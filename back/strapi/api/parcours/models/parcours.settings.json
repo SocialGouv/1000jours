@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "parcours",
+  "info": {
+    "name": "Parcours"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "etapes": {
+      "collection": "etape",
+      "via": "parcours",
+      "dominant": true
+    }
+  }
+}
