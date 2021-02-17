@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/thematiques",
+      "handler": "thematique.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/thematiques/count",
+      "handler": "thematique.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/thematiques/:id",
+      "handler": "thematique.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/thematiques",
+      "handler": "thematique.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/thematiques/:id",
+      "handler": "thematique.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/thematiques/:id",
+      "handler": "thematique.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

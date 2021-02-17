@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "articles",
+  "info": {
+    "name": "Article",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "titre": {
+      "type": "string"
+    },
+    "contenu": {
+      "type": "richtext"
+    },
+    "etape": {
+      "model": "etape"
+    },
+    "thematiques": {
+      "via": "articles",
+      "collection": "thematique",
+      "dominant": true
+    }
+  }
+}

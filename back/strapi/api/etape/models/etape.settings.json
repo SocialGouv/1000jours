@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "etapes",
+  "info": {
+    "name": "Étape",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "thematiques": {
+      "collection": "thematique",
+      "via": "etapes"
+    },
+    "description": {
+      "type": "text"
+    },
+    "parcours": {
+      "via": "etapes",
+      "collection": "parcours"
+    }
+  }
+}
