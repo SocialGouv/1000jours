@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "git-cz": "^4.7.6",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.168",
