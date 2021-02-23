@@ -1,0 +1,6 @@
+{
+  "name": "les1000jours-front",
+  "type": "app",
+  "subdomain": "les1000jours-front",
+  "probesPath": "/"
+}
