@@ -9,12 +9,13 @@ COPY yarn.lock .
 
 ENV NODE_ENV=production
 
-RUN yarn install --production --frozen-lockfile
+# need expo-cli and typescript@~4.0.0 @types/react@~16.9.35
+RUN yarn install --frozen-lockfile
+RUN yarn global add expo-cli
+RUN yarn add --dev typescript@~4.0.0 @types/react@~16.9.35
 
 COPY . .
 
-RUN cd /front
-
 USER node
 
-ENTRYPOINT ["yarn", "start"]
+ENTRYPOINT ["yarn", "start:web"]
