@@ -44,11 +44,10 @@ export default function TabOneScreen() {
 
   return (
     <ScrollView>
-
       <View style={[styles.mainContainer]}>
         <View style={[styles.timelineContainer]}>
           <View style={[styles.timelineBlock, styles.timelineBlockRight, styles.timelineBlockFirst]} />
-          {range(steps.length - 2).map((index) =>
+          {range(steps.length - 2).map((index: number) =>
             <View style={[styles.timelineBlock, (index % 2 === 0) ? styles.timelineBlockLeft : styles.timelineBlockRight]} key={index} />
           )}
         </View>
@@ -56,7 +55,6 @@ export default function TabOneScreen() {
           <TimelineStep title={title} icon={icon} index={index} key={index} />
         )}
       </View>
-
     </ScrollView>
   );
 }
