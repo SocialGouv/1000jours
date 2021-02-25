@@ -1,70 +1,96 @@
-import * as React from 'react';
-import { StyleSheet, Image } from 'react-native';
-import { View, Text } from '../Themed';
+import type { FC } from "react";
+import * as React from "react";
+import { Image, StyleSheet } from "react-native";
 
-type TimelineStepProps = {
-    title: string;
-    icon: string;
-    index: number;
-    isTheLast: boolean
-};
+import { Text, View } from "../Themed";
 
-const TimelineStep: React.FC<TimelineStepProps> = ({title, icon, index, isTheLast}) => {
+interface TimelineStepProps {
+  title: string;
+  icon: string;
+  index: number;
+  isTheLast: boolean;
+}
 
-  const getStyles=(index: number, isTheLast: boolean) =>{
+const TimelineStep: FC<TimelineStepProps> = ({
+  title,
+  icon,
+  index: listIndex,
+  isTheLast,
+}) => {
+  const getStyles = (index: number, isLast: boolean) => {
     const initialOffset = 10;
     const verticalOffset = 100;
-    if(index === 0) {
-      return [styles.step, {marginTop: initialOffset - 50}, styles.stepLeft];
+    if (index === 0) {
+      return [styles.step, { marginTop: initialOffset - 50 }, styles.stepLeft];
     } else {
-      const marginTop = ((initialOffset - index + 1) + (verticalOffset * (index - 1))) - (isTheLast ? 50 : 0);
-      return [styles.step, {marginTop: marginTop}, (index %2 === 0) ? styles.stepLeft : styles.stepRight];
+      const marginTop =
+        initialOffset -
+        index +
+        1 +
+        verticalOffset * (index - 1) -
+        (isLast ? 50 : 0);
+      return [
+        styles.step,
+        { marginTop: marginTop },
+        index % 2 === 0 ? styles.stepLeft : styles.stepRight,
+      ];
     }
   };
 
   return (
-    <View style={getStyles(index, isTheLast)}>
-        <Image style={[styles.stepIcon]} source={{uri: icon}}/>
-        <Text style={[styles.stepTitle, isTheLast ? styles.stepLast : (index === 0) ? styles.stepFirst : null]}>{title}</Text>
+    <View style={getStyles(listIndex, isTheLast)}>
+      <Image style={[styles.stepIcon]} source={{ uri: icon }} />
+      <Text
+        style={[
+          styles.stepTitle,
+          isTheLast
+            ? styles.stepLast
+            : listIndex === 0
+            ? styles.stepFirst
+            : null,
+        ]}
+      >
+        {title}
+      </Text>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
-    step: {
-      height: 80,
-      position: 'absolute',
-      flex: 1,
-      alignItems: 'center',
-      backgroundColor: 'transparent'
-    },
-    stepRight: {
-      right: 0,
-      flexDirection: 'row-reverse',
-      textAlign: 'right',
-    },
-    stepLeft: {
-      left: 0,
-      flexDirection: 'row',
-      textAlign: 'left',
-    },
-    stepIcon: {
-      width: 80,
-      height: 80,
-    },
-    stepTitle: {
-      paddingLeft: 10,
-      paddingRight: 10,
-      fontSize: 13,
-    },
-    stepFirst: {
-      paddingBottom: 60,
-    },
-    stepLast: {
-      paddingLeft: 0,
-      paddingRight: 0,
-      paddingTop: 80,
-    },
-  });
+  step: {
+    alignItems: "center",
+    backgroundColor: "transparent",
+    flex: 1,
+    height: 80,
+    position: "absolute",
+  },
+  stepFirst: {
+    paddingBottom: 60,
+  },
+  stepIcon: {
+    height: 80,
+    width: 80,
+  },
+  stepLast: {
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 80,
+  },
+  stepLeft: {
+    flexDirection: "row",
+    left: 0,
+    textAlign: "left",
+  },
+  stepRight: {
+    flexDirection: "row-reverse",
+    right: 0,
+    textAlign: "right",
+  },
+  stepTitle: {
+    fontSize: 13,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+});
 
-export default TimelineStep
+export default TimelineStep;
