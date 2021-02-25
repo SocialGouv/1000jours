@@ -24,7 +24,7 @@ const TimelineStep: React.FC<TimelineStepProps> = ({title, icon, index, isTheLas
 
   return (
     <View style={getStyles(index, isTheLast)}>
-        <Image style={[styles.stepIcon]} source={{uri: icon}}></Image>
+        <Image style={[styles.stepIcon]} source={{uri: icon}}/>
         <Text style={[styles.stepTitle, isTheLast ? styles.stepLast : (index === 0) ? styles.stepFirst : null]}>{title}</Text>
     </View>
   )

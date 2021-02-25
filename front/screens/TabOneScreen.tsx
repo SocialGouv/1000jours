@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { range } from 'lodash';
 import { View } from '../components/Themed';
 import TimelineStep from '../components/timeline/TimlineStep';
+import Colors from '../constants/Colors';
 
 export default function TabOneScreen() {
 
@@ -45,6 +46,8 @@ export default function TabOneScreen() {
     },
   ];
 
+  const numberOfStepsWithoutTheFirstAndLast = (steps.length - 1) - 2;
+
   return (
     <ScrollView style={[styles.mainContainer]}>
       <View>
@@ -54,7 +57,7 @@ export default function TabOneScreen() {
       <View style={[styles.timelineStepContainer]}>
         <View style={[styles.timelineContainer]}>
           <View style={[styles.timelineBlock, styles.timelineBlockRight, styles.timelineBlockFirst]} />
-          {range(steps.length - 3).map((index) =>
+          {range(numberOfStepsWithoutTheFirstAndLast).map((index) =>
             <View style={[styles.timelineBlock, (index % 2 === 0) ? styles.timelineBlockLeft : styles.timelineBlockRight]} key={index} />
           )}
         </View>
@@ -68,19 +71,19 @@ export default function TabOneScreen() {
 
 const styles = StyleSheet.create({
   title: {
-    color: '#150863',
+    color: Colors.primaryColor,
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 10
   },
   description: {
-    color: '#4c4c4c',
+    color: Colors.tertiaryColor,
   },
   mainContainer: {
     paddingTop: 15,
     paddingLeft: 15,
     paddingRight: 15,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   timelineStepContainer: {
     marginTop: 80,
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
     marginTop: -1,
     backgroundColor: "transparent",
     borderStyle: "solid",
-    borderColor: "#e29132",
+    borderColor: Colors.secondaryColor,
     borderTopWidth: 1,
     borderBottomWidth: 1,
   },

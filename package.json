@@ -1,10 +1,8 @@
 {
   "dependencies": {
-    "git-cz": "^4.7.6",
-    "lodash": "^4.17.20"
+    "git-cz": "^4.7.6"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.168",
     "commitizen": "^4.2.3"
   },
   "scripts": {
