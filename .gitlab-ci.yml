@@ -1,0 +1,24 @@
+include:
+  - project: SocialGouv/gitlab-ci-yml
+    file: /autodevops.yml
+    ref: v20.7.9
+
+variables:
+  AUTO_DEVOPS_KANIKO: "✔️"
+  AUTO_DEVOPS_RELEASE_AUTO: "✔️"
+  AUTO_DEVOPS_PRODUCTION_AUTO: "✔️"
+  AUTO_DEVOPS_ENABLE_KAPP: "✔️"
+  AUTO_DEVOPS_TEST_DISABLED: "🛑"
+  AUTO_DEVOPS_QUALITY_DISABLED: "🛑"
+  AUTO_DEVOPS_NOTIFY_DISABLED: "🛑"
+
+Build:
+  stage: Code Quality
+  script:
+    - echo "No build, ma"
+
+Register Kaniko image:
+  extends: .autodevops_register_kaniko_image
+  variables:
+    CONTEXT: front
+    IMAGE_NAME: les1000jours-front
