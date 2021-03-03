@@ -16,10 +16,13 @@ RUN yarn add --dev typescript@~4.0.0 @types/react@~16.9.35 @types/react-native@~
 
 COPY . .
 
-RUN yarn expo build:web
+ENV EXPO_MANIFEST_PROXY_URL="https://risseraka-chore-d-u8fps8-1000jours.dev2.fabrique.social.gouv.fr"
+ENV EXPO_PACKAGER_PROXY_URL="https://expo-metro-risseraka-chore-d-u8fps8-1000jours.dev2.fabrique.social.gouv.fr"
+ENV RCT_METRO_PORT=443
+ENV EXPO_DEVTOOLS_LISTEN_ADDRESS=0.0.0.0
+ENV REACT_NATIVE_PACKAGER_HOSTNAME="expo-metro-risseraka-chore-d-u8fps8-1000jours.dev2.fabrique.social.gouv.fr"
 
-FROM registry.gitlab.factory.social.gouv.fr/socialgouv/docker/nginx4spa:4.6.1
 
-COPY --from=builder /app/web-build /usr/share/nginx/html
+ENTRYPOINT ["yarn", "expo", "start", "--offline", "--non-interactive", "--lan"]
 
-ENV PORT 3000
+
