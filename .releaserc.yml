@@ -7,4 +7,5 @@ plugins:
         - CHANGELOG.md
         - README.md
       message: "chore(release): version ${nextRelease.version}\n\n${nextRelease.notes}"
+  - "@semantic-release/github"
 repositoryUrl: ssh://git@github.com/SocialGouv/1000jours.git

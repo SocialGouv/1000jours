@@ -1,0 +1,650 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`kosko generate --prod 1`] = `
+"---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    app: expo
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+    component: nginx
+  name: expo
+  namespace: les1000jours
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expo
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
+      labels:
+        app: expo
+        application: les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
+        component: nginx
+    spec:
+      containers:
+        - image: harbor.fabrique.social.gouv.fr/1000jours/les1000jours-expo:1.2.3
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /index.html
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+          name: expo
+          ports:
+            - containerPort: 80
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            httpGet:
+              path: /index.html
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 128Mi
+            requests:
+              cpu: 5m
+              memory: 32Mi
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /index.html
+              port: http
+            periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: expo
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: expo
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  namespace: les1000jours
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: expo
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    app: expo
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: expo
+  namespace: les1000jours
+spec:
+  rules:
+    - host: les1000jours.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              serviceName: expo
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - les1000jours.fabrique.social.gouv.fr
+      secretName: expo-crt
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    app: hasura
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: hasura
+  namespace: les1000jours
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hasura
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
+      labels:
+        app: hasura
+        application: les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
+    spec:
+      containers:
+        - image: harbor.fabrique.social.gouv.fr/1000jours/les1000jours-hasura:1.2.3
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+          name: hasura
+          ports:
+            - containerPort: 80
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 64Mi
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+          envFrom:
+            - secretRef:
+                name: azure-pg-user
+            - secretRef:
+                name: hasura-sealed-secret
+            - configMapRef:
+                name: hasura-configmap
+      initContainers:
+        - env:
+            - name: WAIT_FOR_RETRIES
+              value: '24'
+          envFrom:
+            - secretRef:
+                name: azure-pg-user
+          image: >-
+            registry.gitlab.factory.social.gouv.fr/socialgouv/docker/wait-for-postgres:4.6.0
+          imagePullPolicy: Always
+          name: wait-for-postgres
+          resources:
+            limits:
+              cpu: 20m
+              memory: 32Mi
+            requests:
+              cpu: 5m
+              memory: 16Mi
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: hasura-sealed-secret
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  namespace: les1000jours
+spec:
+  encryptedData:
+    HASURA_GRAPHQL_ADMIN_SECRET: >-
+      AgAQ9npiVSZcI8IA6kHHQ9tMaKYahCPmiYh9PoEmKIvisGCM4hQ2Q+UUoUvA2N3Id/GCxNZh3hqmTjLp+mHPy0e8rr9+/WVB5jrrqWO/oX2R1kXq0dbITF27UOjmTaUkZefPf7diHKpCXKGamkP6YbVuZa+1BBmBBfkIDJsraKO1CS/EO0QZAb0fHJiOkNy30j4pTTlg16JdugEj3kXdXXXZD/F8OyvlLBY1jivC/uFMGppNh1eRivgi4Y+krCDCuLphAa5YVslLMf7bboDD5Tk1b2HOCNYxQ96dxvkqCVtNd2rxXfDsYy9vMbQfYnsBjsIT7VZhk3GaMpVmPTRjp89XQDvj86+PrPtuFlgmfLrNvbvcqJ30y5lkD46c4Bd9zgwN4FeeVuY/oCKgfrN1qdCOT+ZYchkVQuCbKT+qK0gfOkYRt+B5feL5MtaEXX2MyhPS8wCvNLyAEth6NbmYxdXOPBXQrfGNcZYg/qjeB/muAzkd4wEPsR9ExoY5envlJ8Mx8LUQ/7A2tRp1jd+uy8s1hdb94BgOhcCqgzdqRkIVp40GiVHzVkFWQEkMEoX1Mw4iifs0QtAZu8qPyFWYORf9fty8zG/WX0RStdYbTuahCLb+Vqs2A5UEbg8nRdfl16aZJ3RY2fIoF1kYNG7XiZmp+bltOOqvYcOBnAr3Dy/y1PV1NrBMCULxibM57+nRyXrJe6TYLrJWPnp7meLLKppKPN3tgvx21s1/8bpbxC0xgshPZFgXQXgB
+  template:
+    metadata:
+      creationTimestamp: null
+      name: hasura-sealed-secret
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
+      labels:
+        application: les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hasura-configmap
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  namespace: les1000jours
+data:
+  HASURA_GRAPHQL_ENABLE_CONSOLE: 'false'
+  HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log
+  HASURA_GRAPHQL_NO_OF_RETRIES: '5'
+  HASURA_GRAPHQL_SERVER_PORT: '80'
+  HASURA_GRAPHQL_LOG_LEVEL: info
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hasura
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: hasura
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  namespace: les1000jours
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: hasura
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    app: hasura
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: hasura
+  namespace: les1000jours
+spec:
+  rules:
+    - host: hasura.les1000jours.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              serviceName: hasura
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - hasura.les1000jours.fabrique.social.gouv.fr
+      secretName: hasura-crt
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  name: azure-pg-user
+  namespace: les1000jours
+  labels:
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+spec:
+  encryptedData:
+    DATABASE_URL: >-
+      AgCGY8hGFzTHWKh/cHQy9zvffsBZJT0MogJ7WUdW6aBg/zFX6ofJOXxg+cH2vZ3phS8zHtCHcCNUa5yxgxyKJev9aTa3LYhfLVoUSvvLxqo3YgKIYaYfXoRqXBNFRN5jvPvBlgGtar+xAxZ36ZlFRf/dVXKlW0B70Yyz+yp2KvXN34/ec19AvNthTv3pRL/PzoJpwJsTcHdzGuZ3ZUid5KbBAi2FR91P4SsitiXZ1TOoTG+Ez2+sVacZWmgqa8q/4MsXyih9WdUpgs8sx+ybuBJdc+o92WsI6+31FaKnl7Tbi/9WFTkXJZyQyi+9U4qPLRa57CAzkPgvC/R+WVBJkiZbzy+WVITweNuNSfEH1qMzT8JgKpiGQZF0VU1FLVgfmGZsYisil5yVpMG8PdPMrAJ11x0AffAG/cv6Mrr4R+5XVfxLUQwvJlDHpAjQvTRf+Q5FnJM9h39PmbrovsIpvff4csJn0fh9PW56gup5n2XnFaXalz2mQCK0FRvu4Ai38fsxaOOWMpiUmwYRjIxksSs57JDs/PEqQBaq4gmpVJ/cdyjUoOI88wMc+wo/pmFtlWi9NLL8DLmUCzUiiIdvRtd4he1Pbbx/Kf7DbP/QXC+b01oxbpTU75u4DPuDdODxfafmTmyHUmIjEARmhheX3btKHrzK7dKIRiP09+xdVYr3htBkOJDAmV0mZI53BHEzKzoE5L2asvvZKvuMvRsfj8D9mAQY9iyjSz+XEXIvEwEJUR5PZt69JIXhIG4w8YnfSjT5Ft1ZOFcWTYmQZ5Pbu5O5WOCprnVJcoE5vHYwv4CLxtC0yvjI9kfoUHSGx6RNHjqotA0ayn8LDXDm5OjkqRWXojMrA0IGzONaDP/hA7Ld58WGX4xLJv3G62VlYSY0YwrIZpXLz8D0C+RjHEEdnFDIibU5uCj0vqBC0qfVuKZV9nPYfr3/oA==
+    DB_URI: >-
+      AgAogDLTAbsXIcIhrIigNOZl9hnZzMRv6IEfJs/zefmuYDAhao3GrjWVOXBgYm7HoN5COL3NgoMOUWLzSk5nVf0KQceAcLxESP37dU700VWnrf59nRWfaOyZCW+ySs4vnwfpUUnqUEY8Q8Mfa8wO2oBaLjxlw9ZDkO57QWVDb0sblWgeP7cVF+QX79fC70S0G0zeP/ZQbgfAkbhHHNyE1yvi29CuBDBk4WnaAED7VIZwCWt0kB/UQnokUa1atxsG4h+CePmeHsW9/CssbaPdtsmN4cWlb5uv6WqVwWPVfw7+LXZdD4YR5/kivfsXYx+7n5uTuzdpdTrtzD1MwWQmiK09Ow9E4AzUK5359DiaelMN/9nG95HQ+8A+X+HyKugAFMxyhrNPzchxuXqjXbbgLgzkqWFi/P/chvUh7K+C5rL3u7orybA83Ei4f56eh0bWII49+fOT06ClXJCtzqo1WoaAaIYu4dItddDjzcGQm7y91Do+MP6hYdvPZ4Et9QcMs4WA3B0TboBhRw70n8Gopddj5tJUJOl1/gRmiZA8OcTfPU+d7vVmxa3GT600LAypA4awQOsW0D5tNU8TSz89hlQvRoPTTj54d0Oh20IMUOgbg1NZLQ787thnbCmp4yzkWtmzOzmn9cxASYWY3hQV7i35JPQLKkZ8HfNe5Q/Sqp7wn8nTvN2t1LAuSkpQ4Jqyh97SDzmQHIgsJWuHGSTtheWS2/cqeeY0AEGJRMHsa6jqHc/DepfLapD3TTjyPaASKpepqMNOQU3AC6rMqWDduLVyipd9JCJ8lHLG7rzP9YfAempK5827IveEFQeW5S40ydAwe52AnKyGXl/zmcitgC8rGGvDx9GCUatS3ru06GWlfnVu7+rBhHZLJ6jESApei0pwpkstRuL5NK6sEnfdCxzP0xzEKONPBJ3tQMmliliSOpFs8MdK+w==
+    HASURA_GRAPHQL_DATABASE_URL: >-
+      AgAXTozR45PRtJE0mmcidMjVtH8HWUV2WLEj6sUyh0jFQPqDmG51wScOVcghlMbsZRWQey+SLlLterN2+GBGowZa0a5exf52/NyUAfhWIIwPaUALIC+uNWnOnp/8qrQRAGS51SLjVlPNjmUDU4jamjL23XMkIi8Wpb0QaxiAbDlRl7kKqT81UVm4LeKcR1YGNu95yIeghZDo0LtFNisDWX5mcT+m5vk9ol3qjWuXqW7k1dMTHvD9YW6pwNaAVNss1MYXUqdcE5lgJpidX6aTVDLMTOaIrihH7hLJVdtk/pZKEn97idgElPHJ5Rw9DVJ2RjAuIVOQ6zaTI7ueAJd5zb/oYz8KbeggU1J54u6sc8aDOwVhRnDnMdNd9T4Cc5677UkTJZMzlb7SFG/RgdPsoJEjePXs7Z8MK8N/G+93n8lnz4vWZMHGJCOOI4Gkv/tOWrU7SH+FptgEHtDRDJRnDVJe5tbE8F23kFCiU1MSHVYPIB7e0L/AAosNBGm0FAM50TUalQyCffyMDYDLq5qyfNDPB+ZUHHz/A09wKmKyaqBws617VTpkXmNYSBrPZ+AV9JP9IqU8rfJovdqkhBsAu1crI5hVhGiRhD5TfZY8n9rSvvK9IV8hY8UGM09mMnV62bSFxrescNBg2qZ1Dxd4hf5FxMv3gEOJzKVajZHx2QjGWjZBYhhMRdTPQqrIc3MT/7sH1J09+M3+nb1TC5wIThTvNNda/g8p5x5boH89vq8UvsatLokcDlMdhTaSIPgMmm+5fci/75ELhuwPgQqcbSjQxJlHs0lKnCVJtPhxebyvLw7eCimnA/ExygZk5Px76bnpIOi9Z/BFJZIdYvDCpU3XsBBBleSXofpOqUHKDaH5V++gZMLnMlmLnSUL8aif0+VJ+nzW4KlCoY92iwzaSqc4sCLCy3/WMAxm8cm6YKT2mMWgXxim0g==
+    PGDATABASE: >-
+      AgBzXWipb5edaBGji6fs++Mvnm45bYm55It7Cb8pwW2A7cj3iBWAv7pLLS2nV5RF7o6zo3SpFAjDx+hC1vBV7gdsWXncQLUGQmUyZw5mDu+mwtJ6S4mPDOp1IvJbiBJyRnUBY0MsDUENlDmRre89gftF3XPKOzZks0rmv5rF98WDRpFc11qCRyoLXkICnf78TYyd+lK4z/loBY48jqKofy9CaThogckCd7STRPfAfz/UWV1wM4qfXnhIJDOuLmI+ncIdCcjgaDTmFcxMpJXHB9iawQedBfj4Ya5dTH6TrP+VF9Jyymp+YCUXDFYQrUYbGSbXYwXwfscneDnKvynbxcbt375lBJavA0qXf677rDUIrdY9UBkgaKx6q+zMAZqo2bG20fB0OtrPVIHhKoDic51vPsc3bIfChsl5bP+DVGEorp8nf7WYfsdnTv4Cgw2KtD2G0O6q3aD+wYfV690eexceUVHWUh/trQWbde8HsTI7Auw4gX6KpIvptAWF7EXVN6/h+E3L1OuvroPPLweOSakeZ+wiVxjP9gHM4XkrXgU8FFKtsghwJB9E0G0vOlQHg+3dvDszyt//5eCSmjvhXHdgCB9zO1rE+6g4t8xZLqERm4i6adwxbE1LVJqzZ9GDNz5XfuXkiwd9Rcy2YqvTnkoait4LwmSMCASzY2iYy4K+PqhvDkcpWQN1XUUFK7gJTsFsJ71g
+    PGHOST: >-
+      AgB8b5OGDessEEtnjOSbqduF1ukG/JPaNdhP51cgyW36kdSDaRQWlLoj/yDO5B+8rLoMyJZsvwVu33eg9Gz3WDbC4CDGePHYTYL/PGt+v1u1UKr1oskzip7kW8SlUIwVWu62kSKRdI/oi572+YQmOYNuEBGMQlCCDdSb9FWUf2z3qIIr7ESanEa6tsgVQlFkVuuopnHIiiOfZv3ux7WI0KyWHnfXEBVOL/LegBxs/uFuGwmeLBvTxLuSZfvBfTMUBKFYe5F7z1hCZRZe5dR0FldhLmABKW/rVo+xKtARAKxcWPsPO5c/tCylu6BxhtAsau68O6MRpwZ19PtrQQF9RgmmqzQxBztVOb5LQfp2gpmcGWJPR+TpE4rtq8RKvqbGkaDFBmTrHBfbTNnZIG1oFvnJ3iltfxLFT5kkW8MyQbWMvvJ01Wwee9fz5MubSzBkLXOPTUb4PP2J0PkLTohOmHGxwPvVCp3oetUQBqkn/HuJfZWa7HZFaMXrzUfrsOFqj2VLsVjPx3sz9MRfNdKAyz6OI3NYy0ydL5jvk5YYXHDzoJnSn9YoQQsD3dVuIDsY+01eZAZrpFFkrxceVTx/0v58ViMbyCAQI7ZNYGvFlv4g4NxRfzOJ6fxjGR50Rx4Hn/tqUKdRNnTZhWMoCRPNhN6MNUAjjFj90tk9KQdcwUHusJmDEzWzSa17JUO2iwZs+LZzY+JVDODl4pSjhQ/sNFwOSeSt86tcYOZVA7zGtzA1GA8pV8iMDSgawUmWDivZ6/+UzA==
+    PGPASSWORD: >-
+      AgA9m+9lecZP1tjpWGrfklUvIYYKOt5xchn85CU0T4adnHBACKMr2smZRKeybrxGPPngjoQN5JIPFlpz2D4grfN/MnA6s+7lbgtpZPiEuSt1OHvQsqsUqCbkOHd5DYmXq7RnayNaQCxjPuVSMeHo2elRgbcggT3mtmI/FuVN/RzfjEiZoay2a8BOT8YAoSy/xiU8JkUBVlwBotGgzUDFm9KozrNHCorZxPZkVzmZ9xSgYFGPF0pnl9JIdO2psISCvOfrWMmQ6VphbWVsf2l+U14Ujcv1iC+SFVrdhGn8RP0HhHav650iaKRgLoa7q/UN7riFWtUVz3XK9igWKy61V2wAS/4ODQmLMt67oug5+Bj3GBgQAbGfsnhGLkuR4Ffa+fg4i55uvtIX1tnxlJXi3UkXVkVVZTPl4Xnn/nVeVDwhpsh6aX9aaAtFhrhZM5Fv0N2ZfOuJiuC2jprfkoPvZNG9t3eRRgkeRpFTYmrASYvTpynRrrpy0cDoR0y2ZBSNv+gNrGc7PhIAdjA1eQV58roD/Ic+Td2Aw0ncqLqOJzNa6q5SM/nqwcGe9VnpwlAOctz/yMSR+El96b7WrFgLufxkiMPCxYc/ISEFRVV1d3pBqkZQtF5RtpG47A39uKsHK47VJwV8wZNcLagNjIdC6CUseoE61HFNQ9n9/yIzxV5aNdn2L5nd47VJEiBJUPILLDBXpqJRIs3SazS3TetywxxYGhgC/MAsuX3FxnXyf+MH7tyhU+kImCg=
+    PGRST_DB_URI: >-
+      AgCcwCyy4boC4FusnnrvbQovrFnIgJw/ohGuPr/fsgNMJmhThvoKtO1CU+q4WeEUYaqJRZQXPRB9ICzms5QUY3E+xRtkVxxSWKRoWyi9AnSj28WP3ekCCNTa9+9fBY2vPnHi1i+xX4UllPJinKwEh2AOlkd/EGd8PzPKwENJaB0vFloZhbp4QM7q7h67XuZqACCI5bVVFiH2E2W9qhatWtw8Xxwm0V4flUlhKOjbZ4XdKUb9CDBhy87EASmJmeGokkbsx1i/rh7n309IqzS5hwfpPLby+oub2lsEPp41q+C/4tEpA0TSJrS41xFtaGGKFs2ZqF7ISvWTjW6578iCAtr700PqKX9LpE6QM2kiFCaOmSz8kHMrDcU4a/p6Vx0M+/zhvSbixSUTNz7i/fi3AWh83E8OJuuGrbA0/4+K85Cfm/9omdtTpNkHfO4dyLyMQUMpcTXY4IHUiPuve+B8dUkyGw+H5AtUA2dgYlBaIgXBWvdSyv/Kl70UGHW0jT19x2CVg6SxyKsmu0av1oLJRhFvMG3o8DDeG/0cknB7VGp1xr8vilbNZQ3UskA+Q9MOZD2+OCB3iEN6qBWZU9mG9ml3cOs92NDYZee3OsL/82OdUilyyY9KcqtCh7rTTsBKSXLBVarEmCxiDLrETG1hzbNAjX8vhEyVK/j2MEnMX5rccr7Wp9Vpis507ewc4oYRzFqwERQkvfwb093rmREGSVl+8iAiVfJtXhyZHTAPbmn8lWgugA0EaOC4mxg+19rzKxaWbjKkWRZn9+uNXoeKRnF2SxuAtiCoIDSGqwJchyGAd0O+I6e/ES6hxsoVuZTP/K2QDna00oUorpQ9si4JnG/iCTRwbNqpDPR1Pptn/3naEskTumLz6191SEc7adjNglwGJGrS1GaShp7F1ZQgkv1Ok7nDRzVSaNdRff6hqTyMy/J+c97riA==
+    PGSSLMODE: >-
+      AgBMCJRfJtV2TMDmiy/o00e5Bt1n1KzISqsXXwZgLSvdDGVqiVpfhKr1E4VkykxZefc1Zdq4X3ZUP6+xhbXEWYsuNhMDMP18RJutFlBb6jLaN/6cUtkG4Ve0VhpGdNJRfzBXLjsUVgpsoDB5R+jK5lJR+C4t9HupLLGN2zRI5ZaJDqGADSdM9gMw3aZGNJDgRX80u8cPvSMUSYoHKFOKdeR6/DSQWA5+prh0nv3Yjc6ILUZ5x+A0D80FBWXozc8kDGFiYPnSoTjT7Cq+7B/Yq0t7pL0xjZeB2nK2GclqARpBC0Jiu8Nf9kd15pePRTM+23JF3A9xVwYF9f98RoGhVyt7zQtypHOSBPPEXqztltZHM2R1R1xAvCaFMGqMJXuFTSi0DDYHt+WM/KeXYpQQLY7xZOCGOp5zMVkM0/2myoOfV3Lxrl1SWFh55AtbuLWSVPMkMMgIOhliW8+yflkxgPtoH1DxfUPmhKL4VHxjfx/s2OIMbeHMze7RUB6+dmklyHrtgCvsml/WfJbz0kHiFmwdQwIvUFT6oVvETWajcrFIeiJaCzZRrM3YH7J+OJjPA/Y26hX00IxmdkZzAOeueUgDiAvq2Y1Nuh60Ne8Kt7Zf4DkN8isYmciOHEzRcno/F1L29vGCWompCq0utb8VnTBKjE5ZDZKNDAhMEYuJrnRZBkLDmqkAAQSX0T/7xMtvclkfc6ZLlq0k
+    PGUSER: >-
+      AgBn2x1cVQ1o3bjQyISTmkmWsxcVbxoKrtPJVF7+/Ml+DDilEdklQZ2yv2sWM/Qg+tLfC3R7Mgl20WJGlsXH19cgy+JL24guo+3h5mSaCziAtOupIGaIEK+YedV5eI7kBHjS0WW4P+zZfzaBePkvbraJepHNCT6fD0lZfcCbZEBHj/ALH5ILgCb8uI0ZZME7lgu3mm55/gSsuyEjnUVm66rgdjWLTo0a4gHwdUjNC0y1UKBYZynhdirupJ0XN9JnaiK5byT+QL0LIFOd7Kc4/O+purS2HmUURAGZ/tPRQaNV0mejDTOTE1cbfGJO1QCAH94iO4e63ExxFpvmhSQp159MFocD7R7Krze7QKboxquoWwejvV7oNLM8wd94G5umbDPlT+De11tnvCou6psGyN4F9miOC8SFvbBQ1z/rsp5w2ClB6zpvQY4eWcTsUgJX9Lxfm7dvXxejJcoNWd24PEEbug+4cwDY3syzu3XwWfBo1UjoKk1I+9Q9Y4BjkcUqBtElGLcKm82J2+cr6QVyfmpAbi0w4BIVjvl4rHccZwJPrXp2Xxp7zEf1Q+S/IygRG6JNvpcl6xaFHWZcXyHnLYPMUru5na5u512nZihxYwNJ5BjstW8Ktw6nJA7XLCCKjVu/QWrxPM6qsZqK8nDSeZjIwon27D1kAHEb/oKwo9pdhFoDGDQCR89FK2eM2rFa8abS9fgCZyR3ZqoU19lRA1tPs/hwM7MGhRuvr1X4OaKHJ4E6YZbvJomyA0urllBkLuVMoIzq08fX
+  template:
+    metadata:
+      annotations:
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
+      name: azure-pg-user
+      labels:
+        application: les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
+    type: Opaque
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    app: strapi
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: strapi
+  namespace: les1000jours
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strapi
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
+      labels:
+        app: strapi
+        application: les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
+    spec:
+      containers:
+        - image: harbor.fabrique.social.gouv.fr/1000jours/les1000jours-strapi:1.2.3
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+          name: strapi
+          ports:
+            - containerPort: 1337
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /_health
+              port: http
+            periodSeconds: 5
+          volumeMounts:
+            - mountPath: /app/public/uploads
+              name: uploads
+          envFrom:
+            - secretRef:
+                name: azure-pg-user
+            - secretRef:
+                name: strapi-sealed-secret
+            - configMapRef:
+                name: strapi-configmap
+          env:
+            - name: DATABASE_CLIENT
+              value: postgres
+            - name: DATABASE_NAME
+              value: $(PGDATABASE)
+            - name: DATABASE_HOST
+              value: $(PGHOST)
+            - name: DATABASE_PORT
+              value: $(PGPORT)
+            - name: DATABASE_USERNAME
+              value: $(PGUSER)
+            - name: DATABASE_PASSWORD
+              value: $(PGPASSWORD)
+            - name: DATABASE_SSL
+              value: 'true'
+      initContainers:
+        - env:
+            - name: WAIT_FOR_RETRIES
+              value: '24'
+          envFrom:
+            - secretRef:
+                name: azure-pg-user
+          image: >-
+            registry.gitlab.factory.social.gouv.fr/socialgouv/docker/wait-for-postgres:4.6.0
+          imagePullPolicy: Always
+          name: wait-for-postgres
+          resources:
+            limits:
+              cpu: 20m
+              memory: 32Mi
+            requests:
+              cpu: 5m
+              memory: 16Mi
+      volumes:
+        - azureFile:
+            readOnly: false
+            secretName: strapi-sealed-secret
+            shareName: uploads
+          name: uploads
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: strapi-sealed-secret
+  namespace: les1000jours
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+spec:
+  encryptedData:
+    azurestorageaccountkey: >-
+      AgAkJgKaR+GhrzqD932VwlSDoBH9MqaPub3grpNM5Qee0zqysuyyJlpaqs+YZwB1/TbKFoG2+JUvWAUfOnpc9B+T3IQ7xzLbF4pAAPTLbCOk/nBLbf4bPNnDRKSKAdYMn/+w8yVuzGWotVnO4jAP01lJEg8NFFQtrohHHMbEekIUAmNSACq4dbmyZsCk51fDs7IF8qj/ZOcntdEsRb78DcIJPUPCvT9T6H9ixJNaImO3Z+9GBNwaSJILCC9a6h7vw+mK6XyS07n32QdAu0VVaUNMDkRSLd0gltNBA2KW4Y50+PXVCG4g+GBlL+Wh8Y+ogxAj06rOi/p4kCvnmT/uzlVhOEspaqfbySKO+AkgvMk9AeNrS9R/KtqmfnlXiV5IW0PoNzwCtfS45144D9CH/tSYrIG16UruGHdRFe16QAESsBvdc9tmOpU37YCxjO5pKnWcLbKJ5/Pt9l10tsLoNd+AbPJZqZxLG3/EqKkpq8N4va4xZSCqxeDY6VtRGV7bWm95KMiYjv9cRAgsgbSt8Gos+8Qqu5eXgd6ddylCme/BakgZd4zGFO6QC10InkejKCz9/KDW2XpYGLPXUmtr9xnPoxvCv00VbcfEc4kksdv7h6sjDrFArrt35Y33AKritupKR/kvmDSGnIY/yqhau7kyZY1j9QAn0YBcHkqwN751HifxCAxAe7LbmSIAA0QFyBg8ABmkIQ73aGtfjT+m0Gyx+R4QWb4YJSkEJBHoPOgCd+MNvxFjP8vtr8W47BWVpxwrDIvb9C2FRACND7WjFlyS8Pg6+R+3NByLeJca/xvkHbRcS+pB20Yh
+    azurestorageaccountname: >-
+      AgAneH/u/2KW+nvKfrkOIYfWfN/lWpIdyyu1ts+Tb645Hd0rILp4o02r2KAcYC2ZtP1Iy6r/MlI2zwOKf2DNcDRR8JtUJDXyYYgPtI/UV1XH2ivB7zVflWv5TdKI8rrRLa6bmMxY0+dJGia0rvgxhWxrUepOxYZDUivg8Y/lFFIrjhCm/N5aA+eFjGHbG6Dv6TqwkS3IYMBU00qwDZ/Xd/9T3qOp/5AEgsP+A14pf7hKBw8q5aXEFoTKlBtou39ajHyk1bVlz2ikiWuH+iEjnFefaP5zjqIucdDHyGWiH4oMX0K66FNAIL9DKoZN4mo3j1CWAyNzAPB5oO8w9oRFL3e/A1KK1y53j98YV+UcMD/1Nropk0/TbFg1tvhRDfXyJeJN1uZgrCeAuCWMGaNj+emDdn9KzZ41hWkgxR5f7rCXSKg19D5X151zDKvfcwdp25cfxQAe5d7o99+4jiUgao6VrAsINqXSmE3VfeL3azZoyFOdYrafDogyz9V4YeoGv7xmR8Bka8DWvEV18x0G3wVvXDk45DJIyPxgrZ/+adOEtmYpTiEiBiNHACzXTv9cP+xd5W0XKI4P+4zpwgw9doV1vlS4Urp+PNV7X38lvrB3DUHKXpWB++bO4NX4CKmm8LcsiNFQZrmoi5BncWmuapXCmpczO1qNKaQ9BieIEhdyBcprx3m9jp5y5DWR0cut64P+O1sH7YdcXuQKAgh5D0Uf
+  template:
+    metadata:
+      name: strapi-sealed-secret
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
+      labels:
+        application: les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: strapi-configmap
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  namespace: les1000jours
+data:
+  STRAPI_LOG_LEVEL: info
+  NODE_ENV: production
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: strapi
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: strapi
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  namespace: les1000jours
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 1337
+  selector:
+    app: strapi
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    app: strapi
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: strapi
+  namespace: les1000jours
+spec:
+  rules:
+    - host: strapi-les1000jours.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              serviceName: strapi
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - strapi-les1000jours.fabrique.social.gouv.fr
+      secretName: strapi-crt
+"
+`;
