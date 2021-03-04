@@ -1,17 +1,17 @@
-export type RootStackParamList = {
-  Root: undefined;
-  NotFound: undefined;
-};
+export interface RootStackParamList {
+  root: undefined;
+  notFound: undefined;
+}
 
-export type BottomTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
-};
+export interface BottomTabParamList {
+  tabOne: undefined;
+  tabTwo: undefined;
+}
 
-export type TabOneParamList = {
-  TabOneScreen: undefined;
-};
+export interface TabOneParamList {
+  tabOneScreen: undefined;
+}
 
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
-};
+export interface TabTwoParamList {
+  tabTwoScreen: undefined;
+}
