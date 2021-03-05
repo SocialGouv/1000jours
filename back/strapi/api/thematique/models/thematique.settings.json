@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "thematiques",
+  "info": {
+    "name": "Thématique",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "articles": {
+      "collection": "article",
+      "via": "thematiques"
+    },
+    "etapes": {
+      "via": "thematiques",
+      "collection": "etape",
+      "dominant": true
+    }
+  }
+}

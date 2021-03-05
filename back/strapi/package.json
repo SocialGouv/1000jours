@@ -1,0 +1,41 @@
+{
+  "name": "app",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi",
+    "config:dump": "strapi configuration:dump -f config/api.json",
+    "config:restore": "strapi configuration:restore -f config/api.json"
+  },
+  "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^25.0.0",
+    "@ckeditor/ckeditor5-react": "^3.0.1",
+    "knex": "<0.20.0",
+    "pg": "latest",
+    "strapi": "3.5.0",
+    "strapi-admin": "3.5.0",
+    "strapi-connector-bookshelf": "3.5.0",
+    "strapi-plugin-content-manager": "3.5.0",
+    "strapi-plugin-content-type-builder": "3.5.0",
+    "strapi-plugin-email": "3.5.0",
+    "strapi-plugin-graphql": "3.5.0",
+    "strapi-plugin-upload": "3.5.0",
+    "strapi-plugin-users-permissions": "3.5.0",
+    "strapi-utils": "3.5.0"
+  },
+  "author": {
+    "name": "Fabrique des ministère sociaux"
+  },
+  "strapi": {
+    "uuid": "fe5989bb-85d0-4485-b0ad-3b195fdafb39"
+  },
+  "engines": {
+    "node": ">=10.16.0 <=14.x.x",
+    "npm": "^6.0.0"
+  },
+  "license": "MIT"
+}

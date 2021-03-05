@@ -1,0 +1,116 @@
+- table:
+    schema: public
+    name: articles
+  object_relationships:
+  - name: etapeByEtape
+    using:
+      foreign_key_constraint_on: etape
+  array_relationships:
+  - name: articles_thematiques__thematiques_articles
+    using:
+      foreign_key_constraint_on:
+        column: article_id
+        table:
+          schema: public
+          name: articles_thematiques__thematiques_articles
+- table:
+    schema: public
+    name: articles_etapes__etapes_articles
+- table:
+    schema: public
+    name: articles_thematiques__thematiques_articles
+  object_relationships:
+  - name: article
+    using:
+      foreign_key_constraint_on: article_id
+  - name: thematique
+    using:
+      foreign_key_constraint_on: thematique_id
+- table:
+    schema: public
+    name: etapes
+  array_relationships:
+  - name: articles
+    using:
+      foreign_key_constraint_on:
+        column: etape
+        table:
+          schema: public
+          name: articles
+  - name: etapes_parcours__parcours_etapes
+    using:
+      foreign_key_constraint_on:
+        column: etape_id
+        table:
+          schema: public
+          name: etapes_parcours__parcours_etapes
+  - name: etapes_thematiques__thematiques_etapes
+    using:
+      foreign_key_constraint_on:
+        column: etape_id
+        table:
+          schema: public
+          name: etapes_thematiques__thematiques_etapes
+  - name: evenements
+    using:
+      foreign_key_constraint_on:
+        column: etape
+        table:
+          schema: public
+          name: evenements
+- table:
+    schema: public
+    name: etapes_parcours__parcours_etapes
+  object_relationships:
+  - name: etape
+    using:
+      foreign_key_constraint_on: etape_id
+  - name: parcour
+    using:
+      foreign_key_constraint_on: parcour_id
+- table:
+    schema: public
+    name: etapes_thematiques__thematiques_etapes
+  object_relationships:
+  - name: etape
+    using:
+      foreign_key_constraint_on: etape_id
+  - name: thematique
+    using:
+      foreign_key_constraint_on: thematique_id
+- table:
+    schema: public
+    name: evenements
+  object_relationships:
+  - name: etapeByEtape
+    using:
+      foreign_key_constraint_on: etape
+- table:
+    schema: public
+    name: parcours
+  array_relationships:
+  - name: etapes_parcours__parcours_etapes
+    using:
+      foreign_key_constraint_on:
+        column: parcour_id
+        table:
+          schema: public
+          name: etapes_parcours__parcours_etapes
+- table:
+    schema: public
+    name: thematiques
+  array_relationships:
+  - name: articles_thematiques__thematiques_articles
+    using:
+      foreign_key_constraint_on:
+        column: thematique_id
+        table:
+          schema: public
+          name: articles_thematiques__thematiques_articles
+  - name: etapes_thematiques__thematiques_etapes
+    using:
+      foreign_key_constraint_on:
+        column: thematique_id
+        table:
+          schema: public
+          name: etapes_thematiques__thematiques_etapes
