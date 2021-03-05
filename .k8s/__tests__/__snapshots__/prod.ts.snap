@@ -8,16 +8,17 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
   labels:
     app: expo
-    application: xxx
-    owner: xxx
-    team: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
   name: expo
-  namespace: xxx
+  namespace: les1000jours
 spec:
   replicas: 1
   selector:
@@ -28,14 +29,15 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
-        app.gitlab.com/app: ddd
-        app.gitlab.com/env: dddd
-        app.gitlab.com/env.name: ddd
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
       labels:
         app: expo
-        application: xxx
-        owner: xxx
-        team: xxx
+        application: les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
     spec:
       containers:
         - image: harbor.fabrique.social.gouv.fr/1000jours/les1000jours-front:1.2.3
@@ -80,17 +82,18 @@ kind: Service
 metadata:
   labels:
     app: expo
-    application: xxx
-    owner: xxx
-    team: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
   name: expo
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
-  namespace: xxx
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  namespace: les1000jours
 spec:
   ports:
     - name: http
@@ -109,19 +112,20 @@ metadata:
     kubernetes.io/tls-acme: 'true'
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
   labels:
     app: expo
-    application: xxx
-    owner: xxx
-    team: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
   name: expo
-  namespace: xxx
+  namespace: les1000jours
 spec:
   rules:
-    - host: xxx.ddd
+    - host: les1000jours.fabrique.social.gouv.fr
       http:
         paths:
           - backend:
@@ -130,7 +134,7 @@ spec:
             path: /
   tls:
     - hosts:
-        - xxx.ddd
+        - les1000jours.fabrique.social.gouv.fr
       secretName: expo-crt
 ---
 apiVersion: apps/v1
@@ -139,16 +143,17 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
   labels:
     app: expo-metro
-    application: xxx
-    owner: xxx
-    team: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
   name: expo-metro
-  namespace: xxx
+  namespace: les1000jours
 spec:
   replicas: 1
   selector:
@@ -159,14 +164,15 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
-        app.gitlab.com/app: ddd
-        app.gitlab.com/env: dddd
-        app.gitlab.com/env.name: ddd
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
       labels:
         app: expo-metro
-        application: xxx
-        owner: xxx
-        team: xxx
+        application: les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
     spec:
       containers:
         - image: harbor.fabrique.social.gouv.fr/1000jours/les1000jours-front:1.2.3
@@ -211,17 +217,18 @@ kind: Service
 metadata:
   labels:
     app: expo-metro
-    application: xxx
-    owner: xxx
-    team: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
   name: expo-metro
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
-  namespace: xxx
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  namespace: les1000jours
 spec:
   ports:
     - name: http
@@ -240,19 +247,20 @@ metadata:
     kubernetes.io/tls-acme: 'true'
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
   labels:
     app: expo-metro
-    application: xxx
-    owner: xxx
-    team: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
   name: expo-metro
-  namespace: xxx
+  namespace: les1000jours
 spec:
   rules:
-    - host: expo-metro-xxx.ddd
+    - host: expo-metro-les1000jours.fabrique.social.gouv.fr
       http:
         paths:
           - backend:
@@ -261,7 +269,7 @@ spec:
             path: /
   tls:
     - hosts:
-        - expo-metro-xxx.ddd
+        - expo-metro-les1000jours.fabrique.social.gouv.fr
       secretName: expo-metro-crt
 ---
 apiVersion: apps/v1
@@ -270,16 +278,17 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
   labels:
     app: hasura
-    application: xxx
-    owner: xxx
-    team: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
   name: hasura
-  namespace: xxx
+  namespace: les1000jours
 spec:
   replicas: 1
   selector:
@@ -290,14 +299,15 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
-        app.gitlab.com/app: ddd
-        app.gitlab.com/env: dddd
-        app.gitlab.com/env.name: ddd
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
       labels:
         app: hasura
-        application: xxx
-        owner: xxx
-        team: xxx
+        application: les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
     spec:
       containers:
         - image: harbor.fabrique.social.gouv.fr/1000jours/les1000jours-hasura:1.2.3
@@ -369,14 +379,15 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
   labels:
-    application: xxx
-    owner: xxx
-    team: xxx
-  namespace: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  namespace: les1000jours
 spec:
   encryptedData:
     HASURA_GRAPHQL_ADMIN_SECRET: >-
@@ -388,13 +399,14 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
-        app.gitlab.com/app: ddd
-        app.gitlab.com/env: dddd
-        app.gitlab.com/env.name: ddd
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
       labels:
-        application: xxx
-        owner: xxx
-        team: xxx
+        application: les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
     type: Opaque
 ---
 apiVersion: v1
@@ -404,14 +416,15 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
   labels:
-    application: xxx
-    owner: xxx
-    team: xxx
-  namespace: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  namespace: les1000jours
 data:
   HASURA_GRAPHQL_ENABLE_CONSOLE: 'false'
   HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log
@@ -424,17 +437,18 @@ kind: Service
 metadata:
   labels:
     app: hasura
-    application: xxx
-    owner: xxx
-    team: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
   name: hasura
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
-  namespace: xxx
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  namespace: les1000jours
 spec:
   ports:
     - name: http
@@ -453,19 +467,20 @@ metadata:
     kubernetes.io/tls-acme: 'true'
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
   labels:
     app: hasura
-    application: xxx
-    owner: xxx
-    team: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
   name: hasura
-  namespace: xxx
+  namespace: les1000jours
 spec:
   rules:
-    - host: hasura.xxx.ddd
+    - host: hasura.les1000jours.fabrique.social.gouv.fr
       http:
         paths:
           - backend:
@@ -474,51 +489,55 @@ spec:
             path: /
   tls:
     - hosts:
-        - hasura.xxx.ddd
+        - hasura.les1000jours.fabrique.social.gouv.fr
       secretName: hasura-crt
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
-  creationTimestamp: null
-  name: azure-pg-user
   annotations:
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  name: azure-pg-user
+  namespace: les1000jours
   labels:
-    application: xxx
-    owner: xxx
-    team: xxx
-  namespace: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
 spec:
   encryptedData:
     DATABASE_URL: >-
-      AgChXoL9ubO3gDoiVwOZrKKfXL9QeDWc+doOmKL+rumyq21Tm79aJNtzDigc4Sm/BMPCLuTxCNqHc2ZJdoGuxCXIkVqfx8vXDNnum+W/iQVWCMIs63FaMol1VV0EmFZDCNpL1iSSiZXoX9D6gcV4VwtZer/rJohGTqhyem7y0SND0hTp7MCzUP2B+u71S5rGUyzlmWJfHaf5kSuTb85LxNC7naMPGaI2pspaKW1FWHONWfj/ozfzmt7yhzjBTcZe8MOwqBwn4WhKn4YfVvFWQE2FqE1xQZ3u4cCqP2c0UigTSypVeIcgM5yYcJplbLNSOoVXJHR8uYqKqGxblTTf1bzRMlXlbLQwSfFx17GrDTz3flZxoiMHmGyD4R7CMUJNUjwCFHUVaTz0J/AI8wPiORZwOPhA0ldrPkbE7ZokqB1MLRRnkvZ9qpBCV23rhixuX/wlkwpL3JsakTZQads7H5246DMVEEip4t7BwkjSv65UKMlXKuFMy+Z1kISxWen54PyTIsaXpqid0s3tXW96j++gp2m1JfgDy0IL3c46XP5WJTdD45KxIrra8MEMWEM/68aNqRQa8ihjBL0ZTMUC5Y/x6Smyst4qfXzcEZD3zw6657pf5KzdjSW+3Q3nCkvQdkLBKcfrBKuqSQemqPjQeLZw2CfFLAnPMgh19VH36+WpzCcsRdFOTSTuJGWr0o5Trm9bmaqKlJuS6yuKVg2nU8WRjxjFK4N+5t0rkUSuYSl0pzLzt53vSlV0JfUbocp4wEfvGYmsmGpJk4O0iK6SRHFpGadXd44jZ1MQBgoNOFS33astaJyiue15IsSe/82Z8Nt6/CxWMya/ur2WzYzpVggAg68HE3E8dEAmThOkuvGIB66IppNZ4oda7ZKbd+DfddsqG3FravN8+SjU6A2aNxeh3HIY1YDXxMA2uBaXQdVF
+      AgCGY8hGFzTHWKh/cHQy9zvffsBZJT0MogJ7WUdW6aBg/zFX6ofJOXxg+cH2vZ3phS8zHtCHcCNUa5yxgxyKJev9aTa3LYhfLVoUSvvLxqo3YgKIYaYfXoRqXBNFRN5jvPvBlgGtar+xAxZ36ZlFRf/dVXKlW0B70Yyz+yp2KvXN34/ec19AvNthTv3pRL/PzoJpwJsTcHdzGuZ3ZUid5KbBAi2FR91P4SsitiXZ1TOoTG+Ez2+sVacZWmgqa8q/4MsXyih9WdUpgs8sx+ybuBJdc+o92WsI6+31FaKnl7Tbi/9WFTkXJZyQyi+9U4qPLRa57CAzkPgvC/R+WVBJkiZbzy+WVITweNuNSfEH1qMzT8JgKpiGQZF0VU1FLVgfmGZsYisil5yVpMG8PdPMrAJ11x0AffAG/cv6Mrr4R+5XVfxLUQwvJlDHpAjQvTRf+Q5FnJM9h39PmbrovsIpvff4csJn0fh9PW56gup5n2XnFaXalz2mQCK0FRvu4Ai38fsxaOOWMpiUmwYRjIxksSs57JDs/PEqQBaq4gmpVJ/cdyjUoOI88wMc+wo/pmFtlWi9NLL8DLmUCzUiiIdvRtd4he1Pbbx/Kf7DbP/QXC+b01oxbpTU75u4DPuDdODxfafmTmyHUmIjEARmhheX3btKHrzK7dKIRiP09+xdVYr3htBkOJDAmV0mZI53BHEzKzoE5L2asvvZKvuMvRsfj8D9mAQY9iyjSz+XEXIvEwEJUR5PZt69JIXhIG4w8YnfSjT5Ft1ZOFcWTYmQZ5Pbu5O5WOCprnVJcoE5vHYwv4CLxtC0yvjI9kfoUHSGx6RNHjqotA0ayn8LDXDm5OjkqRWXojMrA0IGzONaDP/hA7Ld58WGX4xLJv3G62VlYSY0YwrIZpXLz8D0C+RjHEEdnFDIibU5uCj0vqBC0qfVuKZV9nPYfr3/oA==
+    DB_URI: >-
+      AgAogDLTAbsXIcIhrIigNOZl9hnZzMRv6IEfJs/zefmuYDAhao3GrjWVOXBgYm7HoN5COL3NgoMOUWLzSk5nVf0KQceAcLxESP37dU700VWnrf59nRWfaOyZCW+ySs4vnwfpUUnqUEY8Q8Mfa8wO2oBaLjxlw9ZDkO57QWVDb0sblWgeP7cVF+QX79fC70S0G0zeP/ZQbgfAkbhHHNyE1yvi29CuBDBk4WnaAED7VIZwCWt0kB/UQnokUa1atxsG4h+CePmeHsW9/CssbaPdtsmN4cWlb5uv6WqVwWPVfw7+LXZdD4YR5/kivfsXYx+7n5uTuzdpdTrtzD1MwWQmiK09Ow9E4AzUK5359DiaelMN/9nG95HQ+8A+X+HyKugAFMxyhrNPzchxuXqjXbbgLgzkqWFi/P/chvUh7K+C5rL3u7orybA83Ei4f56eh0bWII49+fOT06ClXJCtzqo1WoaAaIYu4dItddDjzcGQm7y91Do+MP6hYdvPZ4Et9QcMs4WA3B0TboBhRw70n8Gopddj5tJUJOl1/gRmiZA8OcTfPU+d7vVmxa3GT600LAypA4awQOsW0D5tNU8TSz89hlQvRoPTTj54d0Oh20IMUOgbg1NZLQ787thnbCmp4yzkWtmzOzmn9cxASYWY3hQV7i35JPQLKkZ8HfNe5Q/Sqp7wn8nTvN2t1LAuSkpQ4Jqyh97SDzmQHIgsJWuHGSTtheWS2/cqeeY0AEGJRMHsa6jqHc/DepfLapD3TTjyPaASKpepqMNOQU3AC6rMqWDduLVyipd9JCJ8lHLG7rzP9YfAempK5827IveEFQeW5S40ydAwe52AnKyGXl/zmcitgC8rGGvDx9GCUatS3ru06GWlfnVu7+rBhHZLJ6jESApei0pwpkstRuL5NK6sEnfdCxzP0xzEKONPBJ3tQMmliliSOpFs8MdK+w==
     HASURA_GRAPHQL_DATABASE_URL: >-
-      AgChXoL9ubO3gDoiVwOZrKKfXL9QeDWc+doOmKL+rumyq21Tm79aJNtzDigc4Sm/BMPCLuTxCNqHc2ZJdoGuxCXIkVqfx8vXDNnum+W/iQVWCMIs63FaMol1VV0EmFZDCNpL1iSSiZXoX9D6gcV4VwtZer/rJohGTqhyem7y0SND0hTp7MCzUP2B+u71S5rGUyzlmWJfHaf5kSuTb85LxNC7naMPGaI2pspaKW1FWHONWfj/ozfzmt7yhzjBTcZe8MOwqBwn4WhKn4YfVvFWQE2FqE1xQZ3u4cCqP2c0UigTSypVeIcgM5yYcJplbLNSOoVXJHR8uYqKqGxblTTf1bzRMlXlbLQwSfFx17GrDTz3flZxoiMHmGyD4R7CMUJNUjwCFHUVaTz0J/AI8wPiORZwOPhA0ldrPkbE7ZokqB1MLRRnkvZ9qpBCV23rhixuX/wlkwpL3JsakTZQads7H5246DMVEEip4t7BwkjSv65UKMlXKuFMy+Z1kISxWen54PyTIsaXpqid0s3tXW96j++gp2m1JfgDy0IL3c46XP5WJTdD45KxIrra8MEMWEM/68aNqRQa8ihjBL0ZTMUC5Y/x6Smyst4qfXzcEZD3zw6657pf5KzdjSW+3Q3nCkvQdkLBKcfrBKuqSQemqPjQeLZw2CfFLAnPMgh19VH36+WpzCcsRdFOTSTuJGWr0o5Trm9bmaqKlJuS6yuKVg2nU8WRjxjFK4N+5t0rkUSuYSl0pzLzt53vSlV0JfUbocp4wEfvGYmsmGpJk4O0iK6SRHFpGadXd44jZ1MQBgoNOFS33astaJyiue15IsSe/82Z8Nt6/CxWMya/ur2WzYzpVggAg68HE3E8dEAmThOkuvGIB66IppNZ4oda7ZKbd+DfddsqG3FravN8+SjU6A2aNxeh3HIY1YDXxMA2uBaXQdVF
+      AgAXTozR45PRtJE0mmcidMjVtH8HWUV2WLEj6sUyh0jFQPqDmG51wScOVcghlMbsZRWQey+SLlLterN2+GBGowZa0a5exf52/NyUAfhWIIwPaUALIC+uNWnOnp/8qrQRAGS51SLjVlPNjmUDU4jamjL23XMkIi8Wpb0QaxiAbDlRl7kKqT81UVm4LeKcR1YGNu95yIeghZDo0LtFNisDWX5mcT+m5vk9ol3qjWuXqW7k1dMTHvD9YW6pwNaAVNss1MYXUqdcE5lgJpidX6aTVDLMTOaIrihH7hLJVdtk/pZKEn97idgElPHJ5Rw9DVJ2RjAuIVOQ6zaTI7ueAJd5zb/oYz8KbeggU1J54u6sc8aDOwVhRnDnMdNd9T4Cc5677UkTJZMzlb7SFG/RgdPsoJEjePXs7Z8MK8N/G+93n8lnz4vWZMHGJCOOI4Gkv/tOWrU7SH+FptgEHtDRDJRnDVJe5tbE8F23kFCiU1MSHVYPIB7e0L/AAosNBGm0FAM50TUalQyCffyMDYDLq5qyfNDPB+ZUHHz/A09wKmKyaqBws617VTpkXmNYSBrPZ+AV9JP9IqU8rfJovdqkhBsAu1crI5hVhGiRhD5TfZY8n9rSvvK9IV8hY8UGM09mMnV62bSFxrescNBg2qZ1Dxd4hf5FxMv3gEOJzKVajZHx2QjGWjZBYhhMRdTPQqrIc3MT/7sH1J09+M3+nb1TC5wIThTvNNda/g8p5x5boH89vq8UvsatLokcDlMdhTaSIPgMmm+5fci/75ELhuwPgQqcbSjQxJlHs0lKnCVJtPhxebyvLw7eCimnA/ExygZk5Px76bnpIOi9Z/BFJZIdYvDCpU3XsBBBleSXofpOqUHKDaH5V++gZMLnMlmLnSUL8aif0+VJ+nzW4KlCoY92iwzaSqc4sCLCy3/WMAxm8cm6YKT2mMWgXxim0g==
     PGDATABASE: >-
-      AgCPmg9L23oNElDuc4fMjBr4qSBO+RFTdyWnI9AVei5yW9My5lQKOx+b2Fu8aZHuzzmU5pkmK0tpBpmoJR6QDds1jQtR/XBw3j+o74lgLU8C9PNQypxx/myqIG2ASlnCO8evsvQI2mofKCwfl7eMLwdEl2C5k5Y3AlH+Qjn+z3feu/w3h/bHwNj6n2Wv0W8YI+bPPCO/4UrVP+rb6/dqmhZI+9vFhFHW4ACTtzP/ILh5nEt3qP5TnfK9BuQSrIEyeXG2H8+TQ+pix+zWkr5XbMg0Un/DmCh/fVjRyO0sQwNMOr+P7ePcUZ8zt09/5zn/NPQE8Jz9CRSQmod0kyH6SOgHcN79HLfuV1Ov6i72IQLC1p7NAA90lN0FSUAyYUH5l7tSGOg5QyEPMMto3KjLgBKiOCLMBKyfySqG7C0dMBOizwV9T4WrabMPCeG10f/gYr1+LHzyi95A6NEapBPeGPS4zv/S+fBGP+sKxiFzekdo3Xk7DNrVewkzwyeKqn0IWKq2idDYn5H1R2dHsKacNzV7kvNDM9AzkMvxMFw18etpyQ7coiIbQZieIbp7AywEUmfs98/ld/KCli1ayTK8KIKW64mohufiG3vD5C2mY0w9qpI3JvD3czYyeFNUEE+Swgn/Psqifp/K6twQVB/jF/y8ADF7so4iKzckcR3hzvNZTwc9T3JlBKfUq6bthACfF5huD9jbzExlfgLrt2YZ
+      AgBzXWipb5edaBGji6fs++Mvnm45bYm55It7Cb8pwW2A7cj3iBWAv7pLLS2nV5RF7o6zo3SpFAjDx+hC1vBV7gdsWXncQLUGQmUyZw5mDu+mwtJ6S4mPDOp1IvJbiBJyRnUBY0MsDUENlDmRre89gftF3XPKOzZks0rmv5rF98WDRpFc11qCRyoLXkICnf78TYyd+lK4z/loBY48jqKofy9CaThogckCd7STRPfAfz/UWV1wM4qfXnhIJDOuLmI+ncIdCcjgaDTmFcxMpJXHB9iawQedBfj4Ya5dTH6TrP+VF9Jyymp+YCUXDFYQrUYbGSbXYwXwfscneDnKvynbxcbt375lBJavA0qXf677rDUIrdY9UBkgaKx6q+zMAZqo2bG20fB0OtrPVIHhKoDic51vPsc3bIfChsl5bP+DVGEorp8nf7WYfsdnTv4Cgw2KtD2G0O6q3aD+wYfV690eexceUVHWUh/trQWbde8HsTI7Auw4gX6KpIvptAWF7EXVN6/h+E3L1OuvroPPLweOSakeZ+wiVxjP9gHM4XkrXgU8FFKtsghwJB9E0G0vOlQHg+3dvDszyt//5eCSmjvhXHdgCB9zO1rE+6g4t8xZLqERm4i6adwxbE1LVJqzZ9GDNz5XfuXkiwd9Rcy2YqvTnkoait4LwmSMCASzY2iYy4K+PqhvDkcpWQN1XUUFK7gJTsFsJ71g
     PGHOST: >-
-      AgAHMLNN6/Lire1zToAZvMVgUakKXeD29rSsczSEvF3IHhXZHkoSUkr5shFwnTnpyvK81U6ftv0hhXb052Xg43CQzJIZF3rLhLIYMs8rD0jlBtFxWuqFRe9Eq2ZbBL6JKJJJgmNOSSvV3fOQLwH9Nm9tiELUlVB8AwF7+ZhwF1w5PIJJOaxEBchscheBePwFumxqnZ8RS7uwStOYrkbKzzk3UYckkGRO7zViZhu6sBqR+Q+gEX7MJ1zZgLiOGA/AlrCc8I1YQcHabAgjxH1uzUmE2Yxa+O0G0eZyYDzgTylueLKgN+kIkut6E/1TdBAZdHP9u1LkUW3+Y8Ma9ZK3FR8AXulOk7W5VJZxdzgn0cRn7SgBYS7BMdJTmMcsb7XynW1P0614acVSAINFqKjsUSDTl/AUqqm1thefE3eDk8aYkaeis1MB5ZdvQAXhFZJ2nQyh7geib0LLVDg4huC+rhEvBRvGsw9AfRXmGGfMN1fyVHxL6uCaJWoOraBTEPrXaHwXyp9pDIya/ulWDHSes/wTQBgF75yqf/L1VnDKBJ70WSnVd7Sbq8C5Xuw+n2vf7/Fnu7TYDTCgRepjnWo5Dsl4hD5zcI9nZqk8wEHO/Id9ZK8cwiDSkniuES51LHrx0gFcMaxaTXI/7Xx2+3j6rpsZfoEM3BqV8wFYOB0bc1RwRuMqC3xGPV5YagtOKjLY+8G4mLYvMbKKrqstSOBR6bg0wVSycNn0BascDt6i89Jlkc/lHOu1mwxZaSNPDIYDMSLtEGY=
+      AgB8b5OGDessEEtnjOSbqduF1ukG/JPaNdhP51cgyW36kdSDaRQWlLoj/yDO5B+8rLoMyJZsvwVu33eg9Gz3WDbC4CDGePHYTYL/PGt+v1u1UKr1oskzip7kW8SlUIwVWu62kSKRdI/oi572+YQmOYNuEBGMQlCCDdSb9FWUf2z3qIIr7ESanEa6tsgVQlFkVuuopnHIiiOfZv3ux7WI0KyWHnfXEBVOL/LegBxs/uFuGwmeLBvTxLuSZfvBfTMUBKFYe5F7z1hCZRZe5dR0FldhLmABKW/rVo+xKtARAKxcWPsPO5c/tCylu6BxhtAsau68O6MRpwZ19PtrQQF9RgmmqzQxBztVOb5LQfp2gpmcGWJPR+TpE4rtq8RKvqbGkaDFBmTrHBfbTNnZIG1oFvnJ3iltfxLFT5kkW8MyQbWMvvJ01Wwee9fz5MubSzBkLXOPTUb4PP2J0PkLTohOmHGxwPvVCp3oetUQBqkn/HuJfZWa7HZFaMXrzUfrsOFqj2VLsVjPx3sz9MRfNdKAyz6OI3NYy0ydL5jvk5YYXHDzoJnSn9YoQQsD3dVuIDsY+01eZAZrpFFkrxceVTx/0v58ViMbyCAQI7ZNYGvFlv4g4NxRfzOJ6fxjGR50Rx4Hn/tqUKdRNnTZhWMoCRPNhN6MNUAjjFj90tk9KQdcwUHusJmDEzWzSa17JUO2iwZs+LZzY+JVDODl4pSjhQ/sNFwOSeSt86tcYOZVA7zGtzA1GA8pV8iMDSgawUmWDivZ6/+UzA==
     PGPASSWORD: >-
-      AgB2f0i3Lv8mgeyS/0XBbzLjaRZ8PfPCvomzEy+cAjAiaJQQPXZ0tzRtit9m8bwOO/HilZKqeuxQnDpOPEIvcJ/7AUpxescN2rReGQnMzNHk6p1ilPj5PIjyrQtVCn1ezB9RIULdYgRteh98uTHIjXO8gFls8zZj7jG1rep7upSfyBDlsU5nq98bH6olj0b2Jz/MBsgyryBB/lSNUut+T1X1tAblurd6CejRMgqtMO2K/wnZspc5Rvd3NIfbtsMgpokTZ2wbcFexMWlIBpbyU6FrHUOWe/he7TPTjW49pOVwTMNqT7bmU4EdhZOtHm6qhPmDYHiD2K91+cPCq6C7ys/FJk3uSo0wdBGWNLb0AQV61LOImnsVRHuM3fs7rVJ+wCd5o3ticYfpyXj6hLYFzFlJv4Etp/Bnqy5KDazLBKmsXWAL9CsVbVuSkiXGHuVGBhVZ71Kd4IRmzHqbBQwZhfKSuk8l7AXAFjf0S97StsyLeF6WeEk9JBLFYv7l24cRmISM/Kjqm9otOwohOIAd0tYGTm3i6sl2Ym6rkEtZy2Qa6SyjFS+ic2VJ53//Mx6XnnAlVltZKB2TL2bFpTt4avZUb8NMhggQhp9a8Mch0kXN47CZgc/ETciI1mzY4WUcJ92OCggIxSIKwOZqAM6xqMHT81kry1roRByqxa0/LktyEUfmuNtQuAbSS14JzOkrNK5LdCitHUR99yC9b+M1AOBI1HReN184fg6/C1TxlFmdSDUlP09wSn42
+      AgA9m+9lecZP1tjpWGrfklUvIYYKOt5xchn85CU0T4adnHBACKMr2smZRKeybrxGPPngjoQN5JIPFlpz2D4grfN/MnA6s+7lbgtpZPiEuSt1OHvQsqsUqCbkOHd5DYmXq7RnayNaQCxjPuVSMeHo2elRgbcggT3mtmI/FuVN/RzfjEiZoay2a8BOT8YAoSy/xiU8JkUBVlwBotGgzUDFm9KozrNHCorZxPZkVzmZ9xSgYFGPF0pnl9JIdO2psISCvOfrWMmQ6VphbWVsf2l+U14Ujcv1iC+SFVrdhGn8RP0HhHav650iaKRgLoa7q/UN7riFWtUVz3XK9igWKy61V2wAS/4ODQmLMt67oug5+Bj3GBgQAbGfsnhGLkuR4Ffa+fg4i55uvtIX1tnxlJXi3UkXVkVVZTPl4Xnn/nVeVDwhpsh6aX9aaAtFhrhZM5Fv0N2ZfOuJiuC2jprfkoPvZNG9t3eRRgkeRpFTYmrASYvTpynRrrpy0cDoR0y2ZBSNv+gNrGc7PhIAdjA1eQV58roD/Ic+Td2Aw0ncqLqOJzNa6q5SM/nqwcGe9VnpwlAOctz/yMSR+El96b7WrFgLufxkiMPCxYc/ISEFRVV1d3pBqkZQtF5RtpG47A39uKsHK47VJwV8wZNcLagNjIdC6CUseoE61HFNQ9n9/yIzxV5aNdn2L5nd47VJEiBJUPILLDBXpqJRIs3SazS3TetywxxYGhgC/MAsuX3FxnXyf+MH7tyhU+kImCg=
+    PGRST_DB_URI: >-
+      AgCcwCyy4boC4FusnnrvbQovrFnIgJw/ohGuPr/fsgNMJmhThvoKtO1CU+q4WeEUYaqJRZQXPRB9ICzms5QUY3E+xRtkVxxSWKRoWyi9AnSj28WP3ekCCNTa9+9fBY2vPnHi1i+xX4UllPJinKwEh2AOlkd/EGd8PzPKwENJaB0vFloZhbp4QM7q7h67XuZqACCI5bVVFiH2E2W9qhatWtw8Xxwm0V4flUlhKOjbZ4XdKUb9CDBhy87EASmJmeGokkbsx1i/rh7n309IqzS5hwfpPLby+oub2lsEPp41q+C/4tEpA0TSJrS41xFtaGGKFs2ZqF7ISvWTjW6578iCAtr700PqKX9LpE6QM2kiFCaOmSz8kHMrDcU4a/p6Vx0M+/zhvSbixSUTNz7i/fi3AWh83E8OJuuGrbA0/4+K85Cfm/9omdtTpNkHfO4dyLyMQUMpcTXY4IHUiPuve+B8dUkyGw+H5AtUA2dgYlBaIgXBWvdSyv/Kl70UGHW0jT19x2CVg6SxyKsmu0av1oLJRhFvMG3o8DDeG/0cknB7VGp1xr8vilbNZQ3UskA+Q9MOZD2+OCB3iEN6qBWZU9mG9ml3cOs92NDYZee3OsL/82OdUilyyY9KcqtCh7rTTsBKSXLBVarEmCxiDLrETG1hzbNAjX8vhEyVK/j2MEnMX5rccr7Wp9Vpis507ewc4oYRzFqwERQkvfwb093rmREGSVl+8iAiVfJtXhyZHTAPbmn8lWgugA0EaOC4mxg+19rzKxaWbjKkWRZn9+uNXoeKRnF2SxuAtiCoIDSGqwJchyGAd0O+I6e/ES6hxsoVuZTP/K2QDna00oUorpQ9si4JnG/iCTRwbNqpDPR1Pptn/3naEskTumLz6191SEc7adjNglwGJGrS1GaShp7F1ZQgkv1Ok7nDRzVSaNdRff6hqTyMy/J+c97riA==
     PGSSLMODE: >-
-      AgAINM6BMnjTbcNLUgVFpgiaVsKfYG/4U4eQeopY9MUg3lJo7eWIHDvPJ4aXZorCm7hykM4bge+bkOhtZt16/DWCel28ziw7OvjUhVgaU4ua5Zse560BOauInEFty9IsLYsoIslxdkG4b577FpjTV12f5xw4lGJATqPavZGpLJgCtct2EYxiXgMySpx0bbK6uCSlu9yw9SLO1kjctzZtgNOI2E423ppaPOKFWc73ImgTOem/rtKdEIbY91/PtXR4iW8u7b0IEwrl+sp/lKz0wMqejEU59eqa2iiFu7kzJBWurEFrQKiYsySeXVeeRs0Kdx1+Xq8ti+vmJiDJOEPQhFNWlYMNksIAKMQPCuZf/1V2Yd+tImd9Hs5sJPYEWZqIObCYR36CoK7ipnumVZDBtyzQ8PZp9E4la+EnrBxJ0LOkDkT95ta9At/0XLMGmiyCqk+S1fW5IeSSneMrS6tiPkUjpDq43rOgWnN7fTWzOcu7w/DU5pIh4l6nIOD78Gbvh0wCBqxG6LUhOSPxCjc7BX6RxnxSWJe4Kn5aXFCsJFhNcwpwklgDbGivFnZiamaW0piCwmzY4LPqQXxie9a5lJblThKw1hNQ50hRCeODQW/G69NS9KSnMJg+54jWd6sJ+XbMtOHNvjmqZB2KeG8Px5IwncZt8eH7elN3a8IT74HkVH8SIGEuN8v/e82/BHvrKbVCsnVzqVNM
+      AgBMCJRfJtV2TMDmiy/o00e5Bt1n1KzISqsXXwZgLSvdDGVqiVpfhKr1E4VkykxZefc1Zdq4X3ZUP6+xhbXEWYsuNhMDMP18RJutFlBb6jLaN/6cUtkG4Ve0VhpGdNJRfzBXLjsUVgpsoDB5R+jK5lJR+C4t9HupLLGN2zRI5ZaJDqGADSdM9gMw3aZGNJDgRX80u8cPvSMUSYoHKFOKdeR6/DSQWA5+prh0nv3Yjc6ILUZ5x+A0D80FBWXozc8kDGFiYPnSoTjT7Cq+7B/Yq0t7pL0xjZeB2nK2GclqARpBC0Jiu8Nf9kd15pePRTM+23JF3A9xVwYF9f98RoGhVyt7zQtypHOSBPPEXqztltZHM2R1R1xAvCaFMGqMJXuFTSi0DDYHt+WM/KeXYpQQLY7xZOCGOp5zMVkM0/2myoOfV3Lxrl1SWFh55AtbuLWSVPMkMMgIOhliW8+yflkxgPtoH1DxfUPmhKL4VHxjfx/s2OIMbeHMze7RUB6+dmklyHrtgCvsml/WfJbz0kHiFmwdQwIvUFT6oVvETWajcrFIeiJaCzZRrM3YH7J+OJjPA/Y26hX00IxmdkZzAOeueUgDiAvq2Y1Nuh60Ne8Kt7Zf4DkN8isYmciOHEzRcno/F1L29vGCWompCq0utb8VnTBKjE5ZDZKNDAhMEYuJrnRZBkLDmqkAAQSX0T/7xMtvclkfc6ZLlq0k
     PGUSER: >-
-      AgCC+9O3guxzQyUwCqIJRqaDj35mMU/nI2hFc4ICluzJHXxVzzWhBEUokuU4wPltFY2Zumoo0UH7CKlsZj7xi/my4IpgjDU+c8QH36Mw2xj8RSjRzB58wstowRFZ9jvk9wqElr8pfkAJh+eOkMxypTAp8EIPZyzsqS2f4x75xwcmphftMGA4ygCiqLEVneM6fsrdeViOz1PfYS/wbml/vaBpmTnXygrwPdgXs9+4pswqw+SH59ySD5nUzQ1MMzQ9JAo8FT6TurbQJ+xx8jrYO0VlL/k26u2idDPzWHzL+IVZP2fpNEExQkFYYYzQ716ChZ2X09i4CLT8KxnS2Bq9E5KboCAVdhLjOx7sPv9FV5CW4oWuiNadqhQNvleyRFkwabga7jbO0YmlCsoK4jqgUUiNFSmXACQLjyYRKX4BaOL3LxCCMAk9VZUjTvsKRXjjCP62l4aAceSOmbsFwZeG4Q+RWyMIIpEhhI+0TevK29ZY9uUtPnColGFzJ2RG5v+wxMqdTeMk/5635bzU6Do8MrQj9eHGwpJ/2URH0O+e1WLcEe9uv09M2cDf5DfkUK2tZ7CPKl7Uzwxzucsmae4XzvfqnO55GuZZ6d55CnNYHwhjd8ig2RLHKn89XGraV7gZmYp//6qOOcyvxCxbKajvRtYncOVF6SG6MF40a/Qdujd7U5WA2T1IO6LuoPxWY/sdJZsl2sjt+SneqnShKveiL5HvsZgfm6TOwRebImOuLNIb2t3TGaVy
+      AgBn2x1cVQ1o3bjQyISTmkmWsxcVbxoKrtPJVF7+/Ml+DDilEdklQZ2yv2sWM/Qg+tLfC3R7Mgl20WJGlsXH19cgy+JL24guo+3h5mSaCziAtOupIGaIEK+YedV5eI7kBHjS0WW4P+zZfzaBePkvbraJepHNCT6fD0lZfcCbZEBHj/ALH5ILgCb8uI0ZZME7lgu3mm55/gSsuyEjnUVm66rgdjWLTo0a4gHwdUjNC0y1UKBYZynhdirupJ0XN9JnaiK5byT+QL0LIFOd7Kc4/O+purS2HmUURAGZ/tPRQaNV0mejDTOTE1cbfGJO1QCAH94iO4e63ExxFpvmhSQp159MFocD7R7Krze7QKboxquoWwejvV7oNLM8wd94G5umbDPlT+De11tnvCou6psGyN4F9miOC8SFvbBQ1z/rsp5w2ClB6zpvQY4eWcTsUgJX9Lxfm7dvXxejJcoNWd24PEEbug+4cwDY3syzu3XwWfBo1UjoKk1I+9Q9Y4BjkcUqBtElGLcKm82J2+cr6QVyfmpAbi0w4BIVjvl4rHccZwJPrXp2Xxp7zEf1Q+S/IygRG6JNvpcl6xaFHWZcXyHnLYPMUru5na5u512nZihxYwNJ5BjstW8Ktw6nJA7XLCCKjVu/QWrxPM6qsZqK8nDSeZjIwon27D1kAHEb/oKwo9pdhFoDGDQCR89FK2eM2rFa8abS9fgCZyR3ZqoU19lRA1tPs/hwM7MGhRuvr1X4OaKHJ4E6YZbvJomyA0urllBkLuVMoIzq08fX
   template:
     metadata:
-      creationTimestamp: null
-      name: azure-pg-user
       annotations:
-        app.gitlab.com/app: ddd
-        app.gitlab.com/env: dddd
-        app.gitlab.com/env.name: ddd
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
+      name: azure-pg-user
       labels:
-        application: xxx
-        owner: xxx
-        team: xxx
+        application: les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
     type: Opaque
 ---
 apiVersion: apps/v1
@@ -527,16 +546,17 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
   labels:
     app: strapi
-    application: xxx
-    owner: xxx
-    team: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
   name: strapi
-  namespace: xxx
+  namespace: les1000jours
 spec:
   replicas: 1
   selector:
@@ -547,14 +567,15 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
-        app.gitlab.com/app: ddd
-        app.gitlab.com/env: dddd
-        app.gitlab.com/env.name: ddd
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
       labels:
         app: strapi
-        application: xxx
-        owner: xxx
-        team: xxx
+        application: les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
     spec:
       containers:
         - image: harbor.fabrique.social.gouv.fr/1000jours/les1000jours-strapi:1.2.3
@@ -603,15 +624,15 @@ spec:
             - name: DATABASE_CLIENT
               value: postgres
             - name: DATABASE_NAME
-              value: $(PG_DATABASE)
+              value: $(PGDATABASE)
             - name: DATABASE_HOST
-              value: $(PG_HOST)
+              value: $(PGHOST)
             - name: DATABASE_PORT
-              value: $(PG_PORT)
+              value: $(PGPORT)
             - name: DATABASE_USERNAME
-              value: $(PG_USER)
+              value: $(PGUSER)
             - name: DATABASE_PASSWORD
-              value: $(PG_PASSWORD)
+              value: $(PGPASSWORD)
             - name: DATABASE_SSL
               value: 'true'
       initContainers:
@@ -641,14 +662,15 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
   labels:
-    application: xxx
-    owner: xxx
-    team: xxx
-  namespace: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  namespace: les1000jours
 spec:
   encryptedData:
     SMTP_EMAIL_PASSWORD: >-
@@ -664,13 +686,14 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
-        app.gitlab.com/app: ddd
-        app.gitlab.com/env: dddd
-        app.gitlab.com/env.name: ddd
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
       labels:
-        application: xxx
-        owner: xxx
-        team: xxx
+        application: les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
     type: Opaque
 ---
 apiVersion: v1
@@ -680,14 +703,15 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
   labels:
-    application: xxx
-    owner: xxx
-    team: xxx
-  namespace: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  namespace: les1000jours
 data:
   STRAPI_LOG_LEVEL: info
   NODE_ENV: production
@@ -697,17 +721,18 @@ kind: Service
 metadata:
   labels:
     app: strapi
-    application: xxx
-    owner: xxx
-    team: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
   name: strapi
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
-  namespace: xxx
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  namespace: les1000jours
 spec:
   ports:
     - name: http
@@ -726,19 +751,20 @@ metadata:
     kubernetes.io/tls-acme: 'true'
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: ddd
-    app.gitlab.com/env: dddd
-    app.gitlab.com/env.name: ddd
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
   labels:
     app: strapi
-    application: xxx
-    owner: xxx
-    team: xxx
+    application: les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
   name: strapi
-  namespace: xxx
+  namespace: les1000jours
 spec:
   rules:
-    - host: strapi-xxx.ddd
+    - host: strapi-les1000jours.fabrique.social.gouv.fr
       http:
         paths:
           - backend:
@@ -747,7 +773,7 @@ spec:
             path: /
   tls:
     - hosts:
-        - strapi-xxx.ddd
+        - strapi-les1000jours.fabrique.social.gouv.fr
       secretName: strapi-crt
 "
 `;
