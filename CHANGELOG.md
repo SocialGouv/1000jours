@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/SocialGouv/1000jours/compare/v1.0.0...v1.0.1) (2021-03-05)
+
+
+### Bug Fixes
+
+* **deps:** update expo monorepo ([#20](https://github.com/SocialGouv/1000jours/issues/20)) ([3cefb8b](https://github.com/SocialGouv/1000jours/commit/3cefb8b42bf6c1b91869a94c80dcaf5a8befb44f))
+* **deps:** update react monorepo to v17 ([#21](https://github.com/SocialGouv/1000jours/issues/21)) ([f893edb](https://github.com/SocialGouv/1000jours/commit/f893edb65d36f92ebad97d72167f5d626d3d5f03))
+
 # 1.0.0 (2021-03-03)
 
 
