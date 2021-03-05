@@ -3968,7 +3968,7 @@ expo-asset@~8.2.1, expo-asset@~8.2.2:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
-expo-constants@~10.0.0:
+expo-constants@~10.0.0, expo-constants@~10.0.1:
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-10.0.1.tgz#a6cf6998c70ef6e1772a7c4096723482194c5828"
   integrity sha512-SnMIX1PnTz3AgGcFd+paCb8Ur0WfEiBjEZ7TxCdwpk7XVQO4etCzn6auNutCd4PBc4YVNvmKF9e0WFgLxy4NRQ==
@@ -3976,7 +3976,7 @@ expo-constants@~10.0.0:
     "@expo/config" "^3.3.18"
     uuid "^3.3.2"
 
-expo-constants@~9.3.3, expo-constants@~9.3.5:
+expo-constants@~9.3.3:
   version "9.3.5"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-9.3.5.tgz#78085763e8ed100a5f2df7c682fd99631aa03d5e"
   integrity sha512-qIlv2ffSjQl3wrvJwXYoNfQNfH/sK46EXcgyEQnQ1SAQO4ukwTEpG9j3fdW6aTiVEVrv/DsA1IaVRqKrUwSd3A==
@@ -4005,6 +4005,13 @@ expo-font@~8.4.0:
   integrity sha512-CPGcHLUkPP+yf618fiw2bWTFLojIYCCqWonco/JONcM3tsv6wjkafx4Qw1mMCRoFL7XoiBfHylkKnD0avpzQIQ==
   dependencies:
     fbjs "1.0.0"
+    fontfaceobserver "^2.1.0"
+
+expo-font@~9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-9.0.0.tgz#638db10cbb09a1d03de823704d166e745f5cbae3"
+  integrity sha512-hMuyPNyni1MXYzAdKRMlaEm7StCvuaxsNohhDF9noh0HXizmnsWc6a5AGcJJgRO/iJssk/iL2nzP4nYdB+rrGQ==
+  dependencies:
     fontfaceobserver "^2.1.0"
 
 expo-keep-awake@~8.4.0:
@@ -4072,10 +4079,10 @@ expo-status-bar@~1.0.3:
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.0.3.tgz#62b4d6145680abd43ba6ecfa465f835e88bf6263"
   integrity sha512-/Orgla1nkIrfswNHbuAOTbPVq0g3+GrhoQVk7MRafY2dwrFLgXhaPExS+eN2hpmzqPv2LG5cqAZDCQUAjmZYBQ==
 
-expo-web-browser@~8.6.0:
-  version "8.6.0"
-  resolved "https://registry.yarnpkg.com/expo-web-browser/-/expo-web-browser-8.6.0.tgz#121ad81b2597b8273739b630c278a6f6937b95ae"
-  integrity sha512-VHFuBl0im00yEVbEzOZUrQVvq8uGhyU/4WivJkfLF4GA3Pj7CaG6PMo0+6YNzkzB1JoVx5AfuKgBbSuOuETP9Q==
+expo-web-browser@~9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/expo-web-browser/-/expo-web-browser-9.0.0.tgz#9e12c0d08f19665cbae7b565a11e9c1b2e584cda"
+  integrity sha512-w9jd5U5Cvo9CbD0K/I7Ol+PCn4OZLqveRENoJ+CA9nP2G35XBwTx4zEd7y05MViYEOfJ1fViCER1/pWwJZYcNg==
   dependencies:
     compare-urls "^2.0.0"
 
