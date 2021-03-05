@@ -11,7 +11,6 @@
     "config:dump": "strapi configuration:dump -f config/api.json",
     "config:restore": "strapi configuration:restore -f config/api.json"
   },
-  "devDependencies": {},
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^25.0.0",
     "@ckeditor/ckeditor5-react": "^3.0.1",
@@ -29,7 +28,7 @@
     "strapi-utils": "3.5.0"
   },
   "author": {
-    "name": "A Strapi developer"
+    "name": "Fabrique des ministère sociaux"
   },
   "strapi": {
     "uuid": "fe5989bb-85d0-4485-b0ad-3b195fdafb39"
