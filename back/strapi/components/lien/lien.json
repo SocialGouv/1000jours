@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_lien_liens",
+  "info": {
+    "name": "lien",
+    "icon": "external-link-alt"
+  },
+  "options": {},
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_image_visuels",
+  "info": {
+    "name": "visuel",
+    "icon": "file",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}
