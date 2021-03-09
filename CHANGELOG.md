@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/SocialGouv/1000jours/compare/v1.0.1...v1.1.0) (2021-03-09)
+
+
+### Features
+
+* 🎸 onboarding/profile ([#25](https://github.com/SocialGouv/1000jours/issues/25)) ([c710669](https://github.com/SocialGouv/1000jours/commit/c7106699f02fa5a1da5f0b48c620aad1c164b343)), closes [#7](https://github.com/SocialGouv/1000jours/issues/7) [#10](https://github.com/SocialGouv/1000jours/issues/10)
+
 ## [1.0.1](https://github.com/SocialGouv/1000jours/compare/v1.0.0...v1.0.1) (2021-03-05)
 
 
