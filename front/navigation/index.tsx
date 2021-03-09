@@ -9,6 +9,8 @@ import * as React from "react";
 import type { ColorSchemeName } from "react-native";
 
 import NotFoundScreen from "../screens/NotFoundScreen";
+import { Onboarding } from "../screens/Onboarding";
+import { Profile } from "../screens/Profile";
 import type { RootStackParamList } from "../types";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
@@ -37,6 +39,8 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 const RootNavigator: FC = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="onboarding" component={Onboarding} />
+    <Stack.Screen name="profile" component={Profile} />
     <Stack.Screen name="root" component={BottomTabNavigator} />
     <Stack.Screen
       name="notFound"

@@ -18,5 +18,7 @@ export default {
   },
   primaryColor: "#150863",
   secondaryColor: "#f09014",
-  tertiaryColor: "#4c4c4c",
+  tertiaryColor: "#5875D4",
+  tertiaryColorDisabled: "#cdd6f2",
+  textColor: "#4c4c4c",
 };

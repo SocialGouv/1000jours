@@ -7,7 +7,7 @@ import type { RootStackParamList } from "../types";
 
 const NotFoundScreen: FC = ({
   navigation,
-}: StackScreenProps<RootStackParamList, "NotFound">) => {
+}: StackScreenProps<RootStackParamList, "notFound">) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>This screen doesn't exist.</Text>
