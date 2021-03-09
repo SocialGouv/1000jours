@@ -1,4 +1,5 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
+import { filter } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
 import type { ImageSourcePropType } from "react-native";
@@ -33,12 +34,9 @@ export const Profile: FC<Props> = ({ navigation }) => {
   };
 
   const hasCheckedSituation = () => {
-    for (const userSituation of userSituations) {
-      if (userSituation.isChecked) {
-        return true;
-      }
-    }
-    return false;
+    return filter(userSituations, ["isChecked", true]).length > 0
+      ? true
+      : false;
   };
 
   const [userSituations, setUserSituations] = React.useState<UserSituation[]>(
@@ -66,7 +64,6 @@ export const Profile: FC<Props> = ({ navigation }) => {
 
   React.useEffect(() => {
     setHasCheckedSituation(hasCheckedSituation());
-    console.log(hasCheckedSituation());
   }, [userSituations]);
 
   return (
