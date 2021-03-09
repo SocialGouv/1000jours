@@ -3,7 +3,11 @@
     "git-cz": "^4.7.6"
   },
   "devDependencies": {
-    "commitizen": "^4.2.3"
+    "@socialgouv/eslint-config-typescript": "^1.55.0",
+    "commitizen": "^4.2.3",
+    "eslint": "^7.21.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.3"
   },
   "scripts": {
     "commit": "git-cz"
