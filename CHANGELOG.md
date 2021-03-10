@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/SocialGouv/1000jours/compare/v1.1.0...v1.2.0) (2021-03-10)
+
+
+### Features
+
+* déploiement kubernetes ([#42](https://github.com/SocialGouv/1000jours/issues/42)) ([4bb8e4b](https://github.com/SocialGouv/1000jours/commit/4bb8e4b124ed2c648aa74b4df84292e5989fdb3b))
+
 # [1.1.0](https://github.com/SocialGouv/1000jours/compare/v1.0.1...v1.1.0) (2021-03-09)
 
 
