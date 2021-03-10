@@ -1,0 +1,866 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`kosko generate --dev 1`] = `
+"---
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    field.cattle.io/creatorId: gitlab
+    field.cattle.io/projectId: c-bd7z2:p-7ms8p
+    git/branch: chore-db-schema2
+    git/remote: >-
+      https://gitlab-ci-token:[MASKED]@gitlab.factory.social.gouv.fr/SocialGouv/1000jours.git
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    azure-pg-admin-user: les1000jours
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: 1000jours-85-master-dev2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    app: pgweb
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+    component: pgweb
+  name: pgweb
+  namespace: 1000jours-85-master-dev2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgweb
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
+      labels:
+        app: pgweb
+        application: chore-d-u8fps8-les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
+        component: pgweb
+    spec:
+      containers:
+        - image: sosedoff/pgweb:0.11.7
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+          name: pgweb
+          ports:
+            - containerPort: 8081
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 64Mi
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 5
+          envFrom:
+            - secretRef:
+                name: azure-pg-user-4113006e
+      initContainers:
+        - env:
+            - name: WAIT_FOR_RETRIES
+              value: '24'
+          envFrom:
+            - secretRef:
+                name: azure-pg-user-4113006e
+          image: >-
+            registry.gitlab.factory.social.gouv.fr/socialgouv/docker/wait-for-postgres:4.6.0
+          imagePullPolicy: Always
+          name: wait-for-postgres
+          resources:
+            limits:
+              cpu: 20m
+              memory: 32Mi
+            requests:
+              cpu: 5m
+              memory: 16Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: pgweb
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: pgweb
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  namespace: 1000jours-85-master-dev2
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8081
+  selector:
+    app: pgweb
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    app: pgweb
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: pgweb
+  namespace: 1000jours-85-master-dev2
+spec:
+  rules:
+    - host: pgweb-chore-d-u8fps8-les1000jours.dev2.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              serviceName: pgweb
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - pgweb-chore-d-u8fps8-les1000jours.dev2.fabrique.social.gouv.fr
+      secretName: wildcard-crt
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    app: expo
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+    component: nginx
+  name: expo
+  namespace: 1000jours-85-master-dev2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expo
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
+      labels:
+        app: expo
+        application: chore-d-u8fps8-les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
+        component: nginx
+    spec:
+      containers:
+        - image: >-
+            harbor.fabrique.social.gouv.fr/1000jours/les1000jours-expo:4113006e12d735981f1d69f71fbd2f8759ad1cae
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /index.html
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+          name: expo
+          ports:
+            - containerPort: 80
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            httpGet:
+              path: /index.html
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 128Mi
+            requests:
+              cpu: 5m
+              memory: 32Mi
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /index.html
+              port: http
+            periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: expo
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: expo
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  namespace: 1000jours-85-master-dev2
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: expo
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    app: expo
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: expo
+  namespace: 1000jours-85-master-dev2
+spec:
+  rules:
+    - host: chore-d-u8fps8-les1000jours.dev2.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              serviceName: expo
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - chore-d-u8fps8-les1000jours.dev2.fabrique.social.gouv.fr
+      secretName: wildcard-crt
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    app: hasura
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: hasura
+  namespace: 1000jours-85-master-dev2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hasura
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
+      labels:
+        app: hasura
+        application: chore-d-u8fps8-les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
+    spec:
+      containers:
+        - image: >-
+            harbor.fabrique.social.gouv.fr/1000jours/les1000jours-hasura:4113006e12d735981f1d69f71fbd2f8759ad1cae
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+          name: hasura
+          ports:
+            - containerPort: 80
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 64Mi
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+          envFrom:
+            - secretRef:
+                name: azure-pg-user-4113006e
+            - secretRef:
+                name: hasura-sealed-secret
+            - configMapRef:
+                name: hasura-configmap
+      initContainers:
+        - env:
+            - name: WAIT_FOR_RETRIES
+              value: '24'
+          envFrom:
+            - secretRef:
+                name: azure-pg-user-4113006e
+          image: >-
+            registry.gitlab.factory.social.gouv.fr/socialgouv/docker/wait-for-postgres:4.6.0
+          imagePullPolicy: Always
+          name: wait-for-postgres
+          resources:
+            limits:
+              cpu: 20m
+              memory: 32Mi
+            requests:
+              cpu: 5m
+              memory: 16Mi
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  creationTimestamp: null
+  name: hasura-sealed-secret
+  labels:
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  namespace: 1000jours-85-master-dev2
+spec:
+  encryptedData:
+    HASURA_GRAPHQL_ADMIN_SECRET: >-
+      AgDZX0nGJWSkGYaaTpArKf3L1jsBEzKzsE1qkDIziGJHgVuqdPUhvZwmd6/9yPtkw7ohLh4/yqpQFELURajvHPJy4ZBok5bRhX4eC2tbsEQ+20YmL86KGNUhGSdJ9Ua3m/jV5qEyFnLPBG4cPJL4OjEDNvm/WwJvQfTlXaV4YoZMzlZmPMLFKAQ/8jKoefaIjtTXPq3YSeULlEx94Pv08C5b6o0US4fQwhtBAUOlUmhPEDXo0u4r4yM5w7HGWSCD4Dsb+rHlcRi7ulCCafeaBLITq3BMhzS1eO5XNrLGzh4iDh4rTtv83Y8kFFvb/zXlq/uiPZMoTxaH5eTqYQkCRA3L/2T7hWWiINDB9kbNTIyIZ2uF0W1RLnwgq2VASruNEhxXHYKeQfnhxcqTxGAsTgJgAGhMm17vALEAHt+72L4O822WJw39TB9ozqbnZ0I++ZAmd+kIrZ3Uxp7WfzmM7bKzdqn8L2k0jxHCOKWxChXayONqTFUq9YfJdqSHtNnfi5Bt610SjmD62Vil1hmxIhQv6xmzRwo2pfbhrUj6gNsNdDTrV5fxfZzEOtvwl6C+bPuHmD+qbke78eiJp8A4WIgn1CayHsSoaokH36Q1IW+ETuyQHhz8RMd8ZmrGAeSWUm71SR0nKCWgCwtRX4NhBR5fGR8M7CLTJm3ofrv1fyZ8WKPC7OcnhHmKYBeaw6qku9K+0qRCuvIp/6/dd28SC1obdir77d924ZTkFxUVIAu9J0u0AOEu6UZS
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
+      creationTimestamp: null
+      name: hasura-sealed-secret
+      labels:
+        application: chore-d-u8fps8-les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hasura-configmap
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  namespace: 1000jours-85-master-dev2
+data:
+  HASURA_GRAPHQL_ENABLE_CONSOLE: 'true'
+  HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+  HASURA_GRAPHQL_NO_OF_RETRIES: '5'
+  HASURA_GRAPHQL_SERVER_PORT: '80'
+  HASURA_GRAPHQL_LOG_LEVEL: debug
+  HASURA_GRAPHQL_DEV_MODE: 'true'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hasura
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: hasura
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  namespace: 1000jours-85-master-dev2
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: hasura
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    app: hasura
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: hasura
+  namespace: 1000jours-85-master-dev2
+spec:
+  rules:
+    - host: hasura-chore-d-u8fps8-les1000jours.dev2.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              serviceName: hasura
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - hasura-chore-d-u8fps8-les1000jours.dev2.fabrique.social.gouv.fr
+      secretName: wildcard-crt
+---
+apiVersion: batch/v1
+kind: Job
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      containers:
+        - command:
+            - create-db-user
+          env:
+            - name: NEW_DB_NAME
+              value: autodevops_4113006e
+            - name: NEW_USER
+              value: user_4113006e
+            - name: NEW_PASSWORD
+              value: password_4113006e
+            - name: NEW_DB_EXTENSIONS
+              value: hstore pgcrypto citext uuid-ossp
+          envFrom:
+            - secretRef:
+                name: azure-pg-admin-user
+          image: >-
+            registry.gitlab.factory.social.gouv.fr/socialgouv/docker/azure-db:2.6.1
+          imagePullPolicy: IfNotPresent
+          name: create-db-user
+          resources:
+            limits:
+              cpu: 300m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 64Mi
+      restartPolicy: Never
+    metadata:
+      annotations:
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
+      labels:
+        application: chore-d-u8fps8-les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
+  ttlSecondsAfterFinished: 86400
+metadata:
+  annotations:
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: create-db-job-4113006e
+  namespace: 1000jours-85-master-dev2
+---
+apiVersion: v1
+kind: Secret
+stringData:
+  DATABASE_URL: >-
+    postgresql://user_4113006e%40les1000joursdevserver.postgres.database.azure.com:password_4113006e@les1000joursdevserver.postgres.database.azure.com/autodevops_4113006e?sslmode=require
+  DB_URI: >-
+    postgresql://user_4113006e%40les1000joursdevserver.postgres.database.azure.com:password_4113006e@les1000joursdevserver.postgres.database.azure.com/autodevops_4113006e?sslmode=require
+  HASURA_GRAPHQL_DATABASE_URL: >-
+    postgresql://user_4113006e%40les1000joursdevserver.postgres.database.azure.com:password_4113006e@les1000joursdevserver.postgres.database.azure.com/autodevops_4113006e?sslmode=require
+  PGDATABASE: autodevops_4113006e
+  PGHOST: les1000joursdevserver.postgres.database.azure.com
+  PGPASSWORD: password_4113006e
+  PGRST_DB_URI: >-
+    postgresql://user_4113006e%40les1000joursdevserver.postgres.database.azure.com:password_4113006e@les1000joursdevserver.postgres.database.azure.com/autodevops_4113006e?sslmode=require
+  PGSSLMODE: require
+  PGUSER: user_4113006e@les1000joursdevserver.postgres.database.azure.com
+metadata:
+  annotations:
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: azure-pg-user-4113006e
+  namespace: 1000jours-85-master-dev2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    app: strapi
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: strapi
+  namespace: 1000jours-85-master-dev2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strapi
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
+      labels:
+        app: strapi
+        application: chore-d-u8fps8-les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
+    spec:
+      containers:
+        - image: >-
+            harbor.fabrique.social.gouv.fr/1000jours/les1000jours-strapi:4113006e12d735981f1d69f71fbd2f8759ad1cae
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+          name: strapi
+          ports:
+            - containerPort: 1337
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /_health
+              port: http
+            periodSeconds: 5
+          volumeMounts:
+            - mountPath: /app/public/uploads
+              name: uploads
+          envFrom:
+            - secretRef:
+                name: azure-pg-user-4113006e
+            - secretRef:
+                name: strapi-sealed-secret
+            - configMapRef:
+                name: strapi-configmap
+          env:
+            - name: DATABASE_CLIENT
+              value: postgres
+            - name: DATABASE_NAME
+              value: $(PGDATABASE)
+            - name: DATABASE_HOST
+              value: $(PGHOST)
+            - name: DATABASE_PORT
+              value: $(PGPORT)
+            - name: DATABASE_USERNAME
+              value: $(PGUSER)
+            - name: DATABASE_PASSWORD
+              value: $(PGPASSWORD)
+            - name: DATABASE_SSL
+              value: 'true'
+      initContainers:
+        - env:
+            - name: WAIT_FOR_RETRIES
+              value: '24'
+          envFrom:
+            - secretRef:
+                name: azure-pg-user-4113006e
+          image: >-
+            registry.gitlab.factory.social.gouv.fr/socialgouv/docker/wait-for-postgres:4.6.0
+          imagePullPolicy: Always
+          name: wait-for-postgres
+          resources:
+            limits:
+              cpu: 20m
+              memory: 32Mi
+            requests:
+              cpu: 5m
+              memory: 16Mi
+      volumes:
+        - azureFile:
+            readOnly: false
+            secretName: strapi-sealed-secret
+            shareName: uploads
+          name: uploads
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  creationTimestamp: null
+  name: strapi-sealed-secret
+  labels:
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  namespace: 1000jours-85-master-dev2
+spec:
+  encryptedData:
+    azurestorageaccountkey: >-
+      AgBFr0my7h/JGd5RpGNYWZrgoFEcPRw94Gvj/5jMGkbiDcbp4EAlMxsXn0qmwCAJyPVA3T7sqcUHiIRwwonPO9w2bFgTisWp3MknsT2CNoyEorBMMCFmsozZW1PvMGbFjWwm4N8kEsdeMqxUxtuHaKvGAflno4j70HVmaFMmzahBu20mZd98hN3T79YlP4jTGBWgcCCZ5QuUqffdiHKAwtTlowrZEkLD6eqfAmmKjCiU2O/9sNqnrVljkgWsmKWH1uFUPoCqZ9Gb736u8DGx1ADfF9XPKmP79/a+OkCRXPhioCeRHgjKYR3/kMgl+BPO/1vlGUiQW/MD24b7i+GpkwpIK5AOonLVHKYBOgQ+QZi9wsyCB3tqY1waYhV8JcVQXbFs2bJr6ZZanNdVD0aPBUAxhEyWCg7M7ZfeUT6leU/SJAugSl/Z6yxQXGUYZgNVaOyWR3fvGice1mAOTJRES06vyjQNsJHz1z2bVva/33qCi+drmRbjELvsc5rhotlVYCFhLzENT1PdJJfYAA41HLMR5Wm7ikaF206gBfXbYXg0H/TsUP0GLKI3VIoKiKshyvqsVo8cnXsgC93dVgONLY4Jag+zIbM60DwEgahYy9IT9IDP5aIpOXIcA05JHnm3UhgGVqVPnpsvcpS5HZknvMDza0Hfz2za0IZM8tMcr3mOpSeN2JQbpAYeQtUjjlqW7/TDQb5Gopz+WaBvBBOZGbWqTrEcfBV+TEnxgkyNtRaEhEYl4RNjpEJ4XkqPkUn+hu8q0mS7+s9bbX3mqTbEeV22VYGFplsS3z12TwhLnAi4sG1wEZyUMRKh
+    azurestorageaccountname: >-
+      AgDN1NUWadBvEx4QTYeNbQDLNJs4mwJ362L/UQpACz6gb681vSqGm4gMVwaJIKGwxBNARW3EFL/fnz5m+Wt1K48/6wbaJ/vmjUkik/nDKx7q06Hm7IqROFLjCjmoUbQ6Mk6y12uYkYiQbQjCbrjGSjBFZsx/uAQPP4Zv/sqLK7IZTgwjRav2j9ITQ9UzGiXznIsVQwvuukaufxA94ewVmqny20pWDhBFNUWi57OitGSMrlRID07KyL3LQ5Vm8CJ67GWrYZ7/bOflbBRZTGxVFOdUf51PeGVghDTpC3kcNd5DgSTTVQiT04bwsWQ6uvKaFtr3efdfZ4UoWmY9r8xFoV0h6pBc5gWPOSgbCwmg6a+/IfhMHE6hSoUoexENcUvfBWls9TcR4SlgtFlduR/q+HQC2QfXXNrMF4CIKOR9NnrC7r4n8FXWf+4BAqKQK2MOkX67EZKb9aCUH1RPWx9WqK1w/JTJgzzV7Qa7LP1M/WGrUWWjzeI0HtNasy4+oI0hY9Wh5CO+MZ8MeoksBUg0/ZIUYFbGkssUlOVsYPPLdBd5QWtPqN3aitYzxe5pdM5Hqu6k2wzYGaBwApZkRVM5mUi1jRT+sHkuT8XNOTxvqSmk1oX3qUWv5Ee8lAT0deHDFCyzq8ltZp26fBGCyKQAwGX6ezqxkMC/fztGOppm+pUFSXxzOngzSKJpS4JPPFuLuc/lO/jENCOwyp+tOiHh7R4=
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.gitlab.com/app: socialgouv-1000jours-les1000jours
+        app.gitlab.com/env: chore-d-u8fps8
+        app.gitlab.com/env.name: chore-db-schema2-dev2
+      creationTimestamp: null
+      name: strapi-sealed-secret
+      labels:
+        application: chore-d-u8fps8-les1000jours
+        owner: les1000jours
+        team: les1000jours
+        cert: wildcard
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: strapi-configmap
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  namespace: 1000jours-85-master-dev2
+data:
+  STRAPI_LOG_LEVEL: debug
+  NODE_ENV: production
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: strapi
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: strapi
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  namespace: 1000jours-85-master-dev2
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 1337
+  selector:
+    app: strapi
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours-les1000jours
+    app.gitlab.com/env: chore-d-u8fps8
+    app.gitlab.com/env.name: chore-db-schema2-dev2
+  labels:
+    app: strapi
+    application: chore-d-u8fps8-les1000jours
+    owner: les1000jours
+    team: les1000jours
+    cert: wildcard
+  name: strapi
+  namespace: 1000jours-85-master-dev2
+spec:
+  rules:
+    - host: strapi-chore-d-u8fps8-les1000jours.dev2.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              serviceName: strapi
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - strapi-chore-d-u8fps8-les1000jours.dev2.fabrique.social.gouv.fr
+      secretName: wildcard-crt
+"
+`;
