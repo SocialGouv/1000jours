@@ -14,16 +14,32 @@
     "titre": {
       "type": "string"
     },
-    "contenu": {
+    "resume": {
       "type": "richtext"
     },
     "etape": {
       "model": "etape"
     },
     "thematiques": {
-      "via": "articles",
       "collection": "thematique",
+      "via": "articles",
       "dominant": true
+    },
+    "contenu_additionnel": {
+      "type": "component",
+      "repeatable": true,
+      "component": "text.text"
+    },
+    "visuel": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
     }
   }
 }

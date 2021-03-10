@@ -1,19 +1,23 @@
 {
-  "name": "app",
+  "name": "1000j-backoffice",
   "private": true,
   "version": "0.1.0",
-  "description": "A Strapi application",
+  "description": "Backoffice 1000jours",
   "scripts": {
-    "develop": "strapi develop",
+    "develop": "yarn watch-ts & strapi develop",
     "start": "strapi start",
     "build": "strapi build",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
     "strapi": "strapi",
+    "lint": "eslint api",
     "config:dump": "strapi configuration:dump -f config/api.json",
     "config:restore": "strapi configuration:restore -f config/api.json"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^25.0.0",
     "@ckeditor/ckeditor5-react": "^3.0.1",
+    "date-fns": "^2.19.0",
     "knex": "<0.20.0",
     "pg": "latest",
     "strapi": "3.5.2",
@@ -28,7 +32,7 @@
     "strapi-utils": "3.5.2"
   },
   "author": {
-    "name": "Fabrique des ministère sociaux"
+    "name": "Fabrique des ministères sociaux"
   },
   "strapi": {
     "uuid": "fe5989bb-85d0-4485-b0ad-3b195fdafb39"
@@ -44,6 +48,7 @@
     "eslint": "^7.21.0",
     "eslint-plugin-jest": "^24.1.5",
     "jest": "^26.6.3",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.3"
   }
 }

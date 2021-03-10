@@ -1,7 +1,11 @@
 {
-  "name": "back",
-  "version": "1.0.0",
+  "name": "1000j-api",
+  "version": "0.1.0",
   "main": "index.ts",
+  "description": "API GraphQL 1000jours",
+  "author": {
+    "name": "Fabrique des ministères sociaux"
+  },
   "dependencies": {
     "hasura": "^2.0.1"
   },

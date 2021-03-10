@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "etapes",
+  "collectionName": "thematiques",
   "info": {
-    "name": "Étape",
+    "name": "Thématique",
     "description": ""
   },
   "options": {
@@ -14,16 +14,17 @@
     "nom": {
       "type": "string"
     },
-    "thematiques": {
-      "collection": "thematique",
-      "via": "etapes"
-    },
     "description": {
       "type": "text"
     },
-    "parcours": {
-      "via": "etapes",
-      "collection": "parcours"
+    "articles": {
+      "via": "thematiques",
+      "collection": "article"
+    },
+    "etapes": {
+      "via": "thematiques",
+      "collection": "etape",
+      "dominant": true
     }
   }
 }
