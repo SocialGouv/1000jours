@@ -18,8 +18,26 @@ CREATE TABLE public.articles (
     created_by integer,
     updated_by integer,
     created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
-    updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP
+    updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+    liens text,
+    resume text
 );
+CREATE TABLE public.articles_components (
+    id integer NOT NULL,
+    field character varying(255) NOT NULL,
+    "order" integer NOT NULL,
+    component_type character varying(255) NOT NULL,
+    component_id integer NOT NULL,
+    article_id integer NOT NULL
+);
+CREATE SEQUENCE public.articles_components_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.articles_components_id_seq OWNED BY public.articles_components.id;
 CREATE TABLE public.articles_etapes__etapes_articles (
     id integer NOT NULL,
     etape_id integer,
@@ -54,6 +72,85 @@ CREATE SEQUENCE public.articles_thematiques__thematiques_articles_id_seq
     NO MAXVALUE
     CACHE 1;
 ALTER SEQUENCE public.articles_thematiques__thematiques_articles_id_seq OWNED BY public.articles_thematiques__thematiques_articles.id;
+CREATE TABLE public.components_articles_article_complexes (
+    id integer NOT NULL,
+    text1 text,
+    text2 text,
+    le_saviez_vous_parent text,
+    le_saviez_vous_enfant text,
+    le_saviez_vous_explication text,
+    liens_1_titre character varying(255),
+    liens_1_url character varying(255),
+    liens_2_titre character varying(255),
+    liens_2_url character varying(255),
+    liens_3_titre character varying(255),
+    liens_3_url character varying(255)
+);
+CREATE SEQUENCE public.components_articles_article_complexes_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.components_articles_article_complexes_id_seq OWNED BY public.components_articles_article_complexes.id;
+CREATE TABLE public.components_composants_images (
+    id integer NOT NULL,
+    description text
+);
+CREATE SEQUENCE public.components_composants_images_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.components_composants_images_id_seq OWNED BY public.components_composants_images.id;
+CREATE TABLE public.components_composants_le_saviez_vous (
+    id integer NOT NULL,
+    avantage_parent text,
+    avantage_enfant text,
+    explication character varying(255)
+);
+CREATE SEQUENCE public.components_composants_le_saviez_vous_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.components_composants_le_saviez_vous_id_seq OWNED BY public.components_composants_le_saviez_vous.id;
+CREATE TABLE public.components_composants_liens (
+    id integer NOT NULL,
+    titre character varying(255),
+    url character varying(255),
+    lien_1_titre character varying(255),
+    lien_1_url character varying(255),
+    lien_2_titre character varying(255),
+    lien_2_url character varying(255),
+    llien_3_titre character varying(255),
+    llien_3_url character varying(255)
+);
+CREATE SEQUENCE public.components_composants_liens_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.components_composants_liens_id_seq OWNED BY public.components_composants_liens.id;
+CREATE TABLE public.components_composants_texts (
+    id integer NOT NULL,
+    text text
+);
+CREATE SEQUENCE public.components_composants_texts_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.components_composants_texts_id_seq OWNED BY public.components_composants_texts.id;
 CREATE TABLE public.core_store (
     id integer NOT NULL,
     key character varying(255),
@@ -78,7 +175,8 @@ CREATE TABLE public.etapes (
     updated_by integer,
     created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
-    description text
+    description text,
+    ordre integer
 );
 CREATE SEQUENCE public.etapes_id_seq
     AS integer
@@ -153,13 +251,6 @@ CREATE SEQUENCE public.parcours_id_seq
     NO MAXVALUE
     CACHE 1;
 ALTER SEQUENCE public.parcours_id_seq OWNED BY public.parcours.id;
-CREATE TABLE public.posts (
-    id integer DEFAULT pg_backend_pid() NOT NULL,
-    title text,
-    content text,
-    "userId" integer,
-    created_at date DEFAULT now() NOT NULL
-);
 CREATE TABLE public.strapi_administrator (
     id integer NOT NULL,
     firstname character varying(255),
@@ -366,8 +457,14 @@ CREATE SEQUENCE public."users-permissions_user_id_seq"
     CACHE 1;
 ALTER SEQUENCE public."users-permissions_user_id_seq" OWNED BY public."users-permissions_user".id;
 ALTER TABLE ONLY public.articles ALTER COLUMN id SET DEFAULT nextval('public.articles_id_seq'::regclass);
+ALTER TABLE ONLY public.articles_components ALTER COLUMN id SET DEFAULT nextval('public.articles_components_id_seq'::regclass);
 ALTER TABLE ONLY public.articles_etapes__etapes_articles ALTER COLUMN id SET DEFAULT nextval('public.articles_etapes__etapes_articles_id_seq'::regclass);
 ALTER TABLE ONLY public.articles_thematiques__thematiques_articles ALTER COLUMN id SET DEFAULT nextval('public.articles_thematiques__thematiques_articles_id_seq'::regclass);
+ALTER TABLE ONLY public.components_articles_article_complexes ALTER COLUMN id SET DEFAULT nextval('public.components_articles_article_complexes_id_seq'::regclass);
+ALTER TABLE ONLY public.components_composants_images ALTER COLUMN id SET DEFAULT nextval('public.components_composants_images_id_seq'::regclass);
+ALTER TABLE ONLY public.components_composants_le_saviez_vous ALTER COLUMN id SET DEFAULT nextval('public.components_composants_le_saviez_vous_id_seq'::regclass);
+ALTER TABLE ONLY public.components_composants_liens ALTER COLUMN id SET DEFAULT nextval('public.components_composants_liens_id_seq'::regclass);
+ALTER TABLE ONLY public.components_composants_texts ALTER COLUMN id SET DEFAULT nextval('public.components_composants_texts_id_seq'::regclass);
 ALTER TABLE ONLY public.core_store ALTER COLUMN id SET DEFAULT nextval('public.core_store_id_seq'::regclass);
 ALTER TABLE ONLY public.etapes ALTER COLUMN id SET DEFAULT nextval('public.etapes_id_seq'::regclass);
 ALTER TABLE ONLY public.etapes_parcours__parcours_etapes ALTER COLUMN id SET DEFAULT nextval('public.etapes_parcours__parcours_etapes_id_seq'::regclass);
@@ -385,12 +482,24 @@ ALTER TABLE ONLY public.upload_file_morph ALTER COLUMN id SET DEFAULT nextval('p
 ALTER TABLE ONLY public."users-permissions_permission" ALTER COLUMN id SET DEFAULT nextval('public."users-permissions_permission_id_seq"'::regclass);
 ALTER TABLE ONLY public."users-permissions_role" ALTER COLUMN id SET DEFAULT nextval('public."users-permissions_role_id_seq"'::regclass);
 ALTER TABLE ONLY public."users-permissions_user" ALTER COLUMN id SET DEFAULT nextval('public."users-permissions_user_id_seq"'::regclass);
+ALTER TABLE ONLY public.articles_components
+    ADD CONSTRAINT articles_components_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.articles_etapes__etapes_articles
     ADD CONSTRAINT articles_etapes__etapes_articles_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.articles
     ADD CONSTRAINT articles_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.articles_thematiques__thematiques_articles
     ADD CONSTRAINT articles_thematiques__thematiques_articles_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.components_articles_article_complexes
+    ADD CONSTRAINT components_articles_article_complexes_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.components_composants_images
+    ADD CONSTRAINT components_composants_images_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.components_composants_le_saviez_vous
+    ADD CONSTRAINT components_composants_le_saviez_vous_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.components_composants_liens
+    ADD CONSTRAINT components_composants_liens_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.components_composants_texts
+    ADD CONSTRAINT components_composants_texts_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.core_store
     ADD CONSTRAINT core_store_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.etapes_parcours__parcours_etapes
@@ -403,8 +512,6 @@ ALTER TABLE ONLY public.evenements
     ADD CONSTRAINT evenements_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.parcours
     ADD CONSTRAINT parcours_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY public.posts
-    ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.strapi_administrator
     ADD CONSTRAINT strapi_administrator_email_unique UNIQUE (email);
 ALTER TABLE ONLY public.strapi_administrator
@@ -437,6 +544,8 @@ ALTER TABLE ONLY public."users-permissions_user"
     ADD CONSTRAINT "users-permissions_user_pkey" PRIMARY KEY (id);
 ALTER TABLE ONLY public."users-permissions_user"
     ADD CONSTRAINT "users-permissions_user_username_unique" UNIQUE (username);
+ALTER TABLE ONLY public.articles_components
+    ADD CONSTRAINT article_id_fk FOREIGN KEY (article_id) REFERENCES public.articles(id) ON DELETE CASCADE;
 ALTER TABLE ONLY public.articles
     ADD CONSTRAINT articles_etape_fkey FOREIGN KEY (etape) REFERENCES public.etapes(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.articles_thematiques__thematiques_articles

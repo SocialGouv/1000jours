@@ -1,0 +1,52 @@
+{
+  "collectionName": "components_articles_article_complexes",
+  "info": {
+    "name": "article complexe",
+    "icon": "boxes",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "text1": {
+      "type": "richtext"
+    },
+    "image": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "text2": {
+      "type": "richtext"
+    },
+    "le_saviez_vous_parent": {
+      "type": "text"
+    },
+    "le_saviez_vous_enfant": {
+      "type": "text"
+    },
+    "liens_1_titre": {
+      "type": "string"
+    },
+    "liens_1_url": {
+      "type": "string"
+    },
+    "liens_2_titre": {
+      "type": "string"
+    },
+    "liens_2_url": {
+      "type": "string"
+    },
+    "liens_3_titre": {
+      "type": "string"
+    },
+    "liens_3_url": {
+      "type": "string"
+    }
+  }
+}

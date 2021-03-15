@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_composants_liens",
+  "info": {
+    "name": "liens_externes",
+    "icon": "external-link-square-alt",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "lien_1_titre": {
+      "type": "string"
+    },
+    "lien_1_url": {
+      "type": "string"
+    },
+    "lien_2_titre": {
+      "type": "string"
+    },
+    "lien_2_url": {
+      "type": "string"
+    },
+    "llien_3_titre": {
+      "type": "string"
+    },
+    "llien_3_url": {
+      "type": "string"
+    }
+  }
+}

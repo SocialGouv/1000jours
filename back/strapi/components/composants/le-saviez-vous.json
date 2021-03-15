@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_composants_le_saviez_vous",
+  "info": {
+    "name": "le_saviez_vous",
+    "icon": "question-circle"
+  },
+  "options": {},
+  "attributes": {
+    "avantage_parent": {
+      "type": "text"
+    },
+    "avantage_enfant": {
+      "type": "text"
+    },
+    "explication": {
+      "type": "string"
+    }
+  }
+}

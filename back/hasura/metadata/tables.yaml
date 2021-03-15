@@ -6,6 +6,13 @@
     using:
       foreign_key_constraint_on: etape
   array_relationships:
+  - name: articles_components
+    using:
+      foreign_key_constraint_on:
+        column: article_id
+        table:
+          schema: public
+          name: articles_components
   - name: articles_thematiques__thematiques_articles
     using:
       foreign_key_constraint_on:
@@ -13,6 +20,21 @@
         table:
           schema: public
           name: articles_thematiques__thematiques_articles
+- table:
+    schema: public
+    name: articles_components
+  object_relationships:
+  - name: article
+    using:
+      foreign_key_constraint_on: article_id
+  - name: contenu_complexe
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: components_articles_article_complexes
+        column_mapping:
+          component_id: id
 - table:
     schema: public
     name: articles_etapes__etapes_articles
@@ -26,6 +48,18 @@
   - name: thematique
     using:
       foreign_key_constraint_on: thematique_id
+- table:
+    schema: public
+    name: components_articles_article_complexes
+  object_relationships:
+  - name: article
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: articles_components
+        column_mapping:
+          id: component_id
 - table:
     schema: public
     name: etapes

@@ -1,13 +1,12 @@
 {
-  "collectionName": "components_text_texts",
+  "collectionName": "components_composants_texts",
   "info": {
     "name": "text",
-    "icon": "align-justify",
-    "description": ""
+    "icon": "align-justify"
   },
   "options": {},
   "attributes": {
-    "texte": {
+    "text": {
       "type": "richtext"
     }
   }

@@ -1,8 +1,8 @@
 {
-  "collectionName": "components_image_visuels",
+  "collectionName": "components_composants_images",
   "info": {
-    "name": "visuel",
-    "icon": "file",
+    "name": "Image",
+    "icon": "file-image",
     "description": ""
   },
   "options": {},
@@ -17,6 +17,9 @@
       ],
       "plugin": "upload",
       "required": false
+    },
+    "description": {
+      "type": "text"
     }
   }
 }
