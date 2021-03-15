@@ -17,8 +17,8 @@
       "type": "text"
     },
     "etapes": {
-      "collection": "etape",
       "via": "parcours",
+      "collection": "etape",
       "dominant": true
     }
   }

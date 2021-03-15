@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "outDir": "./api",
+    "rootDir": "./api-src",
+    "target": "es5",
+    "declaration": true,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "noImplicitAny": false
+  },
+  "include": [
+    "./api-src/**/*",
+    "./api-src/**/*.json"
+  ]
+}

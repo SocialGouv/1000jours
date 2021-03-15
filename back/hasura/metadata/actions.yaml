@@ -1,6 +1,21 @@
-actions: []
+actions:
+- name: getCurrentEtape
+  definition:
+    kind: ""
+    handler: http://51.91.58.234:1337/etapes/get-current
+    forward_client_headers: true
 custom_types:
   enums: []
-  input_objects: []
-  objects: []
+  input_objects:
+  - name: Informations
+  objects:
+  - name: CurrentEtape
+    relationships:
+    - remote_table:
+        schema: public
+        name: etapes
+      name: etape
+      type: object
+      field_mapping:
+        id: id
   scalars: []

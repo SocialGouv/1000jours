@@ -9,6 +9,14 @@
       }
     },
     {
+      "method": "POST",
+      "path": "/etapes/get-current",
+      "handler": "etape.getCurrent",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "GET",
       "path": "/etapes/count",
       "handler": "etape.count",
