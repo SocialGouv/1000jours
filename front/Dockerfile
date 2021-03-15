@@ -18,7 +18,7 @@ COPY . .
 
 RUN yarn expo build:web
 
-FROM registry.gitlab.factory.social.gouv.fr/socialgouv/docker/nginx4spa:4.8.0
+FROM ghcr.io/socialgouv/docker/nginx4spa:4.8.0
 
 COPY --from=builder /app/web-build /usr/share/nginx/html
 
