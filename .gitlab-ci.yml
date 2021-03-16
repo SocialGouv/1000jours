@@ -24,6 +24,22 @@ Build:
   rules:
     - when: never
 
+stages:
+  - test
+  - deploy
+before_script:
+  - npm ci
+lint:
+  stage: lint
+  script:
+    - npm lint
+expo-deployments:
+  stage: deploy
+  script:
+    - apk add --no-cache bash
+    - yarn expo-login
+    - yarn publish-staging
+
 K8S Test:
   extends: .autodevops_k8s_test
   rules:
