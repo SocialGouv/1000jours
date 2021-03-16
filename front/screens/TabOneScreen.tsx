@@ -1,25 +1,24 @@
 import { range } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
-import type { ImageSourcePropType } from "react-native";
 import { StyleSheet, Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import stepIcon8 from "../assets/images/OLD_Icone-1-a-2-ans.png";
-import stepIcon7 from "../assets/images/OLD_Icone-4-mois-a-1-an.png";
-import stepIcon6 from "../assets/images/OLD_Icone-4-premiers-mois.png";
-import stepIcon5 from "../assets/images/OLD_Icone-accouchement.png";
-import stepIcon2 from "../assets/images/OLD_Icone-conception.png";
-import stepIcon3 from "../assets/images/OLD_Icone-debut-de-grossesse.png";
-import stepIcon4 from "../assets/images/OLD_Icone-fin-de-grossesse.png";
-import stepIcon1 from "../assets/images/OLD_icone-projet-parent.png";
+import StepIcon8 from "../assets/images/OLD_Icone_1_a_2_ans.svg";
+import StepIcon7 from "../assets/images/OLD_Icone_4_mois_a_1_an.svg";
+import StepIcon6 from "../assets/images/OLD_Icone_4_premiers_mois.svg";
+import StepIcon5 from "../assets/images/OLD_Icone_accouchement.svg";
+import StepIcon2 from "../assets/images/OLD_Icone_conception.svg";
+import StepIcon3 from "../assets/images/OLD_Icone_debut_de_grossesse.svg";
+import StepIcon4 from "../assets/images/OLD_Icone_fin_de_grossesse.svg";
+import StepIcon1 from "../assets/images/OLD_icone_projet_parent.svg";
 import { View } from "../components/Themed";
 import TimelineStep from "../components/timeline/TimlineStep";
 import Colors from "../constants/Colors";
 
 interface Step {
   title: string;
-  icon: ImageSourcePropType;
+  icon: React.ReactElement;
 }
 
 const TabOneScreen: FC = () => {
@@ -29,35 +28,35 @@ const TabOneScreen: FC = () => {
 
   const steps: Step[] = [
     {
-      icon: stepIcon1,
+      icon: <StepIcon1 />,
       title: "Projet de parentalité",
     },
     {
-      icon: stepIcon2,
+      icon: <StepIcon2 />,
       title: "Conception",
     },
     {
-      icon: stepIcon3,
+      icon: <StepIcon3 />,
       title: "Début de grossesse",
     },
     {
-      icon: stepIcon4,
+      icon: <StepIcon4 />,
       title: "Suite et fin de grossesse",
     },
     {
-      icon: stepIcon5,
+      icon: <StepIcon5 />,
       title: "Accouchement",
     },
     {
-      icon: stepIcon6,
+      icon: <StepIcon6 />,
       title: "Ses 3 premiers mois",
     },
     {
-      icon: stepIcon7,
+      icon: <StepIcon7 />,
       title: "De ses 4 mois à 1 an",
     },
     {
-      icon: stepIcon8,
+      icon: <StepIcon8 />,
       title: "De sa 1ère année à sa 2ème année",
     },
   ];

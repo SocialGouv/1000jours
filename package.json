@@ -13,9 +13,7 @@
     "typescript": "^4.2.3"
   },
   "scripts": {
-    "commit": "git-cz"
-  },
-  "scripts": {
+    "commit": "git-cz",
     "k8s": "yarn --silent --cwd .k8s"
   }
 }

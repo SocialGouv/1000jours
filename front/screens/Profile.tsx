@@ -2,12 +2,12 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import { filter } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
-import type { ImageSourcePropType } from "react-native";
-import { Image, ScrollView, StyleSheet, Text } from "react-native";
-import CheckBox from "react-native-check-box";
+import { ScrollView, StyleSheet, Text } from "react-native";
 
-import profileImage from "../assets/images/Humaaans-Space1.png";
-import Button from "../components/form/Button";
+import ProfileImage from "../assets/images/Humaaans_Space_1.svg";
+import _Button from "../components/form/_Button";
+import _Checkbox from "../components/form/_Checkbox";
+import _Datepicker from "../components/form/_DatePicker";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
@@ -18,11 +18,12 @@ interface Props {
 
 export const Profile: FC<Props> = ({ navigation }) => {
   const appName = "1000 JOURS APP'";
-  const image: ImageSourcePropType = profileImage;
+  const image: React.ReactElement = <ProfileImage />;
   const title = "Votre profil";
+  const childBirthdayLabel = "Date de naissance de votre enfant";
 
   const defaultUserContext: UserContext = {
-    childBirthday: null,
+    childBirthday: undefined,
     situations: [
       { id: 1, isChecked: false, label: "J'ai en projet d'avoir un enfant" },
       { id: 2, isChecked: false, label: "Je cherche à concevoir un enfant" },
@@ -42,7 +43,7 @@ export const Profile: FC<Props> = ({ navigation }) => {
   const [userSituations, setUserSituations] = React.useState<UserSituation[]>(
     defaultUserContext.situations
   );
-  const [childBirthday, setChildBirthday] = React.useState<Date | null>(
+  const [childBirthday, setChildBirthday] = React.useState<Date | undefined>(
     defaultUserContext.childBirthday
   );
   const [
@@ -62,6 +63,12 @@ export const Profile: FC<Props> = ({ navigation }) => {
     });
   };
 
+  const updateChildBirthday = (date: Date | undefined) => {
+    setChildBirthday(() => {
+      return date;
+    });
+  };
+
   React.useEffect(() => {
     setHasCheckedSituation(hasCheckedSituation());
   }, [userSituations]);
@@ -72,29 +79,39 @@ export const Profile: FC<Props> = ({ navigation }) => {
         <Text style={[styles.appName]}>{appName}</Text>
       </View>
       <ScrollView style={[styles.body]}>
-        <View style={[styles.justifyContentCenter]}>
-          <Image source={image} />
-        </View>
+        <View style={[styles.justifyContentCenter]}>{image}</View>
         <Text style={[styles.title, styles.textAlignCenter]}>{title}</Text>
         <View style={[styles.choices]}>
           {userSituations.map((situation, index) => {
             return (
-              <CheckBox
-                key={index}
-                style={[styles.checkbox]}
-                onClick={() => {
-                  updateUserSituations(situation);
-                }}
-                isChecked={situation.isChecked}
-                rightText={situation.label}
-                checkBoxColor={Colors.primaryColor}
-              />
+              <View key={index}>
+                <_Checkbox
+                  title={situation.label}
+                  checked={situation.isChecked}
+                  onPress={() => {
+                    updateUserSituations(situation);
+                  }}
+                />
+              </View>
             );
           })}
         </View>
+        <View>
+          <Text style={[styles.colorPrimary, styles.textAlignCenter]}>
+            {childBirthdayLabel}
+          </Text>
+          <View style={[styles.datepickerContainer]}>
+            <_Datepicker
+              date={childBirthday ? childBirthday : new Date()}
+              onChange={(event, date) => {
+                updateChildBirthday(date);
+              }}
+            />
+          </View>
+        </View>
         <View style={[styles.footer, styles.justifyContentCenter]}>
           <View style={[styles.buttonContainer]}>
-            <Button
+            <_Button
               title="Passer"
               rounded={false}
               disabled={false}
@@ -104,7 +121,7 @@ export const Profile: FC<Props> = ({ navigation }) => {
             />
           </View>
           <View style={[styles.buttonContainer]}>
-            <Button
+            <_Button
               title="Valider"
               rounded={true}
               disabled={!hasCheckedUserSituation}
@@ -140,6 +157,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15,
   },
+  colorPrimary: {
+    color: Colors.primaryColor,
+  },
+  datepickerContainer: {
+    padding: 20,
+  },
   footer: {
     flex: 1,
     flexDirection: "row",
@@ -168,5 +191,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     padding: 15,
+  },
+  w100: {
+    width: "100%",
   },
 });

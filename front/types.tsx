@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
 export type RootStackParamList = {
   onboarding: undefined;
   profile: undefined;
@@ -26,5 +27,5 @@ export type UserSituation = {
 
 export type UserContext = {
   situations: UserSituation[];
-  childBirthday: Date | null;
+  childBirthday: Date | undefined;
 };
