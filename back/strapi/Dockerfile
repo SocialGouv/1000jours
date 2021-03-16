@@ -11,6 +11,7 @@ COPY . .
 
 ENV NODE_ENV production
 
+RUN yarn build-ts
 RUN yarn build
 
 CMD ["yarn", "start"]
