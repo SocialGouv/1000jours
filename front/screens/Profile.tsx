@@ -23,7 +23,7 @@ export const Profile: FC<Props> = ({ navigation }) => {
   const childBirthdayLabel = "Date de naissance de votre enfant";
 
   const defaultUserContext: UserContext = {
-    childBirthday: null,
+    childBirthday: undefined,
     situations: [
       { id: 1, isChecked: false, label: "J'ai en projet d'avoir un enfant" },
       { id: 2, isChecked: false, label: "Je cherche à concevoir un enfant" },
@@ -43,7 +43,7 @@ export const Profile: FC<Props> = ({ navigation }) => {
   const [userSituations, setUserSituations] = React.useState<UserSituation[]>(
     defaultUserContext.situations
   );
-  const [childBirthday, setChildBirthday] = React.useState<Date | null>(
+  const [childBirthday, setChildBirthday] = React.useState<Date | undefined>(
     defaultUserContext.childBirthday
   );
   const [
@@ -109,7 +109,7 @@ export const Profile: FC<Props> = ({ navigation }) => {
         </View>
         <View style={[styles.footer, styles.justifyContentCenter]}>
           <View style={[styles.buttonContainer]}>
-            <Button
+            <_Button
               title="Passer"
               rounded={false}
               disabled={false}
@@ -119,7 +119,7 @@ export const Profile: FC<Props> = ({ navigation }) => {
             />
           </View>
           <View style={[styles.buttonContainer]}>
-            <Button
+            <_Button
               title="Valider"
               rounded={true}
               disabled={!hasCheckedUserSituation}
