@@ -18,7 +18,7 @@ import Colors from "../constants/Colors";
 
 interface Step {
   title: string;
-  icon: React.ReactElement;
+  icon: React.ReactNode;
 }
 
 const TabOneScreen: FC = () => {

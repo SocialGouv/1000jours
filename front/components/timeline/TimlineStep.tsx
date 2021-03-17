@@ -7,7 +7,7 @@ import { Text, View } from "../Themed";
 
 interface TimelineStepProps {
   title: string;
-  icon: React.ReactElement;
+  icon: React.ReactNode;
   index: number;
   isTheLast: boolean;
 }

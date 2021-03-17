@@ -27,5 +27,5 @@ export type UserSituation = {
 
 export type UserContext = {
   situations: UserSituation[];
-  childBirthday: Date | undefined;
+  childBirthday: Date | null;
 };

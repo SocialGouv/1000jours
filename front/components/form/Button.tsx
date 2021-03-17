@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
+import { Button as RNEButton } from "react-native-elements";
 
 import Colors from "../../constants/Colors";
 
@@ -11,9 +11,9 @@ interface Props {
   action: () => void;
 }
 
-const _Button: React.FC<Props> = ({ title, rounded, disabled, action }) => {
+const Button: React.FC<Props> = ({ title, rounded, disabled, action }) => {
   return (
-    <Button
+    <RNEButton
       disabled={disabled}
       disabledStyle={disabled ? styles.disabledButton : null}
       iconRight
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default _Button;
+export default Button;

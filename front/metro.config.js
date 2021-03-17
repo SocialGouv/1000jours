@@ -1,13 +1,14 @@
-import { getDefaultConfig } from "metro-config";
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-require-imports */
+const { getDefaultConfig } = require("@expo/metro-config");
 
-export default (async () => {
+module.exports = (async () => {
   const {
     resolver: { sourceExts, assetExts },
-  } = await getDefaultConfig();
-
+  } = await getDefaultConfig(__dirname);
   return {
     resolver: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       assetExts: assetExts.filter((ext) => ext !== "svg"),
       sourceExts: [...sourceExts, "svg"],
     },

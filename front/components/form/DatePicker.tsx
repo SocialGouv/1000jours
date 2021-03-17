@@ -9,7 +9,7 @@ interface Props {
   onChange: (event: Event, date?: Date | undefined) => void;
 }
 
-const _Datepicker: React.FC<Props> = ({ date, onChange }) => {
+const Datepicker: React.FC<Props> = ({ date, onChange }) => {
   return (
     <DateTimePicker
       dateFormat="day month year"
@@ -27,4 +27,4 @@ const _Datepicker: React.FC<Props> = ({ date, onChange }) => {
   );
 };
 
-export default _Datepicker;
+export default Datepicker;

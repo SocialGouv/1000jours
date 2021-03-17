@@ -7,7 +7,7 @@ import { SwiperFlatList } from "react-native-swiper-flatlist";
 import ThirdSlideImage from "../assets/images/Humaaans_2_Characters.svg";
 import FirstSlideImage from "../assets/images/Humaaans_3_Characters.svg";
 import SecondSlideImage from "../assets/images/Humaaans_Sitting.svg";
-import _Button from "../components/form/_Button";
+import Button from "../components/form/Button";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import type { RootStackParamList } from "../types";
@@ -23,7 +23,7 @@ interface Props {
 
 interface SlideView {
   title: string;
-  image: React.ReactElement;
+  image: React.ReactNode;
   description: string;
 }
 
@@ -93,7 +93,7 @@ export const Onboarding: FC<Props> = ({ navigation }) => {
       <View style={[styles.footer, styles.justifyContentCenter]}>
         {swiperCurrentIndex === slideViews.length - 1 ? (
           <View style={[styles.justifyContentCenter]}>
-            <_Button
+            <Button
               title="Commencer"
               rounded={true}
               disabled={false}
@@ -104,7 +104,7 @@ export const Onboarding: FC<Props> = ({ navigation }) => {
           </View>
         ) : (
           <View style={[styles.buttonsContainer, styles.justifyContentCenter]}>
-            <_Button
+            <Button
               title="Passer"
               rounded={false}
               disabled={false}
@@ -112,7 +112,7 @@ export const Onboarding: FC<Props> = ({ navigation }) => {
                 navigation.navigate("profile");
               }}
             />
-            <_Button
+            <Button
               title="Suivant"
               rounded={false}
               disabled={false}

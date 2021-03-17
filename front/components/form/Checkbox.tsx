@@ -1,5 +1,5 @@
 import * as React from "react";
-import { CheckBox } from "react-native-elements";
+import { CheckBox as RNECheckBox } from "react-native-elements";
 
 import CheckedIcon from "../../assets/images/radio_checked.svg";
 import UncheckedIcon from "../../assets/images/radio_unchecked.svg";
@@ -10,9 +10,9 @@ interface Props {
   onPress: () => void;
 }
 
-const _Checkbox: React.FC<Props> = ({ title, checked, onPress }) => {
+const Checkbox: React.FC<Props> = ({ title, checked, onPress }) => {
   return (
-    <CheckBox
+    <RNECheckBox
       title={title}
       checkedIcon={<CheckedIcon width={16} height={16} />}
       uncheckedIcon={<UncheckedIcon width={16} height={16} />}
@@ -22,4 +22,4 @@ const _Checkbox: React.FC<Props> = ({ title, checked, onPress }) => {
   );
 };
 
-export default _Checkbox;
+export default Checkbox;

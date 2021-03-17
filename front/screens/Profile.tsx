@@ -5,9 +5,9 @@ import * as React from "react";
 import { ScrollView, StyleSheet, Text } from "react-native";
 
 import ProfileImage from "../assets/images/Humaaans_Space_1.svg";
-import _Button from "../components/form/_Button";
-import _Checkbox from "../components/form/_Checkbox";
-import _Datepicker from "../components/form/_DatePicker";
+import Button from "../components/form/Button";
+import Checkbox from "../components/form/Checkbox";
+import Datepicker from "../components/form/DatePicker";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
@@ -18,12 +18,12 @@ interface Props {
 
 export const Profile: FC<Props> = ({ navigation }) => {
   const appName = "1000 JOURS APP'";
-  const image: React.ReactElement = <ProfileImage />;
+  const image = <ProfileImage />;
   const title = "Votre profil";
   const childBirthdayLabel = "Date de naissance de votre enfant";
 
   const defaultUserContext: UserContext = {
-    childBirthday: undefined,
+    childBirthday: null,
     situations: [
       { id: 1, isChecked: false, label: "J'ai en projet d'avoir un enfant" },
       { id: 2, isChecked: false, label: "Je cherche à concevoir un enfant" },
@@ -43,7 +43,7 @@ export const Profile: FC<Props> = ({ navigation }) => {
   const [userSituations, setUserSituations] = React.useState<UserSituation[]>(
     defaultUserContext.situations
   );
-  const [childBirthday, setChildBirthday] = React.useState<Date | undefined>(
+  const [childBirthday, setChildBirthday] = React.useState<Date | null>(
     defaultUserContext.childBirthday
   );
   const [
@@ -63,10 +63,8 @@ export const Profile: FC<Props> = ({ navigation }) => {
     });
   };
 
-  const updateChildBirthday = (date: Date | undefined) => {
-    setChildBirthday(() => {
-      return date;
-    });
+  const updateChildBirthday = (date: Date | null) => {
+    setChildBirthday(() => date);
   };
 
   React.useEffect(() => {
@@ -85,7 +83,7 @@ export const Profile: FC<Props> = ({ navigation }) => {
           {userSituations.map((situation, index) => {
             return (
               <View key={index}>
-                <_Checkbox
+                <Checkbox
                   title={situation.label}
                   checked={situation.isChecked}
                   onPress={() => {
@@ -101,17 +99,17 @@ export const Profile: FC<Props> = ({ navigation }) => {
             {childBirthdayLabel}
           </Text>
           <View style={[styles.datepickerContainer]}>
-            <_Datepicker
+            <Datepicker
               date={childBirthday ? childBirthday : new Date()}
               onChange={(event, date) => {
-                updateChildBirthday(date);
+                updateChildBirthday(date ? date : null);
               }}
             />
           </View>
         </View>
         <View style={[styles.footer, styles.justifyContentCenter]}>
           <View style={[styles.buttonContainer]}>
-            <_Button
+            <Button
               title="Passer"
               rounded={false}
               disabled={false}
@@ -121,7 +119,7 @@ export const Profile: FC<Props> = ({ navigation }) => {
             />
           </View>
           <View style={[styles.buttonContainer]}>
-            <_Button
+            <Button
               title="Valider"
               rounded={true}
               disabled={!hasCheckedUserSituation}
