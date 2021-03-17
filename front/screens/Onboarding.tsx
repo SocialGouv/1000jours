@@ -93,7 +93,7 @@ export const Onboarding: FC<Props> = ({ navigation }) => {
       <View style={[styles.footer, styles.justifyContentCenter]}>
         {swiperCurrentIndex === slideViews.length - 1 ? (
           <View style={[styles.justifyContentCenter]}>
-            <_Button
+            <Button
               title="Commencer"
               rounded={true}
               disabled={false}
@@ -104,7 +104,7 @@ export const Onboarding: FC<Props> = ({ navigation }) => {
           </View>
         ) : (
           <View style={[styles.buttonsContainer, styles.justifyContentCenter]}>
-            <_Button
+            <Button
               title="Passer"
               rounded={false}
               disabled={false}
@@ -112,7 +112,7 @@ export const Onboarding: FC<Props> = ({ navigation }) => {
                 navigation.navigate("profile");
               }}
             />
-            <_Button
+            <Button
               title="Suivant"
               rounded={false}
               disabled={false}
