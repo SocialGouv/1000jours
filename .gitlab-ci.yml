@@ -1,2 +1,49 @@
-test:
-  script: echo "test"
+include:
+  - project: SocialGouv/gitlab-ci-yml
+    file: /autodevops.yml
+    ref: v20.7.11
+
+variables:
+  AUTO_DEVOPS_KANIKO: "✔️"
+  AUTO_DEVOPS_RELEASE_AUTO: "✔️"
+  AUTO_DEVOPS_PRODUCTION_AUTO: "✔️"
+  AUTO_DEVOPS_ENABLE_KAPP: "✔️"
+  AUTO_DEVOPS_TEST_DISABLED: "🛑"
+  AUTO_DEVOPS_QUALITY_DISABLED: "🛑"
+  AUTO_DEVOPS_NOTIFY_DISABLED: "🛑"
+
+Install:
+  rules:
+    - when: never
+
+Lint:
+  rules:
+    - when: never
+
+Build:
+  rules:
+    - when: never
+
+Register Kaniko image:
+  extends: .autodevops_register_kaniko_image
+  needs: []
+  dependencies: []
+  variables:
+    CONTEXT: front
+    IMAGE_NAME: les1000jours-expo
+
+Register hasura:
+  extends: .autodevops_register_kaniko_image
+  needs: []
+  dependencies: []
+  variables:
+    CONTEXT: back/hasura
+    IMAGE_NAME: les1000jours-hasura
+
+Register strapi:
+  extends: .autodevops_register_kaniko_image
+  needs: []
+  dependencies: []
+  variables:
+    CONTEXT: back/strapi
+    IMAGE_NAME: les1000jours-strapi
