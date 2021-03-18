@@ -132,7 +132,7 @@ export const Profile: FC<Props> = ({ navigation }) => {
           </View>
         </View>
         <View style={[styles.footer, styles.justifyContentCenter]}>
-          <View style={[styles.buttonContainer]}>
+          <View>
             <Button
               title="Passer"
               rounded={false}
@@ -142,7 +142,7 @@ export const Profile: FC<Props> = ({ navigation }) => {
               }}
             />
           </View>
-          <View style={[styles.buttonContainer]}>
+          <View>
             <Button
               title="Valider"
               rounded={true}
@@ -166,11 +166,6 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-  },
-  buttonContainer: {
-    flex: 1,
-    marginLeft: 5,
-    marginRight: 5,
   },
   checkbox: {
     height: 40,

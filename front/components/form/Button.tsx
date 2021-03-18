@@ -32,6 +32,8 @@ const styles = StyleSheet.create({
     marginRight: 30,
     marginTop: 10,
     padding: 15,
+    paddingLeft: 30,
+    paddingRight: 30,
   },
   clearButtonTitle: {
     color: Colors.tertiaryColor,
@@ -43,6 +45,10 @@ const styles = StyleSheet.create({
   roundedButton: {
     backgroundColor: Colors.tertiaryColor,
     borderRadius: 40,
+    marginLeft: 30,
+    marginRight: 30,
+    paddingLeft: 30,
+    paddingRight: 30,
   },
   roundedButtonTitle: {
     color: "white",
