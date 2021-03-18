@@ -1,7 +1,7 @@
 include:
   - project: SocialGouv/gitlab-ci-yml
     file: /autodevops.yml
-    ref: long-urls
+    ref: v20.7.14
 
 variables:
   AUTO_DEVOPS_KANIKO: "✔️"
@@ -29,12 +29,12 @@ K8S Test:
   rules:
     - if: "$PRODUCTION || $RELEASE"
       when: never
-    # NOTE(douglasduteil): ensure to run k8s test 
+    # NOTE(douglasduteil): ensure to run k8s test
     # - if: "$AUTO_DEVOPS_TEST_DISABLED"
     #  when: never
     - exists:
         - .k8s/package.json
-        
+
 Register Kaniko image:
   extends: .autodevops_register_kaniko_image
   needs: []
