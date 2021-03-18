@@ -8,6 +8,7 @@ variables:
   AUTO_DEVOPS_RELEASE_AUTO: "✔️"
   AUTO_DEVOPS_PRODUCTION_AUTO: "✔️"
   AUTO_DEVOPS_ENABLE_KAPP: "✔️"
+  AUTO_DEVOPS_TEST_DISABLED: "🛑"
   AUTO_DEVOPS_QUALITY_DISABLED: "🛑"
   AUTO_DEVOPS_NOTIFY_DISABLED: "🛑"
 
@@ -23,6 +24,17 @@ Build:
   rules:
     - when: never
 
+K8S Test:
+  extends: .autodevops_k8s_test
+  rules:
+    - <<: *autodevops_trigger_rule
+      when: never
+    # NOTE(douglasduteil): ensure to run k8s test 
+    # - if: "$AUTO_DEVOPS_TEST_DISABLED"
+    #  when: never
+    - exists:
+        - .k8s/package.json
+        
 Register Kaniko image:
   extends: .autodevops_register_kaniko_image
   needs: []
