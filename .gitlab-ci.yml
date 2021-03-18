@@ -27,7 +27,7 @@ Build:
 K8S Test:
   extends: .autodevops_k8s_test
   rules:
-    - <<: *autodevops_trigger_rule
+    - if: "$PRODUCTION || $RELEASE"
       when: never
     # NOTE(douglasduteil): ensure to run k8s test 
     # - if: "$AUTO_DEVOPS_TEST_DISABLED"
