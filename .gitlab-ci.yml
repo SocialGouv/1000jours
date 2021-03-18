@@ -3,6 +3,14 @@ include:
     file: /autodevops.yml
     ref: v20.7.11
 
+#
+
+workflow:
+  rules:
+    - when: always
+
+#
+
 variables:
   AUTO_DEVOPS_KANIKO: "✔️"
   AUTO_DEVOPS_RELEASE_AUTO: "✔️"
