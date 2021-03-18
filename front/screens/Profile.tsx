@@ -1,5 +1,5 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
-import { filter } from "lodash";
+import { filter, find } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
 import { ScrollView, StyleSheet, Text } from "react-native";
@@ -20,7 +20,6 @@ export const Profile: FC<Props> = ({ navigation }) => {
   const appName = "1000 JOURS APP'";
   const image = <ProfileImage />;
   const title = "Votre profil";
-  const childBirthdayLabel = "Date de naissance de votre enfant";
 
   const defaultUserContext: UserContext = {
     childBirthday: null,
@@ -52,8 +51,8 @@ export const Profile: FC<Props> = ({ navigation }) => {
   ] = React.useState<boolean>(hasCheckedSituation());
 
   const updateUserSituations = (userSituation: UserSituation) => {
-    setUserSituations((previousUserSituations) => {
-      return previousUserSituations.map((item) => {
+    setUserSituations(() => {
+      return defaultUserContext.situations.map((item) => {
         if (item.id === userSituation.id) {
           return { ...item, isChecked: !userSituation.isChecked };
         } else {
@@ -70,6 +69,31 @@ export const Profile: FC<Props> = ({ navigation }) => {
   React.useEffect(() => {
     setHasCheckedSituation(hasCheckedSituation());
   }, [userSituations]);
+
+  const getCheckedUserSituationsWhereChildBirthdayIsNeeded = () => {
+    const userSituationsIdsWhereChildBirthdayIsNeeded = [3, 4, 5];
+    return filter(userSituations, (userSituation) => {
+      return (
+        userSituation.isChecked &&
+        userSituationsIdsWhereChildBirthdayIsNeeded.includes(userSituation.id)
+      );
+    });
+  };
+  const childBirthdayIsNeeded = () => {
+    const results = getCheckedUserSituationsWhereChildBirthdayIsNeeded();
+    return results.length > 0 ? true : false;
+  };
+  const getChildBirthdayLabel = () => {
+    const results = getCheckedUserSituationsWhereChildBirthdayIsNeeded();
+    if (find(results, ["id", 3])) {
+      return "Naissance prévue de votre enfant";
+    } else if (find(results, ["id", 4])) {
+      return "Date de naissance de votre enfant";
+    } else if (find(results, ["id", 5])) {
+      return "Date de naissance de votre enfant le plus jeune";
+    }
+    return "Date de naissance de votre enfant";
+  };
 
   return (
     <View style={[styles.mainContainer]}>
@@ -94,9 +118,9 @@ export const Profile: FC<Props> = ({ navigation }) => {
             );
           })}
         </View>
-        <View>
+        <View style={[childBirthdayIsNeeded() ? null : styles.hide]}>
           <Text style={[styles.colorPrimary, styles.textAlignCenter]}>
-            {childBirthdayLabel}
+            {getChildBirthdayLabel()}
           </Text>
           <View style={[styles.datepickerContainer]}>
             <Datepicker
@@ -169,6 +193,9 @@ const styles = StyleSheet.create({
   header: {
     height: 44,
     margin: 15,
+  },
+  hide: {
+    display: "none",
   },
   justifyContentCenter: {
     alignItems: "center",
