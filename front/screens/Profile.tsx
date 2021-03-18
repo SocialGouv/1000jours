@@ -34,9 +34,7 @@ export const Profile: FC<Props> = ({ navigation }) => {
   };
 
   const hasCheckedSituation = () => {
-    return filter(userSituations, ["isChecked", true]).length > 0
-      ? true
-      : false;
+    return filter(userSituations, ["isChecked", true]).length > 0;
   };
 
   const [userSituations, setUserSituations] = React.useState<UserSituation[]>(
@@ -81,7 +79,7 @@ export const Profile: FC<Props> = ({ navigation }) => {
   };
   const childBirthdayIsNeeded = () => {
     const results = getCheckedUserSituationsWhereChildBirthdayIsNeeded();
-    return results.length > 0 ? true : false;
+    return results.length > 0;
   };
   const getChildBirthdayLabel = () => {
     const results = getCheckedUserSituationsWhereChildBirthdayIsNeeded();
