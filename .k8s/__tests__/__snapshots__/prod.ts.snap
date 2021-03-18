@@ -178,24 +178,24 @@ spec:
       containers:
         - image: harbor.fabrique.social.gouv.fr/1000jours/les1000jours-hasura:1.2.3
           livenessProbe:
-            failureThreshold: 6
+            failureThreshold: 10
             httpGet:
               path: /healthz
               port: http
-            initialDelaySeconds: 30
-            periodSeconds: 5
+            initialDelaySeconds: 60
+            periodSeconds: 20
             timeoutSeconds: 5
           name: hasura
           ports:
             - containerPort: 80
               name: http
           readinessProbe:
-            failureThreshold: 15
+            failureThreshold: 10
             httpGet:
               path: /healthz
               port: http
-            initialDelaySeconds: 0
-            periodSeconds: 5
+            initialDelaySeconds: 60
+            periodSeconds: 20
             successThreshold: 1
             timeoutSeconds: 1
           resources:
@@ -206,11 +206,12 @@ spec:
               cpu: 100m
               memory: 64Mi
           startupProbe:
-            failureThreshold: 12
+            failureThreshold: 10
             httpGet:
               path: /healthz
               port: http
             periodSeconds: 5
+            initialDelaySeconds: 120
           envFrom:
             - secretRef:
                 name: azure-pg-user

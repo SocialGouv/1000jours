@@ -10,6 +10,22 @@ const manifests = create({
   },
   deployment: {
     image: getHarborImagePath({ name: "les1000jours-hasura" }),
+    container: {
+      livenessProbe: {
+        failureThreshold: 10,
+        initialDelaySeconds: 60,
+        periodSeconds: 20,
+      },
+      readinessProbe: {
+        failureThreshold: 10,
+        initialDelaySeconds: 60,
+        periodSeconds: 20,
+      },
+      startupProbe: {
+        failureThreshold: 10,
+        initialDelaySeconds: 120,
+      },
+    },
   },
 });
 
