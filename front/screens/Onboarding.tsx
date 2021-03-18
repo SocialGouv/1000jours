@@ -1,13 +1,12 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
-import type { ImageSourcePropType } from "react-native";
-import { Dimensions, Image, StyleSheet, Text } from "react-native";
+import { Dimensions, StyleSheet, Text } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 
-import thirdSlideImage from "../assets/images/Humaaans-2-Characters.png";
-import firstSlideImage from "../assets/images/Humaaans-3-Characters.png";
-import secondSlideImage from "../assets/images/Humaaans-Sitting.png";
+import ThirdSlideImage from "../assets/images/Humaaans_2_Characters.svg";
+import FirstSlideImage from "../assets/images/Humaaans_3_Characters.svg";
+import SecondSlideImage from "../assets/images/Humaaans_Sitting.svg";
 import Button from "../components/form/Button";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
@@ -24,7 +23,7 @@ interface Props {
 
 interface SlideView {
   title: string;
-  image: ImageSourcePropType;
+  image: React.ReactNode;
   description: string;
 }
 
@@ -34,19 +33,19 @@ export const Onboarding: FC<Props> = ({ navigation }) => {
     {
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Accumsan tortor posuere ac ut consequat semper viverra. Purus in mollis nunc sed id.",
-      image: firstSlideImage,
+      image: <FirstSlideImage />,
       title: "Bienvenue sur l'application",
     },
     {
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Accumsan tortor posuere ac ut consequat semper viverra. Purus in mollis nunc sed id.",
-      image: secondSlideImage,
+      image: <SecondSlideImage />,
       title: "Trouver les informations",
     },
     {
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Accumsan tortor posuere ac ut consequat semper viverra. Purus in mollis nunc sed id.",
-      image: thirdSlideImage,
+      image: <ThirdSlideImage />,
       title: "Connaître les différentes étapes",
     },
   ];
@@ -78,7 +77,7 @@ export const Onboarding: FC<Props> = ({ navigation }) => {
                 key={index}
               >
                 <View style={[styles.justifyContentCenter]}>
-                  <Image source={slideView.image} />
+                  {slideView.image}
                 </View>
                 <Text style={[styles.title, styles.textAlignCenter]}>
                   {slideView.title}

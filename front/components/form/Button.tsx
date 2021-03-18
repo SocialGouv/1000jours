@@ -1,64 +1,50 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native";
+import { Button as RNEButton } from "react-native-elements";
 
 import Colors from "../../constants/Colors";
-import { Text } from "../Themed";
 
-interface ButtonProps {
+interface Props {
   title: string;
   rounded: boolean;
   disabled: boolean;
   action: () => void;
 }
 
-const getStyle = (rounded: boolean, disabled: boolean) => {
-  return [
-    styles.normalButton,
-    rounded ? styles.roundedButton : null,
-    disabled ? styles.disabledButton : null,
-  ];
-};
-
-const Button: React.FC<ButtonProps> = ({
-  title,
-  rounded,
-  disabled,
-  action,
-}) => {
+const Button: React.FC<Props> = ({ title, rounded, disabled, action }) => {
   return (
-    <TouchableOpacity
+    <RNEButton
       disabled={disabled}
-      style={getStyle(rounded, disabled)}
+      disabledStyle={disabled ? styles.disabledButton : null}
+      iconRight
+      title={title}
+      buttonStyle={rounded ? styles.roundedButton : styles.clearButton}
+      titleStyle={rounded ? styles.roundedButtonTitle : styles.clearButtonTitle}
       onPress={action}
-    >
-      <Text
-        style={rounded ? styles.roundedButtonText : styles.normalButtonText}
-      >
-        {title}
-      </Text>
-    </TouchableOpacity>
+      type={rounded ? "solid" : "clear"}
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  disabledButton: {
-    backgroundColor: Colors.tertiaryColorDisabled,
-  },
-  normalButton: {
+  clearButton: {
     marginLeft: 30,
     marginRight: 30,
     marginTop: 10,
     padding: 15,
   },
-  normalButtonText: {
+  clearButtonTitle: {
     color: Colors.tertiaryColor,
     textAlign: "center",
+  },
+  disabledButton: {
+    backgroundColor: Colors.tertiaryColorDisabled,
   },
   roundedButton: {
     backgroundColor: Colors.tertiaryColor,
     borderRadius: 40,
   },
-  roundedButtonText: {
+  roundedButtonTitle: {
     color: "white",
     textAlign: "center",
   },

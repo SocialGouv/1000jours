@@ -1,14 +1,13 @@
 import type { FC } from "react";
 import * as React from "react";
-import type { ImageSourcePropType } from "react-native";
-import { Image, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import Colors from "../../constants/Colors";
 import { Text, View } from "../Themed";
 
 interface TimelineStepProps {
   title: string;
-  icon: ImageSourcePropType;
+  icon: React.ReactNode;
   index: number;
   isTheLast: boolean;
 }
@@ -42,7 +41,7 @@ const TimelineStep: FC<TimelineStepProps> = ({
   return (
     <View style={getStyles(listIndex, isTheLast)}>
       <View style={[styles.stepIconContainer, styles.justifyContentCenter]}>
-        <Image source={icon} />
+        {icon}
       </View>
       <Text
         style={[

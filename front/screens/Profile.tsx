@@ -2,12 +2,12 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import { filter } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
-import type { ImageSourcePropType } from "react-native";
-import { Image, ScrollView, StyleSheet, Text } from "react-native";
-import CheckBox from "react-native-check-box";
+import { ScrollView, StyleSheet, Text } from "react-native";
 
-import profileImage from "../assets/images/Humaaans-Space1.png";
+import ProfileImage from "../assets/images/Humaaans_Space_1.svg";
 import Button from "../components/form/Button";
+import Checkbox from "../components/form/Checkbox";
+import Datepicker from "../components/form/DatePicker";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
@@ -18,8 +18,9 @@ interface Props {
 
 export const Profile: FC<Props> = ({ navigation }) => {
   const appName = "1000 JOURS APP'";
-  const image: ImageSourcePropType = profileImage;
+  const image = <ProfileImage />;
   const title = "Votre profil";
+  const childBirthdayLabel = "Date de naissance de votre enfant";
 
   const defaultUserContext: UserContext = {
     childBirthday: null,
@@ -62,6 +63,10 @@ export const Profile: FC<Props> = ({ navigation }) => {
     });
   };
 
+  const updateChildBirthday = (date: Date | null) => {
+    setChildBirthday(() => date);
+  };
+
   React.useEffect(() => {
     setHasCheckedSituation(hasCheckedSituation());
   }, [userSituations]);
@@ -72,25 +77,35 @@ export const Profile: FC<Props> = ({ navigation }) => {
         <Text style={[styles.appName]}>{appName}</Text>
       </View>
       <ScrollView style={[styles.body]}>
-        <View style={[styles.justifyContentCenter]}>
-          <Image source={image} />
-        </View>
+        <View style={[styles.justifyContentCenter]}>{image}</View>
         <Text style={[styles.title, styles.textAlignCenter]}>{title}</Text>
         <View style={[styles.choices]}>
           {userSituations.map((situation, index) => {
             return (
-              <CheckBox
-                key={index}
-                style={[styles.checkbox]}
-                onClick={() => {
-                  updateUserSituations(situation);
-                }}
-                isChecked={situation.isChecked}
-                rightText={situation.label}
-                checkBoxColor={Colors.primaryColor}
-              />
+              <View key={index}>
+                <Checkbox
+                  title={situation.label}
+                  checked={situation.isChecked}
+                  onPress={() => {
+                    updateUserSituations(situation);
+                  }}
+                />
+              </View>
             );
           })}
+        </View>
+        <View>
+          <Text style={[styles.colorPrimary, styles.textAlignCenter]}>
+            {childBirthdayLabel}
+          </Text>
+          <View style={[styles.datepickerContainer]}>
+            <Datepicker
+              date={childBirthday ? childBirthday : new Date()}
+              onChange={(event, date) => {
+                updateChildBirthday(date ? date : null);
+              }}
+            />
+          </View>
         </View>
         <View style={[styles.footer, styles.justifyContentCenter]}>
           <View style={[styles.buttonContainer]}>
@@ -140,6 +155,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15,
   },
+  colorPrimary: {
+    color: Colors.primaryColor,
+  },
+  datepickerContainer: {
+    padding: 20,
+  },
   footer: {
     flex: 1,
     flexDirection: "row",
@@ -168,5 +189,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     padding: 15,
+  },
+  w100: {
+    width: "100%",
   },
 });

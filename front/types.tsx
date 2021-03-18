@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
 export type RootStackParamList = {
   onboarding: undefined;
   profile: undefined;
