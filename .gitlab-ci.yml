@@ -7,7 +7,6 @@ include:
 
 workflow:
   rules:
-    - when: always
 
 #
 
