@@ -8,14 +8,24 @@ export default {
       profile: "profile",
       root: {
         screens: {
-          tabOne: {
+          tabAroundMe: {
             screens: {
-              tabOneScreen: "one",
+              tabAroundMeScreen: "around-me",
             },
           },
-          tabTwo: {
+          tabCalendar: {
             screens: {
-              tabTwoScreen: "two",
+              tabCalendarScreen: "calendar",
+            },
+          },
+          tabFavorites: {
+            screens: {
+              tabFavoritesScreen: "favorites",
+            },
+          },
+          tabHome: {
+            screens: {
+              tabHomeScreen: "home",
             },
           },
         },

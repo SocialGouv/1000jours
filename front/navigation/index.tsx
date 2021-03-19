@@ -7,7 +7,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
 import type { ColorSchemeName } from "react-native";
+import { StyleSheet } from "react-native";
 
+import IconeMenu from "../assets/images/icone menu.svg";
+import LogoMinistere from "../assets/images/Logo ministère.svg";
+import { Text, View } from "../components/Themed";
+import Colors from "../constants/Colors";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import { Onboarding } from "../screens/Onboarding";
 import { Profile } from "../screens/Profile";
@@ -41,7 +46,30 @@ const RootNavigator: FC = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="onboarding" component={Onboarding} />
     <Stack.Screen name="profile" component={Profile} />
-    <Stack.Screen name="root" component={BottomTabNavigator} />
+    <Stack.Screen
+      name="root"
+      component={BottomTabNavigator}
+      options={{
+        headerLeft: () => (
+          <View style={[styles.headerRight]}>
+            <LogoMinistere />
+          </View>
+        ),
+        headerRight: () => (
+          <View
+            style={[styles.headerRight]}
+            onTouchEnd={() => {
+              console.log("Open menu");
+            }}
+          >
+            <IconeMenu />
+            <Text style={[styles.headerRightButtonText]}>Menu</Text>
+          </View>
+        ),
+        headerShown: true,
+        headerTitle: "1000j",
+      }}
+    />
     <Stack.Screen
       name="notFound"
       component={NotFoundScreen}
@@ -49,5 +77,19 @@ const RootNavigator: FC = () => (
     />
   </Stack.Navigator>
 );
+
+const styles = StyleSheet.create({
+  headerLeft: {
+    paddingLeft: 20,
+  },
+  headerRight: {
+    alignItems: "center",
+    paddingRight: 20,
+  },
+  headerRightButtonText: {
+    color: Colors.primaryColor,
+    paddingTop: 5,
+  },
+});
 
 export default Navigation;
