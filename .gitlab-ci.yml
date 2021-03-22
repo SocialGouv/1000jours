@@ -1,7 +1,7 @@
 include:
   - project: SocialGouv/gitlab-ci-yml
     file: /autodevops.yml
-    ref: v20.7.11
+    ref: v20.7.14
 
 variables:
   AUTO_DEVOPS_KANIKO: "✔️"
@@ -23,6 +23,17 @@ Lint:
 Build:
   rules:
     - when: never
+
+K8S Test:
+  extends: .autodevops_k8s_test
+  rules:
+    - if: "$PRODUCTION || $RELEASE"
+      when: never
+    # NOTE(douglasduteil): ensure to run k8s test
+    # - if: "$AUTO_DEVOPS_TEST_DISABLED"
+    #  when: never
+    - exists:
+        - .k8s/package.json
 
 Register Kaniko image:
   extends: .autodevops_register_kaniko_image
