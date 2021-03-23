@@ -12,6 +12,11 @@ D'abord, installez les dépendances
 yarn
 ```
 
+Puis, créer le fichier `.env`:
+```bash
+cp .env.example .env
+```
+
 Pour lancer l'application, utilisez :
 
 ```bash
