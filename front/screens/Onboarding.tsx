@@ -11,6 +11,8 @@ import Button from "../components/form/Button";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import type { RootStackParamList } from "../types";
+import { useQuery } from "@apollo/client";
+import { gql } from "@apollo/client/core";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -26,6 +28,17 @@ interface SlideView {
   image: React.ReactNode;
   description: string;
 }
+
+const ALL_ARTICLES = gql`
+  query GetAllArticles {
+    articles {
+      contenu
+      created_at
+      etape
+      id
+    }
+  }
+`;
 
 const Onboarding: FC<Props> = ({ navigation }) => {
   const appName = "1000 JOURS APP'";
@@ -52,6 +65,8 @@ const Onboarding: FC<Props> = ({ navigation }) => {
 
   const [swiperCurrentIndex, setSwiperCurrentIndex] = React.useState(0);
   const swiperRef = React.useRef<SwiperFlatList>(null);
+
+  const { loading, error, data } = useQuery(ALL_ARTICLES);
 
   return (
     <View style={[styles.mainContainer]}>
