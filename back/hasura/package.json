@@ -18,6 +18,7 @@
     "metadata:create": "hasura metadata export --admin-secret $HASURA_GRAPHQL_ADMIN_SECRET",
     "metadata:apply": "hasura metadata apply --admin-secret $HASURA_GRAPHQL_ADMIN_SECRET",
     "seeds:apply": "hasura seeds apply --admin-secret $HASURA_GRAPHQL_ADMIN_SECRET",
-    "data:import": "yarn migration:apply && yarn metadata:apply && yarn seeds:apply"
+    "data:import": "yarn migration:apply && yarn metadata:apply && yarn seeds:apply",
+    "console": "hasura console --no-browser --address $HASURA_ENDPOINT --endpoint http://$HASURA_ENDPOINT:8080 --admin-secret=$HASURA_GRAPHQL_ADMIN_SECRET"
   }
 }
