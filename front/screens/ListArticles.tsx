@@ -16,7 +16,7 @@ const ListArticles: FC<Props> = ({ navigation }) => {
   const screenTitle = "Nom de l'étape";
   const description =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-  const list = [
+  const articles = [
     {
       imageUrl:
         "https://raw.githubusercontent.com/koehlersimon/fallback/master/Resources/Public/Images/placeholder.jpg",
@@ -47,7 +47,7 @@ const ListArticles: FC<Props> = ({ navigation }) => {
         <Text style={[styles.description]}>{description}</Text>
       </View>
       <View>
-        {list.map((article, index) => (
+        {articles.map((article, index) => (
           <ListItem
             key={index}
             bottomDivider
