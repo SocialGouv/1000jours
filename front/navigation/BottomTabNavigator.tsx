@@ -19,50 +19,56 @@ import type {
   TabCalendarParamList,
   TabFavoritesParamList,
   TabHomeParamList,
+  TabItem,
 } from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 const BottomTabNavigator: FC = () => {
   const colorScheme = useColorScheme();
+  const tabItems: TabItem[] = [
+    {
+      component: TabHomeNavigator,
+      icon: <IconeAccueil height={30} />,
+      name: "tabHome",
+      title: "Accueil",
+    },
+    {
+      component: TabCalendarNavigator,
+      icon: <IconeCalendrier height={30} />,
+      name: "tabCalendar",
+      title: "Calendrier",
+    },
+    {
+      component: TabFavoritesNavigator,
+      icon: <IconeFavoris height={30} />,
+      name: "tabFavorites",
+      title: "Favoris",
+    },
+    {
+      component: TabAroundMeNavigator,
+      icon: <IconeAutourDeMoi height={30} />,
+      name: "tabAroundMe",
+      title: "Autour de moi",
+    },
+  ];
 
   return (
     <BottomTab.Navigator
       initialRouteName="tabHome"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
     >
-      <BottomTab.Screen
-        name="tabHome"
-        component={TabHomeNavigator}
-        options={{
-          tabBarIcon: () => <IconeAccueil height={30} />,
-          title: "Accueil",
-        }}
-      />
-      <BottomTab.Screen
-        name="tabCalendar"
-        component={TabCalendarNavigator}
-        options={{
-          tabBarIcon: () => <IconeCalendrier height={30} />,
-          title: "Calendrier",
-        }}
-      />
-      <BottomTab.Screen
-        name="tabFavorites"
-        component={TabFavoritesNavigator}
-        options={{
-          tabBarIcon: () => <IconeFavoris height={30} />,
-          title: "Favoris",
-        }}
-      />
-      <BottomTab.Screen
-        name="tabAroundMe"
-        component={TabAroundMeNavigator}
-        options={{
-          tabBarIcon: () => <IconeAutourDeMoi height={30} />,
-          title: "Autour de moi",
-        }}
-      />
+      {tabItems.map((tabItem, index) => (
+        <BottomTab.Screen
+          key={index}
+          name={tabItem.name}
+          component={tabItem.component}
+          options={{
+            tabBarIcon: () => tabItem.icon,
+            title: tabItem.title,
+          }}
+        />
+      ))}
     </BottomTab.Navigator>
   );
 };

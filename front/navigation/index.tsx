@@ -10,7 +10,7 @@ import type { ColorSchemeName } from "react-native";
 import { StyleSheet } from "react-native";
 
 import IconeMenu from "../assets/images/icone menu.svg";
-import LogoMinistere from "../assets/images/Logo ministère.svg";
+import LogoMinistere from "../assets/images/Logo ministere.svg";
 import { Text, View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import NotFoundScreen from "../screens/NotFoundScreen";
@@ -51,7 +51,7 @@ const RootNavigator: FC = () => (
       component={BottomTabNavigator}
       options={{
         headerLeft: () => (
-          <View style={[styles.headerRight]}>
+          <View style={[styles.headerLeft]}>
             <LogoMinistere />
           </View>
         ),
@@ -80,11 +80,11 @@ const RootNavigator: FC = () => (
 
 const styles = StyleSheet.create({
   headerLeft: {
-    paddingLeft: 20,
+    paddingLeft: 15,
   },
   headerRight: {
     alignItems: "center",
-    paddingRight: 20,
+    paddingRight: 15,
   },
   headerRightButtonText: {
     color: Colors.primaryColor,

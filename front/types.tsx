@@ -1,3 +1,5 @@
+import type { FC } from "react";
+
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 export type RootStackParamList = {
   onboarding: undefined;
@@ -38,4 +40,11 @@ export type UserSituation = {
 export type UserContext = {
   situations: UserSituation[];
   childBirthday: Date | null;
+};
+
+export type TabItem = {
+  name: keyof BottomTabParamList;
+  component: FC;
+  icon: React.ReactNode;
+  title: string;
 };
