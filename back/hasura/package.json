@@ -13,7 +13,7 @@
     "hasura-cli": "^1.3.3"
   },
   "scripts": {
-    "migration:create": "hasura migrate create --from-server 1000jours --admin-secret $HASURA_GRAPHQL_ADMIN_SECRET",
+    "migration:create": "hasura migrate create init --from-server --admin-secret $HASURA_GRAPHQL_ADMIN_SECRET",
     "migration:apply": "hasura migrate apply --admin-secret $HASURA_GRAPHQL_ADMIN_SECRET",
     "metadata:create": "hasura metadata export --admin-secret $HASURA_GRAPHQL_ADMIN_SECRET",
     "metadata:apply": "hasura metadata apply --admin-secret $HASURA_GRAPHQL_ADMIN_SECRET",

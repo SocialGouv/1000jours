@@ -25,11 +25,6 @@
       "via": "articles",
       "dominant": true
     },
-    "contenu_additionnel": {
-      "type": "component",
-      "repeatable": true,
-      "component": "text.text"
-    },
     "visuel": {
       "model": "file",
       "via": "related",
