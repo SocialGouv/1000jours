@@ -8,7 +8,7 @@ BEGIN
   _new."updated_at" = NOW();
   RETURN _new;
 END;
-$$
+$$;
 
 ALTER TABLE ONLY public.articles
     ADD CONSTRAINT articles_etape_fkey FOREIGN KEY (etape) REFERENCES public.etapes(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
