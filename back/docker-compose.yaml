@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: milleetunjoursdebebe
 
   strapi:
-    image: strapi/strapi
+    build: strapi
     environment:
       DATABASE_CLIENT: postgres
       DATABASE_NAME: 1000jours
@@ -35,6 +35,9 @@ services:
     depends_on:
     - "postgres"
     restart: always
+    volumes:
+      - ./hasura/migrations:/hasura-migrations
+      - ./hasura/metadata:/hasura-metadata
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://1000jours:milleetunjoursdebebe@postgres:5432/1000jours
       ## enable the console served by server

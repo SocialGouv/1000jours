@@ -237,6 +237,23 @@ spec:
             requests:
               cpu: 5m
               memory: 16Mi
+        - name: wait-for-strapi
+          image: bash:4
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 5m
+              memory: 16Mi
+            limits:
+              cpu: 20m
+              memory: 32Mi
+          command:
+            - sh
+            - '-c'
+            - >-
+              until nslookup strapi.$(cat
+              /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local;
+              do echo en attente de strapi; sleep 2; done
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret

@@ -1,7 +1,11 @@
 import env from "@kosko/env";
 
 import { create } from "@socialgouv/kosko-charts/components/hasura";
-import { getHarborImagePath } from "@socialgouv/kosko-charts/utils/getHarborImagePath";
+import {
+  getHarborImagePath,
+  getDeployment,
+  addWaitForService,
+} from "@socialgouv/kosko-charts/utils";
 
 const manifests = create({
   env,
@@ -28,5 +32,9 @@ const manifests = create({
     },
   },
 });
+
+//@ts-expect-error
+const deploy = getDeployment(manifests);
+addWaitForService(deploy, "strapi");
 
 export default manifests;
