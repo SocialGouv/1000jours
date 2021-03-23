@@ -1,3 +1,18 @@
+# [1.3.0](https://github.com/SocialGouv/1000jours/compare/v1.2.0...v1.3.0) (2021-03-23)
+
+
+### Bug Fixes
+
+* **build:** corrige le build du backoffice ([#55](https://github.com/SocialGouv/1000jours/issues/55)) ([1e5a75c](https://github.com/SocialGouv/1000jours/commit/1e5a75c9b32434286cb8d4db04f657376958880e))
+* **ci:** fix hasura prod sealed-secret ([#44](https://github.com/SocialGouv/1000jours/issues/44)) ([a5d9de2](https://github.com/SocialGouv/1000jours/commit/a5d9de29d01f178bcc8c82b811784011051293a3))
+
+
+### Features
+
+* 🎸 Ajoute le header et la tabbar de l'application ([#69](https://github.com/SocialGouv/1000jours/issues/69)) ([63a1502](https://github.com/SocialGouv/1000jours/commit/63a15025fe0dfe78811f2cc3c08a3b8f9dbc6587)), closes [#36](https://github.com/SocialGouv/1000jours/issues/36) [#38](https://github.com/SocialGouv/1000jours/issues/38)
+* **etape:** retourne l'étape courante en fonction des informations fournies, ref [#30](https://github.com/SocialGouv/1000jours/issues/30) ([#45](https://github.com/SocialGouv/1000jours/issues/45)) ([9b35724](https://github.com/SocialGouv/1000jours/commit/9b3572464c40c09d43cfd821a108651fd7938e77))
+* **profile:** 🎸 Affiche la date de naissance  ([#60](https://github.com/SocialGouv/1000jours/issues/60)) ([3f097da](https://github.com/SocialGouv/1000jours/commit/3f097da9573d6cb22b529af506ae0faadb26dda2)), closes [#56](https://github.com/SocialGouv/1000jours/issues/56) [#57](https://github.com/SocialGouv/1000jours/issues/57) [#10](https://github.com/SocialGouv/1000jours/issues/10)
+
 # [1.2.0](https://github.com/SocialGouv/1000jours/compare/v1.1.0...v1.2.0) (2021-03-10)
 
 
