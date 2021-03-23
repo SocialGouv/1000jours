@@ -1,82 +1,123 @@
-import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
 
+import IconeAccueil from "../assets/images/icone accueil.svg";
+import IconeAutourDeMoi from "../assets/images/icone autour de moi.svg";
+import IconeCalendrier from "../assets/images/icone calendrier.svg";
+import IconeFavoris from "../assets/images/icone favoris.svg";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import TabAroundMeScreen from "../screens/TabAroundMeScreen";
+import TabCalendarScreen from "../screens/TabCalendarScreen";
+import TabFavoritesScreen from "../screens/TabFavoritesScreen";
+import TabHomeScreen from "../screens/TabHomeScreen";
 import type {
   BottomTabParamList,
-  TabOneParamList,
-  TabTwoParamList,
+  TabAroundMeParamList,
+  TabCalendarParamList,
+  TabFavoritesParamList,
+  TabHomeParamList,
+  TabItem,
 } from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 const BottomTabNavigator: FC = () => {
   const colorScheme = useColorScheme();
+  const tabItems: TabItem[] = [
+    {
+      component: TabHomeNavigator,
+      icon: <IconeAccueil height={30} />,
+      name: "tabHome",
+      title: "Accueil",
+    },
+    {
+      component: TabCalendarNavigator,
+      icon: <IconeCalendrier height={30} />,
+      name: "tabCalendar",
+      title: "Calendrier",
+    },
+    {
+      component: TabFavoritesNavigator,
+      icon: <IconeFavoris height={30} />,
+      name: "tabFavorites",
+      title: "Favoris",
+    },
+    {
+      component: TabAroundMeNavigator,
+      icon: <IconeAutourDeMoi height={30} />,
+      name: "tabAroundMe",
+      title: "Autour de moi",
+    },
+  ];
 
   return (
     <BottomTab.Navigator
-      initialRouteName="tabOne"
+      initialRouteName="tabHome"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
     >
-      <BottomTab.Screen
-        name="tabOne"
-        component={TabOneNavigator}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name="tabTwo"
-        component={TabTwoNavigator}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
-          ),
-        }}
-      />
+      {tabItems.map((tabItem, index) => (
+        <BottomTab.Screen
+          key={index}
+          name={tabItem.name}
+          component={tabItem.component}
+          options={{
+            tabBarIcon: () => tabItem.icon,
+            title: tabItem.title,
+          }}
+        />
+      ))}
     </BottomTab.Navigator>
   );
 };
 
-// You can explore the built-in icon families and icons on the web at:
-// https://icons.expo.fyi/
-const TabBarIcon = (props: {
-  name: React.ComponentProps<typeof Ionicons>["name"];
-  color: string;
-}) => <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
-
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
 
-const TabOneNavigator: FC = () => (
-  <TabOneStack.Navigator>
-    <TabOneStack.Screen
-      name="tabOneScreen"
-      component={TabOneScreen}
-      options={{ headerTitle: "1000 jours App" }}
+const TabHomeStack = createStackNavigator<TabHomeParamList>();
+const TabHomeNavigator: FC = () => (
+  <TabHomeStack.Navigator screenOptions={{ headerShown: false }}>
+    <TabHomeStack.Screen
+      name="tabHomeScreen"
+      component={TabHomeScreen}
+      options={{}}
     />
-  </TabOneStack.Navigator>
+  </TabHomeStack.Navigator>
 );
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
-
-const TabTwoNavigator: FC = () => (
-  <TabTwoStack.Navigator>
-    <TabTwoStack.Screen
-      name="tabTwoScreen"
-      component={TabTwoScreen}
-      options={{ headerTitle: "Tab Two Title" }}
+const TabCalendarStack = createStackNavigator<TabCalendarParamList>();
+const TabCalendarNavigator: FC = () => (
+  <TabCalendarStack.Navigator screenOptions={{ headerShown: false }}>
+    <TabCalendarStack.Screen
+      name="tabCalendarScreen"
+      component={TabCalendarScreen}
+      options={{}}
     />
-  </TabTwoStack.Navigator>
+  </TabCalendarStack.Navigator>
+);
+
+const TabFavoritesStack = createStackNavigator<TabFavoritesParamList>();
+const TabFavoritesNavigator: FC = () => (
+  <TabFavoritesStack.Navigator screenOptions={{ headerShown: false }}>
+    <TabFavoritesStack.Screen
+      name="tabFavoritesScreen"
+      component={TabFavoritesScreen}
+      options={{}}
+    />
+  </TabFavoritesStack.Navigator>
+);
+
+const TabAroundMeStack = createStackNavigator<TabAroundMeParamList>();
+const TabAroundMeNavigator: FC = () => (
+  <TabAroundMeStack.Navigator screenOptions={{ headerShown: false }}>
+    <TabAroundMeStack.Screen
+      name="tabAroundMeScreen"
+      component={TabAroundMeScreen}
+      options={{}}
+    />
+  </TabAroundMeStack.Navigator>
 );
 
 export default BottomTabNavigator;

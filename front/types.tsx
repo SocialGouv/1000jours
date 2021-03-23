@@ -1,3 +1,5 @@
+import type { FC } from "react";
+
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 export type RootStackParamList = {
   onboarding: undefined;
@@ -7,16 +9,26 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
-  tabOne: undefined;
-  tabTwo: undefined;
+  tabHome: undefined;
+  tabCalendar: undefined;
+  tabFavorites: undefined;
+  tabAroundMe: undefined;
 };
 
-export type TabOneParamList = {
-  tabOneScreen: undefined;
+export type TabHomeParamList = {
+  tabHomeScreen: undefined;
 };
 
-export type TabTwoParamList = {
-  tabTwoScreen: undefined;
+export type TabCalendarParamList = {
+  tabCalendarScreen: undefined;
+};
+
+export type TabFavoritesParamList = {
+  tabFavoritesScreen: undefined;
+};
+
+export type TabAroundMeParamList = {
+  tabAroundMeScreen: undefined;
 };
 
 export type UserSituation = {
@@ -28,4 +40,11 @@ export type UserSituation = {
 export type UserContext = {
   situations: UserSituation[];
   childBirthday: Date | null;
+};
+
+export type TabItem = {
+  name: keyof BottomTabParamList;
+  component: FC;
+  icon: React.ReactNode;
+  title: string;
 };

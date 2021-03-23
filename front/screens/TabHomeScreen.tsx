@@ -4,14 +4,14 @@ import * as React from "react";
 import { StyleSheet, Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import StepIcon8 from "../assets/images/OLD_Icone_1_a_2_ans.svg";
-import StepIcon7 from "../assets/images/OLD_Icone_4_mois_a_1_an.svg";
-import StepIcon6 from "../assets/images/OLD_Icone_4_premiers_mois.svg";
-import StepIcon5 from "../assets/images/OLD_Icone_accouchement.svg";
-import StepIcon2 from "../assets/images/OLD_Icone_conception.svg";
-import StepIcon3 from "../assets/images/OLD_Icone_debut_de_grossesse.svg";
-import StepIcon4 from "../assets/images/OLD_Icone_fin_de_grossesse.svg";
-import StepIcon1 from "../assets/images/OLD_icone_projet_parent.svg";
+import StepIcon8 from "../assets/images/Icone 1 à 2 ans.svg";
+import StepIcon7 from "../assets/images/Icone 4 mois à 1 an.svg";
+import StepIcon6 from "../assets/images/Icone 4 premiers mois.svg";
+import StepIcon5 from "../assets/images/Icone accouchement.svg";
+import StepIcon2 from "../assets/images/Icone conception.svg";
+import StepIcon3 from "../assets/images/Icone début de grossesse.svg";
+import StepIcon4 from "../assets/images/Icone fin de grossesse.svg";
+import StepIcon1 from "../assets/images/icone projet parent.svg";
 import { View } from "../components/Themed";
 import TimelineStep from "../components/timeline/TimlineStep";
 import Colors from "../constants/Colors";
@@ -21,7 +21,7 @@ interface Step {
   icon: React.ReactNode;
 }
 
-const TabOneScreen: FC = () => {
+const TabHomeScreen: FC = () => {
   const screenTitle = "Choisissez l'étape que vous souhaitez approfondir";
   const description =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
@@ -160,4 +160,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TabOneScreen;
+export default TabHomeScreen;
