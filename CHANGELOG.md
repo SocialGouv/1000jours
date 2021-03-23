@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/SocialGouv/1000jours/compare/v1.3.0...v1.4.0) (2021-03-23)
+
+
+### Features
+
+* 🎸 je consulte le détail d'un article ([#72](https://github.com/SocialGouv/1000jours/issues/72)) ([5b3a330](https://github.com/SocialGouv/1000jours/commit/5b3a330257f80f51e5392dbf7acbfd2b1dcaa804)), closes [#28](https://github.com/SocialGouv/1000jours/issues/28)
+
 # [1.3.0](https://github.com/SocialGouv/1000jours/compare/v1.2.0...v1.3.0) (2021-03-23)
 
 
