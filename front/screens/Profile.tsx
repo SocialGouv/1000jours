@@ -16,7 +16,7 @@ interface Props {
   navigation: StackNavigationProp<RootStackParamList, "profile">;
 }
 
-export const Profile: FC<Props> = ({ navigation }) => {
+const Profile: FC<Props> = ({ navigation }) => {
   const appName = "1000 JOURS APP'";
   const image = <ProfileImage />;
   const title = "Votre profil";
@@ -214,3 +214,5 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 });
+
+export default Profile;

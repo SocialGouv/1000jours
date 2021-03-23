@@ -27,7 +27,7 @@ interface SlideView {
   description: string;
 }
 
-export const Onboarding: FC<Props> = ({ navigation }) => {
+const Onboarding: FC<Props> = ({ navigation }) => {
   const appName = "1000 JOURS APP'";
   const slideViews: SlideView[] = [
     {
@@ -179,3 +179,5 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
 });
+
+export default Onboarding;

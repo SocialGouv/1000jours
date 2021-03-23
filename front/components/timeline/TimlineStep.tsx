@@ -10,6 +10,7 @@ interface TimelineStepProps {
   icon: React.ReactNode;
   index: number;
   isTheLast: boolean;
+  onPress: () => void;
 }
 
 const TimelineStep: FC<TimelineStepProps> = ({
@@ -17,6 +18,7 @@ const TimelineStep: FC<TimelineStepProps> = ({
   icon,
   index: listIndex,
   isTheLast,
+  onPress,
 }) => {
   const getStyles = (index: number, isLast: boolean) => {
     const initialOffset = 10;
@@ -39,7 +41,7 @@ const TimelineStep: FC<TimelineStepProps> = ({
   };
 
   return (
-    <View style={getStyles(listIndex, isTheLast)}>
+    <View style={getStyles(listIndex, isTheLast)} onTouchEnd={onPress}>
       <View style={[styles.stepIconContainer, styles.justifyContentCenter]}>
         {icon}
       </View>
