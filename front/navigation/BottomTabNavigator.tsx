@@ -9,6 +9,8 @@ import IconeCalendrier from "../assets/images/icone calendrier.svg";
 import IconeFavoris from "../assets/images/icone favoris.svg";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
+import Article from "../screens/Article";
+import ListArticles from "../screens/ListArticles";
 import TabAroundMeScreen from "../screens/TabAroundMeScreen";
 import TabCalendarScreen from "../screens/TabCalendarScreen";
 import TabFavoritesScreen from "../screens/TabFavoritesScreen";
@@ -84,6 +86,8 @@ const TabHomeNavigator: FC = () => (
       component={TabHomeScreen}
       options={{}}
     />
+    <TabHomeStack.Screen name="listArticles" component={ListArticles} />
+    <TabHomeStack.Screen name="article" component={Article} />
   </TabHomeStack.Navigator>
 );
 

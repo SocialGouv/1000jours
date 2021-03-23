@@ -1,3 +1,4 @@
+import type { StackNavigationProp } from "@react-navigation/stack";
 import { range } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
@@ -15,13 +16,18 @@ import StepIcon1 from "../assets/images/icone projet parent.svg";
 import { View } from "../components/Themed";
 import TimelineStep from "../components/timeline/TimlineStep";
 import Colors from "../constants/Colors";
+import type { TabHomeParamList } from "../types";
 
 interface Step {
   title: string;
   icon: React.ReactNode;
 }
 
-const TabHomeScreen: FC = () => {
+interface Props {
+  navigation: StackNavigationProp<TabHomeParamList, "listArticles">;
+}
+
+const TabHomeScreen: FC<Props> = ({ navigation }) => {
   const screenTitle = "Choisissez l'étape que vous souhaitez approfondir";
   const description =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
@@ -97,6 +103,9 @@ const TabHomeScreen: FC = () => {
             index={index}
             isTheLast={index === steps.length - 1}
             key={index}
+            onPress={() => {
+              navigation.navigate("listArticles");
+            }}
           />
         ))}
       </View>

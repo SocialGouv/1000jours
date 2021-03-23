@@ -17,6 +17,8 @@ export type BottomTabParamList = {
 
 export type TabHomeParamList = {
   tabHomeScreen: undefined;
+  listArticles: undefined;
+  article: undefined;
 };
 
 export type TabCalendarParamList = {
