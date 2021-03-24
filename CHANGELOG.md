@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/SocialGouv/1000jours/compare/v1.4.0...v1.4.1) (2021-03-24)
+
+
+### Bug Fixes
+
+* Ci3 ([#70](https://github.com/SocialGouv/1000jours/issues/70)) ([3f665ff](https://github.com/SocialGouv/1000jours/commit/3f665ff0df881efd688f1323fba246ae0d0d00d5))
+
 # [1.4.0](https://github.com/SocialGouv/1000jours/compare/v1.3.0...v1.4.0) (2021-03-23)
 
 
