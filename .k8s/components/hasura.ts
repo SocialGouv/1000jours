@@ -11,7 +11,7 @@ const manifests = create({
   env,
   config: {
     ingress: true,
-    subDomainPrefix: "graphql-",
+    subDomainPrefix: "api-",
   },
   deployment: {
     image: getHarborImagePath({ name: "les1000jours-hasura" }),

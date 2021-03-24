@@ -385,7 +385,7 @@ metadata:
   namespace: 1000jours-85-master-dev2
 spec:
   rules:
-    - host: graphql-chore-d-u8fps8-les1000jours.dev2.fabrique.social.gouv.fr
+    - host: api-chore-d-u8fps8-les1000jours.dev2.fabrique.social.gouv.fr
       http:
         paths:
           - backend:
@@ -394,7 +394,7 @@ spec:
             path: /
   tls:
     - hosts:
-        - graphql-chore-d-u8fps8-les1000jours.dev2.fabrique.social.gouv.fr
+        - api-chore-d-u8fps8-les1000jours.dev2.fabrique.social.gouv.fr
       secretName: wildcard-crt
 ---
 apiVersion: batch/v1

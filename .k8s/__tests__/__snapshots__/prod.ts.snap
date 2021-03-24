@@ -364,7 +364,7 @@ metadata:
   namespace: les1000jours
 spec:
   rules:
-    - host: graphql-les1000jours.fabrique.social.gouv.fr
+    - host: api-les1000jours.fabrique.social.gouv.fr
       http:
         paths:
           - backend:
@@ -373,7 +373,7 @@ spec:
             path: /
   tls:
     - hosts:
-        - graphql-les1000jours.fabrique.social.gouv.fr
+        - api-les1000jours.fabrique.social.gouv.fr
       secretName: hasura-crt
 ---
 apiVersion: bitnami.com/v1alpha1
