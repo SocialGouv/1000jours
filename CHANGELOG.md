@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/SocialGouv/1000jours/compare/v1.4.1...v1.4.2) (2021-03-24)
+
+
+### Bug Fixes
+
+* **ci:** better DNS prefixes ([#73](https://github.com/SocialGouv/1000jours/issues/73)) ([de5155f](https://github.com/SocialGouv/1000jours/commit/de5155f8f2ccbef4b1b3e8559481d80b7998487d))
+
 ## [1.4.1](https://github.com/SocialGouv/1000jours/compare/v1.4.0...v1.4.1) (2021-03-24)
 
 
