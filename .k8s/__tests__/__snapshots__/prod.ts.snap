@@ -364,7 +364,7 @@ metadata:
   namespace: les1000jours
 spec:
   rules:
-    - host: hasura.les1000jours.fabrique.social.gouv.fr
+    - host: api-les1000jours.fabrique.social.gouv.fr
       http:
         paths:
           - backend:
@@ -373,7 +373,7 @@ spec:
             path: /
   tls:
     - hosts:
-        - hasura.les1000jours.fabrique.social.gouv.fr
+        - api-les1000jours.fabrique.social.gouv.fr
       secretName: hasura-crt
 ---
 apiVersion: bitnami.com/v1alpha1
@@ -653,7 +653,7 @@ metadata:
   namespace: les1000jours
 spec:
   rules:
-    - host: strapi-les1000jours.fabrique.social.gouv.fr
+    - host: backoffice-les1000jours.fabrique.social.gouv.fr
       http:
         paths:
           - backend:
@@ -662,7 +662,7 @@ spec:
             path: /
   tls:
     - hosts:
-        - strapi-les1000jours.fabrique.social.gouv.fr
+        - backoffice-les1000jours.fabrique.social.gouv.fr
       secretName: strapi-crt
 "
 `;

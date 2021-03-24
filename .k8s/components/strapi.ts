@@ -32,7 +32,7 @@ const manifests = create("strapi", {
   config: {
     containerPort: 1337,
     withPostgres: true,
-    subDomainPrefix: "strapi-",
+    subDomainPrefix: "backoffice-",
   },
   deployment: {
     image: getHarborImagePath({ name: "les1000jours-strapi" }),
