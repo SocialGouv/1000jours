@@ -1,4 +1,0 @@
-INSERT INTO public.evenements (id, nom, description, debut, etape, published_at, created_by, updated_by, created_at, updated_at) VALUES (3, 'rdv 3e echo', NULL, -63, 4, '2021-03-01 14:03:25.903+00', 1, 1, '2021-03-01 14:03:21.885+00', '2021-03-01 14:03:25.936+00');
-INSERT INTO public.evenements (id, nom, description, debut, etape, published_at, created_by, updated_by, created_at, updated_at) VALUES (2, 'rdv 2e echo', NULL, -119, 4, '2021-03-01 14:02:59.07+00', 1, 1, '2021-03-01 14:02:33.076+00', '2021-03-01 14:02:59.103+00');
-INSERT INTO public.evenements (id, nom, description, debut, etape, published_at, created_by, updated_by, created_at, updated_at) VALUES (1, 'rdv 1ère echo', NULL, -217, 3, '2021-03-01 14:01:31.748+00', 1, 1, '2021-03-01 14:01:27.607+00', '2021-03-01 14:01:31.786+00');
-SELECT pg_catalog.setval('public.evenements_id_seq', 3, true);
