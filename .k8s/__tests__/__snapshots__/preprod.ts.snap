@@ -383,7 +383,7 @@ metadata:
   namespace: 1000jours-85-preprod-dev2
 spec:
   rules:
-    - host: hasura-v1-2-3-les1000jours.dev2.fabrique.social.gouv.fr
+    - host: graphql-v1-2-3-les1000jours.dev2.fabrique.social.gouv.fr
       http:
         paths:
           - backend:
@@ -392,7 +392,7 @@ spec:
             path: /
   tls:
     - hosts:
-        - hasura-v1-2-3-les1000jours.dev2.fabrique.social.gouv.fr
+        - graphql-v1-2-3-les1000jours.dev2.fabrique.social.gouv.fr
       secretName: wildcard-crt
 ---
 apiVersion: bitnami.com/v1alpha1
@@ -675,7 +675,7 @@ metadata:
   namespace: 1000jours-85-preprod-dev2
 spec:
   rules:
-    - host: strapi-v1-2-3-les1000jours.dev2.fabrique.social.gouv.fr
+    - host: backoffice-v1-2-3-les1000jours.dev2.fabrique.social.gouv.fr
       http:
         paths:
           - backend:
@@ -684,7 +684,7 @@ spec:
             path: /
   tls:
     - hosts:
-        - strapi-v1-2-3-les1000jours.dev2.fabrique.social.gouv.fr
+        - backoffice-v1-2-3-les1000jours.dev2.fabrique.social.gouv.fr
       secretName: wildcard-crt
 "
 `;
