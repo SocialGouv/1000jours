@@ -17,8 +17,10 @@
     "resume": {
       "type": "richtext"
     },
-    "etape": {
-      "model": "etape"
+    "etapes": {
+      "collection": "etape",
+      "via": "articles",
+      "dominant": true
     },
     "thematiques": {
       "collection": "thematique",
@@ -35,6 +37,72 @@
       ],
       "plugin": "upload",
       "required": false
+    },
+    "texte_1": {
+      "type": "richtext"
+    },
+    "le_saviez_vous": {
+      "type": "text"
+    },
+    "texte_2": {
+      "type": "richtext"
+    },
+    "enbref_1_icone": {
+      "type": "enumeration",
+      "enum": [
+        "bebe",
+        "parent",
+        "alimentation"
+      ]
+    },
+    "enbref_1_texte": {
+      "type": "text"
+    },
+    "enbref_2_icone": {
+      "type": "enumeration",
+      "enum": [
+        "bebe",
+        "parent",
+        "alimentation"
+      ]
+    },
+    "enbref_2_texte": {
+      "type": "text"
+    },
+    "enbref_3_icone": {
+      "type": "enumeration",
+      "enum": [
+        "bebe",
+        "parent",
+        "alimentation"
+      ]
+    },
+    "enbref_3_texte": {
+      "type": "text"
+    },
+    "lien_1_titre": {
+      "type": "string"
+    },
+    "lien_1_url": {
+      "type": "string"
+    },
+    "lien_2_titre": {
+      "type": "string"
+    },
+    "lien_2_url": {
+      "type": "string"
+    },
+    "lien_3_titre": {
+      "type": "string"
+    },
+    "lien_3_url": {
+      "type": "string"
+    },
+    "lien_4_titre": {
+      "type": "string"
+    },
+    "lien_4_url": {
+      "type": "string"
     }
   }
 }

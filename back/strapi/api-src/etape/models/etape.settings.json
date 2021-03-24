@@ -25,6 +25,10 @@
       "collection": "parcours",
       "via": "etapes"
     },
+    "articles": {
+      "collection": "article",
+      "via": "etapes"
+    },
     "ordre": {
       "type": "integer"
     }
