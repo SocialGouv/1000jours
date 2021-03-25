@@ -10,4 +10,5 @@ data:
   ## enable debugging mode. It is recommended to disable this in production
   HASURA_GRAPHQL_LOG_LEVEL: "debug"
   HASURA_GRAPHQL_DEV_MODE: "true"
+  HASURA_GRAPHQL_UNAUTHORIZED_ROLE: "anonymous"
 
