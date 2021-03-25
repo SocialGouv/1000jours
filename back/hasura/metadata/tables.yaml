@@ -1,15 +1,24 @@
 - table:
     schema: public
     name: articles
+  object_relationships:
+  - name: visuel
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: upload_file_morph
+        column_mapping:
+          id: related_id
   array_relationships:
-  - name: articles_etapes__etapes_articles
+  - name: etapes
     using:
       foreign_key_constraint_on:
         column: article_id
         table:
           schema: public
           name: articles_etapes__etapes_articles
-  - name: articles_thematiques__thematiques_articles
+  - name: thematiques
     using:
       foreign_key_constraint_on:
         column: article_id
@@ -81,14 +90,14 @@
     schema: public
     name: etapes
   array_relationships:
-  - name: articles_etapes__etapes_articles
+  - name: articles
     using:
       foreign_key_constraint_on:
         column: etape_id
         table:
           schema: public
           name: articles_etapes__etapes_articles
-  - name: etapes_parcours__parcours_etapes
+  - name: parcours
     using:
       foreign_key_constraint_on:
         column: etape_id
@@ -119,7 +128,7 @@
     schema: public
     name: parcours
   array_relationships:
-  - name: etapes_parcours__parcours_etapes
+  - name: etapes
     using:
       foreign_key_constraint_on:
         column: parcour_id
@@ -130,7 +139,7 @@
     schema: public
     name: thematiques
   array_relationships:
-  - name: articles_thematiques__thematiques_articles
+  - name: articles
     using:
       foreign_key_constraint_on:
         column: thematique_id
@@ -146,3 +155,38 @@
       filter:
         published_at:
           _is_null: false
+- table:
+    schema: public
+    name: upload_file
+  array_relationships:
+  - name: relations
+    using:
+      foreign_key_constraint_on:
+        column: upload_file_id
+        table:
+          schema: public
+          name: upload_file_morph
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - formats
+      - height
+      - size
+      - url
+      - width
+      filter: {}
+- table:
+    schema: public
+    name: upload_file_morph
+  object_relationships:
+  - name: file
+    using:
+      foreign_key_constraint_on: upload_file_id
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - related_id
+      - upload_file_id
+      filter: {}
