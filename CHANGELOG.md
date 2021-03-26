@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/SocialGouv/1000jours/compare/v1.4.2...v1.4.3) (2021-03-25)
+
+
+### Bug Fixes
+
+* **api:** permet aux clients non-authentifiés de faire des requêtes ([#74](https://github.com/SocialGouv/1000jours/issues/74)) ([5f6c41a](https://github.com/SocialGouv/1000jours/commit/5f6c41aa9ea4943094538edeb4f6d4ec68e9525c))
+
 ## [1.4.2](https://github.com/SocialGouv/1000jours/compare/v1.4.1...v1.4.2) (2021-03-24)
 
 
