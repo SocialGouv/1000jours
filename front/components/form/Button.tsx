@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { StyleProp, TextStyle, ViewStyle } from "react-native";
 import { StyleSheet } from "react-native";
 import { Button as RNEButton } from "react-native-elements";
 
@@ -7,19 +8,34 @@ import Colors from "../../constants/Colors";
 interface Props {
   title: string;
   rounded: boolean;
-  disabled: boolean;
   action: () => void;
+  icon?: React.ReactElement;
+  disabled?: boolean;
+  buttonStyle?: StyleProp<ViewStyle>;
+  titleStyle?: StyleProp<TextStyle>;
 }
 
-const Button: React.FC<Props> = ({ title, rounded, disabled, action }) => {
+const Button: React.FC<Props> = ({
+  title,
+  icon,
+  rounded,
+  disabled,
+  action,
+  buttonStyle,
+  titleStyle,
+}) => {
   return (
     <RNEButton
       disabled={disabled}
       disabledStyle={disabled ? styles.disabledButton : null}
-      iconRight
+      icon={icon}
+      iconRight={false}
       title={title}
-      buttonStyle={rounded ? styles.roundedButton : styles.clearButton}
-      titleStyle={rounded ? styles.roundedButtonTitle : styles.clearButtonTitle}
+      buttonStyle={[rounded ? styles.roundedButton : null, buttonStyle]}
+      titleStyle={[
+        rounded ? styles.roundedButtonTitle : styles.clearButtonTitle,
+        titleStyle,
+      ]}
       onPress={action}
       type={rounded ? "solid" : "clear"}
     />
@@ -27,23 +43,15 @@ const Button: React.FC<Props> = ({ title, rounded, disabled, action }) => {
 };
 
 const styles = StyleSheet.create({
-  clearButton: {
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 10,
-    padding: 15,
-    paddingLeft: 30,
-    paddingRight: 30,
-  },
   clearButtonTitle: {
-    color: Colors.tertiaryColor,
-    textAlign: "center",
+    color: Colors.primaryBlue,
+    textAlign: "left",
   },
   disabledButton: {
-    backgroundColor: Colors.tertiaryColorDisabled,
+    backgroundColor: Colors.primaryBlueLight,
   },
   roundedButton: {
-    backgroundColor: Colors.tertiaryColor,
+    backgroundColor: Colors.primaryBlue,
     borderRadius: 40,
     marginLeft: 30,
     marginRight: 30,

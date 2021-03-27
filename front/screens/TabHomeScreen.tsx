@@ -115,7 +115,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   description: {
-    color: Colors.textColor,
+    color: Colors.commonText,
   },
   mainContainer: {
     backgroundColor: "white",
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   timelineBlock: {
     backgroundColor: "transparent",
     borderBottomWidth: 1,
-    borderColor: Colors.secondaryColor,
+    borderColor: Colors.primaryYellow,
     borderStyle: "solid",
     borderTopWidth: 1,
     height: 100,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   title: {
-    color: Colors.primaryColor,
+    color: Colors.primaryBlue,
     fontSize: 15,
     fontWeight: "bold",
     marginBottom: 10,

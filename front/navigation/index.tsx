@@ -62,7 +62,7 @@ const RootNavigator: FC = () => (
               console.log("Open menu");
             }}
           >
-            <IconeMenu />
+            <IconeMenu width="28" />
             <Text style={[styles.headerRightButtonText]}>Menu</Text>
           </View>
         ),
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     paddingRight: 15,
   },
   headerRightButtonText: {
-    color: Colors.primaryColor,
+    color: Colors.primaryBlue,
     paddingTop: 5,
   },
 });
