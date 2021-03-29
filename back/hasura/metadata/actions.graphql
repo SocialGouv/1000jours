@@ -4,6 +4,9 @@ type Query {
   ): CurrentEtape
 }
 
+
+
+
 input Informations {
   projet : Boolean
   conception : Boolean
@@ -17,3 +20,4 @@ type CurrentEtape {
   id : String
   date : String
 }
+
