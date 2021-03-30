@@ -85,6 +85,8 @@ const strapiManifests = create("strapi", {
 //@ts-expect-error
 const deployment = getManifestByKind(strapiManifests, Deployment) as Deployment;
 
+const namespace = deployment?.metadata?.namespace;
+
 if (deployment && deployment?.spec?.template.spec) {
   deployment.spec.template.spec.volumes = [
     {
@@ -105,12 +107,13 @@ const pv = new PersistentVolume({
   },
   spec: {
     capacity: {
-      storage: "10Gi",
+      storage: "50Gi",
     },
     accessModes: ["ReadWriteMany"],
     persistentVolumeReclaimPolicy: "Retain",
     azureFile: {
       secretName: "strapi-sealed-secret",
+      secretNamespace: namespace,
       shareName: "uploads",
       readOnly: false,
     },
