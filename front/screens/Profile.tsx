@@ -158,7 +158,7 @@ const Profile: FC<Props> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   appName: {
-    color: Colors.primaryColor,
+    color: Colors.primaryBlue,
     fontSize: 25,
     fontWeight: "bold",
   },
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   colorPrimary: {
-    color: Colors.primaryColor,
+    color: Colors.primaryBlue,
   },
   datepickerContainer: {
     padding: 20,
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   title: {
-    color: Colors.primaryColor,
+    color: Colors.primaryBlue,
     fontSize: 18,
     fontWeight: "bold",
     padding: 15,

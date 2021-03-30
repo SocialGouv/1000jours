@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     paddingBottom: 60,
   },
   stepIconContainer: {
-    borderColor: Colors.secondaryColor,
+    borderColor: Colors.primaryYellow,
     borderRadius: 40,
     borderWidth: 1,
     height: 80,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   stepTitle: {
-    color: Colors.primaryColor,
+    color: Colors.primaryBlue,
     fontSize: 13,
     paddingLeft: 10,
     paddingRight: 10,

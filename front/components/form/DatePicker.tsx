@@ -21,7 +21,7 @@ const Datepicker: React.FC<Props> = ({ date, onChange }) => {
         value={date}
         mode="date"
         display="default"
-        textColor={Colors.primaryColor}
+        textColor={Colors.primaryBlue}
         onChange={onChange}
         style={{
           alignSelf: "center",

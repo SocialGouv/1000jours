@@ -18,7 +18,7 @@ export type BottomTabParamList = {
 export type TabHomeParamList = {
   tabHomeScreen: undefined;
   listArticles: undefined;
-  article: undefined;
+  article: { id: number };
 };
 
 export type TabCalendarParamList = {
@@ -49,4 +49,26 @@ export type TabItem = {
   component: FC;
   icon: React.ReactNode;
   title: string;
+};
+
+export type ThematiqueContainer = {
+  thematique: Thematique;
+};
+export type Thematique = {
+  id: number;
+  nom: string;
+};
+export type UploadFile = {
+  url: string;
+};
+export type Visuel = {
+  uploadFile: UploadFile;
+};
+export type Article = {
+  id: number;
+  titre: string;
+  resume: string;
+  texte1: string;
+  visuel?: Visuel;
+  thematiques: ThematiqueContainer[];
 };

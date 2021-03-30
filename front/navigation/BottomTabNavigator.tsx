@@ -9,7 +9,7 @@ import IconeCalendrier from "../assets/images/icone calendrier.svg";
 import IconeFavoris from "../assets/images/icone favoris.svg";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import Article from "../screens/Article";
+import ArticleDetail from "../screens/ArticleDetail";
 import ListArticles from "../screens/ListArticles";
 import TabAroundMeScreen from "../screens/TabAroundMeScreen";
 import TabCalendarScreen from "../screens/TabCalendarScreen";
@@ -87,7 +87,7 @@ const TabHomeNavigator: FC = () => (
       options={{}}
     />
     <TabHomeStack.Screen name="listArticles" component={ListArticles} />
-    <TabHomeStack.Screen name="article" component={Article} />
+    <TabHomeStack.Screen name="article" component={ArticleDetail} />
   </TabHomeStack.Navigator>
 );
 
