@@ -2,6 +2,7 @@ import * as React from "react";
 import type { StyleProp, TextStyle, ViewStyle } from "react-native";
 import { StyleSheet } from "react-native";
 import { Button as RNEButton } from "react-native-elements";
+import type { IconNode } from "react-native-elements/dist/icons/Icon";
 
 import Colors from "../../constants/Colors";
 
@@ -9,7 +10,7 @@ interface Props {
   title: string;
   rounded: boolean;
   action: () => void;
-  icon?: React.ReactElement;
+  icon?: IconNode;
   disabled?: boolean;
   buttonStyle?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;

@@ -6,13 +6,11 @@ import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
-import { ActivityIndicator, StyleSheet, Text } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, Text } from "react-native";
 import { Image } from "react-native-elements";
 import HTML from "react-native-render-html";
 
-import IconArrowLeft from "../assets/images/icone retour.svg";
-import Button from "../components/form/Button";
-import Icomoon from "../components/Icomoon";
+import BackButton from "../components/BackButton";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
@@ -37,7 +35,7 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
         resume
         texte1: texte_1
         visuel {
-          uploadFile: upload_file {
+          uploadFile: file {
             url
           }
         }
@@ -52,64 +50,48 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
   `;
   const { loading, error, data } = useQuery(ARTICLE_DETAIL);
 
-  if (loading) {
-    return (
-      <View>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  } else {
-    if (error) {
-      return (
+  if (loading) return <ActivityIndicator size="large" />;
+  if (error) return <Text>{Labels.errorMsg}</Text>;
+
+  const result = data as { article: Article };
+  return (
+    <ScrollView>
+      <View style={[styles.mainContainer]}>
         <View>
-          <Text>{Labels.errorMsg}</Text>
-        </View>
-      );
-    } else {
-      const result = data as { article: Article };
-      return (
-        <View style={[styles.mainContainer]}>
-          <View>
-            <View style={[styles.flexStart]}>
-              <Button
-                title="Retour"
-                icon={<IconArrowLeft width={24} />}
-                rounded={false}
-                disabled={false}
-                action={() => {
-                  navigation.goBack();
-                }}
-                titleStyle={{ color: Colors.secondaryGreen }}
-              />
-            </View>
-            <Text style={[styles.title]}>{screenTitle}</Text>
-            <Text style={[styles.description]}>{description}</Text>
-          </View>
-          <View>
-            <Image
-              source={{
-                uri: `${BO_URL}${result.article.visuel?.uploadFile.url}`,
+          <View style={[styles.flexStart]}>
+            <BackButton
+              action={() => {
+                navigation.goBack();
               }}
-              style={[styles.articleImage]}
             />
-            <Text style={[styles.title]}>{result.article.titre}</Text>
-            <View style={[styles.flexStart]}>
-              {result.article.thematiques.map((thematiqueContainer, index) => {
-                return (
-                  <View style={[styles.thematiqueContainer]} key={index}>
-                    <Text style={[styles.thematique]}>
-                      {thematiqueContainer.thematique.nom}
-                    </Text>
-                  </View>
-                );
-              })}
-            </View>
-            <HTML source={{ html: result.article.texte1 }} />
           </View>
+          <Text style={[styles.title]}>{screenTitle}</Text>
+          <Text style={[styles.description]}>{description}</Text>
         </View>
-      );
-    }
-  }
+        <View>
+          <Image
+            source={{
+              uri: `${BO_URL}${result.article.visuel?.uploadFile.url}`,
+            }}
+            style={[styles.articleImage]}
+          />
+          <Text style={[styles.title]}>{result.article.titre}</Text>
+          <View style={[styles.flexStart]}>
+            {result.article.thematiques.map((thematiqueContainer, index) => {
+              return (
+                <View style={[styles.thematiqueContainer]} key={index}>
+                  <Text style={[styles.thematique]}>
+                    {thematiqueContainer.thematique.nom}
+                  </Text>
+                </View>
+              );
+            })}
+          </View>
+          <HTML source={{ html: result.article.texte1 }} />
+        </View>
+      </View>
+    </ScrollView>
+  );
 };
 
 const styles = StyleSheet.create({
