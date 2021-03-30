@@ -672,12 +672,13 @@ metadata:
     usage: strapi-uploads
 spec:
   capacity:
-    storage: 10Gi
+    storage: 50Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   azureFile:
     secretName: strapi-sealed-secret
+    secretNamespace: les1000jours
     shareName: uploads
     readOnly: false
 ---
