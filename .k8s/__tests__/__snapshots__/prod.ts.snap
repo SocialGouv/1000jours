@@ -543,7 +543,7 @@ spec:
               memory: 16Mi
       volumes:
         - persistentVolumeClaim:
-            claimName: strapi-uploads2
+            claimName: strapi-uploads
           name: uploads
 ---
 apiVersion: bitnami.com/v1alpha1
@@ -665,27 +665,9 @@ spec:
       secretName: strapi-crt
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: strapi-uploads2
-  labels:
-    usage: strapi-uploads2
-spec:
-  capacity:
-    storage: 50Gi
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  azureFile:
-    secretName: strapi-sealed-secret
-    secretNamespace: les1000jours
-    shareName: uploads
-    readOnly: false
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: strapi-uploads2
+  name: strapi-uploads
   annotations:
     volume.beta.kubernetes.io/storage-class: ''
 spec:
@@ -696,6 +678,6 @@ spec:
       storage: 10Gi
   selector:
     matchLabels:
-      usage: strapi-uploads2
+      usage: strapi-uploads
 "
 `;
