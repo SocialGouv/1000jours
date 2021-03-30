@@ -67,7 +67,17 @@ const RootNavigator: FC = () => (
           </View>
         ),
         headerShown: true,
-        headerTitle: "1000j",
+        headerTitle: () => (
+          <View
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text>1000 jours</Text>
+          </View>
+        ),
       }}
     />
     <Stack.Screen

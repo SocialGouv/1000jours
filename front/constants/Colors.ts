@@ -31,4 +31,5 @@ export default {
   commonText: "#4C4C4C",
   cardGrey: "#FAFAFA",
   cardWhite: "#FEFEFE",
+  disabled: "#BDBDBD",
 };
