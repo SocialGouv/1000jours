@@ -15,7 +15,7 @@
       "type": "string"
     },
     "resume": {
-      "type": "richtext"
+      "type": "text"
     },
     "etapes": {
       "collection": "etape",

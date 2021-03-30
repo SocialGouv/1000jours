@@ -3990,6 +3990,11 @@ cjs-module-lexer@^0.6.0:
   resolved "https://registry.yarnpkg.com/cjs-module-lexer/-/cjs-module-lexer-0.6.0.tgz#4186fcca0eae175970aee870b9fe2d6cf8d5655f"
   integrity sha512-uc2Vix1frTfnuzxxu1Hp4ktSvM3QaI4oXl4ZUqL1wjTu/BGki9TrCWoqLTg/drR1KwAEarXuRFCG2Svr1GxPFw==
 
+ckeditor5-build-strapi-wysiwyg@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/ckeditor5-build-strapi-wysiwyg/-/ckeditor5-build-strapi-wysiwyg-1.8.0.tgz#206451f8af8c01e88bbe10e337fc91e26e880ad4"
+  integrity sha512-19FYexWicMLvECmsF7YrQzM8khbuOjkAnbvgj46DWabZswP0wKPRVHunUF+CemEhnB8BXFVjNfoKkhSIzDvJYw==
+
 class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
@@ -12327,6 +12332,14 @@ strapi-helper-plugin@3.5.3:
     reactstrap "8.4.1"
     styled-components "^5.2.1"
     whatwg-fetch "^3.6.2"
+
+strapi-plugin-ckeditor5@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/strapi-plugin-ckeditor5/-/strapi-plugin-ckeditor5-1.8.0.tgz#61636db1c52ab4cf34384457f0c91207b2a7e47f"
+  integrity sha512-sy9hQLoS/GPdvowomh2/o7qeMzXnsk4VMy1Qr+ldtYnob0IPGOxurNPFsE4pf2JFyHDIWhqp6cAC08ELvpgfHA==
+  dependencies:
+    "@ckeditor/ckeditor5-react" "^3.0.2"
+    ckeditor5-build-strapi-wysiwyg "^1.8.0"
 
 strapi-plugin-content-manager@3.5.3:
   version "3.5.3"
