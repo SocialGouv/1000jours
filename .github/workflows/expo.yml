@@ -2,8 +2,7 @@ name: Expo Publish Dev
 on:
   push:
     branches:    
-      - '*'    
-      - '!master'
+      - 'master'
     paths:
       - 'front/**'
       
