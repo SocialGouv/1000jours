@@ -7,6 +7,9 @@ import { getManifestByKind } from "@socialgouv/kosko-charts/utils/getManifestByK
 import { Deployment } from "kubernetes-models/api/apps/v1/Deployment";
 import { EnvVar } from "kubernetes-models/api/core/v1/EnvVar";
 
+import { PersistentVolume } from "kubernetes-models/v1/PersistentVolume";
+import { PersistentVolumeClaim } from "kubernetes-models/v1/PersistentVolumeClaim";
+
 type AnyObject = {
   [any: string]: any;
 };
@@ -27,7 +30,9 @@ const addEnvs = ({ deployment, data, containerIndex = 0 }: AddEnvsParams) => {
   });
 };
 
-const manifests = create("strapi", {
+const manifests = [];
+
+const strapiManifests = create("strapi", {
   env,
   config: {
     containerPort: 1337,
@@ -78,20 +83,68 @@ const manifests = create("strapi", {
 });
 
 //@ts-expect-error
-const deployment = getManifestByKind(manifests, Deployment) as Deployment;
+const deployment = getManifestByKind(strapiManifests, Deployment) as Deployment;
+
+const namespace = deployment?.metadata?.namespace;
 
 if (deployment && deployment?.spec?.template.spec) {
   deployment.spec.template.spec.volumes = [
     {
-      azureFile: {
-        readOnly: false,
-        secretName: "strapi-sealed-secret",
-        shareName: "uploads",
+      persistentVolumeClaim: {
+        claimName: "strapi-uploads2",
       },
       name: "uploads",
     },
   ];
 }
+
+const pv = new PersistentVolume({
+  metadata: {
+    name: "strapi-uploads2",
+    labels: {
+      usage: "strapi-uploads2",
+    },
+  },
+  spec: {
+    capacity: {
+      storage: "50Gi",
+    },
+    accessModes: ["ReadWriteMany"],
+    persistentVolumeReclaimPolicy: "Retain",
+    azureFile: {
+      secretName: "strapi-sealed-secret",
+      secretNamespace: namespace,
+      shareName: "uploads",
+      readOnly: false,
+    },
+  },
+});
+
+const pvc = new PersistentVolumeClaim({
+  metadata: {
+    name: "strapi-uploads2",
+    annotations: {
+      "volume.beta.kubernetes.io/storage-class": "",
+    },
+  },
+  spec: {
+    accessModes: ["ReadWriteMany"],
+    resources: {
+      requests: {
+        storage: "10Gi",
+      },
+    },
+    selector: {
+      matchLabels: {
+        usage: "strapi-uploads2",
+      },
+    },
+  },
+});
+
+manifests.push(strapiManifests);
+manifests.push(pv);
+manifests.push(pvc);
 
 addEnvs({
   deployment,
