@@ -91,7 +91,7 @@ if (deployment && deployment?.spec?.template.spec) {
   deployment.spec.template.spec.volumes = [
     {
       persistentVolumeClaim: {
-        claimName: "strapi-uploads",
+        claimName: "strapi-uploads2",
       },
       name: "uploads",
     },
@@ -100,9 +100,9 @@ if (deployment && deployment?.spec?.template.spec) {
 
 const pv = new PersistentVolume({
   metadata: {
-    name: "strapi-uploads",
+    name: "strapi-uploads2",
     labels: {
-      usage: "strapi-uploads",
+      usage: "strapi-uploads2",
     },
   },
   spec: {
@@ -122,7 +122,7 @@ const pv = new PersistentVolume({
 
 const pvc = new PersistentVolumeClaim({
   metadata: {
-    name: "strapi-uploads",
+    name: "strapi-uploads2",
     annotations: {
       "volume.beta.kubernetes.io/storage-class": "",
     },
@@ -136,7 +136,7 @@ const pvc = new PersistentVolumeClaim({
     },
     selector: {
       matchLabels: {
-        usage: "strapi-uploads",
+        usage: "strapi-uploads2",
       },
     },
   },
