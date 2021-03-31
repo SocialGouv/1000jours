@@ -27,8 +27,8 @@ const manifests = create({
         periodSeconds: 20,
       },
       startupProbe: {
-        failureThreshold: 10,
-        initialDelaySeconds: 120,
+        failureThreshold: 20,
+        initialDelaySeconds: 90,
       },
     },
   },
