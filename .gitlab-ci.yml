@@ -13,17 +13,13 @@ variables:
   AUTO_DEVOPS_NOTIFY_DISABLED: "🛑"
 
 Lint:
-  script:
-    - cd front
-    - yarn lint
+  rules:
+    - when: never
 
 Build:
-  script:
-    - apk add --no-cache bash
-    - cd front
-    - yarn
-    - yarn expo-login
-    - yarn publish-staging
+  rules:
+    - when: never
+
 
 K8S Test:
   extends: .autodevops_k8s_test

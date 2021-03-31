@@ -542,10 +542,8 @@ spec:
               cpu: 5m
               memory: 16Mi
       volumes:
-        - azureFile:
-            readOnly: false
-            secretName: strapi-sealed-secret
-            shareName: uploads
+        - persistentVolumeClaim:
+            claimName: strapi-uploads2
           name: uploads
 ---
 apiVersion: bitnami.com/v1alpha1
@@ -665,5 +663,39 @@ spec:
     - hosts:
         - backoffice-les1000jours.fabrique.social.gouv.fr
       secretName: strapi-crt
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: strapi-uploads2
+  labels:
+    usage: strapi-uploads2
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  azureFile:
+    secretName: strapi-sealed-secret
+    secretNamespace: les1000jours
+    shareName: uploads
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: strapi-uploads2
+  annotations:
+    volume.beta.kubernetes.io/storage-class: ''
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  selector:
+    matchLabels:
+      usage: strapi-uploads2
 "
 `;
