@@ -564,7 +564,7 @@ spec:
               memory: 16Mi
       volumes:
         - persistentVolumeClaim:
-            claimName: strapi-uploads
+            claimName: strapi-file-uploads
           name: uploads
 ---
 apiVersion: bitnami.com/v1alpha1
@@ -689,17 +689,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: strapi-uploads
-  annotations:
-    volume.beta.kubernetes.io/storage-class: ''
+  name: strapi-file-uploads
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 10Gi
-  selector:
-    matchLabels:
-      usage: strapi-uploads
 "
 `;

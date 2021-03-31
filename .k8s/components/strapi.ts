@@ -91,7 +91,7 @@ if (deployment && deployment?.spec?.template.spec) {
   deployment.spec.template.spec.volumes = [
     {
       persistentVolumeClaim: {
-        claimName: "strapi-uploads",
+        claimName: "strapi-file-uploads",
       },
       name: "uploads",
     },
@@ -100,21 +100,13 @@ if (deployment && deployment?.spec?.template.spec) {
 
 const pvc = new PersistentVolumeClaim({
   metadata: {
-    name: "strapi-uploads",
-    annotations: {
-      "volume.beta.kubernetes.io/storage-class": "",
-    },
+    name: "strapi-file-uploads",
   },
   spec: {
-    accessModes: ["ReadWriteMany"],
+    accessModes: ["ReadWriteOnce"],
     resources: {
       requests: {
         storage: "10Gi",
-      },
-    },
-    selector: {
-      matchLabels: {
-        usage: "strapi-uploads",
       },
     },
   },
