@@ -20,6 +20,7 @@ Build:
   rules:
     - when: never
 
+
 K8S Test:
   extends: .autodevops_k8s_test
   rules:
