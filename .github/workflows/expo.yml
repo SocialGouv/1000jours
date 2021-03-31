@@ -19,6 +19,7 @@ jobs:
           expo-version: 4.x
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
-      - run: cd front
-      - run: yarn install
-      - run: yarn publish-staging
+      - run: |
+          cd front
+          yarn install
+          yarn publish-staging
