@@ -91,59 +91,28 @@ if (deployment && deployment?.spec?.template.spec) {
   deployment.spec.template.spec.volumes = [
     {
       persistentVolumeClaim: {
-        claimName: "strapi-uploads2",
+        claimName: "strapi-file-uploads",
       },
       name: "uploads",
     },
   ];
 }
 
-const pv = new PersistentVolume({
-  metadata: {
-    name: "strapi-uploads2",
-    labels: {
-      usage: "strapi-uploads2",
-    },
-  },
-  spec: {
-    capacity: {
-      storage: "50Gi",
-    },
-    accessModes: ["ReadWriteMany"],
-    persistentVolumeReclaimPolicy: "Retain",
-    azureFile: {
-      secretName: "strapi-sealed-secret",
-      secretNamespace: namespace,
-      shareName: "uploads",
-      readOnly: false,
-    },
-  },
-});
-
 const pvc = new PersistentVolumeClaim({
   metadata: {
-    name: "strapi-uploads2",
-    annotations: {
-      "volume.beta.kubernetes.io/storage-class": "",
-    },
+    name: "strapi-file-uploads",
   },
   spec: {
-    accessModes: ["ReadWriteMany"],
+    accessModes: ["ReadWriteOnce"],
     resources: {
       requests: {
         storage: "10Gi",
-      },
-    },
-    selector: {
-      matchLabels: {
-        usage: "strapi-uploads2",
       },
     },
   },
 });
 
 manifests.push(strapiManifests);
-manifests.push(pv);
 manifests.push(pvc);
 
 addEnvs({

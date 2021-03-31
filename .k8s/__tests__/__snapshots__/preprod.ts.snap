@@ -224,12 +224,12 @@ spec:
               cpu: 100m
               memory: 64Mi
           startupProbe:
-            failureThreshold: 10
+            failureThreshold: 20
             httpGet:
               path: /healthz
               port: http
             periodSeconds: 5
-            initialDelaySeconds: 120
+            initialDelaySeconds: 90
           envFrom:
             - secretRef:
                 name: azure-pg-user
@@ -564,7 +564,7 @@ spec:
               memory: 16Mi
       volumes:
         - persistentVolumeClaim:
-            claimName: strapi-uploads2
+            claimName: strapi-file-uploads
           name: uploads
 ---
 apiVersion: bitnami.com/v1alpha1
@@ -687,37 +687,14 @@ spec:
       secretName: wildcard-crt
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: strapi-uploads2
-  labels:
-    usage: strapi-uploads2
-spec:
-  capacity:
-    storage: 50Gi
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  azureFile:
-    secretName: strapi-sealed-secret
-    secretNamespace: 1000jours-85-preprod-dev2
-    shareName: uploads
-    readOnly: false
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: strapi-uploads2
-  annotations:
-    volume.beta.kubernetes.io/storage-class: ''
+  name: strapi-file-uploads
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 10Gi
-  selector:
-    matchLabels:
-      usage: strapi-uploads2
 "
 `;
