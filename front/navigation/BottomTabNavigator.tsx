@@ -8,7 +8,6 @@ import IconeAutourDeMoi from "../assets/images/icone autour de moi.svg";
 import IconeCalendrier from "../assets/images/icone calendrier.svg";
 import IconeFavoris from "../assets/images/icone favoris.svg";
 import Colors from "../constants/Colors";
-import useColorScheme from "../hooks/useColorScheme";
 import ArticleDetail from "../screens/ArticleDetail";
 import ListArticles from "../screens/ListArticles";
 import TabAroundMeScreen from "../screens/TabAroundMeScreen";
@@ -27,7 +26,6 @@ import type {
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 const BottomTabNavigator: FC = () => {
-  const colorScheme = useColorScheme();
   const tabItems: TabItem[] = [
     {
       component: TabHomeNavigator,
@@ -58,7 +56,10 @@ const BottomTabNavigator: FC = () => {
   return (
     <BottomTab.Navigator
       initialRouteName="tabHome"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+      tabBarOptions={{
+        activeTintColor: Colors.primaryBlue,
+        inactiveTintColor: Colors.disabled,
+      }}
     >
       {tabItems.map((tabItem, index) => (
         <BottomTab.Screen
