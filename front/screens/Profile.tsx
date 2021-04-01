@@ -2,14 +2,15 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import { filter, find } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text } from "react-native";
 
 import ProfileImage from "../assets/images/Humaaans_Space_1.svg";
 import Button from "../components/form/Button";
 import Checkbox from "../components/form/Checkbox";
-import Datepicker from "../components/form/DatePicker";
+import InputDate from "../components/form/InputDate";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
+import Labels from "../constants/Labels";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
 
 interface Props {
@@ -32,21 +33,24 @@ const Profile: FC<Props> = ({ navigation }) => {
       { id: 6, isChecked: false, label: "Je suis un professionnel de santé" },
     ],
   };
-
+  const userSituationsIdsWhereChildBirthdayIsNeeded = [3, 4, 5];
   const hasCheckedSituation = () => {
     return filter(userSituations, ["isChecked", true]).length > 0;
   };
 
+  const canValidateForm = () => {
+    if (!hasCheckedSituation()) return false;
+    if (!childBirthdayIsNeeded()) return true;
+    // vérifie que jour, mois et année sont remplis
+    return day.length > 0 && month.length > 0 && year.length === 4;
+  };
+  const [canValidate, setCanValidate] = React.useState(false);
+  const [day, setDay] = React.useState("");
+  const [month, setMonth] = React.useState("");
+  const [year, setYear] = React.useState("");
   const [userSituations, setUserSituations] = React.useState<UserSituation[]>(
     defaultUserContext.situations
   );
-  const [childBirthday, setChildBirthday] = React.useState<Date | null>(
-    defaultUserContext.childBirthday
-  );
-  const [
-    hasCheckedUserSituation,
-    setHasCheckedSituation,
-  ] = React.useState<boolean>(hasCheckedSituation());
 
   const updateUserSituations = (userSituation: UserSituation) => {
     setUserSituations(() => {
@@ -60,16 +64,7 @@ const Profile: FC<Props> = ({ navigation }) => {
     });
   };
 
-  const updateChildBirthday = (date: Date | null) => {
-    setChildBirthday(() => date);
-  };
-
-  React.useEffect(() => {
-    setHasCheckedSituation(hasCheckedSituation());
-  }, [userSituations]);
-
   const getCheckedUserSituationsWhereChildBirthdayIsNeeded = () => {
-    const userSituationsIdsWhereChildBirthdayIsNeeded = [3, 4, 5];
     return filter(userSituations, (userSituation) => {
       return (
         userSituation.isChecked &&
@@ -92,6 +87,29 @@ const Profile: FC<Props> = ({ navigation }) => {
     }
     return "Date de naissance de votre enfant";
   };
+
+  const validateForm = () => {
+    if (isValidDate(+day, +month, +year)) {
+      navigation.navigate("root");
+    } else {
+      Alert.alert(Labels.invalidDate);
+    }
+  };
+
+  const isValidDate = (_day: number, _month: number, _year: number) => {
+    const dateStr =
+      _year.toString() + "/" + _month.toString() + "/" + _day.toString();
+    const date = new Date(dateStr);
+    return (
+      date.getFullYear() === _year &&
+      date.getMonth() === _month - 1 &&
+      date.getDate() === _day
+    );
+  };
+
+  React.useEffect(() => {
+    setCanValidate(canValidateForm());
+  }, [day, month, year, userSituations]);
 
   return (
     <View style={[styles.mainContainer]}>
@@ -120,14 +138,20 @@ const Profile: FC<Props> = ({ navigation }) => {
           <Text style={[styles.colorPrimary, styles.textAlignCenter]}>
             {getChildBirthdayLabel()}
           </Text>
-          <View style={[styles.datepickerContainer]}>
-            <Datepicker
-              date={childBirthday ? childBirthday : new Date()}
-              onChange={(event, date) => {
-                updateChildBirthday(date ? date : null);
-              }}
-            />
-          </View>
+          <InputDate
+            day={day}
+            month={month}
+            year={year}
+            onDayChange={(text) => {
+              setDay(text);
+            }}
+            onMonthChange={(text) => {
+              setMonth(text);
+            }}
+            onYearChange={(text) => {
+              setYear(text);
+            }}
+          ></InputDate>
         </View>
         <View style={[styles.footer, styles.justifyContentCenter]}>
           <View>
@@ -144,10 +168,8 @@ const Profile: FC<Props> = ({ navigation }) => {
             <Button
               title="Valider"
               rounded={true}
-              disabled={!hasCheckedUserSituation}
-              action={() => {
-                navigation.navigate("root");
-              }}
+              disabled={!canValidate}
+              action={validateForm}
             />
           </View>
         </View>
