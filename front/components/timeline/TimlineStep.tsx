@@ -48,15 +48,15 @@ const TimelineStep: FC<TimelineStepProps> = ({
     }
   };
 
-  const getStepIcon = (stepId: number) => {
-    if (stepId === 1) return <StepIcon1 />;
-    if (stepId === 2) return <StepIcon2 />;
-    if (stepId === 3) return <StepIcon3 />;
-    if (stepId === 4) return <StepIcon4 />;
-    if (stepId === 5) return <StepIcon5 />;
-    if (stepId === 6) return <StepIcon6 />;
-    if (stepId === 7) return <StepIcon7 />;
-    if (stepId === 8) return <StepIcon8 />;
+  const getStepIcon = (stepOrder: number) => {
+    if (stepOrder === 1) return <StepIcon1 />;
+    if (stepOrder === 2) return <StepIcon2 />;
+    if (stepOrder === 3) return <StepIcon3 />;
+    if (stepOrder === 4) return <StepIcon4 />;
+    if (stepOrder === 5) return <StepIcon5 />;
+    if (stepOrder === 6) return <StepIcon6 />;
+    if (stepOrder === 7) return <StepIcon7 />;
+    if (stepOrder === 8) return <StepIcon8 />;
     return null;
   };
 
