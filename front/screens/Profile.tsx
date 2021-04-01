@@ -39,20 +39,17 @@ const Profile: FC<Props> = ({ navigation }) => {
   };
 
   const canValidateForm = () => {
-    if (hasCheckedSituation()) {
-      if (childBirthdayIsNeeded()) {
-        return day.length > 0 && month.length > 0 && year.length === 4;
-      } else {
-        return true;
-      }
-    } else {
-      return false;
+    if (!hasCheckedSituation()) return false;
+    else {
+      if (!childBirthdayIsNeeded()) return true;
+      // vérifie que jour, mois et année sont remplis
+      else return day.length > 0 && month.length > 0 && year.length === 4;
     }
   };
-  const [canValidate, setCanValidate] = React.useState<boolean>(false);
-  const [day, setDay] = React.useState<string>("");
-  const [month, setMonth] = React.useState<string>("");
-  const [year, setYear] = React.useState<string>("");
+  const [canValidate, setCanValidate] = React.useState(false);
+  const [day, setDay] = React.useState("");
+  const [month, setMonth] = React.useState("");
+  const [year, setYear] = React.useState("");
   const [userSituations, setUserSituations] = React.useState<UserSituation[]>(
     defaultUserContext.situations
   );
@@ -97,7 +94,6 @@ const Profile: FC<Props> = ({ navigation }) => {
     if (isValidDate(+day, +month, +year)) {
       navigation.navigate("root");
     } else {
-      console.log("Invalid Date");
       Alert.alert(Labels.invalidDate);
     }
   };
@@ -105,20 +101,17 @@ const Profile: FC<Props> = ({ navigation }) => {
   const isValidDate = (_day: number, _month: number, _year: number) => {
     const dateStr =
       _year.toString() + "/" + _month.toString() + "/" + _day.toString();
-    const d = new Date(dateStr);
-    if (
-      d.getFullYear() === _year &&
-      d.getMonth() === _month - 1 &&
-      d.getDate() === _day
-    ) {
-      return true;
-    }
-    return false;
+    const date = new Date(dateStr);
+    return (
+      date.getFullYear() === _year &&
+      date.getMonth() === _month - 1 &&
+      date.getDate() === _day
+    );
   };
 
   React.useEffect(() => {
     setCanValidate(canValidateForm());
-  });
+  }, [day, month, year, userSituations]);
 
   return (
     <View style={[styles.mainContainer]}>
