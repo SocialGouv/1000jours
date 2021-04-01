@@ -67,8 +67,8 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
         </View>
         {result.etapes.map((step, index) => (
           <TimelineStep
-            ordre={step.ordre}
-            nom={step.nom}
+            order={step.ordre}
+            name={step.nom}
             index={index}
             isTheLast={index === result.etapes.length - 1}
             key={index}

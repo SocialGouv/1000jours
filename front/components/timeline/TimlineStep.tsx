@@ -14,20 +14,31 @@ import Colors from "../../constants/Colors";
 import { Text, View } from "../Themed";
 
 interface TimelineStepProps {
-  ordre: number;
-  nom: string;
+  order: number;
+  name: string;
   index: number;
   isTheLast: boolean;
   onPress: () => void;
 }
 
 const TimelineStep: FC<TimelineStepProps> = ({
-  ordre,
-  nom,
+  order,
+  name,
   index: listIndex,
   isTheLast,
   onPress,
 }) => {
+  const stepIcons: React.ReactNode[] = [
+    <StepIcon1 />,
+    <StepIcon2 />,
+    <StepIcon3 />,
+    <StepIcon4 />,
+    <StepIcon5 />,
+    <StepIcon6 />,
+    <StepIcon7 />,
+    <StepIcon8 />,
+  ];
+
   const getStyles = (index: number, isLast: boolean) => {
     const initialOffset = 10;
     const verticalOffset = 100;
@@ -48,25 +59,13 @@ const TimelineStep: FC<TimelineStepProps> = ({
     }
   };
 
-  const getStepIcon = (stepOrder: number) => {
-    if (stepOrder === 1) return <StepIcon1 />;
-    if (stepOrder === 2) return <StepIcon2 />;
-    if (stepOrder === 3) return <StepIcon3 />;
-    if (stepOrder === 4) return <StepIcon4 />;
-    if (stepOrder === 5) return <StepIcon5 />;
-    if (stepOrder === 6) return <StepIcon6 />;
-    if (stepOrder === 7) return <StepIcon7 />;
-    if (stepOrder === 8) return <StepIcon8 />;
-    return null;
-  };
-
   return (
     <View style={getStyles(listIndex, isTheLast)}>
       <View
         style={[styles.stepIconContainer, styles.justifyContentCenter]}
         onTouchEnd={onPress}
       >
-        {getStepIcon(ordre)}
+        {stepIcons[order - 1]}
       </View>
       <Text
         style={[
@@ -78,7 +77,7 @@ const TimelineStep: FC<TimelineStepProps> = ({
             : null,
         ]}
       >
-        {nom}
+        {name}
       </Text>
     </View>
   );

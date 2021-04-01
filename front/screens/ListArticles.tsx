@@ -57,38 +57,36 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
           <Text style={[styles.headerListInfo]}>
             {result.articles.length} article(s) à lire
           </Text>
-          {result.articles.map((article, index) => {
-            return (
-              <ListItem
-                key={index}
-                bottomDivider
-                onPress={() => {
-                  navigation.navigate("article", {
-                    id: article.id,
-                    step: route.params.step,
-                  });
+          {result.articles.map((article, index) => (
+            <ListItem
+              key={index}
+              bottomDivider
+              onPress={() => {
+                navigation.navigate("article", {
+                  id: article.id,
+                  step: route.params.step,
+                });
+              }}
+              containerStyle={[styles.listItem]}
+            >
+              <Image
+                source={{
+                  uri: `${BO_URL}${article.visuel?.uploadFile.url}`,
                 }}
-                containerStyle={[styles.listItem]}
-              >
-                <Image
-                  source={{
-                    uri: `${BO_URL}${article.visuel?.uploadFile.url}`,
-                  }}
-                  style={[styles.articleImage]}
-                />
-                <ListItem.Content style={[styles.articleContent]}>
-                  <ListItem.Title style={[styles.articleTitle]}>
-                    {article.titre}
-                  </ListItem.Title>
-                  <ListItem.Subtitle style={[styles.articleDescription]}>
-                    <Text numberOfLines={3} allowFontScaling={true}>
-                      {article.resume}
-                    </Text>
-                  </ListItem.Subtitle>
-                </ListItem.Content>
-              </ListItem>
-            );
-          })}
+                style={[styles.articleImage]}
+              />
+              <ListItem.Content style={[styles.articleContent]}>
+                <ListItem.Title style={[styles.articleTitle]}>
+                  {article.titre}
+                </ListItem.Title>
+                <ListItem.Subtitle style={[styles.articleDescription]}>
+                  <Text numberOfLines={3} allowFontScaling={true}>
+                    {article.resume}
+                  </Text>
+                </ListItem.Subtitle>
+              </ListItem.Content>
+            </ListItem>
+          ))}
         </View>
       </View>
     </ScrollView>
