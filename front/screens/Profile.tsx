@@ -40,11 +40,9 @@ const Profile: FC<Props> = ({ navigation }) => {
 
   const canValidateForm = () => {
     if (!hasCheckedSituation()) return false;
-    else {
-      if (!childBirthdayIsNeeded()) return true;
-      // vérifie que jour, mois et année sont remplis
-      else return day.length > 0 && month.length > 0 && year.length === 4;
-    }
+    if (!childBirthdayIsNeeded()) return true;
+    // vérifie que jour, mois et année sont remplis
+    return day.length > 0 && month.length > 0 && year.length === 4;
   };
   const [canValidate, setCanValidate] = React.useState(false);
   const [day, setDay] = React.useState("");
