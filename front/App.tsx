@@ -10,7 +10,7 @@ import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 
 const client = new ApolloClient({
-  cache: new InMemoryCache({ resultCaching: false }),
+  cache: new InMemoryCache(),
   headers: {
     "content-type": "application/json",
     "x-hasura-admin-secret": HASURA_ADMIN_SECRET,

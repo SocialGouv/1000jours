@@ -14,18 +14,17 @@ import BackButton from "../components/BackButton";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
-import type { Article, TabHomeParamList } from "../types";
+import type { Article, Step, TabHomeParamList } from "../types";
 
 interface Props {
-  route: RouteProp<{ params: { id: number } }, "params">;
+  route: RouteProp<{ params: { id: number; step: Step } }, "params">;
   navigation: StackNavigationProp<TabHomeParamList, "article">;
 }
 
 const ArticleDetail: FC<Props> = ({ route, navigation }) => {
   const articleId = route.params.id;
-  const screenTitle = "Nom de l'étape";
-  const description =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  const screenTitle = route.params.step.nom;
+  const description = route.params.step.description;
 
   const ARTICLE_DETAIL = gql`
     query GetAllArticles {
@@ -48,7 +47,9 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
       }
     }
   `;
-  const { loading, error, data } = useQuery(ARTICLE_DETAIL);
+  const { loading, error, data } = useQuery(ARTICLE_DETAIL, {
+    fetchPolicy: "no-cache",
+  });
 
   if (loading) return <ActivityIndicator size="large" />;
   if (error) return <Text>{Labels.errorMsg}</Text>;

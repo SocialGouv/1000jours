@@ -2,20 +2,28 @@ import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
+import StepIcon8 from "../../assets/images/Icone 1 à 2 ans.svg";
+import StepIcon7 from "../../assets/images/Icone 4 mois à 1 an.svg";
+import StepIcon6 from "../../assets/images/Icone 4 premiers mois.svg";
+import StepIcon5 from "../../assets/images/Icone accouchement.svg";
+import StepIcon2 from "../../assets/images/Icone conception.svg";
+import StepIcon3 from "../../assets/images/Icone début de grossesse.svg";
+import StepIcon4 from "../../assets/images/Icone fin de grossesse.svg";
+import StepIcon1 from "../../assets/images/icone projet parent.svg";
 import Colors from "../../constants/Colors";
 import { Text, View } from "../Themed";
 
 interface TimelineStepProps {
-  title: string;
-  icon: React.ReactNode;
+  ordre: number;
+  nom: string;
   index: number;
   isTheLast: boolean;
   onPress: () => void;
 }
 
 const TimelineStep: FC<TimelineStepProps> = ({
-  title,
-  icon,
+  ordre,
+  nom,
   index: listIndex,
   isTheLast,
   onPress,
@@ -40,10 +48,25 @@ const TimelineStep: FC<TimelineStepProps> = ({
     }
   };
 
+  const getStepIcon = (stepId: number) => {
+    if (stepId === 1) return <StepIcon1 />;
+    if (stepId === 2) return <StepIcon2 />;
+    if (stepId === 3) return <StepIcon3 />;
+    if (stepId === 4) return <StepIcon4 />;
+    if (stepId === 5) return <StepIcon5 />;
+    if (stepId === 6) return <StepIcon6 />;
+    if (stepId === 7) return <StepIcon7 />;
+    if (stepId === 8) return <StepIcon8 />;
+    return null;
+  };
+
   return (
-    <View style={getStyles(listIndex, isTheLast)} onTouchEnd={onPress}>
-      <View style={[styles.stepIconContainer, styles.justifyContentCenter]}>
-        {icon}
+    <View style={getStyles(listIndex, isTheLast)}>
+      <View
+        style={[styles.stepIconContainer, styles.justifyContentCenter]}
+        onTouchEnd={onPress}
+      >
+        {getStepIcon(ordre)}
       </View>
       <Text
         style={[
@@ -55,7 +78,7 @@ const TimelineStep: FC<TimelineStepProps> = ({
             : null,
         ]}
       >
-        {title}
+        {nom}
       </Text>
     </View>
   );
