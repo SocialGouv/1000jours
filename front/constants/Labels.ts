@@ -43,7 +43,7 @@ export default {
       pro: "Je suis un professionnel de santé",
       project: "J'ai en projet d'avoir un enfant",
       search: "Je cherche à concevoir un enfant",
-      severalChild: "J'ai plusieurs enfants",
+      severalChildren: "J'ai plusieurs enfants",
     },
     title: "Votre profil",
   },

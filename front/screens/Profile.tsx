@@ -32,7 +32,7 @@ const Profile: FC<Props> = ({ navigation }) => {
       {
         id: 5,
         isChecked: false,
-        label: Labels.profile.situations.severalChild,
+        label: Labels.profile.situations.severalChildren,
       },
       { id: 6, isChecked: false, label: Labels.profile.situations.pro },
     ],
