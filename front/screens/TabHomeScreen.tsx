@@ -1,27 +1,17 @@
+import { useQuery } from "@apollo/client";
+import { gql } from "@apollo/client/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { range } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
-import { StyleSheet, Text } from "react-native";
+import { ActivityIndicator, StyleSheet, Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import StepIcon8 from "../assets/images/Icone 1 à 2 ans.svg";
-import StepIcon7 from "../assets/images/Icone 4 mois à 1 an.svg";
-import StepIcon6 from "../assets/images/Icone 4 premiers mois.svg";
-import StepIcon5 from "../assets/images/Icone accouchement.svg";
-import StepIcon2 from "../assets/images/Icone conception.svg";
-import StepIcon3 from "../assets/images/Icone début de grossesse.svg";
-import StepIcon4 from "../assets/images/Icone fin de grossesse.svg";
-import StepIcon1 from "../assets/images/icone projet parent.svg";
 import { View } from "../components/Themed";
 import TimelineStep from "../components/timeline/TimlineStep";
 import Colors from "../constants/Colors";
-import type { TabHomeParamList } from "../types";
-
-interface Step {
-  title: string;
-  icon: React.ReactNode;
-}
+import Labels from "../constants/Labels";
+import type { Step, TabHomeParamList } from "../types";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList, "listArticles">;
@@ -31,44 +21,23 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   const screenTitle = "Choisissez l'étape que vous souhaitez approfondir";
   const description =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  const ALL_STEPS = gql`
+    query GetAllSteps {
+      etapes(order_by: { ordre: asc }) {
+        id
+        nom
+        ordre
+        description
+      }
+    }
+  `;
+  const { loading, error, data } = useQuery(ALL_STEPS);
 
-  const steps: Step[] = [
-    {
-      icon: <StepIcon1 />,
-      title: "Projet de parentalité",
-    },
-    {
-      icon: <StepIcon2 />,
-      title: "Conception",
-    },
-    {
-      icon: <StepIcon3 />,
-      title: "Début de grossesse",
-    },
-    {
-      icon: <StepIcon4 />,
-      title: "Suite et fin de grossesse",
-    },
-    {
-      icon: <StepIcon5 />,
-      title: "Accouchement",
-    },
-    {
-      icon: <StepIcon6 />,
-      title: "Ses 3 premiers mois",
-    },
-    {
-      icon: <StepIcon7 />,
-      title: "De ses 4 mois à 1 an",
-    },
-    {
-      icon: <StepIcon8 />,
-      title: "De sa 1ère année à sa 2ème année",
-    },
-  ];
+  if (loading) return <ActivityIndicator size="large" />;
+  if (error) return <Text>{Labels.errorMsg}</Text>;
 
-  const numberOfStepsWithoutTheFirstAndLast = steps.length - 1 - 2;
-
+  const result = data as { etapes: Step[] };
+  const numberOfStepsWithoutTheFirstAndLast = result.etapes.length - 1 - 2;
   return (
     <ScrollView style={[styles.mainContainer]}>
       <View>
@@ -96,15 +65,15 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
             />
           ))}
         </View>
-        {steps.map(({ title, icon }, index) => (
+        {result.etapes.map((step, index) => (
           <TimelineStep
-            title={title}
-            icon={icon}
+            order={step.ordre}
+            name={step.nom}
             index={index}
-            isTheLast={index === steps.length - 1}
+            isTheLast={index === result.etapes.length - 1}
             key={index}
             onPress={() => {
-              navigation.navigate("listArticles");
+              navigation.navigate("listArticles", { step });
             }}
           />
         ))}

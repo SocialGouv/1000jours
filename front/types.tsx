@@ -17,8 +17,8 @@ export type BottomTabParamList = {
 
 export type TabHomeParamList = {
   tabHomeScreen: undefined;
-  listArticles: undefined;
-  article: { id: number };
+  listArticles: { step: Step };
+  article: { id: number; step: Step };
 };
 
 export type TabCalendarParamList = {
@@ -49,6 +49,13 @@ export type TabItem = {
   component: FC;
   icon: React.ReactNode;
   title: string;
+};
+
+export type Step = {
+  id: number;
+  ordre: number;
+  nom: string;
+  description: string;
 };
 
 export type ThematiqueContainer = {

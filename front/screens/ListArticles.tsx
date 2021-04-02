@@ -2,25 +2,26 @@ import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 // @ts-expect-error
 import { BO_URL } from "@env";
+import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
-import { ActivityIndicator, StyleSheet, Text } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, Text } from "react-native";
 import { Image, ListItem } from "react-native-elements";
 
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
-import type { Article, TabHomeParamList } from "../types";
+import type { Article, Step, TabHomeParamList } from "../types";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList, "listArticles">;
+  route: RouteProp<{ params: { step: Step } }, "params">;
 }
 
-const ListArticles: FC<Props> = ({ navigation }) => {
-  const screenTitle = "Nom de l'étape";
-  const description =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+const ListArticles: FC<Props> = ({ navigation, route }) => {
+  const screenTitle = route.params.step.nom;
+  const description = route.params.step.description;
 
   const ALL_ARTICLES = gql`
     query GetAllArticles {
@@ -36,29 +37,35 @@ const ListArticles: FC<Props> = ({ navigation }) => {
       }
     }
   `;
-  const { loading, error, data } = useQuery(ALL_ARTICLES);
+  const { loading, error, data } = useQuery(ALL_ARTICLES, {
+    fetchPolicy: "no-cache",
+  });
 
   if (loading) return <ActivityIndicator size="large" />;
   if (error) return <Text>{Labels.errorMsg}</Text>;
 
   const result = data as { articles: Article[] };
+
   return (
-    <View style={[styles.mainContainer]}>
-      <View>
-        <Text style={[styles.title]}>{screenTitle}</Text>
-        <Text style={[styles.description]}>{description}</Text>
-      </View>
-      <View style={[styles.listContainer]}>
-        <Text style={[styles.headerListInfo]}>
-          {result.articles.length} article(s) à lire
-        </Text>
-        {result.articles.map((article, index) => {
-          return (
+    <ScrollView>
+      <View style={[styles.mainContainer]}>
+        <View>
+          <Text style={[styles.title]}>{screenTitle}</Text>
+          <Text style={[styles.description]}>{description}</Text>
+        </View>
+        <View style={[styles.listContainer]}>
+          <Text style={[styles.headerListInfo]}>
+            {result.articles.length} article(s) à lire
+          </Text>
+          {result.articles.map((article, index) => (
             <ListItem
               key={index}
               bottomDivider
               onPress={() => {
-                navigation.navigate("article", { id: article.id });
+                navigation.navigate("article", {
+                  id: article.id,
+                  step: route.params.step,
+                });
               }}
               containerStyle={[styles.listItem]}
             >
@@ -79,10 +86,10 @@ const ListArticles: FC<Props> = ({ navigation }) => {
                 </ListItem.Subtitle>
               </ListItem.Content>
             </ListItem>
-          );
-        })}
+          ))}
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

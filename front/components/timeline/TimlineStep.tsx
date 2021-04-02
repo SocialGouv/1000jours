@@ -2,24 +2,43 @@ import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
+import StepIcon8 from "../../assets/images/Icone 1 à 2 ans.svg";
+import StepIcon7 from "../../assets/images/Icone 4 mois à 1 an.svg";
+import StepIcon6 from "../../assets/images/Icone 4 premiers mois.svg";
+import StepIcon5 from "../../assets/images/Icone accouchement.svg";
+import StepIcon2 from "../../assets/images/Icone conception.svg";
+import StepIcon3 from "../../assets/images/Icone début de grossesse.svg";
+import StepIcon4 from "../../assets/images/Icone fin de grossesse.svg";
+import StepIcon1 from "../../assets/images/icone projet parent.svg";
 import Colors from "../../constants/Colors";
 import { Text, View } from "../Themed";
 
 interface TimelineStepProps {
-  title: string;
-  icon: React.ReactNode;
+  order: number;
+  name: string;
   index: number;
   isTheLast: boolean;
   onPress: () => void;
 }
 
 const TimelineStep: FC<TimelineStepProps> = ({
-  title,
-  icon,
+  order,
+  name,
   index: listIndex,
   isTheLast,
   onPress,
 }) => {
+  const stepIcons: React.ReactNode[] = [
+    <StepIcon1 />,
+    <StepIcon2 />,
+    <StepIcon3 />,
+    <StepIcon4 />,
+    <StepIcon5 />,
+    <StepIcon6 />,
+    <StepIcon7 />,
+    <StepIcon8 />,
+  ];
+
   const getStyles = (index: number, isLast: boolean) => {
     const initialOffset = 10;
     const verticalOffset = 100;
@@ -41,9 +60,12 @@ const TimelineStep: FC<TimelineStepProps> = ({
   };
 
   return (
-    <View style={getStyles(listIndex, isTheLast)} onTouchEnd={onPress}>
-      <View style={[styles.stepIconContainer, styles.justifyContentCenter]}>
-        {icon}
+    <View style={getStyles(listIndex, isTheLast)}>
+      <View
+        style={[styles.stepIconContainer, styles.justifyContentCenter]}
+        onTouchEnd={onPress}
+      >
+        {stepIcons[order - 1]}
       </View>
       <Text
         style={[
@@ -55,7 +77,7 @@ const TimelineStep: FC<TimelineStepProps> = ({
             : null,
         ]}
       >
-        {title}
+        {name}
       </Text>
     </View>
   );
