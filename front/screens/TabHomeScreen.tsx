@@ -18,9 +18,8 @@ interface Props {
 }
 
 const TabHomeScreen: FC<Props> = ({ navigation }) => {
-  const screenTitle = "Choisissez l'étape que vous souhaitez approfondir";
-  const description =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  const screenTitle = Labels.timeline.title;
+  const description = Labels.timeline.description;
   const ALL_STEPS = gql`
     query GetAllSteps {
       etapes(order_by: { ordre: asc }) {

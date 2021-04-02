@@ -8,6 +8,7 @@ import IconeAutourDeMoi from "../assets/images/icone autour de moi.svg";
 import IconeCalendrier from "../assets/images/icone calendrier.svg";
 import IconeFavoris from "../assets/images/icone favoris.svg";
 import Colors from "../constants/Colors";
+import Labels from "../constants/Labels";
 import ArticleDetail from "../screens/ArticleDetail";
 import ListArticles from "../screens/ListArticles";
 import TabAroundMeScreen from "../screens/TabAroundMeScreen";
@@ -31,25 +32,25 @@ const BottomTabNavigator: FC = () => {
       component: TabHomeNavigator,
       icon: <IconeAccueil height={30} />,
       name: "tabHome",
-      title: "Accueil",
+      title: Labels.tabs.homeTitle,
     },
     {
       component: TabCalendarNavigator,
       icon: <IconeCalendrier height={30} />,
       name: "tabCalendar",
-      title: "Calendrier",
+      title: Labels.tabs.calendarTitle,
     },
     {
       component: TabFavoritesNavigator,
       icon: <IconeFavoris height={30} />,
       name: "tabFavorites",
-      title: "Favoris",
+      title: Labels.tabs.favoritesTitle,
     },
     {
       component: TabAroundMeNavigator,
       icon: <IconeAutourDeMoi height={30} />,
       name: "tabAroundMe",
-      title: "Autour de moi",
+      title: Labels.tabs.aroundMeTitle,
     },
   ];
 

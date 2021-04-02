@@ -13,6 +13,7 @@ import IconeMenu from "../assets/images/icone menu.svg";
 import LogoMinistere from "../assets/images/Logo ministere.svg";
 import { Text, View } from "../components/Themed";
 import Colors from "../constants/Colors";
+import Labels from "../constants/Labels";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import Onboarding from "../screens/Onboarding";
 import Profile from "../screens/Profile";
@@ -63,19 +64,21 @@ const RootNavigator: FC = () => (
             }}
           >
             <IconeMenu width="28" />
-            <Text style={[styles.headerRightButtonText]}>Menu</Text>
+            <Text style={[styles.headerRightButtonText]}>
+              {Labels.menu.title}
+            </Text>
           </View>
         ),
         headerShown: true,
         headerTitle: () => (
           <View
             style={{
+              alignItems: "center",
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
             }}
           >
-            <Text>1000 jours</Text>
+            <Text>{Labels.appName}</Text>
           </View>
         ),
       }}
