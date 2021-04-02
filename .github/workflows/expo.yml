@@ -1,11 +1,11 @@
 name: Expo Publish Dev
 on:
   push:
-    branches:    
+    branches:
       - 'master'
     paths:
       - 'front/**'
-      
+
 jobs:
   publish:
     name: Install and publish
@@ -24,4 +24,5 @@ jobs:
         run: |
           cd front
           yarn install
+          yarn expo-login
           yarn publish-staging
