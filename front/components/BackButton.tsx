@@ -2,6 +2,7 @@ import * as React from "react";
 
 import IconArrowLeft from "../assets/images/icone retour.svg";
 import Colors from "../constants/Colors";
+import Labels from "../constants/Labels";
 import Button from "./form/Button";
 
 interface Props {
@@ -16,7 +17,7 @@ const BackButton: React.FC<Props> = ({
 }) => {
   return (
     <Button
-      title="Retour"
+      title={Labels.buttons.back}
       icon={<IconArrowLeft width={24} />}
       rounded={false}
       disabled={false}
