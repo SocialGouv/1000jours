@@ -18,19 +18,23 @@ interface Props {
 }
 
 const Profile: FC<Props> = ({ navigation }) => {
-  const appName = "1000 JOURS APP'";
+  const appName = Labels.appName;
   const image = <ProfileImage />;
-  const title = "Votre profil";
+  const title = Labels.profile.title;
 
   const defaultUserContext: UserContext = {
     childBirthday: null,
     situations: [
-      { id: 1, isChecked: false, label: "J'ai en projet d'avoir un enfant" },
-      { id: 2, isChecked: false, label: "Je cherche à concevoir un enfant" },
-      { id: 3, isChecked: false, label: "J'attends un enfant" },
-      { id: 4, isChecked: false, label: "J'ai un enfant" },
-      { id: 5, isChecked: false, label: "J'ai plusieurs enfants" },
-      { id: 6, isChecked: false, label: "Je suis un professionnel de santé" },
+      { id: 1, isChecked: false, label: Labels.profile.situations.project },
+      { id: 2, isChecked: false, label: Labels.profile.situations.search },
+      { id: 3, isChecked: false, label: Labels.profile.situations.pregnant },
+      { id: 4, isChecked: false, label: Labels.profile.situations.oneChild },
+      {
+        id: 5,
+        isChecked: false,
+        label: Labels.profile.situations.severalChild,
+      },
+      { id: 6, isChecked: false, label: Labels.profile.situations.pro },
     ],
   };
   const userSituationsIdsWhereChildBirthdayIsNeeded = [3, 4, 5];
@@ -79,13 +83,13 @@ const Profile: FC<Props> = ({ navigation }) => {
   const getChildBirthdayLabel = () => {
     const results = getCheckedUserSituationsWhereChildBirthdayIsNeeded();
     if (find(results, ["id", 3])) {
-      return "Naissance prévue de votre enfant";
+      return Labels.profile.childBirthday.planned;
     } else if (find(results, ["id", 4])) {
-      return "Date de naissance de votre enfant";
+      return Labels.profile.childBirthday.firstChild;
     } else if (find(results, ["id", 5])) {
-      return "Date de naissance de votre enfant le plus jeune";
+      return Labels.profile.childBirthday.lastChild;
     }
-    return "Date de naissance de votre enfant";
+    return Labels.profile.childBirthday.firstChild;
   };
 
   const validateForm = () => {
@@ -156,7 +160,7 @@ const Profile: FC<Props> = ({ navigation }) => {
         <View style={[styles.footer, styles.justifyContentCenter]}>
           <View>
             <Button
-              title="Passer"
+              title={Labels.buttons.pass}
               rounded={false}
               disabled={false}
               action={() => {
@@ -166,7 +170,7 @@ const Profile: FC<Props> = ({ navigation }) => {
           </View>
           <View>
             <Button
-              title="Valider"
+              title={Labels.buttons.validate}
               rounded={true}
               disabled={!canValidate}
               action={validateForm}

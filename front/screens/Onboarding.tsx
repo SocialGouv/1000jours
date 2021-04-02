@@ -10,6 +10,7 @@ import SecondSlideImage from "../assets/images/Humaaans_Sitting.svg";
 import Button from "../components/form/Button";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
+import Labels from "../constants/Labels";
 import type { RootStackParamList } from "../types";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
@@ -28,25 +29,22 @@ interface SlideView {
 }
 
 const Onboarding: FC<Props> = ({ navigation }) => {
-  const appName = "1000 JOURS APP'";
+  const appName = Labels.appName;
   const slideViews: SlideView[] = [
     {
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Accumsan tortor posuere ac ut consequat semper viverra. Purus in mollis nunc sed id.",
+      description: Labels.onboarding.slidesText[0].description,
       image: <FirstSlideImage />,
-      title: "Bienvenue sur l'application",
+      title: Labels.onboarding.slidesText[0].title,
     },
     {
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Accumsan tortor posuere ac ut consequat semper viverra. Purus in mollis nunc sed id.",
+      description: Labels.onboarding.slidesText[1].description,
       image: <SecondSlideImage />,
-      title: "Trouver les informations",
+      title: Labels.onboarding.slidesText[1].title,
     },
     {
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Accumsan tortor posuere ac ut consequat semper viverra. Purus in mollis nunc sed id.",
+      description: Labels.onboarding.slidesText[2].description,
       image: <ThirdSlideImage />,
-      title: "Connaître les différentes étapes",
+      title: Labels.onboarding.slidesText[2].title,
     },
   ];
 
@@ -94,7 +92,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
         {swiperCurrentIndex === slideViews.length - 1 ? (
           <View style={[styles.justifyContentCenter]}>
             <Button
-              title="Commencer"
+              title={Labels.buttons.start}
               rounded={true}
               disabled={false}
               action={() => {
@@ -105,7 +103,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
         ) : (
           <View style={[styles.buttonsContainer, styles.justifyContentCenter]}>
             <Button
-              title="Passer"
+              title={Labels.buttons.pass}
               rounded={false}
               disabled={false}
               action={() => {
@@ -113,7 +111,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
               }}
             />
             <Button
-              title="Suivant"
+              title={Labels.buttons.next}
               rounded={false}
               disabled={false}
               action={() => {
