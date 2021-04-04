@@ -1,3 +1,11 @@
+## [1.5.2](https://github.com/SocialGouv/1000jours/compare/v1.5.1...v1.5.2) (2021-04-04)
+
+
+### Bug Fixes
+
+* **ci:** corrige expo login dans github actions ([#98](https://github.com/SocialGouv/1000jours/issues/98)) ([f7871d5](https://github.com/SocialGouv/1000jours/commit/f7871d58f70d924995561c8612f154c60616417c))
+* 🐛 Corrige l'affichage de la date de naissance ([#94](https://github.com/SocialGouv/1000jours/issues/94)) ([88dd735](https://github.com/SocialGouv/1000jours/commit/88dd735ffb8543932320815fa2b7e2f82dffd948))
+
 ## [1.5.1](https://github.com/SocialGouv/1000jours/compare/v1.5.0...v1.5.1) (2021-04-01)
 
 
