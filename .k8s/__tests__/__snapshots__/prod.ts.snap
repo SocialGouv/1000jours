@@ -504,8 +504,6 @@ spec:
           envFrom:
             - secretRef:
                 name: azure-pg-user
-            - secretRef:
-                name: strapi-sealed-secret
             - configMapRef:
                 name: strapi-configmap
           env:
@@ -545,44 +543,6 @@ spec:
         - persistentVolumeClaim:
             claimName: strapi-file-uploads
           name: uploads
----
-apiVersion: bitnami.com/v1alpha1
-kind: SealedSecret
-metadata:
-  name: strapi-sealed-secret
-  namespace: les1000jours
-  annotations:
-    kapp.k14s.io/disable-default-ownership-label-rules: ''
-    kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: socialgouv-1000jours-les1000jours
-    app.gitlab.com/env: chore-d-u8fps8
-    app.gitlab.com/env.name: chore-db-schema2-dev2
-  labels:
-    application: les1000jours
-    owner: les1000jours
-    team: les1000jours
-    cert: wildcard
-spec:
-  encryptedData:
-    azurestorageaccountkey: >-
-      AgAkJgKaR+GhrzqD932VwlSDoBH9MqaPub3grpNM5Qee0zqysuyyJlpaqs+YZwB1/TbKFoG2+JUvWAUfOnpc9B+T3IQ7xzLbF4pAAPTLbCOk/nBLbf4bPNnDRKSKAdYMn/+w8yVuzGWotVnO4jAP01lJEg8NFFQtrohHHMbEekIUAmNSACq4dbmyZsCk51fDs7IF8qj/ZOcntdEsRb78DcIJPUPCvT9T6H9ixJNaImO3Z+9GBNwaSJILCC9a6h7vw+mK6XyS07n32QdAu0VVaUNMDkRSLd0gltNBA2KW4Y50+PXVCG4g+GBlL+Wh8Y+ogxAj06rOi/p4kCvnmT/uzlVhOEspaqfbySKO+AkgvMk9AeNrS9R/KtqmfnlXiV5IW0PoNzwCtfS45144D9CH/tSYrIG16UruGHdRFe16QAESsBvdc9tmOpU37YCxjO5pKnWcLbKJ5/Pt9l10tsLoNd+AbPJZqZxLG3/EqKkpq8N4va4xZSCqxeDY6VtRGV7bWm95KMiYjv9cRAgsgbSt8Gos+8Qqu5eXgd6ddylCme/BakgZd4zGFO6QC10InkejKCz9/KDW2XpYGLPXUmtr9xnPoxvCv00VbcfEc4kksdv7h6sjDrFArrt35Y33AKritupKR/kvmDSGnIY/yqhau7kyZY1j9QAn0YBcHkqwN751HifxCAxAe7LbmSIAA0QFyBg8ABmkIQ73aGtfjT+m0Gyx+R4QWb4YJSkEJBHoPOgCd+MNvxFjP8vtr8W47BWVpxwrDIvb9C2FRACND7WjFlyS8Pg6+R+3NByLeJca/xvkHbRcS+pB20Yh
-    azurestorageaccountname: >-
-      AgAneH/u/2KW+nvKfrkOIYfWfN/lWpIdyyu1ts+Tb645Hd0rILp4o02r2KAcYC2ZtP1Iy6r/MlI2zwOKf2DNcDRR8JtUJDXyYYgPtI/UV1XH2ivB7zVflWv5TdKI8rrRLa6bmMxY0+dJGia0rvgxhWxrUepOxYZDUivg8Y/lFFIrjhCm/N5aA+eFjGHbG6Dv6TqwkS3IYMBU00qwDZ/Xd/9T3qOp/5AEgsP+A14pf7hKBw8q5aXEFoTKlBtou39ajHyk1bVlz2ikiWuH+iEjnFefaP5zjqIucdDHyGWiH4oMX0K66FNAIL9DKoZN4mo3j1CWAyNzAPB5oO8w9oRFL3e/A1KK1y53j98YV+UcMD/1Nropk0/TbFg1tvhRDfXyJeJN1uZgrCeAuCWMGaNj+emDdn9KzZ41hWkgxR5f7rCXSKg19D5X151zDKvfcwdp25cfxQAe5d7o99+4jiUgao6VrAsINqXSmE3VfeL3azZoyFOdYrafDogyz9V4YeoGv7xmR8Bka8DWvEV18x0G3wVvXDk45DJIyPxgrZ/+adOEtmYpTiEiBiNHACzXTv9cP+xd5W0XKI4P+4zpwgw9doV1vlS4Urp+PNV7X38lvrB3DUHKXpWB++bO4NX4CKmm8LcsiNFQZrmoi5BncWmuapXCmpczO1qNKaQ9BieIEhdyBcprx3m9jp5y5DWR0cut64P+O1sH7YdcXuQKAgh5D0Uf
-  template:
-    metadata:
-      name: strapi-sealed-secret
-      annotations:
-        kapp.k14s.io/disable-default-ownership-label-rules: ''
-        kapp.k14s.io/disable-default-label-scoping-rules: ''
-        app.gitlab.com/app: socialgouv-1000jours-les1000jours
-        app.gitlab.com/env: chore-d-u8fps8
-        app.gitlab.com/env.name: chore-db-schema2-dev2
-      labels:
-        application: les1000jours
-        owner: les1000jours
-        team: les1000jours
-        cert: wildcard
-    type: Opaque
 ---
 apiVersion: v1
 kind: ConfigMap
