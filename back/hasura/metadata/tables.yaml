@@ -97,6 +97,13 @@
         table:
           schema: public
           name: articles_etapes__etapes_articles
+  - name: evenements
+    using:
+      foreign_key_constraint_on:
+        column: etape_id
+        table:
+          schema: public
+          name: etapes_evenements__evenements_etapes
   - name: parcours
     using:
       foreign_key_constraint_on:
@@ -116,6 +123,16 @@
           _is_null: false
 - table:
     schema: public
+    name: etapes_evenements__evenements_etapes
+  object_relationships:
+  - name: etape
+    using:
+      foreign_key_constraint_on: etape_id
+  - name: evenement
+    using:
+      foreign_key_constraint_on: evenement_id
+- table:
+    schema: public
     name: etapes_parcours__parcours_etapes
   object_relationships:
   - name: etape
@@ -124,6 +141,17 @@
   - name: parcour
     using:
       foreign_key_constraint_on: parcour_id
+- table:
+    schema: public
+    name: evenements
+  array_relationships:
+  - name: etapes
+    using:
+      foreign_key_constraint_on:
+        column: evenement_id
+        table:
+          schema: public
+          name: etapes_evenements__evenements_etapes
 - table:
     schema: public
     name: parcours
