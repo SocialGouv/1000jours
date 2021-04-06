@@ -85,6 +85,11 @@ const strapiManifests = create("strapi", {
 //@ts-expect-error
 const deployment = getManifestByKind(strapiManifests, Deployment) as Deployment;
 
+// due to azureFile volumes regressions
+if (deployment && deployment.spec) {
+  deployment.spec.strategy = { type: 'Recreate' }
+}
+
 const namespace = deployment?.metadata?.namespace;
 
 if (deployment && deployment?.spec?.template.spec) {

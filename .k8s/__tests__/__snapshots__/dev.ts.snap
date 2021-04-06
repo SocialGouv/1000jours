@@ -605,6 +605,8 @@ spec:
         - persistentVolumeClaim:
             claimName: strapi-file-uploads
           name: uploads
+  strategy:
+    type: Recreate
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
