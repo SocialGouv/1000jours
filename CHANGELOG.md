@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/SocialGouv/1000jours/compare/v1.5.2...v1.5.3) (2021-04-06)
+
+
+### Bug Fixes
+
+* **k8s:** force recreate strapi deployment ([#101](https://github.com/SocialGouv/1000jours/issues/101)) ([9c66acc](https://github.com/SocialGouv/1000jours/commit/9c66accabe27a392fe92065c4a7b87325a2d9cf6))
+
 ## [1.5.2](https://github.com/SocialGouv/1000jours/compare/v1.5.1...v1.5.2) (2021-04-04)
 
 
