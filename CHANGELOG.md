@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/SocialGouv/1000jours/compare/v1.5.3...v1.6.0) (2021-04-06)
+
+
+### Features
+
+* ajoute du stockage local ([#97](https://github.com/SocialGouv/1000jours/issues/97)) ([1a8b9e8](https://github.com/SocialGouv/1000jours/commit/1a8b9e86f74e02484bc34fcbcbf02579b0d8aeeb))
+
 ## [1.5.3](https://github.com/SocialGouv/1000jours/compare/v1.5.2...v1.5.3) (2021-04-06)
 
 
