@@ -115,7 +115,7 @@ const pv = new PersistentVolume({
       storage: "10Gi"
     },
     accessModes: ["ReadWriteMany"],
-    persistentVolumeReclaimPolicy: "retain",
+    persistentVolumeReclaimPolicy: "Retain",
     azureFile: {
       secretName: "strapi-sealed-secret",
       shareName: "uploads",
