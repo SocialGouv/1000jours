@@ -15,7 +15,7 @@
     "config:restore": "strapi configuration:restore -f config/api.json"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^25.0.0",
+    "@ckeditor/ckeditor5-build-classic": "^27.0.0",
     "@ckeditor/ckeditor5-react": "^3.0.2",
     "date-fns": "^2.19.0",
     "knex": "<0.20.0",
