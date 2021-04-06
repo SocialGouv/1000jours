@@ -566,8 +566,6 @@ spec:
         - persistentVolumeClaim:
             claimName: strapi-file-uploads
           name: uploads
-  strategy:
-    type: Recreate
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
@@ -689,23 +687,6 @@ spec:
       secretName: wildcard-crt
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: strapi-file-uploads-4113006e
-  labels:
-    usage: strapi-file-uploads-4113006e
-spec:
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  azureFile:
-    secretName: strapi-sealed-secret
-    shareName: uploads
-    secretNamespace: 1000jours-85-preprod-dev2
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: strapi-file-uploads
@@ -719,6 +700,6 @@ spec:
       storage: 1Gi
   selector:
     matchLabels:
-      usage: strapi-file-uploads-4113006e
+      usage: strapi-file-uploads
 "
 `;

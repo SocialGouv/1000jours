@@ -7,7 +7,6 @@ import { getManifestByKind } from "@socialgouv/kosko-charts/utils/getManifestByK
 import { Deployment } from "kubernetes-models/api/apps/v1/Deployment";
 import { EnvVar } from "kubernetes-models/api/core/v1/EnvVar";
 
-import { PersistentVolume } from "kubernetes-models/v1/PersistentVolume";
 import { PersistentVolumeClaim } from "kubernetes-models/v1/PersistentVolumeClaim";
 
 type AnyObject = {
@@ -85,13 +84,6 @@ const strapiManifests = create("strapi", {
 //@ts-expect-error
 const deployment = getManifestByKind(strapiManifests, Deployment) as Deployment;
 
-// due to azureFile volumes regressions
-if (deployment && deployment.spec) {
-  deployment.spec.strategy = { type: 'Recreate' }
-}
-
-const namespace = deployment?.metadata?.namespace;
-
 if (deployment && deployment?.spec?.template.spec) {
   deployment.spec.template.spec.volumes = [
     {
@@ -102,29 +94,6 @@ if (deployment && deployment?.spec?.template.spec) {
     },
   ];
 }
-
-const pvName = `strapi-file-uploads-${process.env.CI_COMMIT_SHORT_SHA}`;
-
-const pv = new PersistentVolume({
-  metadata: {
-    name: pvName,
-    labels:{
-      usage: pvName
-    }
-  },
-  spec: {
-    capacity: {
-      storage: "10Gi"
-    },
-    accessModes: ["ReadWriteMany"],
-    persistentVolumeReclaimPolicy: "Retain",
-    azureFile: {
-      secretName: "strapi-sealed-secret",
-      shareName: "uploads",
-      secretNamespace: deployment?.metadata?.namespace
-    }
-  },
-});
 
 const pvc = new PersistentVolumeClaim({
   metadata: {
@@ -142,15 +111,11 @@ const pvc = new PersistentVolumeClaim({
     },
     selector:{
       matchLabels:{
-        usage: pvName
+        usage: "strapi-file-uploads"
       }
     }
   },
 });
-
-manifests.push(strapiManifests);
-manifests.push(pv);
-manifests.push(pvc);
 
 addEnvs({
   deployment,
@@ -164,5 +129,8 @@ addEnvs({
     DATABASE_SSL: "true",
   },
 });
+
+manifests.push(strapiManifests);
+manifests.push(pvc);
 
 export default manifests;
