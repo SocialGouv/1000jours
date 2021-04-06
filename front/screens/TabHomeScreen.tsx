@@ -7,7 +7,7 @@ import * as React from "react";
 import { ActivityIndicator, StyleSheet, Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { ComfortaText } from "../components/StyledText";
+import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import TimelineStep from "../components/timeline/TimlineStep";
 import Colors from "../constants/Colors";
@@ -41,8 +41,8 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   return (
     <ScrollView style={[styles.mainContainer]}>
       <View>
-        <ComfortaText style={[styles.title]}>{screenTitle}</ComfortaText>
-        <ComfortaText style={[styles.description]}>{description}</ComfortaText>
+        <CommonText style={[styles.title]}>{screenTitle}</CommonText>
+        <CommonText style={[styles.description]}>{description}</CommonText>
       </View>
       <View style={[styles.timelineStepContainer]}>
         <View style={[styles.timelineContainer]}>

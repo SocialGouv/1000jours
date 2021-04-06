@@ -11,7 +11,7 @@ import { Image } from "react-native-elements";
 import HTML from "react-native-render-html";
 
 import BackButton from "../components/BackButton";
-import { ComfortaText } from "../components/StyledText";
+import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
@@ -53,7 +53,7 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
   });
 
   if (loading) return <ActivityIndicator size="large" />;
-  if (error) return <ComfortaText>{Labels.errorMsg}</ComfortaText>;
+  if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
 
   const result = data as { article: Article };
   return (
@@ -67,10 +67,8 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
               }}
             />
           </View>
-          <ComfortaText style={[styles.title]}>{screenTitle}</ComfortaText>
-          <ComfortaText style={[styles.description]}>
-            {description}
-          </ComfortaText>
+          <CommonText style={[styles.title]}>{screenTitle}</CommonText>
+          <CommonText style={[styles.description]}>{description}</CommonText>
         </View>
         <View>
           <Image
@@ -79,16 +77,14 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
             }}
             style={[styles.articleImage]}
           />
-          <ComfortaText style={[styles.title]}>
-            {result.article.titre}
-          </ComfortaText>
+          <CommonText style={[styles.title]}>{result.article.titre}</CommonText>
           <View style={[styles.flexStart]}>
             {result.article.thematiques.map((thematiqueContainer, index) => {
               return (
                 <View style={[styles.thematiqueContainer]} key={index}>
-                  <ComfortaText style={[styles.thematique]}>
+                  <CommonText style={[styles.thematique]}>
                     {thematiqueContainer.thematique.nom}
-                  </ComfortaText>
+                  </CommonText>
                 </View>
               );
             })}

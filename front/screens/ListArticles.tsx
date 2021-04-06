@@ -9,7 +9,7 @@ import * as React from "react";
 import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
 
-import { ComfortaText } from "../components/StyledText";
+import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
@@ -43,7 +43,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
   });
 
   if (loading) return <ActivityIndicator size="large" />;
-  if (error) return <ComfortaText>{Labels.errorMsg}</ComfortaText>;
+  if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
 
   const result = data as { articles: Article[] };
 
@@ -51,15 +51,13 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     <ScrollView>
       <View style={[styles.mainContainer]}>
         <View>
-          <ComfortaText style={[styles.title]}>{screenTitle}</ComfortaText>
-          <ComfortaText style={[styles.description]}>
-            {description}
-          </ComfortaText>
+          <CommonText style={[styles.title]}>{screenTitle}</CommonText>
+          <CommonText style={[styles.description]}>{description}</CommonText>
         </View>
         <View style={[styles.listContainer]}>
-          <ComfortaText style={[styles.headerListInfo]}>
+          <CommonText style={[styles.headerListInfo]}>
             {result.articles.length} article(s) à lire
-          </ComfortaText>
+          </CommonText>
           {result.articles.map((article, index) => (
             <ListItem
               key={index}
@@ -80,18 +78,18 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
               />
               <ListItem.Content style={[styles.articleContent]}>
                 <ListItem.Title style={[styles.articleTitleContainer]}>
-                  <ComfortaText style={[styles.articleTitle]}>
+                  <CommonText style={[styles.articleTitle]}>
                     {article.titre}
-                  </ComfortaText>
+                  </CommonText>
                 </ListItem.Title>
                 <ListItem.Subtitle style={[styles.articleDescription]}>
-                  <ComfortaText
+                  <CommonText
                     style={[styles.articleDescriptionFont]}
                     numberOfLines={3}
                     allowFontScaling={true}
                   >
                     {article.resume}
-                  </ComfortaText>
+                  </CommonText>
                 </ListItem.Subtitle>
               </ListItem.Content>
             </ListItem>

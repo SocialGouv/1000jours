@@ -9,7 +9,7 @@ import ThirdSlideImage from "../assets/images/Humaaans_2_Characters.svg";
 import FirstSlideImage from "../assets/images/Humaaans_3_Characters.svg";
 import SecondSlideImage from "../assets/images/Humaaans_Sitting.svg";
 import Button from "../components/form/Button";
-import { ComfortaText } from "../components/StyledText";
+import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
@@ -88,14 +88,14 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                   <View style={[styles.justifyContentCenter]}>
                     {slideView.image}
                   </View>
-                  <ComfortaText style={[styles.title, styles.textAlignCenter]}>
+                  <CommonText style={[styles.title, styles.textAlignCenter]}>
                     {slideView.title}
-                  </ComfortaText>
-                  <ComfortaText
+                  </CommonText>
+                  <CommonText
                     style={[styles.description, styles.textAlignCenter]}
                   >
                     {slideView.description}
-                  </ComfortaText>
+                  </CommonText>
                 </View>
               </View>
             );
