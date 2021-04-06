@@ -691,9 +691,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: strapi-file-uploads-volume
+  name: strapi-file-uploads-4113006e
   labels:
-    usage: strapi-file-uploads-volume
+    usage: strapi-file-uploads-4113006e
 spec:
   capacity:
     storage: 10Gi
@@ -716,6 +716,9 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 10Gi
+      storage: 1Gi
+  selector:
+    matchLabels:
+      usage: strapi-file-uploads-4113006e
 "
 `;

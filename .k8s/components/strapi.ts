@@ -103,11 +103,13 @@ if (deployment && deployment?.spec?.template.spec) {
   ];
 }
 
+const pvName = `strapi-file-uploads-${process.env.CI_COMMIT_SHORT_SHA}`;
+
 const pv = new PersistentVolume({
   metadata: {
-    name: "strapi-file-uploads-volume",
+    name: pvName,
     labels:{
-      usage: "strapi-file-uploads-volume"
+      usage: pvName
     }
   },
   spec: {
@@ -135,9 +137,14 @@ const pvc = new PersistentVolumeClaim({
     accessModes: ["ReadWriteMany"],
     resources: {
       requests: {
-        storage: "10Gi",
+        storage: "1Gi",
       },
     },
+    selector:{
+      matchLabels:{
+        usage: pvName
+      }
+    }
   },
 });
 
