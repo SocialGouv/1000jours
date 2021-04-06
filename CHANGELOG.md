@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/SocialGouv/1000jours/compare/v1.7.0...v1.7.1) (2021-04-06)
+
+
+### Bug Fixes
+
+* azureFile again ([#104](https://github.com/SocialGouv/1000jours/issues/104)) ([019cfad](https://github.com/SocialGouv/1000jours/commit/019cfadda9cc7b60c372532e1fe77907fc1451fc))
+
 # [1.7.0](https://github.com/SocialGouv/1000jours/compare/v1.6.0...v1.7.0) (2021-04-06)
 
 
