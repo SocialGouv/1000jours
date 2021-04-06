@@ -1,6 +1,7 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
+import { useRef, useState } from "react";
 import { Dimensions, StyleSheet, Text } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 
@@ -8,13 +9,14 @@ import ThirdSlideImage from "../assets/images/Humaaans_2_Characters.svg";
 import FirstSlideImage from "../assets/images/Humaaans_3_Characters.svg";
 import SecondSlideImage from "../assets/images/Humaaans_Sitting.svg";
 import Button from "../components/form/Button";
+import { ComfortaText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
-import type { RootStackParamList } from "../types";
-import { useRef, useState } from "react";
-import { storeObjectValue } from "../storage/storage-utils";
+import { FontWeight } from "../constants/Layout";
 import { isFirstLaunchKey } from "../storage/storage-keys";
+import { storeObjectValue } from "../storage/storage-utils";
+import type { RootStackParamList } from "../types";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -73,7 +75,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
           autoplay={false}
           showPagination
           paginationDefaultColor="lightgray"
-          paginationActiveColor={Colors.primaryBlue}
+          paginationActiveColor={Colors.secondaryGreen}
           paginationStyleItem={styles.swipePaginationItem}
         >
           {slideViews.map((slideView, index) => {
@@ -82,15 +84,19 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                 style={[styles.swipeView, styles.justifyContentCenter]}
                 key={index}
               >
-                <View style={[styles.justifyContentCenter]}>
-                  {slideView.image}
+                <View style={[styles.swipeViewMargin]}>
+                  <View style={[styles.justifyContentCenter]}>
+                    {slideView.image}
+                  </View>
+                  <ComfortaText style={[styles.title, styles.textAlignCenter]}>
+                    {slideView.title}
+                  </ComfortaText>
+                  <ComfortaText
+                    style={[styles.description, styles.textAlignCenter]}
+                  >
+                    {slideView.description}
+                  </ComfortaText>
                 </View>
-                <Text style={[styles.title, styles.textAlignCenter]}>
-                  {slideView.title}
-                </Text>
-                <Text style={[styles.textAlignCenter]}>
-                  {slideView.description}
-                </Text>
               </View>
             );
           })}
@@ -131,13 +137,12 @@ const Onboarding: FC<Props> = ({ navigation }) => {
   );
 };
 
-const paddingOfSlideView = 30;
-const width = Dimensions.get("window").width - paddingOfSlideView;
+const width = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   appName: {
-    color: Colors.primaryBlue,
+    color: Colors.primaryBlueDark,
     fontSize: 25,
-    fontWeight: "bold",
+    fontWeight: FontWeight.bold,
   },
   body: {
     flex: 4,
@@ -145,6 +150,12 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flex: 1,
     flexDirection: "row",
+  },
+  description: {
+    color: Colors.commonText,
+    fontSize: 12,
+    fontWeight: FontWeight.medium,
+    lineHeight: 20,
   },
   footer: {
     flex: 1,
@@ -159,25 +170,27 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     flexDirection: "column",
-    paddingLeft: 15,
-    paddingRight: 15,
     paddingTop: 30,
   },
   swipePaginationItem: {
     height: 5,
-    width: 30,
+    marginHorizontal: 8,
+    width: 32,
   },
   swipeView: {
     width,
+  },
+  swipeViewMargin: {
+    margin: "10%",
   },
   textAlignCenter: {
     textAlign: "center",
   },
   title: {
-    color: Colors.primaryBlue,
-    fontSize: 18,
+    color: Colors.primaryBlueDark,
+    fontSize: 15,
     fontWeight: "bold",
-    paddingBottom: 10,
+    paddingBottom: 15,
     paddingTop: 10,
   },
 });

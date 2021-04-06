@@ -6,11 +6,12 @@ import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
-import { ActivityIndicator, ScrollView, StyleSheet, Text } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { Image } from "react-native-elements";
 import HTML from "react-native-render-html";
 
 import BackButton from "../components/BackButton";
+import { ComfortaText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
@@ -52,7 +53,7 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
   });
 
   if (loading) return <ActivityIndicator size="large" />;
-  if (error) return <Text>{Labels.errorMsg}</Text>;
+  if (error) return <ComfortaText>{Labels.errorMsg}</ComfortaText>;
 
   const result = data as { article: Article };
   return (
@@ -66,8 +67,10 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
               }}
             />
           </View>
-          <Text style={[styles.title]}>{screenTitle}</Text>
-          <Text style={[styles.description]}>{description}</Text>
+          <ComfortaText style={[styles.title]}>{screenTitle}</ComfortaText>
+          <ComfortaText style={[styles.description]}>
+            {description}
+          </ComfortaText>
         </View>
         <View>
           <Image
@@ -76,19 +79,24 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
             }}
             style={[styles.articleImage]}
           />
-          <Text style={[styles.title]}>{result.article.titre}</Text>
+          <ComfortaText style={[styles.title]}>
+            {result.article.titre}
+          </ComfortaText>
           <View style={[styles.flexStart]}>
             {result.article.thematiques.map((thematiqueContainer, index) => {
               return (
                 <View style={[styles.thematiqueContainer]} key={index}>
-                  <Text style={[styles.thematique]}>
+                  <ComfortaText style={[styles.thematique]}>
                     {thematiqueContainer.thematique.nom}
-                  </Text>
+                  </ComfortaText>
                 </View>
               );
             })}
           </View>
-          <HTML source={{ html: result.article.texte1 }} />
+          <HTML
+            baseFontStyle={styles.htmlContainer}
+            source={{ html: result.article.texte1 }}
+          />
         </View>
       </View>
     </ScrollView>
@@ -109,6 +117,12 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     flexDirection: "row",
     flexWrap: "wrap",
+  },
+  htmlContainer: {
+    color: Colors.commonText,
+    fontFamily: "comfortaa-regular",
+    fontSize: 14,
+    lineHeight: 22,
   },
   mainContainer: {
     padding: 15,

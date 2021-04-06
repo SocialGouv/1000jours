@@ -17,6 +17,11 @@ const useCachedResources = (): boolean => {
           ...Ionicons.font,
           /* eslint-disable */
           "space-mono": require("../assets/fonts/SpaceMono-Regular.ttf"),
+          "comfortaa-bold": require("../assets/fonts/Comfortaa-Bold.ttf"),
+          "comfortaa-light": require("../assets/fonts/Comfortaa-Light.ttf"),
+          "comfortaa-medium": require("../assets/fonts/Comfortaa-Medium.ttf"),
+          "comfortaa-regular": require("../assets/fonts/Comfortaa-Regular.ttf"),
+          "comfortaa-semibold": require("../assets/fonts/Comfortaa-SemiBold.ttf"),
         });
       } catch (error: unknown) {
         // We might want to provide this error information to an error reporting service

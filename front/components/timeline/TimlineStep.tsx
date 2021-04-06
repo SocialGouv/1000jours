@@ -11,6 +11,7 @@ import StepIcon3 from "../../assets/images/Icone début de grossesse.svg";
 import StepIcon4 from "../../assets/images/Icone fin de grossesse.svg";
 import StepIcon1 from "../../assets/images/icone projet parent.svg";
 import Colors from "../../constants/Colors";
+import { ComfortaText } from "../StyledText";
 import { Text, View } from "../Themed";
 
 interface TimelineStepProps {
@@ -67,7 +68,7 @@ const TimelineStep: FC<TimelineStepProps> = ({
       >
         {stepIcons[order - 1]}
       </View>
-      <Text
+      <ComfortaText
         style={[
           styles.stepTitle,
           isTheLast
@@ -78,7 +79,7 @@ const TimelineStep: FC<TimelineStepProps> = ({
         ]}
       >
         {name}
-      </Text>
+      </ComfortaText>
     </View>
   );
 };
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   stepTitle: {
-    color: Colors.primaryBlue,
+    color: Colors.primaryBlueDark,
     fontSize: 13,
     paddingLeft: 10,
     paddingRight: 10,

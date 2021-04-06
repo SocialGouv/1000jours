@@ -6,9 +6,10 @@ import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
-import { ActivityIndicator, ScrollView, StyleSheet, Text } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
 
+import { ComfortaText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
@@ -42,7 +43,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
   });
 
   if (loading) return <ActivityIndicator size="large" />;
-  if (error) return <Text>{Labels.errorMsg}</Text>;
+  if (error) return <ComfortaText>{Labels.errorMsg}</ComfortaText>;
 
   const result = data as { articles: Article[] };
 
@@ -50,13 +51,15 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     <ScrollView>
       <View style={[styles.mainContainer]}>
         <View>
-          <Text style={[styles.title]}>{screenTitle}</Text>
-          <Text style={[styles.description]}>{description}</Text>
+          <ComfortaText style={[styles.title]}>{screenTitle}</ComfortaText>
+          <ComfortaText style={[styles.description]}>
+            {description}
+          </ComfortaText>
         </View>
         <View style={[styles.listContainer]}>
-          <Text style={[styles.headerListInfo]}>
+          <ComfortaText style={[styles.headerListInfo]}>
             {result.articles.length} article(s) à lire
-          </Text>
+          </ComfortaText>
           {result.articles.map((article, index) => (
             <ListItem
               key={index}
@@ -76,13 +79,19 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
                 style={[styles.articleImage]}
               />
               <ListItem.Content style={[styles.articleContent]}>
-                <ListItem.Title style={[styles.articleTitle]}>
-                  {article.titre}
+                <ListItem.Title style={[styles.articleTitleContainer]}>
+                  <ComfortaText style={[styles.articleTitle]}>
+                    {article.titre}
+                  </ComfortaText>
                 </ListItem.Title>
                 <ListItem.Subtitle style={[styles.articleDescription]}>
-                  <Text numberOfLines={3} allowFontScaling={true}>
+                  <ComfortaText
+                    style={[styles.articleDescriptionFont]}
+                    numberOfLines={3}
+                    allowFontScaling={true}
+                  >
                     {article.resume}
-                  </Text>
+                  </ComfortaText>
                 </ListItem.Subtitle>
               </ListItem.Content>
             </ListItem>
@@ -103,15 +112,18 @@ const styles = StyleSheet.create({
   },
   articleDescriptionFont: {
     color: Colors.commonText,
-    lineHeight: 22,
+    fontSize: 14,
+    lineHeight: 20,
   },
   articleImage: {
     height: 130,
     width: 120,
   },
   articleTitle: {
-    color: Colors.primaryBlue,
-    fontSize: 17,
+    color: Colors.primaryBlueDark,
+    fontSize: 16,
+  },
+  articleTitleContainer: {
     paddingBottom: 15,
   },
   description: {
