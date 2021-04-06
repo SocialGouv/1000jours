@@ -103,12 +103,36 @@ if (deployment && deployment?.spec?.template.spec) {
   ];
 }
 
+const pv = new PersistentVolume({
+  metadata: {
+    name: "strapi-file-uploads-volume",
+    labels:{
+      usage: "strapi-file-uploads-volume"
+    }
+  },
+  spec: {
+    capacity: {
+      storage: "10Gi"
+    },
+    accessModes: ["ReadWriteMany"],
+    persistentVolumeReclaimPolicy: "retain",
+    azureFile: {
+      secretName: "strapi-sealed-secret",
+      shareName: "uploads",
+      secretNamespace: deployment?.metadata?.namespace
+    }
+  },
+});
+
 const pvc = new PersistentVolumeClaim({
   metadata: {
     name: "strapi-file-uploads",
+    annotations:{
+      "volume.beta.kubernetes.io/storage-class": ""
+    }
   },
   spec: {
-    accessModes: ["ReadWriteOnce"],
+    accessModes: ["ReadWriteMany"],
     resources: {
       requests: {
         storage: "10Gi",
@@ -118,6 +142,7 @@ const pvc = new PersistentVolumeClaim({
 });
 
 manifests.push(strapiManifests);
+manifests.push(pv);
 manifests.push(pvc);
 
 addEnvs({

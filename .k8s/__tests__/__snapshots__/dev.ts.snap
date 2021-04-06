@@ -728,12 +728,31 @@ spec:
       secretName: wildcard-crt
 ---
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: strapi-file-uploads-volume
+  labels:
+    usage: strapi-file-uploads-volume
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: retain
+  azureFile:
+    secretName: strapi-sealed-secret
+    shareName: uploads
+    secretNamespace: 1000jours-85-master-dev2
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: strapi-file-uploads
+  annotations:
+    volume.beta.kubernetes.io/storage-class: ''
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 10Gi
