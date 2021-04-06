@@ -12,6 +12,9 @@ import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
+import { useEffect, useState } from "react";
+import { storeObjectValue } from "../storage/storage-utils";
+import { userProfileKey } from "../storage/storage-keys";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, "profile">;
@@ -48,11 +51,11 @@ const Profile: FC<Props> = ({ navigation }) => {
     // vérifie que jour, mois et année sont remplis
     return day.length > 0 && month.length > 0 && year.length === 4;
   };
-  const [canValidate, setCanValidate] = React.useState(false);
-  const [day, setDay] = React.useState("");
-  const [month, setMonth] = React.useState("");
-  const [year, setYear] = React.useState("");
-  const [userSituations, setUserSituations] = React.useState<UserSituation[]>(
+  const [canValidate, setCanValidate] = useState(false);
+  const [day, setDay] = useState("");
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
+  const [userSituations, setUserSituations] = useState<UserSituation[]>(
     defaultUserContext.situations
   );
 
@@ -111,7 +114,12 @@ const Profile: FC<Props> = ({ navigation }) => {
     );
   };
 
-  React.useEffect(() => {
+  const navigateToRoot = () => {
+    void storeObjectValue(userProfileKey, userSituations);
+    navigation.navigate("root");
+  };
+
+  useEffect(() => {
     setCanValidate(canValidateForm());
   }, [day, month, year, userSituations]);
 
@@ -155,7 +163,7 @@ const Profile: FC<Props> = ({ navigation }) => {
             onYearChange={(text) => {
               setYear(text);
             }}
-          ></InputDate>
+          />
         </View>
         <View style={[styles.footer, styles.justifyContentCenter]}>
           <View>
@@ -163,9 +171,7 @@ const Profile: FC<Props> = ({ navigation }) => {
               title={Labels.buttons.pass}
               rounded={false}
               disabled={false}
-              action={() => {
-                navigation.navigate("root");
-              }}
+              action={navigateToRoot}
             />
           </View>
           <View>

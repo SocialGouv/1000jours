@@ -12,6 +12,9 @@ import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
 import type { RootStackParamList } from "../types";
+import { useRef, useState } from "react";
+import { storeObjectValue } from "../storage/storage-utils";
+import { isFirstLaunchKey } from "../storage/storage-keys";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -48,8 +51,13 @@ const Onboarding: FC<Props> = ({ navigation }) => {
     },
   ];
 
-  const [swiperCurrentIndex, setSwiperCurrentIndex] = React.useState(0);
-  const swiperRef = React.useRef<SwiperFlatList>(null);
+  const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
+  const swiperRef = useRef<SwiperFlatList>(null);
+
+  const navigateToProfile = async () => {
+    void storeObjectValue(isFirstLaunchKey, false);
+    navigation.navigate("profile");
+  };
 
   return (
     <View style={[styles.mainContainer]}>
@@ -95,9 +103,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
               title={Labels.buttons.start}
               rounded={true}
               disabled={false}
-              action={() => {
-                navigation.navigate("profile");
-              }}
+              action={navigateToProfile}
             />
           </View>
         ) : (
@@ -106,9 +112,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
               title={Labels.buttons.pass}
               rounded={false}
               disabled={false}
-              action={() => {
-                navigation.navigate("profile");
-              }}
+              action={navigateToProfile}
             />
             <Button
               title={Labels.buttons.next}

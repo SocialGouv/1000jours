@@ -4,6 +4,7 @@ export default {
   config: {
     screens: {
       notFound: "*",
+      loading: "loading",
       onboarding: "onboarding",
       profile: "profile",
       root: {
