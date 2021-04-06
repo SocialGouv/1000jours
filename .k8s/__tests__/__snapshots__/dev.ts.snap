@@ -685,24 +685,24 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: strapi-file-uploads-volume
+  name: strapi-file-uploads-chore-db-schema2
   labels:
-    usage: strapi-file-uploads-volume
+    usage: strapi-file-uploads-chore-db-schema2
 spec:
   capacity:
-    storage: 10Gi
+    storage: 5Gi
   accessModes:
     - ReadWriteMany
-  persistentVolumeReclaimPolicy: retain
+  persistentVolumeReclaimPolicy: Retain
   azureFile:
-    secretName: strapi-sealed-secret
+    secretName: azure-les1000joursdev-volume
     shareName: uploads
-    secretNamespace: 1000jours-85-master-dev2
+    secretNamespace: les1000jours-secret
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: strapi-file-uploads
+  name: strapi-file-uploads-chore-db-schema2
   annotations:
     volume.beta.kubernetes.io/storage-class: ''
 spec:
@@ -710,9 +710,9 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
+      storage: 5Gi
   selector:
     matchLabels:
-      usage: strapi-file-uploads
+      usage: strapi-file-uploads-chore-db-schema2
 "
 `;

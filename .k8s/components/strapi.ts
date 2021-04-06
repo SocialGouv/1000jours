@@ -7,6 +7,7 @@ import { getManifestByKind } from "@socialgouv/kosko-charts/utils/getManifestByK
 import { Deployment } from "kubernetes-models/api/apps/v1/Deployment";
 import { EnvVar } from "kubernetes-models/api/core/v1/EnvVar";
 
+import { PersistentVolume } from "kubernetes-models/v1/PersistentVolume";
 import { PersistentVolumeClaim } from "kubernetes-models/v1/PersistentVolumeClaim";
 
 type AnyObject = {
@@ -95,30 +96,34 @@ if (deployment && deployment?.spec?.template.spec) {
   ];
 }
 
+const pvName = (env.env === "prod" || env.env==="preprod") ? "strapi-file-uploads": `strapi-file-uploads-${process.env.CI_COMMIT_REF_SLUG}`;
+
+const secretName = env.env === "prod" ? "azure-les1000joursprod-volume":"azure-les1000joursdev-volume"
+
 const pv = new PersistentVolume({
   metadata: {
-    name: "strapi-file-uploads-volume",
+    name: pvName,
     labels:{
-      usage: "strapi-file-uploads-volume"
+      usage: pvName
     }
   },
   spec: {
     capacity: {
-      storage: "10Gi"
+      storage: "5Gi"
     },
     accessModes: ["ReadWriteMany"],
-    persistentVolumeReclaimPolicy: "retain",
+    persistentVolumeReclaimPolicy: "Retain",
     azureFile: {
-      secretName: "strapi-sealed-secret",
+      secretName,
       shareName: "uploads",
-      secretNamespace: deployment?.metadata?.namespace
+      secretNamespace: "les1000jours-secret"
     }
   },
 });
 
 const pvc = new PersistentVolumeClaim({
   metadata: {
-    name: "strapi-file-uploads",
+    name: pvName,
     annotations:{
       "volume.beta.kubernetes.io/storage-class": ""
     }
@@ -127,20 +132,16 @@ const pvc = new PersistentVolumeClaim({
     accessModes: ["ReadWriteMany"],
     resources: {
       requests: {
-        storage: "1Gi",
+        storage: "5Gi",
       },
     },
     selector:{
       matchLabels:{
-        usage: "strapi-file-uploads"
+        usage: pvName
       }
     }
   },
 });
-
-manifests.push(strapiManifests);
-manifests.push(pv);
-manifests.push(pvc);
 
 addEnvs({
   deployment,
@@ -154,5 +155,9 @@ addEnvs({
     DATABASE_SSL: "true",
   },
 });
+
+manifests.push(strapiManifests);
+manifests.push(pv);
+manifests.push(pvc);
 
 export default manifests;
