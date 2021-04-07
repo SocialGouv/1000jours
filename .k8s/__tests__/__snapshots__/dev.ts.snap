@@ -466,7 +466,7 @@ spec:
               memory: 16Mi
       volumes:
         - persistentVolumeClaim:
-            claimName: pvcName
+            claimName: 1000jours-strapi-uploads
           name: uploads
 ---
 apiVersion: v1
@@ -557,7 +557,7 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 5Gi
+      storage: 1Gi
   volumeMode: Filesystem
 "
 `;

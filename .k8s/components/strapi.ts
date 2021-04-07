@@ -91,7 +91,7 @@ if (deployment && deployment?.spec?.template.spec) {
   deployment.spec.template.spec.volumes = [
     {
       persistentVolumeClaim: {
-        claimName: `pvcName`,
+        claimName: pvcName,
       },
       name: "uploads",
     },
@@ -107,7 +107,7 @@ const pvc = new PersistentVolumeClaim({
     accessModes: ["ReadWriteMany"],
     resources: {
       requests: {
-        storage: "5Gi",
+        storage: "1Gi",
       },
     },
     volumeMode: "Filesystem"
