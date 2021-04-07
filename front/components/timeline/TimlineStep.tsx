@@ -12,7 +12,7 @@ import StepIcon4 from "../../assets/images/Icone fin de grossesse.svg";
 import StepIcon1 from "../../assets/images/icone projet parent.svg";
 import Colors from "../../constants/Colors";
 import { CommonText } from "../StyledText";
-import { Text, View } from "../Themed";
+import { View } from "../Themed";
 
 interface TimelineStepProps {
   order: number;
@@ -40,7 +40,7 @@ const TimelineStep: FC<TimelineStepProps> = ({
     <StepIcon8 />,
   ];
 
-  const getStyles = (index: number, isLast: boolean) => {
+  const getStepStyles = (index: number, isLast: boolean) => {
     const initialOffset = 10;
     const verticalOffset = 100;
     if (index === 0) {
@@ -59,18 +59,25 @@ const TimelineStep: FC<TimelineStepProps> = ({
       ];
     }
   };
+  const getStepNumStyles = (index: number) => {
+    if (index === 0) return [styles.stepNum, styles.stepNumLeft];
+    return [
+      styles.stepNum,
+      index % 2 === 0 ? styles.stepNumLeft : styles.stepNumRight,
+    ];
+  };
 
   return (
-    <View style={getStyles(listIndex, isTheLast)}>
+    <View style={getStepStyles(listIndex, isTheLast)}>
       <View
         style={[styles.stepIconContainer, styles.justifyContentCenter]}
         onTouchEnd={onPress}
       >
         {stepIcons[order - 1]}
       </View>
-      <CommonText
+      <View
         style={[
-          styles.stepTitle,
+          styles.stepTitleContainer,
           isTheLast
             ? styles.stepLast
             : listIndex === 0
@@ -78,12 +85,14 @@ const TimelineStep: FC<TimelineStepProps> = ({
             : null,
         ]}
       >
-        {name}
-      </CommonText>
+        <CommonText style={[styles.stepTitle]}>{name}</CommonText>
+        <CommonText style={getStepNumStyles(listIndex)}>{order}</CommonText>
+      </View>
     </View>
   );
 };
 
+const sizeOfStepNum = 45;
 const styles = StyleSheet.create({
   justifyContentCenter: {
     alignItems: "center",
@@ -97,7 +106,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   stepFirst: {
-    paddingBottom: 60,
+    marginBottom: 60,
   },
   stepIconContainer: {
     borderColor: Colors.primaryYellow,
@@ -107,15 +116,26 @@ const styles = StyleSheet.create({
     width: 80,
   },
   stepLast: {
-    paddingBottom: 20,
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingTop: 80,
+    marginTop: 60,
   },
   stepLeft: {
     flexDirection: "row",
     left: 0,
     textAlign: "left",
+  },
+  stepNum: {
+    color: Colors.primaryBlueLight,
+    fontSize: sizeOfStepNum,
+    fontWeight: "bold",
+    paddingHorizontal: 5,
+    position: "absolute",
+    zIndex: -1,
+  },
+  stepNumLeft: {
+    left: 0,
+  },
+  stepNumRight: {
+    right: 0,
   },
   stepRight: {
     flexDirection: "row-reverse",
@@ -125,8 +145,14 @@ const styles = StyleSheet.create({
   stepTitle: {
     color: Colors.primaryBlueDark,
     fontSize: 13,
-    paddingLeft: 10,
-    paddingRight: 10,
+  },
+  stepTitleContainer: {
+    alignSelf: "center",
+    backgroundColor: "transparent",
+    height: sizeOfStepNum,
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    position: "relative",
   },
 });
 
