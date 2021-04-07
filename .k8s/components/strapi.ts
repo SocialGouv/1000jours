@@ -104,7 +104,7 @@ const pvc = new PersistentVolumeClaim({
     annotations: {}
   },
   spec: {
-    accessModes: ["ReadWriteMany"],
+    accessModes: ["ReadWriteOnce"],
     resources: {
       requests: {
         storage: "1Gi",
