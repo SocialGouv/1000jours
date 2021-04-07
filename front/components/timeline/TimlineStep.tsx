@@ -60,14 +60,11 @@ const TimelineStep: FC<TimelineStepProps> = ({
     }
   };
   const getStepNumStyles = (index: number) => {
-    if (index === 0) {
-      return [styles.stepNum, styles.stepNumLeft];
-    } else {
-      return [
-        styles.stepNum,
-        index % 2 === 0 ? styles.stepNumLeft : styles.stepNumRight,
-      ];
-    }
+    if (index === 0) return [styles.stepNum, styles.stepNumLeft];
+    return [
+      styles.stepNum,
+      index % 2 === 0 ? styles.stepNumLeft : styles.stepNumRight,
+    ];
   };
 
   return (
