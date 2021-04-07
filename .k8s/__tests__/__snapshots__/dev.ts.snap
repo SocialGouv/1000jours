@@ -601,7 +601,7 @@ spec:
               memory: 16Mi
       volumes:
         - persistentVolumeClaim:
-            claimName: strapi-file-uploads
+            claimName: strapi-file-uploads-chore-db-schema2
           name: uploads
 ---
 apiVersion: v1

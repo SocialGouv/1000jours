@@ -85,18 +85,20 @@ const strapiManifests = create("strapi", {
 //@ts-expect-error
 const deployment = getManifestByKind(strapiManifests, Deployment) as Deployment;
 
+const pvName = (env.env === "prod" || env.env==="preprod") ? "strapi-file-uploads": `strapi-file-uploads-${process.env.CI_COMMIT_REF_SLUG}`;
+
+
 if (deployment && deployment?.spec?.template.spec) {
   deployment.spec.template.spec.volumes = [
     {
       persistentVolumeClaim: {
-        claimName: "strapi-file-uploads",
+        claimName: pvName,
       },
       name: "uploads",
     },
   ];
 }
 
-const pvName = (env.env === "prod" || env.env==="preprod") ? "strapi-file-uploads": `strapi-file-uploads-${process.env.CI_COMMIT_REF_SLUG}`;
 
 const secretName = env.env === "prod" ? "azure-les1000joursprod-volume":"azure-les1000joursdev-volume"
 
