@@ -8,15 +8,15 @@ import type { TextProps } from "./Themed";
 import { Text } from "./Themed";
 
 const fontsMap = {
-  "100": "comfortaa-light",
-  "200": "comfortaa-light",
-  "300": "comfortaa-light",
-  "400": "comfortaa-regular",
-  "500": "comfortaa-medium",
-  "600": "comfortaa-semibold",
-  "700": "comfortaa-bold",
-  "800": "comfortaa-bold",
-  "900": "comfortaa-bold",
+  [FontWeight.weight100]: "comfortaa-light",
+  [FontWeight.weight200]: "comfortaa-light",
+  [FontWeight.light]: "comfortaa-light",
+  [FontWeight.normal]: "comfortaa-regular",
+  [FontWeight.medium]: "comfortaa-medium",
+  [FontWeight.semibold]: "comfortaa-semibold",
+  [FontWeight.bold]: "comfortaa-bold",
+  [FontWeight.weight800]: "comfortaa-bold",
+  [FontWeight.weight900]: "comfortaa-bold",
   bold: "comfortaa-bold",
   normal: "comfortaa-regular",
 };
