@@ -1,8 +1,10 @@
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { CheckBox as RNECheckBox } from "react-native-elements";
 
 import CheckedIcon from "../../assets/images/radio_checked.svg";
 import UncheckedIcon from "../../assets/images/radio_unchecked.svg";
+import Colors from "../../constants/Colors";
 
 interface Props {
   title: string;
@@ -18,8 +20,26 @@ const Checkbox: React.FC<Props> = ({ title, checked, onPress }) => {
       uncheckedIcon={<UncheckedIcon width={16} height={16} />}
       checked={checked}
       onPress={onPress}
+      containerStyle={[styles.checkbox]}
+      textStyle={[styles.label, checked ? styles.labelSelected : null]}
     />
   );
 };
+const styles = StyleSheet.create({
+  checkbox: {
+    alignSelf: "flex-start",
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    paddingVertical: 5,
+  },
+  label: {
+    color: Colors.primaryBlueDark,
+    fontFamily: "comfortaa-regular",
+    fontSize: 11,
+  },
+  labelSelected: {
+    color: Colors.secondaryGreen,
+  },
+});
 
 export default Checkbox;

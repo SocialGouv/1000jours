@@ -6,9 +6,10 @@ import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
-import { ActivityIndicator, ScrollView, StyleSheet, Text } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
 
+import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
@@ -42,7 +43,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
   });
 
   if (loading) return <ActivityIndicator size="large" />;
-  if (error) return <Text>{Labels.errorMsg}</Text>;
+  if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
 
   const result = data as { articles: Article[] };
 
@@ -50,13 +51,13 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     <ScrollView>
       <View style={[styles.mainContainer]}>
         <View>
-          <Text style={[styles.title]}>{screenTitle}</Text>
-          <Text style={[styles.description]}>{description}</Text>
+          <CommonText style={[styles.title]}>{screenTitle}</CommonText>
+          <CommonText style={[styles.description]}>{description}</CommonText>
         </View>
         <View style={[styles.listContainer]}>
-          <Text style={[styles.headerListInfo]}>
+          <CommonText style={[styles.headerListInfo]}>
             {result.articles.length} article(s) à lire
-          </Text>
+          </CommonText>
           {result.articles.map((article, index) => (
             <ListItem
               key={index}
@@ -76,13 +77,19 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
                 style={[styles.articleImage]}
               />
               <ListItem.Content style={[styles.articleContent]}>
-                <ListItem.Title style={[styles.articleTitle]}>
-                  {article.titre}
+                <ListItem.Title style={[styles.articleTitleContainer]}>
+                  <CommonText style={[styles.articleTitle]}>
+                    {article.titre}
+                  </CommonText>
                 </ListItem.Title>
                 <ListItem.Subtitle style={[styles.articleDescription]}>
-                  <Text numberOfLines={3} allowFontScaling={true}>
+                  <CommonText
+                    style={[styles.articleDescriptionFont]}
+                    numberOfLines={3}
+                    allowFontScaling={true}
+                  >
                     {article.resume}
-                  </Text>
+                  </CommonText>
                 </ListItem.Subtitle>
               </ListItem.Content>
             </ListItem>
@@ -103,15 +110,18 @@ const styles = StyleSheet.create({
   },
   articleDescriptionFont: {
     color: Colors.commonText,
-    lineHeight: 22,
+    fontSize: 14,
+    lineHeight: 20,
   },
   articleImage: {
     height: 130,
     width: 120,
   },
   articleTitle: {
-    color: Colors.primaryBlue,
-    fontSize: 17,
+    color: Colors.primaryBlueDark,
+    fontSize: 16,
+  },
+  articleTitleContainer: {
     paddingBottom: 15,
   },
   description: {

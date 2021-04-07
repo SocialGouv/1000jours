@@ -54,15 +54,16 @@ const InputDate: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   inputDateContainer: {
+    alignSelf: "center",
     flexDirection: "row",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
+    padding: 15,
   },
   textInput: {
     backgroundColor: Colors.cardGrey,
     borderRadius: 5,
     flex: 1,
     marginHorizontal: 5,
+    maxWidth: 80,
     paddingHorizontal: 8,
     paddingVertical: 4,
     textAlign: "center",

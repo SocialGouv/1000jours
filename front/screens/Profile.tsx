@@ -2,6 +2,7 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import { filter, find } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { Alert, ScrollView, StyleSheet, Text } from "react-native";
 
 import ProfileImage from "../assets/images/Humaaans_Space_1.svg";
@@ -11,10 +12,9 @@ import InputDate from "../components/form/InputDate";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
-import type { RootStackParamList, UserContext, UserSituation } from "../types";
-import { useEffect, useState } from "react";
-import { storeObjectValue } from "../storage/storage-utils";
 import { userProfileKey } from "../storage/storage-keys";
+import { storeObjectValue } from "../storage/storage-utils";
+import type { RootStackParamList, UserContext, UserSituation } from "../types";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, "profile">;
@@ -146,8 +146,13 @@ const Profile: FC<Props> = ({ navigation }) => {
             );
           })}
         </View>
-        <View style={[childBirthdayIsNeeded() ? null : styles.hide]}>
-          <Text style={[styles.colorPrimary, styles.textAlignCenter]}>
+        <View
+          style={[
+            styles.birthdayConatiner,
+            childBirthdayIsNeeded() ? null : styles.hide,
+          ]}
+        >
+          <Text style={[styles.colorPrimaryDark, styles.textAlignCenter]}>
             {getChildBirthdayLabel()}
           </Text>
           <InputDate
@@ -190,9 +195,12 @@ const Profile: FC<Props> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   appName: {
-    color: Colors.primaryBlue,
+    color: Colors.primaryBlueDark,
     fontSize: 25,
     fontWeight: "bold",
+  },
+  birthdayConatiner: {
+    paddingTop: 30,
   },
   body: {
     flex: 1,
@@ -201,11 +209,10 @@ const styles = StyleSheet.create({
     height: 40,
   },
   choices: {
-    flex: 1,
-    padding: 15,
+    alignSelf: "center",
   },
-  colorPrimary: {
-    color: Colors.primaryBlue,
+  colorPrimaryDark: {
+    color: Colors.primaryBlueDark,
   },
   datepickerContainer: {
     padding: 20,
@@ -214,6 +221,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     paddingBottom: 15,
+    paddingTop: 30,
   },
   header: {
     height: 44,
@@ -237,8 +245,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   title: {
-    color: Colors.primaryBlue,
-    fontSize: 18,
+    color: Colors.primaryBlueDark,
+    fontSize: 15,
     fontWeight: "bold",
     padding: 15,
   },
