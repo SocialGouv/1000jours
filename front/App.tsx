@@ -10,6 +10,7 @@ import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import { allKeys } from "./storage/storage-keys";
+import { initLocales } from "./config/calendar-config";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -19,6 +20,8 @@ const client = new ApolloClient({
   },
   uri: `${API_URL}/v1/graphql`,
 });
+
+initLocales();
 
 const App: FC = () => {
   const isLoadingComplete = useCachedResources();

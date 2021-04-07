@@ -1,3 +1,22 @@
+## [1.7.1](https://github.com/SocialGouv/1000jours/compare/v1.7.0...v1.7.1) (2021-04-06)
+
+
+### Bug Fixes
+
+* azureFile again ([#104](https://github.com/SocialGouv/1000jours/issues/104)) ([019cfad](https://github.com/SocialGouv/1000jours/commit/019cfadda9cc7b60c372532e1fe77907fc1451fc))
+
+# [1.7.0](https://github.com/SocialGouv/1000jours/compare/v1.6.0...v1.7.0) (2021-04-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @ckeditor/ckeditor5-build-classic to v27 ([#93](https://github.com/SocialGouv/1000jours/issues/93)) ([4f51ff8](https://github.com/SocialGouv/1000jours/commit/4f51ff8a2cbdae237100773013f0d04282fddbfe))
+
+
+### Features
+
+* **calendrier:** ajoute le setup du calendrier ([#105](https://github.com/SocialGouv/1000jours/issues/105)) ([cea356d](https://github.com/SocialGouv/1000jours/commit/cea356d9f719b36b0c90fffd524985b6cf79d7dc))
+
 # [1.6.0](https://github.com/SocialGouv/1000jours/compare/v1.5.3...v1.6.0) (2021-04-06)
 
 

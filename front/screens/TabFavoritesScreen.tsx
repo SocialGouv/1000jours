@@ -3,10 +3,11 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import { Text, View } from "../components/Themed";
+import Labels from "../constants/Labels";
 
 const TabFavoritesScreen: FC = () => (
   <View style={styles.container}>
-    <Text style={styles.title}>TabFavoritesScreen</Text>
+    <Text style={styles.title}>{Labels.tabs.favoritesTitle}</Text>
     <View
       style={styles.separator}
       lightColor="#eee"
