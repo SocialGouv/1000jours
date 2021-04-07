@@ -7,20 +7,26 @@ import { FontWeight } from "../constants/Layout";
 import type { TextProps } from "./Themed";
 import { Text } from "./Themed";
 
-const fontsMap = new Map<string, string>([
-  [FontWeight.light, "comfortaa-light"],
-  [FontWeight.normal, "comfortaa-regular"],
-  [FontWeight.medium, "comfortaa-medium"],
-  [FontWeight.semibold, "comfortaa-semibold"],
-  [FontWeight.bold, "comfortaa-bold"],
-  ["normal", "comfortaa-regular"],
-  ["bold", "comfortaa-bold"],
-]);
+const fontsMap = {
+  "100": "comfortaa-light",
+  "200": "comfortaa-light",
+  "300": "comfortaa-light",
+  "400": "comfortaa-regular",
+  "500": "comfortaa-medium",
+  "600": "comfortaa-semibold",
+  "700": "comfortaa-bold",
+  "800": "comfortaa-bold",
+  "900": "comfortaa-bold",
+  bold: "comfortaa-bold",
+  normal: "comfortaa-regular",
+};
 
 const getFontFromWeight = (style: StyleProp<TextStyle>) => {
-  const fontWeight = style ? StyleSheet.flatten(style).fontWeight : "normal";
+  const fontWeight = style
+    ? StyleSheet.flatten(style).fontWeight
+    : FontWeight.normal;
   return {
-    fontFamily: fontWeight ? fontsMap.get(fontWeight) : fontsMap.get("normal"),
+    fontFamily: fontWeight ? fontsMap[fontWeight] : fontsMap[FontWeight.normal],
   };
 };
 
