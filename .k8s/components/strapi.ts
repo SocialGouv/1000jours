@@ -85,50 +85,23 @@ const strapiManifests = create("strapi", {
 //@ts-expect-error
 const deployment = getManifestByKind(strapiManifests, Deployment) as Deployment;
 
-const pvName = (env.env === "prod" || env.env==="preprod") ? "strapi-file-uploads": `strapi-file-uploads-${process.env.CI_COMMIT_REF_SLUG}`;
-
+const pvcName = "1000jours-strapi-uploads"
 
 if (deployment && deployment?.spec?.template.spec) {
   deployment.spec.template.spec.volumes = [
     {
       persistentVolumeClaim: {
-        claimName: pvName,
+        claimName: `pvcName`,
       },
       name: "uploads",
     },
   ];
 }
 
-
-const secretName = env.env === "prod" ? "azure-les1000joursprod-volume":"azure-les1000joursdev-volume"
-
-const pv = new PersistentVolume({
-  metadata: {
-    name: pvName,
-    labels:{
-      usage: pvName
-    }
-  },
-  spec: {
-    capacity: {
-      storage: "5Gi"
-    },
-    accessModes: ["ReadWriteMany"],
-    persistentVolumeReclaimPolicy: "Retain",
-    azureFile: {
-      secretName,
-      shareName: "uploads",
-      secretNamespace: "les1000jours-secret"
-    }
-  },
-});
-
 const pvc = new PersistentVolumeClaim({
   metadata: {
-    name: pvName,
-    annotations:{
-      "volume.beta.kubernetes.io/storage-class": ""
-    }
+    name: pvcName,
+    annotations: {}
   },
   spec: {
     accessModes: ["ReadWriteMany"],
@@ -137,11 +110,7 @@ const pvc = new PersistentVolumeClaim({
         storage: "5Gi",
       },
     },
-    selector:{
-      matchLabels:{
-        usage: pvName
-      }
-    }
+    volumeMode: "Filesystem"
   },
 });
 
@@ -159,7 +128,6 @@ addEnvs({
 });
 
 manifests.push(strapiManifests);
-manifests.push(pv);
 manifests.push(pvc);
 
 export default manifests;

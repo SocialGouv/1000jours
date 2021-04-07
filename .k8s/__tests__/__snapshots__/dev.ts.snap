@@ -466,7 +466,7 @@ spec:
               memory: 16Mi
       volumes:
         - persistentVolumeClaim:
-            claimName: strapi-file-uploads-chore-db-schema2
+            claimName: pvcName
           name: uploads
 ---
 apiVersion: v1
@@ -548,36 +548,16 @@ spec:
       secretName: wildcard-crt
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: strapi-file-uploads-chore-db-schema2
-  labels:
-    usage: strapi-file-uploads-chore-db-schema2
-spec:
-  capacity:
-    storage: 5Gi
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  azureFile:
-    secretName: azure-les1000joursdev-volume
-    shareName: uploads
-    secretNamespace: les1000jours-secret
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: strapi-file-uploads-chore-db-schema2
-  annotations:
-    volume.beta.kubernetes.io/storage-class: ''
+  name: 1000jours-strapi-uploads
+  annotations: {}
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 5Gi
-  selector:
-    matchLabels:
-      usage: strapi-file-uploads-chore-db-schema2
+  volumeMode: Filesystem
 "
 `;
