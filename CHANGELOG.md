@@ -1,3 +1,15 @@
+# [1.9.0](https://github.com/SocialGouv/1000jours/compare/v1.8.0...v1.9.0) (2021-04-08)
+
+
+### Bug Fixes
+
+* **strapi:** nodeSelector ([#113](https://github.com/SocialGouv/1000jours/issues/113)) ([33fd2b3](https://github.com/SocialGouv/1000jours/commit/33fd2b3fb1de65586df22b7070982124e5211f88))
+
+
+### Features
+
+* **evenements:** permet de gérer les événements dans le backoffice ([#103](https://github.com/SocialGouv/1000jours/issues/103)) ([14acc49](https://github.com/SocialGouv/1000jours/commit/14acc4953056357f140e4cf221a88fc08a203942)), closes [#35](https://github.com/SocialGouv/1000jours/issues/35)
+
 # [1.8.0](https://github.com/SocialGouv/1000jours/compare/v1.7.1...v1.8.0) (2021-04-08)
 
 
