@@ -64,7 +64,7 @@ const strapiManifests = create("strapi", {
       },
       resources: {
         requests: {
-          cpu: "100m",
+          cpu: "200m",
           memory: "128Mi",
         },
         limits: {

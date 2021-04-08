@@ -377,7 +377,7 @@ spec:
               cpu: 500m
               memory: 256Mi
             requests:
-              cpu: 100m
+              cpu: 200m
               memory: 128Mi
           startupProbe:
             failureThreshold: 12
