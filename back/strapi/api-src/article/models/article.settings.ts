@@ -1,4 +1,13 @@
-{
+const enBrefIconeType = {
+  "type": "enumeration",
+  "enum": [
+    "bebe",
+    "parent",
+    "alimentation"
+  ]
+}
+
+module.exports = {
   "kind": "collectionType",
   "collectionName": "articles",
   "info": {
@@ -47,36 +56,15 @@
     "texte_2": {
       "type": "richtext"
     },
-    "enbref_1_icone": {
-      "type": "enumeration",
-      "enum": [
-        "bebe",
-        "parent",
-        "alimentation"
-      ]
-    },
+    "enbref_1_icone": enBrefIconeType,
     "enbref_1_texte": {
       "type": "text"
     },
-    "enbref_2_icone": {
-      "type": "enumeration",
-      "enum": [
-        "bebe",
-        "parent",
-        "alimentation"
-      ]
-    },
+    "enbref_2_icone": enBrefIconeType,
     "enbref_2_texte": {
       "type": "text"
     },
-    "enbref_3_icone": {
-      "type": "enumeration",
-      "enum": [
-        "bebe",
-        "parent",
-        "alimentation"
-      ]
-    },
+    "enbref_3_icone": enBrefIconeType,
     "enbref_3_texte": {
       "type": "text"
     },
