@@ -99,16 +99,10 @@ export type Article = {
 
 export type ArticleInShortItem = {
   icon: string;
-  description: string;
+  text: string;
 };
 
 export type ArticleLink = {
   label: string;
   url: string;
 };
-
-export enum InShortIcon {
-  baby = "bebe",
-  parents = "parent",
-  babyBottle = "alimentation",
-}

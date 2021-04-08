@@ -6,19 +6,13 @@ import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
-import {
-  ActivityIndicator,
-  Linking,
-  ScrollView,
-  StyleSheet,
-  Text,
-} from "react-native";
-import { Image, ListItem } from "react-native-elements";
+import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
+import { Image } from "react-native-elements";
 import HTML from "react-native-render-html";
 
-import BabyIcon from "../assets/images/icone bébé.svg";
-import BabyBottleIcon from "../assets/images/icone biberon.svg";
-import ParentsIcon from "../assets/images/icone parents.svg";
+import DidYouKnow from "../components/article/DidYouKnow";
+import InShort from "../components/article/InShort";
+import Links from "../components/article/Links";
 import BackButton from "../components/BackButton";
 import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
@@ -31,7 +25,6 @@ import type {
   Step,
   TabHomeParamList,
 } from "../types";
-import { InShortIcon } from "../types";
 
 interface Props {
   route: RouteProp<{ params: { id: number; step: Step } }, "params">;
@@ -44,19 +37,6 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
   const description = route.params.step.description;
   const inShortArray: ArticleInShortItem[] = [];
   const linksArray: ArticleLink[] = [];
-
-  const getInShortIcon = (icon: string) => {
-    const iconSize = 40;
-    if (InShortIcon.baby === icon) return <BabyIcon width={iconSize} />;
-    if (InShortIcon.parents === icon) return <ParentsIcon width={iconSize} />;
-    if (InShortIcon.babyBottle === icon)
-      return <BabyBottleIcon width={iconSize} />;
-    return null;
-  };
-
-  const goToUrl = (url: string) => {
-    void Linking.openURL(url);
-  };
 
   const ARTICLE_DETAIL = gql`
     query GetArticleDetail {
@@ -99,44 +79,25 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
     fetchPolicy: "no-cache",
   });
 
+  const addInShort = (text: string, icon: string) => {
+    inShortArray.push({ icon, text });
+  };
   const setInShortArray = (article: Article) => {
     if (article.enbrefTexte1)
-      inShortArray.push({
-        description: article.enbrefTexte1,
-        icon: article.enbrefIcone1,
-      });
+      addInShort(article.enbrefTexte1, article.enbrefIcone1);
     if (article.enbrefTexte2)
-      inShortArray.push({
-        description: article.enbrefTexte2,
-        icon: article.enbrefIcone2,
-      });
+      addInShort(article.enbrefTexte2, article.enbrefIcone2);
     if (article.enbrefTexte3)
-      inShortArray.push({
-        description: article.enbrefTexte3,
-        icon: article.enbrefIcone3,
-      });
+      addInShort(article.enbrefTexte3, article.enbrefIcone3);
+  };
+  const addLink = (title: string, url: string) => {
+    linksArray.push({ label: title, url: url });
   };
   const setLinksArray = (article: Article) => {
-    if (article.lienUrl1)
-      linksArray.push({
-        label: article.lienTitre1,
-        url: article.lienUrl1,
-      });
-    if (article.lienUrl2)
-      linksArray.push({
-        label: article.lienTitre2,
-        url: article.lienUrl2,
-      });
-    if (article.lienUrl3)
-      linksArray.push({
-        label: article.lienTitre3,
-        url: article.lienUrl3,
-      });
-    if (article.lienUrl4)
-      linksArray.push({
-        label: article.lienTitre4,
-        url: article.lienUrl4,
-      });
+    if (article.lienUrl1) addLink(article.lienTitre1, article.lienUrl1);
+    if (article.lienUrl2) addLink(article.lienTitre2, article.lienUrl2);
+    if (article.lienUrl3) addLink(article.lienTitre3, article.lienUrl3);
+    if (article.lienUrl4) addLink(article.lienTitre4, article.lienUrl4);
   };
 
   if (loading) return <ActivityIndicator size="large" />;
@@ -183,85 +144,17 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
               );
             })}
           </View>
-
-          {/* Texte 1 */}
           <HTML
             baseFontStyle={styles.htmlContainer}
             source={{ html: result.article.texte1 }}
           />
-
-          {/* Le Saviez-Vous ? */}
-          <View style={styles.didYouKnowContainer}>
-            <View style={[styles.cardTitleContainer, styles.positionRelative]}>
-              <CommonText style={[styles.didYouKnowTitle]}>
-                {Labels.article.didYouKnowTitle}
-              </CommonText>
-              <Text
-                style={[
-                  styles.cardBackgroundSymbol,
-                  styles.didYouKnowBackgroundSymbol,
-                ]}
-              >
-                ?
-              </Text>
-            </View>
-            <CommonText style={[styles.didYouKnowContent]}>
-              {result.article.leSaviezVous}
-            </CommonText>
-          </View>
-
-          {/* Texte 2 */}
+          <DidYouKnow description={result.article.leSaviezVous} />
           <HTML
             baseFontStyle={styles.htmlContainer}
             source={{ html: result.article.texte2 }}
           />
-
-          {/* En Bref */}
-          <View style={styles.inShortContainer}>
-            <View style={[styles.cardTitleContainer, styles.positionRelative]}>
-              <CommonText style={[styles.inShortTitle]}>
-                {Labels.article.inShortTitle}
-              </CommonText>
-              <Text
-                style={[
-                  styles.cardBackgroundSymbol,
-                  styles.inShortBackgroundSymbol,
-                ]}
-              >
-                !
-              </Text>
-            </View>
-
-            <View style={styles.inShortListItemsContainer}>
-              {inShortArray.map((item, i) => (
-                <ListItem key={i} containerStyle={[styles.listItemContainer]}>
-                  {getInShortIcon(item.icon)}
-                  <ListItem.Content>
-                    <ListItem.Title>
-                      <CommonText style={[styles.listItemTitle]}>
-                        {item.description}
-                      </CommonText>
-                    </ListItem.Title>
-                  </ListItem.Content>
-                </ListItem>
-              ))}
-            </View>
-          </View>
-
-          {/* Liens */}
-          <View style={styles.linksContainer}>
-            {linksArray.map((item, i) => (
-              <CommonText
-                key={i}
-                style={[styles.link]}
-                onPress={() => {
-                  goToUrl(item.url);
-                }}
-              >
-                {item.label}
-              </CommonText>
-            ))}
-          </View>
+          <InShort inShortArray={inShortArray} />
+          <Links linksArray={linksArray} />
         </View>
       </View>
     </ScrollView>
