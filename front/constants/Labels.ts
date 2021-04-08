@@ -1,11 +1,19 @@
 export default {
   appName: "Nos 1000 jours",
+  article: {
+    didYouKnowTitle: "Le saviez-vous ?",
+    inShortTitle: "En bref :",
+  },
   buttons: {
     back: "Retour",
     next: "Suivant",
     pass: "Passer",
     start: "Commencer",
     validate: "Valider",
+  },
+  calendar: {
+    description:
+      "Ici vous pouvez suivre tous vos rendez-vous et autres événements prévus. Vous pouvez y ajouter plusieurs informations.",
   },
   errorMsg: "Une erreur est survenue, merci de réessayer plus tard",
   invalidDate: "La date saisie n'est pas valide.",
@@ -57,9 +65,5 @@ export default {
     description:
       "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. A chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
     title: "Choisissez l'étape que vous souhaitez approfondir",
-  },
-  calendar: {
-    description:
-      "Ici vous pouvez suivre tous vos rendez-vous et autres événements prévus. Vous pouvez y ajouter plusieurs informations.",
   },
 };
