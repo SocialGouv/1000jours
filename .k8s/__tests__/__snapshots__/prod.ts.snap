@@ -407,6 +407,8 @@ spec:
         - persistentVolumeClaim:
             claimName: 1000jours-strapi-uploads
           name: uploads
+      nodeSelector:
+        workload: les1000jours-strapi
 ---
 apiVersion: v1
 kind: ConfigMap

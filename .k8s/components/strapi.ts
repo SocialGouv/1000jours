@@ -85,7 +85,7 @@ const strapiManifests = create("strapi", {
 //@ts-expect-error
 const deployment = getManifestByKind(strapiManifests, Deployment) as Deployment;
 
-const pvcName = "1000jours-strapi-uploads"
+const pvcName = "1000jours-strapi-uploads";
 
 if (deployment && deployment?.spec?.template.spec) {
   deployment.spec.template.spec.volumes = [
@@ -96,12 +96,15 @@ if (deployment && deployment?.spec?.template.spec) {
       name: "uploads",
     },
   ];
+  deployment.spec.template.spec.nodeSelector = {
+    workload: "les1000jours-strapi",
+  };
 }
 
 const pvc = new PersistentVolumeClaim({
   metadata: {
     name: pvcName,
-    annotations: {}
+    annotations: {},
   },
   spec: {
     accessModes: ["ReadWriteOnce"],
@@ -110,7 +113,7 @@ const pvc = new PersistentVolumeClaim({
         storage: "1Gi",
       },
     },
-    volumeMode: "Filesystem"
+    volumeMode: "Filesystem",
   },
 });
 
