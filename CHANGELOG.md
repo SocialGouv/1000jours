@@ -1,3 +1,16 @@
+# [1.8.0](https://github.com/SocialGouv/1000jours/compare/v1.7.1...v1.8.0) (2021-04-08)
+
+
+### Bug Fixes
+
+* no azure file, no expo ([#110](https://github.com/SocialGouv/1000jours/issues/110)) ([bc32f6f](https://github.com/SocialGouv/1000jours/commit/bc32f6f4d0e899d6ea066bd3727986f7105e873e))
+
+
+### Features
+
+* 🎸 Ajoute la font correspondante aux maquettes ([#107](https://github.com/SocialGouv/1000jours/issues/107)) ([0c1b708](https://github.com/SocialGouv/1000jours/commit/0c1b708ac36519bf1d90963bce24285bd4b90137)), closes [#106](https://github.com/SocialGouv/1000jours/issues/106)
+* 🎸 Je peux voir le numéro des étapes (timeline) ([#109](https://github.com/SocialGouv/1000jours/issues/109)) ([f00a044](https://github.com/SocialGouv/1000jours/commit/f00a044c0bfa2a852f21f1a4884c0ac0fd5ca625)), closes [#108](https://github.com/SocialGouv/1000jours/issues/108) [#108](https://github.com/SocialGouv/1000jours/issues/108)
+
 ## [1.7.1](https://github.com/SocialGouv/1000jours/compare/v1.7.0...v1.7.1) (2021-04-06)
 
 
