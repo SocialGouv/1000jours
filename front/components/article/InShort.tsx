@@ -44,8 +44,8 @@ const InShort: FC<Props> = ({ inShortArray }) => {
       </View>
 
       <View style={styles.inShortListItemsContainer}>
-        {inShortArray.map((item, i) => (
-          <ListItem key={i} containerStyle={[styles.listItemContainer]}>
+        {inShortArray.map((item, index) => (
+          <ListItem key={index} containerStyle={[styles.listItemContainer]}>
             {inShortIcons[item.icon]}
             <ListItem.Content>
               <ListItem.Title>
