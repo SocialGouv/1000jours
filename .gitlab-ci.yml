@@ -36,14 +36,6 @@ Register Kaniko image:
   needs: []
   dependencies: []
   variables:
-    CONTEXT: front
-    IMAGE_NAME: les1000jours-expo
-
-Register hasura:
-  extends: .autodevops_register_kaniko_image
-  needs: []
-  dependencies: []
-  variables:
     CONTEXT: back/hasura
     IMAGE_NAME: les1000jours-hasura
 
