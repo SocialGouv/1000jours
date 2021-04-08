@@ -29,7 +29,17 @@
       "collection": "article",
       "via": "etapes"
     },
+    "evenements": {
+      "collection": "evenement",
+      "via": "etapes"
+    },
     "ordre": {
+      "type": "integer"
+    },
+    "debut": {
+      "type": "integer"
+    },
+    "fin": {
       "type": "integer"
     }
   }

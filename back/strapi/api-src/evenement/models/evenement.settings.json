@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "evenements",
+  "info": {
+    "name": "Événement"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "nom": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "etapes": {
+      "collection": "etape",
+      "via": "evenements",
+      "dominant": true
+    },
+    "debut": {
+      "type": "integer"
+    },
+    "fin": {
+      "type": "integer"
+    }
+  }
+}

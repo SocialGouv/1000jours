@@ -1,33 +1,33 @@
-"use strict";
+import {
+  addMonths,
+  addWeeks,
+  addYears,
+  isAfter,
+  isBefore,
+  subWeeks,
+} from "date-fns";
 
-type Informations = {
-  projet: boolean,
-  conception: boolean,
-  grossesse: boolean,
-  enfant: boolean,
-  enfants: boolean,
-  date: Date,
+("use strict");
+
+interface Informations {
+  projet: boolean;
+  conception: boolean;
+  grossesse: boolean;
+  enfant: boolean;
+  enfants: boolean;
+  date: Date;
 }
 
-type Context = {
-  badRequest: (message: string) => void,
+interface Context {
+  badRequest: (message: string) => void;
   request: {
     body: {
       input: {
-        infos: Informations
-      }
-    }
-  }
+        infos: Informations;
+      };
+    };
+  };
 }
-
-import {
-  isBefore,
-  isAfter,
-  addWeeks,
-  subWeeks,
-  addMonths,
-  addYears,
-} from "date-fns";
 
 const ETAPE_PROJET = 1;
 const ETAPE_CONCEPTION = 2;
@@ -48,9 +48,11 @@ const calcGrossesse = (ctx: Context, terme: Date): number | void => {
   const grossesseDebut = subWeeks(terme, GROSSESSE_TOTAL_SEMAINES_SA);
 
   if (isBefore(now, grossesseDebut)) {
-    return ctx.badRequest("terme is too much in the future");
+    ctx.badRequest("terme is too much in the future");
+    return;
   } else if (isBefore(terme, now)) {
-    return ctx.badRequest("terme is in the past");
+    ctx.badRequest("terme is in the past");
+    return;
   }
 
   const trimestre2 = addWeeks(
@@ -67,11 +69,13 @@ const calcEnfant = (ctx: Context, naissance: Date): number | void => {
   const now = new Date();
 
   if (isBefore(now, naissance)) {
-    return ctx.badRequest("naissance is in the future");
+    ctx.badRequest("naissance is in the future");
+    return;
   }
 
   if (isAfter(now, addYears(naissance, 2))) {
-    return ctx.badRequest("enfant > 2 ans");
+    ctx.badRequest("enfant > 2 ans");
+    return;
   }
 
   if (isAfter(now, addYears(naissance, 1))) {
@@ -84,8 +88,9 @@ const calcEnfant = (ctx: Context, naissance: Date): number | void => {
 };
 
 const getCurrent = async (ctx: Context) => {
-  if (!ctx.request.body?.input?.infos) {
-    return ctx.badRequest("missing informations");
+  if (!ctx.request.body.input.infos) {
+    ctx.badRequest("missing informations");
+    return;
   }
 
   const {
@@ -99,17 +104,19 @@ const getCurrent = async (ctx: Context) => {
 
   if (grossesse || enfant || enfants) {
     if (!dateString) {
-      return ctx.badRequest("missing date");
+      ctx.badRequest("missing date");
+      return;
     }
 
     const date = new Date(dateString);
 
     if (date.toString() === "Invalid Date") {
-      return ctx.badRequest("invalid date");
+      ctx.badRequest("invalid date");
+      return;
     }
 
     const id = grossesse ? calcGrossesse(ctx, date) : calcEnfant(ctx, date);
-    if (!id) return null
+    if (!id) return null;
 
     return { date, id };
   }

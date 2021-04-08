@@ -3,4 +3,5 @@ declare namespace strapi {
   const plugins;
   const services;
   const utils;
+  const query;
 }

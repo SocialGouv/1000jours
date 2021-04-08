@@ -10,7 +10,7 @@
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "strapi": "strapi",
-    "lint": "eslint api",
+    "lint": "eslint api-src",
     "config:dump": "strapi configuration:dump -f config/api.json",
     "config:restore": "strapi configuration:restore -f config/api.json"
   },
