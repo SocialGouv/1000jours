@@ -24,5 +24,4 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn expo-login
           yarn publish-staging
