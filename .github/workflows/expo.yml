@@ -5,7 +5,9 @@ on:
       - 'master'
     paths:
       - 'front/**'
-  workflow_dispatch
+  workflow_dispatch:
+    name:
+      description: 'Manual workflow'
 
 jobs:
   publish:
