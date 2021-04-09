@@ -10,7 +10,6 @@
     "test": "jest --watchAll",
     "lint": "eslint .",
     "lint-fix": "eslint --fix .",
-    "expo-login": "expo login --non-interactive -u Alezco",
     "build-staging:android": "expo build:android --release-channel staging",
     "build-staging:ios": "expo build:ios --release-channel staging",
     "build-prod:android": "expo build:android --release-channel prod",
