@@ -1,21 +1,30 @@
 import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
-// @ts-expect-error
-import { BO_URL } from "@env";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
 import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
-import { Image } from "react-native-elements";
-import HTML from "react-native-render-html";
 
+import DidYouKnow from "../components/article/DidYouKnow";
+import ImageBanner from "../components/article/ImageBanner";
+import InShort from "../components/article/InShort";
+import Links from "../components/article/Links";
+import TextHtml from "../components/article/TextHtml";
+import Thematics from "../components/article/Thematics";
+import Title from "../components/article/Title";
 import BackButton from "../components/BackButton";
 import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
-import type { Article, Step, TabHomeParamList } from "../types";
+import type {
+  Article,
+  ArticleInShortItem,
+  ArticleLink,
+  Step,
+  TabHomeParamList,
+} from "../types";
 
 interface Props {
   route: RouteProp<{ params: { id: number; step: Step } }, "params">;
@@ -26,14 +35,32 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
   const articleId = route.params.id;
   const screenTitle = route.params.step.nom;
   const description = route.params.step.description;
+  let inShortArray: ArticleInShortItem[] = [];
+  let linksArray: ArticleLink[] = [];
 
   const ARTICLE_DETAIL = gql`
-    query GetAllArticles {
+    query GetArticleDetail {
       article: articles_by_pk(id: ${articleId}) {
         id
         titre
         resume
         texte1: texte_1
+        texte2: texte_2
+        leSaviezVous: le_saviez_vous
+        enbrefTexte1: enbref_1_texte
+        enbrefTexte2: enbref_2_texte
+        enbrefTexte3: enbref_3_texte
+        enbrefIcone1: enbref_1_icone
+        enbrefIcone2: enbref_2_icone
+        enbrefIcone3: enbref_3_icone
+        lienTitre1: lien_1_titre
+        lienTitre2: lien_2_titre
+        lienTitre3: lien_3_titre
+        lienTitre4: lien_4_titre
+        lienUrl1: lien_1_url
+        lienUrl2: lien_2_url
+        lienUrl3: lien_3_url
+        lienUrl4: lien_4_url
         visuel {
           uploadFile: file {
             url
@@ -52,10 +79,28 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
     fetchPolicy: "no-cache",
   });
 
+  const setInShortArray = (article: Article) => {
+    inShortArray = [
+      { icon: article.enbrefIcone1, text: article.enbrefTexte1 },
+      { icon: article.enbrefIcone2, text: article.enbrefTexte2 },
+      { icon: article.enbrefIcone3, text: article.enbrefTexte3 },
+    ];
+  };
+  const setLinksArray = (article: Article) => {
+    linksArray = [
+      { label: article.lienTitre1, url: article.lienUrl1 },
+      { label: article.lienTitre2, url: article.lienUrl2 },
+      { label: article.lienTitre3, url: article.lienUrl3 },
+      { label: article.lienTitre4, url: article.lienUrl4 },
+    ];
+  };
+
   if (loading) return <ActivityIndicator size="large" />;
   if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
 
   const result = data as { article: Article };
+  setInShortArray(result.article);
+  setLinksArray(result.article);
   return (
     <ScrollView>
       <View style={[styles.mainContainer]}>
@@ -71,28 +116,14 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
           <CommonText style={[styles.description]}>{description}</CommonText>
         </View>
         <View>
-          <Image
-            source={{
-              uri: `${BO_URL}${result.article.visuel?.uploadFile.url}`,
-            }}
-            style={[styles.articleImage]}
-          />
-          <CommonText style={[styles.title]}>{result.article.titre}</CommonText>
-          <View style={[styles.flexStart]}>
-            {result.article.thematiques.map((thematiqueContainer, index) => {
-              return (
-                <View style={[styles.thematiqueContainer]} key={index}>
-                  <CommonText style={[styles.thematique]}>
-                    {thematiqueContainer.thematique.nom}
-                  </CommonText>
-                </View>
-              );
-            })}
-          </View>
-          <HTML
-            baseFontStyle={styles.htmlContainer}
-            source={{ html: result.article.texte1 }}
-          />
+          <ImageBanner imageUrl={result.article.visuel?.uploadFile.url} />
+          <Title title={result.article.titre} />
+          <Thematics items={result.article.thematiques} />
+          <TextHtml html={result.article.texte1} />
+          <DidYouKnow description={result.article.leSaviezVous} />
+          <TextHtml html={result.article.texte2} />
+          <InShort inShortArray={inShortArray} />
+          <Links linksArray={linksArray} />
         </View>
       </View>
     </ScrollView>
@@ -100,12 +131,6 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  articleImage: {
-    height: 150,
-    marginBottom: 15,
-    marginTop: 15,
-    width: "100%",
-  },
   description: {
     color: Colors.commonText,
   },
@@ -114,23 +139,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
   },
-  htmlContainer: {
-    color: Colors.commonText,
-    fontFamily: "comfortaa-regular",
-    fontSize: 14,
-    lineHeight: 22,
-  },
   mainContainer: {
     padding: 15,
-  },
-  thematique: {
-    color: Colors.primaryBlue,
-  },
-  thematiqueContainer: {
-    backgroundColor: Colors.primaryBlueLight,
-    borderRadius: 8,
-    marginRight: 8,
-    padding: 6,
   },
   title: {
     color: Colors.primaryBlue,

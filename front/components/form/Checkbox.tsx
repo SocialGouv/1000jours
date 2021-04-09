@@ -5,6 +5,7 @@ import { CheckBox as RNECheckBox } from "react-native-elements";
 import CheckedIcon from "../../assets/images/radio_checked.svg";
 import UncheckedIcon from "../../assets/images/radio_unchecked.svg";
 import Colors from "../../constants/Colors";
+import { fontsMap } from "../StyledText";
 
 interface Props {
   title: string;
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: Colors.primaryBlueDark,
-    fontFamily: "comfortaa-regular",
+    fontFamily: fontsMap.normal,
     fontSize: 11,
   },
   labelSelected: {

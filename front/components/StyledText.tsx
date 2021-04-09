@@ -7,7 +7,7 @@ import { FontWeight } from "../constants/Layout";
 import type { TextProps } from "./Themed";
 import { Text } from "./Themed";
 
-const fontsMap = {
+export const fontsMap = {
   [FontWeight.weight100]: "comfortaa-light",
   [FontWeight.weight200]: "comfortaa-light",
   [FontWeight.light]: "comfortaa-light",
@@ -26,7 +26,7 @@ const getFontFromWeight = (style: StyleProp<TextStyle>) => {
     ? StyleSheet.flatten(style).fontWeight
     : FontWeight.normal;
   return {
-    fontFamily: fontWeight ? fontsMap[fontWeight] : fontsMap[FontWeight.normal],
+    fontFamily: fontWeight ? fontsMap[fontWeight] : fontsMap.normal,
   };
 };
 
