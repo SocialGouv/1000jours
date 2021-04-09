@@ -1,3 +1,4 @@
+import { filter } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
 import { Linking, StyleSheet } from "react-native";
@@ -18,7 +19,7 @@ const Links: FC<Props> = ({ linksArray }) => {
 
   return (
     <View style={styles.linksContainer}>
-      {linksArray.map((item, index) => (
+      {filter(linksArray, "label").map((item, index) => (
         <CommonText
           key={index}
           style={[styles.link]}

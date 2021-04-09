@@ -35,8 +35,8 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
   const articleId = route.params.id;
   const screenTitle = route.params.step.nom;
   const description = route.params.step.description;
-  const inShortArray: ArticleInShortItem[] = [];
-  const linksArray: ArticleLink[] = [];
+  let inShortArray: ArticleInShortItem[] = [];
+  let linksArray: ArticleLink[] = [];
 
   const ARTICLE_DETAIL = gql`
     query GetArticleDetail {
@@ -79,25 +79,20 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
     fetchPolicy: "no-cache",
   });
 
-  const addInShort = (text: string, icon: string) => {
-    inShortArray.push({ icon, text });
-  };
   const setInShortArray = (article: Article) => {
-    if (article.enbrefTexte1)
-      addInShort(article.enbrefTexte1, article.enbrefIcone1);
-    if (article.enbrefTexte2)
-      addInShort(article.enbrefTexte2, article.enbrefIcone2);
-    if (article.enbrefTexte3)
-      addInShort(article.enbrefTexte3, article.enbrefIcone3);
-  };
-  const addLink = (title: string, url: string) => {
-    linksArray.push({ label: title, url: url });
+    inShortArray = [
+      { icon: article.enbrefIcone1, text: article.enbrefTexte1 },
+      { icon: article.enbrefIcone2, text: article.enbrefTexte2 },
+      { icon: article.enbrefIcone3, text: article.enbrefTexte3 },
+    ];
   };
   const setLinksArray = (article: Article) => {
-    if (article.lienUrl1) addLink(article.lienTitre1, article.lienUrl1);
-    if (article.lienUrl2) addLink(article.lienTitre2, article.lienUrl2);
-    if (article.lienUrl3) addLink(article.lienTitre3, article.lienUrl3);
-    if (article.lienUrl4) addLink(article.lienTitre4, article.lienUrl4);
+    linksArray = [
+      { label: article.lienTitre1, url: article.lienUrl1 },
+      { label: article.lienTitre2, url: article.lienUrl2 },
+      { label: article.lienTitre3, url: article.lienUrl3 },
+      { label: article.lienTitre4, url: article.lienUrl4 },
+    ];
   };
 
   if (loading) return <ActivityIndicator size="large" />;

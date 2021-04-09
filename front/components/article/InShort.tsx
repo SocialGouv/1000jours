@@ -1,3 +1,4 @@
+import { filter } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet, Text } from "react-native";
@@ -44,7 +45,7 @@ const InShort: FC<Props> = ({ inShortArray }) => {
       </View>
 
       <View style={styles.inShortListItemsContainer}>
-        {inShortArray.map((item, index) => (
+        {filter(inShortArray, "text").map((item, index) => (
           <ListItem key={index} containerStyle={[styles.listItemContainer]}>
             {inShortIcons[item.icon]}
             <ListItem.Content>
