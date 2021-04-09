@@ -5,6 +5,7 @@ on:
       - 'master'
     paths:
       - 'front/**'
+  workflow_dispatch
 
 jobs:
   publish:
