@@ -10,7 +10,7 @@ import ParentsIcon from "../../assets/images/icone parents.svg";
 import Colors from "../../constants/Colors";
 import Labels from "../../constants/Labels";
 import type { ArticleInShortItem } from "../../types";
-import { CommonText } from "../StyledText";
+import { CommonText, fontsMap } from "../StyledText";
 import { View } from "../Themed";
 
 export const inShortIconNames = {
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   htmlContainer: {
     color: Colors.commonText,
-    fontFamily: "comfortaa-regular",
+    fontFamily: fontsMap.normal,
     fontSize: 14,
   },
   inShortBackgroundSymbol: {
