@@ -203,6 +203,7 @@ data:
   HASURA_GRAPHQL_LOG_LEVEL: debug
   HASURA_GRAPHQL_DEV_MODE: 'true'
   HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
+  HASURA_ACTION_BASE_URL: http://strapi
 ---
 apiVersion: v1
 kind: Service

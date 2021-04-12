@@ -14,6 +14,7 @@
   },
   "scripts": {
     "commit": "git-cz",
-    "k8s": "yarn --silent --cwd .k8s"
+    "k8s": "yarn --silent --cwd .k8s",
+    "k8s-update": "yarn --silent --cwd .k8s test -u"
   }
 }
