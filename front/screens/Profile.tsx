@@ -2,6 +2,7 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import { filter, find } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
+// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useEffect, useState } from "react";
 import { Alert, ScrollView, StyleSheet, Text } from "react-native";
 
@@ -9,6 +10,7 @@ import ProfileImage from "../assets/images/Humaaans_Space_1.svg";
 import Button from "../components/form/Button";
 import Checkbox from "../components/form/Checkbox";
 import InputDate from "../components/form/InputDate";
+import HeaderApp from "../components/HeaderApp";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
@@ -21,7 +23,6 @@ interface Props {
 }
 
 const Profile: FC<Props> = ({ navigation }) => {
-  const appName = Labels.appName;
   const image = <ProfileImage />;
   const title = Labels.profile.title;
 
@@ -125,10 +126,8 @@ const Profile: FC<Props> = ({ navigation }) => {
 
   return (
     <View style={[styles.mainContainer]}>
-      <View style={[styles.header, styles.justifyContentCenter]}>
-        <Text style={[styles.appName]}>{appName}</Text>
-      </View>
-      <ScrollView style={[styles.body]}>
+      <HeaderApp />
+      <ScrollView>
         <View style={[styles.justifyContentCenter]}>{image}</View>
         <Text style={[styles.title, styles.textAlignCenter]}>{title}</Text>
         <View style={[styles.choices]}>
@@ -170,8 +169,10 @@ const Profile: FC<Props> = ({ navigation }) => {
             }}
           />
         </View>
-        <View style={[styles.footer, styles.justifyContentCenter]}>
-          <View>
+      </ScrollView>
+      <View style={[styles.footer, styles.justifyContentCenter]}>
+        <View style={[styles.buttonsContainer, styles.justifyContentCenter]}>
+          <View style={[styles.buttonContainer]}>
             <Button
               title={Labels.buttons.pass}
               rounded={false}
@@ -179,7 +180,7 @@ const Profile: FC<Props> = ({ navigation }) => {
               action={navigateToRoot}
             />
           </View>
-          <View>
+          <View style={[styles.buttonContainer]}>
             <Button
               title={Labels.buttons.validate}
               rounded={true}
@@ -188,7 +189,7 @@ const Profile: FC<Props> = ({ navigation }) => {
             />
           </View>
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 };
@@ -202,8 +203,11 @@ const styles = StyleSheet.create({
   birthdayConatiner: {
     paddingTop: 30,
   },
-  body: {
+  buttonContainer: {
     flex: 1,
+  },
+  buttonsContainer: {
+    flexDirection: "row",
   },
   checkbox: {
     height: 40,
@@ -217,11 +221,12 @@ const styles = StyleSheet.create({
   datepickerContainer: {
     padding: 20,
   },
+  flexColumn: {
+    flex: 1,
+    flexDirection: "column",
+  },
   footer: {
     flex: 1,
-    flexDirection: "row",
-    paddingBottom: 15,
-    paddingTop: 30,
   },
   header: {
     height: 44,
