@@ -48,6 +48,7 @@ services:
       ## uncomment next line to set an admin secret
       HASURA_GRAPHQL_ADMIN_SECRET: hasurac'estpasmal
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: "anonymous"
+      HASURA_ACTION_BASE_URL: http://localhost:1337
 
 volumes:
   db_data:
