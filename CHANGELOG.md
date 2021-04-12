@@ -1,3 +1,10 @@
+## [1.10.3](https://github.com/SocialGouv/1000jours/compare/v1.10.2...v1.10.3) (2021-04-12)
+
+
+### Bug Fixes
+
+* **api:** corrige l'url des appels vers strapi ([#122](https://github.com/SocialGouv/1000jours/issues/122)) ([5be148c](https://github.com/SocialGouv/1000jours/commit/5be148c76c2715bbc87ae7d5ee5103ad45fc9f7c))
+
 ## [1.10.2](https://github.com/SocialGouv/1000jours/compare/v1.10.1...v1.10.2) (2021-04-12)
 
 
