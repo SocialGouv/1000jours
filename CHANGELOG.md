@@ -1,3 +1,10 @@
+## [1.10.2](https://github.com/SocialGouv/1000jours/compare/v1.10.1...v1.10.2) (2021-04-12)
+
+
+### Bug Fixes
+
+* 🐛 Corrige les retours UI (Onboarding et Profil) ([#121](https://github.com/SocialGouv/1000jours/issues/121)) ([77c0406](https://github.com/SocialGouv/1000jours/commit/77c04062de1e696a16672507109322ab06ef75ce)), closes [#7](https://github.com/SocialGouv/1000jours/issues/7) [#10](https://github.com/SocialGouv/1000jours/issues/10)
+
 ## [1.10.1](https://github.com/SocialGouv/1000jours/compare/v1.10.0...v1.10.1) (2021-04-09)
 
 
