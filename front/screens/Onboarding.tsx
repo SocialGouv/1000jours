@@ -1,14 +1,16 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
+// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useRef, useState } from "react";
-import { Dimensions, StyleSheet, Text } from "react-native";
+import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 
 import ThirdSlideImage from "../assets/images/Humaaans_2_Characters.svg";
 import FirstSlideImage from "../assets/images/Humaaans_3_Characters.svg";
 import SecondSlideImage from "../assets/images/Humaaans_Sitting.svg";
 import Button from "../components/form/Button";
+import HeaderApp from "../components/HeaderApp";
 import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
@@ -34,7 +36,6 @@ interface SlideView {
 }
 
 const Onboarding: FC<Props> = ({ navigation }) => {
-  const appName = Labels.appName;
   const slideViews: SlideView[] = [
     {
       description: Labels.onboarding.slidesText[0].description,
@@ -56,17 +57,15 @@ const Onboarding: FC<Props> = ({ navigation }) => {
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const swiperRef = useRef<SwiperFlatList>(null);
 
-  const navigateToProfile = async () => {
+  const navigateToProfile = () => {
     void storeObjectValue(isFirstLaunchKey, false);
     navigation.navigate("profile");
   };
 
   return (
-    <View style={[styles.mainContainer]}>
-      <View style={[styles.header, styles.justifyContentCenter]}>
-        <Text style={[styles.appName]}>{appName}</Text>
-      </View>
-      <View style={[styles.body, styles.justifyContentCenter]}>
+    <View style={[styles.mainContainer, styles.flexColumn]}>
+      <HeaderApp />
+      <ScrollView>
         <SwiperFlatList
           ref={swiperRef}
           onChangeIndex={({ index }) => {
@@ -101,7 +100,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
             );
           })}
         </SwiperFlatList>
-      </View>
+      </ScrollView>
       <View style={[styles.footer, styles.justifyContentCenter]}>
         {swiperCurrentIndex === slideViews.length - 1 ? (
           <View style={[styles.justifyContentCenter]}>
@@ -114,22 +113,26 @@ const Onboarding: FC<Props> = ({ navigation }) => {
           </View>
         ) : (
           <View style={[styles.buttonsContainer, styles.justifyContentCenter]}>
-            <Button
-              title={Labels.buttons.pass}
-              rounded={false}
-              disabled={false}
-              action={navigateToProfile}
-            />
-            <Button
-              title={Labels.buttons.next}
-              rounded={false}
-              disabled={false}
-              action={() => {
-                swiperRef.current?.scrollToIndex({
-                  index: swiperCurrentIndex + 1,
-                });
-              }}
-            />
+            <View style={[styles.buttonContainer]}>
+              <Button
+                title={Labels.buttons.pass}
+                rounded={false}
+                disabled={false}
+                action={navigateToProfile}
+              />
+            </View>
+            <View style={[styles.buttonContainer]}>
+              <Button
+                title={Labels.buttons.next}
+                rounded={false}
+                disabled={false}
+                action={() => {
+                  swiperRef.current?.scrollToIndex({
+                    index: swiperCurrentIndex + 1,
+                  });
+                }}
+              />
+            </View>
           </View>
         )}
       </View>
@@ -144,11 +147,10 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: FontWeight.bold,
   },
-  body: {
-    flex: 4,
+  buttonContainer: {
+    flex: 1,
   },
   buttonsContainer: {
-    flex: 1,
     flexDirection: "row",
   },
   description: {
@@ -156,20 +158,20 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: FontWeight.medium,
     lineHeight: 20,
+    paddingHorizontal: 15,
+  },
+  flexColumn: {
+    flex: 1,
+    flexDirection: "column",
   },
   footer: {
     flex: 1,
-  },
-  header: {
-    flex: 0.5,
   },
   justifyContentCenter: {
     alignItems: "center",
     justifyContent: "center",
   },
   mainContainer: {
-    flex: 1,
-    flexDirection: "column",
     paddingTop: 30,
   },
   swipePaginationItem: {
