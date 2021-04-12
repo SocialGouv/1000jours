@@ -2,7 +2,7 @@ actions:
 - name: getCurrentEtape
   definition:
     kind: ""
-    handler: {{HASURA_ACTION_BASE_URL}}/etapes/get-current
+    handler: "{{HASURA_ACTION_BASE_URL}}/etapes/get-current"
     forward_client_headers: true
 custom_types:
   enums: []
