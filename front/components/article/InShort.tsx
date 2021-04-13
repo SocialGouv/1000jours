@@ -4,12 +4,10 @@ import * as React from "react";
 import { StyleSheet, Text } from "react-native";
 import { ListItem } from "react-native-elements";
 
-import BabyIcon from "../../assets/images/icone bébé.svg";
-import BabyBottleIcon from "../../assets/images/icone biberon.svg";
-import ParentsIcon from "../../assets/images/icone parents.svg";
 import Colors from "../../constants/Colors";
 import Labels from "../../constants/Labels";
 import type { ArticleInShortItem } from "../../types";
+import Icomoon, { IcomoonIcons } from "../Icomoon";
 import { CommonText, fontsMap } from "../StyledText";
 import { View } from "../Themed";
 
@@ -26,9 +24,27 @@ interface Props {
 const InShort: FC<Props> = ({ inShortArray }) => {
   const iconSize = 40;
   const inShortIcons = {
-    [inShortIconNames.baby]: <BabyIcon width={iconSize} />,
-    [inShortIconNames.parents]: <ParentsIcon width={iconSize} />,
-    [inShortIconNames.babyBottle]: <BabyBottleIcon width={iconSize} />,
+    [inShortIconNames.baby]: (
+      <Icomoon
+        name={IcomoonIcons.bebe}
+        size={iconSize}
+        color={Colors.primaryBlue}
+      />
+    ),
+    [inShortIconNames.parents]: (
+      <Icomoon
+        name={IcomoonIcons.parents}
+        size={iconSize}
+        color={Colors.primaryBlue}
+      />
+    ),
+    [inShortIconNames.babyBottle]: (
+      <Icomoon
+        name={IcomoonIcons.biberon}
+        size={iconSize}
+        color={Colors.primaryBlue}
+      />
+    ),
   };
 
   return (

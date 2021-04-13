@@ -35,6 +35,7 @@ const Button: React.FC<Props> = ({
       buttonStyle={[rounded ? styles.roundedButton : null, buttonStyle]}
       titleStyle={[
         rounded ? styles.roundedButtonTitle : styles.clearButtonTitle,
+        icon ? styles.buttonWithIcon : null,
         titleStyle,
       ]}
       onPress={action}
@@ -44,6 +45,9 @@ const Button: React.FC<Props> = ({
 };
 
 const styles = StyleSheet.create({
+  buttonWithIcon: {
+    paddingStart: 5,
+  },
   clearButtonTitle: {
     color: Colors.primaryBlue,
     textAlign: "left",
@@ -54,10 +58,8 @@ const styles = StyleSheet.create({
   roundedButton: {
     backgroundColor: Colors.primaryBlue,
     borderRadius: 40,
-    marginLeft: 30,
-    marginRight: 30,
-    paddingLeft: 30,
-    paddingRight: 30,
+    marginHorizontal: 20,
+    paddingHorizontal: 20,
   },
   roundedButtonTitle: {
     color: "white",

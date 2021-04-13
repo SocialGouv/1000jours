@@ -9,18 +9,18 @@ import * as React from "react";
 import type { ColorSchemeName } from "react-native";
 import { StyleSheet } from "react-native";
 
-import IconeMenu from "../assets/images/icone menu.svg";
 import LogoMinistere from "../assets/images/Logo ministere.svg";
+import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import { Text, View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
+import LoadingScreen from "../screens/LoadingScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import Onboarding from "../screens/Onboarding";
 import Profile from "../screens/Profile";
 import type { RootStackParamList } from "../types";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
-import LoadingScreen from "../screens/LoadingScreen";
 
 interface NavigationProps {
   colorScheme: ColorSchemeName;
@@ -58,7 +58,11 @@ const RootNavigator: FC = () => (
               console.log("Open menu");
             }}
           >
-            <IconeMenu width="28" />
+            <Icomoon
+              name={IcomoonIcons.menu}
+              size={5}
+              color={Colors.primaryBlue}
+            />
             <Text style={[styles.headerRightButtonText]}>
               {Labels.menu.title}
             </Text>

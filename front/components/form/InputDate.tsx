@@ -1,8 +1,8 @@
 import * as React from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 
-import IconeCalendrier from "../../assets/images/icone calendrier.svg";
 import Colors from "../../constants/Colors";
+import Icomoon, { IcomoonIcons } from "../Icomoon";
 
 interface Props {
   day: string;
@@ -23,7 +23,11 @@ const InputDate: React.FC<Props> = ({
 }) => {
   return (
     <View style={styles.inputDateContainer}>
-      <IconeCalendrier height={24} />
+      <Icomoon
+        name={IcomoonIcons.calendrier}
+        size={24}
+        color={Colors.primaryBlue}
+      />
       <TextInput
         style={[styles.textInput]}
         onChangeText={onDayChange}
