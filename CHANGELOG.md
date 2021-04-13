@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/SocialGouv/1000jours/compare/v1.11.0...v1.12.0) (2021-04-13)
+
+
+### Features
+
+* 🎸 Je peux utiliser une font d'icones (Icomoon) ([#125](https://github.com/SocialGouv/1000jours/issues/125)) ([340f673](https://github.com/SocialGouv/1000jours/commit/340f67378299548225ce77d8bb20cab44576b6d3)), closes [#124](https://github.com/SocialGouv/1000jours/issues/124) [#126](https://github.com/SocialGouv/1000jours/issues/126)
+
 # [1.11.0](https://github.com/SocialGouv/1000jours/compare/v1.10.3...v1.11.0) (2021-04-13)
 
 
