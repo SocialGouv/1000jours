@@ -2,17 +2,11 @@ import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import StepIcon8 from "../../assets/images/Icone 1 à 2 ans.svg";
-import StepIcon7 from "../../assets/images/Icone 4 mois à 1 an.svg";
-import StepIcon6 from "../../assets/images/Icone 4 premiers mois.svg";
-import StepIcon5 from "../../assets/images/Icone accouchement.svg";
-import StepIcon2 from "../../assets/images/Icone conception.svg";
-import StepIcon3 from "../../assets/images/Icone début de grossesse.svg";
-import StepIcon4 from "../../assets/images/Icone fin de grossesse.svg";
-import StepIcon1 from "../../assets/images/icone projet parent.svg";
 import Colors from "../../constants/Colors";
+import { IcomoonIcons } from "../Icomoon";
 import { CommonText } from "../StyledText";
 import { View } from "../Themed";
+import StepIcon from "./StepIcon";
 
 interface TimelineStepProps {
   order: number;
@@ -30,14 +24,14 @@ const TimelineStep: FC<TimelineStepProps> = ({
   onPress,
 }) => {
   const stepIcons: React.ReactNode[] = [
-    <StepIcon1 />,
-    <StepIcon2 />,
-    <StepIcon3 />,
-    <StepIcon4 />,
-    <StepIcon5 />,
-    <StepIcon6 />,
-    <StepIcon7 />,
-    <StepIcon8 />,
+    <StepIcon name={IcomoonIcons.stepProjetParent} />,
+    <StepIcon name={IcomoonIcons.stepConception} />,
+    <StepIcon name={IcomoonIcons.stepDebutDeGrossesse} />,
+    <StepIcon name={IcomoonIcons.stepFinDeGrossesse} />,
+    <StepIcon name={IcomoonIcons.stepAccouchement} />,
+    <StepIcon name={IcomoonIcons.step4PremiersMois} />,
+    <StepIcon name={IcomoonIcons.step4MoisA1An} />,
+    <StepIcon name={IcomoonIcons.step1A2Ans} />,
   ];
 
   const getStepStyles = (index: number, isLast: boolean) => {

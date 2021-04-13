@@ -11,6 +11,7 @@ import Button from "../components/form/Button";
 import Checkbox from "../components/form/Checkbox";
 import InputDate from "../components/form/InputDate";
 import HeaderApp from "../components/HeaderApp";
+import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
@@ -38,7 +39,6 @@ const Profile: FC<Props> = ({ navigation }) => {
         isChecked: false,
         label: Labels.profile.situations.severalChildren,
       },
-      { id: 6, isChecked: false, label: Labels.profile.situations.pro },
     ],
   };
   const userSituationsIdsWhereChildBirthdayIsNeeded = [3, 4, 5];
@@ -97,7 +97,7 @@ const Profile: FC<Props> = ({ navigation }) => {
   };
 
   const validateForm = () => {
-    if (isValidDate(+day, +month, +year)) {
+    if (!childBirthdayIsNeeded() || isValidDate(+day, +month, +year)) {
       navigation.navigate("root");
     } else {
       Alert.alert(Labels.invalidDate);
@@ -125,58 +125,70 @@ const Profile: FC<Props> = ({ navigation }) => {
   }, [day, month, year, userSituations]);
 
   return (
-    <View style={[styles.mainContainer]}>
+    <View style={[styles.mainContainer, styles.flexColumn]}>
       <HeaderApp />
-      <ScrollView>
-        <View style={[styles.justifyContentCenter]}>{image}</View>
-        <Text style={[styles.title, styles.textAlignCenter]}>{title}</Text>
-        <View style={[styles.choices]}>
-          {userSituations.map((situation, index) => {
-            return (
-              <View key={index}>
-                <Checkbox
-                  title={situation.label}
-                  checked={situation.isChecked}
-                  onPress={() => {
-                    updateUserSituations(situation);
-                  }}
-                />
-              </View>
-            );
-          })}
-        </View>
-        <View
-          style={[
-            styles.birthdayConatiner,
-            childBirthdayIsNeeded() ? null : styles.hide,
-          ]}
-        >
-          <Text style={[styles.colorPrimaryDark, styles.textAlignCenter]}>
-            {getChildBirthdayLabel()}
-          </Text>
-          <InputDate
-            day={day}
-            month={month}
-            year={year}
-            onDayChange={(text) => {
-              setDay(text);
-            }}
-            onMonthChange={(text) => {
-              setMonth(text);
-            }}
-            onYearChange={(text) => {
-              setYear(text);
-            }}
-          />
-        </View>
-      </ScrollView>
-      <View style={[styles.footer, styles.justifyContentCenter]}>
+      <View style={styles.mainView}>
+        <ScrollView style={styles.mainMargins}>
+          <View style={[styles.justifyContentCenter]}>{image}</View>
+          <Text style={[styles.title, styles.textAlignCenter]}>{title}</Text>
+          <View style={[styles.choices]}>
+            {userSituations.map((situation, index) => {
+              return (
+                <View key={index}>
+                  <Checkbox
+                    title={situation.label}
+                    checked={situation.isChecked}
+                    onPress={() => {
+                      updateUserSituations(situation);
+                    }}
+                  />
+                </View>
+              );
+            })}
+          </View>
+          <View
+            style={[
+              styles.birthdayConatiner,
+              childBirthdayIsNeeded() ? null : styles.hide,
+            ]}
+          >
+            <Text style={[styles.colorPrimaryDark, styles.textAlignCenter]}>
+              {getChildBirthdayLabel()}
+            </Text>
+            <InputDate
+              day={day}
+              month={month}
+              year={year}
+              onDayChange={(text) => {
+                setDay(text);
+              }}
+              onMonthChange={(text) => {
+                setMonth(text);
+              }}
+              onYearChange={(text) => {
+                setYear(text);
+              }}
+            />
+          </View>
+        </ScrollView>
+      </View>
+
+      <View
+        style={[styles.footer, styles.justifyContentCenter, styles.mainMargins]}
+      >
         <View style={[styles.buttonsContainer, styles.justifyContentCenter]}>
           <View style={[styles.buttonContainer]}>
             <Button
               title={Labels.buttons.pass}
               rounded={false}
               disabled={false}
+              icon={
+                <Icomoon
+                  name={IcomoonIcons.fermer}
+                  size={14}
+                  color={Colors.primaryBlue}
+                />
+              }
               action={navigateToRoot}
             />
           </View>
@@ -227,6 +239,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
+    paddingVertical: 10,
   },
   header: {
     height: 44,
@@ -242,9 +255,13 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     flexDirection: "column",
-    paddingLeft: 15,
-    paddingRight: 15,
     paddingTop: 30,
+  },
+  mainMargins: {
+    marginHorizontal: 15,
+  },
+  mainView: {
+    flex: 8,
   },
   textAlignCenter: {
     textAlign: "center",

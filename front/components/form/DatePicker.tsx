@@ -3,8 +3,8 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
-import IconeCalendrier from "../../assets/images/icone calendrier.svg";
 import Colors from "../../constants/Colors";
+import Icomoon, { IcomoonIcons } from "../Icomoon";
 
 interface Props {
   date: Date;
@@ -14,7 +14,11 @@ interface Props {
 const Datepicker: React.FC<Props> = ({ date, onChange }) => {
   return (
     <View style={[styles.flexRow]}>
-      <IconeCalendrier height={24} />
+      <Icomoon
+        name={IcomoonIcons.calendrier}
+        size={24}
+        color={Colors.primaryBlue}
+      />
       <DateTimePicker
         dateFormat="day month year"
         locale="fr-FR"

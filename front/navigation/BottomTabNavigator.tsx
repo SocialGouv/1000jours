@@ -3,10 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
 
-import IconeAccueil from "../assets/images/icone accueil.svg";
-import IconeAutourDeMoi from "../assets/images/icone autour de moi.svg";
-import IconeCalendrier from "../assets/images/icone calendrier.svg";
-import IconeFavoris from "../assets/images/icone favoris.svg";
+import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
 import ArticleDetail from "../screens/ArticleDetail";
@@ -30,25 +27,49 @@ const BottomTabNavigator: FC = () => {
   const tabItems: TabItem[] = [
     {
       component: TabHomeNavigator,
-      icon: <IconeAccueil height={30} />,
+      icon: (
+        <Icomoon
+          name={IcomoonIcons.accueil}
+          color={Colors.primaryBlue}
+          size={30}
+        />
+      ),
       name: "tabHome",
       title: Labels.tabs.homeTitle,
     },
     {
       component: TabCalendarNavigator,
-      icon: <IconeCalendrier height={30} />,
+      icon: (
+        <Icomoon
+          name={IcomoonIcons.calendrier}
+          color={Colors.primaryBlue}
+          size={30}
+        />
+      ),
       name: "tabCalendar",
       title: Labels.tabs.calendarTitle,
     },
     {
       component: TabFavoritesNavigator,
-      icon: <IconeFavoris height={30} />,
+      icon: (
+        <Icomoon
+          name={IcomoonIcons.favoris}
+          color={Colors.primaryBlue}
+          size={30}
+        />
+      ),
       name: "tabFavorites",
       title: Labels.tabs.favoritesTitle,
     },
     {
       component: TabAroundMeNavigator,
-      icon: <IconeAutourDeMoi height={30} />,
+      icon: (
+        <Icomoon
+          name={IcomoonIcons.autourDeMoi}
+          color={Colors.primaryBlue}
+          size={30}
+        />
+      ),
       name: "tabAroundMe",
       title: Labels.tabs.aroundMeTitle,
     },

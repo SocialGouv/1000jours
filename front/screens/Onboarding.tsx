@@ -11,6 +11,7 @@ import FirstSlideImage from "../assets/images/Humaaans_3_Characters.svg";
 import SecondSlideImage from "../assets/images/Humaaans_Sitting.svg";
 import Button from "../components/form/Button";
 import HeaderApp from "../components/HeaderApp";
+import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
@@ -65,42 +66,44 @@ const Onboarding: FC<Props> = ({ navigation }) => {
   return (
     <View style={[styles.mainContainer, styles.flexColumn]}>
       <HeaderApp />
-      <ScrollView>
-        <SwiperFlatList
-          ref={swiperRef}
-          onChangeIndex={({ index }) => {
-            setSwiperCurrentIndex(index);
-          }}
-          autoplay={false}
-          showPagination
-          paginationDefaultColor="lightgray"
-          paginationActiveColor={Colors.secondaryGreen}
-          paginationStyleItem={styles.swipePaginationItem}
-        >
-          {slideViews.map((slideView, index) => {
-            return (
-              <View
-                style={[styles.swipeView, styles.justifyContentCenter]}
-                key={index}
-              >
-                <View style={[styles.swipeViewMargin]}>
-                  <View style={[styles.justifyContentCenter]}>
-                    {slideView.image}
+      <View style={styles.mainView}>
+        <ScrollView>
+          <SwiperFlatList
+            ref={swiperRef}
+            onChangeIndex={({ index }) => {
+              setSwiperCurrentIndex(index);
+            }}
+            autoplay={false}
+            showPagination
+            paginationDefaultColor="lightgray"
+            paginationActiveColor={Colors.secondaryGreen}
+            paginationStyleItem={styles.swipePaginationItem}
+          >
+            {slideViews.map((slideView, index) => {
+              return (
+                <View
+                  style={[styles.swipeView, styles.justifyContentCenter]}
+                  key={index}
+                >
+                  <View style={[styles.swipeViewMargin]}>
+                    <View style={[styles.justifyContentCenter]}>
+                      {slideView.image}
+                    </View>
+                    <CommonText style={[styles.title, styles.textAlignCenter]}>
+                      {slideView.title}
+                    </CommonText>
+                    <CommonText
+                      style={[styles.description, styles.textAlignCenter]}
+                    >
+                      {slideView.description}
+                    </CommonText>
                   </View>
-                  <CommonText style={[styles.title, styles.textAlignCenter]}>
-                    {slideView.title}
-                  </CommonText>
-                  <CommonText
-                    style={[styles.description, styles.textAlignCenter]}
-                  >
-                    {slideView.description}
-                  </CommonText>
                 </View>
-              </View>
-            );
-          })}
-        </SwiperFlatList>
-      </ScrollView>
+              );
+            })}
+          </SwiperFlatList>
+        </ScrollView>
+      </View>
       <View style={[styles.footer, styles.justifyContentCenter]}>
         {swiperCurrentIndex === slideViews.length - 1 ? (
           <View style={[styles.justifyContentCenter]}>
@@ -118,6 +121,13 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                 title={Labels.buttons.pass}
                 rounded={false}
                 disabled={false}
+                icon={
+                  <Icomoon
+                    name={IcomoonIcons.fermer}
+                    size={14}
+                    color={Colors.primaryBlue}
+                  />
+                }
                 action={navigateToProfile}
               />
             </View>
@@ -126,6 +136,13 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                 title={Labels.buttons.next}
                 rounded={false}
                 disabled={false}
+                icon={
+                  <Icomoon
+                    name={IcomoonIcons.suivant}
+                    size={14}
+                    color={Colors.primaryBlue}
+                  />
+                }
                 action={() => {
                   swiperRef.current?.scrollToIndex({
                     index: swiperCurrentIndex + 1,
@@ -166,13 +183,18 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
+    paddingVertical: 10,
   },
   justifyContentCenter: {
     alignItems: "center",
     justifyContent: "center",
   },
   mainContainer: {
+    flex: 1,
     paddingTop: 30,
+  },
+  mainView: {
+    flex: 8,
   },
   swipePaginationItem: {
     height: 5,
