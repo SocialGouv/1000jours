@@ -5,6 +5,8 @@ import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import type { FC } from "react";
 import * as React from "react";
+// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
+import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import IcomoonFont from "./assets/icomoon/icomoon.ttf";
@@ -33,8 +35,9 @@ const App: FC = () => {
   const colorScheme = useColorScheme();
 
   // Load Custom Fonts (Icomoon)
-  const [fontsLoaded, setFontsLoaded] = React.useState<boolean>(false);
-  const loadFontAsync = () => {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  useEffect(() => {
     Font.loadAsync(customFonts)
       .then(() => {
         setFontsLoaded(true);
@@ -42,9 +45,6 @@ const App: FC = () => {
       .catch((error) => {
         console.log(error);
       });
-  };
-  React.useEffect(() => {
-    loadFontAsync();
   }, []);
 
   if (CLEAR_STORAGE) void AsyncStorage.multiRemove(allKeys);
