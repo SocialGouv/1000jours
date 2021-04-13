@@ -47,11 +47,17 @@ module.exports = {
       "plugin": "upload",
       "required": false
     },
+    "texte_1_titre": {
+      "type": "string"
+    },
     "texte_1": {
       "type": "richtext"
     },
     "le_saviez_vous": {
       "type": "text"
+    },
+    "texte_2_titre": {
+      "type": "string"
     },
     "texte_2": {
       "type": "richtext"
