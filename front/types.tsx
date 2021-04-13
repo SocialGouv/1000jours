@@ -76,7 +76,9 @@ export type Article = {
   id: number;
   titre: string;
   resume: string;
+  texteTitre1: string;
   texte1: string;
+  texteTitre2: string;
   texte2: string;
   leSaviezVous: string;
   enbrefTexte1: string;

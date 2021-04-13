@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
   htmlContainer: {
     color: Colors.commonText,
     fontFamily: fontsMap.normal,
-    fontSize: 14,
+    fontSize: 12,
+    lineHeight: 20,
   },
 });
 

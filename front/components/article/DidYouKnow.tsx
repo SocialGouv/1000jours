@@ -12,7 +12,7 @@ interface Props {
 }
 
 const DidYouKnow: FC<Props> = ({ description }) => {
-  return (
+  return description && description.length > 0 ? (
     <View style={styles.didYouKnowContainer}>
       <View style={[styles.cardTitleContainer, styles.positionRelative]}>
         <CommonText style={[styles.didYouKnowTitle]}>
@@ -29,7 +29,7 @@ const DidYouKnow: FC<Props> = ({ description }) => {
       </View>
       <CommonText style={[styles.didYouKnowContent]}>{description}</CommonText>
     </View>
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({
