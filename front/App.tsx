@@ -1,5 +1,4 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { API_URL, CLEAR_STORAGE, HASURA_ADMIN_SECRET } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
@@ -20,9 +19,9 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   headers: {
     "content-type": "application/json",
-    "x-hasura-admin-secret": HASURA_ADMIN_SECRET,
+    "x-hasura-admin-secret": process.env.HASURA_ADMIN_SECRET ?? "",
   },
-  uri: `${API_URL}/v1/graphql`,
+  uri: `${process.env.API_URL}/v1/graphql`,
 });
 
 initLocales();
@@ -47,7 +46,7 @@ const App: FC = () => {
       });
   }, []);
 
-  if (CLEAR_STORAGE) void AsyncStorage.multiRemove(allKeys);
+  if (process.env.CLEAR_STORAGE) void AsyncStorage.multiRemove(allKeys);
 
   if (!fontsLoaded || !isLoadingComplete) {
     return null;

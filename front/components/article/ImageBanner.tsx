@@ -1,4 +1,3 @@
-import { BO_URL } from "@env";
 import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -12,7 +11,7 @@ const ImageBanner: FC<Props> = ({ imageUrl }) => {
   return (
     <Image
       source={{
-        uri: `${BO_URL}${imageUrl}`,
+        uri: `${process.env.BO_URL}${imageUrl}`,
       }}
       style={[styles.articleImage]}
     />

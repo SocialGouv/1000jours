@@ -1,7 +1,5 @@
 import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
-// @ts-expect-error
-import { BO_URL } from "@env";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
@@ -72,7 +70,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
             >
               <Image
                 source={{
-                  uri: `${BO_URL}${article.visuel?.uploadFile.url}`,
+                  uri: `${process.env.BO_URL}${article.visuel?.uploadFile.url}`,
                 }}
                 style={[styles.articleImage]}
               />
