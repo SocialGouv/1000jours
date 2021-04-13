@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/SocialGouv/1000jours/compare/v1.10.3...v1.11.0) (2021-04-13)
+
+
+### Features
+
+* **articles:** ajout des titres de paragraphes dans le backoffice ([#123](https://github.com/SocialGouv/1000jours/issues/123)) ([7eca059](https://github.com/SocialGouv/1000jours/commit/7eca05919de752d43f91850e74ff14a0a9aae6bd))
+
 ## [1.10.3](https://github.com/SocialGouv/1000jours/compare/v1.10.2...v1.10.3) (2021-04-12)
 
 
