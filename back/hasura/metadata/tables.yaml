@@ -47,7 +47,9 @@
       - lien_4_url
       - resume
       - texte_1
+      - texte_1_titre
       - texte_2
+      - texte_2_titre
       - titre
       filter:
         published_at:
@@ -131,6 +133,13 @@
   - name: evenement
     using:
       foreign_key_constraint_on: evenement_id
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - etape_id
+      - evenement_id
+      filter: {}
 - table:
     schema: public
     name: etapes_parcours__parcours_etapes
@@ -141,6 +150,13 @@
   - name: parcour
     using:
       foreign_key_constraint_on: parcour_id
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - etape_id
+      - parcour_id
+      filter: {}
 - table:
     schema: public
     name: evenements
@@ -152,6 +168,18 @@
         table:
           schema: public
           name: etapes_evenements__evenements_etapes
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - debut
+      - description
+      - fin
+      - id
+      - nom
+      filter:
+        published_at:
+          _is_null: false
 - table:
     schema: public
     name: parcours
