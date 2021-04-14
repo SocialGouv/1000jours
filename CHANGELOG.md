@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/SocialGouv/1000jours/compare/v1.12.0...v1.12.1) (2021-04-14)
+
+
+### Bug Fixes
+
+* **api:** corrige les permissions de vue anonyme des événements ([#128](https://github.com/SocialGouv/1000jours/issues/128)) ([665bb95](https://github.com/SocialGouv/1000jours/commit/665bb950f594afd01a9d6a4ac44de86a0dad0d4d))
+
 # [1.12.0](https://github.com/SocialGouv/1000jours/compare/v1.11.0...v1.12.0) (2021-04-13)
 
 
