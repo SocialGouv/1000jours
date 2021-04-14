@@ -11,12 +11,13 @@
     "lint": "eslint .",
     "lint-fix": "eslint --fix .",
     "expo-login": "expo login --non-interactive -u Alezco",
-    "publish-staging:android": "expo build:android --release-channel staging",
-    "publish-staging:ios": "expo build:ios --release-channel staging",
-    "publish-prod:android": "expo build:android --release-channel prod",
-    "publish-prod:ios": "expo build:ios --release-channel prod",
-    "publish-staging": "yarn publish-staging:ios && yarn publish-staging:android",
-    "publish-prod": "yarn publish-prod:ios && yarn publish-prod:android"
+    "build-staging:android": "expo build:android --release-channel staging",
+    "build-staging:ios": "expo build:ios --release-channel staging",
+    "build-prod:android": "expo build:android --release-channel prod",
+    "build-prod:ios": "expo build:ios --release-channel prod",
+    "build-dev": "yarn build-staging:ios && yarn build-staging:android",
+    "build-prod": "yarn build-prod:ios && yarn build-prod:android",
+    "publish-dev": "expo publish --release-channel staging"
   },
   "jest": {
     "preset": "jest-expo"
