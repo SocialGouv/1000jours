@@ -1,10 +1,5 @@
 name: Expo Build Dev
 on:
-  push:
-    branches:
-      - 'master'
-    paths:
-      - 'front/**'
   workflow_dispatch:
     name:
       description: 'Manual workflow'
