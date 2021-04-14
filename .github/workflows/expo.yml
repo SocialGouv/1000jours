@@ -23,6 +23,14 @@ jobs:
           expo-version: 4.x
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+      - uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_API_URL: ${{ secrets.API_URL }}
+          envkey_HASURA_ADMIN_SECRET: ${{ secrets.HASURA_ADMIN_SECRET }}
+          envkey_BO_URL: ${{ secrets.BO_URL }}
+          envkey_CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
+          directory: front
+          file_name: .env
       - name: Yarn
         run: |
           cd front
