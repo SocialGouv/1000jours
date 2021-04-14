@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/SocialGouv/1000jours/compare/v1.12.1...v1.13.0) (2021-04-14)
+
+
+### Features
+
+* 🎸 Ajoute texteTitre1 et texteTitre2 (article) ([#127](https://github.com/SocialGouv/1000jours/issues/127)) ([5c97599](https://github.com/SocialGouv/1000jours/commit/5c9759954fc122e7a752d995d107f6c9d2cb4982)), closes [#102](https://github.com/SocialGouv/1000jours/issues/102)
+
 ## [1.12.1](https://github.com/SocialGouv/1000jours/compare/v1.12.0...v1.12.1) (2021-04-14)
 
 
