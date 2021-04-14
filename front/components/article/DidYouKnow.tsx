@@ -12,7 +12,8 @@ interface Props {
 }
 
 const DidYouKnow: FC<Props> = ({ description }) => {
-  return description && description.length > 0 ? (
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  return description?.length > 0 ? (
     <View style={styles.didYouKnowContainer}>
       <View style={[styles.cardTitleContainer, styles.positionRelative]}>
         <CommonText style={[styles.didYouKnowTitle]}>

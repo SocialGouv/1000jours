@@ -9,9 +9,9 @@ interface Props {
   title: string;
 }
 
-const SubTitle: FC<Props> = ({ title }) => {
-  return <CommonText style={[styles.title]}>{title}</CommonText>;
-};
+const SubTitle: FC<Props> = ({ title }) => (
+  <CommonText style={[styles.title]}>{title}</CommonText>
+);
 
 const styles = StyleSheet.create({
   title: {
