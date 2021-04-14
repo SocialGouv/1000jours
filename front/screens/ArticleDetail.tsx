@@ -10,6 +10,7 @@ import DidYouKnow from "../components/article/DidYouKnow";
 import ImageBanner from "../components/article/ImageBanner";
 import InShort from "../components/article/InShort";
 import Links from "../components/article/Links";
+import SubTitle from "../components/article/SubTitle";
 import TextHtml from "../components/article/TextHtml";
 import Thematics from "../components/article/Thematics";
 import Title from "../components/article/Title";
@@ -44,7 +45,9 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
         id
         titre
         resume
+        texteTitre1: texte_1_titre
         texte1: texte_1
+        texteTitre2: texte_2_titre
         texte2: texte_2
         leSaviezVous: le_saviez_vous
         enbrefTexte1: enbref_1_texte
@@ -119,8 +122,10 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
           <ImageBanner imageUrl={result.article.visuel?.uploadFile.url} />
           <Title title={result.article.titre} />
           <Thematics items={result.article.thematiques} />
+          <SubTitle title={result.article.texteTitre1} />
           <TextHtml html={result.article.texte1} />
           <DidYouKnow description={result.article.leSaviezVous} />
+          <SubTitle title={result.article.texteTitre2} />
           <TextHtml html={result.article.texte2} />
           <InShort inShortArray={inShortArray} />
           <Links linksArray={linksArray} />

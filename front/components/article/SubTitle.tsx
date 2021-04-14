@@ -9,18 +9,18 @@ interface Props {
   title: string;
 }
 
-const Title: FC<Props> = ({ title }) => {
-  return <CommonText style={[styles.title]}>{title}</CommonText>;
-};
+const SubTitle: FC<Props> = ({ title }) => (
+  <CommonText style={[styles.title]}>{title}</CommonText>
+);
 
 const styles = StyleSheet.create({
   title: {
-    color: Colors.primaryBlueDark,
-    fontSize: 15,
+    color: Colors.primaryBlue,
+    fontSize: 12,
     fontWeight: "bold",
     marginBottom: 10,
     textTransform: "uppercase",
   },
 });
 
-export default Title;
+export default SubTitle;

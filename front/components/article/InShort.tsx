@@ -47,7 +47,7 @@ const InShort: FC<Props> = ({ inShortArray }) => {
     ),
   };
 
-  return (
+  return filter(inShortArray, "text").length > 0 ? (
     <View style={styles.inShortContainer}>
       <View style={[styles.cardTitleContainer, styles.positionRelative]}>
         <CommonText style={[styles.inShortTitle]}>
@@ -75,7 +75,7 @@ const InShort: FC<Props> = ({ inShortArray }) => {
         ))}
       </View>
     </View>
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({
