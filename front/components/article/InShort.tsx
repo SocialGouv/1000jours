@@ -21,8 +21,8 @@ interface Props {
   inShortArray: ArticleInShortItem[];
 }
 
+const iconSize = 40;
 const InShort: FC<Props> = ({ inShortArray }) => {
-  const iconSize = 40;
   const inShortIcons = {
     [inShortIconNames.baby]: (
       <Icomoon
@@ -63,7 +63,7 @@ const InShort: FC<Props> = ({ inShortArray }) => {
       <View style={styles.inShortListItemsContainer}>
         {filter(inShortArray, "text").map((item, index) => (
           <ListItem key={index} containerStyle={[styles.listItemContainer]}>
-            {inShortIcons[item.icon]}
+            <View style={styles.listItemIcon}>{inShortIcons[item.icon]}</View>
             <ListItem.Content>
               <ListItem.Title>
                 <CommonText style={[styles.listItemTitle]}>
@@ -120,6 +120,12 @@ const styles = StyleSheet.create({
   },
   listItemContainer: {
     backgroundColor: "transparent",
+  },
+  listItemIcon: {
+    alignItems: "center",
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    width: iconSize,
   },
   listItemTitle: {
     color: Colors.primaryBlueDark,
