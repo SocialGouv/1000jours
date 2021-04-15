@@ -79,7 +79,7 @@ const getCurrent = async (infos) => {
     date: dateString,
   } = infos;
 
-  let id = null
+  let id = null;
 
   if (grossesse || enfant || enfants) {
     if (!dateString) {

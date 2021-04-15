@@ -14,4 +14,4 @@ const getCurrentControler = async (context) => {
   }
 };
 
-module.exports = { getCurrentControler };
+module.exports = { getCurrent: getCurrentControler };

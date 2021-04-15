@@ -1,3 +1,6 @@
 {
-  "extends": ["@socialgouv/eslint-config-recommended"]
+  "extends": ["@socialgouv/eslint-config-recommended"],
+  "globals": {
+    "strapi": true
+  }
 }

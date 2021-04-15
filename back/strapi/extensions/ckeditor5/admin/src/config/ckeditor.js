@@ -3,40 +3,9 @@
 ////// CONFIGURATION TEMPLATE: uncomment desired lines to override default config.
 ////// While all lines are commented, config will not change anything.
 
-module.exports = ({
-  toolbar: {
-    items: [
-      'fontFamily',
-      'fontSize',
-      'fontColor',
-      '|',
-      'bold',
-      'italic',
-      'underline',
-      'code',
-      'link',
-      'bulletedList',
-      'numberedList',
-      'insertImage',
-      'strapiMediaLib',
-      '|',
-      'alignment',
-      'indent',
-      'outdent',
-      '|',
-      'specialCharacters',
-      'blockQuote',
-      'insertTable',
-      'mediaEmbed',
-      'htmlEmbed',
-      'codeBlock',
-      'horizontalLine',
-      '|',
-      'fullScreen',
-      'undo',
-      'redo',
-    ],
-    // shouldNotGroupWhenFull: true
+module.exports = {
+  htmlEmbed: {
+    // showPreviews: true
   },
   image: {
     // styles: [
@@ -84,7 +53,38 @@ module.exports = ({
     //     'tableCellProperties',
     // ]
   },
-  htmlEmbed: {
-    // showPreviews: true
+  toolbar: {
+    items: [
+      "fontFamily",
+      "fontSize",
+      "fontColor",
+      "|",
+      "bold",
+      "italic",
+      "underline",
+      "code",
+      "link",
+      "bulletedList",
+      "numberedList",
+      "insertImage",
+      "strapiMediaLib",
+      "|",
+      "alignment",
+      "indent",
+      "outdent",
+      "|",
+      "specialCharacters",
+      "blockQuote",
+      "insertTable",
+      "mediaEmbed",
+      "htmlEmbed",
+      "codeBlock",
+      "horizontalLine",
+      "|",
+      "fullScreen",
+      "undo",
+      "redo",
+    ],
+    // shouldNotGroupWhenFull: true
   },
-});
+};

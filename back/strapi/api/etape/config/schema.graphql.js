@@ -3,7 +3,7 @@
 const { getCurrent } = require("../services/get-current");
 
 const getCurrentResolver = async (obj, options, { context }) => {
-  const infos = !context.params._infos;
+  const infos = context.params._infos;
 
   if (!infos) return context.badRequest("missing informations");
 
@@ -34,8 +34,8 @@ module.exports = {
     Query: {
       getCurrent: {
         description: "Retourne l'étape courante en fonction des informations ",
-        resolverOf: "application::etape.etape.find",
         resolver: getCurrentResolver,
+        resolverOf: "application::etape.etape.find",
       },
     },
   },

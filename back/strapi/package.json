@@ -9,7 +9,7 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "lint": "eslint api extensions plugins config --fix",
+    "lint": "eslint . --fix",
     "config:dump": "strapi configuration:dump -p -f config/api.json",
     "config:restore": "strapi configuration:restore -f config/api.json"
   },
