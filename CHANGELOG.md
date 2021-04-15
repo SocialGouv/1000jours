@@ -1,3 +1,10 @@
+## [1.13.4](https://github.com/SocialGouv/1000jours/compare/v1.13.3...v1.13.4) (2021-04-15)
+
+
+### Bug Fixes
+
+* **articles:** enlève les caractères inutiles en début et fin de textes ([#140](https://github.com/SocialGouv/1000jours/issues/140)) ([d71ae4c](https://github.com/SocialGouv/1000jours/commit/d71ae4c0e8cd1bb0c87639de8c696a4f29a3b325))
+
 ## [1.13.3](https://github.com/SocialGouv/1000jours/compare/v1.13.2...v1.13.3) (2021-04-15)
 
 
