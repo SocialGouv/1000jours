@@ -31,14 +31,6 @@ K8S Test:
     - exists:
         - .k8s/package.json
 
-Register Kaniko image:
-  extends: .autodevops_register_kaniko_image
-  needs: []
-  dependencies: []
-  variables:
-    CONTEXT: back/hasura
-    IMAGE_NAME: les1000jours-hasura
-
 Register strapi:
   extends: .autodevops_register_kaniko_image
   needs: []

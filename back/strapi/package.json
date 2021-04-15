@@ -19,17 +19,17 @@
     "date-fns": "^2.19.0",
     "knex": "<0.20.0",
     "pg": "latest",
-    "strapi": "3.5.3",
-    "strapi-admin": "3.5.3",
-    "strapi-connector-bookshelf": "3.5.3",
+    "strapi": "^3.5.3",
+    "strapi-admin": "^3.5.3",
+    "strapi-connector-bookshelf": "^3.5.3",
     "strapi-plugin-ckeditor5": "^1.8.0",
-    "strapi-plugin-content-manager": "3.5.3",
-    "strapi-plugin-content-type-builder": "3.5.3",
-    "strapi-plugin-email": "3.5.3",
-    "strapi-plugin-graphql": "3.5.3",
-    "strapi-plugin-upload": "3.5.3",
-    "strapi-plugin-users-permissions": "3.5.3",
-    "strapi-utils": "3.5.3"
+    "strapi-plugin-content-manager": "^3.5.3",
+    "strapi-plugin-content-type-builder": "^3.5.3",
+    "strapi-plugin-email": "^3.5.3",
+    "strapi-plugin-graphql": "^3.5.3",
+    "strapi-plugin-upload": "^3.5.3",
+    "strapi-plugin-users-permissions": "^3.5.3",
+    "strapi-utils": "^3.5.3"
   },
   "author": {
     "name": "Fabrique des ministères sociaux"
