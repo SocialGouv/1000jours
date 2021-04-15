@@ -119,7 +119,15 @@ const styles = StyleSheet.create({
     marginVertical: "auto",
   },
   listItemContainer: {
+    alignItems: "flex-start",
     backgroundColor: "transparent",
+    padding: 10,
+  },
+  listItemIcon: {
+    alignItems: "center",
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    width: iconSize + 15,
   },
   listItemIcon: {
     alignItems: "center",

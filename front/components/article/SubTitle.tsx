@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlue,
     fontSize: 12,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginTop: 20,
     textTransform: "uppercase",
   },
 });

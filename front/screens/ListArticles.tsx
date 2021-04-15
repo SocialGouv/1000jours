@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
   },
   articleDescription: {
     color: Colors.commonText,
-    height: 70,
   },
   articleDescriptionFont: {
     color: Colors.commonText,
@@ -112,8 +111,8 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   articleImage: {
-    height: 130,
-    width: 120,
+    height: 100,
+    width: 100,
   },
   articleTitle: {
     color: Colors.primaryBlueDark,
