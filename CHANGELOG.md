@@ -1,3 +1,10 @@
+## [1.13.1](https://github.com/SocialGouv/1000jours/compare/v1.13.0...v1.13.1) (2021-04-15)
+
+
+### Bug Fixes
+
+* 🐛 Ajoute une marge sur les sous titres d'article ([#134](https://github.com/SocialGouv/1000jours/issues/134)) ([a30c718](https://github.com/SocialGouv/1000jours/commit/a30c718fe40abc029540b28c8abcbb696769aba1)), closes [#133](https://github.com/SocialGouv/1000jours/issues/133)
+
 # [1.13.0](https://github.com/SocialGouv/1000jours/compare/v1.12.1...v1.13.0) (2021-04-14)
 
 
