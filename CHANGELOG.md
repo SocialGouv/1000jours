@@ -1,3 +1,10 @@
+## [1.13.2](https://github.com/SocialGouv/1000jours/compare/v1.13.1...v1.13.2) (2021-04-15)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'alignement des icones "En Bref" (Article) ([#136](https://github.com/SocialGouv/1000jours/issues/136)) ([2cdbf03](https://github.com/SocialGouv/1000jours/commit/2cdbf03b4ec2e8411b117205dfb7f96da3d1f2a7))
+
 ## [1.13.1](https://github.com/SocialGouv/1000jours/compare/v1.13.0...v1.13.1) (2021-04-15)
 
 
