@@ -1,33 +1,13 @@
-import {
+"use strict";
+
+const {
   addMonths,
   addWeeks,
   addYears,
   isAfter,
   isBefore,
   subWeeks,
-} from "date-fns";
-
-("use strict");
-
-interface Informations {
-  projet: boolean;
-  conception: boolean;
-  grossesse: boolean;
-  enfant: boolean;
-  enfants: boolean;
-  date: Date;
-}
-
-interface Context {
-  badRequest: (message: string) => void;
-  request: {
-    body: {
-      input: {
-        infos: Informations;
-      };
-    };
-  };
-}
+} = require("date-fns");
 
 const ETAPE_PROJET = 1;
 const ETAPE_CONCEPTION = 2;
@@ -42,7 +22,7 @@ const ETAPE_ENFANT_1_AN_2_ANS = 8;
 const GROSSESSE_TRIMESTRE_2_SEMAINES_SA = 16;
 const GROSSESSE_TOTAL_SEMAINES_SA = 41;
 
-const calcGrossesse = (ctx: Context, terme: Date): number | void => {
+const calcGrossesse = (ctx, terme) => {
   const now = new Date();
 
   const grossesseDebut = subWeeks(terme, GROSSESSE_TOTAL_SEMAINES_SA);
@@ -65,7 +45,7 @@ const calcGrossesse = (ctx: Context, terme: Date): number | void => {
     : ETAPE_GROSSESSE_SUITE_FIN;
 };
 
-const calcEnfant = (ctx: Context, naissance: Date): number | void => {
+const calcEnfant = (ctx, naissance) => {
   const now = new Date();
 
   if (isBefore(now, naissance)) {
@@ -87,7 +67,7 @@ const calcEnfant = (ctx: Context, naissance: Date): number | void => {
   return ETAPE_ENFANT_3_PREMIERS_MOIS;
 };
 
-const getCurrent = async (ctx: Context) => {
+const getCurrent = async (ctx) => {
   if (!ctx.request.body.input.infos) {
     ctx.badRequest("missing informations");
     return;
@@ -130,4 +110,4 @@ const getCurrent = async (ctx: Context) => {
   return { id: null };
 };
 
-export { getCurrent };
+module.exports = { getCurrent };
