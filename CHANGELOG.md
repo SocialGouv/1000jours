@@ -1,3 +1,10 @@
+## [1.13.3](https://github.com/SocialGouv/1000jours/compare/v1.13.2...v1.13.3) (2021-04-15)
+
+
+### Bug Fixes
+
+* 🐛 Corrige les marges et les alignements (Article) ([#139](https://github.com/SocialGouv/1000jours/issues/139)) ([3474dd9](https://github.com/SocialGouv/1000jours/commit/3474dd9e970aa94c7e555bcec992273be139db31)), closes [#133](https://github.com/SocialGouv/1000jours/issues/133)
+
 ## [1.13.2](https://github.com/SocialGouv/1000jours/compare/v1.13.1...v1.13.2) (2021-04-15)
 
 
