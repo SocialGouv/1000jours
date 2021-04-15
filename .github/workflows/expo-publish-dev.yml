@@ -10,8 +10,8 @@ on:
       description: 'Manual workflow'
 
 jobs:
-  publish:
-    name: Install and publish
+  Publish-android:
+    name: Publish Android
     runs-on: ubuntu-latest
     env:
       API_URL: ${{ secrets.API_URL }}
@@ -32,4 +32,28 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn publish-dev
+          yarn publish-staging:android
+
+  Publish-ios:
+    name: Publish iOS
+    runs-on: ubuntu-latest
+    env:
+      API_URL: ${{ secrets.API_URL }}
+      HASURA_ADMIN_SECRET: ${{ secrets.HASURA_ADMIN_SECRET }}
+      BO_URL: ${{ secrets.BO_URL }}
+      CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-version: 4.x
+          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+      - name: Yarn
+        run: |
+          cd front
+          yarn install
+          yarn publish-staging:ios
