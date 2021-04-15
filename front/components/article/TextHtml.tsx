@@ -4,22 +4,30 @@ import { StyleSheet } from "react-native";
 import HTML from "react-native-render-html";
 
 import Colors from "../../constants/Colors";
-import { fontsMap } from "../StyledText";
 
 interface Props {
   html: string;
 }
 
 const TextHtml: FC<Props> = ({ html }) => {
-  return <HTML baseFontStyle={styles.htmlContainer} source={{ html }} />;
+  return (
+    <HTML
+      containerStyle={styles.containerStyle}
+      baseFontStyle={styles.baseFontStyle}
+      source={{ html }}
+    />
+  );
 };
 
 const styles = StyleSheet.create({
-  htmlContainer: {
+  baseFontStyle: {
     color: Colors.commonText,
-    fontFamily: fontsMap.normal,
     fontSize: 12,
     lineHeight: 20,
+  },
+  containerStyle: {
+    margin: 0,
+    padding: 0,
   },
 });
 

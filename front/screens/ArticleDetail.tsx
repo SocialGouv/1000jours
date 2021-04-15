@@ -120,15 +120,17 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
         </View>
         <View>
           <ImageBanner imageUrl={result.article.visuel?.uploadFile.url} />
-          <Title title={result.article.titre} />
-          <Thematics items={result.article.thematiques} />
-          <SubTitle title={result.article.texteTitre1} />
-          <TextHtml html={result.article.texte1} />
-          <DidYouKnow description={result.article.leSaviezVous} />
-          <SubTitle title={result.article.texteTitre2} />
-          <TextHtml html={result.article.texte2} />
-          <InShort inShortArray={inShortArray} />
-          <Links linksArray={linksArray} />
+          <View style={styles.articleDetails}>
+            <Title title={result.article.titre} />
+            <Thematics items={result.article.thematiques} />
+            <SubTitle title={result.article.texteTitre1} />
+            <TextHtml html={result.article.texte1} />
+            <DidYouKnow description={result.article.leSaviezVous} />
+            <SubTitle title={result.article.texteTitre2} />
+            <TextHtml html={result.article.texte2} />
+            <InShort inShortArray={inShortArray} />
+            <Links linksArray={linksArray} />
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -136,6 +138,9 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  articleDetails: {
+    paddingHorizontal: 15,
+  },
   description: {
     color: Colors.commonText,
   },
@@ -151,7 +156,7 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlue,
     fontSize: 15,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginVertical: 5,
     textTransform: "uppercase",
   },
 });
