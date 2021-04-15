@@ -2,9 +2,8 @@
 
 const EtapeService = require("../services");
 
-const getCurrentEtapeResolver = async (obj, options, { context }) => {
+const getCurrentEtapeResolver = async (_1, _2, { context }) => {
   const infos = context.params._infos;
-
   if (!infos) return context.badRequest("missing informations");
 
   try {
@@ -33,7 +32,7 @@ module.exports = {
   resolver: {
     Query: {
       getCurrentEtape: {
-        description: "Retourne l'étape courante en fonction des informations ",
+        description: "Retourne l'étape courante en fonction des informations",
         resolver: getCurrentEtapeResolver,
         resolverOf: "application::etape.etape.find",
       },
