@@ -1,17 +1,17 @@
 "use strict";
 
-const { getCurrent } = require("../services/get-current");
+const EtapeService = require("../services");
 
-const getCurrentControler = async (context) => {
+const getCurrentEtapeControler = async (context) => {
   const { infos } = context.request.body.input;
 
   if (!infos) return context.badRequest("missing informations");
 
   try {
-    return getCurrent(infos);
+    return EtapeService.getCurrent(infos);
   } catch (e) {
     context.badRequest(e.message);
   }
 };
 
-module.exports = { getCurrent: getCurrentControler };
+module.exports = { getCurrent: getCurrentEtapeControler };

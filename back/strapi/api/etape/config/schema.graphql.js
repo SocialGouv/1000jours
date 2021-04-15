@@ -1,14 +1,14 @@
 "use strict";
 
-const { getCurrent } = require("../services/get-current");
+const EtapeService = require("../services");
 
-const getCurrentResolver = async (obj, options, { context }) => {
+const getCurrentEtapeResolver = async (obj, options, { context }) => {
   const infos = context.params._infos;
 
   if (!infos) return context.badRequest("missing informations");
 
   try {
-    return getCurrent(infos);
+    return EtapeService.getCurrent(infos);
   } catch (e) {
     context.badRequest(e.message);
   }
@@ -26,15 +26,15 @@ module.exports = {
     }
   `,
   query: `
-    getCurrent (
+    getCurrentEtape (
       infos: Informations!
     ): Etape
   `,
   resolver: {
     Query: {
-      getCurrent: {
+      getCurrentEtape: {
         description: "Retourne l'étape courante en fonction des informations ",
-        resolver: getCurrentResolver,
+        resolver: getCurrentEtapeResolver,
         resolverOf: "application::etape.etape.find",
       },
     },

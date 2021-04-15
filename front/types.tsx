@@ -59,18 +59,12 @@ export type Step = {
   description: string;
 };
 
-export type ThematiqueContainer = {
-  thematique: Thematique;
-};
 export type Thematique = {
   id: number;
   nom: string;
 };
-export type UploadFile = {
-  url: string;
-};
 export type Visuel = {
-  uploadFile: UploadFile;
+  url: string;
 };
 export type Article = {
   id: number;
@@ -96,7 +90,7 @@ export type Article = {
   lienUrl3: string;
   lienUrl4: string;
   visuel?: Visuel;
-  thematiques: ThematiqueContainer[];
+  thematiques: Thematique[];
 };
 
 export type ArticleInShortItem = {
