@@ -7,7 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
 import type { ColorSchemeName } from "react-native";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
 import LogoMinistere from "../assets/images/Logo ministere.svg";
 import Icomoon, { IcomoonIcons } from "../components/Icomoon";
@@ -52,9 +52,9 @@ const RootNavigator: FC = () => (
           </View>
         ),
         headerRight: () => (
-          <View
+          <TouchableOpacity
             style={[styles.headerRight]}
-            onTouchEnd={() => {
+            onPress={() => {
               console.log("Open menu");
             }}
           >
@@ -66,7 +66,7 @@ const RootNavigator: FC = () => (
             <Text style={[styles.headerRightButtonText]}>
               {Labels.menu.title}
             </Text>
-          </View>
+          </TouchableOpacity>
         ),
         headerShown: true,
         headerTitle: () => (

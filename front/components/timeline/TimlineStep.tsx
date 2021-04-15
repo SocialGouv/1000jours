@@ -1,6 +1,8 @@
 import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { Button as RNEButton } from "react-native-elements";
+import type { IconNode } from "react-native-elements/dist/icons/Icon";
 
 import Colors from "../../constants/Colors";
 import { IcomoonIcons } from "../Icomoon";
@@ -23,7 +25,7 @@ const TimelineStep: FC<TimelineStepProps> = ({
   isTheLast,
   onPress,
 }) => {
-  const stepIcons: React.ReactNode[] = [
+  const stepIcons: IconNode[] = [
     <StepIcon name={IcomoonIcons.stepProjetParent} />,
     <StepIcon name={IcomoonIcons.stepConception} />,
     <StepIcon name={IcomoonIcons.stepDebutDeGrossesse} />,
@@ -63,11 +65,13 @@ const TimelineStep: FC<TimelineStepProps> = ({
 
   return (
     <View style={getStepStyles(listIndex, isTheLast)}>
-      <View
-        style={[styles.stepIconContainer, styles.justifyContentCenter]}
-        onTouchEnd={onPress}
-      >
-        {stepIcons[order - 1]}
+      <View style={[styles.stepIconContainer]}>
+        <RNEButton
+          icon={stepIcons[order - 1]}
+          onPress={onPress}
+          buttonStyle={[styles.stepIconButton, styles.justifyContentCenter]}
+          type="clear"
+        />
       </View>
       <View
         style={[
@@ -102,12 +106,15 @@ const styles = StyleSheet.create({
   stepFirst: {
     marginBottom: 60,
   },
-  stepIconContainer: {
+  stepIconButton: {
     borderColor: Colors.primaryYellow,
     borderRadius: 40,
     borderWidth: 1,
     height: 80,
     width: 80,
+  },
+  stepIconContainer: {
+    backgroundColor: "white",
   },
   stepLast: {
     marginTop: 60,
