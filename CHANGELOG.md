@@ -1,3 +1,10 @@
+## [1.13.5](https://github.com/SocialGouv/1000jours/compare/v1.13.4...v1.13.5) (2021-04-16)
+
+
+### Bug Fixes
+
+* **ci:** corrige la publication sur Expo Go depuis la pipeline ([#143](https://github.com/SocialGouv/1000jours/issues/143)) ([ef58218](https://github.com/SocialGouv/1000jours/commit/ef582185437fa1c2bef4f42d210dfc71e6ab6bb9))
+
 ## [1.13.4](https://github.com/SocialGouv/1000jours/compare/v1.13.3...v1.13.4) (2021-04-15)
 
 
