@@ -3,22 +3,22 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import Colors from "../../constants/Colors";
-import type { ThematiqueContainer } from "../../types";
+import type { Thematique } from "../../types";
 import { CommonText } from "../StyledText";
 import { View } from "../Themed";
 
 interface Props {
-  items: ThematiqueContainer[];
+  items: Thematique[];
 }
 
 const Thematics: FC<Props> = ({ items }) => {
   return (
     <View style={[styles.flexStart]}>
-      {items.map((thematiqueContainer, index) => {
+      {items.map((thematique, index) => {
         return (
           <View style={[styles.thematiqueContainer]} key={index}>
             <CommonText style={[styles.thematique]}>
-              {thematiqueContainer.thematique.nom}
+              {thematique.nom}
             </CommonText>
           </View>
         );

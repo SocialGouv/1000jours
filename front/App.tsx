@@ -17,11 +17,8 @@ import { allKeys } from "./storage/storage-keys";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  headers: {
-    "content-type": "application/json",
-    "x-hasura-admin-secret": process.env.HASURA_ADMIN_SECRET ?? "",
-  },
-  uri: `${process.env.API_URL}/v1/graphql`,
+  headers: { "content-type": "application/json" },
+  uri: `${process.env.API_URL}/graphql`,
 });
 
 initLocales();

@@ -41,7 +41,7 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
 
   const ARTICLE_DETAIL = gql`
     query GetArticleDetail {
-      article: articles_by_pk(id: ${articleId}) {
+      article(id: ${articleId}) {
         id
         titre
         resume
@@ -65,15 +65,11 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
         lienUrl3: lien_3_url
         lienUrl4: lien_4_url
         visuel {
-          uploadFile: file {
-            url
-          }
+          url
         }
         thematiques {
-          thematique {
-            nom
-            id
-          }
+          nom
+          id
         }
       }
     }
@@ -119,7 +115,7 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
           <CommonText style={[styles.description]}>{description}</CommonText>
         </View>
         <View>
-          <ImageBanner imageUrl={result.article.visuel?.uploadFile.url} />
+          <ImageBanner imageUrl={result.article.visuel?.url} />
           <View style={styles.articleDetails}>
             <Title title={result.article.titre} />
             <Thematics items={result.article.thematiques} />

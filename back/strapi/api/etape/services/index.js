@@ -1,33 +1,13 @@
-import {
+"use strict";
+
+const {
   addMonths,
   addWeeks,
   addYears,
   isAfter,
   isBefore,
   subWeeks,
-} from "date-fns";
-
-("use strict");
-
-interface Informations {
-  projet: boolean;
-  conception: boolean;
-  grossesse: boolean;
-  enfant: boolean;
-  enfants: boolean;
-  date: Date;
-}
-
-interface Context {
-  badRequest: (message: string) => void;
-  request: {
-    body: {
-      input: {
-        infos: Informations;
-      };
-    };
-  };
-}
+} = require("date-fns");
 
 const ETAPE_PROJET = 1;
 const ETAPE_CONCEPTION = 2;
@@ -42,17 +22,15 @@ const ETAPE_ENFANT_1_AN_2_ANS = 8;
 const GROSSESSE_TRIMESTRE_2_SEMAINES_SA = 16;
 const GROSSESSE_TOTAL_SEMAINES_SA = 41;
 
-const calcGrossesse = (ctx: Context, terme: Date): number | void => {
+const calcGrossesse = (terme) => {
   const now = new Date();
 
   const grossesseDebut = subWeeks(terme, GROSSESSE_TOTAL_SEMAINES_SA);
 
   if (isBefore(now, grossesseDebut)) {
-    ctx.badRequest("terme is too much in the future");
-    return;
+    throw new Error("terme's date is too far in the future");
   } else if (isBefore(terme, now)) {
-    ctx.badRequest("terme is in the past");
-    return;
+    throw new Error("terme's date cannot be in the past");
   }
 
   const trimestre2 = addWeeks(
@@ -65,17 +43,15 @@ const calcGrossesse = (ctx: Context, terme: Date): number | void => {
     : ETAPE_GROSSESSE_SUITE_FIN;
 };
 
-const calcEnfant = (ctx: Context, naissance: Date): number | void => {
+const calcEnfant = (naissance) => {
   const now = new Date();
 
   if (isBefore(now, naissance)) {
-    ctx.badRequest("naissance is in the future");
-    return;
+    throw new Error("naissance cannot be in the future");
   }
 
   if (isAfter(now, addYears(naissance, 2))) {
-    ctx.badRequest("enfant > 2 ans");
-    return;
+    throw new Error("child is aged two or more");
   }
 
   if (isAfter(now, addYears(naissance, 1))) {
@@ -87,10 +63,9 @@ const calcEnfant = (ctx: Context, naissance: Date): number | void => {
   return ETAPE_ENFANT_3_PREMIERS_MOIS;
 };
 
-const getCurrent = async (ctx: Context) => {
-  if (!ctx.request.body.input.infos) {
-    ctx.badRequest("missing informations");
-    return;
+const getCurrent = async (infos) => {
+  if (!infos) {
+    throw new Error("missing informations");
   }
 
   const {
@@ -100,34 +75,30 @@ const getCurrent = async (ctx: Context) => {
     enfant,
     enfants,
     date: dateString,
-  } = ctx.request.body.input.infos;
+  } = infos;
+
+  let id = null;
 
   if (grossesse || enfant || enfants) {
     if (!dateString) {
-      ctx.badRequest("missing date");
-      return;
+      throw new Error("missing date");
     }
 
     const date = new Date(dateString);
 
     if (date.toString() === "Invalid Date") {
-      ctx.badRequest("invalid date");
-      return;
+      throw new Error("invalide date");
     }
 
-    const id = grossesse ? calcGrossesse(ctx, date) : calcEnfant(ctx, date);
-    if (!id) return null;
-
-    return { date, id };
-  }
-  if (projet) {
-    return { id: ETAPE_PROJET };
+    id = grossesse ? calcGrossesse(date) : calcEnfant(date);
+  } else if (projet) {
+    id = ETAPE_PROJET;
   }
   if (conception) {
-    return { id: ETAPE_CONCEPTION };
+    id = ETAPE_CONCEPTION;
   }
 
-  return { id: null };
+  return id ? strapi.query("etape").findOne({ id }) : null;
 };
 
-export { getCurrent };
+module.exports = { getCurrent };

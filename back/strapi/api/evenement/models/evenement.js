@@ -30,16 +30,16 @@ const linkToEtapes = async (data) => {
     })
     .fetchAll();
 
-  if (!result?.length) return;
+  if (!result || !result.length) return;
 
   const etapes = result.models;
 
-  const etapesIds = etapes.map((etape) => etape.id)
+  const etapesIds = etapes.map((etape) => etape.id);
 
-  if (!data?.etapes?.length) {
-    data.etapes = etapesIds
+  if (!data || !data.etapes || !data.etapes.length) {
+    data.etapes = etapesIds;
 
-    return
+    return;
   }
 
   data.etapes = [...data.etapes, ...etapesIds];

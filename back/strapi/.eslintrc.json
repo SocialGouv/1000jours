@@ -1,6 +1,6 @@
 {
-  "extends": ["@socialgouv/eslint-config-typescript"],
-  "rules": {
-    "@typescript-eslint/no-use-before-define": "off"
+  "extends": ["@socialgouv/eslint-config-recommended"],
+  "globals": {
+    "strapi": true
   }
 }

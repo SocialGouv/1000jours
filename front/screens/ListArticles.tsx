@@ -29,9 +29,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
         titre
         resume
         visuel {
-          uploadFile: file {
-            url
-          }
+          url
         }
       }
     }
@@ -70,7 +68,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
             >
               <Image
                 source={{
-                  uri: `${process.env.BO_URL}${article.visuel?.uploadFile.url}`,
+                  uri: `${process.env.API_URL}${article.visuel?.url}`,
                 }}
                 style={[styles.articleImage]}
               />

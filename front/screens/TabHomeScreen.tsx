@@ -23,7 +23,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   const description = Labels.timeline.description;
   const ALL_STEPS = gql`
     query GetAllSteps {
-      etapes(order_by: { ordre: asc }) {
+      etapes(sort: "id") {
         id
         nom
         ordre
