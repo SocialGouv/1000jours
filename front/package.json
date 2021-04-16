@@ -17,7 +17,8 @@
     "build-dev": "yarn build-staging:ios && yarn build-staging:android",
     "build-prod": "yarn build-prod:ios && yarn build-prod:android",
     "publish-dev": "expo publish --release-channel staging",
-    "publish-prod": "expo publish --release-channel prod"
+    "publish-prod": "expo publish --release-channel prod",
+    "upload:android": "expo upload:android --key ./play-store-api-key.json --release-status draft --track prod"
   },
   "jest": {
     "preset": "jest-expo"
