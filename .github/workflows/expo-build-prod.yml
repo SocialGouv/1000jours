@@ -1,4 +1,4 @@
-name: Expo Build Dev
+name: Expo Build Prod
 on:
   workflow_dispatch:
     name:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   Build-android:
-    name: Build and publish Android for staging
+    name: Build and publish Android for prod
     runs-on: ubuntu-latest
     env:
       API_URL: ${{ secrets.API_URL }}
@@ -25,10 +25,10 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn build-staging:android
+          yarn build-prod:android
 
   Build-ios:
-    name: Build and publish iOS for staging
+    name: Build and publish iOS for prod
     runs-on: ubuntu-latest
     env:
       API_URL: ${{ secrets.API_URL }}
@@ -47,4 +47,4 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn build-staging:ios
+          yarn build-prod:ios
