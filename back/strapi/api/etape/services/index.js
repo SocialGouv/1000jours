@@ -28,7 +28,7 @@ const calcGrossesse = (terme) => {
   const grossesseDebut = subWeeks(terme, GROSSESSE_TOTAL_SEMAINES_SA);
 
   if (isBefore(now, grossesseDebut)) {
-    throw new Error("terme's date is too much into the future");
+    throw new Error("terme's date is too far in the future");
   } else if (isBefore(terme, now)) {
     throw new Error("terme's date cannot be in the past");
   }
