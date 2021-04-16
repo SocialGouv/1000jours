@@ -4,14 +4,15 @@
   "version": "0.1.0",
   "description": "Backoffice 1000jours",
   "scripts": {
-    "develop": "yarn watch-ts & strapi develop",
+    "develop": "strapi develop",
+    "prestart": "yarn config:restore",
     "start": "strapi start",
     "build": "strapi build",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "strapi": "strapi",
     "lint": "eslint api-src",
-    "config:dump": "strapi configuration:dump -f config/api.json",
+    "config:dump": "strapi configuration:dump -p -f config/api.json",
     "config:restore": "strapi configuration:restore -f config/api.json"
   },
   "dependencies": {
