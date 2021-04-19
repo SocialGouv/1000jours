@@ -1,3 +1,10 @@
+## [1.13.7](https://github.com/SocialGouv/1000jours/compare/v1.13.6...v1.13.7) (2021-04-19)
+
+
+### Bug Fixes
+
+* 🐛 Corrige les textes sur la page Onboarding ([#148](https://github.com/SocialGouv/1000jours/issues/148)) ([3cd56b3](https://github.com/SocialGouv/1000jours/commit/3cd56b3b15eaa233c9477863b73ac92aaba0d639))
+
 ## [1.13.6](https://github.com/SocialGouv/1000jours/compare/v1.13.5...v1.13.6) (2021-04-19)
 
 
