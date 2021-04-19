@@ -1,3 +1,10 @@
+## [1.13.6](https://github.com/SocialGouv/1000jours/compare/v1.13.5...v1.13.6) (2021-04-19)
+
+
+### Bug Fixes
+
+* 🐛 Corrige les problèmes de font (Article) et lien invalide ([#147](https://github.com/SocialGouv/1000jours/issues/147)) ([6d3458b](https://github.com/SocialGouv/1000jours/commit/6d3458ba9a167c346040ea7d649e1d72377e0039)), closes [#141](https://github.com/SocialGouv/1000jours/issues/141)
+
 ## [1.13.5](https://github.com/SocialGouv/1000jours/compare/v1.13.4...v1.13.5) (2021-04-16)
 
 
