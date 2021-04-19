@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.cardGrey,
     borderLeftColor: Colors.primaryYellow,
     borderLeftWidth: 4,
-    paddingVertical: 4,
+    paddingBottom: 15,
+    paddingTop: 5,
   },
   didYouKnowContent: {
     color: Colors.primaryBlueDark,
