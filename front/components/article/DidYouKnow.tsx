@@ -35,7 +35,7 @@ const DidYouKnow: FC<Props> = ({ description }) => {
 
 const styles = StyleSheet.create({
   cardBackgroundSymbol: {
-    fontSize: 50,
+    fontSize: 45,
     fontWeight: "bold",
     paddingLeft: 18,
     position: "absolute",
@@ -55,18 +55,18 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.cardGrey,
     borderLeftColor: Colors.primaryYellow,
     borderLeftWidth: 4,
-    paddingVertical: 12,
+    paddingVertical: 4,
   },
   didYouKnowContent: {
     color: Colors.primaryBlueDark,
-    fontSize: 14,
+    fontSize: 12,
     lineHeight: 20,
     paddingHorizontal: 18,
-    paddingTop: 5,
+    paddingTop: 0,
   },
   didYouKnowTitle: {
     color: Colors.primaryYellow,
-    fontSize: 16,
+    fontSize: 12,
   },
   positionRelative: {
     position: "relative",

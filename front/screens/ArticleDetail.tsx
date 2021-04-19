@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.primaryBlue,
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: "bold",
     marginVertical: 5,
     textTransform: "uppercase",

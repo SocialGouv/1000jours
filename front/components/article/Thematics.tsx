@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   thematiqueContainer: {
     backgroundColor: Colors.primaryBlueLight,
     borderRadius: 8,
-    marginBottom: 10,
+    marginBottom: 5,
     marginRight: 8,
     padding: 6,
   },

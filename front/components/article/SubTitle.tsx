@@ -17,9 +17,8 @@ const styles = StyleSheet.create({
   title: {
     color: Colors.primaryBlue,
     fontSize: 12,
-    fontWeight: "bold",
+    fontWeight: "normal",
     marginTop: 20,
-    textTransform: "uppercase",
   },
 });
 

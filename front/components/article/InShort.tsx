@@ -8,7 +8,7 @@ import Colors from "../../constants/Colors";
 import Labels from "../../constants/Labels";
 import type { ArticleInShortItem } from "../../types";
 import Icomoon, { IcomoonIcons } from "../Icomoon";
-import { CommonText, fontsMap } from "../StyledText";
+import { CommonText } from "../StyledText";
 import { View } from "../Themed";
 
 export const inShortIconNames = {
@@ -21,28 +21,28 @@ interface Props {
   inShortArray: ArticleInShortItem[];
 }
 
-const iconSize = 40;
+const iconSize = 30;
 const InShort: FC<Props> = ({ inShortArray }) => {
   const inShortIcons = {
     [inShortIconNames.baby]: (
       <Icomoon
         name={IcomoonIcons.bebe}
         size={iconSize}
-        color={Colors.primaryBlue}
+        color={Colors.secondaryGreen}
       />
     ),
     [inShortIconNames.parents]: (
       <Icomoon
         name={IcomoonIcons.parents}
         size={iconSize}
-        color={Colors.primaryBlue}
+        color={Colors.secondaryGreen}
       />
     ),
     [inShortIconNames.babyBottle]: (
       <Icomoon
         name={IcomoonIcons.biberon}
         size={iconSize}
-        color={Colors.primaryBlue}
+        color={Colors.secondaryGreen}
       />
     ),
   };
@@ -80,7 +80,7 @@ const InShort: FC<Props> = ({ inShortArray }) => {
 
 const styles = StyleSheet.create({
   cardBackgroundSymbol: {
-    fontSize: 50,
+    fontSize: 45,
     fontWeight: "bold",
     paddingLeft: 18,
     position: "absolute",
@@ -96,11 +96,6 @@ const styles = StyleSheet.create({
   colorPrimaryBlueDark: {
     color: Colors.primaryBlueDark,
   },
-  htmlContainer: {
-    color: Colors.commonText,
-    fontFamily: fontsMap.normal,
-    fontSize: 14,
-  },
   inShortBackgroundSymbol: {
     color: Colors.secondaryGreenLight,
   },
@@ -108,14 +103,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.cardGrey,
     borderLeftColor: Colors.secondaryGreen,
     borderLeftWidth: 4,
-    paddingVertical: 12,
+    paddingVertical: 4,
   },
   inShortListItemsContainer: {
     backgroundColor: "transparent",
   },
   inShortTitle: {
     color: Colors.secondaryGreen,
-    fontSize: 16,
+    fontSize: 12,
     marginVertical: "auto",
   },
   listItemContainer: {
@@ -127,17 +122,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "transparent",
     justifyContent: "center",
-    width: iconSize + 15,
-  },
-  listItemIcon: {
-    alignItems: "center",
-    backgroundColor: "transparent",
-    justifyContent: "center",
-    width: iconSize,
+    width: iconSize + 10,
   },
   listItemTitle: {
     color: Colors.primaryBlueDark,
-    fontSize: 14,
+    fontSize: 12,
   },
   positionRelative: {
     position: "relative",

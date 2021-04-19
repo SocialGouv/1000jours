@@ -16,10 +16,9 @@ const Title: FC<Props> = ({ title }) => {
 const styles = StyleSheet.create({
   title: {
     color: Colors.primaryBlueDark,
-    fontSize: 15,
-    fontWeight: "bold",
+    fontSize: 14,
+    fontWeight: "normal",
     marginBottom: 10,
-    textTransform: "uppercase",
   },
 });
 
