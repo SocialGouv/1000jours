@@ -1,6 +1,6 @@
 # 1000jours
 
-Les 1000 premiers jours de bébé
+Nos 1000 premiers jours : du projet aux deux ans de bébé
 
 ## Lancer l'application
 
