@@ -81,32 +81,28 @@ const Onboarding: FC<Props> = ({ navigation }) => {
               paginationStyleItem={styles.swipePaginationItem}
               paginationStyle={styles.swipePagination}
             >
-              {slideViews.map((slideView, index) => {
-                return (
-                  <View
-                    style={[styles.swipeView, styles.justifyContentCenter]}
-                    key={index}
-                  >
-                    <View style={[styles.swipeViewMargin]}>
-                      <View
-                        style={[styles.slideImage, styles.justifyContentCenter]}
-                      >
-                        {slideView.image}
-                      </View>
-                      <CommonText
-                        style={[styles.title, styles.textAlignCenter]}
-                      >
-                        {slideView.title}
-                      </CommonText>
-                      <CommonText
-                        style={[styles.description, styles.textAlignCenter]}
-                      >
-                        {slideView.description}
-                      </CommonText>
+              {slideViews.map((slideView, index) => (
+                <View
+                  style={[styles.swipeView, styles.justifyContentCenter]}
+                  key={index}
+                >
+                  <View style={[styles.swipeViewMargin]}>
+                    <View
+                      style={[styles.slideImage, styles.justifyContentCenter]}
+                    >
+                      {slideView.image}
                     </View>
+                    <CommonText style={[styles.title, styles.textAlignCenter]}>
+                      {slideView.title}
+                    </CommonText>
+                    <CommonText
+                      style={[styles.description, styles.textAlignCenter]}
+                    >
+                      {slideView.description}
+                    </CommonText>
                   </View>
-                );
-              })}
+                </View>
+              ))}
             </SwiperFlatList>
           </ScrollView>
         </View>
