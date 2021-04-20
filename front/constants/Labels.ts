@@ -3,7 +3,7 @@ export default {
   article: {
     didYouKnowTitle: "Le saviez-vous ?",
     inShortTitle: "En bref :",
-    threeFirstMonths: {
+    firstThreeMonths: {
       title: "Autodépistage dépression post-partum",
       description: "Texte qui explique pourquoi c'est important de faire ce test. Il peut mettre en avant des symptômes de la dépression post-partum...",
       buttonLabel: "Faire le test",

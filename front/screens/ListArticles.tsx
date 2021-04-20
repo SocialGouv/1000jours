@@ -25,7 +25,7 @@ const ETAPE_ENFANT_3_PREMIERS_MOIS = 6;
 const ListArticles: FC<Props> = ({ navigation, route }) => {
   const screenTitle = route.params.step.nom;
   const description = route.params.step.description;
-  const stepIs3FirstMonths = route.params.step.id == ETAPE_ENFANT_3_PREMIERS_MOIS;
+  const stepIsFirstThreeMonths = route.params.step.id == ETAPE_ENFANT_3_PREMIERS_MOIS;
   
   const ALL_ARTICLES = gql`
     query GetAllArticles {
@@ -54,24 +54,24 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
 
   return (
     <ScrollView>
-        <View style={[styles.topContainer]}>
-          <CommonText style={[styles.title]}>{screenTitle}</CommonText>
-          <CommonText style={[styles.description]}>{description}</CommonText>
+        <View style={styles.topContainer}>
+          <CommonText style={styles.title}>{screenTitle}</CommonText>
+          <CommonText style={styles.description}>{description}</CommonText>
         </View>
-        {stepIs3FirstMonths && (
-          <View style={[styles.threeFirstMonthsBanner]}>
-            <CommonText style={[styles.bannerTitle]}>{Labels.article.threeFirstMonths.title}</CommonText>
-            <CommonText style={[styles.bannerDescription]}>{Labels.article.threeFirstMonths.description}</CommonText>
+        {stepIsFirstThreeMonths && (
+          <View style={styles.threeFirstMonthsBanner}>
+            <CommonText style={styles.bannerTitle}>{Labels.article.firstThreeMonths.title}</CommonText>
+            <CommonText style={styles.bannerDescription}>{Labels.article.firstThreeMonths.description}</CommonText>
                 <Button
                   buttonStyle={styles.bannerButton}
-                  title={Labels.article.threeFirstMonths.buttonLabel}
+                  title={Labels.article.firstThreeMonths.buttonLabel}
                   rounded={true}
                   disabled={false}
                   action={navigateToSurvey}
                 />
           </View>)}
-        <View style={[styles.listContainer]}>
-          <CommonText style={[styles.headerListInfo]}>
+        <View style={styles.listContainer}>
+          <CommonText style={styles.headerListInfo}>
             {result.articles.length} article(s) à lire
           </CommonText>
           {result.articles.map((article, index) => (
@@ -84,23 +84,23 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
                   step: route.params.step,
                 });
               }}
-              containerStyle={[styles.listItem]}
+              containerStyle={styles.listItem}
             >
               <Image
                 source={{
                   uri: `${process.env.API_URL}${article.visuel?.url}`,
                 }}
-                style={[styles.articleImage]}
+                style={styles.articleImage}
               />
-              <ListItem.Content style={[styles.articleContent]}>
-                <ListItem.Title style={[styles.articleTitleContainer]}>
-                  <CommonText style={[styles.articleTitle]}>
+              <ListItem.Content style={styles.articleContent}>
+                <ListItem.Title style={styles.articleTitleContainer}>
+                  <CommonText style={styles.articleTitle}>
                     {article.titre}
                   </CommonText>
                 </ListItem.Title>
-                <ListItem.Subtitle style={[styles.articleDescription]}>
+                <ListItem.Subtitle style={styles.articleDescription}>
                   <CommonText
-                    style={[styles.articleDescriptionFont]}
+                    style={styles.articleDescriptionFont}
                     numberOfLines={3}
                     allowFontScaling={true}
                   >
