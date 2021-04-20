@@ -5,7 +5,7 @@ export default {
     inShortTitle: "En bref :",
     firstThreeMonths: {
       title: "Autodépistage dépression post-partum",
-      description: "Texte qui explique pourquoi c'est important de faire ce test. Il peut mettre en avant des symptômes de la dépression post-partum...",
+      description: "Vous venez d'avoir un bébé. Vous souhaitez savoir comment vous vous portez psychologiquement ?",
       buttonLabel: "Faire le test",
     },
   },
