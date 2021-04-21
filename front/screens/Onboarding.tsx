@@ -67,26 +67,29 @@ const Onboarding: FC<Props> = ({ navigation }) => {
     <View style={[styles.mainContainer, styles.flexColumn]}>
       <HeaderApp />
       <View style={styles.mainView}>
-        <ScrollView>
-          <SwiperFlatList
-            ref={swiperRef}
-            onChangeIndex={({ index }) => {
-              setSwiperCurrentIndex(index);
-            }}
-            autoplay={false}
-            showPagination
-            paginationDefaultColor="lightgray"
-            paginationActiveColor={Colors.secondaryGreen}
-            paginationStyleItem={styles.swipePaginationItem}
-          >
-            {slideViews.map((slideView, index) => {
-              return (
+        <View style={styles.flexCenter}>
+          <ScrollView>
+            <SwiperFlatList
+              ref={swiperRef}
+              onChangeIndex={({ index }) => {
+                setSwiperCurrentIndex(index);
+              }}
+              autoplay={false}
+              showPagination
+              paginationDefaultColor="lightgray"
+              paginationActiveColor={Colors.secondaryGreen}
+              paginationStyleItem={styles.swipePaginationItem}
+              paginationStyle={styles.swipePagination}
+            >
+              {slideViews.map((slideView, index) => (
                 <View
                   style={[styles.swipeView, styles.justifyContentCenter]}
                   key={index}
                 >
                   <View style={[styles.swipeViewMargin]}>
-                    <View style={[styles.justifyContentCenter]}>
+                    <View
+                      style={[styles.slideImage, styles.justifyContentCenter]}
+                    >
                       {slideView.image}
                     </View>
                     <CommonText style={[styles.title, styles.textAlignCenter]}>
@@ -99,10 +102,10 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                     </CommonText>
                   </View>
                 </View>
-              );
-            })}
-          </SwiperFlatList>
-        </ScrollView>
+              ))}
+            </SwiperFlatList>
+          </ScrollView>
+        </View>
       </View>
       <View style={[styles.footer, styles.justifyContentCenter]}>
         {swiperCurrentIndex === slideViews.length - 1 ? (
@@ -124,8 +127,8 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                 icon={
                   <Icomoon
                     name={IcomoonIcons.fermer}
-                    size={14}
-                    color={Colors.primaryBlue}
+                    size={16}
+                    color={Colors.primaryBlueDark}
                   />
                 }
                 action={navigateToProfile}
@@ -139,8 +142,8 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                 icon={
                   <Icomoon
                     name={IcomoonIcons.suivant}
-                    size={14}
-                    color={Colors.primaryBlue}
+                    size={16}
+                    color={Colors.primaryBlueDark}
                   />
                 }
                 action={() => {
@@ -177,6 +180,12 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     paddingHorizontal: 15,
   },
+  flexCenter: {
+    alignItems: "center",
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+  },
   flexColumn: {
     flex: 1,
     flexDirection: "column",
@@ -196,6 +205,12 @@ const styles = StyleSheet.create({
   mainView: {
     flex: 8,
   },
+  slideImage: {
+    paddingBottom: 20,
+  },
+  swipePagination: {
+    paddingTop: 10,
+  },
   swipePaginationItem: {
     height: 5,
     marginHorizontal: 8,
@@ -205,14 +220,15 @@ const styles = StyleSheet.create({
     width,
   },
   swipeViewMargin: {
-    margin: "10%",
+    marginBottom: "10%",
+    marginHorizontal: "10%",
   },
   textAlignCenter: {
     textAlign: "center",
   },
   title: {
     color: Colors.primaryBlueDark,
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: "bold",
     paddingBottom: 15,
     paddingTop: 10,

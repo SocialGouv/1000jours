@@ -5,6 +5,7 @@ import { Button as RNEButton } from "react-native-elements";
 import type { IconNode } from "react-native-elements/dist/icons/Icon";
 
 import Colors from "../../constants/Colors";
+import { fontsMap } from "../StyledText";
 
 interface Props {
   title: string;
@@ -34,10 +35,12 @@ const Button: React.FC<Props> = ({
       title={title}
       buttonStyle={[rounded ? styles.roundedButton : null, buttonStyle]}
       titleStyle={[
+        styles.fontComfortaa,
         rounded ? styles.roundedButtonTitle : styles.clearButtonTitle,
         icon ? styles.buttonWithIcon : null,
         titleStyle,
       ]}
+      disabledTitleStyle={rounded ? styles.roundedButtonTitle : null}
       onPress={action}
       type={rounded ? "solid" : "clear"}
     />
@@ -46,14 +49,18 @@ const Button: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   buttonWithIcon: {
-    paddingStart: 5,
+    paddingStart: 8,
   },
   clearButtonTitle: {
-    color: Colors.primaryBlue,
+    color: Colors.primaryBlueDark,
     textAlign: "left",
   },
   disabledButton: {
-    backgroundColor: Colors.primaryBlueLight,
+    backgroundColor: Colors.primaryBlueDisabled,
+  },
+  fontComfortaa: {
+    fontFamily: fontsMap.bold,
+    fontSize: 17,
   },
   roundedButton: {
     backgroundColor: Colors.primaryBlue,
