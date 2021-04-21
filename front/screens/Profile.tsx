@@ -143,19 +143,17 @@ const Profile: FC<Props> = ({ navigation }) => {
             <View style={[styles.justifyContentCenter]}>{image}</View>
             <Text style={[styles.title, styles.textAlignCenter]}>{title}</Text>
             <View style={[styles.choices]}>
-              {userSituations.map((situation, index) => {
-                return (
-                  <View key={index}>
-                    <Checkbox
-                      title={situation.label}
-                      checked={situation.isChecked}
-                      onPress={() => {
-                        updateUserSituations(situation);
-                      }}
-                    />
-                  </View>
-                );
-              })}
+              {userSituations.map((situation, index) => (
+                <View key={index}>
+                  <Checkbox
+                    title={situation.label}
+                    checked={situation.isChecked}
+                    onPress={() => {
+                      updateUserSituations(situation);
+                    }}
+                  />
+                </View>
+              ))}
             </View>
             <View
               style={[
