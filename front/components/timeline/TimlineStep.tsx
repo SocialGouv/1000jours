@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     left: 0,
   },
   stepNumRight: {
-    right: 0,
+    left: 0,
   },
   stepRight: {
     flexDirection: "row-reverse",
@@ -152,7 +152,8 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     height: sizeOfStepNum,
     justifyContent: "center",
-    paddingHorizontal: 20,
+    paddingLeft: 20,
+    paddingRight: 10,
     position: "relative",
   },
 });
