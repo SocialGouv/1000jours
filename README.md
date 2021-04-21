@@ -2,48 +2,13 @@
 
 Nos 1000 premiers jours : du projet aux deux ans de bébé
 
-## Lancer l'application
+## Front-end
 
-### Application mobile (front-end)
+[Documentation front-end](https://github.com/SocialGouv/1000jours/blob/master/front/README.md)
 
-D'abord, installez les dépendances
+## Back-end
 
-```bash
-yarn
-```
-
-Puis, créer le fichier `.env`:
-```bash
-cp .env.example .env
-```
-
-Pour lancer l'application, utilisez :
-
-```bash
-yarn start
-```
-
-Pour lancer la version web, utilisez :
-
-```bash
-yarn start:web
-```
-
-Pour lancer l'émulateur Android, utilisez :
-
-```bash
-yarn android
-```
-
-Pour lancer l'émulateur iOS, utilisez :
-
-```bash
-yarn ios
-```
-
-### Application back-end
-
-TODO
+[Documentation back-end](https://github.com/SocialGouv/1000jours/blob/master/back/README.md)
 
 ## Tester l'application
 

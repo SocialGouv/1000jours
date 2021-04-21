@@ -1,17 +1,12 @@
-name: Expo Publish Dev
+name: Expo Publish Prod
 on:
-  push:
-    branches:
-      - 'master'
-    paths:
-      - 'front/**'
   workflow_dispatch:
     name:
       description: 'Manual workflow'
 
 jobs:
   Publish:
-    name: Publish Dev
+    name: Publish Prod
     runs-on: ubuntu-latest
     env:
       API_URL: ${{ secrets.API_URL }}
@@ -30,4 +25,4 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn publish-dev
+          yarn publish-prod
