@@ -4,7 +4,14 @@ import type { FC } from "react";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useEffect, useState } from "react";
-import { Alert, ScrollView, StyleSheet, Text } from "react-native";
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+} from "react-native";
 
 import ProfileImage from "../assets/images/Humaaans_Space_1.svg";
 import Button from "../components/form/Button";
@@ -127,13 +134,16 @@ const Profile: FC<Props> = ({ navigation }) => {
   return (
     <View style={[styles.mainContainer, styles.flexColumn]}>
       <HeaderApp />
-      <View style={styles.mainView}>
-        <ScrollView style={styles.mainMargins}>
-          <View style={[styles.justifyContentCenter]}>{image}</View>
-          <Text style={[styles.title, styles.textAlignCenter]}>{title}</Text>
-          <View style={[styles.choices]}>
-            {userSituations.map((situation, index) => {
-              return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={{ flex: 1 }}
+      >
+        <View style={styles.mainView}>
+          <ScrollView style={styles.mainMargins}>
+            <View style={[styles.justifyContentCenter]}>{image}</View>
+            <Text style={[styles.title, styles.textAlignCenter]}>{title}</Text>
+            <View style={[styles.choices]}>
+              {userSituations.map((situation, index) => (
                 <View key={index}>
                   <Checkbox
                     title={situation.label}
@@ -143,65 +153,69 @@ const Profile: FC<Props> = ({ navigation }) => {
                     }}
                   />
                 </View>
-              );
-            })}
-          </View>
-          <View
-            style={[
-              styles.birthdayConatiner,
-              childBirthdayIsNeeded() ? null : styles.hide,
-            ]}
-          >
-            <Text style={[styles.colorPrimaryDark, styles.textAlignCenter]}>
-              {getChildBirthdayLabel()}
-            </Text>
-            <InputDate
-              day={day}
-              month={month}
-              year={year}
-              onDayChange={(text) => {
-                setDay(text);
-              }}
-              onMonthChange={(text) => {
-                setMonth(text);
-              }}
-              onYearChange={(text) => {
-                setYear(text);
-              }}
-            />
-          </View>
-        </ScrollView>
-      </View>
+              ))}
+            </View>
+            <View
+              style={[
+                styles.birthdayConatiner,
+                childBirthdayIsNeeded() ? null : styles.hide,
+              ]}
+            >
+              <Text style={[styles.colorPrimaryDark, styles.textAlignCenter]}>
+                {getChildBirthdayLabel()}
+              </Text>
+              <InputDate
+                day={day}
+                month={month}
+                year={year}
+                onDayChange={(text) => {
+                  setDay(text);
+                }}
+                onMonthChange={(text) => {
+                  setMonth(text);
+                }}
+                onYearChange={(text) => {
+                  setYear(text);
+                }}
+              />
+            </View>
+          </ScrollView>
+        </View>
 
-      <View
-        style={[styles.footer, styles.justifyContentCenter, styles.mainMargins]}
-      >
-        <View style={[styles.buttonsContainer, styles.justifyContentCenter]}>
-          <View style={[styles.buttonContainer]}>
-            <Button
-              title={Labels.buttons.pass}
-              rounded={false}
-              disabled={false}
-              icon={
-                <Icomoon
-                  name={IcomoonIcons.fermer}
-                  size={14}
-                  color={Colors.primaryBlue}
-                />
-              }
-              action={navigateToRoot}
-            />
-          </View>
-          <View style={[styles.buttonContainer]}>
-            <Button
-              title={Labels.buttons.validate}
-              rounded={true}
-              disabled={!canValidate}
-              action={validateForm}
-            />
+        <View
+          style={[
+            styles.footer,
+            styles.justifyContentCenter,
+            styles.mainMargins,
+          ]}
+        >
+          <View style={[styles.buttonsContainer, styles.justifyContentCenter]}>
+            <View style={[styles.buttonContainer]}>
+              <Button
+                title={Labels.buttons.pass}
+                rounded={false}
+                disabled={false}
+                icon={
+                  <Icomoon
+                    name={IcomoonIcons.fermer}
+                    size={14}
+                    color={Colors.primaryBlue}
+                  />
+                }
+                action={navigateToRoot}
+              />
+            </View>
+            <View style={[styles.buttonContainer]}>
+              <Button
+                title={Labels.buttons.validate}
+                rounded={true}
+                disabled={!canValidate}
+                action={validateForm}
+              />
+            </View>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </View>
   );
 };

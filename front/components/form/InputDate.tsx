@@ -33,7 +33,7 @@ const InputDate: React.FC<Props> = ({
         onChangeText={onDayChange}
         value={day}
         placeholder="Jour"
-        keyboardType="numeric"
+        keyboardType="phone-pad"
         maxLength={2}
       />
       <TextInput
@@ -41,7 +41,7 @@ const InputDate: React.FC<Props> = ({
         onChangeText={onMonthChange}
         value={month}
         placeholder="Mois"
-        keyboardType="numeric"
+        keyboardType="phone-pad"
         maxLength={2}
       />
       <TextInput
@@ -49,7 +49,7 @@ const InputDate: React.FC<Props> = ({
         onChangeText={onYearChange}
         value={year}
         placeholder="Année"
-        keyboardType="numeric"
+        keyboardType="phone-pad"
         maxLength={4}
       />
     </View>
