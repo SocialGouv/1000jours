@@ -3,6 +3,11 @@ export default {
   article: {
     didYouKnowTitle: "Le saviez-vous ?",
     inShortTitle: "En bref :",
+    firstThreeMonths: {
+      title: "Autodépistage dépression post-partum",
+      description: "Vous venez d'avoir un bébé. Vous souhaitez savoir comment vous vous portez psychologiquement ?",
+      buttonLabel: "Faire le test",
+    },
   },
   buttons: {
     back: "Retour",
