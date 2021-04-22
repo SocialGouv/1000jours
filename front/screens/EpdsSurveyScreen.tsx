@@ -35,6 +35,7 @@ export type Answer = {
 interface QuestionAndAnswers {
   question: string;
   answers: Answer[];
+  isAnswered?: boolean;
 }
 
 
@@ -87,9 +88,10 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
         if (questionIndex === swiperCurrentIndex) {
           question.answers = question.answers.map((answer) => {
             if (answer.id === answerBis.id) {
+              question.isAnswered = true;
               return { ...answer, isChecked: !answerBis.isChecked };
             } else {
-              return answer;
+              return { ...answer, isChecked: false };
             }
           });
         }
@@ -171,7 +173,7 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
             )}
           </View>
           <View style={[styles.buttonContainer]}>
-            {swiperCurrentIndex === questionsAndAnswers.length - 1 ? (
+            {questionsAndAnswers[swiperCurrentIndex].isAnswered && swiperCurrentIndex === questionsAndAnswers.length - 1 ? (
               <View style={[styles.justifyContentCenter]}>
                 <Button
                   title={Labels.buttons.validate}
@@ -180,7 +182,7 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
                   action={navigateToProfile}
                 />
               </View>
-            ) :  (
+            ) :  questionsAndAnswers[swiperCurrentIndex].isAnswered && (
               <Button
                 title={Labels.buttons.next}
                 rounded={false}
