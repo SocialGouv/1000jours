@@ -74,7 +74,8 @@ export default {
   },
   epdsSurvey: {
     title: "Autodépistage dépression post-partum",
-    description: "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.\nVeuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement au jour d'aujourdhui.",
+    description: "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.",
+    instruction: "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement au jour d'aujourdhui.",
     questionsAnswers: [
       {
         question:"j’ai pu rire et prendre les choses du bon côté",
