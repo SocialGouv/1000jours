@@ -20,6 +20,7 @@ export type TabHomeParamList = {
   tabHomeScreen: undefined;
   listArticles: { step: Step };
   article: { id: number; step: Step };
+  epdsSurvey: undefined;
 };
 
 export type TabCalendarParamList = {

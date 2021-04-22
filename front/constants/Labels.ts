@@ -72,4 +72,31 @@ export default {
       "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. A chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
     title: "Choisissez l'étape que vous souhaitez approfondir",
   },
+  epdsSurvey: {
+    title: "Autodépistage dépression post-partum",
+    description: "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.\nVeuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement au jour d'aujourdhui.",
+    questionsAnswers: [
+      {
+        question:"j’ai pu rire et prendre les choses du bon côté",
+        answer1: "aussi souvent que d’habitude",
+        answer2: "pas tout-à-fait autant",
+        answer3: "vraiment beaucoup moins souvent ces jours-ci",
+        answer4: "absolument pas",
+      },
+      {
+        question:"je me suis sentie confiante et joyeuse, en pensant à l’avenir",
+        answer1: "autant que d’habitude",
+        answer2: "plutôt moins que d’habitude",
+        answer3: "vraiment moins que d’habitude",
+        answer4: "pratiquement pas",
+      },
+      {
+        question:"je me suis reprochée, sans raisons, d’être responsable quand les choses allaient mal",
+        answer1: "oui, la plupart du temps",
+        answer2: "oui, parfois",
+        answer3: "pas très souvent",
+        answer4: "non, jamais",
+      },
+    ],
+  },
 };
