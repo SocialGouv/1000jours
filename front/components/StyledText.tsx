@@ -25,24 +25,22 @@ const fontsMap = {
   bold: "bold",
   normal: "regular",
 };
-
+type FontWeightValues =
+  | "100"
+  | "200"
+  | "300"
+  | "400"
+  | "500"
+  | "600"
+  | "700"
+  | "800"
+  | "900"
+  | "bold"
+  | "normal";
 export const getFontFamilyName = (
   fontName: string,
-  fontWeight:
-    | "100"
-    | "200"
-    | "300"
-    | "400"
-    | "500"
-    | "600"
-    | "700"
-    | "800"
-    | "900"
-    | "bold"
-    | "normal"
-): string => {
-  return fontName + "-" + fontsMap[fontWeight];
-};
+  fontWeight: FontWeightValues
+): string => `${fontName}-${fontsMap[fontWeight]}`;
 
 const getFontFromWeight = (fontName: string, style?: StyleProp<TextStyle>) => {
   const fontWeight = style

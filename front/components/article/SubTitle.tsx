@@ -10,7 +10,7 @@ interface Props {
 }
 
 const SubTitle: FC<Props> = ({ title }) => (
-  <SecondaryText style={[styles.title]}>{title}</SecondaryText>
+  <SecondaryText style={styles.title}>{title}</SecondaryText>
 );
 
 const styles = StyleSheet.create({
