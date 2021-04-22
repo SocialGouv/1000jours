@@ -27,55 +27,53 @@ interface Props {
   navigation: ProfileScreenNavigationProp;
 }
 
+export type Answer = {
+  id: number;
+  label: string;
+  isChecked: boolean;
+};
 interface QuestionAndAnswers {
   question: string;
-  answers: string[];
+  answers: Answer[];
 }
 
-interface AnsweredQuestion {
-  chosenAnswerIndex?: number;
-}
+
 
 const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
-  const questionsAndAnswers: QuestionAndAnswers[] = [
+  const constQuestionsAndAnswers: QuestionAndAnswers[] = [
     {
       question: Labels.epdsSurvey.questionsAnswers[0].question,
       answers: [
-        Labels.epdsSurvey.questionsAnswers[0].answer1,
-        Labels.epdsSurvey.questionsAnswers[0].answer2,
-        Labels.epdsSurvey.questionsAnswers[0].answer3,
-        Labels.epdsSurvey.questionsAnswers[0].answer4
+        { id: 0, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[0].answer1 },
+        { id: 1, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[0].answer2 },
+        { id: 2, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[0].answer3 },
+        { id: 3, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[0].answer4 },
       ],
     },
     {
       question: Labels.epdsSurvey.questionsAnswers[1].question,
       answers: [
-        Labels.epdsSurvey.questionsAnswers[1].answer1,
-        Labels.epdsSurvey.questionsAnswers[1].answer2,
-        Labels.epdsSurvey.questionsAnswers[1].answer3,
-        Labels.epdsSurvey.questionsAnswers[1].answer4
+        { id: 0, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[1].answer1 },
+        { id: 1, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[1].answer2 },
+        { id: 2, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[1].answer3 },
+        { id: 3, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[1].answer4 },
       ],
     },
     {
       question: Labels.epdsSurvey.questionsAnswers[2].question,
       answers: [
-        Labels.epdsSurvey.questionsAnswers[2].answer1,
-        Labels.epdsSurvey.questionsAnswers[2].answer2,
-        Labels.epdsSurvey.questionsAnswers[2].answer3,
-        Labels.epdsSurvey.questionsAnswers[2].answer4
+        { id: 0, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[2].answer1 },
+        { id: 1, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[2].answer2 },
+        { id: 2, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[2].answer3 },
+        { id: 3, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[2].answer4 },
       ],
     }
   ];
-
-  // Array used to register answered questions
-  let tempAnsweredQuestions: AnsweredQuestion[] = [];
-  questionsAndAnswers.forEach(() => {
-      let answeredQuestion: AnsweredQuestion = {};
-      tempAnsweredQuestions.push(answeredQuestion);
-    });
-
+  
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
-  const [answeredQuestions, setAnsweredQuestions] = useState(tempAnsweredQuestions);
+  const [questionsAndAnswers, setQuestionsAndAnswers] = useState<QuestionAndAnswers[]>(
+    constQuestionsAndAnswers
+  );
   const swiperRef = useRef<SwiperFlatList>(null);
 
   const navigateToProfile = () => {
@@ -83,10 +81,22 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
     navigation.navigate("profile");
   };
 
-  const updatePressedAnswer = (questionIndex: number, answerIndex: number) => {
-    tempAnsweredQuestions[questionIndex].chosenAnswerIndex = answerIndex;
-    setAnsweredQuestions(tempAnsweredQuestions);
-  };
+  const updatePressedAnswer = (answerBis: Answer) => {
+    setQuestionsAndAnswers(() => {
+      return questionsAndAnswers.map((question, questionIndex) => {
+        if (questionIndex === swiperCurrentIndex) {
+          question.answers = question.answers.map((answer) => {
+            if (answer.id === answerBis.id) {
+              return { ...answer, isChecked: !answerBis.isChecked };
+            } else {
+              return answer;
+            }
+          });
+        }
+        return question;
+      });
+    });
+  }
 
   return (
     <View style={[styles.mainContainer, styles.flexColumn]}>
@@ -99,7 +109,6 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
           <SwiperFlatList
             ref={swiperRef}
             onChangeIndex={({ index }) => {
-              console.log(index);
               setSwiperCurrentIndex(index);
             }}
             autoplay={false}
@@ -120,12 +129,13 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
                       {questionView.question}
                     </CommonText>
                     {questionView.answers.map((answer, answerIndex) => {
-                      return (<Checkbox
+                      return (
+                      <Checkbox
                           key={answerIndex}
-                          title={answer}
-                          checked={(swiperCurrentIndex === questionIndex) && (answeredQuestions[questionIndex].chosenAnswerIndex === answerIndex)}
+                          title={answer.label}
+                          checked={answer.isChecked}
                           onPress={() => {
-                            updatePressedAnswer(questionIndex, answerIndex);
+                            updatePressedAnswer(answer);
                           }}
                       />
                       );
@@ -161,7 +171,6 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
             )}
           </View>
           <View style={[styles.buttonContainer]}>
-            <CommonText>{answeredQuestions[swiperCurrentIndex].chosenAnswerIndex}</CommonText>
             {swiperCurrentIndex === questionsAndAnswers.length - 1 ? (
               <View style={[styles.justifyContentCenter]}>
                 <Button
