@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/SocialGouv/1000jours/compare/v1.14.0...v1.14.1) (2021-04-22)
+
+
+### Bug Fixes
+
+* **gitlab:** update to SocialGouv/gitlab-ci-yml@v21.0.2 ([#155](https://github.com/SocialGouv/1000jours/issues/155)) ([7970649](https://github.com/SocialGouv/1000jours/commit/79706495f34b48c611331322bd9179a166404d55))
+
 # [1.14.0](https://github.com/SocialGouv/1000jours/compare/v1.13.7...v1.14.0) (2021-04-22)
 
 
