@@ -1,3 +1,24 @@
+# [1.14.0](https://github.com/SocialGouv/1000jours/compare/v1.13.7...v1.14.0) (2021-04-22)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la position du numéro de l'étape (Timeline) ([#153](https://github.com/SocialGouv/1000jours/issues/153)) ([bc43f48](https://github.com/SocialGouv/1000jours/commit/bc43f48d8a12fa2b6e403f94432a9d7302cefc0f)), closes [#108](https://github.com/SocialGouv/1000jours/issues/108)
+* 🐛 Corrige la saisie de date compliqué sous iOS ([#152](https://github.com/SocialGouv/1000jours/issues/152)) ([b04c46c](https://github.com/SocialGouv/1000jours/commit/b04c46cc24e39f36f3f97120176cd447351d0d22)), closes [#150](https://github.com/SocialGouv/1000jours/issues/150)
+* 🐛 corrige le design de la page Onboarding ([#151](https://github.com/SocialGouv/1000jours/issues/151)) ([4065d07](https://github.com/SocialGouv/1000jours/commit/4065d07572057163269509018a85ee975b4aded4)), closes [#7](https://github.com/SocialGouv/1000jours/issues/7)
+* **deps:** update all dependencies ([#64](https://github.com/SocialGouv/1000jours/issues/64)) ([c34b573](https://github.com/SocialGouv/1000jours/commit/c34b573d41b62f6095a4ed3fa17fde66b823f5d6))
+
+
+### Features
+
+* **ci:** ajoute les workflows de build et publish pour la production ([#145](https://github.com/SocialGouv/1000jours/issues/145)) ([92c5f7e](https://github.com/SocialGouv/1000jours/commit/92c5f7e19ea5277baf5466caff536bc9f7f50a10))
+* **dpp:** ajout de la bannière d'accès au questionnaire ([#149](https://github.com/SocialGouv/1000jours/issues/149)) ([695f3b9](https://github.com/SocialGouv/1000jours/commit/695f3b94f090d9877c4e58be45808afc4ea8b1f3))
+
+
+### Reverts
+
+* Revert "fix(deps): update all dependencies (patch)" (#156) ([46cd862](https://github.com/SocialGouv/1000jours/commit/46cd862ceec1bf69e7e0cb1473cb75a98796ed31)), closes [#156](https://github.com/SocialGouv/1000jours/issues/156)
+
 ## [1.13.7](https://github.com/SocialGouv/1000jours/compare/v1.13.6...v1.13.7) (2021-04-19)
 
 
