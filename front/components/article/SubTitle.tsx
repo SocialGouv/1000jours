@@ -3,14 +3,14 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import Colors from "../../constants/Colors";
-import { CommonText } from "../StyledText";
+import { SecondaryText } from "../StyledText";
 
 interface Props {
   title: string;
 }
 
 const SubTitle: FC<Props> = ({ title }) => (
-  <CommonText style={[styles.title]}>{title}</CommonText>
+  <SecondaryText style={styles.title}>{title}</SecondaryText>
 );
 
 const styles = StyleSheet.create({

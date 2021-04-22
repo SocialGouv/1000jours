@@ -4,7 +4,8 @@ import { StyleSheet } from "react-native";
 import HTML from "react-native-render-html";
 
 import Colors from "../../constants/Colors";
-import { fontsMap } from "../StyledText";
+import { FontWeight } from "../../constants/Layout";
+import { FontNames, getFontFamilyName } from "../StyledText";
 
 interface Props {
   html: string;
@@ -24,12 +25,12 @@ const TextHtml: FC<Props> = ({ html }) => {
 const styles = StyleSheet.create({
   baseFontStyle: {
     color: Colors.commonText,
-    fontFamily: fontsMap.normal,
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.normal),
     fontSize: 12,
     lineHeight: 20,
   },
   bold: {
-    fontFamily: fontsMap.bold,
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.bold),
   },
   containerStyle: {
     margin: 0,
