@@ -7,37 +7,75 @@ import { FontWeight } from "../constants/Layout";
 import type { TextProps } from "./Themed";
 import { Text } from "./Themed";
 
-export const fontsMap = {
-  [FontWeight.weight100]: "comfortaa-light",
-  [FontWeight.weight200]: "comfortaa-light",
-  [FontWeight.light]: "comfortaa-light",
-  [FontWeight.normal]: "comfortaa-regular",
-  [FontWeight.medium]: "comfortaa-medium",
-  [FontWeight.semibold]: "comfortaa-semibold",
-  [FontWeight.bold]: "comfortaa-bold",
-  [FontWeight.weight800]: "comfortaa-bold",
-  [FontWeight.weight900]: "comfortaa-bold",
-  bold: "comfortaa-bold",
-  normal: "comfortaa-regular",
+export enum FontNames {
+  comfortaa = "comfortaa",
+  spaceMono = "space-mono",
+  avenir = "avenir",
+}
+const fontsMap = {
+  [FontWeight.thin]: "light",
+  [FontWeight.extralight]: "light",
+  [FontWeight.light]: "light",
+  [FontWeight.normal]: "regular",
+  [FontWeight.medium]: "medium",
+  [FontWeight.semibold]: "semibold",
+  [FontWeight.bold]: "bold",
+  [FontWeight.extrabold]: "bold",
+  [FontWeight.black]: "black",
+  bold: "bold",
+  normal: "regular",
 };
 
-const getFontFromWeight = (style: StyleProp<TextStyle>) => {
+export const getFontFamilyName = (
+  fontName: string,
+  fontWeight:
+    | "100"
+    | "200"
+    | "300"
+    | "400"
+    | "500"
+    | "600"
+    | "700"
+    | "800"
+    | "900"
+    | "bold"
+    | "normal"
+): string => {
+  return fontName + "-" + fontsMap[fontWeight];
+};
+
+const getFontFromWeight = (fontName: string, style?: StyleProp<TextStyle>) => {
   const fontWeight = style
-    ? StyleSheet.flatten(style).fontWeight
+    ? StyleSheet.flatten(style).fontWeight ?? FontWeight.normal
     : FontWeight.normal;
   return {
-    fontFamily: fontWeight ? fontsMap[fontWeight] : fontsMap.normal,
+    fontFamily: getFontFamilyName(fontName, fontWeight),
   };
 };
 
 export const MonoText: FC<TextProps> = (props) => {
   return (
-    <Text {...props} style={[props.style, { fontFamily: "space-mono" }]} />
+    <Text
+      {...props}
+      style={[props.style, { fontFamily: FontNames.spaceMono }]}
+    />
   );
 };
 
 export const CommonText: FC<TextProps> = (props) => {
   return (
-    <Text {...props} style={[props.style, getFontFromWeight(props.style)]} />
+    <Text
+      {...props}
+      style={[props.style, getFontFromWeight(FontNames.comfortaa, props.style)]}
+    />
+  );
+};
+
+export const SecondaryText: FC<TextProps> = (props) => {
+  return (
+    <Text
+      {...props}
+      style={[props.style, getFontFromWeight(FontNames.avenir, props.style)]}
+    />
   );
 };
