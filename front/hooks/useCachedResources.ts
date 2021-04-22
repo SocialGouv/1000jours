@@ -22,6 +22,11 @@ const useCachedResources = (): boolean => {
           "comfortaa-medium": require("../assets/fonts/Comfortaa-Medium.ttf"),
           "comfortaa-regular": require("../assets/fonts/Comfortaa-Regular.ttf"),
           "comfortaa-semibold": require("../assets/fonts/Comfortaa-SemiBold.ttf"),
+          "avenir-black": require("../assets/fonts/Avenir-Black.ttf"),
+          "avenir-bold": require("../assets/fonts/Avenir-Heavy.ttf"),
+          "avenir-light": require("../assets/fonts/Avenir-Light.ttf"),
+          "avenir-medium": require("../assets/fonts/Avenir-Medium.ttf"),
+          "avenir-regular": require("../assets/fonts/Avenir-Roman.ttf"),
         });
       } catch (error: unknown) {
         // We might want to provide this error information to an error reporting service

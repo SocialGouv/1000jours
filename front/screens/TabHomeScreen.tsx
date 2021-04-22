@@ -7,11 +7,12 @@ import * as React from "react";
 import { ActivityIndicator, StyleSheet, Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { CommonText } from "../components/StyledText";
+import { CommonText, SecondaryText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import TimelineStep from "../components/timeline/TimlineStep";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
+import { FontWeight } from "../constants/Layout";
 import type { Step, TabHomeParamList } from "../types";
 
 interface Props {
@@ -42,7 +43,9 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     <ScrollView style={[styles.mainContainer]}>
       <View>
         <CommonText style={[styles.title]}>{screenTitle}</CommonText>
-        <CommonText style={[styles.description]}>{description}</CommonText>
+        <SecondaryText style={[styles.description]}>
+          {description}
+        </SecondaryText>
       </View>
       <View style={[styles.timelineStepContainer]}>
         <View style={[styles.timelineContainer]}>
@@ -85,8 +88,8 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
   description: {
     color: Colors.commonText,
-    fontSize: 12,
-    lineHeight: 18,
+    fontSize: 16,
+    fontWeight: FontWeight.medium,
   },
   mainContainer: {
     backgroundColor: "white",
@@ -134,9 +137,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.primaryBlueDark,
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 20,
   },
 });
 
