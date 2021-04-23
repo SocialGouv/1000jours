@@ -55,11 +55,6 @@ Pour publier l'application (changements dans le bundle JS), utilisez :
 yarn publish-prod
 ```
 
-Pour builder et publier l'application (changements dans le code natif), utilisez :
-```bash
-yarn build-prod
-```
-
 ### 🪄 Automatiquement
 
 Pour builder ou publier l'application automatiquement :
