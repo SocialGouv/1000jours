@@ -11,6 +11,7 @@ jobs:
     env:
       API_URL: ${{ secrets.API_URL }}
       CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
+      PLAY_STORE_API_KEY: ${{ secrets.PLAY_STORE_API_KEY }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -24,8 +25,9 @@ jobs:
       - name: Yarn
         run: |
           cd front
+          echo $PLAY_STORE_API_KEY | base64 -d > play-store-api-key.json
           yarn install
-          yarn build-prod:android
+          yarn upload:android
 
   Build-ios:
     name: Build and publish iOS for prod
