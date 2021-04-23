@@ -25,9 +25,9 @@ const TextHtml: FC<Props> = ({ html }) => {
 const styles = StyleSheet.create({
   baseFontStyle: {
     color: Colors.commonText,
-    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.normal),
-    fontSize: 12,
-    lineHeight: 20,
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
+    fontSize: 16,
+    lineHeight: 25,
   },
   bold: {
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.bold),
