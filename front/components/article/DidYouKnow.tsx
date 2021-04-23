@@ -4,7 +4,8 @@ import { StyleSheet, Text } from "react-native";
 
 import Colors from "../../constants/Colors";
 import Labels from "../../constants/Labels";
-import { CommonText } from "../StyledText";
+import { FontWeight } from "../../constants/Layout";
+import { CommonText, SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 
 interface Props {
@@ -28,7 +29,9 @@ const DidYouKnow: FC<Props> = ({ description }) => {
           ?
         </Text>
       </View>
-      <CommonText style={[styles.didYouKnowContent]}>{description}</CommonText>
+      <SecondaryText style={[styles.didYouKnowContent]}>
+        {description}
+      </SecondaryText>
     </View>
   ) : null;
 };
@@ -55,19 +58,22 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.cardGrey,
     borderLeftColor: Colors.primaryYellow,
     borderLeftWidth: 4,
+    marginBottom: 15,
     paddingBottom: 15,
     paddingTop: 5,
   },
   didYouKnowContent: {
     color: Colors.primaryBlueDark,
-    fontSize: 12,
-    lineHeight: 20,
+    fontSize: 16,
+    fontWeight: FontWeight.medium,
+    lineHeight: 23,
     paddingHorizontal: 18,
     paddingTop: 0,
   },
   didYouKnowTitle: {
     color: Colors.primaryYellow,
-    fontSize: 12,
+    fontSize: 17,
+    fontWeight: FontWeight.bold,
   },
   positionRelative: {
     position: "relative",

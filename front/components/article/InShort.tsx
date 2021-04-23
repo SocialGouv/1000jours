@@ -6,9 +6,10 @@ import { ListItem } from "react-native-elements";
 
 import Colors from "../../constants/Colors";
 import Labels from "../../constants/Labels";
+import { FontWeight } from "../../constants/Layout";
 import type { ArticleInShortItem } from "../../types";
 import Icomoon, { IcomoonIcons } from "../Icomoon";
-import { CommonText } from "../StyledText";
+import { CommonText, SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 
 export const inShortIconNames = {
@@ -66,9 +67,9 @@ const InShort: FC<Props> = ({ inShortArray }) => {
             <View style={styles.listItemIcon}>{inShortIcons[item.icon]}</View>
             <ListItem.Content>
               <ListItem.Title>
-                <CommonText style={[styles.listItemTitle]}>
+                <SecondaryText style={[styles.listItemTitle]}>
                   {item.text}
-                </CommonText>
+                </SecondaryText>
               </ListItem.Title>
             </ListItem.Content>
           </ListItem>
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.cardGrey,
     borderLeftColor: Colors.secondaryGreen,
     borderLeftWidth: 4,
+    marginBottom: 10,
     paddingVertical: 4,
   },
   inShortListItemsContainer: {
@@ -110,11 +112,11 @@ const styles = StyleSheet.create({
   },
   inShortTitle: {
     color: Colors.secondaryGreen,
-    fontSize: 12,
+    fontSize: 17,
+    fontWeight: FontWeight.bold,
     marginVertical: "auto",
   },
   listItemContainer: {
-    alignItems: "flex-start",
     backgroundColor: "transparent",
     padding: 10,
   },
@@ -126,7 +128,8 @@ const styles = StyleSheet.create({
   },
   listItemTitle: {
     color: Colors.primaryBlueDark,
-    fontSize: 12,
+    fontSize: 16,
+    fontWeight: FontWeight.medium,
   },
   positionRelative: {
     position: "relative",
