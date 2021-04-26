@@ -16,6 +16,7 @@ import Labels from "../constants/Labels";
 import { FontWeight } from "../constants/Layout";
 import type { RootStackParamList } from "../types";
 import BackButton from "../components/BackButton";
+import EpdsQuestion from "../components/epdsSurvey/EpdsQuestion";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -26,13 +27,13 @@ interface Props {
   navigation: ProfileScreenNavigationProp;
 }
 
-interface QuestionAndAnswers {
+export interface QuestionAndAnswers {
   question: string;
   answers: Answer[];
   isAnswered?: boolean;
 }
 
-interface Answer {
+export interface Answer {
   id: number;
   label: string;
   isChecked: boolean;
@@ -179,30 +180,11 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
               >
                 {questionsAndAnswers.map((questionView, questionIndex) => {
                   return (
-                    <View
-                      style={[styles.swipeView, styles.justifyContentCenter]}
-                      key={questionIndex}
-                    >
-                      <View style={styles.swipeViewMargin}>
-                        <CommonText
-                          style={[styles.title, styles.textAlignCenter]}
-                        >
-                          {questionView.question}
-                        </CommonText>
-                        {questionView.answers.map((answer, answerIndex) => {
-                          return (
-                            <Checkbox
-                              key={answerIndex}
-                              title={answer.label}
-                              checked={answer.isChecked}
-                              onPress={() => {
-                                updatePressedAnswer(answer);
-                              }}
-                            />
-                          );
-                        })}
-                      </View>
-                    </View>
+                    <EpdsQuestion
+                      questionAndAnswers={questionView}
+                      questionIndex={questionIndex}
+                      updatePressedAnswer={updatePressedAnswer}
+                    />
                   );
                 })}
               </SwiperFlatList>
