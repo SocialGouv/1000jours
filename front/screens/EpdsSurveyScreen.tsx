@@ -227,18 +227,11 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
   );
 };
 
-const width = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   appName: {
     color: Colors.primaryBlueDark,
     fontSize: 25,
     fontWeight: FontWeight.bold
-  },
-  buttonContainer: {
-    flex: 1
-  },
-  buttonsContainer: {
-    flexDirection: "row"
   },
   description: {
     color: Colors.commonText,
@@ -251,14 +244,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column"
   },
-  footer: {
-    flex: 1,
-    paddingVertical: 10
-  },
-  justifyContentCenter: {
-    alignItems: "center",
-    justifyContent: "center"
-  },
   mainContainer: {
     flex: 1,
     paddingTop: 30
@@ -270,15 +255,6 @@ const styles = StyleSheet.create({
     height: 5,
     marginHorizontal: 8,
     width: 32
-  },
-  swipeView: {
-    width
-  },
-  swipeViewMargin: {
-    margin: "10%"
-  },
-  textAlignCenter: {
-    textAlign: "center"
   },
   title: {
     color: Colors.primaryBlueDark,
