@@ -17,6 +17,7 @@ import { FontWeight } from "../constants/Layout";
 import type { RootStackParamList } from "../types";
 import BackButton from "../components/BackButton";
 import EpdsQuestion from "../components/epdsSurvey/EpdsQuestion";
+import EpdsFooter from "../components/epdsSurvey/EpdsFooter";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -190,55 +191,13 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
               </SwiperFlatList>
             </ScrollView>
           </View>
-          <View style={[styles.footer, styles.justifyContentCenter]}>
-            <View
-              style={[styles.buttonsContainer, styles.justifyContentCenter]}
-            >
-              <View style={[styles.buttonContainer]}>
-                {swiperCurrentIndex > 0 && (
-                  <BackButton
-                    action={() => {
-                      swiperRef.current?.scrollToIndex({
-                        index: swiperCurrentIndex - 1
-                      });
-                    }}
-                  />
-                )}
-              </View>
-              <View style={[styles.buttonContainer]}>
-                {showValidateButton ? (
-                  <View style={styles.justifyContentCenter}>
-                    <Button
-                      title={Labels.buttons.validate}
-                      rounded={true}
-                      disabled={false}
-                      action={() => setDisplayResult(true)}
-                    />
-                  </View>
-                ) : (
-                  questionIsAnswered && (
-                    <Button
-                      title={Labels.buttons.next}
-                      rounded={false}
-                      disabled={false}
-                      icon={
-                        <Icomoon
-                          name={IcomoonIcons.suivant}
-                          size={14}
-                          color={Colors.primaryBlue}
-                        />
-                      }
-                      action={() => {
-                        swiperRef.current?.scrollToIndex({
-                          index: swiperCurrentIndex + 1
-                        });
-                      }}
-                    />
-                  )
-                )}
-              </View>
-            </View>
-          </View>
+          <EpdsFooter
+            swiperCurrentIndex={swiperCurrentIndex}
+            swiperRef={swiperRef}
+            showValidateButton={showValidateButton}
+            questionIsAnswered={questionIsAnswered}
+            setDisplayResult={setDisplayResult}
+          />
         </>
       ) : (
         <View>
