@@ -13,7 +13,7 @@ const ImageBanner: FC<Props> = ({ imageUrl }) => {
       source={{
         uri: `${process.env.API_URL}${imageUrl}`,
       }}
-      style={[styles.articleImage]}
+      containerStyle={[styles.articleImage]}
     />
   );
 };
