@@ -48,7 +48,7 @@ export type UserContext = {
 export type TabItem = {
   name: keyof BottomTabParamList;
   component: FC;
-  icon: React.ReactNode;
+  getIcon: (color: string) => React.ReactNode;
   title: string;
 };
 
