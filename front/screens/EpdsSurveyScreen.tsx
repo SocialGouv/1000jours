@@ -18,6 +18,7 @@ import EpdsQuestion from "../components/epdsSurvey/EpdsQuestion";
 import EpdsFooter from "../components/epdsSurvey/EpdsFooter";
 import { gql } from "@apollo/client/core";
 import { useQuery } from "@apollo/client";
+import EpdsResult from "../components/epdsSurvey/EpdsResult";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -42,7 +43,6 @@ export interface Answer {
 }
 
 const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
-
   // const QUESTIONNAIRE_EPDS = gql`
   //   query QuestionsReponses {
   //     questionnaireEpds {
@@ -200,7 +200,10 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const swiperRef = useRef<SwiperFlatList>(null);
   const [displayResult, setDisplayResult] = useState(false);
-  const [questionsAndAnswers, setQuestionsAndAnswers] = useState<QuestionAndAnswers[]>(constQuestionsAndAnswers);
+  const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
+    QuestionAndAnswers[]
+  >(constQuestionsAndAnswers);
+  const [score, setScore] = useState(0);
 
   const updatePressedAnswer = (selectedAnswer: Answer) => {
     setQuestionsAndAnswers(
@@ -210,6 +213,13 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
           ? question.answers.map((answer) => {
               if (answer.id === selectedAnswer.id) {
                 question.isAnswered = true;
+                const currentQuestionPoints = getCurrentQuestionPoints(
+                  question
+                );
+                const newScore = currentQuestionPoints
+                  ? score - currentQuestionPoints + selectedAnswer.points
+                  : score + selectedAnswer.points;
+                setScore(newScore);
                 return { ...answer, isChecked: !selectedAnswer.isChecked };
               } else {
                 return { ...answer, isChecked: false };
@@ -221,6 +231,15 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
       })
     );
   };
+
+  function getCurrentQuestionPoints(question: QuestionAndAnswers) {
+    const choosenAnswers = question.answers.filter(
+      (answer) => answer.isChecked
+    );
+    if (choosenAnswers && choosenAnswers.length === 1) {
+      return choosenAnswers[0].points;
+    }
+  }
 
   // const allIsCreated = questionsAndAnswers && swiperCurrentIndex;
   const questionIsAnswered = questionsAndAnswers[swiperCurrentIndex].isAnswered;
@@ -277,28 +296,10 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
           />
         </>
       ) : (
-        <View>
-          <CommonText style={styles.title}>
-            {Labels.epdsSurvey.title}
-          </CommonText>
-          <CommonText style={styles.description}>
-            {Labels.epdsSurvey.description}
-          </CommonText>
-          <CommonText style={[styles.description]}>Résultat</CommonText>
-          <Button
-            title={Labels.buttons.back}
-            rounded={false}
-            disabled={false}
-            icon={
-              <Icomoon
-                name={IcomoonIcons.retour}
-                size={14}
-                color={Colors.primaryBlue}
-              />
-            }
-            action={() => setDisplayResult(false)}
-          />
-        </View>
+        <EpdsResult
+          result={score}
+          backToSurvey={() => setDisplayResult(false)}
+        />
       )}
     </View>
   );
