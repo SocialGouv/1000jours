@@ -67,6 +67,7 @@ export type Thematique = {
 export type Visuel = {
   url: string;
 };
+
 export type Article = {
   id: number;
   titre: string;
@@ -102,4 +103,19 @@ export type ArticleInShortItem = {
 export type ArticleLink = {
   label: string;
   url: string;
+};
+
+export type QuestionnaireEpds = {
+  id: number;
+  locale: string;
+  ordre: number;
+  libelle: string;
+  reponse_1_libelle: string;
+  reponse_1_points: number;
+  reponse_2_libelle: string;
+  reponse_2_points: number;
+  reponse_3_libelle: string;
+  reponse_3_points: number;
+  reponse_4_libelle: string;
+  reponse_4_points: number;
 };
