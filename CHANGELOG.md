@@ -1,3 +1,15 @@
+# [1.17.0](https://github.com/SocialGouv/1000jours/compare/v1.16.0...v1.17.0) (2021-04-27)
+
+
+### Bug Fixes
+
+* 🐛 Corrige les retours design sur la tabBar  ([#166](https://github.com/SocialGouv/1000jours/issues/166)) ([654a65b](https://github.com/SocialGouv/1000jours/commit/654a65ba6bc03cb2624dd3f4e9c8ea2a0f8d7c6f)), closes [#10](https://github.com/SocialGouv/1000jours/issues/10) [#28](https://github.com/SocialGouv/1000jours/issues/28) [#102](https://github.com/SocialGouv/1000jours/issues/102) [#133](https://github.com/SocialGouv/1000jours/issues/133) [#36](https://github.com/SocialGouv/1000jours/issues/36)
+
+
+### Features
+
+* 🎸 je consulte les articles liés à une étape ([#165](https://github.com/SocialGouv/1000jours/issues/165)) ([64b198b](https://github.com/SocialGouv/1000jours/commit/64b198bb895fa5debfd3da0efed8a96e691dec60)), closes [#26](https://github.com/SocialGouv/1000jours/issues/26)
+
 # [1.16.0](https://github.com/SocialGouv/1000jours/compare/v1.15.1...v1.16.0) (2021-04-27)
 
 
