@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/SocialGouv/1000jours/compare/v1.15.1...v1.16.0) (2021-04-27)
+
+
+### Features
+
+* **dpp:** add epds survey on app ([#162](https://github.com/SocialGouv/1000jours/issues/162)) ([384583f](https://github.com/SocialGouv/1000jours/commit/384583fb92c76166be3fa7d66b178a5383357b7a))
+
 ## [1.15.1](https://github.com/SocialGouv/1000jours/compare/v1.15.0...v1.15.1) (2021-04-23)
 
 
