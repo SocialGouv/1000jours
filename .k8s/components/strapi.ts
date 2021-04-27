@@ -1,12 +1,12 @@
 import env from "@kosko/env";
 
 import { create } from "@socialgouv/kosko-charts/components/app";
+import gitlab from "@socialgouv/kosko-charts/environments/gitlab"
 import { getHarborImagePath } from "@socialgouv/kosko-charts/utils/getHarborImagePath";
 import { addEnv } from "@socialgouv/kosko-charts/utils/addEnv";
 import { getManifestByKind } from "@socialgouv/kosko-charts/utils/getManifestByKind";
 import { Deployment } from "kubernetes-models/api/apps/v1/Deployment";
 import { EnvVar } from "kubernetes-models/api/core/v1/EnvVar";
-
 import { PersistentVolume } from "kubernetes-models/v1/PersistentVolume";
 import { PersistentVolumeClaim } from "kubernetes-models/v1/PersistentVolumeClaim";
 
@@ -19,6 +19,8 @@ interface AddEnvsParams {
   data: AnyObject;
   containerIndex?: number;
 }
+
+const gitlabEnv = gitlab(process.env);
 
 const addEnvs = ({ deployment, data, containerIndex = 0 }: AddEnvsParams) => {
   Object.keys(data).forEach((key) => {
@@ -120,6 +122,7 @@ const pvc = new PersistentVolumeClaim({
 addEnvs({
   deployment,
   data: {
+    BACKOFFICE_URL: `https://backoffice-${gitlabEnv.subdomain}.${gitlabEnv.domain}`,
     DATABASE_CLIENT: "postgres",
     DATABASE_NAME: "$(PGDATABASE)",
     DATABASE_HOST: "$(PGHOST)",
