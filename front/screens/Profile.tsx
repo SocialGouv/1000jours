@@ -19,9 +19,11 @@ import Checkbox from "../components/form/Checkbox";
 import InputDate from "../components/form/InputDate";
 import HeaderApp from "../components/HeaderApp";
 import Icomoon, { IcomoonIcons } from "../components/Icomoon";
+import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
+import { FontWeight } from "../constants/Layout";
 import { userProfileKey } from "../storage/storage-keys";
 import { storeObjectValue } from "../storage/storage-utils";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
@@ -32,7 +34,6 @@ interface Props {
 
 const Profile: FC<Props> = ({ navigation }) => {
   const image = <ProfileImage />;
-  const title = Labels.profile.title;
 
   const defaultUserContext: UserContext = {
     childBirthday: null,
@@ -141,7 +142,12 @@ const Profile: FC<Props> = ({ navigation }) => {
         <View style={styles.mainView}>
           <ScrollView style={styles.mainMargins}>
             <View style={[styles.justifyContentCenter]}>{image}</View>
-            <Text style={[styles.title, styles.textAlignCenter]}>{title}</Text>
+            <CommonText style={[styles.title, styles.textAlignCenter]}>
+              {Labels.profile.title}
+            </CommonText>
+            <CommonText style={[styles.subTitle, styles.textAlignCenter]}>
+              {Labels.profile.subTitle}
+            </CommonText>
             <View style={[styles.choices]}>
               {userSituations.map((situation, index) => (
                 <View key={index}>
@@ -277,14 +283,21 @@ const styles = StyleSheet.create({
   mainView: {
     flex: 8,
   },
+  subTitle: {
+    color: Colors.primaryBlue,
+    fontSize: 16,
+    fontWeight: FontWeight.normal,
+    paddingBottom: 30,
+  },
   textAlignCenter: {
     textAlign: "center",
   },
   title: {
     color: Colors.primaryBlueDark,
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: "bold",
-    padding: 15,
+    paddingBottom: 10,
+    paddingTop: 15,
   },
   w100: {
     width: "100%",

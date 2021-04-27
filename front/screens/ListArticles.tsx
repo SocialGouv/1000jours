@@ -7,12 +7,12 @@ import * as React from "react";
 import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
 
+import Button from "../components/form/Button";
 import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
 import type { Article, Step, TabHomeParamList } from "../types";
-import Button from "../components/form/Button";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList, "listArticles">;
@@ -25,28 +25,31 @@ const ETAPE_ENFANT_3_PREMIERS_MOIS = 6;
 const ListArticles: FC<Props> = ({ navigation, route }) => {
   const screenTitle = route.params.step.nom;
   const description = route.params.step.description;
-  const stepIsFirstThreeMonths = route.params.step.id == ETAPE_ENFANT_3_PREMIERS_MOIS;
-  
-  const ALL_ARTICLES = gql`
-    query GetAllArticles {
-      articles {
-        id
-        titre
-        resume
-        visuel {
-          url
+  const stepIsFirstThreeMonths =
+    route.params.step.id == ETAPE_ENFANT_3_PREMIERS_MOIS;
+
+  const STEP_ARTICLES = gql`
+    query GetStepArticles {
+      etape(id: ${route.params.step.id}) {
+        articles {
+          id
+          titre
+          resume
+          visuel {
+            url
+          }
         }
       }
     }
   `;
-  const { loading, error, data } = useQuery(ALL_ARTICLES, {
+  const { loading, error, data } = useQuery(STEP_ARTICLES, {
     fetchPolicy: "no-cache",
   });
 
   if (loading) return <ActivityIndicator size="large" />;
   if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
 
-  const result = data as { articles: Article[] };
+  const articles = (data as { etape: { articles: Article[] } }).etape.articles;
 
   const navigateToSurvey = () => {
     navigation.navigate("epdsSurvey");
@@ -54,63 +57,68 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
 
   return (
     <ScrollView>
-        <View style={styles.topContainer}>
-          <CommonText style={styles.title}>{screenTitle}</CommonText>
-          <CommonText style={styles.description}>{description}</CommonText>
-        </View>
-        {stepIsFirstThreeMonths && (
-          <View style={styles.threeFirstMonthsBanner}>
-            <CommonText style={styles.bannerTitle}>{Labels.article.firstThreeMonths.title}</CommonText>
-            <CommonText style={styles.bannerDescription}>{Labels.article.firstThreeMonths.description}</CommonText>
-                <Button
-                  buttonStyle={styles.bannerButton}
-                  title={Labels.article.firstThreeMonths.buttonLabel}
-                  rounded={true}
-                  disabled={false}
-                  action={navigateToSurvey}
-                />
-          </View>)}
-        <View style={styles.listContainer}>
-          <CommonText style={styles.headerListInfo}>
-            {result.articles.length} article(s) à lire
+      <View style={styles.topContainer}>
+        <CommonText style={styles.title}>{screenTitle}</CommonText>
+        <CommonText style={styles.description}>{description}</CommonText>
+      </View>
+      {stepIsFirstThreeMonths && (
+        <View style={styles.threeFirstMonthsBanner}>
+          <CommonText style={styles.bannerTitle}>
+            {Labels.article.firstThreeMonths.title}
           </CommonText>
-          {result.articles.map((article, index) => (
-            <ListItem
-              key={index}
-              bottomDivider
-              onPress={() => {
-                navigation.navigate("article", {
-                  id: article.id,
-                  step: route.params.step,
-                });
-              }}
-              containerStyle={styles.listItem}
-            >
-              <Image
-                source={{
-                  uri: `${process.env.API_URL}${article.visuel?.url}`,
-                }}
-                style={styles.articleImage}
-              />
-              <ListItem.Content style={styles.articleContent}>
-                <ListItem.Title style={styles.articleTitleContainer}>
-                  <CommonText style={styles.articleTitle}>
-                    {article.titre}
-                  </CommonText>
-                </ListItem.Title>
-                <ListItem.Subtitle style={styles.articleDescription}>
-                  <CommonText
-                    style={styles.articleDescriptionFont}
-                    numberOfLines={3}
-                    allowFontScaling={true}
-                  >
-                    {article.resume}
-                  </CommonText>
-                </ListItem.Subtitle>
-              </ListItem.Content>
-            </ListItem>
-          ))}
+          <CommonText style={styles.bannerDescription}>
+            {Labels.article.firstThreeMonths.description}
+          </CommonText>
+          <Button
+            buttonStyle={styles.bannerButton}
+            title={Labels.article.firstThreeMonths.buttonLabel}
+            rounded={true}
+            disabled={false}
+            action={navigateToSurvey}
+          />
         </View>
+      )}
+      <View style={styles.listContainer}>
+        <CommonText style={styles.headerListInfo}>
+          {articles.length} article(s) à lire
+        </CommonText>
+        {articles.map((article, index) => (
+          <ListItem
+            key={index}
+            bottomDivider
+            onPress={() => {
+              navigation.navigate("article", {
+                id: article.id,
+                step: route.params.step,
+              });
+            }}
+            containerStyle={styles.listItem}
+          >
+            <Image
+              source={{
+                uri: `${process.env.API_URL}${article.visuel?.url}`,
+              }}
+              style={styles.articleImage}
+            />
+            <ListItem.Content style={styles.articleContent}>
+              <ListItem.Title style={styles.articleTitleContainer}>
+                <CommonText style={styles.articleTitle}>
+                  {article.titre}
+                </CommonText>
+              </ListItem.Title>
+              <ListItem.Subtitle style={styles.articleDescription}>
+                <CommonText
+                  style={styles.articleDescriptionFont}
+                  numberOfLines={3}
+                  allowFontScaling={true}
+                >
+                  {article.resume}
+                </CommonText>
+              </ListItem.Subtitle>
+            </ListItem.Content>
+          </ListItem>
+        ))}
+      </View>
     </ScrollView>
   );
 };
@@ -138,29 +146,23 @@ const styles = StyleSheet.create({
   articleTitleContainer: {
     paddingBottom: 15,
   },
+  bannerButton: {
+    alignSelf: "flex-end",
+  },
+  bannerDescription: {
+    color: Colors.commonText,
+    marginVertical: 10,
+  },
+  bannerTitle: {
+    color: Colors.primaryBlueDark,
+    fontSize: 16,
+  },
   description: {
     color: Colors.commonText,
   },
   headerListInfo: {
     color: Colors.secondaryGreen,
     fontSize: 14,
-  },
-  threeFirstMonthsBanner: {
-    borderStartWidth: 5,
-    borderStartColor: Colors.primaryYellowDark,
-    backgroundColor: Colors.primaryYellowLight,
-    padding: 15,
-  },
-  bannerTitle: {
-    color: Colors.primaryBlueDark,
-    fontSize: 16,
-  },
-  bannerDescription: {
-    color: Colors.commonText,
-    marginVertical: 10,
-  },
-  bannerButton: {
-    alignSelf: "flex-end",
   },
   listContainer: {
     padding: 15,
@@ -169,7 +171,10 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     paddingRight: 0,
   },
-  topContainer: {
+  threeFirstMonthsBanner: {
+    backgroundColor: Colors.primaryYellowLight,
+    borderStartColor: Colors.primaryYellowDark,
+    borderStartWidth: 5,
     padding: 15,
   },
   title: {
@@ -178,6 +183,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
     textTransform: "uppercase",
+  },
+  topContainer: {
+    padding: 15,
   },
 });
 

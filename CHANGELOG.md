@@ -1,3 +1,31 @@
+# [1.16.0](https://github.com/SocialGouv/1000jours/compare/v1.15.1...v1.16.0) (2021-04-27)
+
+
+### Features
+
+* **dpp:** add epds survey on app ([#162](https://github.com/SocialGouv/1000jours/issues/162)) ([384583f](https://github.com/SocialGouv/1000jours/commit/384583fb92c76166be3fa7d66b178a5383357b7a))
+
+## [1.15.1](https://github.com/SocialGouv/1000jours/compare/v1.15.0...v1.15.1) (2021-04-23)
+
+
+### Bug Fixes
+
+* 🐛 Corrige les retours design (Profile and Article) ([#160](https://github.com/SocialGouv/1000jours/issues/160)) ([e144278](https://github.com/SocialGouv/1000jours/commit/e144278d337f528f17df0d3f115a4f70d66fc999)), closes [#10](https://github.com/SocialGouv/1000jours/issues/10) [#28](https://github.com/SocialGouv/1000jours/issues/28) [#102](https://github.com/SocialGouv/1000jours/issues/102) [#133](https://github.com/SocialGouv/1000jours/issues/133)
+
+# [1.15.0](https://github.com/SocialGouv/1000jours/compare/v1.14.1...v1.15.0) (2021-04-23)
+
+
+### Features
+
+* 🎸 je consulte les articles liés à une étape ([#158](https://github.com/SocialGouv/1000jours/issues/158)) ([405ac73](https://github.com/SocialGouv/1000jours/commit/405ac73fb7d8c927c0edfa9ce897e1b73b634bca)), closes [#26](https://github.com/SocialGouv/1000jours/issues/26)
+
+## [1.14.1](https://github.com/SocialGouv/1000jours/compare/v1.14.0...v1.14.1) (2021-04-22)
+
+
+### Bug Fixes
+
+* **gitlab:** update to SocialGouv/gitlab-ci-yml@v21.0.2 ([#155](https://github.com/SocialGouv/1000jours/issues/155)) ([7970649](https://github.com/SocialGouv/1000jours/commit/79706495f34b48c611331322bd9179a166404d55))
+
 # [1.14.0](https://github.com/SocialGouv/1000jours/compare/v1.13.7...v1.14.0) (2021-04-22)
 
 

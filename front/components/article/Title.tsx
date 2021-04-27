@@ -3,6 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import Colors from "../../constants/Colors";
+import { FontWeight } from "../../constants/Layout";
 import { CommonText } from "../StyledText";
 
 interface Props {
@@ -16,8 +17,8 @@ const Title: FC<Props> = ({ title }) => {
 const styles = StyleSheet.create({
   title: {
     color: Colors.primaryBlueDark,
-    fontSize: 14,
-    fontWeight: "normal",
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
     marginBottom: 10,
   },
 });

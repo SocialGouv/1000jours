@@ -15,6 +15,9 @@ import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
 import { FontWeight } from "../constants/Layout";
 import type { RootStackParamList } from "../types";
+import BackButton from "../components/BackButton";
+import EpdsQuestion from "../components/epdsSurvey/EpdsQuestion";
+import EpdsFooter from "../components/epdsSurvey/EpdsFooter";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -25,207 +28,210 @@ interface Props {
   navigation: ProfileScreenNavigationProp;
 }
 
-export type Answer = {
-  id: number;
-  label: string;
-  isChecked: boolean;
-};
-interface QuestionAndAnswers {
+export interface QuestionAndAnswers {
   question: string;
   answers: Answer[];
   isAnswered?: boolean;
 }
 
-
+export interface Answer {
+  id: number;
+  label: string;
+  isChecked: boolean;
+}
 
 const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
   const constQuestionsAndAnswers: QuestionAndAnswers[] = [
     {
       question: Labels.epdsSurvey.questionsAnswers[0].question,
       answers: [
-        { id: 0, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[0].answer1 },
-        { id: 1, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[0].answer2 },
-        { id: 2, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[0].answer3 },
-        { id: 3, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[0].answer4 },
-      ],
+        {
+          id: 0,
+          isChecked: false,
+          label: Labels.epdsSurvey.questionsAnswers[0].answer1
+        },
+        {
+          id: 1,
+          isChecked: false,
+          label: Labels.epdsSurvey.questionsAnswers[0].answer2
+        },
+        {
+          id: 2,
+          isChecked: false,
+          label: Labels.epdsSurvey.questionsAnswers[0].answer3
+        },
+        {
+          id: 3,
+          isChecked: false,
+          label: Labels.epdsSurvey.questionsAnswers[0].answer4
+        }
+      ]
     },
     {
       question: Labels.epdsSurvey.questionsAnswers[1].question,
       answers: [
-        { id: 0, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[1].answer1 },
-        { id: 1, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[1].answer2 },
-        { id: 2, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[1].answer3 },
-        { id: 3, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[1].answer4 },
-      ],
+        {
+          id: 0,
+          isChecked: false,
+          label: Labels.epdsSurvey.questionsAnswers[1].answer1
+        },
+        {
+          id: 1,
+          isChecked: false,
+          label: Labels.epdsSurvey.questionsAnswers[1].answer2
+        },
+        {
+          id: 2,
+          isChecked: false,
+          label: Labels.epdsSurvey.questionsAnswers[1].answer3
+        },
+        {
+          id: 3,
+          isChecked: false,
+          label: Labels.epdsSurvey.questionsAnswers[1].answer4
+        }
+      ]
     },
     {
       question: Labels.epdsSurvey.questionsAnswers[2].question,
       answers: [
-        { id: 0, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[2].answer1 },
-        { id: 1, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[2].answer2 },
-        { id: 2, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[2].answer3 },
-        { id: 3, isChecked: false, label: Labels.epdsSurvey.questionsAnswers[2].answer4 },
-      ],
+        {
+          id: 0,
+          isChecked: false,
+          label: Labels.epdsSurvey.questionsAnswers[2].answer1
+        },
+        {
+          id: 1,
+          isChecked: false,
+          label: Labels.epdsSurvey.questionsAnswers[2].answer2
+        },
+        {
+          id: 2,
+          isChecked: false,
+          label: Labels.epdsSurvey.questionsAnswers[2].answer3
+        },
+        {
+          id: 3,
+          isChecked: false,
+          label: Labels.epdsSurvey.questionsAnswers[2].answer4
+        }
+      ]
     }
   ];
-  
-  const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
-  const [questionsAndAnswers, setQuestionsAndAnswers] = useState<QuestionAndAnswers[]>(
-    constQuestionsAndAnswers
-  );
-  const swiperRef = useRef<SwiperFlatList>(null);
-  const [displayResult, setDisplayResult] = useState<boolean>(
-    false
-  );
 
-  const updatePressedAnswer = (answerBis: Answer) => {
-    setQuestionsAndAnswers(() => {
-      return questionsAndAnswers.map((question, questionIndex) => {
-        if (questionIndex === swiperCurrentIndex) {
-          question.answers = question.answers.map((answer) => {
-            if (answer.id === answerBis.id) {
-              question.isAnswered = true;
-              return { ...answer, isChecked: !answerBis.isChecked };
-            } else {
-              return { ...answer, isChecked: false };
-            }
-          });
-        }
-        return question;
-      });
-    });
-  }
+  const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
+  const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
+    QuestionAndAnswers[]
+  >(constQuestionsAndAnswers);
+  const swiperRef = useRef<SwiperFlatList>(null);
+  const [displayResult, setDisplayResult] = useState(false);
+
+  const updatePressedAnswer = (selectedAnswer: Answer) => {
+    setQuestionsAndAnswers(
+      questionsAndAnswers.map((question, questionIndex) => {
+        const questionIsCurrent = questionIndex === swiperCurrentIndex;
+        const answers = questionIsCurrent
+          ? question.answers.map((answer) => {
+              if (answer.id === selectedAnswer.id) {
+                question.isAnswered = true;
+                return { ...answer, isChecked: !selectedAnswer.isChecked };
+              } else {
+                return { ...answer, isChecked: false };
+              }
+            })
+          : question.answers;
+
+        return { ...question, answers };
+      })
+    );
+  };
+
+  const questionIsAnswered = questionsAndAnswers[swiperCurrentIndex].isAnswered;
+  const showValidateButton =
+    questionIsAnswered && swiperCurrentIndex === questionsAndAnswers.length - 1;
 
   return (
     <View style={[styles.mainContainer, styles.flexColumn]}>
       {!displayResult ? (
         <>
-        <View>
-            <CommonText style={[styles.title]}>{Labels.epdsSurvey.title}</CommonText>
-            <CommonText style={[styles.description]}>
-              {Labels.epdsSurvey.description}{"\n"}
+          <View>
+            <CommonText style={[styles.title]}>
+              {Labels.epdsSurvey.title}
+            </CommonText>
+            <CommonText style={styles.description}>
+              {Labels.epdsSurvey.description}
+            </CommonText>
+            <CommonText style={styles.description}>
               {Labels.epdsSurvey.instruction}
             </CommonText>
-          </View><View style={styles.mainView}>
-              <ScrollView>
-                <SwiperFlatList
-                  ref={swiperRef}
-                  onChangeIndex={({ index }) => {
-                    setSwiperCurrentIndex(index);
-                  } }
-                  autoplay={false}
-                  showPagination
-                  disableGesture
-                  paginationDefaultColor="lightgray"
-                  paginationActiveColor={Colors.secondaryGreen}
-                  paginationStyleItem={styles.swipePaginationItem}
-                >
-                  {questionsAndAnswers.map((questionView, questionIndex) => {
-                    return (
-                      <View
-                        style={[styles.swipeView, styles.justifyContentCenter]}
-                        key={questionIndex}
-                      >
-                        <View style={[styles.swipeViewMargin]}>
-                          <CommonText style={[styles.title, styles.textAlignCenter]}>
-                            {questionView.question}
-                          </CommonText>
-                          {questionView.answers.map((answer, answerIndex) => {
-                            return (
-                              <Checkbox
-                                key={answerIndex}
-                                title={answer.label}
-                                checked={answer.isChecked}
-                                onPress={() => {
-                                  updatePressedAnswer(answer);
-                                } } />
-                            );
-                          })}
-                        </View>
-                      </View>
-                    );
-                  })}
-                </SwiperFlatList>
-              </ScrollView>
-            </View>
-            <View style={[styles.footer, styles.justifyContentCenter]}>
-              <View style={[styles.buttonsContainer, styles.justifyContentCenter]}>
-                <View style={[styles.buttonContainer]}>
-                  {swiperCurrentIndex > 0 && (
-                    <Button
-                      title={Labels.buttons.back}
-                      rounded={false}
-                      disabled={false}
-                      icon={<Icomoon
-                        name={IcomoonIcons.retour}
-                        size={14}
-                        color={Colors.primaryBlue} />}
-                      action={() => {
-                        swiperRef.current?.scrollToIndex({
-                          index: swiperCurrentIndex - 1
-                        });
-                      } } />
-                  )}
-                </View>
-                <View style={[styles.buttonContainer]}>
-                  {questionsAndAnswers[swiperCurrentIndex].isAnswered && swiperCurrentIndex === questionsAndAnswers.length - 1 ? (
-                    <View style={[styles.justifyContentCenter]}>
-                      <Button
-                        title={Labels.buttons.validate}
-                        rounded={true}
-                        disabled={false}
-                        action={() => setDisplayResult(true)} />
-                    </View>
-                  ) : questionsAndAnswers[swiperCurrentIndex].isAnswered && (
-                    <Button
-                      title={Labels.buttons.next}
-                      rounded={false}
-                      disabled={false}
-                      icon={<Icomoon
-                        name={IcomoonIcons.suivant}
-                        size={14}
-                        color={Colors.primaryBlue} />}
-                      action={() => {
-                        swiperRef.current?.scrollToIndex({
-                          index: swiperCurrentIndex + 1
-                        });
-                      } } />
-                  )}
-                </View>
-              </View>
-            </View></>
+          </View>
+          <View style={styles.mainView}>
+            <ScrollView>
+              <SwiperFlatList
+                ref={swiperRef}
+                onChangeIndex={({ index }) => {
+                  setSwiperCurrentIndex(index);
+                }}
+                autoplay={false}
+                showPagination
+                disableGesture
+                paginationDefaultColor="lightgray"
+                paginationActiveColor={Colors.secondaryGreen}
+                paginationStyleItem={styles.swipePaginationItem}
+              >
+                {questionsAndAnswers.map((questionView, questionIndex) => {
+                  return (
+                    <EpdsQuestion
+                      questionAndAnswers={questionView}
+                      questionIndex={questionIndex}
+                      updatePressedAnswer={updatePressedAnswer}
+                    />
+                  );
+                })}
+              </SwiperFlatList>
+            </ScrollView>
+          </View>
+          <EpdsFooter
+            swiperCurrentIndex={swiperCurrentIndex}
+            swiperRef={swiperRef}
+            showValidateButton={showValidateButton}
+            questionIsAnswered={questionIsAnswered}
+            setDisplayResult={setDisplayResult}
+          />
+        </>
       ) : (
         <View>
-          <CommonText style={[styles.title]}>{Labels.epdsSurvey.title}</CommonText>
-          <CommonText style={[styles.description]}>{Labels.epdsSurvey.description}</CommonText>
+          <CommonText style={styles.title}>
+            {Labels.epdsSurvey.title}
+          </CommonText>
+          <CommonText style={styles.description}>
+            {Labels.epdsSurvey.description}
+          </CommonText>
           <CommonText style={[styles.description]}>Résultat</CommonText>
           <Button
-                      title={Labels.buttons.back}
-                      rounded={false}
-                      disabled={false}
-                      icon={<Icomoon
-                        name={IcomoonIcons.retour}
-                        size={14}
-                        color={Colors.primaryBlue} />}
-                        action={() => setDisplayResult(false)} />
+            title={Labels.buttons.back}
+            rounded={false}
+            disabled={false}
+            icon={
+              <Icomoon
+                name={IcomoonIcons.retour}
+                size={14}
+                color={Colors.primaryBlue}
+              />
+            }
+            action={() => setDisplayResult(false)}
+          />
         </View>
       )}
     </View>
   );
 };
 
-const width = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   appName: {
     color: Colors.primaryBlueDark,
     fontSize: 25,
     fontWeight: FontWeight.bold
-  },
-  buttonContainer: {
-    flex: 1
-  },
-  buttonsContainer: {
-    flexDirection: "row"
   },
   description: {
     color: Colors.commonText,
@@ -238,14 +244,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column"
   },
-  footer: {
-    flex: 1,
-    paddingVertical: 10
-  },
-  justifyContentCenter: {
-    alignItems: "center",
-    justifyContent: "center"
-  },
   mainContainer: {
     flex: 1,
     paddingTop: 30
@@ -257,15 +255,6 @@ const styles = StyleSheet.create({
     height: 5,
     marginHorizontal: 8,
     width: 32
-  },
-  swipeView: {
-    width
-  },
-  swipeViewMargin: {
-    margin: "10%"
-  },
-  textAlignCenter: {
-    textAlign: "center"
   },
   title: {
     color: Colors.primaryBlueDark,

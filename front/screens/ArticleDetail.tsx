@@ -15,10 +15,11 @@ import TextHtml from "../components/article/TextHtml";
 import Thematics from "../components/article/Thematics";
 import Title from "../components/article/Title";
 import BackButton from "../components/BackButton";
-import { CommonText } from "../components/StyledText";
+import { CommonText, SecondaryText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
+import { FontWeight } from "../constants/Layout";
 import type {
   Article,
   ArticleInShortItem,
@@ -111,7 +112,7 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
               }}
             />
           </View>
-          <CommonText style={[styles.title]}>{screenTitle}</CommonText>
+          <SecondaryText style={[styles.title]}>{screenTitle}</SecondaryText>
           <CommonText style={[styles.description]}>{description}</CommonText>
         </View>
         <View>
@@ -136,6 +137,7 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   articleDetails: {
     paddingHorizontal: 15,
+    paddingTop: 10,
   },
   description: {
     color: Colors.commonText,
@@ -149,9 +151,9 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   title: {
-    color: Colors.primaryBlue,
-    fontSize: 14,
-    fontWeight: "bold",
+    color: Colors.primaryBlueDark,
+    fontSize: 18,
+    fontWeight: FontWeight.black,
     marginVertical: 5,
     textTransform: "uppercase",
   },
