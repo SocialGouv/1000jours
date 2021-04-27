@@ -3,7 +3,7 @@ services:
   postgres:
     image: postgres:13
     volumes:
-    - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: 1000jours
       POSTGRES_USER: 1000jours
@@ -20,6 +20,7 @@ services:
       DATABASE_PASSWORD: milleetunjoursdebebe
       JWT_SECRET: jwtsupersecretachanger
       ADMIN_JWT_SECRET: jwtadminachangeraussi
+      BACKOFFICE_URL: http://127.0.0.1:1337
     restart: always
     volumes:
       - ./strapi:/srv/app
