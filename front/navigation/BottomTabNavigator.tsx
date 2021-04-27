@@ -7,6 +7,7 @@ import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
 import ArticleDetail from "../screens/ArticleDetail";
+import EpdsSurveyScreen from "../screens/EpdsSurveyScreen";
 import ListArticles from "../screens/ListArticles";
 import TabAroundMeScreen from "../screens/TabAroundMeScreen";
 import TabCalendarScreen from "../screens/TabCalendarScreen";
@@ -111,6 +112,7 @@ const TabHomeNavigator: FC = () => (
     />
     <TabHomeStack.Screen name="listArticles" component={ListArticles} />
     <TabHomeStack.Screen name="article" component={ArticleDetail} />
+    <TabHomeStack.Screen name="epdsSurvey" component={EpdsSurveyScreen} />
   </TabHomeStack.Navigator>
 );
 

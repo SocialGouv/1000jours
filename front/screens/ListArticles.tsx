@@ -52,7 +52,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
   const articles = (data as { etape: { articles: Article[] } }).etape.articles;
 
   const navigateToSurvey = () => {
-    console.log("navigateToSurvey");
+    navigation.navigate("epdsSurvey");
   };
 
   return (
