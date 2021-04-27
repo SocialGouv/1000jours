@@ -132,6 +132,8 @@ spec:
             - configMapRef:
                 name: strapi-configmap
           env:
+            - name: BACKOFFICE_URL
+              value: https://backoffice-les1000jours.fabrique.social.gouv.fr
             - name: DATABASE_CLIENT
               value: postgres
             - name: DATABASE_NAME

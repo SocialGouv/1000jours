@@ -191,6 +191,9 @@ spec:
             - configMapRef:
                 name: strapi-configmap
           env:
+            - name: BACKOFFICE_URL
+              value: >-
+                https://backoffice-chore-d-u8fps8-les1000jours.dev2.fabrique.social.gouv.fr
             - name: DATABASE_CLIENT
               value: postgres
             - name: DATABASE_NAME
