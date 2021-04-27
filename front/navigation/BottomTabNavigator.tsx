@@ -25,14 +25,15 @@ import type {
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 const BottomTabNavigator: FC = () => {
+  const iconSize = 22;
   const tabItems: TabItem[] = [
     {
       component: TabHomeNavigator,
-      icon: (
+      getIcon: (tintColor) => (
         <Icomoon
           name={IcomoonIcons.accueil}
-          color={Colors.primaryBlue}
-          size={30}
+          color={tintColor}
+          size={iconSize}
         />
       ),
       name: "tabHome",
@@ -40,11 +41,11 @@ const BottomTabNavigator: FC = () => {
     },
     {
       component: TabCalendarNavigator,
-      icon: (
+      getIcon: (tintColor) => (
         <Icomoon
           name={IcomoonIcons.calendrier}
-          color={Colors.primaryBlue}
-          size={30}
+          color={tintColor}
+          size={iconSize}
         />
       ),
       name: "tabCalendar",
@@ -52,11 +53,11 @@ const BottomTabNavigator: FC = () => {
     },
     {
       component: TabFavoritesNavigator,
-      icon: (
+      getIcon: (tintColor) => (
         <Icomoon
           name={IcomoonIcons.favoris}
-          color={Colors.primaryBlue}
-          size={30}
+          color={tintColor}
+          size={iconSize}
         />
       ),
       name: "tabFavorites",
@@ -64,11 +65,11 @@ const BottomTabNavigator: FC = () => {
     },
     {
       component: TabAroundMeNavigator,
-      icon: (
+      getIcon: (tintColor) => (
         <Icomoon
           name={IcomoonIcons.autourDeMoi}
-          color={Colors.primaryBlue}
-          size={30}
+          color={tintColor}
+          size={iconSize}
         />
       ),
       name: "tabAroundMe",
@@ -81,7 +82,7 @@ const BottomTabNavigator: FC = () => {
       initialRouteName="tabHome"
       tabBarOptions={{
         activeTintColor: Colors.primaryBlue,
-        inactiveTintColor: Colors.disabled,
+        inactiveTintColor: Colors.navigation,
       }}
     >
       {tabItems.map((tabItem, index) => (
@@ -90,7 +91,7 @@ const BottomTabNavigator: FC = () => {
           name={tabItem.name}
           component={tabItem.component}
           options={{
-            tabBarIcon: () => tabItem.icon,
+            tabBarIcon: ({ color }) => tabItem.getIcon(color),
             title: tabItem.title,
           }}
         />
