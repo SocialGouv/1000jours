@@ -14,13 +14,17 @@ interface Props {
 
 const EpdsResult: React.FC<Props> = ({ result, backToSurvey }) => {
 
+  result = 15;
   const labelsResultats = Labels.epdsSurvey.resultats;
   const labels = result <= 9 ? labelsResultats.moinsDeNeuf : result <= 12 ? labelsResultats.entreDixEtDouze : labelsResultats.plusDeTreize;
+  const style = result <= 9 ? styles.green : result <= 12 ? styles.yellow : styles.red;
+  const stateOfMind = labels.stateOfMind;
 
   return (
     <View>
       <CommonText style={styles.title}>{Labels.epdsSurvey.title}</CommonText>
-      <CommonText style={[styles.description]}>{labelsResultats.introduction}{result} {labels.intervalle}.</CommonText>
+      <CommonText style={[styles.title, style]}>{stateOfMind}</CommonText>
+      <CommonText style={[styles.description, styles.fontBold]}>{labelsResultats.introduction}{result} {labels.intervalle}.</CommonText>
       <CommonText style={[styles.description]}>{labels.explication}</CommonText>
       <BackButton action={backToSurvey} />
     </View>
@@ -43,7 +47,20 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     paddingHorizontal: 15,
     paddingTop: 10,
-  }
+  },
+  fontBold: {
+    fontSize: 13,
+    fontWeight: FontWeight.bold,
+  },
+  red: {
+    color: Colors.secondaryRedLight,
+  },
+  yellow: {
+    color: Colors.primaryYellowDark,
+  },
+  green: {
+    color: Colors.secondaryGreenDark,
+  },
 });
 
 export default EpdsResult;
