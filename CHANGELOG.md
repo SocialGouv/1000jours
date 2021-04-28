@@ -1,3 +1,10 @@
+## [1.17.2](https://github.com/SocialGouv/1000jours/compare/v1.17.1...v1.17.2) (2021-04-28)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'affichage des images (Liste Article, Article) ([#167](https://github.com/SocialGouv/1000jours/issues/167)) ([406f005](https://github.com/SocialGouv/1000jours/commit/406f00505feb139e842dc279457f202fce756971))
+
 ## [1.17.1](https://github.com/SocialGouv/1000jours/compare/v1.17.0...v1.17.1) (2021-04-28)
 
 
