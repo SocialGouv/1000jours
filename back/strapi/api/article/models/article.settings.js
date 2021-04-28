@@ -50,6 +50,7 @@ module.exports = {
       type: "string",
     },
     resume: {
+      required: true,
       type: "text",
     },
     texte_1: {
@@ -70,10 +71,11 @@ module.exports = {
       via: "articles",
     },
     titre: {
+      required: true,
       type: "string",
     },
     visuel: {
-      allowedTypes: ["images", "files", "videos"],
+      allowedTypes: ["images"],
       model: "file",
       plugin: "upload",
       required: false,
