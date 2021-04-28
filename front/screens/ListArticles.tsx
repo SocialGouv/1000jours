@@ -98,7 +98,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
               source={{
                 uri: article.visuel?.url,
               }}
-              style={styles.articleImage}
+              containerStyle={styles.articleImage}
             />
             <ListItem.Content style={styles.articleContent}>
               <ListItem.Title style={styles.articleTitleContainer}>

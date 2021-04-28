@@ -13,7 +13,7 @@ const ImageBanner: FC<Props> = ({ imageUrl }) => {
       source={{
         uri: imageUrl,
       }}
-      style={[styles.articleImage]}
+      containerStyle={[styles.articleImage]}
     />
   );
 };
