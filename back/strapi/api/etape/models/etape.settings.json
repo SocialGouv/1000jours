@@ -12,7 +12,8 @@
   },
   "attributes": {
     "nom": {
-      "type": "string"
+      "type": "string",
+      "unique": true
     },
     "thematiques": {
       "collection": "thematique",

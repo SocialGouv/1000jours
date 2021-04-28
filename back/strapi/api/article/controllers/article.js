@@ -22,4 +22,7 @@ const findOne = async (ctx) => {
   return ArticleService.completeUrls(article);
 };
 
-module.exports = { find, findOne };
+module.exports = {
+  find,
+  findOne,
+};

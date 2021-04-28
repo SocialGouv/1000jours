@@ -78,7 +78,7 @@ module.exports = {
       allowedTypes: ["images"],
       model: "file",
       plugin: "upload",
-      required: false,
+      required: true,
       via: "related",
     },
   },

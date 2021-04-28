@@ -2,22 +2,16 @@
 
 const { attributes } = require("../models/article.settings");
 
-const completeUrls = async (article) => {
+const completeUrls = (article) => {
   const serverUrl = strapi.config.get("server.url");
 
-  return Object.keys(attributes).reduce((article, key) => {
-    if (attributes[key].type === "richtext") {
-      article[key] = article[key].replace(/\/uploads/g, `${serverUrl}/uploads`);
-    } else if (
-      attributes[key].model === "file" &&
-      article[key] &&
-      article[key].url
-    ) {
-      article[key].url = `${serverUrl}${article[key].url}`;
-    }
-
-    return article;
-  }, article);
+  return JSON.parse(
+    JSON.stringify(article, (key, value) =>
+      typeof value === "string"
+        ? value.replace(/\/uploads/g, `${serverUrl}/uploads`)
+        : value
+    )
+  );
 };
 
 module.exports = { completeUrls };
