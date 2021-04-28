@@ -1,3 +1,10 @@
+## [1.17.1](https://github.com/SocialGouv/1000jours/compare/v1.17.0...v1.17.1) (2021-04-28)
+
+
+### Bug Fixes
+
+* **article:** complète les urls en liens absolus ([#164](https://github.com/SocialGouv/1000jours/issues/164)) ([98a82a7](https://github.com/SocialGouv/1000jours/commit/98a82a7b0e919e88b271152cbc21b1f73dd9b23c))
+
 # [1.17.0](https://github.com/SocialGouv/1000jours/compare/v1.16.0...v1.17.0) (2021-04-27)
 
 
