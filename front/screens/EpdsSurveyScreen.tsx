@@ -2,12 +2,10 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 
-import Button from "../components/form/Button";
-import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
@@ -43,167 +41,75 @@ export interface Answer {
 }
 
 const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
-  // const QUESTIONNAIRE_EPDS = gql`
-  //   query QuestionsReponses {
-  //     questionnaireEpds {
-  //       ordre
-  //       libelle
-  //       reponse_1_libelle
-  //       reponse_1_points
-  //       reponse_2_libelle
-  //       reponse_2_points
-  //       reponse_3_libelle
-  //       reponse_3_points
-  //       reponse_4_libelle
-  //       reponse_4_points
-  //     }
-  //   }
-  // `;
-  // const { loading, error, data } = useQuery(QUESTIONNAIRE_EPDS, {
-  //   fetchPolicy: "no-cache",
-  // });
-
-  // if (loading) { return <ActivityIndicator size="large" />};
-  // if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
-
-  // const questions = (data as { questionnaireEpds: QuestionnaireEpds[] });
-
-  const constQuestionsAndAnswers: QuestionAndAnswers[] = [
-    {
-      question: Labels.epdsSurvey.questionsAnswers[0].question,
-      answers: [
-        {
-          id: 0,
-          isChecked: false,
-          label: Labels.epdsSurvey.questionsAnswers[0].answer1,
-          points: 0
-        },
-        {
-          id: 1,
-          isChecked: false,
-          label: Labels.epdsSurvey.questionsAnswers[0].answer2,
-          points: 1
-        },
-        {
-          id: 2,
-          isChecked: false,
-          label: Labels.epdsSurvey.questionsAnswers[0].answer3,
-          points: 2
-        },
-        {
-          id: 3,
-          isChecked: false,
-          label: Labels.epdsSurvey.questionsAnswers[0].answer4,
-          points: 3
-        }
-      ]
-    },
-    {
-      question: Labels.epdsSurvey.questionsAnswers[1].question,
-      answers: [
-        {
-          id: 0,
-          isChecked: false,
-          label: Labels.epdsSurvey.questionsAnswers[1].answer1,
-          points: 0
-        },
-        {
-          id: 1,
-          isChecked: false,
-          label: Labels.epdsSurvey.questionsAnswers[1].answer2,
-          points: 1
-        },
-        {
-          id: 2,
-          isChecked: false,
-          label: Labels.epdsSurvey.questionsAnswers[1].answer3,
-          points: 2
-        },
-        {
-          id: 3,
-          isChecked: false,
-          label: Labels.epdsSurvey.questionsAnswers[1].answer4,
-          points: 3
-        }
-      ]
-    },
-    {
-      question: Labels.epdsSurvey.questionsAnswers[2].question,
-      answers: [
-        {
-          id: 0,
-          isChecked: false,
-          label: Labels.epdsSurvey.questionsAnswers[2].answer1,
-          points: 3
-        },
-        {
-          id: 1,
-          isChecked: false,
-          label: Labels.epdsSurvey.questionsAnswers[2].answer2,
-          points: 2
-        },
-        {
-          id: 2,
-          isChecked: false,
-          label: Labels.epdsSurvey.questionsAnswers[2].answer3,
-          points: 1
-        },
-        {
-          id: 3,
-          isChecked: false,
-          label: Labels.epdsSurvey.questionsAnswers[2].answer4,
-          points: 0
-        }
-      ]
-    }
-  ];
-
-  // if (questions) {
-  //   questions.questionnaireEpds.forEach((element) => {
-  //     const answers = [
-  //       {
-  //         id: 0,
-  //         isChecked: false,
-  //         label: element.reponse_1_libelle,
-  //         points: element.reponse_1_points,
-  //       },
-  //       {
-  //         id: 1,
-  //         isChecked: false,
-  //         label: element.reponse_2_libelle,
-  //         points: element.reponse_2_points,
-  //       },
-  //       {
-  //         id: 2,
-  //         isChecked: false,
-  //         label: element.reponse_3_libelle,
-  //         points: element.reponse_3_points,
-  //       },
-  //       {
-  //         id: 3,
-  //         isChecked: false,
-  //         label: element.reponse_4_libelle,
-  //         points: element.reponse_4_points,
-  //       }
-  //     ];
-
-  //     const questionAndAnswers: QuestionAndAnswers = {
-  //       question: element.libelle,
-  //       answers,
-  //       isAnswered: false,
-  //     };
-
-  //     constQuestionsAndAnswers.push(questionAndAnswers);
-  //   });
-  // }
-
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const swiperRef = useRef<SwiperFlatList>(null);
-  const [displayResult, setDisplayResult] = useState(false);
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
     QuestionAndAnswers[]
-  >(constQuestionsAndAnswers);
+  >([]);
+  const [displayResult, setDisplayResult] = useState(false);
   const [score, setScore] = useState(0);
+
+  const QUESTIONNAIRE_EPDS = gql`
+    query QuestionsReponses {
+      questionnaireEpds {
+        ordre
+        libelle
+        reponse_1_libelle
+        reponse_1_points
+        reponse_2_libelle
+        reponse_2_points
+        reponse_3_libelle
+        reponse_3_points
+        reponse_4_libelle
+        reponse_4_points
+      }
+    }
+  `;
+  const { loading, error, data } = useQuery(QUESTIONNAIRE_EPDS, {
+    fetchPolicy: "no-cache"
+  });
+
+  if (loading) return <ActivityIndicator size="large" />;
+  if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
+
+  useEffect(() => {
+    const fetchedData = data && (data as { questionnaireEpds: QuestionnaireEpds[] })
+      .questionnaireEpds;
+    const tempQuestionsAndAnswers: QuestionAndAnswers[] =
+      fetchedData &&
+      fetchedData.map((element) => {
+        return {
+          question: element.libelle,
+          answers: [
+            {
+              id: 0,
+              label: element.reponse_1_libelle,
+              points: element.reponse_1_points,
+              isChecked: false
+            },
+            {
+              id: 1,
+              label: element.reponse_2_libelle,
+              points: element.reponse_2_points,
+              isChecked: false
+            },
+            {
+              id: 2,
+              label: element.reponse_3_libelle,
+              points: element.reponse_3_points,
+              isChecked: false
+            },
+            {
+              id: 3,
+              label: element.reponse_4_libelle,
+              points: element.reponse_4_points,
+              isChecked: false
+            }
+          ]
+        };
+      });
+    setQuestionsAndAnswers(tempQuestionsAndAnswers);
+  }, [data]);
 
   const updatePressedAnswer = (selectedAnswer: Answer) => {
     setQuestionsAndAnswers(
@@ -232,19 +138,21 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
     );
   };
 
-  function getCurrentQuestionPoints(question: QuestionAndAnswers) {
+  const getCurrentQuestionPoints = (question: QuestionAndAnswers) => {
     const choosenAnswers = question.answers.filter(
       (answer) => answer.isChecked
     );
     if (choosenAnswers && choosenAnswers.length === 1) {
       return choosenAnswers[0].points;
     }
-  }
+  };
 
-  // const allIsCreated = questionsAndAnswers && swiperCurrentIndex;
-  const questionIsAnswered = questionsAndAnswers[swiperCurrentIndex].isAnswered;
+  const questionIsAnswered =
+    questionsAndAnswers[swiperCurrentIndex] != undefined &&
+    questionsAndAnswers[swiperCurrentIndex].isAnswered;
   const showValidateButton =
-    questionIsAnswered && swiperCurrentIndex === questionsAndAnswers.length - 1;
+    questionIsAnswered &&
+    swiperCurrentIndex === questionsAndAnswers.length - 1;
 
   return (
     <View style={[styles.mainContainer, styles.flexColumn]}>
