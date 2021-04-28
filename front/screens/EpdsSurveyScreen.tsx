@@ -17,6 +17,7 @@ import EpdsFooter from "../components/epdsSurvey/EpdsFooter";
 import { gql } from "@apollo/client/core";
 import { useQuery } from "@apollo/client";
 import EpdsResult from "../components/epdsSurvey/EpdsResult";
+import EpdsSurveyContent from "../components/epdsSurvey/EpdsSurveyContent";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -41,13 +42,13 @@ export interface Answer {
 }
 
 const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
-  const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
-  const swiperRef = useRef<SwiperFlatList>(null);
-  const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
-    QuestionAndAnswers[]
-  >([]);
-  const [displayResult, setDisplayResult] = useState(false);
-  const [score, setScore] = useState(0);
+  // const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
+  // const swiperRef = useRef<SwiperFlatList>(null);
+  // const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
+  //   QuestionAndAnswers[]
+  // >([]);
+  // const [displayResult, setDisplayResult] = useState(false);
+  // const [score, setScore] = useState(0);
 
   const QUESTIONNAIRE_EPDS = gql`
     query QuestionsReponses {
@@ -72,10 +73,9 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
   if (loading) return <ActivityIndicator size="large" />;
   if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
 
-  useEffect(() => {
-    const fetchedData = data && (data as { questionnaireEpds: QuestionnaireEpds[] })
-      .questionnaireEpds;
-    const tempQuestionsAndAnswers: QuestionAndAnswers[] =
+  const fetchedData = (data as { questionnaireEpds: QuestionnaireEpds[] })
+       .questionnaireEpds;
+  const tempQuestionsAndAnswers: QuestionAndAnswers[] =
       fetchedData &&
       fetchedData.map((element) => {
         return {
@@ -108,108 +108,146 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
           ]
         };
       });
-    setQuestionsAndAnswers(tempQuestionsAndAnswers);
-  }, [data]);
 
-  const updatePressedAnswer = (selectedAnswer: Answer) => {
-    setQuestionsAndAnswers(
-      questionsAndAnswers.map((question, questionIndex) => {
-        const questionIsCurrent = questionIndex === swiperCurrentIndex;
-        const answers = questionIsCurrent
-          ? question.answers.map((answer) => {
-              if (answer.id === selectedAnswer.id) {
-                question.isAnswered = true;
-                const currentQuestionPoints = getCurrentQuestionPoints(
-                  question
-                );
-                const newScore = currentQuestionPoints
-                  ? score - currentQuestionPoints + selectedAnswer.points
-                  : score + selectedAnswer.points;
-                setScore(newScore);
-                return { ...answer, isChecked: !selectedAnswer.isChecked };
-              } else {
-                return { ...answer, isChecked: false };
-              }
-            })
-          : question.answers;
+  // useEffect(() => {
+  //   const fetchedData = data && (data as { questionnaireEpds: QuestionnaireEpds[] })
+  //     .questionnaireEpds;
+  //   const tempQuestionsAndAnswers: QuestionAndAnswers[] =
+  //     fetchedData &&
+  //     fetchedData.map((element) => {
+  //       return {
+  //         question: element.libelle,
+  //         answers: [
+  //           {
+  //             id: 0,
+  //             label: element.reponse_1_libelle,
+  //             points: element.reponse_1_points,
+  //             isChecked: false
+  //           },
+  //           {
+  //             id: 1,
+  //             label: element.reponse_2_libelle,
+  //             points: element.reponse_2_points,
+  //             isChecked: false
+  //           },
+  //           {
+  //             id: 2,
+  //             label: element.reponse_3_libelle,
+  //             points: element.reponse_3_points,
+  //             isChecked: false
+  //           },
+  //           {
+  //             id: 3,
+  //             label: element.reponse_4_libelle,
+  //             points: element.reponse_4_points,
+  //             isChecked: false
+  //           }
+  //         ]
+  //       };
+  //     });
+  //   setQuestionsAndAnswers(tempQuestionsAndAnswers);
+  // }, [data]);
 
-        return { ...question, answers };
-      })
-    );
-  };
+  // const updatePressedAnswer = (selectedAnswer: Answer) => {
+  //   setQuestionsAndAnswers(
+  //     questionsAndAnswers.map((question, questionIndex) => {
+  //       const questionIsCurrent = questionIndex === swiperCurrentIndex;
+  //       const answers = questionIsCurrent
+  //         ? question.answers.map((answer) => {
+  //             if (answer.id === selectedAnswer.id) {
+  //               question.isAnswered = true;
+  //               const currentQuestionPoints = getCurrentQuestionPoints(
+  //                 question
+  //               );
+  //               const newScore = currentQuestionPoints
+  //                 ? score - currentQuestionPoints + selectedAnswer.points
+  //                 : score + selectedAnswer.points;
+  //               setScore(newScore);
+  //               return { ...answer, isChecked: !selectedAnswer.isChecked };
+  //             } else {
+  //               return { ...answer, isChecked: false };
+  //             }
+  //           })
+  //         : question.answers;
 
-  const getCurrentQuestionPoints = (question: QuestionAndAnswers) => {
-    const choosenAnswers = question.answers.filter(
-      (answer) => answer.isChecked
-    );
-    if (choosenAnswers && choosenAnswers.length === 1) {
-      return choosenAnswers[0].points;
-    }
-  };
+  //       return { ...question, answers };
+  //     })
+  //   );
+  // };
 
-  const questionIsAnswered =
-    questionsAndAnswers[swiperCurrentIndex] != undefined &&
-    questionsAndAnswers[swiperCurrentIndex].isAnswered;
-  const showValidateButton =
-    questionIsAnswered &&
-    swiperCurrentIndex === questionsAndAnswers.length - 1;
+  // const getCurrentQuestionPoints = (question: QuestionAndAnswers) => {
+  //   const choosenAnswers = question.answers.filter(
+  //     (answer) => answer.isChecked
+  //   );
+  //   if (choosenAnswers && choosenAnswers.length === 1) {
+  //     return choosenAnswers[0].points;
+  //   }
+  // };
+
+  // const questionIsAnswered =
+  //   questionsAndAnswers[swiperCurrentIndex] != undefined &&
+  //   questionsAndAnswers[swiperCurrentIndex].isAnswered;
+  // const showValidateButton =
+  //   questionIsAnswered &&
+  //   swiperCurrentIndex === questionsAndAnswers.length - 1;
 
   return (
-    <View style={[styles.mainContainer, styles.flexColumn]}>
-      {!displayResult ? (
-        <>
-          <View>
-            <CommonText style={[styles.title]}>
-              {Labels.epdsSurvey.title}
-            </CommonText>
-            <CommonText style={styles.description}>
-              {Labels.epdsSurvey.description}
-            </CommonText>
-            <CommonText style={styles.description}>
-              {Labels.epdsSurvey.instruction}
-            </CommonText>
-          </View>
-          <View style={styles.mainView}>
-            <ScrollView>
-              <SwiperFlatList
-                ref={swiperRef}
-                onChangeIndex={({ index }) => {
-                  setSwiperCurrentIndex(index);
-                }}
-                autoplay={false}
-                showPagination
-                disableGesture
-                paginationDefaultColor="lightgray"
-                paginationActiveColor={Colors.secondaryGreen}
-                paginationStyleItem={styles.swipePaginationItem}
-              >
-                {questionsAndAnswers.map((questionView, questionIndex) => {
-                  return (
-                    <EpdsQuestion
-                      questionAndAnswers={questionView}
-                      questionIndex={questionIndex}
-                      updatePressedAnswer={updatePressedAnswer}
-                    />
-                  );
-                })}
-              </SwiperFlatList>
-            </ScrollView>
-          </View>
-          <EpdsFooter
-            swiperCurrentIndex={swiperCurrentIndex}
-            swiperRef={swiperRef}
-            showValidateButton={showValidateButton}
-            questionIsAnswered={questionIsAnswered}
-            setDisplayResult={setDisplayResult}
-          />
-        </>
-      ) : (
-        <EpdsResult
-          result={score}
-          backToSurvey={() => setDisplayResult(false)}
-        />
-      )}
-    </View>
+    <EpdsSurveyContent questionAndAnswers={tempQuestionsAndAnswers}/>
+    // <View style={[styles.mainContainer, styles.flexColumn]}>
+    //   {!displayResult ? (
+    //     <>
+    //       <View>
+    //         <CommonText style={[styles.title]}>
+    //           {Labels.epdsSurvey.title}
+    //         </CommonText>
+    //         <CommonText style={styles.description}>
+    //           {Labels.epdsSurvey.description}
+    //         </CommonText>
+    //         <CommonText style={styles.description}>
+    //           {Labels.epdsSurvey.instruction}
+    //         </CommonText>
+    //       </View>
+    //       <View style={styles.mainView}>
+    //         <ScrollView>
+    //           <SwiperFlatList
+    //             ref={swiperRef}
+    //             onChangeIndex={({ index }) => {
+    //               setSwiperCurrentIndex(index);
+    //             }}
+    //             autoplay={false}
+    //             showPagination
+    //             disableGesture
+    //             paginationDefaultColor="lightgray"
+    //             paginationActiveColor={Colors.secondaryGreen}
+    //             paginationStyleItem={styles.swipePaginationItem}
+    //           >
+    //             {questionsAndAnswers.map((questionView, questionIndex) => {
+    //               return (
+    //                 <EpdsQuestion
+    //                   questionAndAnswers={questionView}
+    //                   questionIndex={questionIndex}
+    //                   updatePressedAnswer={updatePressedAnswer}
+    //                 />
+    //               );
+    //             })}
+    //           </SwiperFlatList>
+    //         </ScrollView>
+    //       </View>
+    //       <EpdsFooter
+    //         swiperCurrentIndex={swiperCurrentIndex}
+    //         swiperRef={swiperRef}
+    //         showValidateButton={showValidateButton}
+    //         questionIsAnswered={questionIsAnswered}
+    //         setDisplayResult={setDisplayResult}
+    //       />
+    //     </>
+    //   ) : (
+    //     <EpdsResult
+    //       result={score}
+    //       backToSurvey={() => setDisplayResult(false)}
+    //     />
+    //   )}
+    // </View>
   );
 };
 
