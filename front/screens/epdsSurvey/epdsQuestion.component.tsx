@@ -9,22 +9,19 @@ import Checkbox from "../../components/form/Checkbox";
 
 interface Props {
   questionAndAnswers: QuestionAndAnswers;
-  questionIndex: number;
   updatePressedAnswer: (answer: Answer) => void;
 }
 
 const EpdsQuestion: React.FC<Props> = ({
   questionAndAnswers,
-  questionIndex,
   updatePressedAnswer
 }) => {
   return (
     <View
       style={[styles.swipeView, styles.justifyContentCenter]}
-      key={questionIndex}
     >
       <View style={styles.swipeViewMargin}>
-        <CommonText style={[styles.title, styles.textAlignCenter]}>
+        <CommonText style={[styles.title]}>
           {questionAndAnswers.question}
         </CommonText>
         {questionAndAnswers.answers.map((answer, answerIndex) => {

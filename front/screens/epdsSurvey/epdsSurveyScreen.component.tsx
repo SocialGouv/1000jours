@@ -34,7 +34,7 @@ export interface Answer {
   isChecked: boolean;
 }
 
-const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
+const EpdsSurveyScreen: FC<Props> = ({}) => {
   const QUESTIONNAIRE_EPDS = gql`
     query QuestionsReponses {
       questionnaireEpds {
@@ -60,8 +60,7 @@ const EpdsSurveyScreen: FC<Props> = ({ navigation }) => {
 
   const fetchedData = (data as { questionnaireEpds: QuestionnaireEpdsFromDB[] })
        .questionnaireEpds;
-  const tempQuestionsAndAnswers: QuestionAndAnswers[] =
-      fetchedData && EpdsSurveyUtils.convertToQuestionsAndAnswers(fetchedData);
+  const tempQuestionsAndAnswers: QuestionAndAnswers[] = EpdsSurveyUtils.convertToQuestionsAndAnswers(fetchedData);
 
   return (
     <EpdsSurveyContent questionAndAnswers={tempQuestionsAndAnswers}/>

@@ -20,10 +20,7 @@ const EpdsResult: React.FC<Props> = ({ result, backToSurvey }) => {
   return (
     <View>
       <CommonText style={styles.title}>{Labels.epdsSurvey.title}</CommonText>
-      <CommonText style={styles.description}>
-        {Labels.epdsSurvey.description}
-      </CommonText>
-      <CommonText style={[styles.description]}>{labelsResultats.introduction}{result} {labels.intervalle}</CommonText>
+      <CommonText style={[styles.description]}>{labelsResultats.introduction}{result} {labels.intervalle}.</CommonText>
       <CommonText style={[styles.description]}>{labels.explication}</CommonText>
       <BackButton action={backToSurvey} />
     </View>
@@ -44,7 +41,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: FontWeight.medium,
     lineHeight: 20,
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    paddingTop: 10,
   }
 });
 

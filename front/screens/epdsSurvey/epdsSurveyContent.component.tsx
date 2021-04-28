@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dimensions, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import Colors from "../../constants/Colors";
 import { Answer, QuestionAndAnswers } from "./epdsSurveyScreen.component";
 import EpdsFooter from "./epdsFooter.component";
@@ -76,9 +76,6 @@ const EpdsSurveyContent: React.FC<Props> = ({ questionAndAnswers }) => {
               {Labels.epdsSurvey.title}
             </CommonText>
             <CommonText style={styles.description}>
-              {Labels.epdsSurvey.description}
-            </CommonText>
-            <CommonText style={styles.description}>
               {Labels.epdsSurvey.instruction}
             </CommonText>
           </View>
@@ -98,11 +95,12 @@ const EpdsSurveyContent: React.FC<Props> = ({ questionAndAnswers }) => {
               >
                 {questionsAndAnswers.map((questionView, questionIndex) => {
                   return (
-                    <EpdsQuestion
-                      questionAndAnswers={questionView}
-                      questionIndex={questionIndex}
-                      updatePressedAnswer={updatePressedAnswer}
-                    />
+                    <View key={questionIndex}>
+                      <EpdsQuestion
+                        questionAndAnswers={questionView}
+                        updatePressedAnswer={updatePressedAnswer}
+                      />
+                    </View>
                   );
                 })}
               </SwiperFlatList>
@@ -126,7 +124,6 @@ const EpdsSurveyContent: React.FC<Props> = ({ questionAndAnswers }) => {
   );
 };
 
-const width = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   title: {
     color: Colors.primaryBlueDark,
@@ -149,15 +146,15 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     paddingTop: 30
-  }
-  ,mainView: {
+  },
+  mainView: {
     flex: 8
   },
   swipePaginationItem: {
     height: 5,
     marginHorizontal: 8,
     width: 32
-  },
+  }
 });
 
 export default EpdsSurveyContent;
