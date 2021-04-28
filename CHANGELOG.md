@@ -1,3 +1,10 @@
+## [1.17.3](https://github.com/SocialGouv/1000jours/compare/v1.17.2...v1.17.3) (2021-04-28)
+
+
+### Bug Fixes
+
+* **articles:** corrige le remplacement des URLs dans l'API ([#168](https://github.com/SocialGouv/1000jours/issues/168)) ([26139f8](https://github.com/SocialGouv/1000jours/commit/26139f88c3b8f35af2fe4503d66abcb09a78ec64))
+
 ## [1.17.2](https://github.com/SocialGouv/1000jours/compare/v1.17.1...v1.17.2) (2021-04-28)
 
 
