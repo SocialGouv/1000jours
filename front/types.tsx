@@ -105,7 +105,7 @@ export type ArticleLink = {
   url: string;
 };
 
-export type QuestionnaireEpds = {
+export type QuestionnaireEpdsFromDB = {
   id: number;
   locale: string;
   ordre: number;

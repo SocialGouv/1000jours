@@ -1,12 +1,11 @@
 import * as React from "react";
 import { Dimensions, StyleSheet } from "react-native";
-import { useRef } from "react";
 import Colors from "../../constants/Colors";
-import BackButton from "../BackButton";
-import { View } from "../Themed";
-import Icomoon, { IcomoonIcons } from "../Icomoon";
+import BackButton from "../../components/BackButton";
+import { View } from "../../components/Themed";
+import Icomoon, { IcomoonIcons } from "../../components/Icomoon";
 import Labels from "../../constants/Labels";
-import Button from "../form/Button";
+import Button from "../../components/form/Button";
 import SwiperFlatListRefProps from "react-native-swiper-flatlist";
 
 interface Props {

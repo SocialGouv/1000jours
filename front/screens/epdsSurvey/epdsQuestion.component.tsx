@@ -1,10 +1,11 @@
 import * as React from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import Colors from "../../constants/Colors";
-import { Answer, QuestionAndAnswers } from "../../screens/EpdsSurveyScreen";
-import Checkbox from "../form/Checkbox";
-import { CommonText } from "../StyledText";
-import { View } from "../Themed";
+import { Answer, QuestionAndAnswers } from "./epdsSurveyScreen.component";
+import { View } from "../../components/Themed";
+import { CommonText } from "../../components/StyledText";
+import Checkbox from "../../components/form/Checkbox";
+
 
 interface Props {
   questionAndAnswers: QuestionAndAnswers;

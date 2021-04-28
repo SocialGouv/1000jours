@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import Colors from "../../constants/Colors";
-import { View } from "../Themed";
 import Labels from "../../constants/Labels";
-import { CommonText } from "../StyledText";
 import { FontWeight } from "../../constants/Layout";
-import BackButton from "../BackButton";
+import BackButton from "../../components/BackButton";
+import { CommonText } from "../../components/StyledText";
+import { View } from "../../components/Themed";
 
 interface Props {
   result: number;

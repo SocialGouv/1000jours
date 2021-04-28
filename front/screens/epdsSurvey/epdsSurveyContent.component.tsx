@@ -1,16 +1,16 @@
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import Colors from "../../constants/Colors";
-import { Answer, QuestionAndAnswers } from "../../screens/EpdsSurveyScreen";
-import { CommonText } from "../StyledText";
-import { View } from "../Themed";
-import EpdsFooter from "./EpdsFooter";
-import EpdsResult from "./EpdsResult";
+import { Answer, QuestionAndAnswers } from "./epdsSurveyScreen.component";
+import EpdsFooter from "./epdsFooter.component";
+import EpdsResult from "./epdsResult.component";
 import { useRef, useState, useEffect } from "react";
 import Labels from "../../constants/Labels";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
-import EpdsQuestion from "./EpdsQuestion";
+import EpdsQuestion from "./epdsQuestion.component";
 import { FontWeight } from "../../constants/Layout";
+import { CommonText } from "../../components/StyledText";
+import { View } from "../../components/Themed";
 
 interface Props {
   questionAndAnswers: QuestionAndAnswers[];
