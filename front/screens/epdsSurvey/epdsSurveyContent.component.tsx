@@ -46,7 +46,6 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
       {!displayResult ? (
         <>
           <View>
-            <CommonText>{score}</CommonText>
             <CommonText style={[styles.title]}>
               {Labels.epdsSurvey.title}
             </CommonText>

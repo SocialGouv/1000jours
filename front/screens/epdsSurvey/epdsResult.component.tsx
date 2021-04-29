@@ -1,4 +1,4 @@
-import { FC } from "react";
+import * as React from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import Colors from "../../constants/Colors";
 import Labels from "../../constants/Labels";
@@ -11,7 +11,7 @@ interface Props {
   result: number;
 }
 
-const EpdsResult: FC<Props> = ({ result }) => {
+const EpdsResult: React.FC<Props> = ({ result }) => {
   const labelsResultats = Labels.epdsSurvey.resultats;
   const {
     stateOfMind,
