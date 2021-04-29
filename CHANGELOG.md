@@ -1,3 +1,10 @@
+## [1.18.1](https://github.com/SocialGouv/1000jours/compare/v1.18.0...v1.18.1) (2021-04-29)
+
+
+### Bug Fixes
+
+* **articles:** corrige le remplacement des URLs des articles dans les étapes pour l'API GraphQL ([#174](https://github.com/SocialGouv/1000jours/issues/174)) ([4856ed6](https://github.com/SocialGouv/1000jours/commit/4856ed65b9fbf9dc323077c3a40b79d498a03cc4))
+
 # [1.18.0](https://github.com/SocialGouv/1000jours/compare/v1.17.5...v1.18.0) (2021-04-29)
 
 
