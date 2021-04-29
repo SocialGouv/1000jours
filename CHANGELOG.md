@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/SocialGouv/1000jours/compare/v1.17.5...v1.18.0) (2021-04-29)
+
+
+### Features
+
+* **graphql:** active l'interface GraphQL en production ([#173](https://github.com/SocialGouv/1000jours/issues/173)) ([755f81e](https://github.com/SocialGouv/1000jours/commit/755f81e63310717ae6eafe7d4d89cf67e53a40c9))
+
 ## [1.17.5](https://github.com/SocialGouv/1000jours/compare/v1.17.4...v1.17.5) (2021-04-29)
 
 
