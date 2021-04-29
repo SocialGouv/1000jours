@@ -3,7 +3,8 @@ import Labels from "../constants/Labels";
 import {
   EpdsAnswer,
   EpdsQuestionAndAnswers,
-  QuestionnaireEpdsFromDB
+  QuestionnaireEpdsFromDB,
+  EpdsIconResult
 } from "../type";
 
 export const convertToQuestionsAndAnswers = (
@@ -92,18 +93,22 @@ export const getResultLabelAndStyle = (result: number) => {
 
   let label;
   let colorStyle;
+  let icone: EpdsIconResult;
   if (result <= 9) {
     label = labelsResultats.moinsDeNeuf;
     colorStyle = greenColor;
+    icone = 'BIEN';
   } else if (result <= 12) {
     label = labelsResultats.entreDixEtDouze;
     colorStyle = yellowColor;
+    icone = 'MOYEN';
   } else {
     label = labelsResultats.plusDeTreize;
     colorStyle = redColor;
+    icone = 'PAS_BIEN';
   }
 
   const stateOfMind = label.stateOfMind;
 
-  return { stateOfMind, label, colorStyle };
+  return { stateOfMind, label, colorStyle, icone };
 };

@@ -25,3 +25,5 @@ export type EpdsAnswer = {
   points: number;
   isChecked: boolean;
 }
+
+export type EpdsIconResult = 'BIEN' | 'MOYEN' | 'PAS_BIEN';
