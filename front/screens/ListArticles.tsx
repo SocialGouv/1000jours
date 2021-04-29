@@ -30,14 +30,12 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
 
   const STEP_ARTICLES = gql`
     query GetStepArticles {
-      etape(id: ${route.params.step.id}) {
-        articles {
-          id
-          titre
-          resume
-          visuel {
-            url
-          }
+      articles(where: { etapes: { id: ${route.params.step.id} } }) {
+        id
+        titre
+        resume
+        visuel {
+          url
         }
       }
     }
@@ -49,7 +47,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
   if (loading) return <ActivityIndicator size="large" />;
   if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
 
-  const articles = (data as { etape: { articles: Article[] } }).etape.articles;
+  const articles = (data as { articles: Article[] }).articles;
 
   const navigateToSurvey = () => {
     navigation.navigate("epdsSurvey");
@@ -96,7 +94,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
           >
             <Image
               source={{
-                uri: `${process.env.API_URL}${article.visuel?.url}`,
+                uri: article.visuel?.url,
               }}
               containerStyle={styles.articleImage}
             />
