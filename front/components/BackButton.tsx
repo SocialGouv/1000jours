@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   font: {
     fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
     fontSize: 14,
+    fontWeight: FontWeight.normal,
   },
 });
 

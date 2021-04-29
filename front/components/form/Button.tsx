@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
   font: {
     fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
     fontSize: 17,
+    fontWeight: FontWeight.normal,
   },
   roundedButton: {
     backgroundColor: Colors.primaryBlue,
