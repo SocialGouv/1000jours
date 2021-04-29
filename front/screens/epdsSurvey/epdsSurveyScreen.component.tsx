@@ -1,16 +1,16 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
-// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { ActivityIndicator } from "react-native";
 
 import { CommonText } from "../../components/StyledText";
 import Labels from "../../constants/Labels";
-import type { QuestionnaireEpdsFromDB, RootStackParamList } from "../../types";
+import type { RootStackParamList } from "../../types";
 import { gql } from "@apollo/client/core";
 import { useQuery } from "@apollo/client";
 import EpdsSurveyContent from "./epdsSurveyContent.component";
 import { EpdsSurveyUtils } from "../../utils";
+import { QuestionnaireEpdsFromDB, EpdsQuestionAndAnswers } from "../../type";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -21,20 +21,7 @@ interface Props {
   navigation: ProfileScreenNavigationProp;
 }
 
-export interface QuestionAndAnswers {
-  question: string;
-  answers: Answer[];
-  isAnswered?: boolean;
-}
-
-export interface Answer {
-  id: number;
-  label: string;
-  points: number;
-  isChecked: boolean;
-}
-
-const EpdsSurveyScreen: FC<Props> = ({}) => {
+const EpdsSurveyScreen: FC<Props> = () => {
   const QUESTIONNAIRE_EPDS = gql`
     query QuestionsReponses {
       questionnaireEpds {
@@ -60,10 +47,10 @@ const EpdsSurveyScreen: FC<Props> = ({}) => {
 
   const fetchedData = (data as { questionnaireEpds: QuestionnaireEpdsFromDB[] })
        .questionnaireEpds;
-  const tempQuestionsAndAnswers: QuestionAndAnswers[] = EpdsSurveyUtils.convertToQuestionsAndAnswers(fetchedData);
+  const questionAndAnswers: EpdsQuestionAndAnswers[] = EpdsSurveyUtils.convertToQuestionsAndAnswers(fetchedData);
 
   return (
-    <EpdsSurveyContent questionAndAnswers={tempQuestionsAndAnswers}/>
+    <EpdsSurveyContent epdsSurvey={questionAndAnswers}/>
   );
 };
 

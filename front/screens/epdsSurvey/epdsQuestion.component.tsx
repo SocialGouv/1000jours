@@ -1,15 +1,14 @@
 import * as React from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import Colors from "../../constants/Colors";
-import { Answer, QuestionAndAnswers } from "./epdsSurveyScreen.component";
 import { View } from "../../components/Themed";
 import { CommonText } from "../../components/StyledText";
 import Checkbox from "../../components/form/Checkbox";
-
+import { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 
 interface Props {
-  questionAndAnswers: QuestionAndAnswers;
-  updatePressedAnswer: (answer: Answer) => void;
+  questionAndAnswers: EpdsQuestionAndAnswers;
+  updatePressedAnswer: (answer: EpdsAnswer) => void;
 }
 
 const EpdsQuestion: React.FC<Props> = ({
@@ -17,25 +16,21 @@ const EpdsQuestion: React.FC<Props> = ({
   updatePressedAnswer
 }) => {
   return (
-    <View
-      style={[styles.swipeView, styles.justifyContentCenter]}
-    >
+    <View style={[styles.swipeView, styles.justifyContentCenter]}>
       <View style={styles.swipeViewMargin}>
-        <CommonText style={[styles.title]}>
+        <CommonText style={styles.title}>
           {questionAndAnswers.question}
         </CommonText>
-        {questionAndAnswers.answers.map((answer, answerIndex) => {
-          return (
-            <Checkbox
-              key={answerIndex}
-              title={answer.label}
-              checked={answer.isChecked}
-              onPress={() => {
-                updatePressedAnswer(answer);
-              }}
-            />
-          );
-        })}
+        {questionAndAnswers.answers.map((answer, answerIndex) => (
+          <Checkbox
+            key={answerIndex}
+            title={answer.label}
+            checked={answer.isChecked}
+            onPress={() => {
+              updatePressedAnswer(answer);
+            }}
+          />
+        ))}
       </View>
     </View>
   );

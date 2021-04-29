@@ -1,70 +1,44 @@
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import Colors from "../../constants/Colors";
-import { Answer, QuestionAndAnswers } from "./epdsSurveyScreen.component";
 import EpdsFooter from "./epdsFooter.component";
 import EpdsResult from "./epdsResult.component";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import Labels from "../../constants/Labels";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import EpdsQuestion from "./epdsQuestion.component";
 import { FontWeight } from "../../constants/Layout";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
+import { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
+import { EpdsSurveyUtils } from "../../utils";
 
 interface Props {
-  questionAndAnswers: QuestionAndAnswers[];
+  epdsSurvey: EpdsQuestionAndAnswers[];
 }
 
-const EpdsSurveyContent: React.FC<Props> = ({ questionAndAnswers }) => {
+const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const swiperRef = useRef<SwiperFlatList>(null);
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
-    QuestionAndAnswers[]
-  >(questionAndAnswers);
+    EpdsQuestionAndAnswers[]
+  >(epdsSurvey);
   const [displayResult, setDisplayResult] = useState(false);
   const [score, setScore] = useState(0);
 
   const questionIsAnswered =
-    questionsAndAnswers[swiperCurrentIndex] != undefined &&
-    questionsAndAnswers[swiperCurrentIndex].isAnswered;
+    questionsAndAnswers[swiperCurrentIndex]?.isAnswered;
   const showValidateButton =
     questionIsAnswered && swiperCurrentIndex === questionsAndAnswers.length - 1;
 
-  const updatePressedAnswer = (selectedAnswer: Answer) => {
-    setQuestionsAndAnswers(
-      questionsAndAnswers.map((question, questionIndex) => {
-        const questionIsCurrent = questionIndex === swiperCurrentIndex;
-        const answers = questionIsCurrent
-          ? question.answers.map((answer) => {
-              if (answer.id === selectedAnswer.id) {
-                question.isAnswered = true;
-                const currentQuestionPoints = getCurrentQuestionPoints(
-                  question
-                );
-                const newScore = currentQuestionPoints
-                  ? score - currentQuestionPoints + selectedAnswer.points
-                  : score + selectedAnswer.points;
-                setScore(newScore);
-                return { ...answer, isChecked: !selectedAnswer.isChecked };
-              } else {
-                return { ...answer, isChecked: false };
-              }
-            })
-          : question.answers;
-
-        return { ...question, answers };
-      })
+  const updatePressedAnswer = (selectedAnswer: EpdsAnswer) => {
+    const updatedSurvey = EpdsSurveyUtils.getUpdatedSurvey(
+      questionsAndAnswers,
+      swiperCurrentIndex,
+      selectedAnswer
     );
-  };
-
-  const getCurrentQuestionPoints = (question: QuestionAndAnswers) => {
-    const choosenAnswers = question.answers.filter(
-      (answer) => answer.isChecked
-    );
-    if (choosenAnswers && choosenAnswers.length === 1) {
-      return choosenAnswers[0].points;
-    }
+    setQuestionsAndAnswers(updatedSurvey);
+    setScore(EpdsSurveyUtils.getUpdatedScore(updatedSurvey));
   };
 
   return (
@@ -72,6 +46,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ questionAndAnswers }) => {
       {!displayResult ? (
         <>
           <View>
+            <CommonText>{score}</CommonText>
             <CommonText style={[styles.title]}>
               {Labels.epdsSurvey.title}
             </CommonText>
@@ -93,16 +68,14 @@ const EpdsSurveyContent: React.FC<Props> = ({ questionAndAnswers }) => {
                 paginationActiveColor={Colors.secondaryGreen}
                 paginationStyleItem={styles.swipePaginationItem}
               >
-                {questionsAndAnswers.map((questionView, questionIndex) => {
-                  return (
-                    <View key={questionIndex}>
-                      <EpdsQuestion
-                        questionAndAnswers={questionView}
-                        updatePressedAnswer={updatePressedAnswer}
-                      />
-                    </View>
-                  );
-                })}
+                {questionsAndAnswers.map((questionView, questionIndex) => (
+                  <View key={questionIndex}>
+                    <EpdsQuestion
+                      questionAndAnswers={questionView}
+                      updatePressedAnswer={updatePressedAnswer}
+                    />
+                  </View>
+                ))}
               </SwiperFlatList>
             </ScrollView>
           </View>
@@ -115,10 +88,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ questionAndAnswers }) => {
           />
         </>
       ) : (
-        <EpdsResult
-          result={score}
-          backToSurvey={() => setDisplayResult(false)}
-        />
+        <EpdsResult result={score} />
       )}
     </View>
   );
