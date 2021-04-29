@@ -36,8 +36,9 @@ const styles = StyleSheet.create({
   },
   label: {
     color: Colors.primaryBlueDark,
-    fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.normal),
+    fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
     fontSize: 11,
+    fontWeight: FontWeight.normal,
   },
   labelSelected: {
     color: Colors.secondaryGreen,
