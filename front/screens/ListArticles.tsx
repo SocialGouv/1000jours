@@ -96,7 +96,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
           >
             <Image
               source={{
-                uri: article.visuel?.url,
+                uri: `${process.env.API_URL}${article.visuel?.url}`,
               }}
               containerStyle={styles.articleImage}
             />
