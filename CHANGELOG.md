@@ -1,3 +1,10 @@
+## [1.17.4](https://github.com/SocialGouv/1000jours/compare/v1.17.3...v1.17.4) (2021-04-29)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'affichage des textes en Bold sur Android ([#170](https://github.com/SocialGouv/1000jours/issues/170)) ([d0e6fe5](https://github.com/SocialGouv/1000jours/commit/d0e6fe5c6865c0a1b690dc41ecaca7aca49e7d9a))
+
 ## [1.17.3](https://github.com/SocialGouv/1000jours/compare/v1.17.2...v1.17.3) (2021-04-28)
 
 
