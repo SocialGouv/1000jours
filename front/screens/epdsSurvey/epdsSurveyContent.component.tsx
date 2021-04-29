@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   swipePaginationItem: {
     height: 5,
     marginHorizontal: 8,
-    width: 32
+    width: 20
   }
 });
 
