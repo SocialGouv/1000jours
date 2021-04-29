@@ -48,6 +48,7 @@ const getFontFromWeight = (fontName: string, style?: StyleProp<TextStyle>) => {
     : FontWeight.normal;
   return {
     fontFamily: getFontFamilyName(fontName, fontWeight),
+    fontWeight: FontWeight.normal,
   };
 };
 
