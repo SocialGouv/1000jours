@@ -1,25 +1,32 @@
 "use strict";
 
+const { sanitizeEntity } = require("strapi-utils");
+
+const format = (article) =>
+  ArticleService.completeUrls(
+    sanitizeEntity(article, { model: strapi.models.article })
+  );
+
 const ArticleService = require("../services");
 
-const find = async (ctx) => {
+const find = async (context) => {
   let articles;
 
-  if (ctx.query._q) {
-    articles = await strapi.query("article").search(ctx.query);
+  if (context.query._q) {
+    articles = await strapi.query("article").search(context.query);
   } else {
-    articles = await strapi.query("article").find(ctx.query);
+    articles = await strapi.query("article").find(context.query);
   }
 
-  return articles.map(ArticleService.completeUrls);
+  return articles.map(format);
 };
 
-const findOne = async (ctx) => {
-  const { id } = ctx.params;
+const findOne = async (context) => {
+  const { id } = context.params;
 
   const article = await strapi.query("article").findOne({ id });
 
-  return ArticleService.completeUrls(article);
+  return format(article);
 };
 
 module.exports = {
