@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/SocialGouv/1000jours/compare/v1.18.1...v1.19.0) (2021-04-30)
+
+
+### Features
+
+* **dpp:** Ajout des questions dans le back + refacto front ([#169](https://github.com/SocialGouv/1000jours/issues/169)) ([ee1d9a8](https://github.com/SocialGouv/1000jours/commit/ee1d9a805ccd999e7222fe309c995adc30bdec23))
+
 ## [1.18.1](https://github.com/SocialGouv/1000jours/compare/v1.18.0...v1.18.1) (2021-04-29)
 
 
