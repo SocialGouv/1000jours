@@ -61,7 +61,6 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
                   setSwiperCurrentIndex(index);
                 }}
                 autoplay={false}
-                showPagination
                 disableGesture
                 paginationDefaultColor="lightgray"
                 paginationActiveColor={Colors.secondaryGreen}

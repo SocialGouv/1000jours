@@ -26,4 +26,8 @@ export type EpdsAnswer = {
   isChecked: boolean;
 }
 
-export type EpdsIconResult = 'BIEN' | 'MOYEN' | 'PAS_BIEN';
+export enum EpdsIconResultEnum {
+  BIEN,
+  MOYEN,
+  PAS_BIEN,
+};

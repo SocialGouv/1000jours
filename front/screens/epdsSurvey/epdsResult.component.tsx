@@ -9,31 +9,34 @@ import { EpdsSurveyUtils } from "../../utils";
 import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
 import IconeResultatMoyen from "../../assets/images/icone_resultats_moyen.svg";
 import IconeResultatPasBien from "../../assets/images/icone_resultats_pasbien.svg";
+import { EpdsIconResult, EpdsIconResultEnum } from "../../type";
 
 interface Props {
   result: number;
 }
 
 const EpdsResult: React.FC<Props> = ({ result }) => {
-  // result = 5;
   const labelsResultats = Labels.epdsSurvey.resultats;
   const {
     stateOfMind,
     label,
     colorStyle,
-    icone
+    icon
   } = EpdsSurveyUtils.getResultLabelAndStyle(result);
 
-  let resultIcone;
-  if (icone === "BIEN") resultIcone = { image: <IconeResultatBien /> };
-  else if (icone === "MOYEN") resultIcone = { image: <IconeResultatMoyen /> };
-  else resultIcone = { image: <IconeResultatPasBien /> };
+  const getIcon = (icone: EpdsIconResultEnum) => {
+    let iconsMap = new Map<EpdsIconResultEnum, JSX.Element >(); 
+    iconsMap.set(EpdsIconResultEnum.BIEN, <IconeResultatBien />);
+    iconsMap.set(EpdsIconResultEnum.MOYEN, <IconeResultatMoyen />);
+    iconsMap.set(EpdsIconResultEnum.PAS_BIEN, <IconeResultatPasBien />);
+    return iconsMap.get(icone);
+  }
 
   return (
     <View>
       <CommonText style={styles.title}>{Labels.epdsSurvey.title}</CommonText>
       <View style={styles.rowView}>
-        <View>{resultIcone.image}</View>
+        <View>{getIcon(icon)}</View>
         <CommonText style={[styles.title, colorStyle, styles.stateOfMind]}>
           {stateOfMind}
         </CommonText>

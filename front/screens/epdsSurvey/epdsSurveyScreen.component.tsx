@@ -24,7 +24,7 @@ interface Props {
 const EpdsSurveyScreen: FC<Props> = () => {
   const QUESTIONNAIRE_EPDS = gql`
     query QuestionsReponses {
-      questionnaireEpds {
+      questionnaireEpds(sort: "ordre") {
         ordre
         libelle
         reponse_1_libelle

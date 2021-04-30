@@ -4,7 +4,7 @@ import {
   EpdsAnswer,
   EpdsQuestionAndAnswers,
   QuestionnaireEpdsFromDB,
-  EpdsIconResult
+  EpdsIconResultEnum
 } from "../type";
 
 export const convertToQuestionsAndAnswers = (
@@ -93,22 +93,22 @@ export const getResultLabelAndStyle = (result: number) => {
 
   let label;
   let colorStyle;
-  let icone: EpdsIconResult;
+  let icon: EpdsIconResultEnum;
   if (result <= 9) {
     label = labelsResultats.moinsDeNeuf;
     colorStyle = greenColor;
-    icone = 'BIEN';
+    icon = EpdsIconResultEnum.BIEN;
   } else if (result <= 12) {
     label = labelsResultats.entreDixEtDouze;
     colorStyle = yellowColor;
-    icone = 'MOYEN';
+    icon = EpdsIconResultEnum.MOYEN;
   } else {
     label = labelsResultats.plusDeTreize;
     colorStyle = redColor;
-    icone = 'PAS_BIEN';
+    icon = EpdsIconResultEnum.PAS_BIEN;
   }
 
   const stateOfMind = label.stateOfMind;
 
-  return { stateOfMind, label, colorStyle, icone };
+  return { stateOfMind, label, colorStyle, icon };
 };
