@@ -1,43 +1,36 @@
 import * as React from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import Colors from "../../constants/Colors";
-import { Answer, QuestionAndAnswers } from "../../screens/EpdsSurveyScreen";
-import Checkbox from "../form/Checkbox";
-import { CommonText } from "../StyledText";
-import { View } from "../Themed";
+import { View } from "../../components/Themed";
+import { CommonText } from "../../components/StyledText";
+import Checkbox from "../../components/form/Checkbox";
+import { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 
 interface Props {
-  questionAndAnswers: QuestionAndAnswers;
-  questionIndex: number;
-  updatePressedAnswer: (answer: Answer) => void;
+  questionAndAnswers: EpdsQuestionAndAnswers;
+  updatePressedAnswer: (answer: EpdsAnswer) => void;
 }
 
 const EpdsQuestion: React.FC<Props> = ({
   questionAndAnswers,
-  questionIndex,
   updatePressedAnswer
 }) => {
   return (
-    <View
-      style={[styles.swipeView, styles.justifyContentCenter]}
-      key={questionIndex}
-    >
+    <View style={[styles.swipeView, styles.justifyContentCenter]}>
       <View style={styles.swipeViewMargin}>
-        <CommonText style={[styles.title, styles.textAlignCenter]}>
+        <CommonText style={styles.title}>
           {questionAndAnswers.question}
         </CommonText>
-        {questionAndAnswers.answers.map((answer, answerIndex) => {
-          return (
-            <Checkbox
-              key={answerIndex}
-              title={answer.label}
-              checked={answer.isChecked}
-              onPress={() => {
-                updatePressedAnswer(answer);
-              }}
-            />
-          );
-        })}
+        {questionAndAnswers.answers.map((answer, answerIndex) => (
+          <Checkbox
+            key={answerIndex}
+            title={answer.label}
+            checked={answer.isChecked}
+            onPress={() => {
+              updatePressedAnswer(answer);
+            }}
+          />
+        ))}
       </View>
     </View>
   );

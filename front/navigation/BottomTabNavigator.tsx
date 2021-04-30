@@ -7,7 +7,7 @@ import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
 import ArticleDetail from "../screens/ArticleDetail";
-import EpdsSurveyScreen from "../screens/EpdsSurveyScreen";
+import EpdsSurveyScreen from "../screens/epdsSurvey/epdsSurveyScreen.component";
 import ListArticles from "../screens/ListArticles";
 import TabAroundMeScreen from "../screens/TabAroundMeScreen";
 import TabCalendarScreen from "../screens/TabCalendarScreen";

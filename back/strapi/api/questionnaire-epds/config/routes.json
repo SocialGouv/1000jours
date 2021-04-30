@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/questionnaire-epds",
+      "handler": "questionnaire-epds.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/questionnaire-epds/count",
+      "handler": "questionnaire-epds.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/questionnaire-epds/:id",
+      "handler": "questionnaire-epds.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/questionnaire-epds",
+      "handler": "questionnaire-epds.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/questionnaire-epds/:id",
+      "handler": "questionnaire-epds.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/questionnaire-epds/:id",
+      "handler": "questionnaire-epds.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

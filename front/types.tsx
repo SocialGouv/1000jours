@@ -67,6 +67,7 @@ export type Thematique = {
 export type Visuel = {
   url: string;
 };
+
 export type Article = {
   id: number;
   titre: string;
