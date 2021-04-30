@@ -1,10 +1,12 @@
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
+import EpdsResult from "../screens/epdsSurvey/epdsResult.component";
 import {
   EpdsAnswer,
   EpdsQuestionAndAnswers,
   QuestionnaireEpdsFromDB,
-  EpdsIconResultEnum
+  EpdsIconResultEnum,
+  EpdsResultData
 } from "../type";
 
 export const convertToQuestionsAndAnswers = (
@@ -84,31 +86,30 @@ export const getCurrentQuestionPoints = (question: EpdsQuestionAndAnswers) => {
   return question.answers.find((answer) => answer.isChecked)?.points;
 };
 
-export const getResultLabelAndStyle = (result: number) => {
+export const getResultLabelAndStyle = (result: number): EpdsResultData => {
   const labelsResultats = Labels.epdsSurvey.resultats;
 
   const greenColor = { color: Colors.secondaryGreenDark };
   const yellowColor = { color: Colors.primaryYellowDark };
   const redColor = { color: Colors.secondaryRedLight };
 
-  let label;
-  let colorStyle;
-  let icon: EpdsIconResultEnum;
   if (result <= 9) {
-    label = labelsResultats.moinsDeNeuf;
-    colorStyle = greenColor;
-    icon = EpdsIconResultEnum.BIEN;
+    return {
+      resultLabels: labelsResultats.moinsDeNeuf,
+      colorStyle: greenColor,
+      icon: EpdsIconResultEnum.BIEN
+    };
   } else if (result <= 12) {
-    label = labelsResultats.entreDixEtDouze;
-    colorStyle = yellowColor;
-    icon = EpdsIconResultEnum.MOYEN;
+    return {
+      resultLabels: labelsResultats.entreDixEtDouze,
+      colorStyle: yellowColor,
+      icon: EpdsIconResultEnum.MOYEN
+    };
   } else {
-    label = labelsResultats.plusDeTreize;
-    colorStyle = redColor;
-    icon = EpdsIconResultEnum.PAS_BIEN;
+    return {
+      resultLabels: labelsResultats.plusDeTreize,
+      colorStyle: redColor,
+      icon: EpdsIconResultEnum.PAS_BIEN
+    };
   }
-
-  const stateOfMind = label.stateOfMind;
-
-  return { stateOfMind, label, colorStyle, icon };
 };

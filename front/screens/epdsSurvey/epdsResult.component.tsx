@@ -9,7 +9,7 @@ import { EpdsSurveyUtils } from "../../utils";
 import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
 import IconeResultatMoyen from "../../assets/images/icone_resultats_moyen.svg";
 import IconeResultatPasBien from "../../assets/images/icone_resultats_pasbien.svg";
-import { EpdsIconResult, EpdsIconResultEnum } from "../../type";
+import { EpdsIconResultEnum } from "../../type";
 
 interface Props {
   result: number;
@@ -17,15 +17,10 @@ interface Props {
 
 const EpdsResult: React.FC<Props> = ({ result }) => {
   const labelsResultats = Labels.epdsSurvey.resultats;
-  const {
-    stateOfMind,
-    label,
-    colorStyle,
-    icon
-  } = EpdsSurveyUtils.getResultLabelAndStyle(result);
+  const resultData = EpdsSurveyUtils.getResultLabelAndStyle(result);
 
   const getIcon = (icone: EpdsIconResultEnum) => {
-    let iconsMap = new Map<EpdsIconResultEnum, JSX.Element >(); 
+    let iconsMap = new Map<EpdsIconResultEnum, React.ReactNode>(); 
     iconsMap.set(EpdsIconResultEnum.BIEN, <IconeResultatBien />);
     iconsMap.set(EpdsIconResultEnum.MOYEN, <IconeResultatMoyen />);
     iconsMap.set(EpdsIconResultEnum.PAS_BIEN, <IconeResultatPasBien />);
@@ -36,16 +31,16 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
     <View>
       <CommonText style={styles.title}>{Labels.epdsSurvey.title}</CommonText>
       <View style={styles.rowView}>
-        <View>{getIcon(icon)}</View>
-        <CommonText style={[styles.title, colorStyle, styles.stateOfMind]}>
-          {stateOfMind}
+        <View>{getIcon(resultData.icon)}</View>
+        <CommonText style={[styles.title, resultData.colorStyle, styles.stateOfMind]}>
+          {resultData.resultLabels.stateOfMind}
         </CommonText>
       </View>
       <CommonText style={[styles.description, styles.fontBold]}>
         {labelsResultats.introduction}
-        {result} {label.intervalle}.
+        {result} {resultData.resultLabels.intervalle}.
       </CommonText>
-      <CommonText style={[styles.description]}>{label.explication}</CommonText>
+      <CommonText style={[styles.description]}>{resultData.resultLabels.explication}</CommonText>
     </View>
   );
 };

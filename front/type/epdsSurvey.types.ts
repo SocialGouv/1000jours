@@ -31,3 +31,9 @@ export enum EpdsIconResultEnum {
   MOYEN,
   PAS_BIEN,
 };
+
+export type EpdsResultData = {
+  resultLabels: any,
+  colorStyle: any,
+  icon: EpdsIconResultEnum,
+}
