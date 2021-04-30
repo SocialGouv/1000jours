@@ -20,7 +20,7 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
   const resultData = EpdsSurveyUtils.getResultLabelAndStyle(result);
 
   const getIcon = (icone: EpdsIconResultEnum) => {
-    let iconsMap = new Map<EpdsIconResultEnum, React.ReactNode>(); 
+    const iconsMap = new Map<EpdsIconResultEnum, React.ReactNode>(); 
     iconsMap.set(EpdsIconResultEnum.BIEN, <IconeResultatBien />);
     iconsMap.set(EpdsIconResultEnum.MOYEN, <IconeResultatMoyen />);
     iconsMap.set(EpdsIconResultEnum.PAS_BIEN, <IconeResultatPasBien />);

@@ -76,7 +76,7 @@ export const getUpdatedScore = (
       (answer) => answer.isChecked
     )?.points;
     if (answeredQuestionPoints) {
-      score = score + answeredQuestionPoints;
+      score += answeredQuestionPoints;
     }
   });
   return score;
