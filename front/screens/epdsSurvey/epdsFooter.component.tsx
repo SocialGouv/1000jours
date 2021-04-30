@@ -1,12 +1,13 @@
 import * as React from "react";
 import { Dimensions, StyleSheet } from "react-native";
-import Colors from "../../constants/Colors";
+import type SwiperFlatListRefProps from "react-native-swiper-flatlist";
+
 import BackButton from "../../components/BackButton";
-import { View } from "../../components/Themed";
-import Icomoon, { IcomoonIcons } from "../../components/Icomoon";
-import Labels from "../../constants/Labels";
 import Button from "../../components/form/Button";
-import SwiperFlatListRefProps from "react-native-swiper-flatlist";
+import Icomoon, { IcomoonIcons } from "../../components/Icomoon";
+import { View } from "../../components/Themed";
+import Colors from "../../constants/Colors";
+import Labels from "../../constants/Labels";
 
 interface Props {
   swiperCurrentIndex: number;
@@ -21,7 +22,7 @@ const EpdsFooter: React.FC<Props> = ({
   swiperRef,
   showValidateButton,
   questionIsAnswered,
-  setDisplayResult
+  setDisplayResult,
 }) => {
   return (
     <View style={[styles.footer, styles.justifyContentCenter]}>
@@ -31,7 +32,7 @@ const EpdsFooter: React.FC<Props> = ({
             <BackButton
               action={() => {
                 swiperRef.current?.scrollToIndex({
-                  index: swiperCurrentIndex - 1
+                  index: swiperCurrentIndex - 1,
                 });
               }}
             />
@@ -44,7 +45,9 @@ const EpdsFooter: React.FC<Props> = ({
                 title={Labels.buttons.validate}
                 rounded={true}
                 disabled={false}
-                action={() => setDisplayResult(true)}
+                action={() => {
+                  setDisplayResult(true);
+                }}
               />
             </View>
           ) : (
@@ -62,7 +65,7 @@ const EpdsFooter: React.FC<Props> = ({
                 }
                 action={() => {
                   swiperRef.current?.scrollToIndex({
-                    index: swiperCurrentIndex + 1
+                    index: swiperCurrentIndex + 1,
                   });
                 }}
               />
@@ -76,19 +79,19 @@ const EpdsFooter: React.FC<Props> = ({
 
 const width = Dimensions.get("window").width;
 const styles = StyleSheet.create({
+  buttonContainer: {
+    flex: 1,
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+  },
   footer: {
     flex: 1,
-    paddingVertical: 10
+    paddingVertical: 10,
   },
   justifyContentCenter: {
     alignItems: "center",
-    justifyContent: "center"
-  },
-  buttonContainer: {
-    flex: 1
-  },
-  buttonsContainer: {
-    flexDirection: "row"
+    justifyContent: "center",
   },
 });
 

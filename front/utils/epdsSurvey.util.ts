@@ -1,46 +1,46 @@
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
 import EpdsResult from "../screens/epdsSurvey/epdsResult.component";
-import {
+import type {
   EpdsAnswer,
   EpdsQuestionAndAnswers,
+  EpdsResultData,
   QuestionnaireEpdsFromDB,
-  EpdsIconResultEnum,
-  EpdsResultData
 } from "../type";
+import { EpdsIconResultEnum } from "../type";
 
 export const convertToQuestionsAndAnswers = (
   questionnaire: QuestionnaireEpdsFromDB[]
 ) => {
   return questionnaire.map((element) => {
     return {
-      question: element.libelle,
       answers: [
         {
           id: 0,
+          isChecked: false,
           label: element.reponse_1_libelle,
           points: element.reponse_1_points,
-          isChecked: false
         },
         {
           id: 1,
+          isChecked: false,
           label: element.reponse_2_libelle,
           points: element.reponse_2_points,
-          isChecked: false
         },
         {
           id: 2,
+          isChecked: false,
           label: element.reponse_3_libelle,
           points: element.reponse_3_points,
-          isChecked: false
         },
         {
           id: 3,
+          isChecked: false,
           label: element.reponse_4_libelle,
           points: element.reponse_4_points,
-          isChecked: false
-        }
-      ]
+        },
+      ],
+      question: element.libelle,
     };
   });
 };
@@ -95,21 +95,21 @@ export const getResultLabelAndStyle = (result: number): EpdsResultData => {
 
   if (result <= 9) {
     return {
-      resultLabels: labelsResultats.moinsDeNeuf,
       colorStyle: greenColor,
-      icon: EpdsIconResultEnum.BIEN
+      icon: EpdsIconResultEnum.BIEN,
+      resultLabels: labelsResultats.moinsDeNeuf,
     };
   } else if (result <= 12) {
     return {
-      resultLabels: labelsResultats.entreDixEtDouze,
       colorStyle: yellowColor,
-      icon: EpdsIconResultEnum.MOYEN
+      icon: EpdsIconResultEnum.MOYEN,
+      resultLabels: labelsResultats.entreDixEtDouze,
     };
   } else {
     return {
-      resultLabels: labelsResultats.plusDeTreize,
       colorStyle: redColor,
-      icon: EpdsIconResultEnum.PAS_BIEN
+      icon: EpdsIconResultEnum.PAS_BIEN,
+      resultLabels: labelsResultats.plusDeTreize,
     };
   }
 };

@@ -1,4 +1,4 @@
-export type QuestionnaireEpdsFromDB = {
+export interface QuestionnaireEpdsFromDB {
   id: number;
   locale: string;
   ordre: number;
@@ -11,15 +11,15 @@ export type QuestionnaireEpdsFromDB = {
   reponse_3_points: number;
   reponse_4_libelle: string;
   reponse_4_points: number;
-};
+}
 
-export type EpdsQuestionAndAnswers = {
+export interface EpdsQuestionAndAnswers {
   question: string;
   answers: EpdsAnswer[];
   isAnswered?: boolean;
 }
 
-export type EpdsAnswer = {
+export interface EpdsAnswer {
   id: number;
   label: string;
   points: number;
@@ -30,10 +30,10 @@ export enum EpdsIconResultEnum {
   BIEN,
   MOYEN,
   PAS_BIEN,
-};
+}
 
-export type EpdsResultData = {
-  resultLabels: any,
-  colorStyle: any,
-  icon: EpdsIconResultEnum,
+export interface EpdsResultData {
+  resultLabels: any;
+  colorStyle: any;
+  icon: EpdsIconResultEnum;
 }
