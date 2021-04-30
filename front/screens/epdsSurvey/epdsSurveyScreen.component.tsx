@@ -1,3 +1,5 @@
+import { useQuery } from "@apollo/client";
+import { gql } from "@apollo/client/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
@@ -5,12 +7,13 @@ import { ActivityIndicator } from "react-native";
 
 import { CommonText } from "../../components/StyledText";
 import Labels from "../../constants/Labels";
+import type {
+  EpdsQuestionAndAnswers,
+  QuestionnaireEpdsFromDB,
+} from "../../type";
 import type { RootStackParamList } from "../../types";
-import { gql } from "@apollo/client/core";
-import { useQuery } from "@apollo/client";
-import EpdsSurveyContent from "./epdsSurveyContent.component";
 import { EpdsSurveyUtils } from "../../utils";
-import { QuestionnaireEpdsFromDB, EpdsQuestionAndAnswers } from "../../type";
+import EpdsSurveyContent from "./epdsSurveyContent.component";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -39,19 +42,19 @@ const EpdsSurveyScreen: FC<Props> = () => {
     }
   `;
   const { loading, error, data } = useQuery(QUESTIONNAIRE_EPDS, {
-    fetchPolicy: "no-cache"
+    fetchPolicy: "no-cache",
   });
 
   if (loading) return <ActivityIndicator size="large" />;
   if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
 
   const fetchedData = (data as { questionnaireEpds: QuestionnaireEpdsFromDB[] })
-       .questionnaireEpds;
-  const questionAndAnswers: EpdsQuestionAndAnswers[] = EpdsSurveyUtils.convertToQuestionsAndAnswers(fetchedData);
-
-  return (
-    <EpdsSurveyContent epdsSurvey={questionAndAnswers}/>
+    .questionnaireEpds;
+  const questionAndAnswers: EpdsQuestionAndAnswers[] = EpdsSurveyUtils.convertToQuestionsAndAnswers(
+    fetchedData
   );
+
+  return <EpdsSurveyContent epdsSurvey={questionAndAnswers} />;
 };
 
 export default EpdsSurveyScreen;

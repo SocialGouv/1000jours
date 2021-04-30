@@ -10,6 +10,7 @@ import type { ColorSchemeName } from "react-native";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 import LogoMinistere from "../assets/images/Logo ministere.svg";
+import AppLogo from "../assets/images/logo.svg";
 import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import { Text, View } from "../components/Themed";
 import Colors from "../constants/Colors";
@@ -77,7 +78,7 @@ const RootNavigator: FC = () => (
               justifyContent: "center",
             }}
           >
-            <Text>{Labels.appName}</Text>
+            <AppLogo height={30} />
           </View>
         ),
       }}

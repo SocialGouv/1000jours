@@ -3,8 +3,8 @@ import * as Linking from "expo-linking";
 export default {
   config: {
     screens: {
-      notFound: "*",
       loading: "loading",
+      notFound: "*",
       onboarding: "onboarding",
       profile: "profile",
       root: {

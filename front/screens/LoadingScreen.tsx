@@ -1,20 +1,21 @@
+import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
-import { View } from "../components/Themed";
 import { useEffect } from "react";
+import { ActivityIndicator, StyleSheet } from "react-native";
+
+import { View } from "../components/Themed";
+import { isFirstLaunchKey } from "../storage/storage-keys";
 import {
   getObjectValue,
   getStringValue,
   storeObjectValue,
 } from "../storage/storage-utils";
-import { isFirstLaunchKey } from "../storage/storage-keys";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../types";
+import type { RootStackParamList } from "../types";
 
-type LoadingScreenProps = {
+interface LoadingScreenProps {
   navigation: StackNavigationProp<RootStackParamList, "loading">;
-};
+}
 
 const LoadingScreen: FC<LoadingScreenProps> = ({ navigation }) => {
   useEffect(() => {
@@ -38,10 +39,10 @@ const LoadingScreen: FC<LoadingScreenProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
-    justifyContent: "center",
     alignItems: "center",
+    display: "flex",
     height: "100%",
+    justifyContent: "center",
   },
 });
 

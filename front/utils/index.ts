@@ -1,5 +1,3 @@
-import * as EpdsSurveyUtils from './epdsSurvey.util';
+import * as EpdsSurveyUtils from "./epdsSurvey.util";
 
-export {
-    EpdsSurveyUtils
-};
+export { EpdsSurveyUtils };

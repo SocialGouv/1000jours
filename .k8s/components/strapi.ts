@@ -1,7 +1,7 @@
 import env from "@kosko/env";
 
 import { create } from "@socialgouv/kosko-charts/components/app";
-import gitlab from "@socialgouv/kosko-charts/environments/gitlab"
+import gitlab from "@socialgouv/kosko-charts/environments/gitlab";
 import { getHarborImagePath } from "@socialgouv/kosko-charts/utils/getHarborImagePath";
 import { addEnv } from "@socialgouv/kosko-charts/utils/addEnv";
 import { getManifestByKind } from "@socialgouv/kosko-charts/utils/getManifestByKind";

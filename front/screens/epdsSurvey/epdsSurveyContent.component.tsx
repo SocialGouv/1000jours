@@ -1,17 +1,18 @@
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
-import Colors from "../../constants/Colors";
-import EpdsFooter from "./epdsFooter.component";
-import EpdsResult from "./epdsResult.component";
 import { useRef, useState } from "react";
-import Labels from "../../constants/Labels";
+import { ScrollView, StyleSheet } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
-import EpdsQuestion from "./epdsQuestion.component";
-import { FontWeight } from "../../constants/Layout";
+
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
-import { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
+import Colors from "../../constants/Colors";
+import Labels from "../../constants/Labels";
+import { FontWeight } from "../../constants/Layout";
+import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils } from "../../utils";
+import EpdsFooter from "./epdsFooter.component";
+import EpdsQuestion from "./epdsQuestion.component";
+import EpdsResult from "./epdsResult.component";
 
 interface Props {
   epdsSurvey: EpdsQuestionAndAnswers[];
@@ -93,36 +94,36 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    color: Colors.primaryBlueDark,
-    fontSize: 15,
-    fontWeight: "bold",
-    paddingBottom: 15,
-    paddingHorizontal: 15
-  },
   description: {
     color: Colors.commonText,
     fontSize: 12,
     fontWeight: FontWeight.medium,
     lineHeight: 20,
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
   },
   flexColumn: {
     flex: 1,
-    flexDirection: "column"
+    flexDirection: "column",
   },
   mainContainer: {
     flex: 1,
-    paddingTop: 30
+    paddingTop: 30,
   },
   mainView: {
-    flex: 8
+    flex: 8,
   },
   swipePaginationItem: {
     height: 5,
     marginHorizontal: 8,
-    width: 20
-  }
+    width: 20,
+  },
+  title: {
+    color: Colors.primaryBlueDark,
+    fontSize: 15,
+    fontWeight: "bold",
+    paddingBottom: 15,
+    paddingHorizontal: 15,
+  },
 });
 
 export default EpdsSurveyContent;
