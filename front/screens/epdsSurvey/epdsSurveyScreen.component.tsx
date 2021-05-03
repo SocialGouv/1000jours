@@ -9,6 +9,7 @@ import {
   Colors,
   DatabaseQueries,
   epdsGender,
+  FontWeight,
   Labels,
   Paddings,
   Sizes
@@ -78,8 +79,7 @@ const styles = StyleSheet.create({
   title: {
     color: Colors.primaryBlueDark,
     fontSize: Sizes.sm,
-    fontWeight: "bold",
-    paddingBottom: Paddings.default,
+    fontWeight: FontWeight.bold,
     paddingHorizontal: Paddings.default
   }
 });

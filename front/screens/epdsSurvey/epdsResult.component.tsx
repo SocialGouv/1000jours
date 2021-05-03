@@ -1,12 +1,19 @@
 import * as React from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
 import IconeResultatMoyen from "../../assets/images/icone_resultats_moyen.svg";
 import IconeResultatPasBien from "../../assets/images/icone_resultats_pasbien.svg";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
-import { Colors, FontWeight, Labels } from "../../constants";
+import {
+  Colors,
+  FontWeight,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes
+} from "../../constants";
 import { EpdsIconResultEnum } from "../../type";
 import { EpdsSurveyUtils } from "../../utils";
 
@@ -30,17 +37,15 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
     <View>
       <View style={styles.rowView}>
         <View>{getIcon(resultData.icon)}</View>
-        <CommonText
-          style={[styles.title, resultData.colorStyle, styles.stateOfMind]}
-        >
+        <CommonText style={[styles.stateOfMind, resultData.colorStyle]}>
           {resultData.resultLabels.stateOfMind}
         </CommonText>
       </View>
-      <CommonText style={[styles.description, styles.fontBold]}>
+      <CommonText style={[styles.text, styles.fontBold]}>
         {labelsResultats.introduction}
         {result} {resultData.resultLabels.intervalle}.
       </CommonText>
-      <CommonText style={[styles.description]}>
+      <CommonText style={styles.text}>
         {resultData.resultLabels.explication}
       </CommonText>
     </View>
@@ -48,33 +53,28 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
 };
 
 const styles = StyleSheet.create({
-  description: {
-    color: Colors.commonText,
-    fontSize: 12,
-    fontWeight: FontWeight.medium,
-    lineHeight: 20,
-    paddingHorizontal: 15,
-    paddingTop: 10,
-  },
-  fontBold: {
-    fontSize: 13,
-    fontWeight: FontWeight.bold,
-  },
   rowView: {
     flexDirection: "row",
-    marginLeft: 10,
+    marginLeft: Margins.default
   },
   stateOfMind: {
+    fontWeight: FontWeight.bold,
+    fontSize: Sizes.sm,
+    marginTop: Margins.smaller,
+    paddingHorizontal: Paddings.default
+  },
+  text: {
+    color: Colors.commonText,
+    fontSize: Sizes.xxs,
     fontWeight: FontWeight.medium,
-    marginTop: 10,
+    lineHeight: Sizes.mmd,
+    paddingHorizontal: Paddings.default,
+    paddingTop: Paddings.default
   },
-  title: {
-    color: Colors.primaryBlueDark,
-    fontSize: 15,
-    fontWeight: "bold",
-    paddingBottom: 15,
-    paddingHorizontal: 15,
-  },
+  fontBold: {
+    fontSize: Sizes.xs,
+    fontWeight: FontWeight.bold
+  }
 });
 
 export default EpdsResult;
