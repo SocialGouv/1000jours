@@ -1,13 +1,11 @@
 import * as React from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import type SwiperFlatListRefProps from "react-native-swiper-flatlist";
-
 import BackButton from "../../components/BackButton";
 import Button from "../../components/form/Button";
 import Icomoon, { IcomoonIcons } from "../../components/Icomoon";
 import { View } from "../../components/Themed";
-import { Colors, Labels } from "../../constants";
-
+import { Colors, Labels, Paddings } from "../../constants";
 
 interface Props {
   swiperCurrentIndex: number;
@@ -22,17 +20,17 @@ const EpdsFooter: React.FC<Props> = ({
   swiperRef,
   showValidateButton,
   questionIsAnswered,
-  setDisplayResult,
+  setDisplayResult
 }) => {
   return (
-    <View style={[styles.footer, styles.justifyContentCenter]}>
-      <View style={[styles.buttonsContainer, styles.justifyContentCenter]}>
-        <View style={[styles.buttonContainer]}>
+    <View style={[styles.footer]}>
+      <View style={styles.buttonsContainer}>
+        <View style={styles.buttonContainer}>
           {swiperCurrentIndex > 0 && (
             <BackButton
               action={() => {
                 swiperRef.current?.scrollToIndex({
-                  index: swiperCurrentIndex - 1,
+                  index: swiperCurrentIndex - 1
                 });
               }}
             />
@@ -65,7 +63,7 @@ const EpdsFooter: React.FC<Props> = ({
                 }
                 action={() => {
                   swiperRef.current?.scrollToIndex({
-                    index: swiperCurrentIndex + 1,
+                    index: swiperCurrentIndex + 1
                   });
                 }}
               />
@@ -77,22 +75,21 @@ const EpdsFooter: React.FC<Props> = ({
   );
 };
 
-const width = Dimensions.get("window").width;
 const styles = StyleSheet.create({
-  buttonContainer: {
-    flex: 1,
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-  },
   footer: {
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: Paddings.default
+  },
+  buttonContainer: {
+    flex: 1
+  },
+  buttonsContainer: {
+    flexDirection: "row"
   },
   justifyContentCenter: {
     alignItems: "center",
-    justifyContent: "center",
-  },
+    justifyContent: "center"
+  }
 });
 
 export default EpdsFooter;

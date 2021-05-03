@@ -4,6 +4,7 @@ import { Dimensions, StyleSheet } from "react-native";
 import Checkbox from "../../components/form/Checkbox";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
+import { FontWeight, Paddings, Sizes } from "../../constants";
 import Colors from "../../constants/Colors";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 
@@ -14,12 +15,12 @@ interface Props {
 
 const EpdsQuestion: React.FC<Props> = ({
   questionAndAnswers,
-  updatePressedAnswer,
+  updatePressedAnswer
 }) => {
   return (
     <View style={[styles.swipeView, styles.justifyContentCenter]}>
       <View style={styles.swipeViewMargin}>
-        <CommonText style={styles.title}>
+        <CommonText style={styles.question}>
           {questionAndAnswers.question}
         </CommonText>
         {questionAndAnswers.answers.map((answer, answerIndex) => (
@@ -39,26 +40,22 @@ const EpdsQuestion: React.FC<Props> = ({
 
 const width = Dimensions.get("window").width;
 const styles = StyleSheet.create({
+  question: {
+    color: Colors.primaryBlueDark,
+    fontSize: Sizes.sm,
+    fontWeight: FontWeight.bold,
+    paddingBottom: Paddings.default
+  },
   justifyContentCenter: {
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   swipeView: {
-    width,
+    width
   },
   swipeViewMargin: {
-    margin: "10%",
-  },
-  textAlignCenter: {
-    textAlign: "center",
-  },
-  title: {
-    color: Colors.primaryBlueDark,
-    fontSize: 15,
-    fontWeight: "bold",
-    paddingBottom: 15,
-    paddingHorizontal: 15,
-  },
+    margin: "10%"
+  }
 });
 
 export default EpdsQuestion;

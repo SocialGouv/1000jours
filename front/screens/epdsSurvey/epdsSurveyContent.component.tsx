@@ -1,12 +1,19 @@
 import * as React from "react";
 import { useRef, useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import { EpdsFooter, EpdsQuestion, EpdsResult } from "..";
 
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
-import { Colors, FontWeight, Labels } from "../../constants";
+import {
+  Colors,
+  FontWeight,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes
+} from "../../constants";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils } from "../../utils";
 
@@ -20,7 +27,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
     EpdsQuestionAndAnswers[]
   >(epdsSurvey);
-  const [displayResult, setDisplayResult] = useState(true);
+  const [displayResult, setDisplayResult] = useState(false);
   const [score, setScore] = useState(0);
 
   const questionIsAnswered =
@@ -39,37 +46,35 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
   };
 
   return (
-    <View style={[styles.mainContainer, styles.flexColumn]}>
+    <View style={styles.mainContainer}>
       {!displayResult ? (
         <>
           <View>
-            <CommonText style={styles.description}>
+            <CommonText style={styles.instruction}>
               {Labels.epdsSurvey.instruction}
             </CommonText>
           </View>
-          <View style={styles.mainView}>
-            <ScrollView>
-              <SwiperFlatList
-                ref={swiperRef}
-                onChangeIndex={({ index }) => {
-                  setSwiperCurrentIndex(index);
-                }}
-                autoplay={false}
-                disableGesture
-                paginationDefaultColor="lightgray"
-                paginationActiveColor={Colors.secondaryGreen}
-                paginationStyleItem={styles.swipePaginationItem}
-              >
-                {questionsAndAnswers.map((questionView, questionIndex) => (
-                  <View key={questionIndex}>
-                    <EpdsQuestion
-                      questionAndAnswers={questionView}
-                      updatePressedAnswer={updatePressedAnswer}
-                    />
-                  </View>
-                ))}
-              </SwiperFlatList>
-            </ScrollView>
+          <View style={styles.flatListView}>
+            <SwiperFlatList
+              ref={swiperRef}
+              onChangeIndex={({ index }) => {
+                setSwiperCurrentIndex(index);
+              }}
+              autoplay={false}
+              disableGesture
+              paginationDefaultColor="lightgray"
+              paginationActiveColor={Colors.secondaryGreen}
+              paginationStyleItem={styles.swipePaginationItem}
+            >
+              {questionsAndAnswers.map((questionView, questionIndex) => (
+                <View key={questionIndex}>
+                  <EpdsQuestion
+                    questionAndAnswers={questionView}
+                    updatePressedAnswer={updatePressedAnswer}
+                  />
+                </View>
+              ))}
+            </SwiperFlatList>
           </View>
           <EpdsFooter
             swiperCurrentIndex={swiperCurrentIndex}
@@ -87,29 +92,25 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
 };
 
 const styles = StyleSheet.create({
-  description: {
-    color: Colors.commonText,
-    fontSize: 12,
-    fontWeight: FontWeight.medium,
-    lineHeight: 20,
-    paddingHorizontal: 15,
-  },
-  flexColumn: {
-    flex: 1,
-    flexDirection: "column",
-  },
   mainContainer: {
     flex: 1,
-    paddingTop: 30,
+    paddingTop: Paddings.larger
   },
-  mainView: {
-    flex: 8,
+  instruction: {
+    color: Colors.commonText,
+    fontSize: Sizes.xs,
+    fontWeight: FontWeight.medium,
+    lineHeight: Sizes.mmd,
+    paddingHorizontal: Paddings.default
+  },
+  flatListView: {
+    flex: 7
   },
   swipePaginationItem: {
-    height: 5,
-    marginHorizontal: 8,
-    width: 20,
-  },
+    height: Sizes.xxxs,
+    marginHorizontal: Margins.smaller,
+    width: Sizes.mmd
+  }
 });
 
 export default EpdsSurveyContent;
