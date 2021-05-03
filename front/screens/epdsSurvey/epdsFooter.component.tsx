@@ -23,7 +23,7 @@ const EpdsFooter: React.FC<Props> = ({
   setDisplayResult
 }) => {
   return (
-    <View style={[styles.footer]}>
+    <View style={styles.footer}>
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonContainer}>
           {swiperCurrentIndex > 0 && (
@@ -36,7 +36,7 @@ const EpdsFooter: React.FC<Props> = ({
             />
           )}
         </View>
-        <View style={[styles.buttonContainer]}>
+        <View style={styles.buttonContainer}>
           {showValidateButton ? (
             <View style={styles.justifyContentCenter}>
               <Button
