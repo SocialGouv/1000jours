@@ -12,7 +12,7 @@ export enum Sizes {
     xxl = scaleNormalize(28),
     xxxl = scaleNormalize(36),
     xxxxl = scaleNormalize(46),
-    giant = scaleNormalize(56),
+    giant = scaleNormalize(300),
   }
 
 export default Sizes;

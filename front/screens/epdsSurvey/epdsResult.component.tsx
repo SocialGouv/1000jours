@@ -28,7 +28,6 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
 
   return (
     <View>
-      <CommonText style={styles.title}>{Labels.epdsSurvey.title}</CommonText>
       <View style={styles.rowView}>
         <View>{getIcon(resultData.icon)}</View>
         <CommonText

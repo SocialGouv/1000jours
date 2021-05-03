@@ -1,19 +1,24 @@
 import { useQuery } from "@apollo/client";
-import { gql } from "@apollo/client/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
-import type { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import * as React from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, StyleSheet } from "react-native";
 
 import { CommonText } from "../../components/StyledText";
-import Labels from "../../constants/Labels";
-import type {
-  EpdsQuestionAndAnswers,
-  QuestionnaireEpdsFromDB,
-} from "../../type";
+import {
+  Colors,
+  DatabaseQueries,
+  epdsGender,
+  Labels,
+  Paddings,
+  Sizes
+} from "../../constants";
+import type { EpdsQuestionAndAnswers } from "../../type";
 import type { RootStackParamList } from "../../types";
-import { EpdsSurveyUtils } from "../../utils";
+import { EpdsSurveyUtils, StorageUtils } from "../../utils";
 import EpdsSurveyContent from "./epdsSurveyContent.component";
+import EpdsGenderEntry from "./epdsGenderEntry.component";
+import { View } from "../../components/Themed";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -25,36 +30,58 @@ interface Props {
 }
 
 const EpdsSurveyScreen: FC<Props> = () => {
-  const QUESTIONNAIRE_EPDS = gql`
-    query QuestionsReponses {
-      questionnaireEpds(sort: "ordre") {
-        ordre
-        libelle
-        reponse_1_libelle
-        reponse_1_points
-        reponse_2_libelle
-        reponse_2_points
-        reponse_3_libelle
-        reponse_3_points
-        reponse_4_libelle
-        reponse_4_points
-      }
+  const [genderIsEntered, setGenderIsEntered] = useState(false);
+
+  useEffect(() => {
+    async function getGenderFromStorage() {
+      const genderValue = await StorageUtils.getStringValue(epdsGender);
+      setGenderIsEntered(genderValue ? true : false);
     }
-  `;
-  const { loading, error, data } = useQuery(QUESTIONNAIRE_EPDS, {
-    fetchPolicy: "no-cache",
-  });
+    getGenderFromStorage();
+  }, []);
+
+  const { loading, error, data } = useQuery(
+    DatabaseQueries.QUESTIONNAIRE_EPDS,
+    {
+      fetchPolicy: "no-cache"
+    }
+  );
 
   if (loading) return <ActivityIndicator size="large" />;
   if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
 
-  const fetchedData = (data as { questionnaireEpds: QuestionnaireEpdsFromDB[] })
-    .questionnaireEpds;
-  const questionAndAnswers: EpdsQuestionAndAnswers[] = EpdsSurveyUtils.convertToQuestionsAndAnswers(
-    fetchedData
+  const questionAndAnswers: EpdsQuestionAndAnswers[] = EpdsSurveyUtils.getQuestionsAndAnswersFromData(
+    data
   );
 
-  return <EpdsSurveyContent epdsSurvey={questionAndAnswers} />;
+  const goToEpdsSurvey = () => {
+    setGenderIsEntered(true);
+  };
+
+  return (
+    <View style={styles.mainContainer}>
+      <CommonText style={styles.title}>{Labels.epdsSurvey.title}</CommonText>
+      {genderIsEntered ? (
+        <EpdsSurveyContent epdsSurvey={questionAndAnswers} />
+      ) : (
+        <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />
+      )}
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    paddingTop: Paddings.default
+  },
+  title: {
+    color: Colors.primaryBlueDark,
+    fontSize: Sizes.sm,
+    fontWeight: "bold",
+    paddingBottom: Paddings.default,
+    paddingHorizontal: Paddings.default
+  }
+});
 
 export default EpdsSurveyScreen;

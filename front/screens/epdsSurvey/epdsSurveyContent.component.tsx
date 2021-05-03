@@ -45,9 +45,6 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
       {!displayResult ? (
         <>
           <View>
-            <CommonText style={[styles.title]}>
-              {Labels.epdsSurvey.title}
-            </CommonText>
             <CommonText style={styles.description}>
               {Labels.epdsSurvey.instruction}
             </CommonText>
@@ -114,13 +111,6 @@ const styles = StyleSheet.create({
     height: 5,
     marginHorizontal: 8,
     width: 20,
-  },
-  title: {
-    color: Colors.primaryBlueDark,
-    fontSize: 15,
-    fontWeight: "bold",
-    paddingBottom: 15,
-    paddingHorizontal: 15,
   },
 });
 

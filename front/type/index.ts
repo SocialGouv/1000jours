@@ -1,4 +1,6 @@
 import {
+  EpdsGender,
+  EpdsGenders,
   EpdsAnswer,
   EpdsIconResultEnum,
   EpdsQuestionAndAnswers,
@@ -7,6 +9,8 @@ import {
 } from "./epdsSurvey.types";
 
 export {
+  EpdsGender,
+  EpdsGenders,
   EpdsAnswer,
   EpdsIconResultEnum,
   EpdsQuestionAndAnswers,

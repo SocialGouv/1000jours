@@ -21,11 +21,8 @@ import HeaderApp from "../components/HeaderApp";
 import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
-import Colors from "../constants/Colors";
-import Labels from "../constants/Labels";
-import { FontWeight } from "../constants/Layout";
-import { userProfileKey } from "../storage/storage-keys";
-import { storeObjectValue } from "../storage/storage-utils";
+import { Colors, Labels, userProfileKey, FontWeight } from "../constants";
+import { StorageUtils } from "../utils";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
 
 interface Props {
@@ -124,7 +121,7 @@ const Profile: FC<Props> = ({ navigation }) => {
   };
 
   const navigateToRoot = () => {
-    void storeObjectValue(userProfileKey, userSituations);
+    void StorageUtils.storeObjectValue(userProfileKey, userSituations);
     navigation.navigate("root");
   };
 

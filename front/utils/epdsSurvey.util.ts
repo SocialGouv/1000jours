@@ -3,11 +3,17 @@ import type {
   EpdsAnswer,
   EpdsQuestionAndAnswers,
   EpdsResultData,
-  QuestionnaireEpdsFromDB,
+  QuestionnaireEpdsFromDB
 } from "../type";
 import { EpdsIconResultEnum } from "../type";
 
-export const convertToQuestionsAndAnswers = (
+export const getQuestionsAndAnswersFromData = (data: any) => {
+  const fetchedData = (data as { questionnaireEpds: QuestionnaireEpdsFromDB[] })
+    .questionnaireEpds;
+  return convertToQuestionsAndAnswers(fetchedData);
+};
+
+const convertToQuestionsAndAnswers = (
   questionnaire: QuestionnaireEpdsFromDB[]
 ) => {
   return questionnaire.map((element) => {
@@ -17,28 +23,28 @@ export const convertToQuestionsAndAnswers = (
           id: 0,
           isChecked: false,
           label: element.reponse_1_libelle,
-          points: element.reponse_1_points,
+          points: element.reponse_1_points
         },
         {
           id: 1,
           isChecked: false,
           label: element.reponse_2_libelle,
-          points: element.reponse_2_points,
+          points: element.reponse_2_points
         },
         {
           id: 2,
           isChecked: false,
           label: element.reponse_3_libelle,
-          points: element.reponse_3_points,
+          points: element.reponse_3_points
         },
         {
           id: 3,
           isChecked: false,
           label: element.reponse_4_libelle,
-          points: element.reponse_4_points,
-        },
+          points: element.reponse_4_points
+        }
       ],
-      question: element.libelle,
+      question: element.libelle
     };
   });
 };
@@ -95,19 +101,19 @@ export const getResultLabelAndStyle = (result: number): EpdsResultData => {
     return {
       colorStyle: greenColor,
       icon: EpdsIconResultEnum.BIEN,
-      resultLabels: labelsResultats.moinsDeNeuf,
+      resultLabels: labelsResultats.moinsDeNeuf
     };
   } else if (result <= 12) {
     return {
       colorStyle: yellowColor,
       icon: EpdsIconResultEnum.MOYEN,
-      resultLabels: labelsResultats.entreDixEtDouze,
+      resultLabels: labelsResultats.entreDixEtDouze
     };
   } else {
     return {
       colorStyle: redColor,
       icon: EpdsIconResultEnum.PAS_BIEN,
-      resultLabels: labelsResultats.plusDeTreize,
+      resultLabels: labelsResultats.plusDeTreize
     };
   }
 };
