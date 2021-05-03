@@ -2,6 +2,6 @@ import Colors from "./Colors";
 import Labels from "./Labels";
 import Layouts, { FontWeight } from "./Layout";
 import Sizes from "./sizes";
-import Spacings from "./spacings";
+import { Margins, Paddings } from "./spacings";
 
-export { Colors, Labels, Layouts, FontWeight, Sizes, Spacings };
+export { Colors, Labels, Layouts, FontWeight, Sizes, Margins, Paddings };
