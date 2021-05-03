@@ -2,15 +2,13 @@ import * as React from "react";
 import { useRef, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
+import { EpdsFooter, EpdsQuestion, EpdsResult } from "..";
 
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import { Colors, FontWeight, Labels } from "../../constants";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils } from "../../utils";
-import EpdsFooter from "./epdsFooter.component";
-import EpdsQuestion from "./epdsQuestion.component";
-import EpdsResult from "./epdsResult.component";
 
 interface Props {
   epdsSurvey: EpdsQuestionAndAnswers[];
@@ -22,7 +20,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
     EpdsQuestionAndAnswers[]
   >(epdsSurvey);
-  const [displayResult, setDisplayResult] = useState(false);
+  const [displayResult, setDisplayResult] = useState(true);
   const [score, setScore] = useState(0);
 
   const questionIsAnswered =

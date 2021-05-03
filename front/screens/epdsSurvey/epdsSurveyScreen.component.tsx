@@ -17,9 +17,8 @@ import {
 import type { EpdsQuestionAndAnswers } from "../../type";
 import type { RootStackParamList } from "../../types";
 import { EpdsSurveyUtils, StorageUtils } from "../../utils";
-import EpdsSurveyContent from "./epdsSurveyContent.component";
-import EpdsGenderEntry from "./epdsGenderEntry.component";
 import { View } from "../../components/Themed";
+import { EpdsGenderEntry, EpdsSurveyContent } from "..";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
