@@ -1,11 +1,11 @@
 const fs = require("fs");
 const path = require("path");
 const fetch = require("node-fetch");
+require('dotenv').config()
 
 const SEED_DIR = "seeds";
 
-const API_URL =
-  "http://backoffice-preprod-les1000jours.dev2.fabrique.social.gouv.fr";
+const { IMPORT_URL } = process.env;
 
 const plural = (str) => `${str}s`.replace(/ss$/, "s");
 
@@ -15,7 +15,7 @@ const main = async () => {
   for (const model of models) {
     const modelPlural = plural(model);
 
-    const url = new URL(`${modelPlural}?_sort=id`, API_URL).href;
+    const url = new URL(`${modelPlural}?_sort=id`, IMPORT_URL).href;
 
     console.log(`fetching ${url}`);
 
@@ -32,6 +32,4 @@ const main = async () => {
   }
 };
 
-main()
-  .catch(console.error)
-  .finally(() => {});
+main().catch(console.error);
