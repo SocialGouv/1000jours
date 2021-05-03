@@ -5,9 +5,7 @@ import { SwiperFlatList } from "react-native-swiper-flatlist";
 
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
-import Colors from "../../constants/Colors";
-import Labels from "../../constants/Labels";
-import { FontWeight } from "../../constants/Layout";
+import { Colors, FontWeight, Labels } from "../../constants";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils } from "../../utils";
 import EpdsFooter from "./epdsFooter.component";

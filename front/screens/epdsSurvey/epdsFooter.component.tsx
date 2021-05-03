@@ -6,8 +6,8 @@ import BackButton from "../../components/BackButton";
 import Button from "../../components/form/Button";
 import Icomoon, { IcomoonIcons } from "../../components/Icomoon";
 import { View } from "../../components/Themed";
-import Colors from "../../constants/Colors";
-import Labels from "../../constants/Labels";
+import { Colors, Labels } from "../../constants";
+
 
 interface Props {
   swiperCurrentIndex: number;

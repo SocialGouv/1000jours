@@ -1,6 +1,4 @@
-import Colors from "../constants/Colors";
-import Labels from "../constants/Labels";
-import EpdsResult from "../screens/epdsSurvey/epdsResult.component";
+import { Colors, Labels } from "../constants";
 import type {
   EpdsAnswer,
   EpdsQuestionAndAnswers,

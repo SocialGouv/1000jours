@@ -6,9 +6,7 @@ import IconeResultatMoyen from "../../assets/images/icone_resultats_moyen.svg";
 import IconeResultatPasBien from "../../assets/images/icone_resultats_pasbien.svg";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
-import Colors from "../../constants/Colors";
-import Labels from "../../constants/Labels";
-import { FontWeight } from "../../constants/Layout";
+import { Colors, FontWeight, Labels } from "../../constants";
 import { EpdsIconResultEnum } from "../../type";
 import { EpdsSurveyUtils } from "../../utils";
 
@@ -50,7 +48,6 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
   );
 };
 
-const width = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   description: {
     color: Colors.commonText,
