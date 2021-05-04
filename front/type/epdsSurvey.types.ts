@@ -2,6 +2,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { EpdsConstants, Labels } from "../constants";
 
+export interface EpdsGenderType {
+  id: number;
+  element: { label: string; value: EpdsConstants.EpdsGender };
+  isChecked: boolean;
+}
+
 export const EpdsGenders = [
   {
     label: Labels.epdsSurvey.genderEntry.choices.male,

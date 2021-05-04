@@ -1,20 +1,21 @@
-import { Picker } from "@react-native-picker/picker";
 import * as React from "react";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 
 import Button from "../../components/form/Button";
+import Checkbox from "../../components/form/Checkbox";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
   Colors,
-  epdsGender,
+  epdsGenderKey,
   FontWeight,
   Labels,
   Margins,
   Paddings,
   Sizes,
 } from "../../constants";
+import type { EpdsGenderType } from "../../type";
 import { EpdsGenders } from "../../type";
 import { StorageUtils } from "../../utils";
 
@@ -25,31 +26,47 @@ interface EpdsGenderEntryProps {
 const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
   goToEpdsSurvey,
 }) => {
+  const gendersArray: EpdsGenderType[] = [
+    {
+      element: { label: EpdsGenders[0].label, value: EpdsGenders[0].value },
+      id: 1,
+      isChecked: false,
+    },
+    {
+      element: { label: EpdsGenders[1].label, value: EpdsGenders[1].value },
+      id: 2,
+      isChecked: false,
+    },
+    {
+      element: { label: EpdsGenders[2].label, value: EpdsGenders[2].value },
+      id: 3,
+      isChecked: false,
+    },
+  ];
+
+  const [epdsGenders, setEpdsGenders] = useState<EpdsGenderType[]>(
+    gendersArray
+  );
   const [selectedGender, setSelectedGender] = useState<string | undefined>();
   const [genderIsSelected, setGenderIsSelected] = useState(false);
 
-  const renderPickerItems = EpdsGenders.map(
-    (gender: { value: string; label: string }) => {
-      return (
-        <Picker.Item
-          label={gender.label}
-          value={gender.value}
-          key={gender.value}
-        />
-      );
-    }
-  );
-
-  const onPickerValueChanged = (
-    newSelectedGender: React.SetStateAction<string | undefined>
-  ) => {
-    setSelectedGender(newSelectedGender);
-    setGenderIsSelected(true);
+  const updateGendersArray = (epdsGender: EpdsGenderType) => {
+    setEpdsGenders(() => {
+      return gendersArray.map((item) => {
+        if (item.id === epdsGender.id) {
+          setSelectedGender(epdsGender.element.value);
+          setGenderIsSelected(true);
+          return { ...item, isChecked: !epdsGender.isChecked };
+        } else {
+          return item;
+        }
+      });
+    });
   };
 
   const onGenderSaved = async () => {
     if (selectedGender) {
-      await StorageUtils.storeStringValue(epdsGender, selectedGender);
+      await StorageUtils.storeStringValue(epdsGenderKey, selectedGender);
       goToEpdsSurvey();
     }
   };
@@ -59,13 +76,17 @@ const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
       <CommonText style={styles.instruction}>
         {Labels.epdsSurvey.genderEntry.instruction}
       </CommonText>
-      <Picker
-        style={styles.pickerView}
-        selectedValue={selectedGender}
-        onValueChange={onPickerValueChanged}
-      >
-        {renderPickerItems}
-      </Picker>
+      {epdsGenders.map((genderElement, index) => (
+        <View key={index}>
+          <Checkbox
+            title={genderElement.element.label}
+            checked={genderElement.isChecked}
+            onPress={() => {
+              updateGendersArray(genderElement);
+            }}
+          />
+        </View>
+      ))}
       <View style={styles.validateButton}>
         <Button
           title={Labels.buttons.validate}
@@ -86,7 +107,7 @@ const styles = StyleSheet.create({
     padding: Paddings.default,
   },
   mainContainer: {
-    alignItems: "center",
+    alignSelf: "center",
     flex: 1,
     justifyContent: "center",
   },
@@ -96,6 +117,7 @@ const styles = StyleSheet.create({
     width: Sizes.giant,
   },
   validateButton: {
+    alignItems: "center",
     marginTop: Margins.larger,
   },
 });

@@ -9,7 +9,7 @@ import { View } from "../../components/Themed";
 import {
   Colors,
   DatabaseQueries,
-  epdsGender,
+  epdsGenderKey,
   FontWeight,
   Labels,
   Paddings,
@@ -34,7 +34,7 @@ const EpdsSurveyScreen: FC<Props> = () => {
 
   useEffect(() => {
     async function getGenderFromStorage() {
-      const genderValue = await StorageUtils.getStringValue(epdsGender);
+      const genderValue = await StorageUtils.getStringValue(epdsGenderKey);
       setGenderIsEntered(genderValue ? true : false);
     }
     void getGenderFromStorage();

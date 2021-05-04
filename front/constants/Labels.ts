@@ -28,7 +28,7 @@ export default {
       "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement aujourd'hui.",
     title: "Autodépistage dépression post-partum",
     genderEntry: {
-      instruction: "Veuillez renseignez votre genre",
+      instruction: "Veuillez renseigner votre civilité",
       choices: {
         male: "Homme",
         female: "Femme",

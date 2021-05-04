@@ -6,7 +6,7 @@ import Layouts, { FontWeight } from "./Layout";
 import Sizes from "./sizes";
 import { Margins, Paddings } from "./spacings";
 import {
-  epdsGender,
+  epdsGenderKey,
   isFirstLaunchKey,
   storageAllKeys,
   userProfileKey,
@@ -16,7 +16,7 @@ export {
   Colors,
   DatabaseQueries,
   EpdsConstants,
-  epdsGender,
+  epdsGenderKey,
   FontWeight,
   isFirstLaunchKey,
   Labels,
