@@ -1,7 +1,9 @@
+import { Picker } from "@react-native-picker/picker";
 import * as React from "react";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 
+import Button from "../../components/form/Button";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
@@ -11,36 +13,36 @@ import {
   Labels,
   Margins,
   Paddings,
-  Sizes
+  Sizes,
 } from "../../constants";
-import { Picker } from "@react-native-picker/picker";
 import { EpdsGenders } from "../../type";
-import Button from "../../components/form/Button";
 import { StorageUtils } from "../../utils";
 
-type EpdsGenderEntryProps = {
+interface EpdsGenderEntryProps {
   goToEpdsSurvey: () => void;
-};
+}
 
 const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
-  goToEpdsSurvey
+  goToEpdsSurvey,
 }) => {
   const [selectedGender, setSelectedGender] = useState<string | undefined>();
   const [genderIsSelected, setGenderIsSelected] = useState(false);
 
   const renderPickerItems = EpdsGenders.map(
-    (epdsGender: { value: string; label: string }) => {
+    (gender: { value: string; label: string }) => {
       return (
         <Picker.Item
-          label={epdsGender.label}
-          value={epdsGender.value}
-          key={epdsGender.value}
+          label={gender.label}
+          value={gender.value}
+          key={gender.value}
         />
       );
     }
   );
 
-  const onPickerValueChanged = (newSelectedGender: any, _: number) => {
+  const onPickerValueChanged = (
+    newSelectedGender: React.SetStateAction<string | undefined>
+  ) => {
     setSelectedGender(newSelectedGender);
     setGenderIsSelected(true);
   };
@@ -77,25 +79,25 @@ const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  },
   instruction: {
     color: Colors.commonText,
     fontSize: Sizes.xs,
     fontWeight: FontWeight.medium,
-    padding: Paddings.default
+    padding: Paddings.default,
+  },
+  mainContainer: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
   },
   pickerView: {
-    width: Sizes.giant,
+    color: Colors.commonText,
     height: Sizes.xxl,
-    color: Colors.commonText
+    width: Sizes.giant,
   },
   validateButton: {
-    marginTop: Margins.larger
-  }
+    marginTop: Margins.larger,
+  },
 });
 
 export default EpdsGenderEntry;

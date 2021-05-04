@@ -1,27 +1,27 @@
 import Colors from "./Colors";
-import * as DatabaseQueries from "./databaseQueries";
+import * as DatabaseQueries from "./databaseQueries.constants";
 import Labels from "./Labels";
 import Layouts, { FontWeight } from "./Layout";
 import Sizes from "./sizes";
 import { Margins, Paddings } from "./spacings";
 import {
-  isFirstLaunchKey,
-  userProfileKey,
   epdsGender,
-  storageAllKeys
+  isFirstLaunchKey,
+  storageAllKeys,
+  userProfileKey,
 } from "./storageKeys";
 
 export {
   Colors,
   DatabaseQueries,
+  epdsGender,
+  FontWeight,
+  isFirstLaunchKey,
   Labels,
   Layouts,
-  FontWeight,
-  Sizes,
   Margins,
   Paddings,
-  isFirstLaunchKey,
+  Sizes,
+  storageAllKeys,
   userProfileKey,
-  epdsGender,
-  storageAllKeys
 };
