@@ -38,7 +38,7 @@ const EpdsSurveyScreen: FC<Props> = () => {
       const genderValue = await StorageUtils.getStringValue(epdsGender);
       setGenderIsEntered(genderValue ? true : false);
     }
-    getGenderFromStorage();
+    void getGenderFromStorage();
   }, []);
 
   const { loading, error, data } = useQuery(

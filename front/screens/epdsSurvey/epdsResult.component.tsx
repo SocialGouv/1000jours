@@ -63,9 +63,9 @@ const styles = StyleSheet.create({
     marginLeft: Margins.default,
   },
   stateOfMind: {
+    alignSelf: "center",
     fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
-    marginTop: Margins.smaller,
     paddingHorizontal: Paddings.default,
   },
   text: {

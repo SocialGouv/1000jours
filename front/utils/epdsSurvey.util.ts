@@ -104,19 +104,19 @@ export const getResultLabelAndStyle = (result: number): EpdsResultData => {
   if (result <= 9) {
     return {
       colorStyle: greenColor,
-      icon: EpdsIconResultEnum.BIEN,
+      icon: EpdsIconResultEnum.bien,
       resultLabels: labelsResultats.moinsDeNeuf,
     };
   } else if (result <= 12) {
     return {
       colorStyle: yellowColor,
-      icon: EpdsIconResultEnum.MOYEN,
+      icon: EpdsIconResultEnum.moyen,
       resultLabels: labelsResultats.entreDixEtDouze,
     };
   } else {
     return {
       colorStyle: redColor,
-      icon: EpdsIconResultEnum.PAS_BIEN,
+      icon: EpdsIconResultEnum.pasBien,
       resultLabels: labelsResultats.plusDeTreize,
     };
   }
