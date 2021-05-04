@@ -4,16 +4,15 @@ import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import type { FC } from "react";
 import * as React from "react";
-// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import IcomoonFont from "./assets/icomoon/icomoon.ttf";
 import { initLocales } from "./config/calendar-config";
+import { storageAllKeys } from "./constants";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
-import { allKeys } from "./storage/storage-keys";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -43,7 +42,7 @@ const App: FC = () => {
       });
   }, []);
 
-  if (process.env.CLEAR_STORAGE) void AsyncStorage.multiRemove(allKeys);
+  if (process.env.CLEAR_STORAGE) void AsyncStorage.multiRemove(storageAllKeys);
 
   if (!fontsLoaded || !isLoadingComplete) {
     return null;

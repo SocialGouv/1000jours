@@ -2,7 +2,6 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import { filter, find } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
-// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useEffect, useState } from "react";
 import {
   Alert,
@@ -21,9 +20,9 @@ import HeaderApp from "../components/HeaderApp";
 import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
-import { Colors, Labels, userProfileKey, FontWeight } from "../constants";
-import { StorageUtils } from "../utils";
+import { Colors, FontWeight, Labels, userProfileKey } from "../constants";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
+import { StorageUtils } from "../utils";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, "profile">;

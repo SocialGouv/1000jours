@@ -1,10 +1,12 @@
 import { useQuery } from "@apollo/client";
 import type { StackNavigationProp } from "@react-navigation/stack";
-import { FC, useEffect, useState } from "react";
+import type { FC } from "react";
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 
 import { CommonText } from "../../components/StyledText";
+import { View } from "../../components/Themed";
 import {
   Colors,
   DatabaseQueries,
@@ -12,12 +14,11 @@ import {
   FontWeight,
   Labels,
   Paddings,
-  Sizes
+  Sizes,
 } from "../../constants";
 import type { EpdsQuestionAndAnswers } from "../../type";
 import type { RootStackParamList } from "../../types";
 import { EpdsSurveyUtils, StorageUtils } from "../../utils";
-import { View } from "../../components/Themed";
 import { EpdsGenderEntry, EpdsSurveyContent } from "..";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
@@ -43,7 +44,7 @@ const EpdsSurveyScreen: FC<Props> = () => {
   const { loading, error, data } = useQuery(
     DatabaseQueries.QUESTIONNAIRE_EPDS,
     {
-      fetchPolicy: "no-cache"
+      fetchPolicy: "no-cache",
     }
   );
 
@@ -73,14 +74,14 @@ const EpdsSurveyScreen: FC<Props> = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    paddingTop: Paddings.default
+    paddingTop: Paddings.default,
   },
   title: {
     color: Colors.primaryBlueDark,
     fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
-    paddingHorizontal: Paddings.default
-  }
+    paddingHorizontal: Paddings.default,
+  },
 });
 
 export default EpdsSurveyScreen;

@@ -1,8 +1,8 @@
 import * as React from "react";
+// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
-import { EpdsFooter, EpdsQuestion, EpdsResult } from "..";
 
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
@@ -12,10 +12,11 @@ import {
   Labels,
   Margins,
   Paddings,
-  Sizes
+  Sizes,
 } from "../../constants";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils } from "../../utils";
+import { EpdsFooter, EpdsQuestion, EpdsResult } from "..";
 
 interface Props {
   epdsSurvey: EpdsQuestionAndAnswers[];
@@ -92,25 +93,25 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    paddingTop: Paddings.larger
+  flatListView: {
+    flex: 7,
   },
   instruction: {
     color: Colors.commonText,
     fontSize: Sizes.xs,
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.mmd,
-    paddingHorizontal: Paddings.default
+    paddingHorizontal: Paddings.default,
   },
-  flatListView: {
-    flex: 7
+  mainContainer: {
+    flex: 1,
+    paddingTop: Paddings.larger,
   },
   swipePaginationItem: {
     height: Sizes.xxxs,
     marginHorizontal: Margins.smaller,
-    width: Sizes.mmd
-  }
+    width: Sizes.mmd,
+  },
 });
 
 export default EpdsSurveyContent;

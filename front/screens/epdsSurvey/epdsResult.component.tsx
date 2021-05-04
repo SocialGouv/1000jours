@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
@@ -12,7 +13,7 @@ import {
   Labels,
   Margins,
   Paddings,
-  Sizes
+  Sizes,
 } from "../../constants";
 import { EpdsIconResultEnum } from "../../type";
 import { EpdsSurveyUtils } from "../../utils";
@@ -27,9 +28,9 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
 
   const getIcon = (icone: EpdsIconResultEnum) => {
     const iconsMap = new Map<EpdsIconResultEnum, React.ReactNode>();
-    iconsMap.set(EpdsIconResultEnum.BIEN, <IconeResultatBien />);
-    iconsMap.set(EpdsIconResultEnum.MOYEN, <IconeResultatMoyen />);
-    iconsMap.set(EpdsIconResultEnum.PAS_BIEN, <IconeResultatPasBien />);
+    iconsMap.set(EpdsIconResultEnum.bien, <IconeResultatBien />);
+    iconsMap.set(EpdsIconResultEnum.moyen, <IconeResultatMoyen />);
+    iconsMap.set(EpdsIconResultEnum.pasBien, <IconeResultatPasBien />);
     return iconsMap.get(icone);
   };
 
@@ -53,15 +54,19 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
 };
 
 const styles = StyleSheet.create({
+  fontBold: {
+    fontSize: Sizes.xs,
+    fontWeight: FontWeight.bold,
+  },
   rowView: {
     flexDirection: "row",
-    marginLeft: Margins.default
+    marginLeft: Margins.default,
   },
   stateOfMind: {
-    fontWeight: FontWeight.bold,
     fontSize: Sizes.sm,
+    fontWeight: FontWeight.bold,
     marginTop: Margins.smaller,
-    paddingHorizontal: Paddings.default
+    paddingHorizontal: Paddings.default,
   },
   text: {
     color: Colors.commonText,
@@ -69,12 +74,8 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.mmd,
     paddingHorizontal: Paddings.default,
-    paddingTop: Paddings.default
+    paddingTop: Paddings.default,
   },
-  fontBold: {
-    fontSize: Sizes.xs,
-    fontWeight: FontWeight.bold
-  }
 });
 
 export default EpdsResult;

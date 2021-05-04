@@ -1,6 +1,7 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import type SwiperFlatListRefProps from "react-native-swiper-flatlist";
+
 import BackButton from "../../components/BackButton";
 import Button from "../../components/form/Button";
 import Icomoon, { IcomoonIcons } from "../../components/Icomoon";
@@ -20,7 +21,7 @@ const EpdsFooter: React.FC<Props> = ({
   swiperRef,
   showValidateButton,
   questionIsAnswered,
-  setDisplayResult
+  setDisplayResult,
 }) => {
   return (
     <View style={styles.footer}>
@@ -30,7 +31,7 @@ const EpdsFooter: React.FC<Props> = ({
             <BackButton
               action={() => {
                 swiperRef.current?.scrollToIndex({
-                  index: swiperCurrentIndex - 1
+                  index: swiperCurrentIndex - 1,
                 });
               }}
             />
@@ -63,7 +64,7 @@ const EpdsFooter: React.FC<Props> = ({
                 }
                 action={() => {
                   swiperRef.current?.scrollToIndex({
-                    index: swiperCurrentIndex + 1
+                    index: swiperCurrentIndex + 1,
                   });
                 }}
               />
@@ -76,20 +77,20 @@ const EpdsFooter: React.FC<Props> = ({
 };
 
 const styles = StyleSheet.create({
-  footer: {
-    flex: 1,
-    paddingVertical: Paddings.default
-  },
   buttonContainer: {
-    flex: 1
+    flex: 1,
   },
   buttonsContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
+  },
+  footer: {
+    flex: 1,
+    paddingVertical: Paddings.default,
   },
   justifyContentCenter: {
     alignItems: "center",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
 
 export default EpdsFooter;

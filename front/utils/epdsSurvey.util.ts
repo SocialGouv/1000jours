@@ -3,11 +3,13 @@ import type {
   EpdsAnswer,
   EpdsQuestionAndAnswers,
   EpdsResultData,
-  QuestionnaireEpdsFromDB
+  QuestionnaireEpdsFromDB,
 } from "../type";
 import { EpdsIconResultEnum } from "../type";
 
-export const getQuestionsAndAnswersFromData = (data: any) => {
+export const getQuestionsAndAnswersFromData = (
+  data: unknown
+): EpdsQuestionAndAnswers[] => {
   const fetchedData = (data as { questionnaireEpds: QuestionnaireEpdsFromDB[] })
     .questionnaireEpds;
   return convertToQuestionsAndAnswers(fetchedData);
@@ -23,28 +25,28 @@ const convertToQuestionsAndAnswers = (
           id: 0,
           isChecked: false,
           label: element.reponse_1_libelle,
-          points: element.reponse_1_points
+          points: element.reponse_1_points,
         },
         {
           id: 1,
           isChecked: false,
           label: element.reponse_2_libelle,
-          points: element.reponse_2_points
+          points: element.reponse_2_points,
         },
         {
           id: 2,
           isChecked: false,
           label: element.reponse_3_libelle,
-          points: element.reponse_3_points
+          points: element.reponse_3_points,
         },
         {
           id: 3,
           isChecked: false,
           label: element.reponse_4_libelle,
-          points: element.reponse_4_points
-        }
+          points: element.reponse_4_points,
+        },
       ],
-      question: element.libelle
+      question: element.libelle,
     };
   });
 };
@@ -53,7 +55,7 @@ export const getUpdatedSurvey = (
   questionsAndAnswers: EpdsQuestionAndAnswers[],
   selectedQuestionIndex: number,
   selectedAnswer: EpdsAnswer
-) => {
+): EpdsQuestionAndAnswers[] => {
   return questionsAndAnswers.map((question, questionIndex) => {
     const questionIsCurrent = questionIndex === selectedQuestionIndex;
     const answers = questionIsCurrent
@@ -73,7 +75,7 @@ export const getUpdatedSurvey = (
 
 export const getUpdatedScore = (
   questionsAndAnswers: EpdsQuestionAndAnswers[]
-) => {
+): number => {
   let score = 0;
   questionsAndAnswers.forEach((question) => {
     const answeredQuestionPoints = question.answers.find(
@@ -86,7 +88,9 @@ export const getUpdatedScore = (
   return score;
 };
 
-export const getCurrentQuestionPoints = (question: EpdsQuestionAndAnswers) => {
+export const getCurrentQuestionPoints = (
+  question: EpdsQuestionAndAnswers
+): number | undefined => {
   return question.answers.find((answer) => answer.isChecked)?.points;
 };
 
@@ -101,19 +105,19 @@ export const getResultLabelAndStyle = (result: number): EpdsResultData => {
     return {
       colorStyle: greenColor,
       icon: EpdsIconResultEnum.BIEN,
-      resultLabels: labelsResultats.moinsDeNeuf
+      resultLabels: labelsResultats.moinsDeNeuf,
     };
   } else if (result <= 12) {
     return {
       colorStyle: yellowColor,
       icon: EpdsIconResultEnum.MOYEN,
-      resultLabels: labelsResultats.entreDixEtDouze
+      resultLabels: labelsResultats.entreDixEtDouze,
     };
   } else {
     return {
       colorStyle: redColor,
       icon: EpdsIconResultEnum.PAS_BIEN,
-      resultLabels: labelsResultats.plusDeTreize
+      resultLabels: labelsResultats.plusDeTreize,
     };
   }
 };
