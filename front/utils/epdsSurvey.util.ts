@@ -16,8 +16,8 @@ export const getQuestionsAndAnswersFromData = (
 
 const convertToQuestionsAndAnswers = (
   questionnaire: QuestionnaireEpdsFromDB[]
-) => {
-  return questionnaire.map((element) => {
+) =>
+  questionnaire.map((element) => {
     return {
       answers: [
         {
@@ -48,14 +48,13 @@ const convertToQuestionsAndAnswers = (
       question: element.libelle,
     };
   });
-};
 
 export const getUpdatedSurvey = (
   questionsAndAnswers: EpdsQuestionAndAnswers[],
   selectedQuestionIndex: number,
   selectedAnswer: EpdsAnswer
-): EpdsQuestionAndAnswers[] => {
-  return questionsAndAnswers.map((question, questionIndex) => {
+): EpdsQuestionAndAnswers[] =>
+  questionsAndAnswers.map((question, questionIndex) => {
     const questionIsCurrent = questionIndex === selectedQuestionIndex;
     const answers = questionIsCurrent
       ? question.answers.map((answer) => {
@@ -70,7 +69,6 @@ export const getUpdatedSurvey = (
 
     return { ...question, answers };
   });
-};
 
 export const getUpdatedScore = (
   questionsAndAnswers: EpdsQuestionAndAnswers[]

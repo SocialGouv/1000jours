@@ -1,3 +1,4 @@
+import { range } from "lodash";
 import * as React from "react";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
@@ -26,23 +27,16 @@ interface EpdsGenderEntryProps {
 const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
   goToEpdsSurvey,
 }) => {
-  const gendersArray: EpdsGenderType[] = [
-    {
-      element: { label: EpdsGenders[0].label, value: EpdsGenders[0].value },
-      id: 1,
+  const gendersArray: EpdsGenderType[] = range(3).map((index) => {
+    return {
+      element: {
+        label: EpdsGenders[index].label,
+        value: EpdsGenders[index].value,
+      },
+      id: index,
       isChecked: false,
-    },
-    {
-      element: { label: EpdsGenders[1].label, value: EpdsGenders[1].value },
-      id: 2,
-      isChecked: false,
-    },
-    {
-      element: { label: EpdsGenders[2].label, value: EpdsGenders[2].value },
-      id: 3,
-      isChecked: false,
-    },
-  ];
+    };
+  });
 
   const [epdsGenders, setEpdsGenders] = useState<EpdsGenderType[]>(
     gendersArray

@@ -33,10 +33,10 @@ const EpdsSurveyScreen: FC<Props> = () => {
   const [genderIsEntered, setGenderIsEntered] = useState(false);
 
   useEffect(() => {
-    async function getGenderFromStorage() {
+    const getGenderFromStorage = async () => {
       const genderValue = await StorageUtils.getStringValue(epdsGenderKey);
       setGenderIsEntered(genderValue ? true : false);
-    }
+    };
     void getGenderFromStorage();
   }, []);
 
