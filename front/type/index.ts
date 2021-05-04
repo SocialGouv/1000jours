@@ -2,6 +2,7 @@ import { DataFetchingType } from "./dataFetching.types";
 import {
   EpdsAnswer,
   EpdsGenders,
+  EpdsGenderType,
   EpdsQuestionAndAnswers,
   EpdsResultData,
   QuestionnaireEpdsFromDB,
@@ -11,6 +12,7 @@ export {
   DataFetchingType,
   EpdsAnswer,
   EpdsGenders,
+  EpdsGenderType,
   EpdsQuestionAndAnswers,
   EpdsResultData,
   QuestionnaireEpdsFromDB,

@@ -15,7 +15,7 @@ interface Props {
 
 const EpdsQuestion: React.FC<Props> = ({
   questionAndAnswers,
-  updatePressedAnswer
+  updatePressedAnswer,
 }) => {
   return (
     <View style={[styles.swipeView, styles.justifyContentCenter]}>
@@ -40,22 +40,22 @@ const EpdsQuestion: React.FC<Props> = ({
 
 const width = Dimensions.get("window").width;
 const styles = StyleSheet.create({
+  justifyContentCenter: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
   question: {
     color: Colors.primaryBlueDark,
     fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
-    paddingBottom: Paddings.default
-  },
-  justifyContentCenter: {
-    alignItems: "center",
-    justifyContent: "center"
+    paddingBottom: Paddings.default,
   },
   swipeView: {
-    width
+    width,
   },
   swipeViewMargin: {
-    margin: "10%"
-  }
+    margin: "10%",
+  },
 });
 
 export default EpdsQuestion;

@@ -11,5 +11,5 @@ export {
   EpdsQuestion,
   EpdsResult,
   EpdsSurveyContent,
-  EpdsSurveyScreen
+  EpdsSurveyScreen,
 };

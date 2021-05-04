@@ -14,8 +14,7 @@ import HeaderApp from "../components/HeaderApp";
 import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
-import { isFirstLaunchKey } from "../constants";
-import { Colors, Labels, FontWeight } from "../constants";
+import { Colors, FontWeight, isFirstLaunchKey, Labels } from "../constants";
 import type { RootStackParamList } from "../types";
 import { StorageUtils } from "../utils";
 

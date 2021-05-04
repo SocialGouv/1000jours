@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-implicit-any-catch */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const getStringValue = async (storageKey: string) => {
@@ -11,6 +12,7 @@ export const getStringValue = async (storageKey: string) => {
 export const getObjectValue = async (storageKey: string) => {
   try {
     const jsonValue = await AsyncStorage.getItem(storageKey);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return jsonValue !== null ? JSON.parse(jsonValue) : null;
   } catch (error) {
     console.error(error);
