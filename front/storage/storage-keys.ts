@@ -1,4 +1,9 @@
 export const isFirstLaunchKey = "@isFirstLaunch";
-export const userProfileKey = "@userProfile";
+export const userSituationsKey = "@userSituations";
+export const userChildBirthdayKey = "@userChildBirthday";
 
-export const allKeys = [isFirstLaunchKey, userProfileKey];
+export const allKeys = [
+  isFirstLaunchKey,
+  userSituationsKey,
+  userChildBirthdayKey,
+];

@@ -20,6 +20,40 @@ export default {
   calendar: {
     description:
       "Ici vous pouvez suivre tous vos rendez-vous et autres événements prévus. Vous pouvez y ajouter plusieurs informations.",
+    noChildBirthday: "Aucune date de naissance",
+    noEventMessage: "Aucun événement",
+  },
+  epdsSurvey: {
+    description:
+      "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.",
+    instruction:
+      "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement aujourd'hui.",
+    questionsAnswers: [
+      {
+        answer1: "Aussi souvent que d’habitude",
+        answer2: "Pas tout-à-fait autant",
+        answer3: "Vraiment beaucoup moins souvent ces jours-ci",
+        answer4: "Absolument pas",
+        question: "J’ai pu rire et prendre les choses du bon côté",
+      },
+      {
+        answer1: "Autant que d’habitude",
+        answer2: "Plutôt moins que d’habitude",
+        answer3: "Vraiment moins que d’habitude",
+        answer4: "Pratiquement pas",
+        question:
+          "Je me suis sentie confiante et joyeuse, en pensant à l’avenir",
+      },
+      {
+        answer1: "Oui, la plupart du temps",
+        answer2: "Oui, parfois",
+        answer3: "Pas très souvent",
+        answer4: "Non, jamais",
+        question:
+          "Je me suis reprochée, sans raisons, d’être responsable quand les choses allaient mal",
+      },
+    ],
+    title: "Autodépistage dépression post-partum",
   },
   epdsSurvey: {
     description:

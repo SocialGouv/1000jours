@@ -1,4 +1,5 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
+import { format } from "date-fns";
 import { filter, find } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
@@ -24,8 +25,11 @@ import { View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
 import { FontWeight } from "../constants/Layout";
-import { userProfileKey } from "../storage/storage-keys";
-import { storeObjectValue } from "../storage/storage-utils";
+import {
+  userChildBirthdayKey,
+  userSituationsKey,
+} from "../storage/storage-keys";
+import { storeObjectValue, storeStringValue } from "../storage/storage-utils";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
 
 interface Props {
@@ -106,16 +110,23 @@ const Profile: FC<Props> = ({ navigation }) => {
 
   const validateForm = () => {
     if (!childBirthdayIsNeeded() || isValidDate(+day, +month, +year)) {
+      void storeObjectValue(userSituationsKey, userSituations);
+      void storeStringValue(
+        userChildBirthdayKey,
+        format(createDate(+day, +month, +year), "yyyy-MM-dd")
+      );
       navigation.navigate("root");
     } else {
       Alert.alert(Labels.invalidDate);
     }
   };
 
+  const createDate = (_day: number, _month: number, _year: number) => {
+    return new Date(Date.UTC(_year, _month - 1, _day));
+  };
+
   const isValidDate = (_day: number, _month: number, _year: number) => {
-    const dateStr =
-      _year.toString() + "/" + _month.toString() + "/" + _day.toString();
-    const date = new Date(dateStr);
+    const date = createDate(_day, _month, _year);
     return (
       date.getFullYear() === _year &&
       date.getMonth() === _month - 1 &&
@@ -124,7 +135,6 @@ const Profile: FC<Props> = ({ navigation }) => {
   };
 
   const navigateToRoot = () => {
-    void storeObjectValue(userProfileKey, userSituations);
     navigation.navigate("root");
   };
 
