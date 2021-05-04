@@ -64,16 +64,14 @@ const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
       >
         {renderPickerItems}
       </Picker>
-      {genderIsSelected && (
-        <View style={styles.validateButton}>
-          <Button
-            title={Labels.buttons.validate}
-            rounded={true}
-            disabled={false}
-            action={onGenderSaved}
-          />
-        </View>
-      )}
+      <View style={styles.validateButton}>
+        <Button
+          title={Labels.buttons.validate}
+          rounded={true}
+          disabled={!genderIsSelected}
+          action={onGenderSaved}
+        />
+      </View>
     </View>
   );
 };
