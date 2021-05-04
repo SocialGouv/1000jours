@@ -87,9 +87,8 @@ export const getUpdatedScore = (
 
 export const getCurrentQuestionPoints = (
   question: EpdsQuestionAndAnswers
-): number | undefined => {
-  return question.answers.find((answer) => answer.isChecked)?.points;
-};
+): number | undefined =>
+  question.answers.find((answer) => answer.isChecked)?.points;
 
 export const getResultLabelAndStyle = (result: number): EpdsResultData => {
   const labelsResultats = Labels.epdsSurvey.resultats;

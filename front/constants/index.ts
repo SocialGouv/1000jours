@@ -3,6 +3,7 @@ import * as DatabaseQueries from "./databaseQueries.constants";
 import * as EpdsConstants from "./epdsConstants.constants";
 import Labels from "./Labels";
 import Layouts, { FontWeight } from "./Layout";
+import * as PlatformConstants from "./platform.constants";
 import Sizes from "./sizes";
 import { Margins, Paddings } from "./spacings";
 import {
@@ -23,6 +24,7 @@ export {
   Layouts,
   Margins,
   Paddings,
+  PlatformConstants,
   Sizes,
   storageAllKeys,
   userProfileKey,

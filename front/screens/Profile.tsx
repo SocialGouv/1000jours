@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -20,7 +19,13 @@ import HeaderApp from "../components/HeaderApp";
 import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
-import { Colors, FontWeight, Labels, userProfileKey } from "../constants";
+import {
+  Colors,
+  FontWeight,
+  Labels,
+  PlatformConstants,
+  userProfileKey,
+} from "../constants";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
 import { StorageUtils } from "../utils";
 
@@ -132,7 +137,7 @@ const Profile: FC<Props> = ({ navigation }) => {
     <View style={[styles.mainContainer, styles.flexColumn]}>
       <HeaderApp />
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        behavior={PlatformConstants.PLATFORM_IS_IOS ? "padding" : undefined}
         style={{ flex: 1 }}
       >
         <View style={styles.mainView}>
