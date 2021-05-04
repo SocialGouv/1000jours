@@ -1,9 +1,8 @@
-import { useQuery } from "@apollo/client";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
@@ -16,9 +15,9 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
-import type { EpdsQuestionAndAnswers } from "../../type";
+import type { DataFetchingType, EpdsQuestionAndAnswers } from "../../type";
 import type { RootStackParamList } from "../../types";
-import { EpdsSurveyUtils, StorageUtils } from "../../utils";
+import { DataFetchingUtils, EpdsSurveyUtils, StorageUtils } from "../../utils";
 import { EpdsGenderEntry, EpdsSurveyContent } from "..";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
@@ -41,18 +40,17 @@ const EpdsSurveyScreen: FC<Props> = () => {
     void getGenderFromStorage();
   }, []);
 
-  const { loading, error, data } = useQuery(
-    DatabaseQueries.QUESTIONNAIRE_EPDS,
-    {
-      fetchPolicy: "no-cache",
-    }
+  const fetchedData: DataFetchingType = DataFetchingUtils.fetchData(
+    DatabaseQueries.QUESTIONNAIRE_EPDS
   );
 
-  if (loading) return <ActivityIndicator size="large" />;
-  if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
+  if (!fetchedData.isFetched) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return fetchedData.response;
+  }
 
   const questionAndAnswers: EpdsQuestionAndAnswers[] = EpdsSurveyUtils.getQuestionsAndAnswersFromData(
-    data
+    fetchedData.response
   );
 
   const goToEpdsSurvey = () => {
