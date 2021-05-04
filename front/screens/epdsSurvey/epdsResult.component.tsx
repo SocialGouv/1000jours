@@ -9,13 +9,13 @@ import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
   Colors,
+  EpdsConstants,
   FontWeight,
   Labels,
   Margins,
   Paddings,
   Sizes,
 } from "../../constants";
-import { EpdsIconResultEnum } from "../../type";
 import { EpdsSurveyUtils } from "../../utils";
 
 interface Props {
@@ -26,11 +26,20 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
   const labelsResultats = Labels.epdsSurvey.resultats;
   const resultData = EpdsSurveyUtils.getResultLabelAndStyle(result);
 
-  const getIcon = (icone: EpdsIconResultEnum) => {
-    const iconsMap = new Map<EpdsIconResultEnum, React.ReactNode>();
-    iconsMap.set(EpdsIconResultEnum.bien, <IconeResultatBien />);
-    iconsMap.set(EpdsIconResultEnum.moyen, <IconeResultatMoyen />);
-    iconsMap.set(EpdsIconResultEnum.pasBien, <IconeResultatPasBien />);
+  const getIcon = (icone: EpdsConstants.ResultIconValueEnum) => {
+    const iconsMap = new Map<
+      EpdsConstants.ResultIconValueEnum,
+      React.ReactNode
+    >();
+    iconsMap.set(EpdsConstants.ResultIconValueEnum.bien, <IconeResultatBien />);
+    iconsMap.set(
+      EpdsConstants.ResultIconValueEnum.moyen,
+      <IconeResultatMoyen />
+    );
+    iconsMap.set(
+      EpdsConstants.ResultIconValueEnum.pasBien,
+      <IconeResultatPasBien />
+    );
     return iconsMap.get(icone);
   };
 

@@ -1,11 +1,10 @@
-import { Colors, Labels } from "../constants";
+import { Colors, EpdsConstants, Labels } from "../constants";
 import type {
   EpdsAnswer,
   EpdsQuestionAndAnswers,
   EpdsResultData,
   QuestionnaireEpdsFromDB,
 } from "../type";
-import { EpdsIconResultEnum } from "../type";
 
 export const getQuestionsAndAnswersFromData = (
   data: unknown
@@ -101,22 +100,22 @@ export const getResultLabelAndStyle = (result: number): EpdsResultData => {
   const yellowColor = { color: Colors.primaryYellowDark };
   const redColor = { color: Colors.secondaryRedLight };
 
-  if (result <= 9) {
+  if (result <= EpdsConstants.RESULT_WELL_VALUE) {
     return {
       colorStyle: greenColor,
-      icon: EpdsIconResultEnum.bien,
+      icon: EpdsConstants.ResultIconValueEnum.bien,
       resultLabels: labelsResultats.moinsDeNeuf,
     };
-  } else if (result <= 12) {
+  } else if (result <= EpdsConstants.RESULT_NOTSOWELL_VALUE) {
     return {
       colorStyle: yellowColor,
-      icon: EpdsIconResultEnum.moyen,
+      icon: EpdsConstants.ResultIconValueEnum.moyen,
       resultLabels: labelsResultats.entreDixEtDouze,
     };
   } else {
     return {
       colorStyle: redColor,
-      icon: EpdsIconResultEnum.pasBien,
+      icon: EpdsConstants.ResultIconValueEnum.pasBien,
       resultLabels: labelsResultats.plusDeTreize,
     };
   }
