@@ -1,29 +1,70 @@
+import { useQuery } from "@apollo/client";
+import { gql } from "@apollo/client/core";
 import type { FC } from "react";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { Calendar } from "react-native-calendars";
+// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
+import { useEffect } from "react";
+import { ActivityIndicator, StyleSheet } from "react-native";
 
+import Agenda from "../components/calendar/agenda";
+import { CommonText } from "../components/StyledText";
 import { Text, View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
+import { userChildBirthdayKey } from "../storage/storage-keys";
+import { getStringValue } from "../storage/storage-utils";
+import type { Event } from "../types";
 
-const TabCalendarScreen: FC = () => (
-  <View style={styles.container}>
-    <Text style={styles.title}>{Labels.tabs.calendarTitle}</Text>
-    <Text style={styles.description}>{Labels.calendar.description}</Text>
-    <Calendar
-      hideExtraDays={true}
-      enableSwipeMonths={true}
-      firstDay={1}
-      theme={{
-        arrowColor: Colors.primaryBlue,
-        todayTextColor: Colors.primaryBlue,
-      }}
-    />
-  </View>
-);
+const TabCalendarScreen: FC = () => {
+  const [childBirthday, setChildBirthday] = React.useState("");
+
+  useEffect(() => {
+    const loadChildBirthday = async () => {
+      const childBirthdayStr =
+        (await getStringValue(userChildBirthdayKey)) ?? "";
+      setChildBirthday(childBirthdayStr);
+    };
+    void loadChildBirthday();
+  }, []);
+
+  const ALL_STEPS = gql`
+    query GetEvents {
+      evenements {
+        id
+        nom
+        description
+        debut
+        fin
+      }
+    }
+  `;
+  const { loading, error, data } = useQuery(ALL_STEPS);
+
+  if (loading) return <ActivityIndicator size="large" />;
+  if (error) return <Text>{Labels.errorMsg}</Text>;
+
+  const evenements = (data as { evenements: Event[] }).evenements;
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{Labels.tabs.calendarTitle}</Text>
+      <Text style={styles.description}>{Labels.calendar.description}</Text>
+      <View style={styles.agendaContainer}>
+        {childBirthday.length > 0 ? (
+          <Agenda evenements={evenements} childBirthday={childBirthday} />
+        ) : (
+          <CommonText>{Labels.calendar.noChildBirthday}</CommonText>
+        )}
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
+  agendaContainer: {
+    flex: 1,
+    marginTop: 20,
+  },
   container: {
     height: "100%",
     padding: 15,
