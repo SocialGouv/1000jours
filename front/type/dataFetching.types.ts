@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { ReactElement } from "react";
+
 export interface DataFetchingType {
   isFetched: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  response: React.ReactNode | any;
+  loadingOrErrorComponent?: ReactElement;
+  response?: any;
 }

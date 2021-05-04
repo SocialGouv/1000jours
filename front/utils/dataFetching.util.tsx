@@ -13,11 +13,14 @@ export const fetchData = (query: DocumentNode): DataFetchingType => {
   });
 
   if (loading)
-    return { isFetched: false, response: <ActivityIndicator size="large" /> };
+    return {
+      isFetched: false,
+      loadingOrErrorComponent: <ActivityIndicator size="large" />,
+    };
   if (error)
     return {
       isFetched: false,
-      response: <CommonText>{Labels.errorMsg}</CommonText>,
+      loadingOrErrorComponent: <CommonText>{Labels.errorMsg}</CommonText>,
     };
 
   return { isFetched: true, response: data };

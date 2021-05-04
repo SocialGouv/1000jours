@@ -1,4 +1,3 @@
-import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -16,20 +15,10 @@ import {
   Sizes,
 } from "../../constants";
 import type { DataFetchingType, EpdsQuestionAndAnswers } from "../../type";
-import type { RootStackParamList } from "../../types";
 import { DataFetchingUtils, EpdsSurveyUtils, StorageUtils } from "../../utils";
 import { EpdsGenderEntry, EpdsSurveyContent } from "..";
 
-type ProfileScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  "onboarding"
->;
-
-interface Props {
-  navigation: ProfileScreenNavigationProp;
-}
-
-const EpdsSurveyScreen: FC<Props> = () => {
+const EpdsSurveyScreen: FC = () => {
   const [genderIsEntered, setGenderIsEntered] = useState(false);
 
   useEffect(() => {
@@ -44,9 +33,8 @@ const EpdsSurveyScreen: FC<Props> = () => {
     DatabaseQueries.QUESTIONNAIRE_EPDS
   );
 
-  if (!fetchedData.isFetched) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return fetchedData.response;
+  if (!fetchedData.isFetched && fetchedData.loadingOrErrorComponent) {
+    return fetchedData.loadingOrErrorComponent;
   }
 
   const questionAndAnswers: EpdsQuestionAndAnswers[] = EpdsSurveyUtils.getQuestionsAndAnswersFromData(
