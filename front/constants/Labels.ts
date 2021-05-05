@@ -1,3 +1,5 @@
+import { EpdsContacts } from ".";
+
 export default {
   appName: "Nos 1000 jours",
   article: {
@@ -83,7 +85,7 @@ export default {
               "Les ressources qui peuvent vous aider les premiers mois de l’enfant",
           },
           {
-            paragraphs: [],
+            paragraphs: EpdsContacts.default.contacts,
             sectionDescription: "Les lignes téléphoniques d'aide aux parents",
             sectionTitle:
               "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",
@@ -124,10 +126,10 @@ export default {
               "Les professionnels qui peuvent vous accompagner pour faire le point",
           },
           {
+            paragraphs: EpdsContacts.default.contacts,
             sectionDescription: "Les lignes téléphoniques d'aide aux parents",
             sectionTitle:
-              "Les sites de référence qui vous apporteront l’information nécessaire",
-            paragraphs: [],
+              "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",
           },
         ],
         stateOfMind: "Je vais bien",
@@ -178,7 +180,7 @@ export default {
               "Les ressources qui peuvent vous aider les premiers mois de l’enfant",
           },
           {
-            paragraphs: [],
+            paragraphs: EpdsContacts.default.contacts,
             sectionDescription: "Les lignes téléphoniques d'aide aux parents",
             sectionTitle:
               "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",

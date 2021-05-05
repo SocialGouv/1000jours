@@ -8,16 +8,29 @@ import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../constants";
 
+interface SimpleInformation {
+  title: string;
+  description: string;
+}
+
+interface ContactInformation {
+  contactName: string;
+  openingTime: string;
+  phoneNumber: string;
+  thematic: string;
+}
+
 interface EpdsResultInformationProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   leftBorderColor: any;
-  informationList: { title: string; description: string }[];
+  informationList: ContactInformation[] | SimpleInformation[];
 }
 
 const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
   leftBorderColor,
   informationList,
 }) => {
+  const textColorStyle = { color: leftBorderColor };
   const borderColorStyle = { borderStartColor: leftBorderColor };
   const renderParagraphs = (
     paragraphs: { title: string; description: string }[]
@@ -27,10 +40,14 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
     ));
   };
 
-  const renderParagraph = (paragraph: {
-    title: string;
-    description: string;
-  }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const renderParagraph = (paragraph: any) => {
+    return paragraph.title
+      ? renderSimpleParagraph(paragraph)
+      : renderContactParagraph(paragraph);
+  };
+
+  const renderSimpleParagraph = (paragraph: SimpleInformation) => {
     return (
       <View style={styles.itemBorder}>
         <CommonText style={styles.paragraphTitle}>{paragraph.title}</CommonText>
@@ -40,6 +57,26 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
       </View>
     );
   };
+
+  const renderContactParagraph = (paragraph: ContactInformation) => {
+    return (
+      <View style={styles.itemBorder}>
+        <CommonText style={[styles.paragraphTitle, textColorStyle]}>
+          {paragraph.contactName}
+        </CommonText>
+        <CommonText style={styles.paragraphDescription}>
+          {paragraph.thematic}
+        </CommonText>
+        <CommonText style={[styles.paragraphDescription, styles.fontBold]}>
+          {paragraph.openingTime}
+        </CommonText>
+        <CommonText style={[styles.paragraphDescription, styles.fontBold]}>
+          {paragraph.phoneNumber}
+        </CommonText>
+      </View>
+    );
+  };
+
   return (
     <List.Section style={[styles.professionalBanner, borderColorStyle]}>
       {informationList.map(
@@ -62,6 +99,9 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
 };
 
 const styles = StyleSheet.create({
+  fontBold: {
+    fontWeight: FontWeight.bold,
+  },
   itemBorder: {
     borderBottomColor: Colors.disabled,
     borderBottomWidth: 1,
@@ -70,12 +110,12 @@ const styles = StyleSheet.create({
   },
   paragraphDescription: {
     color: Colors.commonText,
-    fontSize: Sizes.xs,
+    fontSize: Sizes.xxs,
     lineHeight: Sizes.mmd,
   },
   paragraphTitle: {
     color: Colors.commonText,
-    fontSize: Sizes.xs,
+    fontSize: Sizes.xxs,
     fontWeight: FontWeight.bold,
     lineHeight: Sizes.mmd,
   },
