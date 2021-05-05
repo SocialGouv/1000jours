@@ -1,12 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Linking, StyleSheet } from "react-native";
 import { List } from "react-native-paper";
 
+import Button from "../../components/form/Button";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
-import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../constants";
+import {
+  Colors,
+  FontWeight,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../../constants";
 
 interface SimpleInformation {
   title: string;
@@ -58,6 +66,12 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
     );
   };
 
+  const callContact = (phoneNumber: string) => {
+    // Delete spaces
+    phoneNumber = phoneNumber.replace(/ /g, "");
+    void Linking.openURL("tel:" + phoneNumber);
+  };
+
   const renderContactParagraph = (paragraph: ContactInformation) => {
     return (
       <View style={styles.itemBorder}>
@@ -73,6 +87,15 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
         <CommonText style={[styles.paragraphDescription, styles.fontBold]}>
           {paragraph.phoneNumber}
         </CommonText>
+        <Button
+          buttonStyle={styles.callButton}
+          title={Labels.epdsSurvey.resultats.call}
+          rounded={true}
+          disabled={false}
+          action={() => {
+            callContact(paragraph.phoneNumber);
+          }}
+        />
       </View>
     );
   };
@@ -99,6 +122,9 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
 };
 
 const styles = StyleSheet.create({
+  callButton: {
+    alignSelf: "flex-end",
+  },
   fontBold: {
     fontWeight: FontWeight.bold,
   },
