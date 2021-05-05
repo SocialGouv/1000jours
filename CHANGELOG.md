@@ -1,3 +1,17 @@
+# [1.20.0](https://github.com/SocialGouv/1000jours/compare/v1.19.0...v1.20.0) (2021-05-05)
+
+
+### Bug Fixes
+
+* **api:** corrige l'erreur des articles en cas de visuel absent ([#190](https://github.com/SocialGouv/1000jours/issues/190)) ([d1d11d3](https://github.com/SocialGouv/1000jours/commit/d1d11d33100718e6337fa79cd98d5fad1789a2a8))
+* 🐛 Ajoute "date-fns" ([#188](https://github.com/SocialGouv/1000jours/issues/188)) ([1edc008](https://github.com/SocialGouv/1000jours/commit/1edc008ddd6d6d7878d38db16003ae9a53a72c60))
+
+
+### Features
+
+* 🎸 Affiche les événements en fonction de la date saisie ([#187](https://github.com/SocialGouv/1000jours/issues/187)) ([539e3c3](https://github.com/SocialGouv/1000jours/commit/539e3c3d7ce7b02aee3facb3e6286072f6ae8078)), closes [#35](https://github.com/SocialGouv/1000jours/issues/35)
+* **back:** ajout d'un script pour importer des données ([#176](https://github.com/SocialGouv/1000jours/issues/176)) ([703f3f3](https://github.com/SocialGouv/1000jours/commit/703f3f381813f1672734818dc61e1ec285fec2e4))
+
 # [1.19.0](https://github.com/SocialGouv/1000jours/compare/v1.18.1...v1.19.0) (2021-04-30)
 
 
