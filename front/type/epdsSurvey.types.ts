@@ -53,6 +53,6 @@ export interface EpdsAnswer {
 
 export interface EpdsResultData {
   resultLabels: any;
-  colorStyle: any;
+  color: string;
   icon: EpdsConstants.ResultIconValueEnum;
 }
