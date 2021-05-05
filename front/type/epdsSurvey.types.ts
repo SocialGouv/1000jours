@@ -1,3 +1,28 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/naming-convention */
+import { EpdsConstants, Labels } from "../constants";
+
+export interface EpdsGenderType {
+  id: number;
+  element: { label: string; value: EpdsConstants.EpdsGender };
+  isChecked: boolean;
+}
+
+export const EpdsGenders = [
+  {
+    label: Labels.epdsSurvey.genderEntry.choices.male,
+    value: EpdsConstants.EpdsGender.male,
+  },
+  {
+    label: Labels.epdsSurvey.genderEntry.choices.female,
+    value: EpdsConstants.EpdsGender.female,
+  },
+  {
+    label: Labels.epdsSurvey.genderEntry.choices.noInformation,
+    value: EpdsConstants.EpdsGender.unknown,
+  },
+];
+
 export interface QuestionnaireEpdsFromDB {
   id: number;
   locale: string;
@@ -26,14 +51,8 @@ export interface EpdsAnswer {
   isChecked: boolean;
 }
 
-export enum EpdsIconResultEnum {
-  BIEN,
-  MOYEN,
-  PAS_BIEN,
-}
-
 export interface EpdsResultData {
   resultLabels: any;
   colorStyle: any;
-  icon: EpdsIconResultEnum;
+  icon: EpdsConstants.ResultIconValueEnum;
 }

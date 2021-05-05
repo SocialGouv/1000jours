@@ -1,13 +1,12 @@
 import * as React from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import type SwiperFlatListRefProps from "react-native-swiper-flatlist";
 
 import BackButton from "../../components/BackButton";
 import Button from "../../components/form/Button";
 import Icomoon, { IcomoonIcons } from "../../components/Icomoon";
 import { View } from "../../components/Themed";
-import Colors from "../../constants/Colors";
-import Labels from "../../constants/Labels";
+import { Colors, Labels, Paddings } from "../../constants";
 
 interface Props {
   swiperCurrentIndex: number;
@@ -25,9 +24,9 @@ const EpdsFooter: React.FC<Props> = ({
   setDisplayResult,
 }) => {
   return (
-    <View style={[styles.footer, styles.justifyContentCenter]}>
-      <View style={[styles.buttonsContainer, styles.justifyContentCenter]}>
-        <View style={[styles.buttonContainer]}>
+    <View style={styles.footer}>
+      <View style={styles.buttonsContainer}>
+        <View style={styles.buttonContainer}>
           {swiperCurrentIndex > 0 && (
             <BackButton
               action={() => {
@@ -38,7 +37,7 @@ const EpdsFooter: React.FC<Props> = ({
             />
           )}
         </View>
-        <View style={[styles.buttonContainer]}>
+        <View style={styles.buttonContainer}>
           {showValidateButton ? (
             <View style={styles.justifyContentCenter}>
               <Button
@@ -77,7 +76,6 @@ const EpdsFooter: React.FC<Props> = ({
   );
 };
 
-const width = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
@@ -87,7 +85,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: Paddings.default,
   },
   justifyContentCenter: {
     alignItems: "center",

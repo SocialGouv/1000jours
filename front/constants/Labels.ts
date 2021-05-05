@@ -61,31 +61,14 @@ export default {
     instruction:
       "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement aujourd'hui.",
     title: "Autodépistage dépression post-partum",
-    questionsAnswers: [
-      {
-        answer1: "Aussi souvent que d’habitude",
-        answer2: "Pas tout-à-fait autant",
-        question: "J’ai pu rire et prendre les choses du bon côté",
-        answer3: "Vraiment beaucoup moins souvent ces jours-ci",
-        answer4: "Absolument pas",
+    genderEntry: {
+      instruction: "Veuillez renseigner votre civilité",
+      choices: {
+        male: "Homme",
+        female: "Femme",
+        noInformation: "Ne veut pas donner l'information",
       },
-      {
-        answer1: "Autant que d’habitude",
-        answer2: "Plutôt moins que d’habitude",
-        question:
-          "Je me suis sentie confiante et joyeuse, en pensant à l’avenir",
-        answer3: "Vraiment moins que d’habitude",
-        answer4: "Pratiquement pas",
-      },
-      {
-        answer1: "Oui, la plupart du temps",
-        answer2: "Oui, parfois",
-        question:
-          "Je me suis reprochée, sans raisons, d’être responsable quand les choses allaient mal",
-        answer3: "Pas très souvent",
-        answer4: "Non, jamais",
-      },
-    ],
+    },
     resultats: {
       entreDixEtDouze: {
         intervalle: "(10, 11, 12)",

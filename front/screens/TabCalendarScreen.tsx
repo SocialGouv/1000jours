@@ -9,11 +9,9 @@ import { ActivityIndicator, StyleSheet } from "react-native";
 import Agenda from "../components/calendar/agenda";
 import { CommonText } from "../components/StyledText";
 import { Text, View } from "../components/Themed";
-import Colors from "../constants/Colors";
-import Labels from "../constants/Labels";
-import { userChildBirthdayKey } from "../storage/storage-keys";
-import { getStringValue } from "../storage/storage-utils";
+import { Colors, Labels, StorageKeysConConstants } from "../constants";
 import type { Event } from "../types";
+import { StorageUtils } from "../utils";
 
 const TabCalendarScreen: FC = () => {
   const [childBirthday, setChildBirthday] = React.useState("");
@@ -21,7 +19,9 @@ const TabCalendarScreen: FC = () => {
   useEffect(() => {
     const loadChildBirthday = async () => {
       const childBirthdayStr =
-        (await getStringValue(userChildBirthdayKey)) ?? "";
+        (await StorageUtils.getStringValue(
+          StorageKeysConConstants.userChildBirthdayKey
+        )) ?? "";
       setChildBirthday(childBirthdayStr);
     };
     void loadChildBirthday();

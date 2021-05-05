@@ -3,12 +3,10 @@ import { format } from "date-fns";
 import { filter, find } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
-// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useEffect, useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -22,15 +20,15 @@ import HeaderApp from "../components/HeaderApp";
 import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
-import Colors from "../constants/Colors";
-import Labels from "../constants/Labels";
-import { FontWeight } from "../constants/Layout";
 import {
-  userChildBirthdayKey,
-  userSituationsKey,
-} from "../storage/storage-keys";
-import { storeObjectValue, storeStringValue } from "../storage/storage-utils";
+  Colors,
+  FontWeight,
+  Labels,
+  PlatformConstants,
+  StorageKeysConConstants,
+} from "../constants";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
+import { StorageUtils } from "../utils";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, "profile">;
@@ -110,9 +108,13 @@ const Profile: FC<Props> = ({ navigation }) => {
 
   const validateForm = () => {
     if (!childBirthdayIsNeeded() || isValidDate(+day, +month, +year)) {
-      void storeObjectValue(userSituationsKey, userSituations);
-      void storeStringValue(
-        userChildBirthdayKey,
+      void StorageUtils.storeObjectValue(
+        StorageKeysConConstants.userSituationsKey,
+        userSituations
+      );
+      void StorageUtils.storeStringValue(
+        StorageKeysConConstants.userChildBirthdayKey,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         format(createDate(+day, +month, +year), "yyyy-MM-dd")
       );
       navigation.navigate("root");
@@ -146,7 +148,7 @@ const Profile: FC<Props> = ({ navigation }) => {
     <View style={[styles.mainContainer, styles.flexColumn]}>
       <HeaderApp />
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        behavior={PlatformConstants.PLATFORM_IS_IOS ? "padding" : undefined}
         style={{ flex: 1 }}
       >
         <View style={styles.mainView}>

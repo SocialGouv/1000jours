@@ -1,15 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import * as React from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
 import IconeResultatMoyen from "../../assets/images/icone_resultats_moyen.svg";
 import IconeResultatPasBien from "../../assets/images/icone_resultats_pasbien.svg";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
-import Colors from "../../constants/Colors";
-import Labels from "../../constants/Labels";
-import { FontWeight } from "../../constants/Layout";
-import { EpdsIconResultEnum } from "../../type";
+import {
+  Colors,
+  EpdsConstants,
+  FontWeight,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../../constants";
 import { EpdsSurveyUtils } from "../../utils";
 
 interface Props {
@@ -20,64 +26,64 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
   const labelsResultats = Labels.epdsSurvey.resultats;
   const resultData = EpdsSurveyUtils.getResultLabelAndStyle(result);
 
-  const getIcon = (icone: EpdsIconResultEnum) => {
-    const iconsMap = new Map<EpdsIconResultEnum, React.ReactNode>();
-    iconsMap.set(EpdsIconResultEnum.BIEN, <IconeResultatBien />);
-    iconsMap.set(EpdsIconResultEnum.MOYEN, <IconeResultatMoyen />);
-    iconsMap.set(EpdsIconResultEnum.PAS_BIEN, <IconeResultatPasBien />);
+  const getIcon = (icone: EpdsConstants.ResultIconValueEnum) => {
+    const iconsMap = new Map<
+      EpdsConstants.ResultIconValueEnum,
+      React.ReactNode
+    >();
+    iconsMap.set(EpdsConstants.ResultIconValueEnum.bien, <IconeResultatBien />);
+    iconsMap.set(
+      EpdsConstants.ResultIconValueEnum.moyen,
+      <IconeResultatMoyen />
+    );
+    iconsMap.set(
+      EpdsConstants.ResultIconValueEnum.pasBien,
+      <IconeResultatPasBien />
+    );
     return iconsMap.get(icone);
   };
 
   return (
     <View>
-      <CommonText style={styles.title}>{Labels.epdsSurvey.title}</CommonText>
       <View style={styles.rowView}>
         <View>{getIcon(resultData.icon)}</View>
-        <CommonText
-          style={[styles.title, resultData.colorStyle, styles.stateOfMind]}
-        >
+        <CommonText style={[styles.stateOfMind, resultData.colorStyle]}>
           {resultData.resultLabels.stateOfMind}
         </CommonText>
       </View>
-      <CommonText style={[styles.description, styles.fontBold]}>
+      <CommonText style={[styles.text, styles.fontBold]}>
         {labelsResultats.introduction}
         {result} {resultData.resultLabels.intervalle}.
       </CommonText>
-      <CommonText style={[styles.description]}>
+      <CommonText style={styles.text}>
         {resultData.resultLabels.explication}
       </CommonText>
     </View>
   );
 };
 
-const width = Dimensions.get("window").width;
 const styles = StyleSheet.create({
-  description: {
-    color: Colors.commonText,
-    fontSize: 12,
-    fontWeight: FontWeight.medium,
-    lineHeight: 20,
-    paddingHorizontal: 15,
-    paddingTop: 10,
-  },
   fontBold: {
-    fontSize: 13,
+    fontSize: Sizes.xs,
     fontWeight: FontWeight.bold,
   },
   rowView: {
     flexDirection: "row",
-    marginLeft: 10,
+    marginLeft: Margins.default,
   },
   stateOfMind: {
-    fontWeight: FontWeight.medium,
-    marginTop: 10,
+    alignSelf: "center",
+    fontSize: Sizes.sm,
+    fontWeight: FontWeight.bold,
+    paddingHorizontal: Paddings.default,
   },
-  title: {
-    color: Colors.primaryBlueDark,
-    fontSize: 15,
-    fontWeight: "bold",
-    paddingBottom: 15,
-    paddingHorizontal: 15,
+  text: {
+    color: Colors.commonText,
+    fontSize: Sizes.xxs,
+    fontWeight: FontWeight.medium,
+    lineHeight: Sizes.mmd,
+    paddingHorizontal: Paddings.default,
+    paddingTop: Paddings.default,
   },
 });
 

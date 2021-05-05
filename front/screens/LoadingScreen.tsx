@@ -5,13 +5,9 @@ import { useEffect } from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 
 import { View } from "../components/Themed";
-import { isFirstLaunchKey } from "../storage/storage-keys";
-import {
-  getObjectValue,
-  getStringValue,
-  storeObjectValue,
-} from "../storage/storage-utils";
+import { StorageKeysConConstants } from "../constants";
 import type { RootStackParamList } from "../types";
+import { StorageUtils } from "../utils";
 
 interface LoadingScreenProps {
   navigation: StackNavigationProp<RootStackParamList, "loading">;
@@ -20,14 +16,16 @@ interface LoadingScreenProps {
 const LoadingScreen: FC<LoadingScreenProps> = ({ navigation }) => {
   useEffect(() => {
     const handleFirstLaunch = async () => {
-      const isFirstLaunch = await getObjectValue(isFirstLaunchKey);
+      const isFirstLaunch = await StorageUtils.getObjectValue(
+        StorageKeysConConstants.isFirstLaunchKey
+      );
       if (isFirstLaunch === null) {
         navigation.navigate("onboarding");
       } else {
         navigation.navigate("root");
       }
     };
-    handleFirstLaunch();
+    void handleFirstLaunch();
   }, []);
 
   return (

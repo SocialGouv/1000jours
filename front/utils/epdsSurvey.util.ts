@@ -1,18 +1,23 @@
-import Colors from "../constants/Colors";
-import Labels from "../constants/Labels";
-import EpdsResult from "../screens/epdsSurvey/epdsResult.component";
+import { Colors, EpdsConstants, Labels } from "../constants";
 import type {
   EpdsAnswer,
   EpdsQuestionAndAnswers,
   EpdsResultData,
   QuestionnaireEpdsFromDB,
 } from "../type";
-import { EpdsIconResultEnum } from "../type";
 
-export const convertToQuestionsAndAnswers = (
+export const getQuestionsAndAnswersFromData = (
+  data: unknown
+): EpdsQuestionAndAnswers[] => {
+  const fetchedData = (data as { questionnaireEpds: QuestionnaireEpdsFromDB[] })
+    .questionnaireEpds;
+  return convertToQuestionsAndAnswers(fetchedData);
+};
+
+const convertToQuestionsAndAnswers = (
   questionnaire: QuestionnaireEpdsFromDB[]
-) => {
-  return questionnaire.map((element) => {
+) =>
+  questionnaire.map((element) => {
     return {
       answers: [
         {
@@ -43,14 +48,13 @@ export const convertToQuestionsAndAnswers = (
       question: element.libelle,
     };
   });
-};
 
 export const getUpdatedSurvey = (
   questionsAndAnswers: EpdsQuestionAndAnswers[],
   selectedQuestionIndex: number,
   selectedAnswer: EpdsAnswer
-) => {
-  return questionsAndAnswers.map((question, questionIndex) => {
+): EpdsQuestionAndAnswers[] =>
+  questionsAndAnswers.map((question, questionIndex) => {
     const questionIsCurrent = questionIndex === selectedQuestionIndex;
     const answers = questionIsCurrent
       ? question.answers.map((answer) => {
@@ -65,11 +69,10 @@ export const getUpdatedSurvey = (
 
     return { ...question, answers };
   });
-};
 
 export const getUpdatedScore = (
   questionsAndAnswers: EpdsQuestionAndAnswers[]
-) => {
+): number => {
   let score = 0;
   questionsAndAnswers.forEach((question) => {
     const answeredQuestionPoints = question.answers.find(
@@ -82,9 +85,10 @@ export const getUpdatedScore = (
   return score;
 };
 
-export const getCurrentQuestionPoints = (question: EpdsQuestionAndAnswers) => {
-  return question.answers.find((answer) => answer.isChecked)?.points;
-};
+export const getCurrentQuestionPoints = (
+  question: EpdsQuestionAndAnswers
+): number | undefined =>
+  question.answers.find((answer) => answer.isChecked)?.points;
 
 export const getResultLabelAndStyle = (result: number): EpdsResultData => {
   const labelsResultats = Labels.epdsSurvey.resultats;
@@ -93,22 +97,22 @@ export const getResultLabelAndStyle = (result: number): EpdsResultData => {
   const yellowColor = { color: Colors.primaryYellowDark };
   const redColor = { color: Colors.secondaryRedLight };
 
-  if (result <= 9) {
+  if (result <= EpdsConstants.RESULT_WELL_VALUE) {
     return {
       colorStyle: greenColor,
-      icon: EpdsIconResultEnum.BIEN,
+      icon: EpdsConstants.ResultIconValueEnum.bien,
       resultLabels: labelsResultats.moinsDeNeuf,
     };
-  } else if (result <= 12) {
+  } else if (result <= EpdsConstants.RESULT_NOTSOWELL_VALUE) {
     return {
       colorStyle: yellowColor,
-      icon: EpdsIconResultEnum.MOYEN,
+      icon: EpdsConstants.ResultIconValueEnum.moyen,
       resultLabels: labelsResultats.entreDixEtDouze,
     };
   } else {
     return {
       colorStyle: redColor,
-      icon: EpdsIconResultEnum.PAS_BIEN,
+      icon: EpdsConstants.ResultIconValueEnum.pasBien,
       resultLabels: labelsResultats.plusDeTreize,
     };
   }

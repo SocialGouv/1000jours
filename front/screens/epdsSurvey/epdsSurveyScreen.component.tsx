@@ -1,60 +1,75 @@
-import { useQuery } from "@apollo/client";
-import { gql } from "@apollo/client/core";
-import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
-import { ActivityIndicator } from "react-native";
+import { useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
 
 import { CommonText } from "../../components/StyledText";
-import Labels from "../../constants/Labels";
-import type {
-  EpdsQuestionAndAnswers,
-  QuestionnaireEpdsFromDB,
-} from "../../type";
-import type { RootStackParamList } from "../../types";
-import { EpdsSurveyUtils } from "../../utils";
-import EpdsSurveyContent from "./epdsSurveyContent.component";
+import { View } from "../../components/Themed";
+import {
+  Colors,
+  DatabaseQueries,
+  FontWeight,
+  Labels,
+  Paddings,
+  Sizes,
+  StorageKeysConConstants,
+} from "../../constants";
+import type { DataFetchingType, EpdsQuestionAndAnswers } from "../../type";
+import { DataFetchingUtils, EpdsSurveyUtils, StorageUtils } from "../../utils";
+import { EpdsGenderEntry, EpdsSurveyContent } from "..";
 
-type ProfileScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  "onboarding"
->;
+const EpdsSurveyScreen: FC = () => {
+  const [genderIsEntered, setGenderIsEntered] = useState(false);
 
-interface Props {
-  navigation: ProfileScreenNavigationProp;
-}
+  useEffect(() => {
+    const getGenderFromStorage = async () => {
+      const genderValue = await StorageUtils.getStringValue(
+        StorageKeysConConstants.epdsGenderKey
+      );
+      setGenderIsEntered(Boolean(genderValue));
+    };
+    void getGenderFromStorage();
+  }, []);
 
-const EpdsSurveyScreen: FC<Props> = () => {
-  const QUESTIONNAIRE_EPDS = gql`
-    query QuestionsReponses {
-      questionnaireEpds(sort: "ordre") {
-        ordre
-        libelle
-        reponse_1_libelle
-        reponse_1_points
-        reponse_2_libelle
-        reponse_2_points
-        reponse_3_libelle
-        reponse_3_points
-        reponse_4_libelle
-        reponse_4_points
-      }
-    }
-  `;
-  const { loading, error, data } = useQuery(QUESTIONNAIRE_EPDS, {
-    fetchPolicy: "no-cache",
-  });
-
-  if (loading) return <ActivityIndicator size="large" />;
-  if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
-
-  const fetchedData = (data as { questionnaireEpds: QuestionnaireEpdsFromDB[] })
-    .questionnaireEpds;
-  const questionAndAnswers: EpdsQuestionAndAnswers[] = EpdsSurveyUtils.convertToQuestionsAndAnswers(
-    fetchedData
+  const fetchedData: DataFetchingType = DataFetchingUtils.fetchData(
+    DatabaseQueries.QUESTIONNAIRE_EPDS
   );
 
-  return <EpdsSurveyContent epdsSurvey={questionAndAnswers} />;
+  if (!fetchedData.isFetched && fetchedData.loadingOrErrorComponent) {
+    return fetchedData.loadingOrErrorComponent;
+  }
+
+  const questionAndAnswers: EpdsQuestionAndAnswers[] = EpdsSurveyUtils.getQuestionsAndAnswersFromData(
+    fetchedData.response
+  );
+
+  const goToEpdsSurvey = () => {
+    setGenderIsEntered(true);
+  };
+
+  return (
+    <View style={styles.mainContainer}>
+      <CommonText style={styles.title}>{Labels.epdsSurvey.title}</CommonText>
+      {genderIsEntered ? (
+        <EpdsSurveyContent epdsSurvey={questionAndAnswers} />
+      ) : (
+        <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />
+      )}
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    paddingTop: Paddings.default,
+  },
+  title: {
+    color: Colors.primaryBlueDark,
+    fontSize: Sizes.sm,
+    fontWeight: FontWeight.bold,
+    paddingHorizontal: Paddings.default,
+  },
+});
 
 export default EpdsSurveyScreen;
