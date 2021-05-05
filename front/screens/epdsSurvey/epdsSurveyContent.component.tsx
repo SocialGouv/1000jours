@@ -28,7 +28,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
     EpdsQuestionAndAnswers[]
   >(epdsSurvey);
-  const [displayResult, setDisplayResult] = useState(true);
+  const [displayResult, setDisplayResult] = useState(false);
   const [score, setScore] = useState(0);
 
   const questionIsAnswered =
