@@ -9,7 +9,7 @@ import { ActivityIndicator, StyleSheet } from "react-native";
 import Agenda from "../components/calendar/agenda";
 import { CommonText } from "../components/StyledText";
 import { Text, View } from "../components/Themed";
-import { Colors, Labels, StorageKeysConConstants } from "../constants";
+import { Colors, Labels, StorageKeysConstants } from "../constants";
 import type { Event } from "../types";
 import { StorageUtils } from "../utils";
 
@@ -20,7 +20,7 @@ const TabCalendarScreen: FC = () => {
     const loadChildBirthday = async () => {
       const childBirthdayStr =
         (await StorageUtils.getStringValue(
-          StorageKeysConConstants.userChildBirthdayKey
+          StorageKeysConstants.userChildBirthdayKey
         )) ?? "";
       setChildBirthday(childBirthdayStr);
     };

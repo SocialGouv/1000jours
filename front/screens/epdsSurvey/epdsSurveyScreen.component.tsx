@@ -12,7 +12,7 @@ import {
   Labels,
   Paddings,
   Sizes,
-  StorageKeysConConstants,
+  StorageKeysConstants,
 } from "../../constants";
 import type { DataFetchingType, EpdsQuestionAndAnswers } from "../../type";
 import { DataFetchingUtils, EpdsSurveyUtils, StorageUtils } from "../../utils";
@@ -24,7 +24,7 @@ const EpdsSurveyScreen: FC = () => {
   useEffect(() => {
     const getGenderFromStorage = async () => {
       const genderValue = await StorageUtils.getStringValue(
-        StorageKeysConConstants.epdsGenderKey
+        StorageKeysConstants.epdsGenderKey
       );
       setGenderIsEntered(Boolean(genderValue));
     };

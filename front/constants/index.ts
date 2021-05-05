@@ -6,7 +6,7 @@ import Layouts, { FontWeight } from "./Layout";
 import * as PlatformConstants from "./platform.constants";
 import Sizes from "./sizes";
 import { Margins, Paddings } from "./spacings";
-import * as StorageKeysConConstants from "./storageKeys.constants";
+import * as StorageKeysConstants from "./storageKeys.constants";
 
 export {
   Colors,
@@ -19,5 +19,5 @@ export {
   Paddings,
   PlatformConstants,
   Sizes,
-  StorageKeysConConstants,
+  StorageKeysConstants,
 };

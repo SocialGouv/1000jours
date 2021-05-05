@@ -14,12 +14,7 @@ import HeaderApp from "../components/HeaderApp";
 import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
-import {
-  Colors,
-  FontWeight,
-  Labels,
-  StorageKeysConConstants,
-} from "../constants";
+import { Colors, FontWeight, Labels, StorageKeysConstants } from "../constants";
 import type { RootStackParamList } from "../types";
 import { StorageUtils } from "../utils";
 
@@ -62,7 +57,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
 
   const navigateToProfile = () => {
     void StorageUtils.storeObjectValue(
-      StorageKeysConConstants.isFirstLaunchKey,
+      StorageKeysConstants.isFirstLaunchKey,
       false
     );
     navigation.navigate("profile");

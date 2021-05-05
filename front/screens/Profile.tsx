@@ -25,7 +25,7 @@ import {
   FontWeight,
   Labels,
   PlatformConstants,
-  StorageKeysConConstants,
+  StorageKeysConstants,
 } from "../constants";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
 import { StorageUtils } from "../utils";
@@ -109,11 +109,11 @@ const Profile: FC<Props> = ({ navigation }) => {
   const validateForm = () => {
     if (!childBirthdayIsNeeded() || isValidDate(+day, +month, +year)) {
       void StorageUtils.storeObjectValue(
-        StorageKeysConConstants.userSituationsKey,
+        StorageKeysConstants.userSituationsKey,
         userSituations
       );
       void StorageUtils.storeStringValue(
-        StorageKeysConConstants.userChildBirthdayKey,
+        StorageKeysConstants.userChildBirthdayKey,
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         format(createDate(+day, +month, +year), "yyyy-MM-dd")
       );
