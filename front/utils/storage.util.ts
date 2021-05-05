@@ -27,6 +27,7 @@ export const storeStringValue = async (storageKey: string, value: string) => {
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const storeObjectValue = async (storageKey: string, value: any) => {
   try {
     const jsonValue = JSON.stringify(value);

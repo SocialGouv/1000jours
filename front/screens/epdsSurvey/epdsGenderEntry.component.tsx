@@ -14,7 +14,7 @@ import {
   Margins,
   Paddings,
   Sizes,
-  StorageKeysConConstants,
+  StorageKeysConstants,
 } from "../../constants";
 import type { EpdsGenderType } from "../../type";
 import { EpdsGenders } from "../../type";
@@ -61,7 +61,7 @@ const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
   const onGenderSaved = async () => {
     if (selectedGender) {
       await StorageUtils.storeStringValue(
-        StorageKeysConConstants.epdsGenderKey,
+        StorageKeysConstants.epdsGenderKey,
         selectedGender
       );
       goToEpdsSurvey();
