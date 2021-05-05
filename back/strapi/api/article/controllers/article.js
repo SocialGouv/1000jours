@@ -1,12 +1,5 @@
 "use strict";
 
-const { sanitizeEntity } = require("strapi-utils");
-
-const format = (article) =>
-  ArticleService.completeUrls(
-    sanitizeEntity(article, { model: strapi.models.article })
-  );
-
 const ArticleService = require("../services");
 
 const find = async (context) => {
@@ -18,7 +11,7 @@ const find = async (context) => {
     articles = await strapi.query("article").find(context.query);
   }
 
-  return articles.map(format);
+  return articles.map(ArticleService.format)
 };
 
 const findOne = async (context) => {
@@ -26,7 +19,7 @@ const findOne = async (context) => {
 
   const article = await strapi.query("article").findOne({ id });
 
-  return format(article);
+  return ArticleService.format(article)
 };
 
 module.exports = {
