@@ -9,12 +9,12 @@ import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
   Colors,
-  epdsGenderKey,
   FontWeight,
   Labels,
   Margins,
   Paddings,
   Sizes,
+  StorageKeysConConstants,
 } from "../../constants";
 import type { EpdsGenderType } from "../../type";
 import { EpdsGenders } from "../../type";
@@ -60,7 +60,10 @@ const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
 
   const onGenderSaved = async () => {
     if (selectedGender) {
-      await StorageUtils.storeStringValue(epdsGenderKey, selectedGender);
+      await StorageUtils.storeStringValue(
+        StorageKeysConConstants.epdsGenderKey,
+        selectedGender
+      );
       goToEpdsSurvey();
     }
   };

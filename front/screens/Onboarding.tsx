@@ -14,7 +14,12 @@ import HeaderApp from "../components/HeaderApp";
 import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
-import { Colors, FontWeight, isFirstLaunchKey, Labels } from "../constants";
+import {
+  Colors,
+  FontWeight,
+  Labels,
+  StorageKeysConConstants,
+} from "../constants";
 import type { RootStackParamList } from "../types";
 import { StorageUtils } from "../utils";
 
@@ -56,7 +61,10 @@ const Onboarding: FC<Props> = ({ navigation }) => {
   const swiperRef = useRef<SwiperFlatList>(null);
 
   const navigateToProfile = () => {
-    void StorageUtils.storeObjectValue(isFirstLaunchKey, false);
+    void StorageUtils.storeObjectValue(
+      StorageKeysConConstants.isFirstLaunchKey,
+      false
+    );
     navigation.navigate("profile");
   };
 

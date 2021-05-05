@@ -8,11 +8,11 @@ import { View } from "../../components/Themed";
 import {
   Colors,
   DatabaseQueries,
-  epdsGenderKey,
   FontWeight,
   Labels,
   Paddings,
   Sizes,
+  StorageKeysConConstants,
 } from "../../constants";
 import type { DataFetchingType, EpdsQuestionAndAnswers } from "../../type";
 import { DataFetchingUtils, EpdsSurveyUtils, StorageUtils } from "../../utils";
@@ -23,8 +23,10 @@ const EpdsSurveyScreen: FC = () => {
 
   useEffect(() => {
     const getGenderFromStorage = async () => {
-      const genderValue = await StorageUtils.getStringValue(epdsGenderKey);
-      setGenderIsEntered(genderValue ? true : false);
+      const genderValue = await StorageUtils.getStringValue(
+        StorageKeysConConstants.epdsGenderKey
+      );
+      setGenderIsEntered(Boolean(genderValue));
     };
     void getGenderFromStorage();
   }, []);
