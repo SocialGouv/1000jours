@@ -6,28 +6,18 @@ import Layouts, { FontWeight } from "./Layout";
 import * as PlatformConstants from "./platform.constants";
 import Sizes from "./sizes";
 import { Margins, Paddings } from "./spacings";
-import {
-  epdsGenderKey,
-  isFirstLaunchKey,
-  storageAllKeys,
-  userChildBirthdayKey,
-  userSituationsKey,
-} from "./storageKeys";
+import * as StorageKeysConConstants from "./storageKeys.constants";
 
 export {
   Colors,
   DatabaseQueries,
   EpdsConstants,
-  epdsGenderKey,
   FontWeight,
-  isFirstLaunchKey,
   Labels,
   Layouts,
   Margins,
   Paddings,
   PlatformConstants,
   Sizes,
-  storageAllKeys,
-  userChildBirthdayKey,
-  userSituationsKey,
+  StorageKeysConConstants,
 };

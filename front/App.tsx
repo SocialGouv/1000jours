@@ -9,7 +9,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import IcomoonFont from "./assets/icomoon/icomoon.ttf";
 import { initLocales } from "./config/calendar-config";
-import { storageAllKeys } from "./constants";
+import { StorageKeysConConstants } from "./constants";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
@@ -42,7 +42,8 @@ const App: FC = () => {
       });
   }, []);
 
-  if (process.env.CLEAR_STORAGE) void AsyncStorage.multiRemove(storageAllKeys);
+  if (process.env.CLEAR_STORAGE)
+    void AsyncStorage.multiRemove(StorageKeysConConstants.storageAllKeys);
 
   if (!fontsLoaded || !isLoadingComplete) {
     return null;
