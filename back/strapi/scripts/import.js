@@ -9,7 +9,7 @@ const { IMPORT_URL } = process.env;
 
 const plural = (str) => `${str}s`.replace(/ss$/, "s");
 
-const models = ["parcours", "thematique", "etape", "evenement", "article"];
+const models = ["parcours", "thematique", "etape", "evenement", "article", "questionnaire-epds"];
 
 const main = async () => {
   for (const model of models) {

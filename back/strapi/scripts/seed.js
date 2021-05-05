@@ -6,7 +6,14 @@ const SEED_DIR = "seeds";
 
 const plural = (str) => `${str}s`.replace(/ss$/, "s");
 
-const models = ["parcours", "thematique", "etape", "evenement", "article"];
+const models = [
+  "parcours",
+  "thematique",
+  "etape",
+  "evenement",
+  "article",
+  "questionnaire-epds",
+];
 
 let strapi;
 let knex;
@@ -17,8 +24,10 @@ const importSeed = async ({ model, seeds }) => {
   console.log(`${model}: truncating table`);
   await strapiModel.delete();
 
+  const modelEscaped = model.replace(/-/g, "_");
+
   console.log(`${model}: resetting table sequence`);
-  await knex.raw(`ALTER SEQUENCE ${plural(model)}_id_seq RESTART`);
+  await knex.raw(`ALTER SEQUENCE ${plural(modelEscaped)}_id_seq RESTART`);
 
   console.log(`${model}: inserting ${seeds.length} item(s)`);
   for (const seed of seeds) await strapiModel.create(seed);
