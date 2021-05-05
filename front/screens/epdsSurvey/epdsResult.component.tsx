@@ -58,6 +58,14 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
       <CommonText style={styles.text}>
         {resultData.resultLabels.explication}
       </CommonText>
+      <View style={styles.professionalBanner}>
+        <CommonText style={styles.professionalTitle}>
+          {Labels.article.firstThreeMonths.title}
+        </CommonText>
+        <CommonText style={styles.professionalDescription}>
+          {Labels.article.firstThreeMonths.description}
+        </CommonText>
+      </View>
     </View>
   );
 };
@@ -66,6 +74,20 @@ const styles = StyleSheet.create({
   fontBold: {
     fontSize: Sizes.xs,
     fontWeight: FontWeight.bold,
+  },
+  professionalBanner: {
+    borderStartColor: Colors.primaryYellowDark,
+    borderStartWidth: Margins.smaller,
+    margin: Margins.default,
+    padding: Paddings.default,
+  },
+  professionalDescription: {
+    color: Colors.commonText,
+    // marginVertical: 10,
+  },
+  professionalTitle: {
+    color: Colors.primaryBlueDark,
+    fontSize: Sizes.sm,
   },
   rowView: {
     flexDirection: "row",
