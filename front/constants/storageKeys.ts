@@ -1,5 +1,11 @@
 export const isFirstLaunchKey = "@isFirstLaunch";
-export const userProfileKey = "@userProfile";
+export const userSituationsKey = "@userSituations";
+export const userChildBirthdayKey = "@userChildBirthday";
 export const epdsGenderKey = "@epdsGender";
 
-export const storageAllKeys = [isFirstLaunchKey, userProfileKey, epdsGenderKey];
+export const storageAllKeys = [
+  isFirstLaunchKey,
+  userSituationsKey,
+  userChildBirthdayKey,
+  epdsGenderKey,
+];

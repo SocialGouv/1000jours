@@ -4,7 +4,7 @@ Backoffice de gestion de contenus
 
 ---
 
-Importer le schéma :
+Importer la configuration du backoffice :
 
 ```
 yarn config:restore
@@ -12,8 +12,8 @@ yarn config:restore
 
 ---
 
-Pour compiler les fichiers TypeScript :
+Importer les données depuis le backoffice de preprod (efface la base actuelle) :
 
 ```
-yarn build-ts
+yarn seed:import
 ```

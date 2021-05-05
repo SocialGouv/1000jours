@@ -10,7 +10,8 @@ import {
   epdsGenderKey,
   isFirstLaunchKey,
   storageAllKeys,
-  userProfileKey,
+  userChildBirthdayKey,
+  userSituationsKey,
 } from "./storageKeys";
 
 export {
@@ -27,5 +28,6 @@ export {
   PlatformConstants,
   Sizes,
   storageAllKeys,
-  userProfileKey,
+  userChildBirthdayKey,
+  userSituationsKey,
 };

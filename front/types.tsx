@@ -60,6 +60,16 @@ export type Step = {
   description: string;
 };
 
+export type Event = {
+  id: number;
+  date?: string;
+  nom: string;
+  description: string;
+  debut: number;
+  fin: number;
+};
+export type AgendaItems<TEvent> = Record<string, TEvent[]>;
+
 export type Thematique = {
   id: number;
   nom: string;
