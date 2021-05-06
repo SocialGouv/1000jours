@@ -38,6 +38,12 @@ export default {
     },
     instruction:
       "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement aujourd'hui.",
+    previousSurvey: {
+      continueButton: "Continuer",
+      messsage:
+        "Il semble que vous n'ayez pas terminé le précédent questionnaire. Voulez-vous le continuer ou le recommencer ?",
+      startOverButton: "Recommencer",
+    },
     resultats: {
       call: "Appeler",
       entreDixEtDouze: {

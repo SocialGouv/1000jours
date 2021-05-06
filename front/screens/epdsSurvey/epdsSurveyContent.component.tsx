@@ -1,6 +1,6 @@
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 
@@ -17,7 +17,12 @@ import {
 } from "../../constants";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, StorageUtils } from "../../utils";
-import { EpdsFooter, EpdsQuestion, EpdsResult } from "..";
+import {
+  EpdsFooter,
+  EpdsLoadPreviousSurvey,
+  EpdsQuestion,
+  EpdsResult,
+} from "..";
 
 interface Props {
   epdsSurvey: EpdsQuestionAndAnswers[];
@@ -31,6 +36,39 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
   >(epdsSurvey);
   const [displayResult, setDisplayResult] = useState(false);
   const [score, setScore] = useState(0);
+  const [surveyCanBeStarted, setSurveyCanBeStarted] = useState(false);
+
+  useEffect(() => {
+    const getPreviousSurvey = async () => {
+      const previousQuestionsAndAnswers = await StorageUtils.getObjectValue(
+        StorageKeysConstants.epdsQuestionAndAnswersKey
+      );
+      const previousQuestionIndex = await StorageUtils.getObjectValue(
+        StorageKeysConstants.epdsQuestionIndexKey
+      );
+
+      const previousDataSaved =
+        Boolean(previousQuestionsAndAnswers) && Boolean(previousQuestionIndex);
+      setSurveyCanBeStarted(!previousDataSaved);
+    };
+    void getPreviousSurvey();
+  }, []);
+
+  const getEpdsLoadPreviousSurveyReponse = async (startOver: boolean) => {
+    if (startOver) {
+      void StorageUtils.multiRemove(StorageKeysConstants.epdsSurveyKeys);
+    } else {
+      const questionAndAnswers = (await StorageUtils.getObjectValue(
+        StorageKeysConstants.epdsQuestionAndAnswersKey
+      )) as EpdsQuestionAndAnswers[];
+      setQuestionsAndAnswers(questionAndAnswers);
+      const swiperIndex = (await StorageUtils.getObjectValue(
+        StorageKeysConstants.epdsQuestionIndexKey
+      )) as number;
+      setSwiperCurrentIndex(swiperIndex);
+    }
+    setSurveyCanBeStarted(true);
+  };
 
   const questionIsAnswered =
     questionsAndAnswers[swiperCurrentIndex]?.isAnswered;
@@ -59,45 +97,63 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
     );
   };
 
+  const renderSurveyContent = () => {
+    return (
+      <>
+        <View>
+          <CommonText style={styles.instruction}>
+            {Labels.epdsSurvey.instruction}
+          </CommonText>
+        </View>
+        <View style={styles.flatListView}>
+          <SwiperFlatList
+            ref={swiperRef}
+            index={swiperCurrentIndex}
+            onChangeIndex={({ index }) => {
+              void saveCurrentSurvey(index);
+            }}
+            autoplay={false}
+            disableGesture
+            showPagination
+            paginationDefaultColor="lightgray"
+            paginationActiveColor={Colors.secondaryGreen}
+            paginationStyleItem={styles.swipePaginationItem}
+          >
+            {questionsAndAnswers.map((questionView, questionIndex) => (
+              <View key={questionIndex}>
+                <EpdsQuestion
+                  questionAndAnswers={questionView}
+                  updatePressedAnswer={updatePressedAnswer}
+                />
+              </View>
+            ))}
+          </SwiperFlatList>
+        </View>
+        <EpdsFooter
+          swiperCurrentIndex={swiperCurrentIndex}
+          swiperRef={swiperRef}
+          showValidateButton={showValidateButton}
+          questionIsAnswered={questionIsAnswered}
+          setDisplayResult={setDisplayResult}
+        />
+      </>
+    );
+  };
+
+  const renderSurveyOrLoadPreviousSurveyScreen = () => {
+    return surveyCanBeStarted ? (
+      renderSurveyContent()
+    ) : (
+      <EpdsLoadPreviousSurvey
+        startSurveyOver={getEpdsLoadPreviousSurveyReponse}
+      />
+    );
+  };
+
   return (
     <View style={styles.mainContainer}>
       {!displayResult ? (
-        <>
-          <View>
-            <CommonText style={styles.instruction}>
-              {Labels.epdsSurvey.instruction}
-            </CommonText>
-          </View>
-          <View style={styles.flatListView}>
-            <SwiperFlatList
-              ref={swiperRef}
-              onChangeIndex={({ index }) => {
-                void saveCurrentSurvey(index);
-              }}
-              autoplay={false}
-              disableGesture
-              paginationDefaultColor="lightgray"
-              paginationActiveColor={Colors.secondaryGreen}
-              paginationStyleItem={styles.swipePaginationItem}
-            >
-              {questionsAndAnswers.map((questionView, questionIndex) => (
-                <View key={questionIndex}>
-                  <EpdsQuestion
-                    questionAndAnswers={questionView}
-                    updatePressedAnswer={updatePressedAnswer}
-                  />
-                </View>
-              ))}
-            </SwiperFlatList>
-          </View>
-          <EpdsFooter
-            swiperCurrentIndex={swiperCurrentIndex}
-            swiperRef={swiperRef}
-            showValidateButton={showValidateButton}
-            questionIsAnswered={questionIsAnswered}
-            setDisplayResult={setDisplayResult}
-          />
-        </>
+        renderSurveyOrLoadPreviousSurveyScreen()
       ) : (
         <EpdsResult result={score} />
       )}
