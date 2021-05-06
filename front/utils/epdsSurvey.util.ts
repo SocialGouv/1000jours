@@ -93,25 +93,21 @@ export const getCurrentQuestionPoints = (
 export const getResultLabelAndStyle = (result: number): EpdsResultData => {
   const labelsResultats = Labels.epdsSurvey.resultats;
 
-  const greenColor = { color: Colors.secondaryGreenDark };
-  const yellowColor = { color: Colors.primaryYellowDark };
-  const redColor = { color: Colors.secondaryRedLight };
-
   if (result <= EpdsConstants.RESULT_WELL_VALUE) {
     return {
-      colorStyle: greenColor,
+      color: Colors.secondaryGreenDark,
       icon: EpdsConstants.ResultIconValueEnum.bien,
       resultLabels: labelsResultats.moinsDeNeuf,
     };
   } else if (result <= EpdsConstants.RESULT_NOTSOWELL_VALUE) {
     return {
-      colorStyle: yellowColor,
+      color: Colors.primaryYellowDark,
       icon: EpdsConstants.ResultIconValueEnum.moyen,
       resultLabels: labelsResultats.entreDixEtDouze,
     };
   } else {
     return {
-      colorStyle: redColor,
+      color: Colors.secondaryRedLight,
       icon: EpdsConstants.ResultIconValueEnum.pasBien,
       resultLabels: labelsResultats.plusDeTreize,
     };

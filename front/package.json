@@ -52,6 +52,7 @@
     "react-native-calendars": "^1.1258.0",
     "react-native-elements": "^3.4.0",
     "react-native-gesture-handler": "~1.10.3",
+    "react-native-paper": "^4.8.1",
     "react-native-render-html": "^5.1.0",
     "react-native-screens": "~2.18.1",
     "react-native-svg": "12.1.0",
