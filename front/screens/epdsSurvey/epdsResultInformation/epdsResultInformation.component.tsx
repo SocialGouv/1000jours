@@ -59,6 +59,9 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
             title={professional.sectionTitle}
             titleStyle={styles.sectionTitle}
             titleNumberOfLines={0}
+            description={professional.sectionDescription}
+            descriptionStyle={styles.sectionDescription}
+            descriptionNumberOfLines={0}
           >
             {professional.paragraphs &&
               renderParagraphs(professional.paragraphs)}
@@ -74,6 +77,10 @@ const styles = StyleSheet.create({
     borderStartWidth: Margins.smaller,
     margin: Margins.default,
     padding: Paddings.default,
+  },
+  sectionDescription: {
+    color: Colors.commonText,
+    paddingVertical: Paddings.smaller,
   },
   sectionTitle: {
     color: Colors.primaryBlueDark,
