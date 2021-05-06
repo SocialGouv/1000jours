@@ -56,3 +56,15 @@ export interface EpdsResultData {
   color: string;
   icon: EpdsConstants.ResultIconValueEnum;
 }
+
+export interface EpdsResultSimpleInformation {
+  title: string;
+  description: string;
+}
+
+export interface EpdsResultContactInformation {
+  contactName: string;
+  openingTime: string;
+  phoneNumber: string;
+  thematic: string;
+}

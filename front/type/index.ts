@@ -4,7 +4,9 @@ import {
   EpdsGenders,
   EpdsGenderType,
   EpdsQuestionAndAnswers,
+  EpdsResultContactInformation,
   EpdsResultData,
+  EpdsResultSimpleInformation,
   QuestionnaireEpdsFromDB,
 } from "./epdsSurvey.types";
 
@@ -14,6 +16,8 @@ export {
   EpdsGenders,
   EpdsGenderType,
   EpdsQuestionAndAnswers,
+  EpdsResultContactInformation,
   EpdsResultData,
+  EpdsResultSimpleInformation,
   QuestionnaireEpdsFromDB,
 };
