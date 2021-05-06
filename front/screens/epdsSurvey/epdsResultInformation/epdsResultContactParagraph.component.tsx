@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Linking } from "react-native";
-import { StyleSheet } from "react-native";
+import { Linking, StyleSheet } from "react-native";
 
 import Button from "../../../components/form/Button";
 import { CommonText } from "../../../components/StyledText";
@@ -11,7 +10,6 @@ import type { EpdsResultContactInformation } from "../../../type";
 interface EpdsResultContactParagraphProps {
   paragraph: EpdsResultContactInformation;
   titleColor: string;
-
 }
 
 const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
