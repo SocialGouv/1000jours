@@ -1,16 +1,12 @@
 "use strict";
 
-const sanitizeArticle = (data) => {
-  Object.keys(data).forEach((key) => {
-    if (typeof data[key] === "string") {
-      data[key] = data[key].trim().replace(/(\s)+/g, "$1");
-    }
-  });
-};
+const ArticleService = require("../services");
 
 module.exports = {
   lifecycles: {
-    beforeCreate: async (data) => sanitizeArticle(data),
-    beforeUpdate: async (params, data) => sanitizeArticle(data),
+    beforeCreate: async (data) => ArticleService.sanitizeTexts(data),
+    beforeUpdate: async (params, data) => ArticleService.sanitizeTexts(data),
+    afterFind: (articles) => articles.map(ArticleService.format),
+    afterFindOne: ArticleService.format,
   },
 };
