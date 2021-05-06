@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/SocialGouv/1000jours/compare/v1.20.0...v1.21.0) (2021-05-06)
+
+
+### Features
+
+* **dpp:** correction labels doublon ([#193](https://github.com/SocialGouv/1000jours/issues/193)) ([ec73511](https://github.com/SocialGouv/1000jours/commit/ec73511cfd44700657f9f81c8db04d45ae876381))
+
 # [1.20.0](https://github.com/SocialGouv/1000jours/compare/v1.19.0...v1.20.0) (2021-05-05)
 
 
