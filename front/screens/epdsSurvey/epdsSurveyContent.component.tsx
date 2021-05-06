@@ -13,9 +13,10 @@ import {
   Margins,
   Paddings,
   Sizes,
+  StorageKeysConstants,
 } from "../../constants";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
-import { EpdsSurveyUtils } from "../../utils";
+import { EpdsSurveyUtils, StorageUtils } from "../../utils";
 import { EpdsFooter, EpdsQuestion, EpdsResult } from "..";
 
 interface Props {
@@ -46,6 +47,18 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
     setScore(EpdsSurveyUtils.getUpdatedScore(updatedSurvey));
   };
 
+  const saveCurrentSurvey = async (currentSwiperIndex: number) => {
+    setSwiperCurrentIndex(currentSwiperIndex);
+    await StorageUtils.storeObjectValue(
+      StorageKeysConstants.epdsQuestionAndAnswersKey,
+      questionsAndAnswers
+    );
+    await StorageUtils.storeObjectValue(
+      StorageKeysConstants.epdsQuestionIndexKey,
+      currentSwiperIndex
+    );
+  };
+
   return (
     <View style={styles.mainContainer}>
       {!displayResult ? (
@@ -59,7 +72,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
             <SwiperFlatList
               ref={swiperRef}
               onChangeIndex={({ index }) => {
-                setSwiperCurrentIndex(index);
+                void saveCurrentSurvey(index);
               }}
               autoplay={false}
               disableGesture

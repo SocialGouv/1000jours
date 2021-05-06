@@ -1,38 +1,33 @@
-/* eslint-disable @typescript-eslint/no-implicit-any-catch */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const getStringValue = async (storageKey: string) => {
-  try {
-    return await AsyncStorage.getItem(storageKey);
-  } catch (error) {
-    console.error(error);
-  }
+export const getStringValue = async (
+  storageKey: string
+): Promise<string | null> => {
+  return AsyncStorage.getItem(storageKey);
 };
 
-export const getObjectValue = async (storageKey: string) => {
-  try {
-    const jsonValue = await AsyncStorage.getItem(storageKey);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return jsonValue !== null ? JSON.parse(jsonValue) : null;
-  } catch (error) {
-    console.error(error);
-  }
+export const getObjectValue = async (storageKey: string): Promise<any> => {
+  const jsonValue = await AsyncStorage.getItem(storageKey);
+  return jsonValue !== null ? JSON.parse(jsonValue) : null;
 };
 
-export const storeStringValue = async (storageKey: string, value: string) => {
-  try {
-    await AsyncStorage.setItem(storageKey, value);
-  } catch (error) {
-    console.error(error);
-  }
+export const storeStringValue = async (
+  storageKey: string,
+  value: string
+): Promise<void> => {
+  return AsyncStorage.setItem(storageKey, value);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const storeObjectValue = async (storageKey: string, value: any) => {
-  try {
-    const jsonValue = JSON.stringify(value);
-    await AsyncStorage.setItem(storageKey, jsonValue);
-  } catch (error) {
-    console.error(error);
-  }
+export const storeObjectValue = async (
+  storageKey: string,
+  value: any
+): Promise<void> => {
+  return storeStringValue(storageKey, JSON.stringify(value));
+};
+
+export const multiRemove = async (storageKeys: string[]): Promise<void> => {
+  return AsyncStorage.multiRemove(storageKeys);
 };
