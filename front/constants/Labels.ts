@@ -26,54 +26,21 @@ export default {
   epdsSurvey: {
     description:
       "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.",
-    instruction:
-      "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement aujourd'hui.",
-    questionsAnswers: [
-      {
-        answer1: "Aussi souvent que d’habitude",
-        answer2: "Pas tout-à-fait autant",
-        answer3: "Vraiment beaucoup moins souvent ces jours-ci",
-        answer4: "Absolument pas",
-        question: "J’ai pu rire et prendre les choses du bon côté",
-      },
-      {
-        answer1: "Autant que d’habitude",
-        answer2: "Plutôt moins que d’habitude",
-        answer3: "Vraiment moins que d’habitude",
-        answer4: "Pratiquement pas",
-        question:
-          "Je me suis sentie confiante et joyeuse, en pensant à l’avenir",
-      },
-      {
-        answer1: "Oui, la plupart du temps",
-        answer2: "Oui, parfois",
-        answer3: "Pas très souvent",
-        answer4: "Non, jamais",
-        question:
-          "Je me suis reprochée, sans raisons, d’être responsable quand les choses allaient mal",
-      },
-    ],
-    title: "Autodépistage dépression post-partum",
-  },
-  epdsSurvey: {
-    description:
-      "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.",
-    instruction:
-      "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement aujourd'hui.",
-    title: "Autodépistage dépression post-partum",
     genderEntry: {
-      instruction: "Veuillez renseigner votre civilité",
       choices: {
-        male: "Homme",
         female: "Femme",
+        male: "Homme",
         noInformation: "Ne veut pas donner l'information",
       },
+      instruction: "Veuillez renseigner votre civilité",
     },
+    instruction:
+      "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement aujourd'hui.",
     resultats: {
       entreDixEtDouze: {
-        intervalle: "(10, 11, 12)",
         explication:
           "Il est possible que vous souffriez de problèmes liés à une dépression, mais ce n’est pas certain. N'hésitez pas à transmettre ces résultats ou à parler de votre ressenti actuel avec votre médecin ou le professionnel de santé qui suit votre grossesse. Il pourra poser un diagnostic plus précis. Vous pouvez également en parler à votre conjoint, des amis ou un membre de votre famille.",
+        intervalle: "(10, 11, 12)",
         stateOfMind: "Je vais moins bien",
       },
       introduction: "Vous avez obtenu le score suivant : ",
@@ -90,6 +57,7 @@ export default {
         stateOfMind: "Je ne vais pas bien",
       },
     },
+    title: "Autodépistage dépression post-partum",
   },
   errorMsg: "Une erreur est survenue, merci de réessayer plus tard",
   invalidDate: "La date saisie n'est pas valide.",
