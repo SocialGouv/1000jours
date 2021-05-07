@@ -30,7 +30,7 @@ interface Props {
 
 const Datepicker: React.FC<Props> = ({ date, onChange }) => {
   const buildButtonTitle = (newDate: Date | undefined): string =>
-    newDate ? format(newDate, Formats.dateFR) : Labels.dateFormat;
+    newDate ? format(newDate, Formats.dateFR) : Labels.dateFormatLabel;
 
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(date);
