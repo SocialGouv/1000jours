@@ -14,7 +14,9 @@ export default {
   },
   buttons: {
     back: "Retour",
+    cancel: "Annuler",
     next: "Suivant",
+    ok: "Ok",
     pass: "Passer",
     start: "Commencer",
     validate: "Valider",
