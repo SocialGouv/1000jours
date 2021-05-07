@@ -40,32 +40,40 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
 
   useEffect(() => {
     const getPreviousSurvey = async () => {
-      const previousQuestionsAndAnswers = await StorageUtils.getObjectValue(
-        StorageKeysConstants.epdsQuestionAndAnswersKey
-      );
-      const previousQuestionIndex = await StorageUtils.getObjectValue(
-        StorageKeysConstants.epdsQuestionIndexKey
-      );
+      await Promise.all([
+        StorageUtils.getObjectValue(
+          StorageKeysConstants.epdsQuestionAndAnswersKey
+        ),
+        StorageUtils.getObjectValue(StorageKeysConstants.epdsQuestionIndexKey),
+      ]).then((values) => {
+        const previousQuestionsAndAnswers = values[0];
+        const previousQuestionIndex = values[1];
 
-      const previousDataSaved =
-        Boolean(previousQuestionsAndAnswers) && Boolean(previousQuestionIndex);
-      setSurveyCanBeStarted(!previousDataSaved);
+        const previousDataSaved =
+          Boolean(previousQuestionsAndAnswers) &&
+          Boolean(previousQuestionIndex);
+        setSurveyCanBeStarted(!previousDataSaved);
+      });
     };
     void getPreviousSurvey();
   }, []);
 
   const getEpdsLoadPreviousSurveyReponse = async (startOver: boolean) => {
     if (startOver) {
-      void StorageUtils.multiRemove(StorageKeysConstants.epdsSurveyKeys);
+      void EpdsSurveyUtils.removeEpdsStorageItems();
     } else {
-      const questionAndAnswers = (await StorageUtils.getObjectValue(
-        StorageKeysConstants.epdsQuestionAndAnswersKey
-      )) as EpdsQuestionAndAnswers[];
-      setQuestionsAndAnswers(questionAndAnswers);
-      const swiperIndex = (await StorageUtils.getObjectValue(
-        StorageKeysConstants.epdsQuestionIndexKey
-      )) as number;
-      setSwiperCurrentIndex(swiperIndex);
+      await Promise.all([
+        StorageUtils.getObjectValue(
+          StorageKeysConstants.epdsQuestionAndAnswersKey
+        ),
+        StorageUtils.getObjectValue(StorageKeysConstants.epdsQuestionIndexKey),
+      ]).then((values) => {
+        const questionAndAnswers = values[0] as EpdsQuestionAndAnswers[];
+        const swiperIndex = values[1] as number;
+
+        setQuestionsAndAnswers(questionAndAnswers);
+        setSwiperCurrentIndex(swiperIndex);
+      });
     }
     setSurveyCanBeStarted(true);
   };
@@ -87,14 +95,16 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
 
   const saveCurrentSurvey = async (currentSwiperIndex: number) => {
     setSwiperCurrentIndex(currentSwiperIndex);
-    await StorageUtils.storeObjectValue(
-      StorageKeysConstants.epdsQuestionAndAnswersKey,
-      questionsAndAnswers
-    );
-    await StorageUtils.storeObjectValue(
-      StorageKeysConstants.epdsQuestionIndexKey,
-      currentSwiperIndex
-    );
+    await Promise.all([
+      StorageUtils.storeObjectValue(
+        StorageKeysConstants.epdsQuestionAndAnswersKey,
+        questionsAndAnswers
+      ),
+      StorageUtils.storeObjectValue(
+        StorageKeysConstants.epdsQuestionIndexKey,
+        currentSwiperIndex
+      ),
+    ]);
   };
 
   const renderSurveyContent = () => {

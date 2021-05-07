@@ -16,9 +16,8 @@ import {
   Margins,
   Paddings,
   Sizes,
-  StorageKeysConstants,
 } from "../../constants";
-import { EpdsSurveyUtils, StorageUtils } from "../../utils";
+import { EpdsSurveyUtils } from "../../utils";
 import { EpdsResultInformation } from "..";
 
 interface Props {
@@ -30,7 +29,7 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
   const resultData = EpdsSurveyUtils.getResultLabelAndStyle(result);
 
   // Delete saved storage keys for EPDS survey
-  void StorageUtils.multiRemove(StorageKeysConstants.epdsSurveyKeys);
+  void EpdsSurveyUtils.removeEpdsStorageItems();
 
   const getIcon = (icone: EpdsConstants.ResultIconValueEnum) => {
     const iconsMap = new Map<

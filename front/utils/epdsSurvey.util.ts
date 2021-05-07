@@ -1,10 +1,16 @@
-import { Colors, EpdsConstants, Labels } from "../constants";
+import {
+  Colors,
+  EpdsConstants,
+  Labels,
+  StorageKeysConstants,
+} from "../constants";
 import type {
   EpdsAnswer,
   EpdsQuestionAndAnswers,
   EpdsResultData,
   QuestionnaireEpdsFromDB,
 } from "../type";
+import { StorageUtils } from ".";
 
 export const getQuestionsAndAnswersFromData = (
   data: unknown
@@ -112,4 +118,9 @@ export const getResultLabelAndStyle = (result: number): EpdsResultData => {
       resultLabels: labelsResultats.plusDeTreize,
     };
   }
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const removeEpdsStorageItems = async (): Promise<any> => {
+  return StorageUtils.multiRemove(StorageKeysConstants.epdsSurveyKeys);
 };
