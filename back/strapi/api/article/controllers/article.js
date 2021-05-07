@@ -11,7 +11,7 @@ const find = async (context) => {
     articles = await strapi.query("article").find(context.query);
   }
 
-  return articles.map(ArticleService.format)
+  return articles.map(ArticleService.format);
 };
 
 const findOne = async (context) => {
@@ -19,7 +19,7 @@ const findOne = async (context) => {
 
   const article = await strapi.query("article").findOne({ id });
 
-  return ArticleService.format(article)
+  return ArticleService.format(article);
 };
 
 module.exports = {

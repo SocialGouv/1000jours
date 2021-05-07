@@ -1,7 +1,6 @@
 import { EpdsContacts } from ".";
 
 export default {
-  appName: "Nos 1000 jours",
   article: {
     didYouKnowTitle: "Le saviez-vous ?",
     firstThreeMonths: {
