@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/SocialGouv/1000jours/compare/v1.21.0...v1.22.0) (2021-05-07)
+
+
+### Features
+
+* **logo:** met à jour le logo de l'application partout ([#196](https://github.com/SocialGouv/1000jours/issues/196)) ([a30dc2d](https://github.com/SocialGouv/1000jours/commit/a30dc2d03d78d2ed0c9bb86c62d7132011f289d9))
+
 # [1.21.0](https://github.com/SocialGouv/1000jours/compare/v1.20.0...v1.21.0) (2021-05-06)
 
 
