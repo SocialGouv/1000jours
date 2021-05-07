@@ -1,13 +1,25 @@
 import type { Event } from "@react-native-community/datetimepicker";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { addYears, format } from "date-fns";
+import { addYears, format, subYears } from "date-fns";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useEffect, useState } from "react";
-import { Modal, Platform, StyleSheet, View } from "react-native";
+import { Modal, StyleSheet, View } from "react-native";
 
-import Colors from "../../constants/Colors";
-import Labels from "../../constants/Labels";
+import {
+  Colors,
+  Formats,
+  Labels,
+  Locales,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../../constants";
+import {
+  MAJOR_VERSION_IOS,
+  PLATFORM_IS_ANDROID,
+  PLATFORM_IS_IOS,
+} from "../../constants/platform.constants";
 import Icomoon, { IcomoonIcons } from "../Icomoon";
 import Button from "./Button";
 
@@ -16,10 +28,9 @@ interface Props {
   onChange: (date: Date) => void;
 }
 
-const majorVersionIOS = parseInt(Platform.Version.toString(), 10);
 const Datepicker: React.FC<Props> = ({ date, onChange }) => {
-  const buildButtonTitle = (newDate: Date | undefined) =>
-    newDate ? format(newDate, "dd/MM/yyyy") : "dd/mm/yyyy";
+  const buildButtonTitle = (newDate: Date | undefined): string =>
+    newDate ? format(newDate, Formats.dateFR) : Labels.dateFormat;
 
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(date);
@@ -33,10 +44,10 @@ const Datepicker: React.FC<Props> = ({ date, onChange }) => {
   };
 
   const dateTimePickerChange = (newDate: Date | undefined) => {
-    if (Platform.OS === "ios") {
+    if (PLATFORM_IS_IOS) {
       setSelectedDate(newDate);
       // Valide la date automatiquement pour les device >= iOS 14 (UX/UI très différente)
-      if (majorVersionIOS >= 14) validate(newDate);
+      if (MAJOR_VERSION_IOS >= 14) validate(newDate);
     } else {
       setModalVisible(false);
       if (newDate !== undefined) {
@@ -51,12 +62,12 @@ const Datepicker: React.FC<Props> = ({ date, onChange }) => {
     setButtonLabel(buildButtonTitle(validatedDate));
   }, [validatedDate]);
 
-  const minDate = addYears(new Date(), -100);
+  const minDate = subYears(new Date(), 100);
   const maxDate = addYears(new Date(), 100);
 
   const dateTimePicker: React.ReactNode = (
     <DateTimePicker
-      locale="fr-FR"
+      locale={Locales.frFR}
       value={selectedDate ?? new Date()}
       mode="date"
       display="default"
@@ -82,13 +93,13 @@ const Datepicker: React.FC<Props> = ({ date, onChange }) => {
         icon={
           <Icomoon
             name={IcomoonIcons.calendrier}
-            size={24}
+            size={Sizes.xl}
             color={Colors.primaryBlue}
           />
         }
       />
       {modalVisible ? (
-        Platform.OS === "android" ? (
+        PLATFORM_IS_ANDROID ? (
           dateTimePicker
         ) : (
           <Modal
@@ -105,7 +116,7 @@ const Datepicker: React.FC<Props> = ({ date, onChange }) => {
                 <View
                   style={[styles.buttonsContainer, styles.justifyContentCenter]}
                 >
-                  <View style={[styles.buttonContainer]}>
+                  <View style={styles.buttonContainer}>
                     <Button
                       title={Labels.buttons.cancel}
                       rounded={false}
@@ -115,7 +126,7 @@ const Datepicker: React.FC<Props> = ({ date, onChange }) => {
                       }}
                     />
                   </View>
-                  <View style={[styles.buttonContainer]}>
+                  <View style={styles.buttonContainer}>
                     <Button
                       title={Labels.buttons.validate}
                       rounded={false}
@@ -143,13 +154,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   centeredView: {
-    alignItems: majorVersionIOS < 14 ? "stretch" : "center",
+    alignItems: MAJOR_VERSION_IOS < 14 ? "stretch" : "center",
     flex: 1,
     justifyContent: "center",
-    marginTop: 22,
+    marginTop: Margins.default,
   },
   dateTimePicker: {
-    width: majorVersionIOS < 14 ? "100%" : 130,
+    width: MAJOR_VERSION_IOS < 14 ? "100%" : 130,
   },
   footer: {
     flex: 1,
@@ -159,15 +170,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   modalContainer: {
-    paddingVertical: 10,
+    paddingVertical: Paddings.smaller,
   },
   modalView: {
-    alignItems: majorVersionIOS < 14 ? "stretch" : "center",
+    alignItems: MAJOR_VERSION_IOS < 14 ? "stretch" : "center",
     backgroundColor: "white",
-    borderRadius: 20,
+    borderRadius: Sizes.mmd,
     elevation: 5,
-    margin: 20,
-    padding: 20,
+    margin: Margins.larger,
+    padding: Paddings.larger,
     shadowColor: "black",
     shadowOffset: {
       height: 2,

@@ -12,9 +12,7 @@ import {
 } from "react-native";
 
 import ProfileImage from "../assets/images/Humaaans_Space_1.svg";
-import Button from "../components/form/Button";
-import Checkbox from "../components/form/Checkbox";
-import Datepicker from "../components/form/DatePicker";
+import { Button, Checkbox, Datepicker } from "../components";
 import HeaderApp from "../components/HeaderApp";
 import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import { CommonText } from "../components/StyledText";
@@ -22,6 +20,7 @@ import { View } from "../components/Themed";
 import {
   Colors,
   FontWeight,
+  Formats,
   Labels,
   PlatformConstants,
   StorageKeysConstants,
@@ -182,7 +181,7 @@ const Profile: FC<Props> = ({ navigation }) => {
                       : undefined
                   }
                   onChange={(date) => {
-                    setChildBirthday(format(date, "yyyy-MM-dd"));
+                    setChildBirthday(format(date, Formats.dateISO));
                   }}
                 />
               )}

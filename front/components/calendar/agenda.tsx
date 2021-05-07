@@ -5,9 +5,7 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { Agenda as RNAgenda } from "react-native-calendars";
 
-import Colors from "../../constants/Colors";
-import Labels from "../../constants/Labels";
-import { FontWeight } from "../../constants/Layout";
+import { Colors, FontWeight, Formats, Labels } from "../../constants";
 import type { Event } from "../../types";
 import { CommonText } from "../StyledText";
 
@@ -20,7 +18,10 @@ const Agenda: FC<Props> = ({ evenements, childBirthday }) => {
   const formattedEvents = _.chain(evenements)
     .map((event) => ({
       ...event,
-      date: format(addDays(new Date(childBirthday), event.debut), "yyyy-MM-dd"),
+      date: format(
+        addDays(new Date(childBirthday), event.debut),
+        Formats.dateISO
+      ),
     }))
     .groupBy("date")
     .value();

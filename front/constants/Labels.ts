@@ -27,6 +27,7 @@ export default {
     noChildBirthday: "Aucune date de naissance",
     noEventMessage: "Aucun événement",
   },
+  dateFormat: "dd/mm/yyyy",
   epdsSurvey: {
     description:
       "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.",
