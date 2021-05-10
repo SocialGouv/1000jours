@@ -18,7 +18,7 @@ import {
   Sizes,
 } from "../../constants";
 import { EpdsSurveyUtils } from "../../utils";
-import { EpdsResultInformation } from "..";
+import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation.component";
 
 interface Props {
   result: number;

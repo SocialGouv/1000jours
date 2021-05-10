@@ -17,7 +17,8 @@ import type {
   EpdsResultContactInformation,
   EpdsResultSimpleInformation,
 } from "../../../type";
-import { EpdsResultContactParagraph, EpdsResultSimpleParagraph } from "../..";
+import EpdsResultContactParagraph from "./epdsResultContactParagraph.component";
+import EpdsResultSimpleParagraph from "./epdsResultSimpleParagraph.component";
 
 interface EpdsResultInformationProps {
   leftBorderColor: string;
