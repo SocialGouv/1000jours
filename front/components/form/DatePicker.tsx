@@ -20,6 +20,7 @@ import {
   PLATFORM_IS_ANDROID,
   PLATFORM_IS_IOS,
 } from "../../constants/platform.constants";
+import Shadow from "../../constants/shadow.constants";
 import Icomoon, { IcomoonIcons } from "../Icomoon";
 import Button from "./Button";
 
@@ -181,11 +182,11 @@ const styles = StyleSheet.create({
     padding: Paddings.larger,
     shadowColor: "black",
     shadowOffset: {
-      height: 2,
-      width: 0,
+      height: Shadow.offsetHeight,
+      width: Shadow.offsetWidth,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    shadowOpacity: Shadow.opacity,
+    shadowRadius: Shadow.radius,
   },
 });
 
