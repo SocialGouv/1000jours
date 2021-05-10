@@ -2,7 +2,7 @@ import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useEffect, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
-import { SwiperFlatList } from "react-native-swiper-flatlist";
+import type { SwiperFlatList } from "react-native-swiper-flatlist";
 
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
@@ -10,7 +10,6 @@ import {
   Colors,
   FontWeight,
   Labels,
-  Margins,
   Paddings,
   Sizes,
   StorageKeysConstants,
@@ -20,8 +19,8 @@ import { EpdsSurveyUtils, StorageUtils } from "../../utils";
 import {
   EpdsFooter,
   EpdsLoadPreviousSurvey,
-  EpdsQuestion,
   EpdsResult,
+  EpdsSurveyQuestionsList,
 } from "..";
 
 interface Props {
@@ -112,30 +111,13 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
                 {Labels.epdsSurvey.instruction}
               </CommonText>
             </View>
-            <View style={styles.flatListView}>
-              <SwiperFlatList
-                ref={swiperRef}
-                index={swiperCurrentIndex}
-                onChangeIndex={({ index }) => {
-                  void saveCurrentSurvey(index);
-                }}
-                autoplay={false}
-                disableGesture
-                showPagination
-                paginationDefaultColor="lightgray"
-                paginationActiveColor={Colors.secondaryGreen}
-                paginationStyleItem={styles.swipePaginationItem}
-              >
-                {questionsAndAnswers.map((questionView, questionIndex) => (
-                  <View key={questionIndex}>
-                    <EpdsQuestion
-                      questionAndAnswers={questionView}
-                      updatePressedAnswer={updatePressedAnswer}
-                    />
-                  </View>
-                ))}
-              </SwiperFlatList>
-            </View>
+            <EpdsSurveyQuestionsList
+              epdsSurvey={questionsAndAnswers}
+              swiperRef={swiperRef}
+              swiperCurrentIndex={swiperCurrentIndex}
+              saveCurrentSurvey={saveCurrentSurvey}
+              updatePressedAnswer={updatePressedAnswer}
+            />
             <EpdsFooter
               swiperCurrentIndex={swiperCurrentIndex}
               swiperRef={swiperRef}
@@ -157,9 +139,6 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
 };
 
 const styles = StyleSheet.create({
-  flatListView: {
-    flex: 7,
-  },
   instruction: {
     color: Colors.commonText,
     fontSize: Sizes.xs,
@@ -170,11 +149,6 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     paddingTop: Paddings.larger,
-  },
-  swipePaginationItem: {
-    height: Sizes.xxxs,
-    marginHorizontal: Margins.smaller,
-    width: Sizes.mmd,
   },
 });
 
