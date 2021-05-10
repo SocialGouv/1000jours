@@ -43,5 +43,9 @@ export const storeObjectValue = async (
 };
 
 export const multiRemove = async (storageKeys: string[]): Promise<void> => {
-  return AsyncStorage.multiRemove(storageKeys);
+  try {
+    await AsyncStorage.multiRemove(storageKeys);
+  } catch (error: unknown) {
+    console.error(error);
+  }
 };
