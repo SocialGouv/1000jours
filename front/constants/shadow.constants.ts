@@ -4,7 +4,7 @@ import { scaleNormalize } from "../utils";
 const Shadow = {
   radius: scaleNormalize(4),
   opacity: 0.25,
-  offsetHeight: 2,
+  offsetHeight: scaleNormalize(2),
   offsetWidth: 0,
 };
 
