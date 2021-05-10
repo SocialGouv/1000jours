@@ -17,9 +17,9 @@ import {
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, StorageUtils } from "../../utils";
 import {
-  EpdsFooter,
   EpdsLoadPreviousSurvey,
   EpdsResult,
+  EpdsSurveyFooter,
   EpdsSurveyQuestionsList,
 } from "..";
 
@@ -118,7 +118,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
               saveCurrentSurvey={saveCurrentSurvey}
               updatePressedAnswer={updatePressedAnswer}
             />
-            <EpdsFooter
+            <EpdsSurveyFooter
               swiperCurrentIndex={swiperCurrentIndex}
               swiperRef={swiperRef}
               showValidateButton={showValidateButton}

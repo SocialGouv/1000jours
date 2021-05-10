@@ -16,7 +16,7 @@ interface Props {
   setDisplayResult: (value: boolean) => void;
 }
 
-const EpdsFooter: React.FC<Props> = ({
+const EpdsSurveyFooter: React.FC<Props> = ({
   swiperCurrentIndex,
   swiperRef,
   showValidateButton,
@@ -93,4 +93,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EpdsFooter;
+export default EpdsSurveyFooter;
