@@ -1,3 +1,10 @@
+# [1.23.0](https://github.com/SocialGouv/1000jours/compare/v1.22.0...v1.23.0) (2021-05-10)
+
+
+### Features
+
+* 🎸 Ajoute la nouvelle version du datePicker ([#195](https://github.com/SocialGouv/1000jours/issues/195)) ([79c8ee2](https://github.com/SocialGouv/1000jours/commit/79c8ee293da528be927f2daf1550d950b70bc7d0)), closes [#159](https://github.com/SocialGouv/1000jours/issues/159)
+
 # [1.22.0](https://github.com/SocialGouv/1000jours/compare/v1.21.0...v1.22.0) (2021-05-07)
 
 
