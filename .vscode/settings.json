@@ -1,3 +1,8 @@
 {
-  "eslint.workingDirectories": ["front", "back"]
+  "eslint.workingDirectories": ["front", "back"],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["javascript", "typescript"],
 }
