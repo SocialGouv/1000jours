@@ -1,7 +1,7 @@
 export enum EpdsGender {
-  male = "Male",
-  female = "Female",
-  unknown = "Unknown",
+  homme = "Homme",
+  femme = "Femme",
+  inconnu = "Inconnu",
 }
 
 export const RESULT_WELL_VALUE = 9;

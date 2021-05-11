@@ -31,6 +31,9 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
   // Delete saved storage keys for EPDS survey
   void EpdsSurveyUtils.removeEpdsStorageItems();
 
+  void EpdsSurveyUtils.incrementEpdsSurveyCounter();
+  void EpdsSurveyUtils.saveEpdsSurveyResult(result);
+
   const getIcon = (icone: EpdsConstants.ResultIconValueEnum) => {
     const iconsMap = new Map<
       EpdsConstants.ResultIconValueEnum,
