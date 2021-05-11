@@ -1,12 +1,18 @@
 import { filter } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
-import { StyleSheet, Text } from "react-native";
+import { ImageBackground, StyleSheet, Text } from "react-native";
 import { ListItem } from "react-native-elements";
 
-import Colors from "../../constants/Colors";
-import Labels from "../../constants/Labels";
-import { FontWeight } from "../../constants/Layout";
+import EllipseIcon from "../../assets/images/Ellipse.png";
+import {
+  Colors,
+  FontWeight,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../../constants";
 import type { ArticleInShortItem } from "../../types";
 import Icomoon, { IcomoonIcons } from "../Icomoon";
 import { CommonText, SecondaryText } from "../StyledText";
@@ -41,7 +47,7 @@ const InShort: FC<Props> = ({ inShortArray }) => {
     ),
     [inShortIconNames.babyBottle]: (
       <Icomoon
-        name={IcomoonIcons.biberon}
+        name={IcomoonIcons.entourage}
         size={iconSize}
         color={Colors.secondaryGreen}
       />
@@ -64,7 +70,13 @@ const InShort: FC<Props> = ({ inShortArray }) => {
       <View style={styles.inShortListItemsContainer}>
         {filter(inShortArray, "text").map((item, index) => (
           <ListItem key={index} containerStyle={[styles.listItemContainer]}>
-            <View style={styles.listItemIcon}>{inShortIcons[item.icon]}</View>
+            <ImageBackground
+              source={EllipseIcon}
+              imageStyle={styles.imageBackground}
+              style={styles.listItemIcon}
+            >
+              {inShortIcons[item.icon]}
+            </ImageBackground>
             <ListItem.Content>
               <ListItem.Title>
                 <SecondaryText style={[styles.listItemTitle]}>
@@ -81,54 +93,63 @@ const InShort: FC<Props> = ({ inShortArray }) => {
 
 const styles = StyleSheet.create({
   cardBackgroundSymbol: {
-    fontSize: 45,
+    fontSize: Sizes.xxxxl,
     fontWeight: "bold",
-    paddingLeft: 18,
+    paddingLeft: Paddings.default,
     position: "absolute",
     zIndex: -1,
   },
   cardTitleContainer: {
     backgroundColor: "transparent",
     flex: 1,
-    height: 35,
+    height: Sizes.xxxl,
     justifyContent: "center",
-    paddingLeft: 18,
+    paddingLeft: Paddings.default,
   },
   colorPrimaryBlueDark: {
     color: Colors.primaryBlueDark,
+  },
+  imageBackground: {
+    marginBottom: Margins.smaller,
+    marginStart: Margins.smallest,
+    resizeMode: "contain",
   },
   inShortBackgroundSymbol: {
     color: Colors.secondaryGreenLight,
   },
   inShortContainer: {
     backgroundColor: Colors.cardGrey,
+    borderColor: Colors.borderGrey,
     borderLeftColor: Colors.secondaryGreen,
     borderLeftWidth: 4,
-    marginBottom: 10,
-    paddingVertical: 4,
+    borderWidth: 1,
+    marginBottom: Margins.light,
+    paddingVertical: Paddings.smallest,
   },
   inShortListItemsContainer: {
     backgroundColor: "transparent",
   },
   inShortTitle: {
     color: Colors.secondaryGreen,
-    fontSize: 17,
+    fontSize: Sizes.md,
     fontWeight: FontWeight.bold,
     marginVertical: "auto",
   },
   listItemContainer: {
     backgroundColor: "transparent",
-    padding: 10,
+    padding: Paddings.light,
   },
   listItemIcon: {
     alignItems: "center",
     backgroundColor: "transparent",
+    height: iconSize + Paddings.default,
     justifyContent: "center",
-    width: iconSize + 10,
+    paddingTop: Margins.light,
+    width: iconSize + Paddings.light,
   },
   listItemTitle: {
     color: Colors.primaryBlueDark,
-    fontSize: 16,
+    fontSize: Sizes.sm,
     fontWeight: FontWeight.medium,
   },
   positionRelative: {

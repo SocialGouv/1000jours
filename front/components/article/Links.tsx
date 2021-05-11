@@ -3,8 +3,7 @@ import type { FC } from "react";
 import * as React from "react";
 import { Alert, Linking, StyleSheet } from "react-native";
 
-import Colors from "../../constants/Colors";
-import Labels from "../../constants/Labels";
+import { Colors, Labels, Paddings, Sizes } from "../../constants";
 import type { ArticleLink } from "../../types";
 import { CommonText } from "../StyledText";
 import { View } from "../Themed";
@@ -44,16 +43,16 @@ const styles = StyleSheet.create({
   link: {
     color: Colors.commonText,
     flexDirection: "column",
-    fontSize: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    fontSize: Sizes.xxs,
+    paddingHorizontal: Paddings.light,
+    paddingVertical: Paddings.smaller,
     textDecorationLine: "underline",
   },
   linksContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-    paddingVertical: 10,
+    paddingVertical: Paddings.light,
   },
 });
 

@@ -203,6 +203,9 @@ export default {
   errorMsg: "Une erreur est survenue, merci de réessayer plus tard",
   invalidDate: "La date saisie n'est pas valide.",
   invalidLink: "Ce lien n'est pas valide.",
+  listArticles: {
+    articlesToRead: "article(s) à lire",
+  },
   menu: {
     title: "Menu",
   },

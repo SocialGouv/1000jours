@@ -113,7 +113,9 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
             />
           </View>
           <SecondaryText style={[styles.title]}>{screenTitle}</SecondaryText>
-          <CommonText style={[styles.description]}>{description}</CommonText>
+          {description && (
+            <CommonText style={[styles.description]}>{description}</CommonText>
+          )}
         </View>
         <View>
           <ImageBanner imageUrl={result.article.visuel?.url} />
