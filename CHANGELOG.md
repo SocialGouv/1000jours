@@ -1,3 +1,10 @@
+## [1.23.3](https://github.com/SocialGouv/1000jours/compare/v1.23.2...v1.23.3) (2021-05-11)
+
+
+### Bug Fixes
+
+* 🐛 Corrige les retours design liés aux articles ([#203](https://github.com/SocialGouv/1000jours/issues/203)) ([10c7eb0](https://github.com/SocialGouv/1000jours/commit/10c7eb092763a2a3bd6864185b4e3deecb292f16)), closes [#26](https://github.com/SocialGouv/1000jours/issues/26) [#28](https://github.com/SocialGouv/1000jours/issues/28) [#102](https://github.com/SocialGouv/1000jours/issues/102)
+
 ## [1.23.2](https://github.com/SocialGouv/1000jours/compare/v1.23.1...v1.23.2) (2021-05-11)
 
 
