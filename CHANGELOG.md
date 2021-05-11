@@ -1,3 +1,10 @@
+## [1.23.2](https://github.com/SocialGouv/1000jours/compare/v1.23.1...v1.23.2) (2021-05-11)
+
+
+### Bug Fixes
+
+* **cycles:** fix circular dependencies ([#199](https://github.com/SocialGouv/1000jours/issues/199)) ([5aeb742](https://github.com/SocialGouv/1000jours/commit/5aeb74286bc2def321ba91fd40e5e406b9f757e6))
+
 ## [1.23.1](https://github.com/SocialGouv/1000jours/compare/v1.23.0...v1.23.1) (2021-05-11)
 
 
