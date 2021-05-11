@@ -2,9 +2,14 @@ import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet, Text } from "react-native";
 
-import Colors from "../../constants/Colors";
-import Labels from "../../constants/Labels";
-import { FontWeight } from "../../constants/Layout";
+import {
+  Colors,
+  FontWeight,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../../constants";
 import { CommonText, SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 
@@ -38,42 +43,45 @@ const DidYouKnow: FC<Props> = ({ description }) => {
 
 const styles = StyleSheet.create({
   cardBackgroundSymbol: {
-    fontSize: 45,
+    fontSize: Sizes.xxxxl,
     fontWeight: "bold",
-    paddingLeft: 18,
+    paddingLeft: Paddings.default,
     position: "absolute",
     zIndex: -1,
   },
   cardTitleContainer: {
     backgroundColor: "transparent",
     flex: 1,
-    height: 35,
+    height: Sizes.xxxl,
     justifyContent: "center",
-    paddingLeft: 18,
+    paddingLeft: Paddings.default,
   },
   didYouKnowBackgroundSymbol: {
     color: Colors.primaryYellowLight,
   },
   didYouKnowContainer: {
-    backgroundColor: Colors.cardGrey,
+    backgroundColor: Colors.cardWhite,
+    borderColor: Colors.borderGrey,
     borderLeftColor: Colors.primaryYellow,
     borderLeftWidth: 4,
-    marginBottom: 15,
-    paddingBottom: 15,
-    paddingTop: 5,
+    borderWidth: 1,
+    marginBottom: Margins.default,
+    paddingBottom: Paddings.default,
+    paddingTop: Paddings.smallest,
   },
   didYouKnowContent: {
     color: Colors.primaryBlueDark,
-    fontSize: 16,
+    fontSize: Sizes.sm,
     fontWeight: FontWeight.medium,
-    lineHeight: 23,
-    paddingHorizontal: 18,
+    lineHeight: Sizes.lg,
+    paddingHorizontal: Paddings.default,
     paddingTop: 0,
   },
   didYouKnowTitle: {
     color: Colors.primaryYellow,
-    fontSize: 17,
+    fontSize: Sizes.md,
     fontWeight: FontWeight.bold,
+    marginVertical: "auto",
   },
   positionRelative: {
     position: "relative",

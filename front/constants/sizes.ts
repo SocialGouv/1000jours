@@ -3,6 +3,8 @@
 import { scaleNormalize } from "../utils/scaleNormalize.util";
 
 const Sizes = {
+  xxxxxs: scaleNormalize(6),
+  xxxxs: scaleNormalize(8),
   xxxs: scaleNormalize(10),
   xxs: scaleNormalize(12),
   xs: scaleNormalize(14),
@@ -16,6 +18,7 @@ const Sizes = {
   xxxxl: scaleNormalize(46),
   giant: scaleNormalize(300),
   logo: scaleNormalize(70),
+  thumbnail: scaleNormalize(100),
 };
 
 export default Sizes;

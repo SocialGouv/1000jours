@@ -8,10 +8,16 @@ import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
 
 import Button from "../components/form/Button";
-import { CommonText } from "../components/StyledText";
+import { CommonText, SecondaryText } from "../components/StyledText";
 import { View } from "../components/Themed";
-import Colors from "../constants/Colors";
-import Labels from "../constants/Labels";
+import {
+  Colors,
+  FontWeight,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../constants";
 import type { Article, Step, TabHomeParamList } from "../types";
 
 interface Props {
@@ -56,8 +62,12 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
   return (
     <ScrollView>
       <View style={styles.topContainer}>
-        <CommonText style={styles.title}>{screenTitle}</CommonText>
-        <CommonText style={styles.description}>{description}</CommonText>
+        <SecondaryText style={styles.title}>{screenTitle}</SecondaryText>
+        {description && (
+          <SecondaryText style={styles.description}>
+            {description}
+          </SecondaryText>
+        )}
       </View>
       {stepIsFirstThreeMonths && (
         <View style={styles.threeFirstMonthsBanner}>
@@ -77,9 +87,9 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
         </View>
       )}
       <View style={styles.listContainer}>
-        <CommonText style={styles.headerListInfo}>
-          {articles.length} article(s) à lire
-        </CommonText>
+        <SecondaryText style={styles.headerListInfo}>
+          {articles.length} {Labels.listArticles.articlesToRead}
+        </SecondaryText>
         {articles.map((article, index) => (
           <ListItem
             key={index}
@@ -90,13 +100,15 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
                 step: route.params.step,
               });
             }}
-            containerStyle={styles.listItem}
+            pad={0}
+            containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
+            style={[styles.listItem, styles.borderLeftRadius]}
           >
             <Image
               source={{
                 uri: article.visuel?.url,
               }}
-              containerStyle={styles.articleImage}
+              containerStyle={[styles.articleImage, styles.borderLeftRadius]}
             />
             <ListItem.Content style={styles.articleContent}>
               <ListItem.Title style={styles.articleTitleContainer}>
@@ -105,13 +117,13 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
                 </CommonText>
               </ListItem.Title>
               <ListItem.Subtitle style={styles.articleDescription}>
-                <CommonText
+                <SecondaryText
                   style={styles.articleDescriptionFont}
                   numberOfLines={3}
                   allowFontScaling={true}
                 >
                   {article.resume}
-                </CommonText>
+                </SecondaryText>
               </ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
@@ -124,66 +136,79 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   articleContent: {
     justifyContent: "center",
+    padding: Paddings.default,
   },
   articleDescription: {
     color: Colors.commonText,
   },
   articleDescriptionFont: {
     color: Colors.commonText,
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: Sizes.sm,
+    fontWeight: FontWeight.medium,
+    lineHeight: Sizes.lg,
   },
   articleImage: {
-    height: 100,
-    width: 100,
+    height: "100%",
+    resizeMode: "contain",
+    width: Sizes.thumbnail,
   },
   articleTitle: {
     color: Colors.primaryBlueDark,
-    fontSize: 16,
+    fontSize: Sizes.md,
+    fontWeight: FontWeight.bold,
   },
   articleTitleContainer: {
-    paddingBottom: 15,
+    paddingBottom: Paddings.light,
   },
   bannerButton: {
     alignSelf: "flex-end",
   },
   bannerDescription: {
     color: Colors.commonText,
-    marginVertical: 10,
+    marginVertical: Margins.light,
   },
   bannerTitle: {
     color: Colors.primaryBlueDark,
-    fontSize: 16,
+    fontSize: Sizes.sm,
+  },
+  borderLeftRadius: {
+    borderBottomLeftRadius: Sizes.xxxxxs,
+    borderTopLeftRadius: Sizes.xxxxxs,
   },
   description: {
     color: Colors.commonText,
   },
   headerListInfo: {
     color: Colors.secondaryGreen,
-    fontSize: 14,
+    fontSize: Sizes.xs,
+    fontStyle: "italic",
   },
   listContainer: {
-    padding: 15,
+    padding: Paddings.default,
   },
   listItem: {
-    paddingLeft: 0,
-    paddingRight: 0,
+    marginVertical: Margins.smallest,
+  },
+  listItemContainer: {
+    borderColor: Colors.borderGrey,
+    borderWidth: 1,
+    padding: 0,
   },
   threeFirstMonthsBanner: {
     backgroundColor: Colors.primaryYellowLight,
     borderStartColor: Colors.primaryYellowDark,
     borderStartWidth: 5,
-    padding: 15,
+    padding: Paddings.default,
   },
   title: {
-    color: Colors.primaryBlue,
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
+    color: Colors.primaryBlueDark,
+    fontSize: Sizes.md,
+    fontWeight: FontWeight.black,
     textTransform: "uppercase",
   },
   topContainer: {
-    padding: 15,
+    paddingHorizontal: Paddings.default,
+    paddingTop: Paddings.default,
   },
 });
 

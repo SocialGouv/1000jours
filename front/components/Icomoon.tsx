@@ -31,6 +31,7 @@ export enum IcomoonIcons {
   informations = "informations",
   profil = "profil",
   parents = "parents",
+  entourage = "entourage",
   mentionsLegales = "mentions-legales",
   glossaire = "glossaire",
   stepProjetParent = "step-projet-parent",
