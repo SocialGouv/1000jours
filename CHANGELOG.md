@@ -1,3 +1,10 @@
+## [1.23.1](https://github.com/SocialGouv/1000jours/compare/v1.23.0...v1.23.1) (2021-05-11)
+
+
+### Bug Fixes
+
+* 🐛 Corrige les retours design sur l'Onboarding ([#200](https://github.com/SocialGouv/1000jours/issues/200)) ([cb5206a](https://github.com/SocialGouv/1000jours/commit/cb5206a3c5c4ba4d0aa31a6525fda39a2b19cc2c)), closes [#7](https://github.com/SocialGouv/1000jours/issues/7)
+
 # [1.23.0](https://github.com/SocialGouv/1000jours/compare/v1.22.0...v1.23.0) (2021-05-10)
 
 
