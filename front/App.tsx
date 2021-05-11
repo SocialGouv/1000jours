@@ -1,5 +1,4 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import type { FC } from "react";
@@ -13,6 +12,7 @@ import { StorageKeysConstants } from "./constants";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
+import { StorageUtils } from "./utils";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -43,7 +43,7 @@ const App: FC = () => {
   }, []);
 
   if (process.env.CLEAR_STORAGE)
-    void AsyncStorage.multiRemove(StorageKeysConstants.storageAllKeys);
+    void StorageUtils.multiRemove(StorageKeysConstants.allStorageKeys);
 
   if (!fontsLoaded || !isLoadingComplete) {
     return null;

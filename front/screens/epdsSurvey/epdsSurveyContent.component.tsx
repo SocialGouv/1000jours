@@ -1,8 +1,8 @@
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
-import { SwiperFlatList } from "react-native-swiper-flatlist";
+import type { SwiperFlatList } from "react-native-swiper-flatlist";
 
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
@@ -10,13 +10,18 @@ import {
   Colors,
   FontWeight,
   Labels,
-  Margins,
   Paddings,
   Sizes,
+  StorageKeysConstants,
 } from "../../constants";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
-import { EpdsSurveyUtils } from "../../utils";
-import { EpdsFooter, EpdsQuestion, EpdsResult } from "..";
+import { EpdsSurveyUtils, StorageUtils } from "../../utils";
+import {
+  EpdsLoadPreviousSurvey,
+  EpdsResult,
+  EpdsSurveyFooter,
+  EpdsSurveyQuestionsList,
+} from "..";
 
 interface Props {
   epdsSurvey: EpdsQuestionAndAnswers[];
@@ -30,6 +35,42 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
   >(epdsSurvey);
   const [displayResult, setDisplayResult] = useState(false);
   const [score, setScore] = useState(0);
+  const [surveyCanBeStarted, setSurveyCanBeStarted] = useState(false);
+
+  useEffect(() => {
+    const getPreviousSurvey = async () => {
+      const values: [
+        EpdsQuestionAndAnswers[] | undefined,
+        number | undefined
+      ] = await Promise.all([
+        StorageUtils.getObjectValue(
+          StorageKeysConstants.epdsQuestionAndAnswersKey
+        ),
+        StorageUtils.getObjectValue(StorageKeysConstants.epdsQuestionIndexKey),
+      ]);
+
+      const previousDataSaved = Boolean(values[0]) && Boolean(values[1]);
+      setSurveyCanBeStarted(!previousDataSaved);
+    };
+    void getPreviousSurvey();
+  }, []);
+
+  const getEpdsLoadPreviousSurveyReponse = async (startOver: boolean) => {
+    if (startOver) {
+      await EpdsSurveyUtils.removeEpdsStorageItems();
+    } else {
+      const values: [EpdsQuestionAndAnswers[], number] = await Promise.all([
+        StorageUtils.getObjectValue(
+          StorageKeysConstants.epdsQuestionAndAnswersKey
+        ),
+        StorageUtils.getObjectValue(StorageKeysConstants.epdsQuestionIndexKey),
+      ]);
+
+      setQuestionsAndAnswers(values[0]);
+      setSwiperCurrentIndex(values[1]);
+    }
+    setSurveyCanBeStarted(true);
+  };
 
   const questionIsAnswered =
     questionsAndAnswers[swiperCurrentIndex]?.isAnswered;
@@ -46,45 +87,50 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
     setScore(EpdsSurveyUtils.getUpdatedScore(updatedSurvey));
   };
 
+  const saveCurrentSurvey = async (currentSwiperIndex: number) => {
+    setSwiperCurrentIndex(currentSwiperIndex);
+    await Promise.all([
+      StorageUtils.storeObjectValue(
+        StorageKeysConstants.epdsQuestionAndAnswersKey,
+        questionsAndAnswers
+      ),
+      StorageUtils.storeObjectValue(
+        StorageKeysConstants.epdsQuestionIndexKey,
+        currentSwiperIndex
+      ),
+    ]);
+  };
+
   return (
     <View style={styles.mainContainer}>
       {!displayResult ? (
-        <>
-          <View>
-            <CommonText style={styles.instruction}>
-              {Labels.epdsSurvey.instruction}
-            </CommonText>
-          </View>
-          <View style={styles.flatListView}>
-            <SwiperFlatList
-              ref={swiperRef}
-              onChangeIndex={({ index }) => {
-                setSwiperCurrentIndex(index);
-              }}
-              autoplay={false}
-              disableGesture
-              paginationDefaultColor="lightgray"
-              paginationActiveColor={Colors.secondaryGreen}
-              paginationStyleItem={styles.swipePaginationItem}
-            >
-              {questionsAndAnswers.map((questionView, questionIndex) => (
-                <View key={questionIndex}>
-                  <EpdsQuestion
-                    questionAndAnswers={questionView}
-                    updatePressedAnswer={updatePressedAnswer}
-                  />
-                </View>
-              ))}
-            </SwiperFlatList>
-          </View>
-          <EpdsFooter
-            swiperCurrentIndex={swiperCurrentIndex}
-            swiperRef={swiperRef}
-            showValidateButton={showValidateButton}
-            questionIsAnswered={questionIsAnswered}
-            setDisplayResult={setDisplayResult}
+        surveyCanBeStarted ? (
+          <>
+            <View>
+              <CommonText style={styles.instruction}>
+                {Labels.epdsSurvey.instruction}
+              </CommonText>
+            </View>
+            <EpdsSurveyQuestionsList
+              epdsSurvey={questionsAndAnswers}
+              swiperRef={swiperRef}
+              swiperCurrentIndex={swiperCurrentIndex}
+              saveCurrentSurvey={saveCurrentSurvey}
+              updatePressedAnswer={updatePressedAnswer}
+            />
+            <EpdsSurveyFooter
+              swiperCurrentIndex={swiperCurrentIndex}
+              swiperRef={swiperRef}
+              showValidateButton={showValidateButton}
+              questionIsAnswered={questionIsAnswered}
+              setDisplayResult={setDisplayResult}
+            />
+          </>
+        ) : (
+          <EpdsLoadPreviousSurvey
+            startSurveyOver={getEpdsLoadPreviousSurveyReponse}
           />
-        </>
+        )
       ) : (
         <EpdsResult result={score} />
       )}
@@ -93,9 +139,6 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
 };
 
 const styles = StyleSheet.create({
-  flatListView: {
-    flex: 7,
-  },
   instruction: {
     color: Colors.commonText,
     fontSize: Sizes.xs,
@@ -106,11 +149,6 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     paddingTop: Paddings.larger,
-  },
-  swipePaginationItem: {
-    height: Sizes.xxxs,
-    marginHorizontal: Margins.smaller,
-    width: Sizes.mmd,
   },
 });
 
