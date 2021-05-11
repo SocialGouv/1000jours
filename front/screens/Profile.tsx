@@ -22,7 +22,10 @@ import {
   FontWeight,
   Formats,
   Labels,
+  Margins,
+  Paddings,
   PlatformConstants,
+  Sizes,
   StorageKeysConstants,
 } from "../constants";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
@@ -144,7 +147,9 @@ const Profile: FC<Props> = ({ navigation }) => {
       >
         <View style={styles.mainView}>
           <ScrollView style={styles.mainMargins}>
-            <View style={[styles.justifyContentCenter]}>{image}</View>
+            <View style={[styles.profileImage, styles.justifyContentCenter]}>
+              {image}
+            </View>
             <CommonText style={[styles.title, styles.textAlignCenter]}>
               {Labels.profile.title}
             </CommonText>
@@ -228,22 +233,14 @@ const Profile: FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  appName: {
-    color: Colors.primaryBlueDark,
-    fontSize: 25,
-    fontWeight: "bold",
-  },
   birthdayConatiner: {
-    paddingTop: 30,
+    paddingTop: Paddings.larger,
   },
   buttonContainer: {
     flex: 1,
   },
   buttonsContainer: {
     flexDirection: "row",
-  },
-  checkbox: {
-    height: 40,
   },
   choices: {
     alignSelf: "center",
@@ -252,7 +249,7 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlueDark,
   },
   datepickerContainer: {
-    padding: 20,
+    padding: Paddings.default,
   },
   flexColumn: {
     flex: 1,
@@ -260,11 +257,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
-    paddingVertical: 10,
-  },
-  header: {
-    height: 44,
-    margin: 15,
+    paddingVertical: Paddings.light,
   },
   hide: {
     display: "none",
@@ -276,29 +269,31 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     flexDirection: "column",
-    paddingTop: 30,
+    paddingTop: Paddings.larger,
   },
   mainMargins: {
-    marginHorizontal: 15,
+    marginHorizontal: Margins.default,
   },
   mainView: {
     flex: 8,
   },
+  profileImage: {
+    padding: Paddings.default,
+  },
   subTitle: {
     color: Colors.primaryBlue,
-    fontSize: 16,
+    fontSize: Sizes.sm,
     fontWeight: FontWeight.normal,
-    paddingBottom: 30,
+    paddingBottom: Paddings.larger,
   },
   textAlignCenter: {
     textAlign: "center",
   },
   title: {
     color: Colors.primaryBlueDark,
-    fontSize: 18,
+    fontSize: Sizes.md,
     fontWeight: "bold",
-    paddingBottom: 10,
-    paddingTop: 15,
+    paddingVertical: Paddings.light,
   },
   w100: {
     width: "100%",

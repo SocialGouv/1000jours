@@ -130,7 +130,6 @@ const Onboarding: FC<Props> = ({ navigation }) => {
             <View style={[styles.buttonContainer]}>
               <Button
                 title={Labels.buttons.pass}
-                titleStyle={styles.buttonTitle}
                 rounded={false}
                 disabled={false}
                 icon={
@@ -146,7 +145,6 @@ const Onboarding: FC<Props> = ({ navigation }) => {
             <View style={styles.buttonContainer}>
               <Button
                 title={Labels.buttons.next}
-                titleStyle={styles.buttonTitle}
                 rounded={false}
                 disabled={false}
                 icon={
