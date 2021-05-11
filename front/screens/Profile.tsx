@@ -5,7 +5,6 @@ import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
-  Alert,
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
@@ -13,9 +12,7 @@ import {
 } from "react-native";
 
 import ProfileImage from "../assets/images/Humaaans_Space_1.svg";
-import Button from "../components/form/Button";
-import Checkbox from "../components/form/Checkbox";
-import InputDate from "../components/form/InputDate";
+import { Button, Checkbox, Datepicker } from "../components";
 import HeaderApp from "../components/HeaderApp";
 import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import { CommonText } from "../components/StyledText";
@@ -23,6 +20,7 @@ import { View } from "../components/Themed";
 import {
   Colors,
   FontWeight,
+  Formats,
   Labels,
   PlatformConstants,
   StorageKeysConstants,
@@ -59,16 +57,31 @@ const Profile: FC<Props> = ({ navigation }) => {
   const canValidateForm = () => {
     if (!hasCheckedSituation()) return false;
     if (!childBirthdayIsNeeded()) return true;
-    // vérifie que jour, mois et année sont remplis
-    return day.length > 0 && month.length > 0 && year.length === 4;
+    // vérifie que la date est bien remplie;
+    return childBirthday.length > 0;
   };
   const [canValidate, setCanValidate] = useState(false);
-  const [day, setDay] = useState("");
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
+  const [childBirthday, setChildBirthday] = useState("");
   const [userSituations, setUserSituations] = useState<UserSituation[]>(
     defaultUserContext.situations
   );
+  const [datePickerIsReady, setDatePickerIsReady] = useState(false);
+
+  useEffect(() => {
+    const initChildBirthdayWithStorageValue = async () => {
+      const childBirthdayStr =
+        (await StorageUtils.getStringValue(
+          StorageKeysConstants.userChildBirthdayKey
+        )) ?? "";
+      setChildBirthday(childBirthdayStr);
+      setDatePickerIsReady(true);
+    };
+    void initChildBirthdayWithStorageValue();
+  }, []);
+
+  useEffect(() => {
+    setCanValidate(canValidateForm());
+  }, [childBirthday, userSituations]);
 
   const updateUserSituations = (userSituation: UserSituation) => {
     setUserSituations(() => {
@@ -107,42 +120,20 @@ const Profile: FC<Props> = ({ navigation }) => {
   };
 
   const validateForm = () => {
-    if (!childBirthdayIsNeeded() || isValidDate(+day, +month, +year)) {
-      void StorageUtils.storeObjectValue(
-        StorageKeysConstants.userSituationsKey,
-        userSituations
-      );
-      void StorageUtils.storeStringValue(
-        StorageKeysConstants.userChildBirthdayKey,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        format(createDate(+day, +month, +year), "yyyy-MM-dd")
-      );
-      navigation.navigate("root");
-    } else {
-      Alert.alert(Labels.invalidDate);
-    }
-  };
-
-  const createDate = (_day: number, _month: number, _year: number) => {
-    return new Date(Date.UTC(_year, _month - 1, _day));
-  };
-
-  const isValidDate = (_day: number, _month: number, _year: number) => {
-    const date = createDate(_day, _month, _year);
-    return (
-      date.getFullYear() === _year &&
-      date.getMonth() === _month - 1 &&
-      date.getDate() === _day
+    void StorageUtils.storeObjectValue(
+      StorageKeysConstants.userSituationsKey,
+      userSituations
     );
+    void StorageUtils.storeStringValue(
+      StorageKeysConstants.userChildBirthdayKey,
+      childBirthday
+    );
+    navigation.navigate("root");
   };
 
   const navigateToRoot = () => {
     navigation.navigate("root");
   };
-
-  useEffect(() => {
-    setCanValidate(canValidateForm());
-  }, [day, month, year, userSituations]);
 
   return (
     <View style={[styles.mainContainer, styles.flexColumn]}>
@@ -182,20 +173,18 @@ const Profile: FC<Props> = ({ navigation }) => {
               <Text style={[styles.colorPrimaryDark, styles.textAlignCenter]}>
                 {getChildBirthdayLabel()}
               </Text>
-              <InputDate
-                day={day}
-                month={month}
-                year={year}
-                onDayChange={(text) => {
-                  setDay(text);
-                }}
-                onMonthChange={(text) => {
-                  setMonth(text);
-                }}
-                onYearChange={(text) => {
-                  setYear(text);
-                }}
-              />
+              {datePickerIsReady && (
+                <Datepicker
+                  date={
+                    childBirthday.length > 0
+                      ? new Date(childBirthday)
+                      : undefined
+                  }
+                  onChange={(date) => {
+                    setChildBirthday(format(date, Formats.dateISO));
+                  }}
+                />
+              )}
             </View>
           </ScrollView>
         </View>

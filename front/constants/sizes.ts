@@ -15,6 +15,7 @@ const Sizes = {
   xxxl: scaleNormalize(36),
   xxxxl: scaleNormalize(46),
   giant: scaleNormalize(300),
+  logo: scaleNormalize(70),
 };
 
 export default Sizes;

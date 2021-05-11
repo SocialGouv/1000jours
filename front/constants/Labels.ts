@@ -1,7 +1,6 @@
 import { epdsContacts } from "./epdsContacts.constants";
 
 export default {
-  appName: "Nos 1000 jours",
   article: {
     didYouKnowTitle: "Le saviez-vous ?",
     firstThreeMonths: {
@@ -14,7 +13,9 @@ export default {
   },
   buttons: {
     back: "Retour",
+    cancel: "Annuler",
     next: "Suivant",
+    ok: "Ok",
     pass: "Passer",
     start: "Commencer",
     validate: "Valider",
@@ -25,6 +26,7 @@ export default {
     noChildBirthday: "Aucune date de naissance",
     noEventMessage: "Aucun événement",
   },
+  dateFormatLabel: "dd/mm/yyyy",
   epdsSurvey: {
     description:
       "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.",
