@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/cartographie-geocodes",
+      "handler": "cartographie-geocode.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/cartographie-geocodes/count",
+      "handler": "cartographie-geocode.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/cartographie-geocodes/:id",
+      "handler": "cartographie-geocode.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/cartographie-geocodes",
+      "handler": "cartographie-geocode.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/cartographie-geocodes/:id",
+      "handler": "cartographie-geocode.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/cartographie-geocodes/:id",
+      "handler": "cartographie-geocode.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

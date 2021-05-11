@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/cartographie-sources",
+      "handler": "cartographie-source.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/cartographie-sources/count",
+      "handler": "cartographie-source.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/cartographie-sources/:id",
+      "handler": "cartographie-source.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/cartographie-sources",
+      "handler": "cartographie-source.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/cartographie-sources/:id",
+      "handler": "cartographie-source.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/cartographie-sources/:id",
+      "handler": "cartographie-source.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

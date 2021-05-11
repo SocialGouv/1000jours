@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cartographie_data",
+  "info": {
+    "name": "Cartographie Data",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": false,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "identifiant": {
+      "type": "string",
+      "unique": true
+    },
+    "data": {
+      "type": "json"
+    },
+    "cartographie_source": {
+      "model": "cartographie-source"
+    },
+    "cartographie_poi": {
+      "via": "cartographie_data",
+      "model": "cartographie-poi"
+    }
+  }
+}

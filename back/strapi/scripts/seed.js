@@ -12,7 +12,7 @@ const models = [
   "etape",
   "evenement",
   "article",
-  "questionnaire-epds",
+  "questionnaire-epds"
 ];
 
 let strapi;

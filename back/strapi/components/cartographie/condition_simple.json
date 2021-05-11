@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_cartographie_condition_simple",
+  "info": {
+    "name": "condition_simple",
+    "icon": "question-circle",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "condition_source": {
+      "type": "string"
+    },
+    "condition_valeur": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_cartographie_regle_champs",
+  "info": {
+    "name": "Regle Champ",
+    "icon": "cog",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "conditions": {
+      "type": "component",
+      "repeatable": false,
+      "component": "cartographie.conditions_collection"
+    },
+    "valeur": {
+      "type": "string"
+    }
+  }
+}

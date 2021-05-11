@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_cartographie_conditions_collection",
+  "info": {
+    "name": "conditions_collection",
+    "icon": "align-left"
+  },
+  "options": {},
+  "attributes": {
+    "conditions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "cartographie.condition_simple"
+    }
+  }
+}
