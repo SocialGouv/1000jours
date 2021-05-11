@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     paddingStart: 8,
   },
   clearButtonTitle: {
-    color: Colors.primaryBlueDark,
+    color: Colors.primaryBlue,
     textAlign: "left",
   },
   disabledButton: {
