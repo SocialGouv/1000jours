@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/reponses-epds",
+      "handler": "reponses-epds.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/reponses-epds/count",
+      "handler": "reponses-epds.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/reponses-epds/:id",
+      "handler": "reponses-epds.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/reponses-epds",
+      "handler": "reponses-epds.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/reponses-epds/:id",
+      "handler": "reponses-epds.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/reponses-epds/:id",
+      "handler": "reponses-epds.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
