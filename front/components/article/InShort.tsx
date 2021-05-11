@@ -94,7 +94,6 @@ const InShort: FC<Props> = ({ inShortArray }) => {
 const styles = StyleSheet.create({
   cardBackgroundSymbol: {
     fontSize: Sizes.xxxxl,
-    fontWeight: "bold",
     paddingLeft: Paddings.default,
     position: "absolute",
     zIndex: -1,
