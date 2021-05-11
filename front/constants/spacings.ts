@@ -1,6 +1,6 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
-import { scaleNormalize } from "../utils";
+import { scaleNormalize } from "../utils/scaleNormalize.util";
 
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 export const Margins = {
   smallest: scaleNormalize(4),
   smaller: scaleNormalize(8),

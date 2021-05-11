@@ -16,12 +16,10 @@ import {
 } from "../../constants";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, StorageUtils } from "../../utils";
-import {
-  EpdsLoadPreviousSurvey,
-  EpdsResult,
-  EpdsSurveyFooter,
-  EpdsSurveyQuestionsList,
-} from "..";
+import EpdsLoadPreviousSurvey from "./epdsLoadPreviousSurvey.component";
+import EpdsResult from "./epdsResult.component";
+import EpdsSurveyFooter from "./epdsSurveyFooter.component";
+import EpdsSurveyQuestionsList from "./epdsSurveyQuestionsList.component";
 
 interface Props {
   epdsSurvey: EpdsQuestionAndAnswers[];

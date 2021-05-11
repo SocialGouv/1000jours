@@ -1,7 +1,6 @@
 import Colors from "./Colors";
 import * as DatabaseQueries from "./databaseQueries.constants";
 import * as EpdsConstants from "./epdsConstants.constants";
-import * as EpdsContacts from "./epdsContacts.constants";
 import Formats from "./formats";
 import Labels from "./Labels";
 import Layouts, { FontWeight } from "./Layout";
@@ -15,7 +14,6 @@ export {
   Colors,
   DatabaseQueries,
   EpdsConstants,
-  EpdsContacts,
   FontWeight,
   Formats,
   Labels,

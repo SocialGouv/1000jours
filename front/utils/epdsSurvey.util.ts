@@ -10,7 +10,7 @@ import type {
   EpdsResultData,
   QuestionnaireEpdsFromDB,
 } from "../type";
-import { StorageUtils } from ".";
+import { multiRemove } from "./storage.util";
 
 export const getQuestionsAndAnswersFromData = (
   data: unknown
@@ -120,7 +120,6 @@ export const getResultLabelAndStyle = (result: number): EpdsResultData => {
   }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const removeEpdsStorageItems = async (): Promise<any> => {
-  await StorageUtils.multiRemove(StorageKeysConstants.epdsSurveyKeys);
+export const removeEpdsStorageItems = async (): Promise<void> => {
+  await multiRemove(StorageKeysConstants.epdsSurveyKeys);
 };

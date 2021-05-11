@@ -1,4 +1,4 @@
-import { EpdsContacts } from ".";
+import { epdsContacts } from "./epdsContacts.constants";
 
 export default {
   article: {
@@ -94,7 +94,7 @@ export default {
               "Les ressources qui peuvent vous aider les premiers mois de l’enfant",
           },
           {
-            paragraphs: EpdsContacts.default.contacts,
+            paragraphs: epdsContacts,
             sectionDescription: "Les lignes téléphoniques d'aide aux parents",
             sectionTitle:
               "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",
@@ -135,7 +135,7 @@ export default {
               "Les professionnels qui peuvent vous accompagner pour faire le point",
           },
           {
-            paragraphs: EpdsContacts.default.contacts,
+            paragraphs: epdsContacts,
             sectionDescription: "Les lignes téléphoniques d'aide aux parents",
             sectionTitle:
               "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",
@@ -189,7 +189,7 @@ export default {
               "Les ressources qui peuvent vous aider les premiers mois de l’enfant",
           },
           {
-            paragraphs: EpdsContacts.default.contacts,
+            paragraphs: epdsContacts,
             sectionDescription: "Les lignes téléphoniques d'aide aux parents",
             sectionTitle:
               "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",

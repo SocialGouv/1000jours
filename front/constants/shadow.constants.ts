@@ -1,11 +1,10 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
-import { scaleNormalize } from "../utils";
+import { scaleNormalize } from "../utils/scaleNormalize.util";
 
 const Shadow = {
-  radius: scaleNormalize(4),
-  opacity: 0.25,
   offsetHeight: scaleNormalize(2),
   offsetWidth: 0,
+  opacity: 0.25,
+  radius: scaleNormalize(4),
 };
 
 export default Shadow;

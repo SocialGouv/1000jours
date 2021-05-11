@@ -16,7 +16,8 @@ import {
 } from "../../constants";
 import type { DataFetchingType, EpdsQuestionAndAnswers } from "../../type";
 import { DataFetchingUtils, EpdsSurveyUtils, StorageUtils } from "../../utils";
-import { EpdsGenderEntry, EpdsSurveyContent } from "..";
+import EpdsGenderEntry from "./epdsGenderEntry.component";
+import EpdsSurveyContent from "./epdsSurveyContent.component";
 
 const EpdsSurveyScreen: FC = () => {
   const [genderIsEntered, setGenderIsEntered] = useState(false);

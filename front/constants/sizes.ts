@@ -1,5 +1,6 @@
 /* eslint-disable sort-keys-fix/sort-keys-fix */
-import { scaleNormalize } from "../utils";
+
+import { scaleNormalize } from "../utils/scaleNormalize.util";
 
 const Sizes = {
   xxxs: scaleNormalize(10),

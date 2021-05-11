@@ -4,9 +4,9 @@ import { SwiperFlatList } from "react-native-swiper-flatlist";
 import type { SwiperFlatListRefProps } from "react-native-swiper-flatlist/src/components/SwiperFlatList/SwiperFlatListProps";
 
 import { View } from "../../components/Themed";
-import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../constants";
+import { Colors, Margins, Paddings, Sizes } from "../../constants";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
-import { EpdsQuestion } from "..";
+import EpdsQuestion from "./epdsQuestion.component";
 
 interface EpdsSurveyQuestionsListProps {
   epdsSurvey: EpdsQuestionAndAnswers[];
