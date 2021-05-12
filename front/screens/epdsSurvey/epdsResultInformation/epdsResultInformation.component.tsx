@@ -13,18 +13,13 @@ import {
   Paddings,
   Sizes,
 } from "../../../constants";
-import type {
-  EpdsResultContactInformation,
-  EpdsResultSimpleInformation,
-} from "../../../type";
+import type { EpdsResultInformationType } from "../../../type";
 import EpdsResultContactParagraph from "./epdsResultContactParagraph.component";
 import EpdsResultSimpleParagraph from "./epdsResultSimpleParagraph.component";
 
 interface EpdsResultInformationProps {
   leftBorderColor: string;
-  informationList:
-    | EpdsResultContactInformation[]
-    | EpdsResultSimpleInformation[];
+  informationList: EpdsResultInformationType[];
 }
 
 const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
@@ -33,12 +28,12 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
 }) => {
   const borderColorStyle = { borderStartColor: leftBorderColor };
 
-  const renderParagraphs = (
-    paragraphs: { title: string; description: string }[]
-  ) => {
-    return paragraphs.map((paragraph, index) => (
-      <View key={index}>{renderParagraph(paragraph)}</View>
-    ));
+  const renderParagraphs = (paragraphs: EpdsResultInformationType[]) => {
+    return paragraphs.map(
+      (paragraph: EpdsResultInformationType, index: number) => (
+        <View key={index}>{renderParagraph(paragraph)}</View>
+      )
+    );
   };
 
   const renderParagraph = (paragraph: any) => {

@@ -11,15 +11,15 @@ export interface EpdsGenderType {
 export const EpdsGenders = [
   {
     label: Labels.epdsSurvey.genderEntry.choices.male,
-    value: EpdsConstants.EpdsGender.male,
+    value: EpdsConstants.EpdsGender.homme,
   },
   {
     label: Labels.epdsSurvey.genderEntry.choices.female,
-    value: EpdsConstants.EpdsGender.female,
+    value: EpdsConstants.EpdsGender.femme,
   },
   {
     label: Labels.epdsSurvey.genderEntry.choices.noInformation,
-    value: EpdsConstants.EpdsGender.unknown,
+    value: EpdsConstants.EpdsGender.inconnu,
   },
 ];
 
@@ -68,3 +68,7 @@ export interface EpdsResultContactInformation {
   phoneNumber: string;
   thematic: string;
 }
+
+export type EpdsResultInformationType =
+  | EpdsResultContactInformation
+  | EpdsResultSimpleInformation;

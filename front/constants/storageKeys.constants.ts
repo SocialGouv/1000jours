@@ -4,6 +4,7 @@ export const userChildBirthdayKey = "@userChildBirthday";
 export const epdsGenderKey = "@epdsGender";
 export const epdsQuestionAndAnswersKey = "@epdsQuestionAndAnswersKey";
 export const epdsQuestionIndexKey = "@epdsQuestionIndexKey";
+export const epdsSurveyCounterKey = "@epdsSurveyCounterKey";
 
 export const allStorageKeys = [
   isFirstLaunchKey,

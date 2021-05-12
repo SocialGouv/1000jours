@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reponses_epds",
+  "info": {
+    "name": "Réponses EPDS"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "genre": {
+      "type": "enumeration",
+      "enum": [
+        "Homme",
+        "Femme",
+        "Inconnu"
+      ]
+    },
+    "compteur": {
+      "type": "integer"
+    },
+    "score": {
+      "type": "integer"
+    }
+  }
+}

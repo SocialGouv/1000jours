@@ -16,3 +16,15 @@ export const QUESTIONNAIRE_EPDS = gql`
     }
   }
 `;
+
+export const EPDS_ADD_RESPONSE = gql`
+  mutation($genre: ENUM_REPONSESEPDS_GENRE!, $compteur: Int!, $score: Int!) {
+    createReponsesEpd(
+      input: { data: { genre: $genre, compteur: $compteur, score: $score } }
+    ) {
+      reponsesEpd {
+        created_at
+      }
+    }
+  }
+`;
