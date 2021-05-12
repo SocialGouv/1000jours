@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const getStringValue = async (storageKey: string): Promise<any> => {
+export const getStringValue = async (
+  storageKey: string
+): Promise<string | null | undefined> => {
   try {
     return await AsyncStorage.getItem(storageKey);
   } catch (error: unknown) {
@@ -11,9 +10,11 @@ export const getStringValue = async (storageKey: string): Promise<any> => {
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getObjectValue = async (storageKey: string): Promise<any> => {
   try {
     const jsonValue = await AsyncStorage.getItem(storageKey);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return jsonValue !== null ? JSON.parse(jsonValue) : null;
   } catch (error: unknown) {
     console.error(error);
@@ -33,7 +34,7 @@ export const storeStringValue = async (
 
 export const storeObjectValue = async (
   storageKey: string,
-  value: any
+  value: unknown
 ): Promise<void> => {
   try {
     await storeStringValue(storageKey, JSON.stringify(value));

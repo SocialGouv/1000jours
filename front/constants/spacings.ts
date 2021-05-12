@@ -4,6 +4,7 @@ import { scaleNormalize } from "../utils/scaleNormalize.util";
 export const Margins = {
   smallest: scaleNormalize(4),
   smaller: scaleNormalize(8),
+  light: scaleNormalize(10),
   default: scaleNormalize(16),
   larger: scaleNormalize(24),
   largest: scaleNormalize(36),
@@ -12,6 +13,7 @@ export const Margins = {
 export const Paddings = {
   smallest: scaleNormalize(4),
   smaller: scaleNormalize(8),
+  light: scaleNormalize(10),
   default: scaleNormalize(16),
   larger: scaleNormalize(24),
   largest: scaleNormalize(36),

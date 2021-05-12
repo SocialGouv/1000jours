@@ -1,6 +1,6 @@
-# 1000jours
+# Nos 1000jours
 
-Nos 1000 premiers jours : du projet aux deux ans de bébé
+Nos 1000 jours : du projet aux deux ans de bébé
 
 ## Front-end
 

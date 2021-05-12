@@ -6,3 +6,5 @@ const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const IPHONE6_WIDTH_SCALE = 375;
 export const SCREEN_SCALE = SCREEN_WIDTH / IPHONE6_WIDTH_SCALE;
 export const PLATFORM_IS_IOS = Platform.OS === "ios";
+export const PLATFORM_IS_ANDROID = Platform.OS === "android";
+export const MAJOR_VERSION_IOS = parseInt(Platform.Version.toString(), 10);

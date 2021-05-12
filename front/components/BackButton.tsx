@@ -1,9 +1,7 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import Colors from "../constants/Colors";
-import Labels from "../constants/Labels";
-import { FontWeight } from "../constants/Layout";
+import { Colors, FontWeight, Labels, Sizes } from "../constants";
 import Button from "./form/Button";
 import Icomoon, { IcomoonIcons } from "./Icomoon";
 import { FontNames, getFontFamilyName } from "./StyledText";
@@ -24,7 +22,7 @@ const BackButton: React.FC<Props> = ({
       icon={
         <Icomoon
           name={IcomoonIcons.retour}
-          size={14}
+          size={Sizes.xs}
           color={Colors.secondaryGreen}
         />
       }
@@ -39,8 +37,7 @@ const BackButton: React.FC<Props> = ({
 const styles = StyleSheet.create({
   font: {
     fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
-    fontSize: 14,
-    fontWeight: FontWeight.normal,
+    fontSize: Sizes.xs,
   },
 });
 

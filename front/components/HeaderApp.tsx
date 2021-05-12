@@ -1,38 +1,29 @@
 import type { FC } from "react";
 import * as React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import LogoMinistere from "../assets/images/Logo ministere.svg";
-import Colors from "../constants/Colors";
-import Labels from "../constants/Labels";
+import AppLogo from "../assets/images/logo.svg";
+import { Paddings, Sizes } from "../constants";
 
 const HeaderApp: FC = () => (
-  <View style={styles.header}>
+  <View>
     <View style={styles.logoMinistere}>
       <LogoMinistere height={32} />
     </View>
-    <Text style={styles.appLogo}>{Labels.appName}</Text>
-    <View style={styles.underline}></View>
+    <View style={styles.appLogo}>
+      <AppLogo height={Sizes.logo} />
+    </View>
   </View>
 );
 
 const styles = StyleSheet.create({
   appLogo: {
-    color: Colors.primaryBlueDark,
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  header: {
-    paddingBottom: 35,
+    alignItems: "center",
+    display: "flex",
   },
   logoMinistere: {
-    padding: 15,
-  },
-  underline: {
-    borderBottomWidth: 3,
-    borderColor: Colors.primaryYellow,
-    width: "50%",
+    padding: Paddings.default,
   },
 });
 

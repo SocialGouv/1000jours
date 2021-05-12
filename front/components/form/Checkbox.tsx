@@ -4,6 +4,7 @@ import { CheckBox as RNECheckBox } from "react-native-elements";
 
 import CheckedIcon from "../../assets/images/radio_checked.svg";
 import UncheckedIcon from "../../assets/images/radio_unchecked.svg";
+import { Paddings, Sizes } from "../../constants";
 import Colors from "../../constants/Colors";
 import { FontWeight } from "../../constants/Layout";
 import { FontNames, getFontFamilyName } from "../StyledText";
@@ -18,8 +19,8 @@ const Checkbox: React.FC<Props> = ({ title, checked, onPress }) => {
   return (
     <RNECheckBox
       title={title}
-      checkedIcon={<CheckedIcon width={16} height={16} />}
-      uncheckedIcon={<UncheckedIcon width={16} height={16} />}
+      checkedIcon={<CheckedIcon width={Sizes.xs} height={Sizes.xs} />}
+      uncheckedIcon={<UncheckedIcon width={Sizes.xs} height={Sizes.xs} />}
       checked={checked}
       onPress={onPress}
       containerStyle={[styles.checkbox]}
@@ -32,12 +33,12 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     backgroundColor: "transparent",
     borderWidth: 0,
-    paddingVertical: 5,
+    paddingVertical: Paddings.smallest,
   },
   label: {
     color: Colors.primaryBlueDark,
     fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
-    fontSize: 11,
+    fontSize: Sizes.xxxs,
     fontWeight: FontWeight.normal,
   },
   labelSelected: {

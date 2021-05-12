@@ -12,9 +12,17 @@ import SecondSlideImage from "../assets/images/Humaaans_Sitting.svg";
 import Button from "../components/form/Button";
 import HeaderApp from "../components/HeaderApp";
 import Icomoon, { IcomoonIcons } from "../components/Icomoon";
-import { CommonText } from "../components/StyledText";
+import { CommonText, SecondaryText } from "../components/StyledText";
 import { View } from "../components/Themed";
-import { Colors, FontWeight, Labels, StorageKeysConstants } from "../constants";
+import {
+  Colors,
+  FontWeight,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes,
+  StorageKeysConstants,
+} from "../constants";
 import type { RootStackParamList } from "../types";
 import { StorageUtils } from "../utils";
 
@@ -95,11 +103,11 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                     <CommonText style={[styles.title, styles.textAlignCenter]}>
                       {slideView.title}
                     </CommonText>
-                    <CommonText
+                    <SecondaryText
                       style={[styles.description, styles.textAlignCenter]}
                     >
                       {slideView.description}
-                    </CommonText>
+                    </SecondaryText>
                   </View>
                 </View>
               ))}
@@ -127,14 +135,14 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                 icon={
                   <Icomoon
                     name={IcomoonIcons.fermer}
-                    size={16}
-                    color={Colors.primaryBlueDark}
+                    size={Sizes.sm}
+                    color={Colors.primaryBlue}
                   />
                 }
                 action={navigateToProfile}
               />
             </View>
-            <View style={[styles.buttonContainer]}>
+            <View style={styles.buttonContainer}>
               <Button
                 title={Labels.buttons.next}
                 rounded={false}
@@ -142,8 +150,8 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                 icon={
                   <Icomoon
                     name={IcomoonIcons.suivant}
-                    size={16}
-                    color={Colors.primaryBlueDark}
+                    size={Sizes.sm}
+                    color={Colors.primaryBlue}
                   />
                 }
                 action={() => {
@@ -162,23 +170,21 @@ const Onboarding: FC<Props> = ({ navigation }) => {
 
 const width = Dimensions.get("window").width;
 const styles = StyleSheet.create({
-  appName: {
-    color: Colors.primaryBlueDark,
-    fontSize: 25,
-    fontWeight: FontWeight.bold,
-  },
   buttonContainer: {
     flex: 1,
+  },
+  buttonTitle: {
+    color: Colors.primaryBlue,
   },
   buttonsContainer: {
     flexDirection: "row",
   },
   description: {
     color: Colors.commonText,
-    fontSize: 12,
+    fontSize: Sizes.sm,
     fontWeight: FontWeight.medium,
-    lineHeight: 20,
-    paddingHorizontal: 15,
+    lineHeight: Sizes.mmd,
+    paddingHorizontal: Paddings.default,
   },
   flexCenter: {
     alignItems: "center",
@@ -192,7 +198,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: Paddings.light,
   },
   justifyContentCenter: {
     alignItems: "center",
@@ -200,20 +206,20 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    paddingTop: 30,
+    paddingTop: Paddings.larger,
   },
   mainView: {
     flex: 8,
   },
   slideImage: {
-    paddingBottom: 20,
+    paddingBottom: Paddings.larger,
   },
   swipePagination: {
-    paddingTop: 10,
+    paddingTop: Paddings.light,
   },
   swipePaginationItem: {
     height: 5,
-    marginHorizontal: 8,
+    marginHorizontal: Margins.smaller,
     width: 32,
   },
   swipeView: {
@@ -228,10 +234,10 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.primaryBlueDark,
-    fontSize: 18,
+    fontSize: Sizes.md,
     fontWeight: "bold",
-    paddingBottom: 15,
-    paddingTop: 10,
+    paddingBottom: Paddings.default,
+    paddingTop: Paddings.light,
   },
 });
 

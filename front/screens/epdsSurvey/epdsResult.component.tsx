@@ -50,7 +50,6 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
     };
     void saveEpdsSurveyResults();
   }, []);
-
   // Delete saved storage keys for EPDS survey
   void EpdsSurveyUtils.removeEpdsStorageItems();
 
