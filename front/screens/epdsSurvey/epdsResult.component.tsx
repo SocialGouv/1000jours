@@ -88,10 +88,10 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
       <CommonText style={styles.text}>
         {resultData.resultLabels.explication}
       </CommonText>
-      {/* <EpdsResultInformation
+      <EpdsResultInformation
         leftBorderColor={resultData.color}
         informationList={resultData.resultLabels.professionalsList}
-      /> */}
+      />
     </ScrollView>
   );
 };

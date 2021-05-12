@@ -6,6 +6,7 @@ import {
   EpdsQuestionAndAnswers,
   EpdsResultContactInformation,
   EpdsResultData,
+  EpdsResultInformationType,
   EpdsResultSimpleInformation,
   QuestionnaireEpdsFromDB,
 } from "./epdsSurvey.types";
@@ -18,6 +19,7 @@ export {
   EpdsQuestionAndAnswers,
   EpdsResultContactInformation,
   EpdsResultData,
+  EpdsResultInformationType,
   EpdsResultSimpleInformation,
   QuestionnaireEpdsFromDB,
 };

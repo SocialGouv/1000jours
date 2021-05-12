@@ -68,3 +68,7 @@ export interface EpdsResultContactInformation {
   phoneNumber: string;
   thematic: string;
 }
+
+export type EpdsResultInformationType =
+  | EpdsResultContactInformation
+  | EpdsResultSimpleInformation;

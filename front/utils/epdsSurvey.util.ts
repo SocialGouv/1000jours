@@ -1,8 +1,5 @@
-import { useMutation } from "@apollo/client";
-
 import {
   Colors,
-  DatabaseQueries,
   EpdsConstants,
   Labels,
   StorageKeysConstants,
@@ -13,7 +10,7 @@ import type {
   EpdsResultData,
   QuestionnaireEpdsFromDB,
 } from "../type";
-import { StorageUtils } from ".";
+import { getObjectValue, multiRemove, storeObjectValue } from "./storage.util";
 
 export const getQuestionsAndAnswersFromData = (
   data: unknown
@@ -125,20 +122,17 @@ export const getResultLabelAndStyle = (result: number): EpdsResultData => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const removeEpdsStorageItems = async (): Promise<any> => {
-  await StorageUtils.multiRemove(StorageKeysConstants.epdsSurveyKeys);
+  await multiRemove(StorageKeysConstants.epdsSurveyKeys);
 };
 
 export const incrementEpdsSurveyCounterAndGetNewValue = async (): Promise<number> => {
-  const counterObject = await StorageUtils.getObjectValue(
+  const counterObject = await getObjectValue(
     StorageKeysConstants.epdsSurveyCounterKey
   );
 
   const surveyCounter = counterObject ? Number(counterObject) : 0;
   const newCounter = surveyCounter + 1;
-  await StorageUtils.storeObjectValue(
-    StorageKeysConstants.epdsSurveyCounterKey,
-    newCounter
-  );
+  await storeObjectValue(StorageKeysConstants.epdsSurveyCounterKey, newCounter);
 
   return newCounter;
 };

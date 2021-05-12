@@ -92,7 +92,7 @@ export default {
               "Les ressources qui peuvent vous aider les premiers mois de l’enfant",
           },
           {
-            paragraphs: epdsContacts,
+            paragraphs: epdsContacts.contacts,
             sectionDescription: "Les lignes téléphoniques d'aide aux parents",
             sectionTitle:
               "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",
@@ -133,7 +133,7 @@ export default {
               "Les professionnels qui peuvent vous accompagner pour faire le point",
           },
           {
-            paragraphs: epdsContacts,
+            paragraphs: epdsContacts.contacts,
             sectionDescription: "Les lignes téléphoniques d'aide aux parents",
             sectionTitle:
               "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",
@@ -187,7 +187,7 @@ export default {
               "Les ressources qui peuvent vous aider les premiers mois de l’enfant",
           },
           {
-            paragraphs: epdsContacts,
+            paragraphs: epdsContacts.contacts,
             sectionDescription: "Les lignes téléphoniques d'aide aux parents",
             sectionTitle:
               "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",
