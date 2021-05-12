@@ -63,7 +63,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     <ScrollView>
       <View style={styles.topContainer}>
         <SecondaryText style={styles.title}>{screenTitle}</SecondaryText>
-        {description && (
+        {description.length > 0 && (
           <SecondaryText style={styles.description}>
             {description}
           </SecondaryText>
