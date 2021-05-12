@@ -18,18 +18,14 @@ export const QUESTIONNAIRE_EPDS = gql`
   }
 `;
 
-export const EPDS_ADD_RESPONSE = (
-  genre: string,
-  compteur: number,
-  score: number
-): DocumentNode => gql`
-    mutation {
-      createReponsesEpd(
-        input: { data: { genre: ${genre}, compteur: ${compteur}, score: ${score} } }
-      ) {
-        reponsesEpd {
-          created_at
-        }
+export const EPDS_ADD_RESPONSE = gql`
+  mutation($genre: ENUM_REPONSESEPDS_GENRE!, $compteur: Int!, $score: Int!) {
+    createReponsesEpd(
+      input: { data: { genre: $genre, compteur: $compteur, score: $score } }
+    ) {
+      reponsesEpd {
+        created_at
       }
     }
-  `;
+  }
+`;

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { useMutation } from "@apollo/client/react/hooks";
 import * as React from "react";
+import { useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
 import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
@@ -10,14 +12,16 @@ import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
   Colors,
+  DatabaseQueries,
   EpdsConstants,
   FontWeight,
   Labels,
   Margins,
   Paddings,
   Sizes,
+  StorageKeysConstants,
 } from "../../constants";
-import { EpdsSurveyUtils } from "../../utils";
+import { EpdsSurveyUtils, StorageUtils } from "../../utils";
 import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation.component";
 
 interface Props {
@@ -25,14 +29,30 @@ interface Props {
 }
 
 const EpdsResult: React.FC<Props> = ({ result }) => {
+  const [addReponseQuery] = useMutation(DatabaseQueries.EPDS_ADD_RESPONSE, {
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
   const labelsResultats = Labels.epdsSurvey.resultats;
   const resultData = EpdsSurveyUtils.getResultLabelAndStyle(result);
 
+  useEffect(() => {
+    const saveEpdsSurveyResults = async () => {
+      const newCounter = await EpdsSurveyUtils.incrementEpdsSurveyCounterAndGetNewValue();
+      const genderValue = await StorageUtils.getStringValue(
+        StorageKeysConstants.epdsGenderKey
+      );
+      await addReponseQuery({
+        variables: { compteur: newCounter, genre: genderValue, score: result },
+      });
+    };
+    void saveEpdsSurveyResults();
+  }, []);
+
   // Delete saved storage keys for EPDS survey
   void EpdsSurveyUtils.removeEpdsStorageItems();
-
-  void EpdsSurveyUtils.incrementEpdsSurveyCounter();
-  void EpdsSurveyUtils.saveEpdsSurveyResult(result);
 
   const getIcon = (icone: EpdsConstants.ResultIconValueEnum) => {
     const iconsMap = new Map<
@@ -68,10 +88,10 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
       <CommonText style={styles.text}>
         {resultData.resultLabels.explication}
       </CommonText>
-      <EpdsResultInformation
+      {/* <EpdsResultInformation
         leftBorderColor={resultData.color}
         informationList={resultData.resultLabels.professionalsList}
-      />
+      /> */}
     </ScrollView>
   );
 };

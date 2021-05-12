@@ -15,8 +15,4 @@ export const allStorageKeys = [
   epdsQuestionIndexKey,
 ];
 
-export const epdsSurveyKeys = [
-  epdsQuestionAndAnswersKey,
-  epdsQuestionIndexKey,
-  epdsSurveyCounterKey,
-];
+export const epdsSurveyKeys = [epdsQuestionAndAnswersKey, epdsQuestionIndexKey];
