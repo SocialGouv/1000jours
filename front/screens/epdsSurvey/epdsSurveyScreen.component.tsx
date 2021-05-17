@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.primaryBlueDark,
-    fontSize: Sizes.sm,
+    fontSize: Sizes.md,
     fontWeight: FontWeight.bold,
     paddingHorizontal: Paddings.default,
   },

@@ -16,5 +16,5 @@ export const Paddings = {
   light: scaleNormalize(10),
   default: scaleNormalize(16),
   larger: scaleNormalize(24),
-  largest: scaleNormalize(36),
+  largest: scaleNormalize(40),
 };

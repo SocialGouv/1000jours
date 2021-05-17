@@ -34,7 +34,7 @@ export default {
       choices: {
         female: "Femme",
         male: "Homme",
-        noInformation: "Ne veut pas donner l'information",
+        noInformation: "Je ne souhaite pas renseigner cette information",
       },
       instruction: "Veuillez renseigner votre civilité",
     },
