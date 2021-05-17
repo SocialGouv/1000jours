@@ -6,15 +6,26 @@ import * as React from "react";
 import { useEffect } from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 
+import { Button } from "../components";
 import Agenda from "../components/calendar/agenda";
+import Events from "../components/calendar/events";
+import Icomoon, { IcomoonIcons } from "../components/Icomoon";
 import { CommonText } from "../components/StyledText";
 import { Text, View } from "../components/Themed";
-import { Colors, Labels, StorageKeysConstants } from "../constants";
+import {
+  Colors,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes,
+  StorageKeysConstants,
+} from "../constants";
 import type { Event } from "../types";
 import { StorageUtils } from "../utils";
 
 const TabCalendarScreen: FC = () => {
   const [childBirthday, setChildBirthday] = React.useState("");
+  const [isModeAgenda, setIsModeAgenda] = React.useState(true);
 
   useEffect(() => {
     const loadChildBirthday = async () => {
@@ -49,11 +60,35 @@ const TabCalendarScreen: FC = () => {
     <View style={styles.container}>
       <Text style={styles.title}>{Labels.tabs.calendarTitle}</Text>
       <Text style={styles.description}>{Labels.calendar.description}</Text>
-      <View style={styles.agendaContainer}>
+
+      <View style={styles.calendarContainer}>
+        <View style={styles.switchViewMode}>
+          <Button
+            title=""
+            rounded={false}
+            disabled={false}
+            icon={
+              <Icomoon
+                name={IcomoonIcons.calendrier}
+                size={Sizes.mmd}
+                color={Colors.primaryBlue}
+              />
+            }
+            action={() => {
+              setIsModeAgenda(!isModeAgenda);
+            }}
+          />
+        </View>
         {childBirthday.length > 0 ? (
-          <Agenda evenements={evenements} childBirthday={childBirthday} />
+          isModeAgenda ? (
+            <Agenda evenements={evenements} childBirthday={childBirthday} />
+          ) : (
+            <Events evenements={evenements} childBirthday={childBirthday} />
+          )
         ) : (
-          <CommonText>{Labels.calendar.noChildBirthday}</CommonText>
+          <View style={styles.center}>
+            <CommonText>{Labels.calendar.noChildBirthday}</CommonText>
+          </View>
         )}
       </View>
     </View>
@@ -61,22 +96,30 @@ const TabCalendarScreen: FC = () => {
 };
 
 const styles = StyleSheet.create({
-  agendaContainer: {
+  calendarContainer: {
     flex: 1,
-    marginTop: 20,
+    marginTop: Paddings.default,
+  },
+  center: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
   },
   container: {
     height: "100%",
-    padding: 15,
+    padding: Paddings.default,
   },
   description: {
     color: Colors.commonText,
   },
+  switchViewMode: {
+    alignItems: "flex-end",
+  },
   title: {
     color: Colors.primaryBlue,
-    fontSize: 15,
+    fontSize: Sizes.xs,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: Margins.light,
   },
 });
 

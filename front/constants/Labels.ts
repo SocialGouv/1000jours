@@ -23,6 +23,7 @@ export default {
   calendar: {
     description:
       "Ici vous pouvez suivre tous vos rendez-vous et autres événements prévus. Vous pouvez y ajouter plusieurs informations.",
+    listOfEvents: "Liste des événements",
     noChildBirthday: "Aucune date de naissance",
     noEventMessage: "Aucun événement",
   },
