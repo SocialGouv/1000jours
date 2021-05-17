@@ -28,7 +28,17 @@ const EpdsSurveyFooter: React.FC<Props> = ({
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonContainer}>
           {swiperCurrentIndex > 0 && (
-            <BackButton
+            <Button
+              title={Labels.buttons.back}
+              rounded={false}
+              disabled={false}
+              icon={
+                <Icomoon
+                  name={IcomoonIcons.retour}
+                  size={14}
+                  color={Colors.primaryBlue}
+                />
+              }
               action={() => {
                 swiperRef.current?.scrollToIndex({
                   index: swiperCurrentIndex - 1,
@@ -41,7 +51,7 @@ const EpdsSurveyFooter: React.FC<Props> = ({
           {showValidateButton ? (
             <View style={styles.justifyContentCenter}>
               <Button
-                title={Labels.buttons.validate}
+                title={Labels.buttons.finish}
                 rounded={true}
                 disabled={false}
                 action={() => {

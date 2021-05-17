@@ -4,9 +4,10 @@ import { SwiperFlatList } from "react-native-swiper-flatlist";
 import type { SwiperFlatListRefProps } from "react-native-swiper-flatlist/src/components/SwiperFlatList/SwiperFlatListProps";
 
 import { View } from "../../components/Themed";
-import { Colors, Margins, Paddings, Sizes } from "../../constants";
+import { Margins, Paddings, Sizes } from "../../constants";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import EpdsQuestion from "./epdsQuestion.component";
+import EpdsSurveyQuestionsPagination from "./epdsSurveyQuestionsPagination.component";
 
 interface EpdsSurveyQuestionsListProps {
   epdsSurvey: EpdsQuestionAndAnswers[];
@@ -33,10 +34,6 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
         }}
         autoplay={false}
         disableGesture
-        showPagination
-        paginationDefaultColor="lightgray"
-        paginationActiveColor={Colors.secondaryGreen}
-        paginationStyleItem={styles.swipePaginationItem}
       >
         {epdsSurvey.map((questionView, questionIndex) => (
           <View key={questionIndex}>
@@ -47,13 +44,17 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
           </View>
         ))}
       </SwiperFlatList>
+      <EpdsSurveyQuestionsPagination
+        currentQuestionIndex={swiperCurrentIndex + 1}
+        totalNumberOfQuestions={epdsSurvey.length}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   flatListView: {
-    flex: 7,
+    flex: 5,
   },
   mainContainer: {
     flex: 1,
