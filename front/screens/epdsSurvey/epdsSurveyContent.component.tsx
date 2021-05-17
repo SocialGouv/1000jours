@@ -140,13 +140,14 @@ const styles = StyleSheet.create({
   instruction: {
     color: Colors.commonText,
     fontSize: Sizes.xs,
+    fontStyle: "italic",
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.mmd,
     paddingHorizontal: Paddings.default,
   },
   mainContainer: {
     flex: 1,
-    paddingTop: Paddings.larger,
+    paddingTop: Paddings.smaller,
   },
 });
 

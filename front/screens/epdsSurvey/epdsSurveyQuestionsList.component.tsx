@@ -34,8 +34,8 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
         autoplay={false}
         disableGesture
         showPagination
-        paginationDefaultColor="lightgray"
-        paginationActiveColor={Colors.secondaryGreen}
+        paginationDefaultColor={Colors.primaryYellowLight}
+        paginationActiveColor={Colors.primaryYellowDark}
         paginationStyleItem={styles.swipePaginationItem}
       >
         {epdsSurvey.map((questionView, questionIndex) => (

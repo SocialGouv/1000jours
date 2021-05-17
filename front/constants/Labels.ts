@@ -14,6 +14,7 @@ export default {
   buttons: {
     back: "Retour",
     cancel: "Annuler",
+    finish: "Terminer",
     next: "Suivant",
     ok: "Ok",
     pass: "Passer",

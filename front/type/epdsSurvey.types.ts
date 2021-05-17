@@ -39,6 +39,7 @@ export interface QuestionnaireEpdsFromDB {
 }
 
 export interface EpdsQuestionAndAnswers {
+  questionNumber: number;
   question: string;
   answers: EpdsAnswer[];
   isAnswered?: boolean;
