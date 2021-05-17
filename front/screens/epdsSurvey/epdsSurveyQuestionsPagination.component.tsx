@@ -2,7 +2,8 @@ import { range } from "lodash";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
-import { Colors, Margins, Sizes } from "../../constants";
+import { CommonText } from "../../components";
+import { Colors, FontWeight, Margins, Sizes } from "../../constants";
 
 interface EpdsSurveyQuestionsPaginationProps {
   currentQuestionIndex: number;
@@ -21,13 +22,21 @@ const EpdsSurveyQuestionsPagination: React.FC<EpdsSurveyQuestionsPaginationProps
 
   return (
     <View style={styles.mainContainer}>
-      {range(totalNumberOfQuestions).map((index) =>
-        index < currentQuestionIndex ? (
-          <View style={questionAnsweredStyle} />
-        ) : (
-          <View style={questionNotAnsweredStyle} />
-        )
-      )}
+      <View style={styles.gaugeView}>
+        {range(totalNumberOfQuestions).map((index) =>
+          index < currentQuestionIndex ? (
+            <View style={questionAnsweredStyle} />
+          ) : (
+            <View style={questionNotAnsweredStyle} />
+          )
+        )}
+      </View>
+      <View style={styles.textView}>
+        <CommonText style={styles.textStyle}>{currentQuestionIndex}</CommonText>
+        <CommonText style={styles.textStyle}>
+          {totalNumberOfQuestions}
+        </CommonText>
+      </View>
     </View>
   );
 };
@@ -39,14 +48,23 @@ const styles = StyleSheet.create({
   defaultStyle: {
     flexGrow: 1,
   },
-  mainContainer: {
-    backgroundColor: Colors.primaryYellowLight,
+  gaugeView: {
     flexDirection: "row",
     height: Sizes.xxxxs,
+  },
+  mainContainer: {
     marginHorizontal: Margins.largest,
   },
   notAnsweredColor: {
     backgroundColor: Colors.primaryYellowLight,
+  },
+  textStyle: {
+    color: Colors.primaryYellowDark,
+    fontWeight: FontWeight.bold,
+  },
+  textView: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
 
