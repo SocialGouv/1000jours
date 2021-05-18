@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.millejours.fabrique",
-      "buildNumber": "1.0.1"
+      "buildNumber": "1.0.3"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,7 +27,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.millejours.fabrique",
-      "versionCode": 2
+      "versionCode": 4
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
