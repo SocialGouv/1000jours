@@ -1,3 +1,10 @@
+# [1.25.0](https://github.com/SocialGouv/1000jours/compare/v1.24.0...v1.25.0) (2021-05-18)
+
+
+### Features
+
+* **deploiement:** met à jour l'icone de l'application et le numéro de version ([44eaeb9](https://github.com/SocialGouv/1000jours/commit/44eaeb94966aa814f403bbaf100c35053965d882))
+
 # [1.24.0](https://github.com/SocialGouv/1000jours/compare/v1.23.4...v1.24.0) (2021-05-17)
 
 
