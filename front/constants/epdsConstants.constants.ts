@@ -1,7 +1,7 @@
 export enum EpdsGender {
   masculin = "Masculin",
-  feminin = "Féminin",
-  nonBinaire = "Non-binaire",
+  feminin = "Feminin",
+  nonBinaire = "Nonbinaire",
   inconnu = "Inconnu",
 }
 

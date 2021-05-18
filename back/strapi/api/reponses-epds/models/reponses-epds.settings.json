@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "reponses_epds",
   "info": {
-    "name": "Réponses EPDS"
+    "name": "Réponses EPDS",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -13,8 +14,9 @@
     "genre": {
       "type": "enumeration",
       "enum": [
-        "Homme",
-        "Femme",
+        "Masculin",
+        "Feminin",
+        "Nonbinaire",
         "Inconnu"
       ]
     },
