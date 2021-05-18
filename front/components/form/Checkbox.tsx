@@ -13,9 +13,11 @@ interface Props {
   title: string;
   checked: boolean;
   onPress: () => void;
+  labelSize?: number;
 }
 
-const Checkbox: React.FC<Props> = ({ title, checked, onPress }) => {
+const Checkbox: React.FC<Props> = ({ title, checked, onPress, labelSize }) => {
+  const labelSizeStyle = { fontSize: labelSize ?? Sizes.xxs };
   return (
     <RNECheckBox
       title={title}
@@ -24,7 +26,11 @@ const Checkbox: React.FC<Props> = ({ title, checked, onPress }) => {
       checked={checked}
       onPress={onPress}
       containerStyle={[styles.checkbox]}
-      textStyle={[styles.label, checked ? styles.labelSelected : null]}
+      textStyle={[
+        styles.label,
+        labelSizeStyle,
+        checked ? styles.labelSelected : null,
+      ]}
     />
   );
 };
@@ -38,7 +44,6 @@ const styles = StyleSheet.create({
   label: {
     color: Colors.primaryBlueDark,
     fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
-    fontSize: Sizes.xxs,
     fontWeight: FontWeight.normal,
   },
   labelSelected: {

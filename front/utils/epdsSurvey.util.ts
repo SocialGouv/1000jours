@@ -52,6 +52,7 @@ const convertToQuestionsAndAnswers = (
         },
       ],
       question: element.libelle,
+      questionNumber: element.ordre,
     };
   });
 

@@ -1,3 +1,10 @@
+# [1.24.0](https://github.com/SocialGouv/1000jours/compare/v1.23.4...v1.24.0) (2021-05-17)
+
+
+### Features
+
+* 🎸 Permet d'afficher les événements sous forme de liste ([#209](https://github.com/SocialGouv/1000jours/issues/209)) ([c6fb1ac](https://github.com/SocialGouv/1000jours/commit/c6fb1ac398784dd9be7b5e36e9e4ab56e3438cce))
+
 ## [1.23.4](https://github.com/SocialGouv/1000jours/compare/v1.23.3...v1.23.4) (2021-05-12)
 
 

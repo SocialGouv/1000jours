@@ -21,11 +21,12 @@ const EpdsQuestion: React.FC<Props> = ({
     <View style={[styles.swipeView, styles.justifyContentCenter]}>
       <View style={styles.swipeViewMargin}>
         <CommonText style={styles.question}>
-          {questionAndAnswers.question}
+        {questionAndAnswers.questionNumber}. {questionAndAnswers.question}
         </CommonText>
         {questionAndAnswers.answers.map((answer, answerIndex) => (
           <Checkbox
             key={answerIndex}
+            labelSize={Sizes.xs}
             title={answer.label}
             checked={answer.isChecked}
             onPress={() => {

@@ -70,20 +70,25 @@ const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
 
   return (
     <View style={styles.mainContainer}>
-      <CommonText style={styles.instruction}>
-        {Labels.epdsSurvey.genderEntry.instruction}
-      </CommonText>
-      {epdsGenders.map((genderElement, index) => (
-        <View key={index}>
-          <Checkbox
-            title={genderElement.element.label}
-            checked={genderElement.isChecked}
-            onPress={() => {
-              updateGendersArray(genderElement);
-            }}
-          />
+      <View>
+        <CommonText style={styles.instruction}>
+          {Labels.epdsSurvey.genderEntry.instruction}
+        </CommonText>
+        <View style={styles.answers}>
+          {epdsGenders.map((genderElement, index) => (
+            <View key={index}>
+              <Checkbox
+                title={genderElement.element.label}
+                checked={genderElement.isChecked}
+                labelSize={Sizes.xs}
+                onPress={() => {
+                  updateGendersArray(genderElement);
+                }}
+              />
+            </View>
+          ))}
         </View>
-      ))}
+      </View>
       <View style={styles.validateButton}>
         <Button
           title={Labels.buttons.validate}
@@ -97,21 +102,19 @@ const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
 };
 
 const styles = StyleSheet.create({
+  answers: {
+    paddingHorizontal: Paddings.largest,
+  },
   instruction: {
-    color: Colors.commonText,
-    fontSize: Sizes.xs,
+    color: Colors.primaryBlueDark,
+    fontSize: Sizes.sm,
     fontWeight: FontWeight.medium,
-    padding: Paddings.default,
+    paddingHorizontal: Paddings.largest,
+    paddingVertical: Paddings.default,
   },
   mainContainer: {
-    alignSelf: "center",
     flex: 1,
-    justifyContent: "center",
-  },
-  pickerView: {
-    color: Colors.commonText,
-    height: Sizes.xxl,
-    width: Sizes.giant,
+    justifyContent: "space-around",
   },
   validateButton: {
     alignItems: "center",
