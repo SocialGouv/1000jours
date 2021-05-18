@@ -206,6 +206,7 @@ export default {
   invalidLink: "Ce lien n'est pas valide.",
   listArticles: {
     articlesToRead: "article(s) à lire",
+    filters: "Filtres",
   },
   menu: {
     title: "Menu",
