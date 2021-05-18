@@ -27,7 +27,7 @@ interface EpdsGenderEntryProps {
 const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
   goToEpdsSurvey,
 }) => {
-  const gendersArray: EpdsGenderType[] = range(3).map((index) => {
+  const gendersArray: EpdsGenderType[] = range(4).map((index) => {
     return {
       element: {
         label: EpdsGenders[index].label,

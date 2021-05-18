@@ -11,11 +11,15 @@ export interface EpdsGenderType {
 export const EpdsGenders = [
   {
     label: Labels.epdsSurvey.genderEntry.choices.male,
-    value: EpdsConstants.EpdsGender.homme,
+    value: EpdsConstants.EpdsGender.masculin,
   },
   {
     label: Labels.epdsSurvey.genderEntry.choices.female,
-    value: EpdsConstants.EpdsGender.femme,
+    value: EpdsConstants.EpdsGender.feminin,
+  },
+  {
+    label: Labels.epdsSurvey.genderEntry.choices.nonBinary,
+    value: EpdsConstants.EpdsGender.nonBinaire,
   },
   {
     label: Labels.epdsSurvey.genderEntry.choices.noInformation,

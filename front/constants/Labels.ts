@@ -34,11 +34,12 @@ export default {
       "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.",
     genderEntry: {
       choices: {
-        female: "Femme",
-        male: "Homme",
+        female: "Féminin",
+        male: "Masculin",
         noInformation: "Je ne souhaite pas renseigner cette information",
+        nonBinary: "Non-binaire",
       },
-      instruction: "Veuillez renseigner votre civilité",
+      instruction: "Veuillez renseigner votre genre",
     },
     instruction:
       "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement aujourd'hui.",
