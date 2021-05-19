@@ -54,7 +54,7 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
 
 const styles = StyleSheet.create({
   flatListView: {
-    flex: 5,
+    flex: 7,
   },
   mainContainer: {
     flex: 1,

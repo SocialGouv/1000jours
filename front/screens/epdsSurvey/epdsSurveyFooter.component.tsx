@@ -2,7 +2,6 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import type SwiperFlatListRefProps from "react-native-swiper-flatlist";
 
-import BackButton from "../../components/BackButton";
 import Button from "../../components/form/Button";
 import Icomoon, { IcomoonIcons } from "../../components/Icomoon";
 import { View } from "../../components/Themed";
