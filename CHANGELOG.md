@@ -1,3 +1,10 @@
+# [1.26.0](https://github.com/SocialGouv/1000jours/compare/v1.25.0...v1.26.0) (2021-05-19)
+
+
+### Features
+
+* 🎸 Ajoute les filtres articles (thematiques) ([#215](https://github.com/SocialGouv/1000jours/issues/215)) ([b20a331](https://github.com/SocialGouv/1000jours/commit/b20a331e238ac8153ef882d69dba1b78ecf2f78a)), closes [#27](https://github.com/SocialGouv/1000jours/issues/27)
+
 # [1.25.0](https://github.com/SocialGouv/1000jours/compare/v1.24.0...v1.25.0) (2021-05-18)
 
 
