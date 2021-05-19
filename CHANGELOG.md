@@ -1,3 +1,10 @@
+## [1.26.1](https://github.com/SocialGouv/1000jours/compare/v1.26.0...v1.26.1) (2021-05-19)
+
+
+### Bug Fixes
+
+* **articles:** fix condition description ([#217](https://github.com/SocialGouv/1000jours/issues/217)) ([828d91b](https://github.com/SocialGouv/1000jours/commit/828d91b3743d568db747daeff45ed35c00ab7515))
+
 # [1.26.0](https://github.com/SocialGouv/1000jours/compare/v1.25.0...v1.26.0) (2021-05-19)
 
 
