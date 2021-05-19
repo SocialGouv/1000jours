@@ -43,31 +43,27 @@ const Events: FC<Props> = ({ evenements, childBirthday }) => {
         {Labels.calendar.listOfEvents}
       </CommonText>
       <ScrollView>
-        {_.keys(formattedEvents).map((date) => {
-          return (
-            <View>
-              <CommonText style={styles.dateTag}>
-                {format(new Date(date), Formats.dateFR)}
-              </CommonText>
-              {formattedEvents[date].map((event, index) => (
-                <ListItem
-                  key={index}
-                  pad={0}
-                  containerStyle={styles.listItemContainer}
-                >
-                  <View style={styles.eventContainer}>
-                    <CommonText style={styles.eventTitle}>
-                      {event.nom}
-                    </CommonText>
-                    <CommonText style={styles.eventDescription}>
-                      {event.description}
-                    </CommonText>
-                  </View>
-                </ListItem>
-              ))}
-            </View>
-          );
-        })}
+        {_.keys(formattedEvents).map((date, indexDate) => (
+          <View key={indexDate}>
+            <CommonText style={styles.dateTag}>
+              {format(new Date(date), Formats.dateFR)}
+            </CommonText>
+            {formattedEvents[date].map((event, indexEvent) => (
+              <ListItem
+                key={indexEvent}
+                pad={0}
+                containerStyle={styles.listItemContainer}
+              >
+                <View style={styles.eventContainer}>
+                  <CommonText style={styles.eventTitle}>{event.nom}</CommonText>
+                  <CommonText style={styles.eventDescription}>
+                    {event.description}
+                  </CommonText>
+                </View>
+              </ListItem>
+            ))}
+          </View>
+        ))}
       </ScrollView>
     </View>
   );

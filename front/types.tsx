@@ -103,11 +103,18 @@ export type Article = {
   lienUrl4: string;
   visuel?: Visuel;
   thematiques: Thematique[];
+  hide?: boolean;
 };
 
 export type ArticleInShortItem = {
   icon: string;
   text: string;
+};
+
+export type ArticleFilter = {
+  thematique: Thematique;
+  nbArticles: number;
+  active: boolean;
 };
 
 export type ArticleLink = {

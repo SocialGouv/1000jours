@@ -2,11 +2,14 @@ import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
+import _ from "lodash";
 import type { FC } from "react";
 import * as React from "react";
+import { useEffect } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
 
+import Filters from "../components/article/Filters";
 import Button from "../components/form/Button";
 import { CommonText, SecondaryText } from "../components/StyledText";
 import { View } from "../components/Themed";
@@ -34,36 +37,60 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
   const stepIsFirstThreeMonths =
     route.params.step.id == ETAPE_ENFANT_3_PREMIERS_MOIS;
 
+  const [filteredArticles, setFilteredArticles] = React.useState<Article[]>([]);
+
   const STEP_ARTICLES = gql`
     query GetStepArticles {
-      articles(where: { etapes: { id: ${route.params.step.id} } }) {
+      articles(where: { 
+        etapes: { id: ${route.params.step.id} }
+      })
+      {
         id
         titre
         resume
         visuel {
           url
         }
+        thematiques {
+          nom
+          id
+        }
       }
     }
   `;
+
   const { loading, error, data } = useQuery(STEP_ARTICLES, {
     fetchPolicy: "no-cache",
   });
 
+  useEffect(() => {
+    if (!loading && data) {
+      const articles = (data as { articles: Article[] }).articles;
+      setFilteredArticles(articles);
+    }
+  }, [loading, data]);
+
   if (loading) return <ActivityIndicator size="large" />;
   if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
 
-  const articles = (data as { articles: Article[] }).articles;
-
   const navigateToSurvey = () => {
     navigation.navigate("epdsSurvey");
+  };
+
+  const applyFilter = (id: number, active: boolean) => {
+    const result = filteredArticles.map((article) => {
+      const thematique = _.find(article.thematiques, { id: id });
+      if (thematique) article.hide = !active;
+      return article;
+    });
+    setFilteredArticles(result);
   };
 
   return (
     <ScrollView>
       <View style={styles.topContainer}>
         <SecondaryText style={styles.title}>{screenTitle}</SecondaryText>
-        {description.length > 0 && (
+        {description && description.length > 0 && (
           <SecondaryText style={styles.description}>
             {description}
           </SecondaryText>
@@ -86,48 +113,57 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
           />
         </View>
       )}
+
+      <Filters articles={filteredArticles} applyFilter={applyFilter} />
+
       <View style={styles.listContainer}>
         <SecondaryText style={styles.headerListInfo}>
-          {articles.length} {Labels.listArticles.articlesToRead}
+          {_.filter(filteredArticles, (article) => !article.hide).length}{" "}
+          {Labels.listArticles.articlesToRead}
         </SecondaryText>
-        {articles.map((article, index) => (
-          <ListItem
-            key={index}
-            bottomDivider
-            onPress={() => {
-              navigation.navigate("article", {
-                id: article.id,
-                step: route.params.step,
-              });
-            }}
-            pad={0}
-            containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
-            style={[styles.listItem, styles.borderLeftRadius]}
-          >
-            <Image
-              source={{
-                uri: article.visuel?.url,
+        {_.filter(filteredArticles, (article) => !article.hide).map(
+          (article, index) => (
+            <ListItem
+              key={index}
+              bottomDivider
+              onPress={() => {
+                navigation.navigate("article", {
+                  id: article.id,
+                  step: route.params.step,
+                });
               }}
-              containerStyle={[styles.articleImage, styles.borderLeftRadius]}
-            />
-            <ListItem.Content style={styles.articleContent}>
-              <ListItem.Title style={styles.articleTitleContainer}>
-                <CommonText style={styles.articleTitle}>
-                  {article.titre}
-                </CommonText>
-              </ListItem.Title>
-              <ListItem.Subtitle style={styles.articleDescription}>
-                <SecondaryText
-                  style={styles.articleDescriptionFont}
-                  numberOfLines={3}
-                  allowFontScaling={true}
-                >
-                  {article.resume}
-                </SecondaryText>
-              </ListItem.Subtitle>
-            </ListItem.Content>
-          </ListItem>
-        ))}
+              pad={0}
+              containerStyle={[
+                styles.listItemContainer,
+                styles.borderLeftRadius,
+              ]}
+              style={[styles.listItem, styles.borderLeftRadius]}
+            >
+              <Image
+                source={{
+                  uri: article.visuel?.url,
+                }}
+                containerStyle={[styles.articleImage, styles.borderLeftRadius]}
+              />
+              <ListItem.Content style={styles.articleContent}>
+                <ListItem.Title style={styles.articleTitleContainer}>
+                  <CommonText style={styles.articleTitle}>
+                    {article.titre}
+                  </CommonText>
+                </ListItem.Title>
+                <ListItem.Subtitle style={styles.articleDescription}>
+                  <SecondaryText
+                    style={styles.articleDescriptionFont}
+                    numberOfLines={3}
+                    allowFontScaling={true}
+                  >
+                    {article.resume}
+                  </SecondaryText>
+                </ListItem.Subtitle>
+              </ListItem.Content>
+            </ListItem>
+          )
+        )}
       </View>
     </ScrollView>
   );
@@ -184,7 +220,8 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
   },
   listContainer: {
-    padding: Paddings.default,
+    paddingHorizontal: Paddings.default,
+    paddingVertical: Paddings.smallest,
   },
   listItem: {
     marginVertical: Margins.smallest,
