@@ -63,8 +63,8 @@ export interface EpdsResultData {
 }
 
 export interface EpdsResultSimpleInformation {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
 }
 
 export interface EpdsResultContactInformation {

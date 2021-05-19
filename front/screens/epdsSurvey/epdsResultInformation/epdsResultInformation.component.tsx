@@ -37,13 +37,19 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
   };
 
   const renderParagraph = (paragraph: any) => {
-    return paragraph.title ? (
-      <EpdsResultSimpleParagraph paragraph={paragraph} />
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return paragraph.contacts ? (
+      paragraph.contacts.map((contact: any, contactIndex: number) => (
+        <View key={contactIndex}>
+          <EpdsResultContactParagraph
+            paragraphTitle={contactIndex === 0 && paragraph.title}
+            paragraph={contact}
+            titleColor={leftBorderColor}
+          />
+        </View>
+      ))
     ) : (
-      <EpdsResultContactParagraph
-        paragraph={paragraph}
-        titleColor={leftBorderColor}
-      />
+      <EpdsResultSimpleParagraph paragraph={paragraph} />
     );
   };
 

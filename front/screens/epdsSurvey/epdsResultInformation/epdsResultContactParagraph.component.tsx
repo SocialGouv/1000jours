@@ -8,11 +8,13 @@ import { Colors, FontWeight, Labels, Margins, Sizes } from "../../../constants";
 import type { EpdsResultContactInformation } from "../../../type";
 
 interface EpdsResultContactParagraphProps {
+  paragraphTitle?: string;
   paragraph: EpdsResultContactInformation;
   titleColor: string;
 }
 
 const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
+  paragraphTitle,
   paragraph,
   titleColor,
 }) => {
@@ -24,23 +26,28 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
     void Linking.openURL("tel:" + phoneNumber);
   };
 
+  const titleStyle = [styles.contactTitle, { fontSize: Sizes.xs }];
   return (
     <View style={styles.itemBorder}>
-      <CommonText style={[styles.paragraphTitle, titleColorStyle]}>
+      {paragraphTitle && paragraphTitle.length > 0 && (
+        <CommonText style={titleStyle}>{paragraphTitle}</CommonText>
+      )}
+      <CommonText style={[styles.contactTitle, titleColorStyle]}>
         {paragraph.contactName}
       </CommonText>
-      <CommonText style={styles.paragraphDescription}>
+      <CommonText style={styles.contactDescription}>
         {paragraph.thematic}
       </CommonText>
-      <CommonText style={[styles.paragraphDescription, styles.fontBold]}>
+      <CommonText style={[styles.contactDescription, styles.fontBold]}>
         {paragraph.openingTime}
       </CommonText>
-      <CommonText style={[styles.paragraphDescription, styles.fontBold]}>
+      <CommonText style={[styles.contactDescription, styles.fontBold]}>
         {paragraph.phoneNumber}
       </CommonText>
       <Button
         buttonStyle={styles.callButton}
         title={Labels.epdsSurvey.resultats.call}
+        titleStyle={styles.fontButton}
         rounded={true}
         disabled={false}
         action={() => {
@@ -55,25 +62,28 @@ const styles = StyleSheet.create({
   callButton: {
     alignSelf: "flex-end",
   },
+  contactDescription: {
+    color: Colors.commonText,
+    fontSize: Sizes.xxs,
+    lineHeight: Sizes.mmd,
+  },
+  contactTitle: {
+    color: Colors.commonText,
+    fontSize: Sizes.xxs,
+    fontWeight: FontWeight.bold,
+    lineHeight: Sizes.mmd,
+  },
   fontBold: {
     fontWeight: FontWeight.bold,
+  },
+  fontButton: {
+    fontSize: Sizes.xs,
   },
   itemBorder: {
     borderBottomColor: Colors.disabled,
     borderBottomWidth: 1,
     paddingBottom: Margins.smaller,
     paddingTop: Margins.smallest,
-  },
-  paragraphDescription: {
-    color: Colors.commonText,
-    fontSize: Sizes.xxs,
-    lineHeight: Sizes.mmd,
-  },
-  paragraphTitle: {
-    color: Colors.commonText,
-    fontSize: Sizes.xxs,
-    fontWeight: FontWeight.bold,
-    lineHeight: Sizes.mmd,
   },
 });
 
