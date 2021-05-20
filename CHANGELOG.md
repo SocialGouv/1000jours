@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/SocialGouv/1000jours/compare/v1.26.1...v1.27.0) (2021-05-20)
+
+
+### Features
+
+* **dpp:** ajout resultats epds + refacto ([#221](https://github.com/SocialGouv/1000jours/issues/221)) ([7017766](https://github.com/SocialGouv/1000jours/commit/7017766ab669a54fae8971f1db9f97b35c41a7cf))
+
 ## [1.26.1](https://github.com/SocialGouv/1000jours/compare/v1.26.0...v1.26.1) (2021-05-19)
 
 
