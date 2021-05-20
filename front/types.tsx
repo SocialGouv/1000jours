@@ -57,7 +57,7 @@ export type Step = {
   id: number;
   ordre: number;
   nom: string;
-  description: string;
+  description: string | null;
 };
 
 export type Event = {
