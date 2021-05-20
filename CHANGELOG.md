@@ -1,3 +1,10 @@
+# [1.28.0](https://github.com/SocialGouv/1000jours/compare/v1.27.1...v1.28.0) (2021-05-20)
+
+
+### Features
+
+* **evenements:** ajout des thématiques dans le backoffice ([#224](https://github.com/SocialGouv/1000jours/issues/224)) ([d3943ee](https://github.com/SocialGouv/1000jours/commit/d3943eead69948c5a3a2ce9358338e6f92a627f7))
+
 ## [1.27.1](https://github.com/SocialGouv/1000jours/compare/v1.27.0...v1.27.1) (2021-05-20)
 
 
