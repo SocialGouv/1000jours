@@ -1,4 +1,4 @@
-import { epdsContacts } from "./epdsContacts.constants";
+import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
   article: {
@@ -58,50 +58,23 @@ export default {
         professionalsList: [
           {
             paragraphs: [
-              {
-                description:
-                  "il permet de vous rassurer sur vos compétences et de réactiver si besoin des aides spécifiques: suivi postnatal, allaitement, soutien à la parentalité, aide à domicile. Cet entretien pris en charge est donc l’occasion d’échanger avec votre professionnel de santé de confiance. ",
-                title:
-                  "Un entretien auprès du professionnel de santé qui vous suit (référent maternité, médecin traitant, sage-femme, gynécologue, infirmière puéricultrice) :",
-              },
-              {
-                description:
-                  "centre d’informations, d’accompagnement, et d’orientation pour vous et votre enfant, A l’écoute des parents, les nombreux professionnels de santé pourront vous proposer une prise en charge complète : consulter la cartographie pour prendre rendez-vous avec votre PMI de proximité.",
-                title: "La PMI est un véritable allié pour les futurs parents,",
-              },
-              {
-                description:
-                  "afin que les femmes enceintes accouchent en toute sécurité et en toute sérénité.  Les professionnels adhérents aux réseaux de périnatalité s’engageant à orienter la femme enceinte vers d’autres professionnels selon l’évolution de sa grossesse, et les nouveau-nés selon leur état de santé. Il est important de préciser que le réseau ne se substitue pas au suivi médical exercé par le praticien ou la sage-femme. Vous pourrez bénéficier d’un suivi dans le cadre du réseau de périnatalité si vous souhaitez, le médecin ou la sage-femme en charge du suivi de votre grossesse, pourra alors vous indiquer la marche à suivre pour ouvrir un dossier périnatal partagé, dont elle sera la détentrice. S vous souhaitez plus d’informations, vous pouvez contacter le réseau périnatal en santé de votre territoire.",
-                title:
-                  "Le réseau périnatal en santé permet le partage de leurs compétences ",
-              },
+              epdsInformation.entretienAupresProfessionnelSante,
+              epdsInformation.pmiVeritableAllieParents,
+              epdsInformation.reseauPerinatalSante,
             ],
             sectionTitle:
               "Les professionnels qui peuvent vous accompagner pour faire le point",
           },
           {
             paragraphs: [
-              {
-                description:
-                  "TISF : le Service d’Aide à domicile (SAAD) propose un accompagnement par un travailleur ou une travailleuse en intervention sociale et familiale (TISF) qui peut intervenir de manière intensive dans les premières semaines en des besoins de la famille. Pour plus d’informations, vous pouvez vous rapprocher de la CAF de votre domicile.",
-                title: "Les services d’aides d’accompagnement à domicile",
-              },
-              {
-                description:
-                  "Au retour à domicile avec votre enfant, la PMI peut vous venir en soutien notamment pour vous aider sur les premiers gestes autour de bébé et plus largement vous aider dans votre nouveau rôle de parents. Appelez votre PMI de rattachement pour prendre rendez-vous.",
-                title:
-                  "La PMI peut effectuer des visites à domicile si vous en ressentez le besoin.",
-              },
+              epdsInformation.servicesAidesAccompagnementDomicile,
+              epdsInformation.laep,
+              epdsInformation.associationsLocalesNationalesSoutienParentalite,
             ],
             sectionTitle:
               "Les ressources qui peuvent vous aider les premiers mois de l’enfant",
           },
-          {
-            paragraphs: epdsContacts.contacts,
-            sectionDescription: "Les lignes téléphoniques d'aide aux parents",
-            sectionTitle:
-              "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",
-          },
+          epdsInformation.sectionRessourcesNumeriquesBienEtMoinsBien,
         ],
         stateOfMind: "Je vais moins bien",
       },
@@ -113,23 +86,12 @@ export default {
         professionalsList: [
           {
             paragraphs: [
+              epdsInformation.entretienAupresProfessionnelSante,
+              epdsInformation.pmiVeritableAllieParents,
               {
-                description:
-                  "il permet de vous rassurer sur vos compétences et de réactiver si besoin des aides spécifiques: suivi postnatal, allaitement, soutien à la parentalité, aide à domicile. Cet entretien pris en charge est donc l’occasion d’échanger avec votre professionnel de santé de confiance.",
-                title:
-                  "Un entretien auprès du professionnel de santé qui vous suit (référent maternité, médecin traitant, sage-femme, gynécologue, infirmière puéricultrice) :",
-              },
-              {
-                description:
-                  "centre d’informations, d’accompagnement, et d’orientation pour vous et votre enfant, A l’écoute des parents, les nombreux professionnels de santé pourront vous proposer une prise en charge complète : consulter la cartographie pour prendre rendez-vous avec votre PMI de proximité.",
-                title: "La PMI est un véritable allié pour les futurs parents,",
-              },
-              {
-                description: "",
                 title: "Les autres professionnels qui peuvent vous aider",
               },
               {
-                description: "",
                 title:
                   "Votre entourage peut se mobiliser pour vous aider : sagefemme, psychologue, infirmière puéricultrice",
               },
@@ -137,12 +99,7 @@ export default {
             sectionTitle:
               "Les professionnels qui peuvent vous accompagner pour faire le point",
           },
-          {
-            paragraphs: epdsContacts.contacts,
-            sectionDescription: "Les lignes téléphoniques d'aide aux parents",
-            sectionTitle:
-              "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",
-          },
+          epdsInformation.sectionRessourcesNumeriquesBienEtMoinsBien,
         ],
         stateOfMind: "Je vais bien",
       },
@@ -152,50 +109,19 @@ export default {
         intervalle: "(13 ou plus)",
         professionalsList: [
           {
-            paragraphs: [
-              {
-                description:
-                  "il permet de vous rassurer sur vos compétences et de réactiver si besoin des aides spécifiques: suivi postnatal, allaitement, soutien à la parentalité, aide à domicile. Cet entretien pris en charge est donc l’occasion d’échanger avec votre professionnel de santé de confiance. ",
-                title:
-                  "Un entretien auprès du professionnel de santé qui vous suit (référent maternité, médecin traitant, sage-femme, gynécologue, infirmière puéricultrice) :",
-              },
-              {
-                description:
-                  "centre d’informations, d’accompagnement, et d’orientation pour vous et votre enfant, A l’écoute des parents, les nombreux professionnels de santé pourront vous proposer une prise en charge complète : consulter la cartographie pour prendre rendez-vous avec votre PMI de proximité.",
-                title: "La PMI est un véritable allié pour les futurs parents,",
-              },
-              {
-                description:
-                  "afin que les femmes enceintes accouchent en toute sécurité et en toute sérénité.  Les professionnels adhérents aux réseaux de périnatalité s’engageant à orienter la femme enceinte vers d’autres professionnels selon l’évolution de sa grossesse, et les nouveau-nés selon leur état de santé. Il est important de préciser que le réseau ne se substitue pas au suivi médical exercé par le praticien ou la sage-femme. Vous pourrez bénéficier d’un suivi dans le cadre du réseau de périnatalité si vous souhaitez, le médecin ou la sage-femme en charge du suivi de votre grossesse, pourra alors vous indiquer la marche à suivre pour ouvrir un dossier périnatal partagé, dont elle sera la détentrice. S vous souhaitez plus d’informations, vous pouvez contacter le réseau périnatal en santé de votre territoire.",
-                title:
-                  "Le réseau périnatal en santé permet le partage de leurs compétences ",
-              },
-            ],
+            paragraphs: epdsInformation.professionnelsAccompagnerPasBien,
             sectionTitle:
               "Les professionnels qui peuvent vous accompagner pour faire le point",
           },
+          epdsInformation.sectionRessourcesNumeriquesPasBien,
           {
             paragraphs: [
-              {
-                description:
-                  "TISF : le Service d’Aide à domicile (SAAD) propose un accompagnement par un travailleur ou une travailleuse en intervention sociale et familiale (TISF) qui peut intervenir de manière intensive dans les premières semaines en des besoins de la famille. Pour plus d’informations, vous pouvez vous rapprocher de la CAF de votre domicile.",
-                title: "Les services d’aides d’accompagnement à domicile",
-              },
-              {
-                description:
-                  "Au retour à domicile avec votre enfant, la PMI peut vous venir en soutien notamment pour vous aider sur les premiers gestes autour de bébé et plus largement vous aider dans votre nouveau rôle de parents. Appelez votre PMI de rattachement pour prendre rendez-vous.",
-                title:
-                  "La PMI peut effectuer des visites à domicile si vous en ressentez le besoin.",
-              },
+              epdsInformation.servicesAidesAccompagnementDomicile,
+              epdsInformation.laep,
+              epdsInformation.associationsLocalesNationalesSoutienParentalite,
             ],
             sectionTitle:
               "Les ressources qui peuvent vous aider les premiers mois de l’enfant",
-          },
-          {
-            paragraphs: epdsContacts.contacts,
-            sectionDescription: "Les lignes téléphoniques d'aide aux parents",
-            sectionTitle:
-              "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",
           },
         ],
         stateOfMind: "Je ne vais pas bien",

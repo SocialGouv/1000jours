@@ -15,10 +15,14 @@ const EpdsResultSimpleParagraph: React.FC<EpdsResultSimpleParagraphProps> = ({
 }) => {
   return (
     <View style={styles.itemBorder}>
-      <CommonText style={styles.paragraphTitle}>{paragraph.title}</CommonText>
-      <CommonText style={styles.paragraphDescription}>
-        {paragraph.description}
-      </CommonText>
+      {paragraph.title && (
+        <CommonText style={styles.paragraphTitle}>{paragraph.title}</CommonText>
+      )}
+      {paragraph.description && (
+        <CommonText style={styles.paragraphDescription}>
+          {paragraph.description}
+        </CommonText>
+      )}
     </View>
   );
 };
@@ -37,7 +41,7 @@ const styles = StyleSheet.create({
   },
   paragraphTitle: {
     color: Colors.commonText,
-    fontSize: Sizes.xxs,
+    fontSize: Sizes.xs,
     fontWeight: FontWeight.bold,
     lineHeight: Sizes.mmd,
   },
