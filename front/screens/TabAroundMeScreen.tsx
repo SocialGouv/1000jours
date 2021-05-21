@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useRef, useState } from "react";
 import * as React from "react";
 import { StyleSheet, TextInput } from "react-native";
@@ -19,6 +20,7 @@ import {
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
   const [postalCodeInput, setPostalCodeInput] = useState<string>("");
+  const [latLng, setLatLng] = useState(AroundMeConstants.COORDINATE_PARIS);
   const [region, setRegion] = useState(AroundMeConstants.INITIAL_REGION);
 
   function setMapViewRef(ref: MapView) {
@@ -31,7 +33,24 @@ const TabAroundMeScreen: React.FC = () => {
   };
 
   const searchByPostalCode = () => {
-    console.log(`searchByPostalCode : ${postalCodeInput}`);
+    // console.log(`searchByPostalCode : ${postalCodeInput}`);
+
+    fetch(`https://api-adresse.data.gouv.fr/search/?q=${postalCodeInput}`)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      .then(async (response) => response.json())
+      .then((json) => {
+        if (json.features[0].geometry.coordinates) {
+          console.log(json.features[0].geometry.coordinates);
+          const newLatLng = {
+            latitude: json.features[0].geometry.coordinates[1],
+            longitude: json.features[0].geometry.coordinates[0],
+          };
+          setLatLng(newLatLng);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -48,10 +67,6 @@ const TabAroundMeScreen: React.FC = () => {
         <TextInput
           style={styles.postalCodeInput}
           onChangeText={setPostalCodeInput}
-          onKeyPress={({ nativeEvent: { key: keyValue } }) => {
-            console.log(keyValue);
-            if (keyValue == "Enter") console.log("LOOOOL");
-          }}
           value={postalCodeInput}
           placeholder={Labels.aroundMe.postalCodeInputPlaceholder}
           keyboardType="number-pad"
@@ -73,10 +88,7 @@ const TabAroundMeScreen: React.FC = () => {
           initialRegion={region}
           onRegionChange={onRegionChange}
         >
-          <Marker
-            coordinate={AroundMeConstants.COORDINATE_PARIS}
-            pinColor="red"
-          />
+          <Marker coordinate={latLng} pinColor="red" />
         </MapView>
       </View>
     </View>
