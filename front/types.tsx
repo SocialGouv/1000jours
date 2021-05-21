@@ -7,6 +7,8 @@ export type RootStackParamList = {
   root: undefined;
   notFound: undefined;
   loading: undefined;
+  legalNotice: undefined;
+  conditionsOfUse: undefined;
 };
 
 export type BottomTabParamList = {
@@ -120,4 +122,10 @@ export type ArticleFilter = {
 export type ArticleLink = {
   label: string;
   url: string;
+};
+
+export type MenuItem = {
+  icon: string;
+  title: string;
+  onPress: () => void;
 };
