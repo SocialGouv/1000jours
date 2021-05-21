@@ -15,11 +15,10 @@ import TextHtml from "../components/article/TextHtml";
 import Thematics from "../components/article/Thematics";
 import Title from "../components/article/Title";
 import BackButton from "../components/BackButton";
-import { CommonText, SecondaryText } from "../components/StyledText";
+import { CommonText, SecondaryText } from "../components";
 import { View } from "../components/Themed";
-import Colors from "../constants/Colors";
-import Labels from "../constants/Labels";
-import { FontWeight } from "../constants/Layout";
+import { Colors, Labels } from "../constants";
+import { FontWeight } from "../constants";
 import type {
   Article,
   ArticleInShortItem,
@@ -27,6 +26,8 @@ import type {
   Step,
   TabHomeParamList,
 } from "../types";
+import { useMatomo } from "matomo-tracker-react-native";
+import { TrackerUtils } from "../utils";
 
 interface Props {
   route: RouteProp<{ params: { id: number; step: Step } }, "params">;
@@ -34,6 +35,7 @@ interface Props {
 }
 
 const ArticleDetail: FC<Props> = ({ route, navigation }) => {
+  const { trackScreenView } = useMatomo();
   const articleId = route.params.id;
   const screenTitle = route.params.step.nom;
   const description = route.params.step.description;
@@ -99,6 +101,9 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
   if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
 
   const result = data as { article: Article };
+  trackScreenView(
+    `${TrackerUtils.TrackingEvent.ARTICLE} : ${result.article.titre}`
+  );
   setInShortArray(result.article);
   setLinksArray(result.article);
   return (

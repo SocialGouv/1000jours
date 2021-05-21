@@ -11,6 +11,8 @@ jobs:
     env:
       API_URL: ${{ secrets.API_URL }}
       CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
+      MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
+      MATOMO_URL: ${{ secrets.MATOMO_URL }}
       PLAY_STORE_API_KEY: ${{ secrets.PLAY_STORE_API_KEY }}
     steps:
       - uses: actions/checkout@v2
@@ -35,6 +37,8 @@ jobs:
     env:
       API_URL: ${{ secrets.API_URL }}
       CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
+      MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
+      MATOMO_URL: ${{ secrets.MATOMO_URL }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
