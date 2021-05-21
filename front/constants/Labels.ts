@@ -5,6 +5,7 @@ export default {
     instruction:
       "Trouvez tous les professionnels autour de vous qui pourront vous aider dans votre rôle de parents.",
     postalCodeInputPlaceholder: "Rechercher par code postal",
+    postalCodeNotFound: "Le code postal vous recherchez n'a pas été trouvé",
     searchButton: "Rechercher",
     title: "Autour de moi",
   },

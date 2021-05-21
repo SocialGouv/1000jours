@@ -4,11 +4,17 @@ export const COORDINATE_PARIS = {
   longitude: 2.342685107141733,
 };
 
+export const DEFAULT_LATITUDE_DELTA = 0.2;
+export const DEFAULT_LONGITUDE_DELTA = 0.2;
+
 export const INITIAL_REGION = {
   latitude: COORDINATE_PARIS.latitude,
-  latitudeDelta: 0.20964114339699336,
+  latitudeDelta: DEFAULT_LATITUDE_DELTA,
   longitude: COORDINATE_PARIS.longitude,
-  longitudeDelta: 0.21492373198270798,
+  longitudeDelta: DEFAULT_LONGITUDE_DELTA,
 };
 
 export const POSTAL_CODE_MAX_LENGTH = 5;
+
+export const getApiUrlWithParam = (postalCode: string): string =>
+  `https://api-adresse.data.gouv.fr/search/?q=${postalCode}&limit=1`;

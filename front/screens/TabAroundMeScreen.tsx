@@ -1,11 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useRef, useState } from "react";
 import * as React from "react";
-import { StyleSheet, TextInput } from "react-native";
-import type { Region } from "react-native-maps";
+import { Keyboard, StyleSheet, TextInput } from "react-native";
+import type { LatLng, Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
-import { Button, SecondaryText } from "../components";
+import {
+  Button,
+  CommonText,
+  CustomSnackBar,
+  SecondaryText,
+} from "../components";
 import { View } from "../components/Themed";
 import {
   AroundMeConstants,
@@ -19,9 +23,14 @@ import {
 
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
-  const [postalCodeInput, setPostalCodeInput] = useState<string>("");
-  const [latLng, setLatLng] = useState(AroundMeConstants.COORDINATE_PARIS);
-  const [region, setRegion] = useState(AroundMeConstants.INITIAL_REGION);
+  const [postalCodeInput, setPostalCodeInput] = useState("");
+  const [latLng, setLatLng] = useState<LatLng>(
+    AroundMeConstants.COORDINATE_PARIS
+  );
+  const [region, setRegion] = useState<Region>(
+    AroundMeConstants.INITIAL_REGION
+  );
+  const [showSnackBar, setShowSnackBar] = useState(false);
 
   function setMapViewRef(ref: MapView) {
     mapRef.current = ref;
@@ -33,24 +42,35 @@ const TabAroundMeScreen: React.FC = () => {
   };
 
   const searchByPostalCode = () => {
-    // console.log(`searchByPostalCode : ${postalCodeInput}`);
-
-    fetch(`https://api-adresse.data.gouv.fr/search/?q=${postalCodeInput}`)
+    Keyboard.dismiss();
+    fetch(AroundMeConstants.getApiUrlWithParam(postalCodeInput))
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       .then(async (response) => response.json())
       .then((json) => {
-        if (json.features[0].geometry.coordinates) {
-          console.log(json.features[0].geometry.coordinates);
-          const newLatLng = {
-            latitude: json.features[0].geometry.coordinates[1],
-            longitude: json.features[0].geometry.coordinates[0],
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        if (json.features[0]?.geometry.coordinates) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          const coordinates: string[] = json.features[0].geometry.coordinates;
+          console.log(coordinates);
+          const newRegion = {
+            latitude: Number(coordinates[1]) - 0.035684, // C'est un petit correctif pour que la carte soit centrée sur la recherche, peut-être que je le
+            latitudeDelta: AroundMeConstants.DEFAULT_LATITUDE_DELTA,
+            longitude: Number(coordinates[0]),
+            longitudeDelta: AroundMeConstants.DEFAULT_LONGITUDE_DELTA,
           };
-          setLatLng(newLatLng);
+          setRegion(newRegion);
+          mapRef.current?.animateToRegion(newRegion);
+        } else {
+          setShowSnackBar(true);
         }
       })
       .catch((error) => {
         console.error(error);
       });
+  };
+
+  const onSnackBarDismiss = () => {
+    setShowSnackBar(false);
   };
 
   return (
@@ -91,6 +111,9 @@ const TabAroundMeScreen: React.FC = () => {
           <Marker coordinate={latLng} pinColor="red" />
         </MapView>
       </View>
+      <CustomSnackBar visible={showSnackBar} onDismiss={onSnackBarDismiss}>
+        <CommonText>{Labels.aroundMe.postalCodeNotFound}</CommonText>
+      </CustomSnackBar>
     </View>
   );
 };
