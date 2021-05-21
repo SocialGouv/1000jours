@@ -1,3 +1,4 @@
+import * as AroundMeConstants from "./aroundMe.constants";
 import Colors from "./Colors";
 import * as DatabaseQueries from "./databaseQueries.constants";
 import * as EpdsConstants from "./epdsConstants.constants";
@@ -11,6 +12,7 @@ import { Margins, Paddings } from "./spacings";
 import * as StorageKeysConstants from "./storageKeys.constants";
 
 export {
+  AroundMeConstants,
   Colors,
   DatabaseQueries,
   EpdsConstants,

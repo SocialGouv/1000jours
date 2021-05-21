@@ -1,6 +1,13 @@
 import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
+  aroundMe: {
+    instruction:
+      "Trouvez tous les professionnels autour de vous qui pourront vous aider dans votre rôle de parents.",
+    postalCodeInputPlaceholder: "Rechercher par code postal",
+    searchButton: "Rechercher",
+    title: "Autour de moi",
+  },
   article: {
     didYouKnowTitle: "Le saviez-vous ?",
     firstThreeMonths: {
