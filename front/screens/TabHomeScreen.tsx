@@ -7,19 +7,23 @@ import * as React from "react";
 import { ActivityIndicator, StyleSheet, Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { CommonText, SecondaryText } from "../components/StyledText";
+import { CommonText, SecondaryText } from "../components";
 import { View } from "../components/Themed";
 import TimelineStep from "../components/timeline/TimlineStep";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
-import { FontWeight } from "../constants/Layout";
+import { FontWeight } from "../constants";
 import type { Step, TabHomeParamList } from "../types";
+import { useMatomo } from "matomo-tracker-react-native";
+import { TrackerUtils } from "../utils";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList, "listArticles">;
 }
 
 const TabHomeScreen: FC<Props> = ({ navigation }) => {
+  const { trackScreenView } = useMatomo();
+  trackScreenView(TrackerUtils.TrackingEvent.HOME);
   const screenTitle = Labels.timeline.title;
   const description = Labels.timeline.description;
   const ALL_STEPS = gql`
