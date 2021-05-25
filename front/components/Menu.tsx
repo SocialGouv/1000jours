@@ -13,8 +13,7 @@ import {
   Paddings,
   Sizes,
 } from "../constants";
-import ConditionsOfUse from "../screens/ConditionsOfUse";
-import LegalNotice from "../screens/LegalNotice";
+import { ConditionsOfUse, LegalNotice } from "../screens";
 import type { MenuItem } from "../types";
 import { Icomoon } from ".";
 import { IcomoonIcons } from "./Icomoon";

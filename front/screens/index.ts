@@ -1,3 +1,5 @@
+import ConditionsOfUse from "./ConditionsOfUse";
 import EpdsSurveyScreen from "./epdsSurvey/epdsSurveyScreen.component";
+import LegalNotice from "./LegalNotice";
 
-export { EpdsSurveyScreen };
+export { ConditionsOfUse, EpdsSurveyScreen, LegalNotice };
