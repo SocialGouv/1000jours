@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
 
-import Icomoon, { IcomoonIcons } from "../components/Icomoon";
+import Icomoon, { IcomoonIcons } from "../components/icomoon.component";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
 import {

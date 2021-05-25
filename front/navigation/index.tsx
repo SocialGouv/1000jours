@@ -1,3 +1,4 @@
+import type { NavigationContainerRef } from "@react-navigation/native";
 import {
   DarkTheme,
   DefaultTheme,
@@ -11,10 +12,13 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 
 import LogoMinistere from "../assets/images/Logo ministere.svg";
 import AppLogo from "../assets/images/logo.svg";
-import Icomoon, { IcomoonIcons } from "../components/Icomoon";
+import { Backdrop, Icomoon, IcomoonIcons, Menu } from "../components";
 import { Text, View } from "../components/Themed";
+import { Sizes } from "../constants";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
+import ConditionsOfUse from "../screens/ConditionsOfUse";
+import LegalNotice from "../screens/LegalNotice";
 import LoadingScreen from "../screens/LoadingScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import Onboarding from "../screens/Onboarding";
@@ -27,22 +31,45 @@ interface NavigationProps {
   colorScheme: ColorSchemeName;
 }
 
-const Navigation: FC<NavigationProps> = ({ colorScheme }) => (
-  <NavigationContainer
-    linking={LinkingConfiguration}
-    theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-  >
-    <RootNavigator />
-  </NavigationContainer>
-);
+const Navigation: FC<NavigationProps> = ({ colorScheme }) => {
+  const [showMenu, setShowMenu] = React.useState(false);
+
+  const navigationRef = React.useRef<NavigationContainerRef>(null);
+
+  return (
+    <NavigationContainer
+      ref={navigationRef}
+      linking={LinkingConfiguration}
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+    >
+      <RootNavigator onPressMenu={setShowMenu} />
+      <Backdrop
+        isVisible={showMenu}
+        onPress={() => {
+          setShowMenu(false);
+        }}
+      />
+      <Menu
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+        navigation={navigationRef.current}
+      />
+    </NavigationContainer>
+  );
+};
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-const RootNavigator: FC = () => (
+interface RootNavigatorProps {
+  onPressMenu: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="loading" component={LoadingScreen} />
     <Stack.Screen name="onboarding" component={Onboarding} />
     <Stack.Screen name="profile" component={Profile} />
+    <Stack.Screen name="legalNotice" component={LegalNotice} />
+    <Stack.Screen name="conditionsOfUse" component={ConditionsOfUse} />
     <Stack.Screen
       name="root"
       component={BottomTabNavigator}
@@ -56,12 +83,12 @@ const RootNavigator: FC = () => (
           <TouchableOpacity
             style={[styles.headerRight]}
             onPress={() => {
-              console.log("Open menu");
+              onPressMenu(true);
             }}
           >
             <Icomoon
               name={IcomoonIcons.menu}
-              size={5}
+              size={Sizes.xxxxxxs}
               color={Colors.primaryBlue}
             />
             <Text style={[styles.headerRightButtonText]}>

@@ -145,6 +145,9 @@ export default {
     filters: "Filtres",
   },
   menu: {
+    conditionsOfUse: "Politiques de confidentialité",
+    legalNotice: "Mentions légales",
+    myProfil: "Mon profil",
     title: "Menu",
   },
   onboarding: {

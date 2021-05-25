@@ -3,6 +3,7 @@
 import { scaleNormalize } from "../utils/scaleNormalize.util";
 
 const Sizes = {
+  xxxxxxs: scaleNormalize(4),
   xxxxxs: scaleNormalize(6),
   xxxxs: scaleNormalize(8),
   xxxs: scaleNormalize(10),

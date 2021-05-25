@@ -8,7 +8,7 @@ import { Colors, Labels, Paddings, Sizes } from "../../constants";
 import type { Article, ArticleFilter } from "../../types";
 import { Button, Icomoon } from "..";
 import Chip from "../Chip";
-import { IcomoonIcons } from "../Icomoon";
+import { IcomoonIcons } from "../icomoon.component";
 import { View } from "../Themed";
 
 interface Props {

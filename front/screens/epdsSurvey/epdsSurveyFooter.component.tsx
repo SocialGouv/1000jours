@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import type SwiperFlatListRefProps from "react-native-swiper-flatlist";
 
 import Button from "../../components/form/Button";
-import Icomoon, { IcomoonIcons } from "../../components/Icomoon";
+import Icomoon, { IcomoonIcons } from "../../components/icomoon.component";
 import { View } from "../../components/Themed";
 import { Colors, Labels, Paddings } from "../../constants";
 

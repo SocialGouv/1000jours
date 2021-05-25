@@ -14,7 +14,7 @@ import {
   Sizes,
 } from "../../constants";
 import type { ArticleInShortItem } from "../../types";
-import Icomoon, { IcomoonIcons } from "../Icomoon";
+import Icomoon, { IcomoonIcons } from "../icomoon.component";
 import { CommonText, SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 
