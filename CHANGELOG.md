@@ -1,3 +1,10 @@
+# [1.30.0](https://github.com/SocialGouv/1000jours/compare/v1.29.0...v1.30.0) (2021-05-25)
+
+
+### Features
+
+* 🎸 Ajoute le menu ainsi que les CGU et Mentions Légales ([#226](https://github.com/SocialGouv/1000jours/issues/226)) ([ab7e0ae](https://github.com/SocialGouv/1000jours/commit/ab7e0ae45a4ddb00d1abe86362a349aba678c7ca)), closes [#214](https://github.com/SocialGouv/1000jours/issues/214) [#29](https://github.com/SocialGouv/1000jours/issues/29)
+
 # [1.29.0](https://github.com/SocialGouv/1000jours/compare/v1.28.0...v1.29.0) (2021-05-25)
 
 
