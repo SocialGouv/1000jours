@@ -10,7 +10,7 @@ import { WebView } from "react-native-webview";
 import htmlFile from "../assets/html/cgu.html";
 import Modal from "../components/Modal";
 import { FontWeight } from "../constants";
-import { getAssetsAsync } from "../utils/asset.util";
+import { AssestUtils } from "../utils";
 
 interface Props {
   setIsVisible: (showMenu: boolean) => void;
@@ -20,7 +20,7 @@ const ConditionsOfUse: FC<Props> = ({ setIsVisible }) => {
   const [html, setHtml] = React.useState<Asset | null>(null);
 
   useEffect(() => {
-    void getAssetsAsync(htmlFile as string).then((asset: Asset) => {
+    void AssestUtils.getAssetsAsync(htmlFile as string).then((asset: Asset) => {
       setHtml(asset);
     });
   }, []);

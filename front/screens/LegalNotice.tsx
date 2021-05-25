@@ -8,7 +8,7 @@ import HTML from "react-native-render-html";
 import htmlFile from "../assets/html/mentions_legales.html";
 import Modal from "../components/Modal";
 import { FontWeight } from "../constants";
-import { getAssetsAsync } from "../utils/asset.util";
+import { AssestUtils } from "../utils";
 
 interface Props {
   setIsVisible: (showMenu: boolean) => void;
@@ -18,7 +18,7 @@ const LegalNotice: FC<Props> = ({ setIsVisible }) => {
   const [html, setHtml] = React.useState<Asset | null>(null);
 
   useEffect(() => {
-    void getAssetsAsync(htmlFile as string).then((asset: Asset) => {
+    void AssestUtils.getAssetsAsync(htmlFile as string).then((asset: Asset) => {
       setHtml(asset);
     });
   }, []);
