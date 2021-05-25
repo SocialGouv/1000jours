@@ -11,7 +11,7 @@ import { Image, ListItem } from "react-native-elements";
 
 import Filters from "../components/article/Filters";
 import Button from "../components/form/Button";
-import { CommonText, SecondaryText } from "../components/StyledText";
+import { CommonText, SecondaryText } from "../components";
 import { View } from "../components/Themed";
 import {
   Colors,
@@ -22,7 +22,8 @@ import {
   Sizes,
 } from "../constants";
 import type { Article, Step, TabHomeParamList } from "../types";
-
+import { useMatomo } from "matomo-tracker-react-native";
+import { TrackerUtils } from "../utils";
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList, "listArticles">;
   route: RouteProp<{ params: { step: Step } }, "params">;
@@ -32,6 +33,11 @@ peut-être que ça devrait être au back, lorsqu'il retourne les articles, de di
 const ETAPE_ENFANT_3_PREMIERS_MOIS = 6;
 
 const ListArticles: FC<Props> = ({ navigation, route }) => {
+  const { trackScreenView } = useMatomo();
+  trackScreenView(
+    `${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`
+  );
+
   const screenTitle = route.params.step.nom;
   const description = route.params.step.description;
   const stepIsFirstThreeMonths =
@@ -90,7 +96,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     <ScrollView>
       <View style={styles.topContainer}>
         <SecondaryText style={styles.title}>{screenTitle}</SecondaryText>
-        {description.length > 0 && (
+        {description !== null && description.length > 0 && (
           <SecondaryText style={styles.description}>
             {description}
           </SecondaryText>

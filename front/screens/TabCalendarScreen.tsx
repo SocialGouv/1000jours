@@ -10,7 +10,7 @@ import { Button } from "../components";
 import Agenda from "../components/calendar/agenda";
 import Events from "../components/calendar/events";
 import Icomoon, { IcomoonIcons } from "../components/Icomoon";
-import { CommonText } from "../components/StyledText";
+import { CommonText } from "../components";
 import { Text, View } from "../components/Themed";
 import {
   Colors,
@@ -21,9 +21,12 @@ import {
   StorageKeysConstants,
 } from "../constants";
 import type { Event } from "../types";
-import { StorageUtils } from "../utils";
+import { StorageUtils, TrackerUtils } from "../utils";
+import { useMatomo } from "matomo-tracker-react-native";
 
 const TabCalendarScreen: FC = () => {
+  const { trackScreenView } = useMatomo();
+  trackScreenView(TrackerUtils.TrackingEvent.CALENDAR);
   const [childBirthday, setChildBirthday] = React.useState("");
   const [isModeAgenda, setIsModeAgenda] = React.useState(true);
 

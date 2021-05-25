@@ -1,3 +1,24 @@
+# [1.28.0](https://github.com/SocialGouv/1000jours/compare/v1.27.1...v1.28.0) (2021-05-20)
+
+
+### Features
+
+* **evenements:** ajout des thématiques dans le backoffice ([#224](https://github.com/SocialGouv/1000jours/issues/224)) ([d3943ee](https://github.com/SocialGouv/1000jours/commit/d3943eead69948c5a3a2ce9358338e6f92a627f7))
+
+## [1.27.1](https://github.com/SocialGouv/1000jours/compare/v1.27.0...v1.27.1) (2021-05-20)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'erreur avec la description de l'étape à null ([#222](https://github.com/SocialGouv/1000jours/issues/222)) ([0c66b3f](https://github.com/SocialGouv/1000jours/commit/0c66b3f93d9d08ea429c3e284c2f1dfc1b0dfdab))
+
+# [1.27.0](https://github.com/SocialGouv/1000jours/compare/v1.26.1...v1.27.0) (2021-05-20)
+
+
+### Features
+
+* **dpp:** ajout resultats epds + refacto ([#221](https://github.com/SocialGouv/1000jours/issues/221)) ([7017766](https://github.com/SocialGouv/1000jours/commit/7017766ab669a54fae8971f1db9f97b35c41a7cf))
+
 ## [1.26.1](https://github.com/SocialGouv/1000jours/compare/v1.26.0...v1.26.1) (2021-05-19)
 
 
