@@ -16,5 +16,8 @@ export const INITIAL_REGION = {
 
 export const POSTAL_CODE_MAX_LENGTH = 5;
 
+// Petit correctif pour que la carte soit centrée sur la recherche (puisque l'API d'Etalab retourne un point GPS et non une zone)
+export const LATITUDE_OFFSET = 0.035684;
+
 export const getApiUrlWithParam = (postalCode: string): string =>
   `https://api-adresse.data.gouv.fr/search/?q=${postalCode}&limit=1`;
