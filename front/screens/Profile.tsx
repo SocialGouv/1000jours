@@ -14,7 +14,7 @@ import {
 import ProfileImage from "../assets/images/Humaaans_Space_1.svg";
 import { Button, Checkbox, Datepicker } from "../components";
 import HeaderApp from "../components/HeaderApp";
-import Icomoon, { IcomoonIcons } from "../components/Icomoon";
+import Icomoon, { IcomoonIcons } from "../components/icomoon.component";
 import { CommonText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import {

@@ -2,7 +2,7 @@ import type { FC } from "react";
 import * as React from "react";
 
 import Colors from "../../constants/Colors";
-import Icomoon from "../Icomoon";
+import Icomoon from "../icomoon.component";
 
 interface Props {
   name: string;

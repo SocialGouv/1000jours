@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 
 import { Colors, FontWeight, Labels, Sizes } from "../constants";
 import Button from "./form/Button";
-import Icomoon, { IcomoonIcons } from "./Icomoon";
+import Icomoon, { IcomoonIcons } from "./icomoon.component";
 import { FontNames, getFontFamilyName } from "./StyledText";
 
 interface Props {

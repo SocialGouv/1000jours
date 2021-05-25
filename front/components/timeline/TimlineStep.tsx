@@ -5,7 +5,7 @@ import { Button as RNEButton } from "react-native-elements";
 import type { IconNode } from "react-native-elements/dist/icons/Icon";
 
 import Colors from "../../constants/Colors";
-import { IcomoonIcons } from "../Icomoon";
+import { IcomoonIcons } from "../icomoon.component";
 import { CommonText } from "../StyledText";
 import { View } from "../Themed";
 import StepIcon from "./StepIcon";

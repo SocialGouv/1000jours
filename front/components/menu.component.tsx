@@ -16,7 +16,7 @@ import {
 import { ConditionsOfUse, LegalNotice } from "../screens";
 import type { MenuItem } from "../types";
 import { Icomoon } from ".";
-import { IcomoonIcons } from "./Icomoon";
+import { IcomoonIcons } from "./icomoon.component";
 import { FontNames, getFontFamilyName } from "./StyledText";
 import { View } from "./Themed";
 

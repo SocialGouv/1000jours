@@ -11,7 +11,7 @@ import FirstSlideImage from "../assets/images/Humaaans_3_Characters.svg";
 import SecondSlideImage from "../assets/images/Humaaans_Sitting.svg";
 import Button from "../components/form/Button";
 import HeaderApp from "../components/HeaderApp";
-import Icomoon, { IcomoonIcons } from "../components/Icomoon";
+import Icomoon, { IcomoonIcons } from "../components/icomoon.component";
 import { CommonText, SecondaryText } from "../components/StyledText";
 import { View } from "../components/Themed";
 import {

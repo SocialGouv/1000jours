@@ -9,7 +9,7 @@ import { ActivityIndicator, StyleSheet } from "react-native";
 import { Button } from "../components";
 import Agenda from "../components/calendar/agenda";
 import Events from "../components/calendar/events";
-import Icomoon, { IcomoonIcons } from "../components/Icomoon";
+import Icomoon, { IcomoonIcons } from "../components/icomoon.component";
 import { CommonText } from "../components/StyledText";
 import { Text, View } from "../components/Themed";
 import {

@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 
 import Colors from "../../constants/Colors";
-import Icomoon, { IcomoonIcons } from "../Icomoon";
+import Icomoon, { IcomoonIcons } from "../icomoon.component";
 
 interface Props {
   day: string;
