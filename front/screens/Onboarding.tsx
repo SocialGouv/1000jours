@@ -12,7 +12,7 @@ import SecondSlideImage from "../assets/images/Humaaans_Sitting.svg";
 import Button from "../components/form/Button";
 import HeaderApp from "../components/HeaderApp";
 import Icomoon, { IcomoonIcons } from "../components/icomoon.component";
-import { CommonText, SecondaryText } from "../components/StyledText";
+import { CommonText, SecondaryText } from "../components";
 import { View } from "../components/Themed";
 import {
   Colors,
@@ -24,7 +24,8 @@ import {
   StorageKeysConstants,
 } from "../constants";
 import type { RootStackParamList } from "../types";
-import { StorageUtils } from "../utils";
+import { StorageUtils, TrackerUtils } from "../utils";
+import { useMatomo } from "matomo-tracker-react-native";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -42,6 +43,8 @@ interface SlideView {
 }
 
 const Onboarding: FC<Props> = ({ navigation }) => {
+  const { trackScreenView } = useMatomo();
+  trackScreenView(TrackerUtils.TrackingEvent.ONBOARDING);
   const slideViews: SlideView[] = [
     {
       description: Labels.onboarding.slidesText[0].description,

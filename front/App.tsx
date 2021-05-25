@@ -12,7 +12,8 @@ import { StorageKeysConstants } from "./constants";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
-import { StorageUtils } from "./utils";
+import { StorageUtils, TrackerUtils } from "./utils";
+import { MatomoProvider, useMatomo } from "matomo-tracker-react-native";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -31,14 +32,16 @@ const App: FC = () => {
 
   // Load Custom Fonts (Icomoon)
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const { trackAppStart } = useMatomo();
 
   useEffect(() => {
+    trackAppStart();
     Font.loadAsync(customFonts)
       .then(() => {
         setFontsLoaded(true);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   }, []);
 
@@ -49,12 +52,14 @@ const App: FC = () => {
     return null;
   } else {
     return (
-      <ApolloProvider client={client}>
-        <SafeAreaProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
-        </SafeAreaProvider>
-      </ApolloProvider>
+      <MatomoProvider instance={TrackerUtils.matomoInstance}>
+        <ApolloProvider client={client}>
+          <SafeAreaProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+          </SafeAreaProvider>
+        </ApolloProvider>
+      </MatomoProvider>
     );
   }
 };

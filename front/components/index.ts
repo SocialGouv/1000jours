@@ -19,6 +19,7 @@ import TimlineStep from "../components/timeline/TimlineStep";
 import Backdrop from "./backdrop.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 import Menu from "./menu.component";
+import CustomSnackBar from "./customSnackBar.component";
 
 export {
   Agenda,
@@ -27,6 +28,7 @@ export {
   Button,
   Checkbox,
   CommonText,
+  CustomSnackBar,
   Datepicker,
   DidYouKnow,
   HeaderApp,

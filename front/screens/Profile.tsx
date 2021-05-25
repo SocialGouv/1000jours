@@ -15,7 +15,7 @@ import ProfileImage from "../assets/images/Humaaans_Space_1.svg";
 import { Button, Checkbox, Datepicker } from "../components";
 import HeaderApp from "../components/HeaderApp";
 import Icomoon, { IcomoonIcons } from "../components/icomoon.component";
-import { CommonText } from "../components/StyledText";
+import { CommonText } from "../components";
 import { View } from "../components/Themed";
 import {
   Colors,
@@ -30,12 +30,16 @@ import {
 } from "../constants";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
 import { StorageUtils } from "../utils";
+import { useMatomo } from "matomo-tracker-react-native";
+import { TrackerUtils } from "../utils";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, "profile">;
 }
 
 const Profile: FC<Props> = ({ navigation }) => {
+  const { trackScreenView } = useMatomo();
+  trackScreenView(TrackerUtils.TrackingEvent.PROFILE);
   const image = <ProfileImage />;
 
   const defaultUserContext: UserContext = {

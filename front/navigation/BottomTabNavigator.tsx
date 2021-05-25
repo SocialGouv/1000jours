@@ -6,13 +6,15 @@ import * as React from "react";
 import Icomoon, { IcomoonIcons } from "../components/icomoon.component";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
-import { EpdsSurveyScreen } from "../screens";
-import ArticleDetail from "../screens/ArticleDetail";
-import ListArticles from "../screens/ListArticles";
-import TabAroundMeScreen from "../screens/TabAroundMeScreen";
-import TabCalendarScreen from "../screens/TabCalendarScreen";
-import TabFavoritesScreen from "../screens/TabFavoritesScreen";
-import TabHomeScreen from "../screens/TabHomeScreen";
+import {
+  ArticleDetail,
+  EpdsSurveyScreen,
+  ListArticles,
+  TabAroundMeScreen,
+  TabCalendarScreen,
+  TabFavoritesScreen,
+  TabHomeScreen,
+} from "../screens";
 import type {
   BottomTabParamList,
   TabAroundMeParamList,

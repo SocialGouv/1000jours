@@ -1,3 +1,18 @@
+# [1.29.0](https://github.com/SocialGouv/1000jours/compare/v1.28.0...v1.29.0) (2021-05-25)
+
+
+### Features
+
+* **carto:** afficher carte et recherche CP ([#227](https://github.com/SocialGouv/1000jours/issues/227)) ([4a9d5db](https://github.com/SocialGouv/1000jours/commit/4a9d5db6c0b84b582a6db3df3881acfb421fd497))
+* **matomo:** ajoute le tracking avec Matomo ([#225](https://github.com/SocialGouv/1000jours/issues/225)) ([9590b9f](https://github.com/SocialGouv/1000jours/commit/9590b9f0693c5090972d5582462f621b0f04c7e1))
+
+# [1.28.0](https://github.com/SocialGouv/1000jours/compare/v1.27.1...v1.28.0) (2021-05-20)
+
+
+### Features
+
+* **evenements:** ajout des thématiques dans le backoffice ([#224](https://github.com/SocialGouv/1000jours/issues/224)) ([d3943ee](https://github.com/SocialGouv/1000jours/commit/d3943eead69948c5a3a2ce9358338e6f92a627f7))
+
 ## [1.27.1](https://github.com/SocialGouv/1000jours/compare/v1.27.0...v1.27.1) (2021-05-20)
 
 

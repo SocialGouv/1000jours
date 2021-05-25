@@ -25,6 +25,10 @@
       "via": "thematiques",
       "collection": "etape",
       "dominant": true
+    },
+    "evenements": {
+      "via": "thematiques",
+      "collection": "evenement"
     }
   }
 }
