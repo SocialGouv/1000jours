@@ -1,4 +1,4 @@
-import type { Region } from "react-native-maps";
+import type { LatLng, Region } from "react-native-maps";
 
 import { AroundMeConstants } from "../constants";
 
@@ -29,5 +29,26 @@ export const searchRegionByPostalCode = async (
     return { newRegion, regionIsFetched: true };
   } else {
     return { regionIsFetched: false };
+  }
+};
+
+export const getCornerLatLng = (
+  region: Region,
+  cornerType: AroundMeConstants.LatLngPointType
+): LatLng => {
+  const halftLatitude = region.latitudeDelta / 2;
+  const halfLongitude = region.longitudeDelta / 2;
+
+  switch (cornerType) {
+    case AroundMeConstants.LatLngPointType.topLeft:
+      return {
+        latitude: region.latitude + halftLatitude,
+        longitude: region.longitude - halfLongitude,
+      };
+    case AroundMeConstants.LatLngPointType.bottomRight:
+      return {
+        latitude: region.latitude - halftLatitude,
+        longitude: region.longitude + halfLongitude,
+      };
   }
 };

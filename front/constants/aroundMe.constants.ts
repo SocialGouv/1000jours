@@ -21,3 +21,8 @@ export const LATITUDE_OFFSET = 0.035684;
 
 export const getApiUrlWithParam = (postalCode: string): string =>
   `https://api-adresse.data.gouv.fr/search/?q=${postalCode}&limit=1`;
+
+export enum LatLngPointType {
+  topLeft = "topLeft",
+  bottomRight = "bottomRight",
+}

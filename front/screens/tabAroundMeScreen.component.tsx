@@ -25,11 +25,16 @@ import { AroundMeUtils, KeyboardUtils } from "../utils";
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
   const [postalCodeInput, setPostalCodeInput] = useState("");
+  const [topLeftLatLng, setTopLeftLatLng] = useState<LatLng>(
+    AroundMeConstants.COORDINATE_PARIS
+  );
+  const [bottomRightLatLng, setBottomRightLatLng] = useState<LatLng>(
+    AroundMeConstants.COORDINATE_PARIS
+  );
   const [region, setRegion] = useState<Region>(
     AroundMeConstants.INITIAL_REGION
   );
   const [showSnackBar, setShowSnackBar] = useState(false);
-  const initialLatLng = AroundMeConstants.COORDINATE_PARIS;
 
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
@@ -51,6 +56,18 @@ const TabAroundMeScreen: React.FC = () => {
 
     if (regionData.regionIsFetched && regionData.newRegion) {
       const newRegion = regionData.newRegion;
+      setTopLeftLatLng(
+        AroundMeUtils.getCornerLatLng(
+          newRegion,
+          AroundMeConstants.LatLngPointType.topLeft
+        )
+      );
+      setBottomRightLatLng(
+        AroundMeUtils.getCornerLatLng(
+          newRegion,
+          AroundMeConstants.LatLngPointType.bottomRight
+        )
+      );
       setRegion(newRegion);
       mapRef.current?.animateToRegion(newRegion);
     } else {
@@ -97,7 +114,8 @@ const TabAroundMeScreen: React.FC = () => {
           initialRegion={region}
           onRegionChange={onRegionChange}
         >
-          <Marker coordinate={initialLatLng} pinColor="red" />
+          <Marker coordinate={topLeftLatLng} pinColor="red" />
+          <Marker coordinate={bottomRightLatLng} pinColor="blue" />
         </MapView>
       </View>
       <CustomSnackBar visible={showSnackBar} onDismiss={onSnackBarDismiss}>
@@ -127,7 +145,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   mapContainer: {
-    height: "110%",
+    height: "100%",
     width: "100%",
   },
   postalCodeInput: {
