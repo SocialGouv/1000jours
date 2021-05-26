@@ -23,7 +23,7 @@ const EpdsResultUrlParagraph: React.FC<EpdsResultUrlParagraphProps> = ({
       {urls.map((url, index) => (
         <View key={index}>
           <TouchableOpacity
-            onPress={async () => Linking.openURL(`http://www.${url}`)}
+            onPress={async () => Linking.openURL(`https://www.${url}`)}
           >
             <CommonText style={[styles.urls, styles.underline]}>
               {url}
