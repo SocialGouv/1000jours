@@ -1,9 +1,11 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { format } from "date-fns";
 import { filter, find } from "lodash";
+import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
+import type { LayoutChangeEvent } from "react-native";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -12,10 +14,9 @@ import {
 } from "react-native";
 
 import ProfileImage from "../assets/images/Humaaans_Space_1.svg";
-import { Button, Checkbox, Datepicker } from "../components";
+import { Button, Checkbox, CommonText, Datepicker } from "../components";
 import HeaderApp from "../components/HeaderApp";
 import Icomoon, { IcomoonIcons } from "../components/icomoon.component";
-import { CommonText } from "../components";
 import { View } from "../components/Themed";
 import {
   Colors,
@@ -29,9 +30,7 @@ import {
   StorageKeysConstants,
 } from "../constants";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
-import { StorageUtils } from "../utils";
-import { useMatomo } from "matomo-tracker-react-native";
-import { TrackerUtils } from "../utils";
+import { StorageUtils, TrackerUtils } from "../utils";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, "profile">;
@@ -45,18 +44,38 @@ const Profile: FC<Props> = ({ navigation }) => {
   const defaultUserContext: UserContext = {
     childBirthday: null,
     situations: [
-      { id: 1, isChecked: false, label: Labels.profile.situations.project },
-      { id: 2, isChecked: false, label: Labels.profile.situations.search },
-      { id: 3, isChecked: false, label: Labels.profile.situations.pregnant },
-      { id: 4, isChecked: false, label: Labels.profile.situations.oneChild },
       {
-        id: 5,
+        id: "projet",
+        isChecked: false,
+        label: Labels.profile.situations.project,
+      },
+      {
+        id: "conception",
+        isChecked: false,
+        label: Labels.profile.situations.search,
+      },
+      {
+        id: "grossesse",
+        isChecked: false,
+        label: Labels.profile.situations.pregnant,
+      },
+      {
+        id: "enfant",
+        isChecked: false,
+        label: Labels.profile.situations.oneChild,
+      },
+      {
+        id: "enfants",
         isChecked: false,
         label: Labels.profile.situations.severalChildren,
       },
     ],
   };
-  const userSituationsIdsWhereChildBirthdayIsNeeded = [3, 4, 5];
+  const userSituationsIdsWhereChildBirthdayIsNeeded = [
+    "grossesse",
+    "enfant",
+    "enfants",
+  ];
   const hasCheckedSituation = () => {
     return filter(userSituations, ["isChecked", true]).length > 0;
   };
@@ -130,16 +149,26 @@ const Profile: FC<Props> = ({ navigation }) => {
     void StorageUtils.storeObjectValue(
       StorageKeysConstants.userSituationsKey,
       userSituations
-    );
-    void StorageUtils.storeStringValue(
-      StorageKeysConstants.userChildBirthdayKey,
-      childBirthday
-    );
-    navigation.navigate("root");
+    ).then(() => {
+      void StorageUtils.storeStringValue(
+        StorageKeysConstants.userChildBirthdayKey,
+        childBirthday
+      ).then(() => {
+        navigation.navigate("root");
+      });
+    });
   };
 
   const navigateToRoot = () => {
     navigation.navigate("root");
+  };
+
+  const scrollViewRef = React.useRef<ScrollView>(null);
+  const scrollTo = (positionY: number) => {
+    scrollViewRef.current?.scrollTo({
+      animated: true,
+      y: positionY,
+    });
   };
 
   return (
@@ -150,7 +179,7 @@ const Profile: FC<Props> = ({ navigation }) => {
         style={{ flex: 1 }}
       >
         <View style={styles.mainView}>
-          <ScrollView style={styles.mainMargins}>
+          <ScrollView style={styles.mainMargins} ref={scrollViewRef}>
             <View style={[styles.profileImage, styles.justifyContentCenter]}>
               {image}
             </View>
@@ -183,16 +212,23 @@ const Profile: FC<Props> = ({ navigation }) => {
                 {getChildBirthdayLabel()}
               </Text>
               {datePickerIsReady && (
-                <Datepicker
-                  date={
-                    childBirthday.length > 0
-                      ? new Date(childBirthday)
-                      : undefined
-                  }
-                  onChange={(date) => {
-                    setChildBirthday(format(date, Formats.dateISO));
+                <View
+                  onLayout={(event: LayoutChangeEvent) => {
+                    const { layout } = event.nativeEvent;
+                    scrollTo(layout.y);
                   }}
-                />
+                >
+                  <Datepicker
+                    date={
+                      childBirthday.length > 0
+                        ? new Date(childBirthday)
+                        : undefined
+                    }
+                    onChange={(date) => {
+                      setChildBirthday(format(date, Formats.dateISO));
+                    }}
+                  />
+                </View>
               )}
             </View>
           </ScrollView>

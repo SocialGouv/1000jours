@@ -12,7 +12,8 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 
 import LogoMinistere from "../assets/images/Logo ministere.svg";
 import AppLogo from "../assets/images/logo.svg";
-import { Backdrop, Icomoon, IcomoonIcons, Menu } from "../components";
+import { Backdrop, Icomoon, IcomoonIcons } from "../components";
+import Menu from "../components/menu.component";
 import { Text, View } from "../components/Themed";
 import { Sizes } from "../constants";
 import Colors from "../constants/Colors";

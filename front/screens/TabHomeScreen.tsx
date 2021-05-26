@@ -1,21 +1,43 @@
-import { useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { range } from "lodash";
+import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
+import { useEffect } from "react";
 import * as React from "react";
-import { ActivityIndicator, StyleSheet, Text } from "react-native";
+import type { LayoutChangeEvent } from "react-native";
+import { ActivityIndicator, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { CommonText, SecondaryText } from "../components";
+import ErrorMessage from "../components/errorMessage.component";
 import { View } from "../components/Themed";
 import TimelineStep from "../components/timeline/TimlineStep";
+import {
+  FontWeight,
+  Margins,
+  Paddings,
+  Sizes,
+  StorageKeysConstants,
+} from "../constants";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
-import { FontWeight } from "../constants";
-import type { Step, TabHomeParamList } from "../types";
-import { useMatomo } from "matomo-tracker-react-native";
-import { TrackerUtils } from "../utils";
+import type {
+  Step,
+  TabHomeParamList,
+  UserInfos,
+  UserSituation,
+} from "../types";
+import { StorageUtils, TrackerUtils } from "../utils";
+
+export enum UserInfo {
+  projet = "projet",
+  conception = "conception",
+  grossesse = "grossesse",
+  enfant = "enfant",
+  enfants = "enfants",
+}
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList, "listArticles">;
@@ -26,9 +48,15 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   trackScreenView(TrackerUtils.TrackingEvent.HOME);
   const screenTitle = Labels.timeline.title;
   const description = Labels.timeline.description;
-  const ALL_STEPS = gql`
-    query GetAllSteps {
+  const ALL_STEPS_AND_CURRENT = gql`
+    query GetAllSteps($infos: Informations!) {
       etapes(sort: "id") {
+        id
+        nom
+        ordre
+        description
+      }
+      getCurrentEtape(infos: $infos) {
         id
         nom
         ordre
@@ -36,15 +64,85 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
       }
     }
   `;
-  const { loading, error, data } = useQuery(ALL_STEPS);
 
-  if (loading) return <ActivityIndicator size="large" />;
-  if (error) return <Text>{Labels.errorMsg}</Text>;
+  const defaultUserInfos: UserInfos = {
+    conception: false,
+    date: null,
+    enfant: false,
+    enfants: false,
+    grossesse: false,
+    projet: false,
+  };
 
-  const result = data as { etapes: Step[] };
-  const numberOfStepsWithoutTheFirstAndLast = result.etapes.length - 1 - 2;
+  const getUserSituations = () => {
+    void StorageUtils.getObjectValue(
+      StorageKeysConstants.userSituationsKey
+    ).then((data) => {
+      if (data) {
+        const userSituations = JSON.parse(
+          JSON.stringify(data)
+        ) as UserSituation[];
+        const infos: UserInfos = {};
+        userSituations.map((userSituation) => {
+          if (userSituation.id === UserInfo.projet)
+            infos.projet = userSituation.isChecked;
+          if (userSituation.id === UserInfo.conception)
+            infos.conception = userSituation.isChecked;
+          if (userSituation.id === UserInfo.grossesse)
+            infos.grossesse = userSituation.isChecked;
+          if (userSituation.id === UserInfo.enfant)
+            infos.enfant = userSituation.isChecked;
+          if (userSituation.id === UserInfo.enfants)
+            infos.enfants = userSituation.isChecked;
+        });
+        void StorageUtils.getStringValue(
+          StorageKeysConstants.userChildBirthdayKey
+        ).then((date) => {
+          if (date && date.length > 0) infos.date = date;
+          loadSteps({ variables: { infos: infos } });
+        });
+      } else {
+        loadSteps({ variables: { infos: defaultUserInfos } });
+      }
+    });
+  };
+
+  useEffect(() => {
+    getUserSituations();
+  }, []);
+
+  const [loadSteps, { called, loading, error, data }] = useLazyQuery(
+    ALL_STEPS_AND_CURRENT,
+    {
+      variables: {
+        infos: defaultUserInfos,
+      },
+    }
+  );
+
+  const scrollViewRef = React.useRef<ScrollView>(null);
+  const scrollTo = (positionY: number) => {
+    scrollViewRef.current?.scrollTo({
+      animated: true,
+      y: positionY,
+    });
+  };
+
+  if (!called || loading) return <ActivityIndicator size="large" />;
+  if (error) {
+    loadSteps({ variables: { infos: defaultUserInfos } });
+    return <ErrorMessage error={error} />;
+  }
+
+  const result = data as { etapes: Step[]; getCurrentEtape: Step | null };
+  const etapes = result.etapes.map((etape) => ({
+    ...etape,
+    active: result.getCurrentEtape && result.getCurrentEtape.id === etape.id,
+  }));
+  const numberOfStepsWithoutTheFirstAndLast = etapes.length - 1 - 2;
+
   return (
-    <ScrollView style={[styles.mainContainer]}>
+    <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>
       <View>
         <CommonText style={[styles.title]}>{screenTitle}</CommonText>
         <SecondaryText style={[styles.description]}>
@@ -72,15 +170,22 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
             />
           ))}
         </View>
-        {result.etapes.map((step, index) => (
+        {etapes.map((step, index) => (
           <TimelineStep
             order={step.ordre}
             name={step.nom}
             index={index}
-            isTheLast={index === result.etapes.length - 1}
+            isTheLast={index === etapes.length - 1}
             key={index}
+            active={step.active}
             onPress={() => {
               navigation.navigate("listArticles", { step });
+            }}
+            onLayout={(event: LayoutChangeEvent) => {
+              if (step.active) {
+                const { layout } = event.nativeEvent;
+                scrollTo(layout.y);
+              }
             }}
           />
         ))}
@@ -92,14 +197,14 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
   description: {
     color: Colors.commonText,
-    fontSize: 16,
+    fontSize: Sizes.xs,
     fontWeight: FontWeight.medium,
   },
   mainContainer: {
     backgroundColor: "white",
-    paddingLeft: 15,
-    paddingRight: 15,
-    paddingTop: 15,
+    paddingLeft: Paddings.default,
+    paddingRight: Paddings.default,
+    paddingTop: Paddings.default,
   },
   timelineBlock: {
     backgroundColor: "transparent",
@@ -107,43 +212,43 @@ const styles = StyleSheet.create({
     borderColor: Colors.primaryYellow,
     borderStyle: "solid",
     borderTopWidth: 1,
-    height: 100,
+    height: Sizes.timelineBlock,
     marginTop: -1,
   },
   timelineBlockFirst: {
     marginTop: 0,
   },
   timelineBlockLeft: {
-    borderBottomLeftRadius: 50,
+    borderBottomLeftRadius: Sizes.timelineBlock / 2,
     borderLeftWidth: 1,
     borderRightWidth: 0,
-    borderTopLeftRadius: 50,
-    marginLeft: 25,
-    marginRight: 75,
+    borderTopLeftRadius: Sizes.timelineBlock / 2,
+    marginLeft: Sizes.step / 4,
+    marginRight: Sizes.step,
   },
   timelineBlockRight: {
-    borderBottomRightRadius: 50,
+    borderBottomRightRadius: Sizes.timelineBlock / 2,
     borderLeftWidth: 0,
     borderRightWidth: 1,
-    borderTopRightRadius: 50,
-    marginLeft: 75,
-    marginRight: 25,
+    borderTopRightRadius: Sizes.timelineBlock / 2,
+    marginLeft: Sizes.step,
+    marginRight: Sizes.step / 4,
   },
   timelineContainer: {
     flex: 1,
     flexDirection: "column",
   },
   timelineStepContainer: {
-    marginBottom: 80,
+    marginBottom: Sizes.step,
     marginLeft: "5%",
     marginRight: "5%",
-    marginTop: 80,
+    marginTop: Sizes.step,
   },
   title: {
     color: Colors.primaryBlueDark,
-    fontSize: 18,
+    fontSize: Sizes.sm,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: Margins.larger,
   },
 });
 
