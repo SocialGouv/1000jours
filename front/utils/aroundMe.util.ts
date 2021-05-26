@@ -20,7 +20,7 @@ export const searchRegionByPostalCode = async (
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const coordinates: string[] = json.features[0].geometry.coordinates;
     const newRegion = {
-      latitude: Number(coordinates[1]) - AroundMeConstants.LATITUDE_OFFSET,
+      latitude: Number(coordinates[1]),
       latitudeDelta: AroundMeConstants.DEFAULT_LATITUDE_DELTA,
       longitude: Number(coordinates[0]),
       longitudeDelta: AroundMeConstants.DEFAULT_LONGITUDE_DELTA,

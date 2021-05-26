@@ -46,6 +46,7 @@ const TabAroundMeScreen: React.FC = () => {
 
   const onSearchByPostalCodeButtonClick = async () => {
     KeyboardUtils.dismissKeyboard();
+    setShowSnackBar(false);
     await searchByPostalCodeAndGoToNewRegion();
   };
 
@@ -118,7 +119,11 @@ const TabAroundMeScreen: React.FC = () => {
           <Marker coordinate={bottomRightLatLng} pinColor="blue" />
         </MapView>
       </View>
-      <CustomSnackBar visible={showSnackBar} onDismiss={onSnackBarDismiss}>
+      <CustomSnackBar
+        visible={showSnackBar}
+        duration={AroundMeConstants.SNACKBAR_DURATION}
+        onDismiss={onSnackBarDismiss}
+      >
         <CommonText>{Labels.aroundMe.postalCodeNotFound}</CommonText>
       </CustomSnackBar>
     </View>
@@ -145,7 +150,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   mapContainer: {
-    height: "100%",
+    height: "80%",
     width: "100%",
   },
   postalCodeInput: {
