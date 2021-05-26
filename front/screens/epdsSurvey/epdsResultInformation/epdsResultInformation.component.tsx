@@ -16,6 +16,7 @@ import {
 import type { EpdsResultInformationType } from "../../../type";
 import EpdsResultContactParagraph from "./epdsResultContactParagraph.component";
 import EpdsResultSimpleParagraph from "./epdsResultSimpleParagraph.component";
+import EpdsResultUrlParagraph from "./epdsResultUrlParagraph.component";
 
 interface EpdsResultInformationProps {
   leftBorderColor: string;
@@ -39,15 +40,16 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
   const renderParagraph = (paragraph: any) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return paragraph.contacts ? (
-      paragraph.contacts.map((contact: any, contactIndex: number) => (
-        <View key={contactIndex}>
-          <EpdsResultContactParagraph
-            paragraphTitle={contactIndex === 0 && paragraph.title}
-            paragraph={contact}
-            titleColor={leftBorderColor}
-          />
-        </View>
-      ))
+      <EpdsResultContactParagraph
+        paragraphTitle={paragraph.title}
+        contacts={paragraph.contacts}
+        titleColor={leftBorderColor}
+      />
+    ) : paragraph.urls ? (
+      <EpdsResultUrlParagraph
+        paragraphTitle={paragraph.title}
+        urls={paragraph.urls}
+      />
     ) : (
       <EpdsResultSimpleParagraph paragraph={paragraph} />
     );

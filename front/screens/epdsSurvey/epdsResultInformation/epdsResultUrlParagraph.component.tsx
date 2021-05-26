@@ -6,26 +6,26 @@ import { View } from "../../../components/Themed";
 import { Colors, FontWeight, Margins, Sizes } from "../../../constants";
 
 interface EpdsResultUrlParagraphProps {
-  urlsTitle?: string;
+  paragraphTitle?: string;
   urls: string[];
 }
 
 const EpdsResultUrlParagraph: React.FC<EpdsResultUrlParagraphProps> = ({
-  urlsTitle,
+  paragraphTitle,
   urls,
 }) => {
-  const titleStyle = [styles.urlsTitle, { fontSize: Sizes.xs }];
+  const titleStyle = [styles.paragraphTitle, { fontSize: Sizes.xs }];
   return (
     <View style={styles.itemBorder}>
-      {urlsTitle && urlsTitle.length > 0 && (
-        <CommonText style={titleStyle}>{urlsTitle}</CommonText>
+      {paragraphTitle && paragraphTitle.length > 0 && (
+        <CommonText style={titleStyle}>{paragraphTitle}</CommonText>
       )}
       {urls.map((url, index) => (
         <View key={index}>
           <TouchableOpacity
             onPress={async () => Linking.openURL(`http://www.${url}`)}
           >
-            <CommonText style={[styles.urlDescription, styles.underline]}>
+            <CommonText style={[styles.urls, styles.underline]}>
               {url}
             </CommonText>
           </TouchableOpacity>
@@ -45,16 +45,16 @@ const styles = StyleSheet.create({
     paddingBottom: Margins.smaller,
     paddingTop: Margins.smallest,
   },
-  underline: { textDecorationLine: "underline" },
-  urlDescription: {
-    color: Colors.primaryBlue,
-    fontSize: Sizes.xxs,
-    lineHeight: Sizes.mmd,
-  },
-  urlsTitle: {
+  paragraphTitle: {
     color: Colors.commonText,
     fontSize: Sizes.xxs,
     fontWeight: FontWeight.bold,
+    lineHeight: Sizes.mmd,
+  },
+  underline: { textDecorationLine: "underline" },
+  urls: {
+    color: Colors.primaryBlue,
+    fontSize: Sizes.xxs,
     lineHeight: Sizes.mmd,
   },
 });
