@@ -9,8 +9,8 @@ import {
   CommonText,
   CustomSnackBar,
   SecondaryText,
-} from "../components";
-import { View } from "../components/Themed";
+} from "../../components";
+import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
   Colors,
@@ -19,8 +19,10 @@ import {
   Margins,
   Paddings,
   Sizes,
-} from "../constants";
-import { AroundMeUtils, KeyboardUtils } from "../utils";
+} from "../../constants";
+import type { AddressDetailsType } from "../../type";
+import { AroundMeUtils, KeyboardUtils } from "../../utils";
+import AddressDetails from "./addressDetails.component";
 
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
@@ -32,6 +34,8 @@ const TabAroundMeScreen: React.FC = () => {
     AroundMeConstants.COORDINATE_PARIS,
   ]);
   const [showSnackBar, setShowSnackBar] = useState(false);
+  const [displayAddressDetails, setDisplayAddressDetails] = useState(false);
+  const [addressDetails, setAddressDetails] = useState<AddressDetailsType>();
 
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
@@ -44,6 +48,7 @@ const TabAroundMeScreen: React.FC = () => {
   const onSearchByPostalCodeButtonClick = async () => {
     KeyboardUtils.dismissKeyboard();
     setShowSnackBar(false);
+    setDisplayAddressDetails(false);
     await searchByPostalCodeAndGoToNewRegion();
   };
 
@@ -80,6 +85,17 @@ const TabAroundMeScreen: React.FC = () => {
     setShowSnackBar(false);
   };
 
+  const onMarkerClick = (markerIndex: number) => {
+    const details: AddressDetailsType = {
+      accessibilityInfo: "Accessibilité simple",
+      phoneNumber: "01 23 45 67 89",
+      postalAddress: "25 rue du Sergent Bauchat, 75012 Paris",
+      professionalName: `Professionnel n°${markerIndex}`,
+    };
+    setAddressDetails(details);
+    setDisplayAddressDetails(true);
+  };
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.topContainer}>
@@ -107,8 +123,11 @@ const TabAroundMeScreen: React.FC = () => {
           action={onSearchByPostalCodeButtonClick}
         />
       </View>
-      <View style={styles.mapContainer}>
+      <View style={styles.map}>
         <MapView
+          onTouchEnd={() => {
+            setDisplayAddressDetails(false);
+          }}
           ref={setMapViewRef}
           provider={PROVIDER_DEFAULT}
           style={styles.map}
@@ -117,11 +136,20 @@ const TabAroundMeScreen: React.FC = () => {
         >
           {markersArray.map((marker, markerIndex) => (
             <View key={markerIndex}>
-              <Marker coordinate={marker} pinColor="red" />
+              <Marker
+                coordinate={marker}
+                pinColor="red"
+                onPress={() => {
+                  onMarkerClick(markerIndex);
+                }}
+              ></Marker>
             </View>
           ))}
         </MapView>
       </View>
+      {displayAddressDetails && addressDetails && (
+        <AddressDetails details={addressDetails} />
+      )}
       <CustomSnackBar
         visible={showSnackBar}
         duration={AroundMeConstants.SNACKBAR_DURATION}
@@ -134,6 +162,14 @@ const TabAroundMeScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  addressDetails: {
+    bottom: 0,
+    left: 0,
+    marginHorizontal: Margins.default,
+    marginVertical: Margins.smaller,
+    position: "absolute",
+    right: 0,
+  },
   callButton: {
     marginHorizontal: Margins.smallest,
   },
@@ -150,11 +186,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  mapContainer: {
-    height: "80%",
-    width: "100%",
+    flex: 1,
   },
   postalCodeInput: {
     backgroundColor: Colors.cardGrey,

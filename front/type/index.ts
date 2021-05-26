@@ -1,3 +1,4 @@
+import { AddressDetailsType } from "./aroundMe.types";
 import { DataFetchingType } from "./dataFetching.types";
 import {
   EpdsAnswer,
@@ -12,6 +13,7 @@ import {
 } from "./epdsSurvey.types";
 
 export {
+  AddressDetailsType,
   DataFetchingType,
   EpdsAnswer,
   EpdsGenders,
