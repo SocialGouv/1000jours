@@ -32,7 +32,7 @@ export const searchRegionByPostalCode = async (
   }
 };
 
-export const getCornerLatLng = (
+export const getLatLngPoint = (
   region: Region,
   cornerType: AroundMeConstants.LatLngPointType
 ): LatLng => {
@@ -40,6 +40,11 @@ export const getCornerLatLng = (
   const halfLongitude = region.longitudeDelta / 2;
 
   switch (cornerType) {
+    case AroundMeConstants.LatLngPointType.center:
+      return {
+        latitude: region.latitude,
+        longitude: region.longitude,
+      };
     case AroundMeConstants.LatLngPointType.topLeft:
       return {
         latitude: region.latitude + halftLatitude,

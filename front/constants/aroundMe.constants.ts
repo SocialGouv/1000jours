@@ -22,6 +22,7 @@ export const getApiUrlWithParam = (postalCode: string): string =>
 export enum LatLngPointType {
   topLeft = "topLeft",
   bottomRight = "bottomRight",
+  center = "center",
 }
 
 export const SNACKBAR_DURATION = 3000;

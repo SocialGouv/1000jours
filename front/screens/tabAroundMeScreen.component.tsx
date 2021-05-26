@@ -25,15 +25,12 @@ import { AroundMeUtils, KeyboardUtils } from "../utils";
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
   const [postalCodeInput, setPostalCodeInput] = useState("");
-  const [topLeftLatLng, setTopLeftLatLng] = useState<LatLng>(
-    AroundMeConstants.COORDINATE_PARIS
-  );
-  const [bottomRightLatLng, setBottomRightLatLng] = useState<LatLng>(
-    AroundMeConstants.COORDINATE_PARIS
-  );
   const [region, setRegion] = useState<Region>(
     AroundMeConstants.INITIAL_REGION
   );
+  const [markersArray, setMarkersArray] = useState<LatLng[]>([
+    AroundMeConstants.COORDINATE_PARIS,
+  ]);
   const [showSnackBar, setShowSnackBar] = useState(false);
 
   const setMapViewRef = (ref: MapView) => {
@@ -57,18 +54,21 @@ const TabAroundMeScreen: React.FC = () => {
 
     if (regionData.regionIsFetched && regionData.newRegion) {
       const newRegion = regionData.newRegion;
-      setTopLeftLatLng(
-        AroundMeUtils.getCornerLatLng(
+      const newLatLngs = [
+        AroundMeUtils.getLatLngPoint(
+          newRegion,
+          AroundMeConstants.LatLngPointType.center
+        ),
+        AroundMeUtils.getLatLngPoint(
           newRegion,
           AroundMeConstants.LatLngPointType.topLeft
-        )
-      );
-      setBottomRightLatLng(
-        AroundMeUtils.getCornerLatLng(
+        ),
+        AroundMeUtils.getLatLngPoint(
           newRegion,
           AroundMeConstants.LatLngPointType.bottomRight
-        )
-      );
+        ),
+      ];
+      setMarkersArray(newLatLngs);
       setRegion(newRegion);
       mapRef.current?.animateToRegion(newRegion);
     } else {
@@ -115,8 +115,11 @@ const TabAroundMeScreen: React.FC = () => {
           initialRegion={region}
           onRegionChange={onRegionChange}
         >
-          <Marker coordinate={topLeftLatLng} pinColor="red" />
-          <Marker coordinate={bottomRightLatLng} pinColor="blue" />
+          {markersArray.map((marker, markerIndex) => (
+            <View key={markerIndex}>
+              <Marker coordinate={marker} pinColor="red" />
+            </View>
+          ))}
         </MapView>
       </View>
       <CustomSnackBar
