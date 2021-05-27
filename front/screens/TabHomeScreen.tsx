@@ -74,41 +74,26 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     projet: false,
   };
 
-  const getUserSituations = () => {
-    void StorageUtils.getObjectValue(
+  const getUserSituations = async () => {
+    const userSituations = (await StorageUtils.getObjectValue(
       StorageKeysConstants.userSituationsKey
-    ).then((data) => {
-      if (data) {
-        const userSituations = JSON.parse(
-          JSON.stringify(data)
-        ) as UserSituation[];
-        const infos: UserInfos = {};
-        userSituations.map((userSituation) => {
-          if (userSituation.id === UserInfo.projet)
-            infos.projet = userSituation.isChecked;
-          if (userSituation.id === UserInfo.conception)
-            infos.conception = userSituation.isChecked;
-          if (userSituation.id === UserInfo.grossesse)
-            infos.grossesse = userSituation.isChecked;
-          if (userSituation.id === UserInfo.enfant)
-            infos.enfant = userSituation.isChecked;
-          if (userSituation.id === UserInfo.enfants)
-            infos.enfants = userSituation.isChecked;
-        });
-        void StorageUtils.getStringValue(
-          StorageKeysConstants.userChildBirthdayKey
-        ).then((date) => {
-          if (date && date.length > 0) infos.date = date;
-          loadSteps({ variables: { infos: infos } });
-        });
-      } else {
-        loadSteps({ variables: { infos: defaultUserInfos } });
-      }
+    )) as UserSituation[] | null;
+    const date = await StorageUtils.getStringValue(
+      StorageKeysConstants.userChildBirthdayKey
+    );
+    const infos: UserInfos = defaultUserInfos;
+
+    userSituations?.map((userSituation) => {
+      const id = userSituation.id as keyof typeof UserInfo;
+      infos[id] = userSituation.isChecked;
     });
+    if (date && date.length > 0) infos.date = date;
+
+    loadSteps({ variables: { infos: infos } });
   };
 
   useEffect(() => {
-    getUserSituations();
+    void getUserSituations();
   }, []);
 
   const [loadSteps, { called, loading, error, data }] = useLazyQuery(

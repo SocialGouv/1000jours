@@ -12,11 +12,11 @@ interface Props {
 
 const ErrorMessage: React.FC<Props> = ({ error }) => {
   const createAlertMessage = () => {
-    const messages = error.graphQLErrors.map((graphqlError) => {
-      return `${graphqlError.message}`;
-    });
+    const message = error.graphQLErrors
+      .map((graphqlError) => `${graphqlError.message}`)
+      .join("\n");
 
-    Alert.alert(Labels.warning, messages.toString(), [{ text: "OK" }]);
+    Alert.alert(Labels.warning, message, [{ text: "OK" }]);
   };
 
   useEffect(() => {
