@@ -1,3 +1,15 @@
+# [1.31.0](https://github.com/SocialGouv/1000jours/compare/v1.30.1...v1.31.0) (2021-05-27)
+
+
+### Bug Fixes
+
+* **ci:** upgrade deps ([#234](https://github.com/SocialGouv/1000jours/issues/234)) ([bca8edc](https://github.com/SocialGouv/1000jours/commit/bca8edca3fc79caaa8eef2e75d77642a6900499d))
+
+
+### Features
+
+* 🎸 Affiche ma situation sur la timeline ([#231](https://github.com/SocialGouv/1000jours/issues/231)) ([e9363ea](https://github.com/SocialGouv/1000jours/commit/e9363ea9c38cf48e21fb6acc6012a84261e9b9f1)), closes [#30](https://github.com/SocialGouv/1000jours/issues/30) [#30](https://github.com/SocialGouv/1000jours/issues/30)
+
 ## [1.30.1](https://github.com/SocialGouv/1000jours/compare/v1.30.0...v1.30.1) (2021-05-26)
 
 
