@@ -9,8 +9,8 @@ import {
   CommonText,
   CustomSnackBar,
   SecondaryText,
+  View,
 } from "../../components";
-import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
   Colors,
@@ -88,9 +88,11 @@ const TabAroundMeScreen: React.FC = () => {
   const onMarkerClick = (markerIndex: number) => {
     const details: AddressDetailsType = {
       accessibilityInfo: "Accessibilité simple",
+      emailAddress: "professionnel@email.com",
       phoneNumber: "01 23 45 67 89",
       postalAddress: "25 rue du Sergent Bauchat, 75012 Paris",
       professionalName: `Professionnel n°${markerIndex}`,
+      website: "www.professionnel.com",
     };
     setAddressDetails(details);
     setDisplayAddressDetails(true);

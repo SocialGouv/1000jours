@@ -3,6 +3,7 @@ import * as AssestUtils from "./asset.util";
 import * as DataFetchingUtils from "./dataFetching.util";
 import * as EpdsSurveyUtils from "./epdsSurvey.util";
 import * as KeyboardUtils from "./keyboard.util";
+import * as LinkingUtils from "./linking.util";
 import * as StorageUtils from "./storage.util";
 import * as TrackerUtils from "./tracker.util";
 
@@ -12,6 +13,7 @@ export {
   DataFetchingUtils,
   EpdsSurveyUtils,
   KeyboardUtils,
+  LinkingUtils,
   StorageUtils,
   TrackerUtils,
 };
