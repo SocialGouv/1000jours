@@ -9,7 +9,7 @@ import { WebView } from "react-native-webview";
 
 import { FontWeight, Paddings } from "../constants";
 import { AssestUtils } from "../utils";
-import { Button } from ".";
+import Button from "./form/Button";
 import { View } from "./Themed";
 
 interface Props {

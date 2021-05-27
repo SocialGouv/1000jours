@@ -1,9 +1,11 @@
 import type { FC } from "react";
 import * as React from "react";
+import type { LayoutChangeEvent } from "react-native";
 import { StyleSheet } from "react-native";
 import { Button as RNEButton } from "react-native-elements";
 import type { IconNode } from "react-native-elements/dist/icons/Icon";
 
+import { Margins, Paddings, Sizes } from "../../constants";
 import Colors from "../../constants/Colors";
 import { IcomoonIcons } from "../icomoon.component";
 import { CommonText } from "../StyledText";
@@ -11,43 +13,91 @@ import { View } from "../Themed";
 import StepIcon from "./StepIcon";
 
 interface TimelineStepProps {
+  active: boolean | null;
   order: number;
   name: string;
   index: number;
   isTheLast: boolean;
   onPress: () => void;
+  onLayout?: (event: LayoutChangeEvent) => void;
 }
 
 const TimelineStep: FC<TimelineStepProps> = ({
+  active,
   order,
   name,
   index: listIndex,
   isTheLast,
   onPress,
+  onLayout,
 }) => {
   const stepIcons: IconNode[] = [
-    <StepIcon name={IcomoonIcons.stepProjetParent} />,
-    <StepIcon name={IcomoonIcons.stepConception} />,
-    <StepIcon name={IcomoonIcons.stepDebutDeGrossesse} />,
-    <StepIcon name={IcomoonIcons.stepFinDeGrossesse} />,
-    <StepIcon name={IcomoonIcons.stepAccouchement} />,
-    <StepIcon name={IcomoonIcons.step4PremiersMois} />,
-    <StepIcon name={IcomoonIcons.step4MoisA1An} />,
-    <StepIcon name={IcomoonIcons.step1A2Ans} />,
+    <StepIcon
+      name={
+        active
+          ? IcomoonIcons.stepProjetParentActive
+          : IcomoonIcons.stepProjetParent
+      }
+    />,
+    <StepIcon
+      name={
+        active ? IcomoonIcons.stepConceptionActive : IcomoonIcons.stepConception
+      }
+    />,
+    <StepIcon
+      name={
+        active
+          ? IcomoonIcons.stepDebutDeGrossesseActive
+          : IcomoonIcons.stepDebutDeGrossesse
+      }
+    />,
+    <StepIcon
+      name={
+        active
+          ? IcomoonIcons.stepFinDeGrossesseActive
+          : IcomoonIcons.stepFinDeGrossesse
+      }
+    />,
+    <StepIcon
+      name={
+        active
+          ? IcomoonIcons.stepAccouchementActive
+          : IcomoonIcons.stepAccouchement
+      }
+    />,
+    <StepIcon
+      name={
+        active
+          ? IcomoonIcons.step4PremiersMoisActive
+          : IcomoonIcons.step4PremiersMois
+      }
+    />,
+    <StepIcon
+      name={
+        active ? IcomoonIcons.step4MoisA1AnActive : IcomoonIcons.step4MoisA1An
+      }
+    />,
+    <StepIcon
+      name={active ? IcomoonIcons.step1A2AnsActive : IcomoonIcons.step1A2Ans}
+    />,
   ];
 
   const getStepStyles = (index: number, isLast: boolean) => {
-    const initialOffset = 10;
-    const verticalOffset = 100;
+    const initialOffset = Paddings.light;
+    const verticalOffset = Paddings.stepOffset;
     if (index === 0) {
-      return [styles.step, { marginTop: initialOffset - 50 }, styles.stepLeft];
+      return [
+        styles.step,
+        { marginTop: initialOffset - verticalOffset / 2 },
+        styles.stepLeft,
+      ];
     } else {
       const marginTop =
         initialOffset -
         index +
         1 +
         verticalOffset * (index - 1) -
-        (isLast ? 50 : 0);
+        (isLast ? verticalOffset / 2 : 0);
       return [
         styles.step,
         { marginTop: marginTop },
@@ -64,7 +114,7 @@ const TimelineStep: FC<TimelineStepProps> = ({
   };
 
   return (
-    <View style={getStepStyles(listIndex, isTheLast)}>
+    <View style={getStepStyles(listIndex, isTheLast)} onLayout={onLayout}>
       <View style={[styles.stepIconContainer]}>
         <RNEButton
           icon={stepIcons[order - 1]}
@@ -90,7 +140,7 @@ const TimelineStep: FC<TimelineStepProps> = ({
   );
 };
 
-const sizeOfStepNum = 45;
+const sizeOfStepNum = Sizes.xxxxl;
 const styles = StyleSheet.create({
   justifyContentCenter: {
     alignItems: "center",
@@ -100,24 +150,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "transparent",
     flex: 1,
-    height: 80,
+    height: Sizes.step,
     position: "absolute",
   },
   stepFirst: {
-    marginBottom: 60,
+    marginBottom: Margins.step,
   },
   stepIconButton: {
     borderColor: Colors.primaryYellow,
-    borderRadius: 40,
+    borderRadius: Sizes.step / 2,
     borderWidth: 1,
-    height: 80,
-    width: 80,
+    height: Sizes.step,
+    width: Sizes.step,
   },
   stepIconContainer: {
     backgroundColor: "white",
   },
   stepLast: {
-    marginTop: 60,
+    marginTop: Margins.step,
   },
   stepLeft: {
     flexDirection: "row",
@@ -128,7 +178,7 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlueLight,
     fontSize: sizeOfStepNum,
     fontWeight: "bold",
-    paddingHorizontal: 5,
+    paddingHorizontal: Paddings.smallest,
     position: "absolute",
     zIndex: -1,
   },
@@ -145,15 +195,15 @@ const styles = StyleSheet.create({
   },
   stepTitle: {
     color: Colors.primaryBlueDark,
-    fontSize: 13,
+    fontSize: Sizes.xxs,
   },
   stepTitleContainer: {
     alignSelf: "center",
     backgroundColor: "transparent",
     height: sizeOfStepNum,
     justifyContent: "center",
-    paddingLeft: 20,
-    paddingRight: 10,
+    paddingLeft: Paddings.default,
+    paddingRight: Paddings.light,
     position: "relative",
   },
 });
