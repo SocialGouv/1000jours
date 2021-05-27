@@ -1,3 +1,5 @@
+import type { AroundMeConstants } from "../constants";
+
 export interface AddressDetailsType {
   professionalName: string;
   postalAddress: string;
@@ -5,4 +7,5 @@ export interface AddressDetailsType {
   emailAddress: string;
   website: string;
   accessibilityInfo: string;
+  poiType: AroundMeConstants.PoiTypeEnum;
 }

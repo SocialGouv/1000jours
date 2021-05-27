@@ -90,6 +90,7 @@ const TabAroundMeScreen: React.FC = () => {
       accessibilityInfo: "Accessibilité simple",
       emailAddress: "professionnel@email.com",
       phoneNumber: "01 23 45 67 89",
+      poiType: AroundMeConstants.PoiTypeEnum.healthProfessional,
       postalAddress: "25 rue du Sergent Bauchat, 75012 Paris",
       professionalName: `Professionnel n°${markerIndex}`,
       website: "www.professionnel.com",

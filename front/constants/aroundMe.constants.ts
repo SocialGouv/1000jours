@@ -26,3 +26,8 @@ export enum LatLngPointType {
 }
 
 export const SNACKBAR_DURATION = 3000;
+
+export enum PoiTypeEnum {
+  healthProfessional = "healthProfessional",
+  healthStructure = "healthStructure",
+}
