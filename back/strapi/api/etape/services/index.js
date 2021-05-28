@@ -28,9 +28,13 @@ const calcGrossesse = (terme) => {
   const grossesseDebut = subWeeks(terme, GROSSESSE_TOTAL_SEMAINES_SA);
 
   if (isBefore(now, grossesseDebut)) {
-    throw new Error("La date que vous avez renseignée est trop éloignée dans le futur");
+    throw new Error(
+      "La date que vous avez renseignée est trop éloignée dans le futur"
+    );
   } else if (isBefore(terme, now)) {
-    throw new Error("La date que vous avez renseignée ne peut pas être dans le passé");
+    throw new Error(
+      "La date que vous avez renseignée ne peut pas être dans le passé"
+    );
   }
 
   const trimestre2 = addWeeks(
@@ -47,11 +51,15 @@ const calcEnfant = (naissance) => {
   const now = new Date();
 
   if (isBefore(now, naissance)) {
-    throw new Error("La date que vous avez renseignée ne peut pas être dans le futur");
+    throw new Error(
+      "La date que vous avez renseignée ne peut pas être dans le futur"
+    );
   }
 
   if (isAfter(now, addYears(naissance, 2))) {
-    throw new Error("Selon la date que vous avez renseignée, l'enfant est âgé de deux ans ou plus");
+    throw new Error(
+      "Selon la date que vous avez renseignée, l'enfant est âgé de deux ans ou plus"
+    );
   }
 
   if (isAfter(now, addYears(naissance, 1))) {

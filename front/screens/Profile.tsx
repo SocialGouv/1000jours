@@ -40,7 +40,6 @@ const Profile: FC<Props> = ({ navigation }) => {
   const { trackScreenView } = useMatomo();
   trackScreenView(TrackerUtils.TrackingEvent.PROFILE);
   const image = <ProfileImage />;
-
   const defaultUserContext: UserContext = {
     childBirthday: null,
     situations: [

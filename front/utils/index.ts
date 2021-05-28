@@ -5,6 +5,7 @@ import * as EpdsSurveyUtils from "./epdsSurvey.util";
 import * as KeyboardUtils from "./keyboard.util";
 import * as StorageUtils from "./storage.util";
 import * as TrackerUtils from "./tracker.util";
+import * as LoggingUtils from "./logging.util";
 
 export {
   AroundMeUtils,
@@ -14,4 +15,5 @@ export {
   KeyboardUtils,
   StorageUtils,
   TrackerUtils,
+  LoggingUtils,
 };
