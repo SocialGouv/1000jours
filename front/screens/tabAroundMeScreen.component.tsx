@@ -54,7 +54,11 @@ const TabAroundMeScreen: React.FC = () => {
         const fetchedData = (data as {
           cartographiePois: CartographiePoisFromDB[];
         }).cartographiePois;
-        setPoisArray(fetchedData.length > 0 ? fetchedData : []);
+        setPoisArray(
+          fetchedData.length > 0
+            ? fetchedData.slice(0, AroundMeConstants.NUMBER_MAX_MARKERS_ON_MAP)
+            : []
+        );
         if (fetchedData.length === 0) {
           showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
         }
