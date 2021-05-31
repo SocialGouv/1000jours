@@ -1,7 +1,7 @@
 "use strict";
 
 const search = async (perimetre) => {
-  if (!perimetre || perimetre.length !== 4) {
+  if (!perimetre) {
     throw new Error("missing perimetre [long1, lat1, long2, lat2]");
   }
   if (perimetre.length !== 4) {
@@ -9,9 +9,6 @@ const search = async (perimetre) => {
       "wrong number of arguments for perimetre [long1, lat1, long2, lat2]"
     );
   }
-
-  if (!perimetre || perimetre.length !== 4)
-    return context.badRequest("missing perimetre [long1, lat1, long2, lat2]");
 
   const [long1, lat1, long2, lat2] = perimetre;
 
