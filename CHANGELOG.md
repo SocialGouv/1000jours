@@ -1,3 +1,10 @@
+# [1.33.0](https://github.com/SocialGouv/1000jours/compare/v1.32.1...v1.33.0) (2021-05-31)
+
+
+### Features
+
+* **carto:** Ajoute le géocoding des adresses de points d'intérêt ([#243](https://github.com/SocialGouv/1000jours/issues/243)) refs [#219](https://github.com/SocialGouv/1000jours/issues/219) ([e19233e](https://github.com/SocialGouv/1000jours/commit/e19233eda47e968997f9e407c4a1d2b12e57c926))
+
 ## [1.32.1](https://github.com/SocialGouv/1000jours/compare/v1.32.0...v1.32.1) (2021-05-31)
 
 
