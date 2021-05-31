@@ -31,12 +31,12 @@ const TabAroundMeScreen: React.FC = () => {
   const [getPoisByPostalCode, { data }] = useLazyQuery(
     DatabaseQueries.AROUNDME_POIS_BY_POSTALCODE
   );
-  const queryParams = { fetchPolicy: "network-only" };
   const [region, setRegion] = useState<Region>(
     AroundMeConstants.INITIAL_REGION
   );
   const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
   const [showSnackBar, setShowSnackBar] = useState(false);
+  const [snackBarMessage, setSnackBarMessage] = useState("");
   const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] = useState(
     false
   ); // Variable utilisée pour trigger le useEffect lors du clic sur le bouton Rechercher
@@ -46,9 +46,8 @@ const TabAroundMeScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    if (postalCodeInput.length == AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
+    if (postalCodeInput.length === AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
       getPoisByPostalCode({
-        ...queryParams,
         variables: { codePostal: postalCodeInput },
       });
       if (data) {
@@ -56,6 +55,9 @@ const TabAroundMeScreen: React.FC = () => {
           cartographiePois: CartographiePoisFromDB[];
         }).cartographiePois;
         setPoisArray(fetchedData.length > 0 ? fetchedData : []);
+        if (fetchedData.length === 0) {
+          showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
+        }
       }
     }
   }, [postalCodeInput, triggerSearchByPostalCode]);
@@ -81,8 +83,13 @@ const TabAroundMeScreen: React.FC = () => {
       setRegion(newRegion);
       mapRef.current?.animateToRegion(newRegion);
     } else {
-      setShowSnackBar(true);
+      showSnackBarWithMessage(Labels.aroundMe.postalCodeNotFound);
     }
+  };
+
+  const showSnackBarWithMessage = (message: string) => {
+    setSnackBarMessage(message);
+    setShowSnackBar(true);
   };
 
   const onSnackBarDismiss = () => {
@@ -142,7 +149,7 @@ const TabAroundMeScreen: React.FC = () => {
         duration={AroundMeConstants.SNACKBAR_DURATION}
         onDismiss={onSnackBarDismiss}
       >
-        <CommonText>{Labels.aroundMe.postalCodeNotFound}</CommonText>
+        <CommonText>{snackBarMessage}</CommonText>
       </CustomSnackBar>
     </View>
   );

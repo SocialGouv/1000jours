@@ -4,6 +4,7 @@ export default {
   aroundMe: {
     instruction:
       "Trouvez tous les professionnels autour de vous qui pourront vous aider dans votre rôle de parents.",
+    noAddressFound: "Aucune adresse n'a été trouvée dans cette zone",
     postalCodeInputPlaceholder: "Rechercher par code postal",
     postalCodeNotFound: "Le code postal que vous recherchez n'a pas été trouvé",
     searchButton: "Rechercher",
