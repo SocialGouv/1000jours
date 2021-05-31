@@ -2,6 +2,7 @@
 
 const { attributes } = require("./cartographie-poi.settings");
 const CartographieCategoriesService = require("../../cartographie-categories/services");
+const CartographieGeocodeService = require("../../cartographie-geocode/services");
 
 const beforeSave = async (data) => {
   Object.keys(attributes).forEach((key) => {
@@ -13,6 +14,11 @@ const beforeSave = async (data) => {
   const categorie = CartographieCategoriesService.getCategorie(data.type);
   if (categorie) {
     data.cartographie_categorie = categorie;
+  }
+
+  const geocode = await CartographieGeocodeService.geocodeData(data);
+  if (geocode) {
+    Object.assign(data, geocode);
   }
 };
 
