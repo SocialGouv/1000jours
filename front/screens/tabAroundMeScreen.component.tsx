@@ -1,8 +1,8 @@
 import { useLazyQuery } from "@apollo/client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as React from "react";
-import { ActivityIndicator, StyleSheet, TextInput } from "react-native";
-import type { LatLng, Region } from "react-native-maps";
+import { StyleSheet, TextInput } from "react-native";
+import type { Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import {
@@ -22,22 +22,43 @@ import {
   Paddings,
   Sizes,
 } from "../constants";
+import type { CartographiePoisFromDB } from "../type";
 import { AroundMeUtils, KeyboardUtils } from "../utils";
 
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
   const [postalCodeInput, setPostalCodeInput] = useState("");
+  const [getPoisByPostalCode, { data }] = useLazyQuery(
+    DatabaseQueries.AROUNDME_POIS_BY_POSTALCODE
+  );
+  const queryParams = { fetchPolicy: "network-only" };
   const [region, setRegion] = useState<Region>(
     AroundMeConstants.INITIAL_REGION
   );
-  const [markersArray, setMarkersArray] = useState<LatLng[]>([
-    AroundMeConstants.COORDINATE_PARIS,
-  ]);
+  const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
   const [showSnackBar, setShowSnackBar] = useState(false);
+  const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] = useState(
+    false
+  ); // Variable utilisée pour trigger le useEffect lors du clic sur le bouton Rechercher
 
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
   };
+
+  useEffect(() => {
+    if (postalCodeInput.length == AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
+      getPoisByPostalCode({
+        ...queryParams,
+        variables: { codePostal: postalCodeInput },
+      });
+      if (data) {
+        const fetchedData = (data as {
+          cartographiePois: CartographiePoisFromDB[];
+        }).cartographiePois;
+        setPoisArray(fetchedData.length > 0 ? fetchedData : []);
+      }
+    }
+  }, [postalCodeInput, triggerSearchByPostalCode]);
 
   const onRegionChange = (newRegion: Region) => {
     setRegion(newRegion);
@@ -49,46 +70,16 @@ const TabAroundMeScreen: React.FC = () => {
     await searchByPostalCodeAndGoToNewRegion();
   };
 
-  // const getPoisByPostalCode = () => {
-  const [getPoisByPostalCode, { loading, data }] = useLazyQuery(
-    DatabaseQueries.AROUNDME_POIS_BY_POSTALCODE
-  );
-
-  // if (loading) return <ActivityIndicator size="large" />;
-  console.log(data);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  // };
-  // await addReponseQuery({
-  //   variables: { compteur: newCounter, genre: genderValue, score: result },
-  // });
-
   const searchByPostalCodeAndGoToNewRegion = async () => {
     const regionData = await AroundMeUtils.searchRegionByPostalCode(
       postalCodeInput
     );
 
     if (regionData.regionIsFetched && regionData.newRegion) {
+      setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
       const newRegion = regionData.newRegion;
-      const newLatLngs = [
-        AroundMeUtils.getLatLngPoint(
-          newRegion,
-          AroundMeConstants.LatLngPointType.center
-        ),
-        AroundMeUtils.getLatLngPoint(
-          newRegion,
-          AroundMeConstants.LatLngPointType.topLeft
-        ),
-        AroundMeUtils.getLatLngPoint(
-          newRegion,
-          AroundMeConstants.LatLngPointType.bottomRight
-        ),
-      ];
-      setMarkersArray(newLatLngs);
       setRegion(newRegion);
       mapRef.current?.animateToRegion(newRegion);
-      getPoisByPostalCode({
-        variables: { postalCode: postalCodeInput },
-      });
     } else {
       setShowSnackBar(true);
     }
@@ -133,9 +124,15 @@ const TabAroundMeScreen: React.FC = () => {
           initialRegion={region}
           onRegionChange={onRegionChange}
         >
-          {markersArray.map((marker, markerIndex) => (
-            <View key={markerIndex}>
-              <Marker coordinate={marker} pinColor="red" />
+          {poisArray.map((poi, poiIndex) => (
+            <View key={poiIndex}>
+              <Marker
+                coordinate={{
+                  latitude: Number(poi.geocode_position_latitude),
+                  longitude: Number(poi.geocode_position_longitude),
+                }}
+                pinColor="red"
+              />
             </View>
           ))}
         </MapView>

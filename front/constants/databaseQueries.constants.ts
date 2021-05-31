@@ -36,14 +36,14 @@ export const AROUNDME_POIS_BY_POSTALCODE = gql`
       cartographie_categorie
       type
       nom
-      adresse
-      code_postal
-      commune
+      geocode_adresse
+      geocode_code_postal
+      geocode_commune
       telephone
       courriel
       site_internet
-      position_latitude
-      position_longitude
+      geocode_position_latitude
+      geocode_position_longitude
     }
   }
 `;
