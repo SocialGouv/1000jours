@@ -1,3 +1,10 @@
+# [1.32.0](https://github.com/SocialGouv/1000jours/compare/v1.31.0...v1.32.0) (2021-05-31)
+
+
+### Features
+
+* **carto:** Ajoute les POIs dans le backoffice ([#241](https://github.com/SocialGouv/1000jours/issues/241)) refs [#219](https://github.com/SocialGouv/1000jours/issues/219) ([f03ce7b](https://github.com/SocialGouv/1000jours/commit/f03ce7b8cb09f4c748fa109b79b71fb1d8c2d4e4))
+
 # [1.31.0](https://github.com/SocialGouv/1000jours/compare/v1.30.1...v1.31.0) (2021-05-27)
 
 
