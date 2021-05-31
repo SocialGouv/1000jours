@@ -60,16 +60,20 @@ const epdsContacts = [
   },
 ];
 
-const sitesEnLignePasBien = {
-  description:
-    "agirpourbébé.fr, monenfant.fr, mpedia.fr ; ameli.fr, psychom.fr, maman-blues.fr",
+const sitesEnLigneBienEtMoinsBien = {
   title: "Les sites en ligne d’accompagnement à la parentalité et de santé",
+  urls: [
+    "agir-pour-bebe.fr",
+    "monenfant.fr",
+    "mpedia.fr",
+    "ameli.fr",
+    "psycom.org",
+  ],
 };
 
-const sitesEnLigneBienEtMoinsBien = {
-  description:
-    "agirpourbébé.fr, monenfant.fr, mpedia.fr ; ameli.fr, psychom.fr",
+const sitesEnLignePasBien = {
   title: "Les sites en ligne d’accompagnement à la parentalité et de santé",
+  urls: [...sitesEnLigneBienEtMoinsBien.urls, "maman-blues.fr"],
 };
 
 export const epdsInformation = {
@@ -158,10 +162,5 @@ export const epdsInformation = {
     description:
       "TISF : le Service d’Aide à domicile (SAAD) propose un accompagnement par un travailleur ou une travailleuse en intervention sociale et familiale (TISF) qui peut intervenir de manière intensive dans les premières semaines en des besoins de la famille. Pour plus d’informations, vous pouvez vous rapprocher de la CAF de votre domicile.\n\nLa PMI peut effectuer des visites à domicile si vous en ressentez le besoin. Au retour à domicile avec votre enfant, la PMI peut vous venir en soutien notamment pour vous aider sur les premiers gestes autour de bébé et plus largement vous aider dans votre nouveau rôle de parents. Appelez votre PMI de rattachement pour prendre rendez-vous.",
     title: "Les services d’aides d’accompagnement à domicile",
-  },
-  sitesEnLigneBienEtMoinsBien: {
-    description:
-      "agirpourbébé.fr, monenfant.fr, mpedia.fr ; ameli.fr, psychom.fr",
-    title: "Les sites en ligne d’accompagnement à la parentalité et de santé",
   },
 };

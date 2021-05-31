@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { reportError } from "./logging.util";
 
 export const getStringValue = async (
   storageKey: string
@@ -6,7 +7,7 @@ export const getStringValue = async (
   try {
     return await AsyncStorage.getItem(storageKey);
   } catch (error: unknown) {
-    console.error(error);
+    reportError(error);
   }
 };
 
@@ -17,7 +18,7 @@ export const getObjectValue = async (storageKey: string): Promise<any> => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return jsonValue !== null ? JSON.parse(jsonValue) : null;
   } catch (error: unknown) {
-    console.error(error);
+    reportError(error);
   }
 };
 
@@ -28,7 +29,7 @@ export const storeStringValue = async (
   try {
     await AsyncStorage.setItem(storageKey, value);
   } catch (error: unknown) {
-    console.error(error);
+    reportError(error);
   }
 };
 
@@ -39,7 +40,7 @@ export const storeObjectValue = async (
   try {
     await storeStringValue(storageKey, JSON.stringify(value));
   } catch (error: unknown) {
-    console.error(error);
+    reportError(error);
   }
 };
 
@@ -47,6 +48,6 @@ export const multiRemove = async (storageKeys: string[]): Promise<void> => {
   try {
     await AsyncStorage.multiRemove(storageKeys);
   } catch (error: unknown) {
-    console.error(error);
+    reportError(error);
   }
 };

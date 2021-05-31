@@ -197,4 +197,5 @@ export default {
       "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. A chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
     title: "Choisissez l'étape que vous souhaitez approfondir",
   },
+  warning: "Attention",
 };

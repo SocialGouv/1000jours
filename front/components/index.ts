@@ -17,9 +17,8 @@ import { CommonText, SecondaryText } from "../components/StyledText";
 import StepIcon from "../components/timeline/StepIcon";
 import TimlineStep from "../components/timeline/TimlineStep";
 import Backdrop from "./backdrop.component";
-import Icomoon, { IcomoonIcons } from "./icomoon.component";
-import Menu from "./menu.component";
 import CustomSnackBar from "./customSnackBar.component";
+import Icomoon, { IcomoonIcons } from "./icomoon.component";
 
 export {
   Agenda,
@@ -37,7 +36,6 @@ export {
   ImageBanner,
   InShort,
   Links,
-  Menu,
   Modal,
   SecondaryText,
   StepIcon,

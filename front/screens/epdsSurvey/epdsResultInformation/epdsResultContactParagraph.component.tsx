@@ -9,13 +9,13 @@ import type { EpdsResultContactInformation } from "../../../type";
 
 interface EpdsResultContactParagraphProps {
   paragraphTitle?: string;
-  paragraph: EpdsResultContactInformation;
+  contacts: EpdsResultContactInformation[];
   titleColor: string;
 }
 
 const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
   paragraphTitle,
-  paragraph,
+  contacts,
   titleColor,
 }) => {
   const titleColorStyle = { color: titleColor };
@@ -26,34 +26,41 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
     void Linking.openURL("tel:" + phoneNumber);
   };
 
-  const titleStyle = [styles.contactTitle, { fontSize: Sizes.xs }];
+  const titleStyle = [styles.contactName, { fontSize: Sizes.xs }];
   return (
     <View style={styles.itemBorder}>
       {paragraphTitle && paragraphTitle.length > 0 && (
         <CommonText style={titleStyle}>{paragraphTitle}</CommonText>
       )}
-      <CommonText style={[styles.contactTitle, titleColorStyle]}>
-        {paragraph.contactName}
-      </CommonText>
-      <CommonText style={styles.contactDescription}>
-        {paragraph.thematic}
-      </CommonText>
-      <CommonText style={[styles.contactDescription, styles.fontBold]}>
-        {paragraph.openingTime}
-      </CommonText>
-      <CommonText style={[styles.contactDescription, styles.fontBold]}>
-        {paragraph.phoneNumber}
-      </CommonText>
-      <Button
-        buttonStyle={styles.callButton}
-        title={Labels.epdsSurvey.resultats.call}
-        titleStyle={styles.fontButton}
-        rounded={true}
-        disabled={false}
-        action={() => {
-          callContact(paragraph.phoneNumber);
-        }}
-      />
+      {contacts.map((contact, index) => (
+        <View
+          style={index !== contacts.length - 1 && styles.itemBorder}
+          key={index}
+        >
+          <CommonText style={[styles.contactName, titleColorStyle]}>
+            {contact.contactName}
+          </CommonText>
+          <CommonText style={styles.contactDescription}>
+            {contact.thematic}
+          </CommonText>
+          <CommonText style={[styles.contactDescription, styles.fontBold]}>
+            {contact.openingTime}
+          </CommonText>
+          <CommonText style={[styles.contactDescription, styles.fontBold]}>
+            {contact.phoneNumber}
+          </CommonText>
+          <Button
+            buttonStyle={styles.callButton}
+            title={Labels.epdsSurvey.resultats.call}
+            titleStyle={styles.fontButton}
+            rounded={true}
+            disabled={false}
+            action={() => {
+              callContact(contact.phoneNumber);
+            }}
+          />
+        </View>
+      ))}
     </View>
   );
 };
@@ -67,7 +74,7 @@ const styles = StyleSheet.create({
     fontSize: Sizes.xxs,
     lineHeight: Sizes.mmd,
   },
-  contactTitle: {
+  contactName: {
     color: Colors.commonText,
     fontSize: Sizes.xxs,
     fontWeight: FontWeight.bold,

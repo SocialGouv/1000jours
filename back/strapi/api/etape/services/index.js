@@ -28,9 +28,13 @@ const calcGrossesse = (terme) => {
   const grossesseDebut = subWeeks(terme, GROSSESSE_TOTAL_SEMAINES_SA);
 
   if (isBefore(now, grossesseDebut)) {
-    throw new Error("terme's date is too far in the future");
+    throw new Error(
+      "La date que vous avez renseignée est trop éloignée dans le futur"
+    );
   } else if (isBefore(terme, now)) {
-    throw new Error("terme's date cannot be in the past");
+    throw new Error(
+      "La date que vous avez renseignée ne peut pas être dans le passé"
+    );
   }
 
   const trimestre2 = addWeeks(
@@ -47,11 +51,15 @@ const calcEnfant = (naissance) => {
   const now = new Date();
 
   if (isBefore(now, naissance)) {
-    throw new Error("naissance cannot be in the future");
+    throw new Error(
+      "La date que vous avez renseignée ne peut pas être dans le futur"
+    );
   }
 
   if (isAfter(now, addYears(naissance, 2))) {
-    throw new Error("child is aged two or more");
+    throw new Error(
+      "Selon la date que vous avez renseignée, l'enfant est âgé de deux ans ou plus"
+    );
   }
 
   if (isAfter(now, addYears(naissance, 1))) {
@@ -65,7 +73,7 @@ const calcEnfant = (naissance) => {
 
 const getCurrent = async (infos) => {
   if (!infos) {
-    throw new Error("missing informations");
+    throw new Error("Informations manquantes");
   }
 
   const {
@@ -81,13 +89,13 @@ const getCurrent = async (infos) => {
 
   if (grossesse || enfant || enfants) {
     if (!dateString) {
-      throw new Error("missing date");
+      throw new Error("Date manquante");
     }
 
     const date = new Date(dateString);
 
     if (date.toString() === "Invalid Date") {
-      throw new Error("invalide date");
+      throw new Error("Date invalide");
     }
 
     id = grossesse ? calcGrossesse(date) : calcEnfant(date);

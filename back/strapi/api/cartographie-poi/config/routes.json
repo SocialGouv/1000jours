@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/cartographie-pois",
+      "handler": "cartographie-poi.search",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/cartographie-pois/count",
+      "handler": "cartographie-poi.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/cartographie-pois/:id",
+      "handler": "cartographie-poi.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/cartographie-pois",
+      "handler": "cartographie-poi.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/cartographie-pois/:id",
+      "handler": "cartographie-poi.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/cartographie-pois/:id",
+      "handler": "cartographie-poi.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

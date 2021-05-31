@@ -25,7 +25,7 @@ metadata:
 apiVersion: batch/v1
 kind: Job
 spec:
-  backoffLimit: 0
+  backoffLimit: 5
   template:
     spec:
       containers:
@@ -43,8 +43,7 @@ spec:
           envFrom:
             - secretRef:
                 name: azure-pg-admin-user
-          image: >-
-            registry.gitlab.factory.social.gouv.fr/socialgouv/docker/azure-db:2.6.1
+          image: ghcr.io/socialgouv/docker/azure-db:6.0.1
           imagePullPolicy: IfNotPresent
           name: create-db-user
           resources:
@@ -215,8 +214,7 @@ spec:
           envFrom:
             - secretRef:
                 name: azure-pg-user-4113006e
-          image: >-
-            registry.gitlab.factory.social.gouv.fr/socialgouv/docker/wait-for-postgres:5.0.1
+          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.0.1
           imagePullPolicy: Always
           name: wait-for-postgres
           resources:
