@@ -31,9 +31,6 @@ module.exports = {
       type: "string",
       required: true,
     },
-    adresse: {
-      type: "string",
-    },
     telephone: {
       type: "string",
     },
@@ -41,6 +38,9 @@ module.exports = {
       type: "string",
     },
     site_internet: {
+      type: "string",
+    },
+    adresse: {
       type: "string",
     },
     code_postal: {
@@ -55,11 +55,24 @@ module.exports = {
     position_latitude: {
       type: "float",
     },
-    references: {
-      type: "json",
+    geocode: {
+      type: "boolean",
+      default: false,
     },
-    donnees_specifiques: {
-      type: "json",
+    geocode_adresse: {
+      type: "string",
+    },
+    geocode_code_postal: {
+      type: "string",
+    },
+    geocode_commune: {
+      type: "string",
+    },
+    geocode_position_longitude: {
+      type: "float",
+    },
+    geocode_position_latitude: {
+      type: "float",
     },
   },
 };

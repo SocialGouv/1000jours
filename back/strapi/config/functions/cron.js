@@ -10,12 +10,4 @@
  * See more details here: https://strapi.io/documentation/developer-docs/latest/concepts/configurations.html#cron-tasks
  */
 
-module.exports = {
-  /**
-   * Simple example.
-   * Every monday at 1am.
-   */
-  // '0 1 * * 1': () => {
-  //
-  // }
-};
+module.exports = {};

@@ -16,10 +16,10 @@ const search = async (perimetre) => {
 
   // TODO: use postgres geo capabilities with Point & box
   return knex("cartographie_pois")
-    .where("position_latitude", ">", lat1)
-    .andWhere("position_latitude", "<", lat2)
-    .andWhere("position_longitude", ">", long1)
-    .andWhere("position_longitude", "<", long2);
+    .where("geocode_position_latitude", ">", lat1)
+    .andWhere("geocode_position_latitude", "<", lat2)
+    .andWhere("geocode_position_longitude", ">", long1)
+    .andWhere("geocode_position_longitude", "<", long2);
 };
 
 module.exports = { search };

@@ -33,9 +33,15 @@ const importSeed = async ({ model, seeds }) => {
   for (const seed of seeds) await strapiModel.create(seed);
 };
 
-const loadJsonFile = (filePath) => JSON.parse(fs.readFileSync(filePath));
+const loadJsonFile = (filePath) => {
+  try {
+    return JSON.parse(fs.readFileSync(filePath));
+  } catch (e) {
+    return [];
+  }
+};
 
-const loadSeeds = () =>
+const loadSeeds = (models) =>
   models.map((model) => ({
     model,
     seeds: loadJsonFile(path.join(SEED_DIR, `${plural(model)}.json`)),
@@ -48,18 +54,31 @@ const initStrapi = async () => {
   strapi = await Strapi().load();
 };
 
-const main = async () => {
+const main = async (items) => {
+  if (items.length > 0) {
+    items = items.filter((model) => models.indexOf(model) !== -1);
+
+    if (items.length === 0) {
+      console.log("nothing to seed, exiting");
+      return;
+    }
+  } else {
+    items = models;
+  }
+
+  console.log("seeding:", items.join(", "));
+
   await initStrapi();
   initKnex();
 
-  const seeds = loadSeeds();
+  const seeds = loadSeeds(items);
 
   for (const seed of seeds) await importSeed(seed);
 };
 
-main()
+main(process.argv.slice(2))
   .catch(console.error)
   .finally(() => {
     console.log("shutting down strapi instance");
-    strapi.stop(0);
+    strapi && strapi.stop(0);
   });
