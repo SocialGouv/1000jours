@@ -61,13 +61,5 @@ module.exports = {
     donnees_specifiques: {
       type: "json",
     },
-    cartographie_geocode: {
-      via: "cartographie_pois",
-      model: "cartographie-geocode",
-    },
-    cartographie_data: {
-      collection: "cartographie-data",
-      via: "cartographie_poi",
-    },
   },
 };
