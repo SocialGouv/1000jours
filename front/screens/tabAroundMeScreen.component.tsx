@@ -1,6 +1,7 @@
+import { useLazyQuery } from "@apollo/client";
 import { useRef, useState } from "react";
 import * as React from "react";
-import { StyleSheet, TextInput } from "react-native";
+import { ActivityIndicator, StyleSheet, TextInput } from "react-native";
 import type { LatLng, Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
@@ -14,6 +15,7 @@ import { View } from "../components/Themed";
 import {
   AroundMeConstants,
   Colors,
+  DatabaseQueries,
   FontWeight,
   Labels,
   Margins,
@@ -47,6 +49,19 @@ const TabAroundMeScreen: React.FC = () => {
     await searchByPostalCodeAndGoToNewRegion();
   };
 
+  // const getPoisByPostalCode = () => {
+  const [getPoisByPostalCode, { loading, data }] = useLazyQuery(
+    DatabaseQueries.AROUNDME_POIS_BY_POSTALCODE
+  );
+
+  // if (loading) return <ActivityIndicator size="large" />;
+  console.log(data);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  // };
+  // await addReponseQuery({
+  //   variables: { compteur: newCounter, genre: genderValue, score: result },
+  // });
+
   const searchByPostalCodeAndGoToNewRegion = async () => {
     const regionData = await AroundMeUtils.searchRegionByPostalCode(
       postalCodeInput
@@ -71,6 +86,9 @@ const TabAroundMeScreen: React.FC = () => {
       setMarkersArray(newLatLngs);
       setRegion(newRegion);
       mapRef.current?.animateToRegion(newRegion);
+      getPoisByPostalCode({
+        variables: { postalCode: postalCodeInput },
+      });
     } else {
       setShowSnackBar(true);
     }

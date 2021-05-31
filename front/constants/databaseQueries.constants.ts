@@ -28,3 +28,22 @@ export const EPDS_ADD_RESPONSE = gql`
     }
   }
 `;
+
+export const AROUNDME_POIS_BY_POSTALCODE = gql`
+  query PoisByPostalCode($codePostal: String!) {
+    cartographiePois(where: { code_postal: $codePostal }) {
+      id
+      cartographie_categorie
+      type
+      nom
+      adresse
+      code_postal
+      commune
+      telephone
+      courriel
+      site_internet
+      position_latitude
+      position_longitude
+    }
+  }
+`;
