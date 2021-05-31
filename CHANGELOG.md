@@ -1,3 +1,10 @@
+## [1.32.1](https://github.com/SocialGouv/1000jours/compare/v1.32.0...v1.32.1) (2021-05-31)
+
+
+### Bug Fixes
+
+* **carto:** Corrige les liens de base de données vers les POIs ([#242](https://github.com/SocialGouv/1000jours/issues/242)) ([0199e44](https://github.com/SocialGouv/1000jours/commit/0199e44a146e8d363b3887d3e66d404b0c6ceda4))
+
 # [1.32.0](https://github.com/SocialGouv/1000jours/compare/v1.31.0...v1.32.0) (2021-05-31)
 
 
