@@ -1,0 +1,36 @@
+{
+  "kind": "singleType",
+  "collectionName": "cartographie_categories",
+  "info": {
+    "name": "Cartographie Categories"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": false,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "structures": {
+      "type": "enumeration",
+      "enum": [
+        "planning_familial",
+        "maison_de_naissance",
+        "maternite",
+        "pmi",
+        "saad",
+        "cpam",
+        "caf",
+        "mairie"
+      ]
+    },
+    "professionnels": {
+      "type": "enumeration",
+      "enum": [
+        "infirmier",
+        "sagefemme",
+        "medecin",
+        "pediatre"
+      ]
+    }
+  }
+}
