@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/cartographie-categories",
+      "handler": "cartographie-categories.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/cartographie-categories",
+      "handler": "cartographie-categories.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/cartographie-categories",
+      "handler": "cartographie-categories.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
