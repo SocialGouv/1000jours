@@ -36,12 +36,12 @@ export const AROUNDME_POIS_BY_POSTALCODE = gql`
       cartographie_categorie
       type
       nom
-      geocode_adresse
-      geocode_code_postal
-      geocode_commune
       telephone
       courriel
       site_internet
+      geocode_adresse
+      geocode_code_postal
+      geocode_commune
       geocode_position_latitude
       geocode_position_longitude
     }

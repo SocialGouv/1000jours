@@ -37,33 +37,32 @@ const TabAroundMeScreen: React.FC = () => {
   const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
+  // Variable utilisée pour trigger le useEffect lors du clic sur le bouton Rechercher
   const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] = useState(
     false
-  ); // Variable utilisée pour trigger le useEffect lors du clic sur le bouton Rechercher
+  );
 
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
   };
 
   useEffect(() => {
-    if (postalCodeInput.length === AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
-      getPoisByPostalCode({
-        variables: { codePostal: postalCodeInput },
-      });
-      if (data) {
-        const fetchedData = (data as {
-          cartographiePois: CartographiePoisFromDB[];
-        }).cartographiePois;
-        setPoisArray(
-          fetchedData.length > 0
-            ? fetchedData.slice(0, AroundMeConstants.NUMBER_MAX_MARKERS_ON_MAP)
-            : []
-        );
-        if (fetchedData.length === 0) {
-          showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
-        }
-      }
+    if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
+      return;
     }
+    getPoisByPostalCode({
+      variables: { codePostal: postalCodeInput },
+    });
+    if (!data) return;
+    const fetchedData = (data as {
+      cartographiePois: CartographiePoisFromDB[];
+    }).cartographiePois;
+    if (fetchedData.length === 0) {
+      showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
+    }
+    setPoisArray(
+      fetchedData.slice(0, AroundMeConstants.NUMBER_MAX_MARKERS_ON_MAP)
+    );
   }, [postalCodeInput, triggerSearchByPostalCode]);
 
   const onRegionChange = (newRegion: Region) => {

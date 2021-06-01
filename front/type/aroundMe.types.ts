@@ -5,12 +5,12 @@ export interface CartographiePoisFromDB {
   cartographie_categorie: string;
   type: string;
   nom: string;
-  geocode_adresse: string;
-  geocode_code_postal: number;
-  geocode_commune: string;
   telephone: string;
   courriel: string;
   site_internet: string;
+  geocode_adresse: string;
+  geocode_code_postal: number;
+  geocode_commune: string;
   geocode_position_latitude: number;
   geocode_position_longitude: number;
 }
