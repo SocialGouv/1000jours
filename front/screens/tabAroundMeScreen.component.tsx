@@ -28,8 +28,11 @@ import { AroundMeUtils, KeyboardUtils } from "../utils";
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
   const [postalCodeInput, setPostalCodeInput] = useState("");
-  const [getPoisByPostalCode, { data }] = useLazyQuery(
+  const [getPoisByPostalCode, { data: fetchedPoisByPostalCode }] = useLazyQuery(
     DatabaseQueries.AROUNDME_POIS_BY_POSTALCODE
+  );
+  const [getPoisByGpsCoords, { data: fetchedPoisByGpsCoords }] = useLazyQuery(
+    DatabaseQueries.AROUNDME_POIS_BY_GPSCOORDS
   );
   const [region, setRegion] = useState<Region>(
     AroundMeConstants.INITIAL_REGION
@@ -41,6 +44,15 @@ const TabAroundMeScreen: React.FC = () => {
   const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] = useState(
     false
   );
+  // Variable utilisée pour trigger le useEffect lors du déplacement sur la carte
+  const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] = useState(
+    false
+  );
+  // Variable utilisée pour éviter que les 2 useEffects ne se lancent l'un après l'autre (si le premier a été exécuté, le deuxième ne se lance pas)
+  const [
+    regionWasMovedBecauseOfPostalCode,
+    setRegionWasMovedBecauseOfPostalCode,
+  ] = useState(false);
 
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
@@ -53,20 +65,52 @@ const TabAroundMeScreen: React.FC = () => {
     getPoisByPostalCode({
       variables: { codePostal: postalCodeInput },
     });
-    if (!data) return;
-    const fetchedData = (data as {
+    if (!fetchedPoisByPostalCode) return;
+    const fetchedData = (fetchedPoisByPostalCode as {
       cartographiePois: CartographiePoisFromDB[];
     }).cartographiePois;
-    if (fetchedData.length === 0) {
-      showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
-    }
-    setPoisArray(
-      fetchedData.slice(0, AroundMeConstants.NUMBER_MAX_MARKERS_ON_MAP)
-    );
+    handleFetchedPois(fetchedData);
+    setRegionWasMovedBecauseOfPostalCode(true);
   }, [postalCodeInput, triggerSearchByPostalCode]);
 
-  const onRegionChange = (newRegion: Region) => {
+  useEffect(() => {
+    if (regionWasMovedBecauseOfPostalCode) {
+      setRegionWasMovedBecauseOfPostalCode(false);
+      return;
+    }
+    const topLeftPoint = AroundMeUtils.getLatLngPoint(
+      region,
+      AroundMeConstants.LatLngPointType.topLeft
+    );
+    const bottomRightPoint = AroundMeUtils.getLatLngPoint(
+      region,
+      AroundMeConstants.LatLngPointType.bottomRight
+    );
+    getPoisByGpsCoords({
+      variables: {
+        lat1: topLeftPoint.latitude,
+        lat2: bottomRightPoint.latitude,
+        long1: topLeftPoint.longitude,
+        long2: bottomRightPoint.longitude,
+      },
+    });
+    if (!fetchedPoisByGpsCoords) return;
+    const fetchedData = (fetchedPoisByGpsCoords as {
+      searchPois: CartographiePoisFromDB[];
+    }).searchPois;
+    handleFetchedPois(fetchedData);
+  }, [triggerSearchByGpsCoords]);
+
+  const handleFetchedPois = (pois: CartographiePoisFromDB[]) => {
+    if (pois.length === 0) {
+      showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
+    }
+    setPoisArray(pois.slice(0, AroundMeConstants.NUMBER_MAX_MARKERS_ON_MAP));
+  };
+
+  const onRegionChangeComplete = (newRegion: Region) => {
     setRegion(newRegion);
+    setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
   };
 
   const onSearchByPostalCodeButtonClick = async () => {
@@ -131,7 +175,8 @@ const TabAroundMeScreen: React.FC = () => {
           provider={PROVIDER_DEFAULT}
           style={styles.map}
           initialRegion={region}
-          onRegionChange={onRegionChange}
+          // onRegionChange={onRegionChange}
+          onRegionChangeComplete={onRegionChangeComplete}
         >
           {poisArray.map((poi, poiIndex) => (
             <View key={poiIndex}>
