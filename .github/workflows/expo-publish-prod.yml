@@ -5,12 +5,13 @@ on:
       description: 'Manual workflow'
 
 jobs:
-  Publish:
-    name: Publish Prod
+  Publish-android:
+    name: Build and publish Android for prod
     runs-on: ubuntu-latest
     env:
       API_URL: ${{ secrets.API_URL }}
       CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
+      PLAY_STORE_API_KEY: ${{ secrets.PLAY_STORE_API_KEY }}
       MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
       MATOMO_URL: ${{ secrets.MATOMO_URL }}
     steps:
@@ -26,5 +27,31 @@ jobs:
       - name: Yarn
         run: |
           cd front
+          echo $PLAY_STORE_API_KEY | base64 -d > play-store-api-key.json
           yarn install
-          yarn publish-prod
+          yarn upload:android
+
+  Publish-ios:
+    name: Build and publish iOS for prod
+    runs-on: macOS-latest
+    env:
+      API_URL: ${{ secrets.API_URL }}
+      CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
+      FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
+      FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-version: 4.x
+          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+      - name: Yarn
+        run: |
+          cd front
+          source .env
+          yarn install
+          yarn upload:ios

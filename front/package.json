@@ -12,13 +12,11 @@
     "lint-fix": "eslint --fix .",
     "build-staging:android": "expo build:android --release-channel staging",
     "build-staging:ios": "expo build:ios --release-channel staging",
-    "build-prod:android": "expo build:android --release-channel prod",
-    "build-prod:ios": "expo build:ios --release-channel prod",
     "build-dev": "yarn build-staging:ios && yarn build-staging:android",
-    "build-prod": "yarn build-prod:ios && yarn build-prod:android",
     "publish-dev": "expo publish --release-channel staging",
-    "publish-prod": "expo publish --release-channel prod",
-    "upload:android": "expo upload:android --key ./play-store-api-key.json --release-status draft --track prod"
+    "upload:android": "expo upload:android --key ./play-store-api-key.json --release-status draft --track prod",
+    "upload:ios": "fastlane deliver",
+    "publish-prod": "yarn upload:android && yarn upload:ios"
   },
   "jest": {
     "preset": "jest-expo"
