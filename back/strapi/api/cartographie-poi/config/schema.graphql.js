@@ -21,8 +21,7 @@ module.exports = {
   resolver: {
     Query: {
       searchPois: {
-        description:
-          "Retourne une liste de POIs en fonction d'un périmètre",
+        description: "Retourne une liste de POIs en fonction d'un périmètre",
         resolver: getPoisResolver,
         resolverOf: "application::cartographie-poi.cartographie-poi.find",
       },
