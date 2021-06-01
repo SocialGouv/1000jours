@@ -2,52 +2,57 @@
 
 const axios = require("axios");
 
+const { slugLower } = require("../../string/services");
+
+const {
+  GEOCODE_FIELDS,
+  concatFields,
+  formatGeocodeResultGeojson,
+} = require("./format");
+
 const GEOCODE_SERVICE_URL = "https://api-adresse.data.gouv.fr";
 
-const GEOCODE_FIELDS = ["adresse", "code_postal", "commune"];
-
-const formatGeocodeResult = ({ properties, geometry }) => ({
-  geocode_adresse: `${properties.name || ""}`.trim(),
-  geocode_code_postal: properties.postcode || "",
-  geocode_commune: properties.city || "",
-  geocode_position_longitude: geometry.coordinates[0],
-  geocode_position_latitude: geometry.coordinates[1],
-  geocode: true,
-});
-
-const geo = async (data, type = "geocode") => {
-  const params =
-    type === "reverse"
-      ? { lon: data.position_longitude, lat: data.position_latitude }
-      : { q: GEOCODE_FIELDS.map((field) => data[field] || "").join(" ") };
-
-  const service = type === "reverse" ? "reverse" : "search";
-  const url = `${GEOCODE_SERVICE_URL}/${service}`;
-
-  const response = await axios(url, { params });
+const geocodeRequest = async (data, service, params) => {
+  const response = await axios(`${GEOCODE_SERVICE_URL}/${service}`, {
+    params: {
+      ...params,
+      limit: 1,
+    },
+  });
 
   const { data: result } = response || {};
 
-  // TODO: handle 'no result'
-  if (!result || !result.features || !result.features.length) return null;
-
-  const feature = result.features[0];
-
-  return formatGeocodeResult(feature);
+  // if result features are empty, then geocode failed
+  // setting geocode to `true` anyway
+  // problematic addresses will be processed manually
+  return result && result.features && result.features.length
+    ? formatGeocodeResultGeojson(result.features[0])
+    : { geocode: true };
 };
 
 const geocodeData = async (data) => {
-  let geocodeType;
+  try {
+    const query = concatFields(GEOCODE_FIELDS, data);
+    const params = { q: query };
 
-  if (data.adresse || data.code_postal || data.commune) {
-    geocodeType = "geocode";
-  } else if (data.position_longitude && data.position_latitude) {
-    geocodeType = "reverse";
-  } else {
-    return null;
+    const { position_longitude: lon, position_latitude: lat } = data;
+
+    if (query) {
+      // add geographical priority with position if any
+      if (lon) params.lon = lon;
+      if (lat) params.lat = lat;
+
+      console.log({ params });
+
+      return geocodeRequest(data, "search", params);
+    }
+
+    if (lon && lat) return geocodeRequest(data, "reverse", { lon, lat });
+  } catch (e) {
+    console.error("[geocode] error:", e);
   }
 
-  return geo(data, geocodeType);
+  return null;
 };
 
 module.exports = {

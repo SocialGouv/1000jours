@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cartographie_types",
+  "info": {
+    "name": "Cartographie POIS Types",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "identifiant": {
+      "type": "string"
+    },
+    "nom": {
+      "type": "string",
+      "unique": true
+    },
+    "categorie": {
+      "type": "enumeration",
+      "enum": ["structure", "professionnel"],
+      "required": true
+    },
+    "etapes": {
+      "collection": "etape",
+      "via": "cartographie_types",
+      "dominant": true
+    }
+  }
+}

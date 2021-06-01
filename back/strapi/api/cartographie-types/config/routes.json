@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/cartographie-types",
+      "handler": "cartographie-types.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/cartographie-types/count",
+      "handler": "cartographie-types.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/cartographie-types/:id",
+      "handler": "cartographie-types.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/cartographie-types",
+      "handler": "cartographie-types.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/cartographie-types/:id",
+      "handler": "cartographie-types.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/cartographie-types/:id",
+      "handler": "cartographie-types.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

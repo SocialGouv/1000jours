@@ -1,24 +1,37 @@
 "use strict";
 
-const { attributes } = require("./cartographie-poi.settings");
-const CartographieCategoriesService = require("../../cartographie-categories/services");
+const CartographiePoi = require("./cartographie-poi.settings");
+const CartographieAdresse = require("../../../components/cartographie/adresse");
 const CartographieGeocodeService = require("../../cartographie-geocode/services");
+const { slugLower } = require("../../string/services");
 
-const beforeSave = async (data) => {
+const trimStringFields = (attributes, data) =>
   Object.keys(attributes).forEach((key) => {
     if (data[key] && attributes[key].type === "string") {
       data[key] = data[key].trim();
     }
   });
 
-  const categorie = CartographieCategoriesService.getCategorie(data.type);
-  if (categorie) {
-    data.cartographie_categorie = categorie;
+const beforeSave = async (data) => {
+  trimStringFields(CartographiePoi.attributes, data);
+
+  for (const reference of data.references) {
+    const source = await strapi
+      .query("cartographie-source")
+      .findOne({ id: reference.cartographie_source });
+    if (!source) continue;
+
+    reference.identifiant = slugLower(source.identifiant, reference.valeur);
   }
 
-  const geocode = await CartographieGeocodeService.geocodeData(data);
-  if (geocode) {
-    Object.assign(data, geocode);
+  for (const adresse of data.cartographie_adresses) {
+    trimStringFields(CartographieAdresse.attributes, adresse);
+
+    const geocode = await CartographieGeocodeService.geocodeData(adresse);
+
+    if (geocode) {
+      Object.assign(adresse, geocode);
+    }
   }
 };
 

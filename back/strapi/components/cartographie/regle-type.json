@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_cartographie_regle_type",
+  "info": {
+    "name": "Regle Type",
+    "icon": "cog",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "identifiant": {
+      "type": "string"
+    },
+    "valeur": {
+      "model": "cartographie-types"
+    },
+    "conditions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "cartographie.condition_simple"
+    }
+  }
+}

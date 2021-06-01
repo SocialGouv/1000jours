@@ -1,10 +1,8 @@
 "use strict";
 
-const sortNumbers = (numbers) => {
-  return numbers.sort(function (a, b) {
-    return a - b
-  });
-}
+const { find } = require("strapi-deepsearch-service");
+
+const sortNumbers = (a, b) => a - b;
 
 const search = async (perimetre) => {
   if (!perimetre) {
@@ -16,17 +14,22 @@ const search = async (perimetre) => {
     );
   }
 
-  const longs = sortNumbers([perimetre[0], perimetre[2]]);
-  const lats = sortNumbers([perimetre[1], perimetre[3]]);
+  const lngs = [perimetre[0], perimetre[2]].sort(sortNumbers);
+  const lats = [perimetre[1], perimetre[3]].sort(sortNumbers);
 
   const knex = strapi.connections.default;
 
+  const query = {
+    "cartographie_adresses.geocode_position_longitude_gt": lngs[0],
+    "cartographie_adresses.geocode_position_longitude_lt": lngs[1],
+    "cartographie_adresses.geocode_position_latitude_gt": lats[0],
+    "cartographie_adresses.geocode_position_latitude_lt": lats[1],
+  };
+
+  return find(strapi.query("cartographie-poi").model, query);
+
   // TODO: use postgres geo capabilities with Point & box
-  return knex("cartographie_pois")
-    .where("geocode_position_longitude", ">", longs[0])
-    .andWhere("geocode_position_longitude", "<", longs[1])
-    .andWhere("geocode_position_latitude", ">", lats[0])
-    .andWhere("geocode_position_latitude", "<", lats[1]);
+  return strapi.query("cartographie-poi").find(query);
 };
 
 module.exports = { search };
