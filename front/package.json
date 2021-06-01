@@ -14,8 +14,11 @@
     "build-staging:ios": "expo build:ios --release-channel staging",
     "build-dev": "yarn build-staging:ios && yarn build-staging:android",
     "publish-dev": "expo publish --release-channel staging",
-    "upload:android": "expo upload:android --key ./play-store-api-key.json --release-status draft --track prod",
-    "upload:ios": "fastlane deliver",
+    "build-prod:android": "expo build:android --release-channel prod",
+    "build-prod:ios": "expo build:ios --release-channel prod",
+    "build-prod": "yarn build-prod:ios && yarn build-prod:android",
+    "upload:android": "expo upload:android --key ./play-store-api-key.json --latest --track beta",
+    "upload:ios": "fastlane deliver --ipa app.ipa",
     "publish-prod": "yarn upload:android && yarn upload:ios"
   },
   "jest": {
@@ -35,7 +38,7 @@
     "@react-navigation/stack": "~5.14.3",
     "babel-plugin-inline-dotenv": "^1.6.0",
     "date-fns": "^2.21.2",
-    "expo": "~40.0.1",
+    "expo": "^41.0.1",
     "expo-asset": "~8.3.2",
     "expo-asset-utils": "^2.0.0",
     "expo-cli": "^4.4.3",

@@ -4,3 +4,5 @@
 
 submit_for_review true
 app_identifier "com.millejours.fabrique"
+force true
+automatic_release true

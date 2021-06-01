@@ -5,8 +5,33 @@ on:
       description: 'Manual workflow'
 
 jobs:
+#  Build-android:
+#    name: Build Android for prod
+#    runs-on: ubuntu-latest
+#    env:
+#      API_URL: ${{ secrets.API_URL }}
+#      CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
+#      MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
+#      MATOMO_URL: ${{ secrets.MATOMO_URL }}
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: actions/setup-node@v2
+#        with:
+#          node-version: 14.x
+#      - uses: expo/expo-github-action@v5
+#        with:
+#          expo-version: 4.x
+#          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+#          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+#      - name: Yarn
+#        run: |
+#          cd front
+#          yarn install
+#          yarn build-prod:android
+
   Publish-android:
-    name: Build and publish Android for prod
+    name: Publish Android for prod
+#    needs: Build-android
     runs-on: ubuntu-latest
     env:
       API_URL: ${{ secrets.API_URL }}
@@ -31,8 +56,33 @@ jobs:
           yarn install
           yarn upload:android
 
+#  Build-ios:
+#    name: Build iOS for prod
+#    runs-on: ubuntu-latest
+#    env:
+#      API_URL: ${{ secrets.API_URL }}
+#      CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
+#      MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
+#      MATOMO_URL: ${{ secrets.MATOMO_URL }}
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: actions/setup-node@v2
+#        with:
+#          node-version: 14.x
+#      - uses: expo/expo-github-action@v5
+#        with:
+#          expo-version: 4.x
+#          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+#          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+#      - name: Yarn
+#        run: |
+#          cd front
+#          yarn install
+#          yarn build-prod:ios
+
   Publish-ios:
-    name: Build and publish iOS for prod
+    name: Publish iOS for prod
+ #   needs: Build-ios
     runs-on: macOS-latest
     env:
       API_URL: ${{ secrets.API_URL }}
@@ -52,6 +102,7 @@ jobs:
       - name: Yarn
         run: |
           cd front
-          source .env
           yarn install
+          curl -o app.ipa "$(expo url:ipa --non-interactive)"
+          npx fastlane spaceauth -u benjaminguedj@hotmail.fr --copy_to_clipboard && export FASTLANE_SESSION=$(pbpaste)
           yarn upload:ios
