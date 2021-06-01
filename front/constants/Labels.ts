@@ -199,4 +199,5 @@ export default {
     title: "Choisissez l'étape que vous souhaitez approfondir",
   },
   warning: "Attention",
+  comingSoon: "Bientôt disponible",
 };
