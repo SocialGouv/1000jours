@@ -76,13 +76,12 @@ const TabAroundMeScreen: React.FC = () => {
   };
 
   const searchByPostalCodeAndGoToNewRegion = async () => {
-    const regionData = await AroundMeUtils.searchRegionByPostalCode(
+    const newRegion = await AroundMeUtils.searchRegionByPostalCode(
       postalCodeInput
     );
 
-    if (regionData.regionIsFetched && regionData.newRegion) {
+    if (newRegion) {
       setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
-      const newRegion = regionData.newRegion;
       setRegion(newRegion);
       mapRef.current?.animateToRegion(newRegion);
     } else {
