@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useLazyQuery } from "@apollo/client";
+import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { StyleSheet, TextInput } from "react-native";
-import type { LatLng, Region } from "react-native-maps";
+import type { Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import {
@@ -14,26 +15,55 @@ import { View } from "../components/Themed";
 import {
   AroundMeConstants,
   Colors,
+  DatabaseQueries,
   FontWeight,
   Labels,
   Margins,
   Paddings,
   Sizes,
 } from "../constants";
+import type { CartographiePoisFromDB } from "../type";
 import { AroundMeUtils, KeyboardUtils } from "../utils";
 
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
   const [postalCodeInput, setPostalCodeInput] = useState("");
+  const [getPoisByPostalCode, { data }] = useLazyQuery(
+    DatabaseQueries.AROUNDME_POIS_BY_POSTALCODE
+  );
   const [region, setRegion] = useState<Region>(
     AroundMeConstants.INITIAL_REGION
   );
+  const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
   const [showSnackBar, setShowSnackBar] = useState(false);
-  const initialLatLng = AroundMeConstants.COORDINATE_PARIS;
+  const [snackBarMessage, setSnackBarMessage] = useState("");
+  // Variable utilisée pour trigger le useEffect lors du clic sur le bouton Rechercher
+  const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] = useState(
+    false
+  );
 
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
   };
+
+  useEffect(() => {
+    if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
+      return;
+    }
+    getPoisByPostalCode({
+      variables: { codePostal: postalCodeInput },
+    });
+    if (!data) return;
+    const fetchedData = (data as {
+      cartographiePois: CartographiePoisFromDB[];
+    }).cartographiePois;
+    if (fetchedData.length === 0) {
+      showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
+    }
+    setPoisArray(
+      fetchedData.slice(0, AroundMeConstants.NUMBER_MAX_MARKERS_ON_MAP)
+    );
+  }, [postalCodeInput, triggerSearchByPostalCode]);
 
   const onRegionChange = (newRegion: Region) => {
     setRegion(newRegion);
@@ -41,21 +71,27 @@ const TabAroundMeScreen: React.FC = () => {
 
   const onSearchByPostalCodeButtonClick = async () => {
     KeyboardUtils.dismissKeyboard();
+    setShowSnackBar(false);
     await searchByPostalCodeAndGoToNewRegion();
   };
 
   const searchByPostalCodeAndGoToNewRegion = async () => {
-    const regionData = await AroundMeUtils.searchRegionByPostalCode(
+    const newRegion = await AroundMeUtils.searchRegionByPostalCode(
       postalCodeInput
     );
 
-    if (regionData.regionIsFetched && regionData.newRegion) {
-      const newRegion = regionData.newRegion;
+    if (newRegion) {
+      setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
       setRegion(newRegion);
       mapRef.current?.animateToRegion(newRegion);
     } else {
-      setShowSnackBar(true);
+      showSnackBarWithMessage(Labels.aroundMe.postalCodeNotFound);
     }
+  };
+
+  const showSnackBarWithMessage = (message: string) => {
+    setSnackBarMessage(message);
+    setShowSnackBar(true);
   };
 
   const onSnackBarDismiss = () => {
@@ -97,11 +133,25 @@ const TabAroundMeScreen: React.FC = () => {
           initialRegion={region}
           onRegionChange={onRegionChange}
         >
-          <Marker coordinate={initialLatLng} pinColor="red" />
+          {poisArray.map((poi, poiIndex) => (
+            <View key={poiIndex}>
+              <Marker
+                coordinate={{
+                  latitude: Number(poi.geocode_position_latitude),
+                  longitude: Number(poi.geocode_position_longitude),
+                }}
+                pinColor="red"
+              />
+            </View>
+          ))}
         </MapView>
       </View>
-      <CustomSnackBar visible={showSnackBar} onDismiss={onSnackBarDismiss}>
-        <CommonText>{Labels.aroundMe.postalCodeNotFound}</CommonText>
+      <CustomSnackBar
+        visible={showSnackBar}
+        duration={AroundMeConstants.SNACKBAR_DURATION}
+        onDismiss={onSnackBarDismiss}
+      >
+        <CommonText>{snackBarMessage}</CommonText>
       </CustomSnackBar>
     </View>
   );
@@ -127,7 +177,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   mapContainer: {
-    height: "110%",
+    height: "80%",
     width: "100%",
   },
   postalCodeInput: {

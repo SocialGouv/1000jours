@@ -1,6 +1,7 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
+import { MatomoProvider, useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -14,7 +15,6 @@ import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import { initMonitoring, reportError } from "./utils/logging.util";
 import { StorageUtils, TrackerUtils } from "./utils";
-import { MatomoProvider, useMatomo } from "matomo-tracker-react-native";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
