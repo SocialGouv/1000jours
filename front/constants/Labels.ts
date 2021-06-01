@@ -36,6 +36,7 @@ export default {
     listOfEvents: "Liste des événements",
     noChildBirthday: "Aucune date de naissance",
     noEventMessage: "Aucun événement",
+    today: "Aujourd'hui",
   },
   dateFormatLabel: "Jour / Mois / Année",
   epdsSurvey: {

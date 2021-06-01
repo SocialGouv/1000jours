@@ -4,7 +4,7 @@ import * as React from "react";
 import { ImageBackground, StyleSheet, Text } from "react-native";
 import { ListItem } from "react-native-elements";
 
-import EllipseIcon from "../../assets/images/Ellipse.png";
+import BgImage from "../../assets/images/bg-icon-in-short.png";
 import {
   Colors,
   FontWeight,
@@ -71,7 +71,7 @@ const InShort: FC<Props> = ({ inShortArray }) => {
         {filter(inShortArray, "text").map((item, index) => (
           <ListItem key={index} containerStyle={[styles.listItemContainer]}>
             <ImageBackground
-              source={EllipseIcon}
+              source={BgImage}
               imageStyle={styles.imageBackground}
               style={styles.listItemIcon}
             >
