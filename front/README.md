@@ -32,6 +32,18 @@ Pour lancer l'émulateur iOS, utilisez :
 yarn ios
 ```
 
+## 🌓 Génération de la font d'icônes
+
+Pour générer la font d'icônes nous utilisons Icomoon, pour se faire rendez-vous sur le site :
+- https://icomoon.io/app/#/select  
+- importer les icônes au format svg (./assets/icomoon/svg/)
+- sélectionner les icônes précédement importées
+- cliquer sur "Generate Font" en bas de la page puis "Download"
+- une fois le zip téléchargé, importé dans "./assets/icomoon/" les fichiers icomoon.ttf et selection.json présent dans le zip.
+- pour terminer, mettre à jour l'enum "IcomoonIcons" du composant "icomoon.component.tsx"
+(N.B : yarn start-clear est nécessaire pour charger les nouvelles icônes dans l'app)
+
+
 ## 🚀 Publication
 
 ### ✋ Manuellement
