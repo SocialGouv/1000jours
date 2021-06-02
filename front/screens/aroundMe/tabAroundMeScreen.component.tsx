@@ -1,5 +1,4 @@
-import { useLazyQuery } from "@apollo/client";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import * as React from "react";
 import { StyleSheet, TextInput } from "react-native";
 import type { Region } from "react-native-maps";
@@ -10,37 +9,27 @@ import {
   CommonText,
   CustomSnackBar,
   SecondaryText,
-} from "../components";
-import { View } from "../components/Themed";
+} from "../../components";
+import FetchPoisCoords from "../../components/aroundMe/fetchPoisCoords.component";
+import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
   Colors,
-  DatabaseQueries,
   FontWeight,
   Labels,
   Margins,
   Paddings,
   Sizes,
-} from "../constants";
-import type { CartographiePoisFromDB } from "../type";
-import { AroundMeUtils, KeyboardUtils } from "../utils";
-import FetchPoisCoords from "./aroundMe/fetchPoisCoords.component";
+} from "../../constants";
+import type { CartographiePoisFromDB } from "../../type";
+import { AroundMeUtils, KeyboardUtils } from "../../utils";
 
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
   const [postalCodeInput, setPostalCodeInput] = useState("");
-  const [queryToUse, setQueryToUse] = useState(
-    DatabaseQueries.AROUNDME_POIS_BY_POSTALCODE
-  );
-  const [getPois, { data: fetchedPois }] = useLazyQuery(queryToUse, {
-    fetchPolicy: "no-cache",
-  });
   const [region, setRegion] = useState<Region>(
     AroundMeConstants.INITIAL_REGION
   );
-  const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
-  const [showSnackBar, setShowSnackBar] = useState(false);
-  const [snackBarMessage, setSnackBarMessage] = useState("");
   // Variable utilisée pour trigger le useEffect lors du clic sur le bouton Rechercher
   const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] = useState(
     false
@@ -49,25 +38,16 @@ const TabAroundMeScreen: React.FC = () => {
   const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] = useState(
     false
   );
+  const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
+  const [showRelaunchResearchButton, setShowRelaunchResearchButton] = useState(
+    true
+  );
+  const [showSnackBar, setShowSnackBar] = useState(false);
+  const [snackBarMessage, setSnackBarMessage] = useState("");
 
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
   };
-
-  useEffect(() => {
-    if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
-      return;
-    }
-    setQueryToUse(DatabaseQueries.AROUNDME_POIS_BY_POSTALCODE);
-    getPois({
-      variables: { codePostal: postalCodeInput },
-    });
-    if (!fetchedPois) return;
-    const fetchedData = (fetchedPois as {
-      cartographiePois: CartographiePoisFromDB[];
-    }).cartographiePois;
-    handleFetchedPois(fetchedData);
-  }, [postalCodeInput, triggerSearchByPostalCode]);
 
   const handleFetchedPois = (pois: CartographiePoisFromDB[]) => {
     if (pois.length === 0) {
@@ -79,6 +59,7 @@ const TabAroundMeScreen: React.FC = () => {
   const onRegionChangeComplete = (newRegion: Region) => {
     setRegion(newRegion);
     setShowSnackBar(false);
+    setShowRelaunchResearchButton(true);
   };
 
   const onSearchByPostalCodeButtonClick = async () => {
@@ -88,6 +69,9 @@ const TabAroundMeScreen: React.FC = () => {
   };
 
   const searchByPostalCodeAndGoToNewRegion = async () => {
+    if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
+      return;
+    }
     const newRegion = await AroundMeUtils.searchRegionByPostalCode(
       postalCodeInput
     );
@@ -113,7 +97,9 @@ const TabAroundMeScreen: React.FC = () => {
   return (
     <View style={styles.mainContainer}>
       <FetchPoisCoords
+        triggerSearchByPostalCode={triggerSearchByPostalCode}
         triggerSearchByGpsCoords={triggerSearchByGpsCoords}
+        postalCode={postalCodeInput}
         region={region}
         setFetchedPois={handleFetchedPois}
       />
@@ -162,17 +148,20 @@ const TabAroundMeScreen: React.FC = () => {
             </View>
           ))}
         </MapView>
-        <View style={styles.relaunchSearchView}>
-          <Button
-            buttonStyle={styles.relaunchSearchButton}
-            title={Labels.aroundMe.relaunchSearch}
-            titleStyle={styles.relaunchSearchButtonText}
-            rounded={true}
-            action={() => {
-              setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
-            }}
-          />
-        </View>
+        {showRelaunchResearchButton && (
+          <View style={styles.relaunchSearchView}>
+            <Button
+              buttonStyle={styles.relaunchSearchButton}
+              title={Labels.aroundMe.relaunchSearch}
+              titleStyle={styles.relaunchSearchButtonText}
+              rounded={true}
+              action={() => {
+                setShowRelaunchResearchButton(false);
+                setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+              }}
+            />
+          </View>
+        )}
       </View>
       <CustomSnackBar
         visible={showSnackBar}
@@ -219,6 +208,8 @@ const styles = StyleSheet.create({
   },
   relaunchSearchButton: {
     backgroundColor: "white",
+    borderColor: Colors.primaryBlue,
+    borderWidth: 1,
     marginHorizontal: Margins.smallest,
   },
   relaunchSearchButtonText: {
