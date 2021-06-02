@@ -29,6 +29,10 @@ export type TabCalendarParamList = {
   tabCalendarScreen: undefined;
 };
 
+export type TabEpdsParamList = {
+  tabEpdsScreen: undefined;
+};
+
 export type TabFavoritesParamList = {
   tabFavoritesScreen: undefined;
 };

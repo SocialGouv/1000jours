@@ -19,6 +19,7 @@ import type {
   BottomTabParamList,
   TabAroundMeParamList,
   TabCalendarParamList,
+  TabEpdsParamList,
   TabFavoritesParamList,
   TabHomeParamList,
   TabItem,
@@ -54,16 +55,16 @@ const BottomTabNavigator: FC = () => {
       title: Labels.tabs.calendarTitle,
     },
     {
-      component: TabFavoritesNavigator,
+      component: TabEpdsNavigator,
       getIcon: (tintColor) => (
         <Icomoon
-          name={IcomoonIcons.favoris}
+          name={IcomoonIcons.testEPDS}
           color={tintColor}
           size={iconSize}
         />
       ),
       name: "tabFavorites",
-      title: Labels.tabs.favoritesTitle,
+      title: Labels.tabs.testEpds,
     },
     {
       component: TabAroundMeNavigator,
@@ -130,15 +131,15 @@ const TabCalendarNavigator: FC = () => (
   </TabCalendarStack.Navigator>
 );
 
-const TabFavoritesStack = createStackNavigator<TabFavoritesParamList>();
-const TabFavoritesNavigator: FC = () => (
-  <TabFavoritesStack.Navigator screenOptions={{ headerShown: false }}>
-    <TabFavoritesStack.Screen
-      name="tabFavoritesScreen"
-      component={TabFavoritesScreen}
+const TabEpdsStack = createStackNavigator<TabEpdsParamList>();
+const TabEpdsNavigator: FC = () => (
+  <TabEpdsStack.Navigator screenOptions={{ headerShown: false }}>
+    <TabEpdsStack.Screen
+      name="tabEpdsScreen"
+      component={EpdsSurveyScreen}
       options={{}}
     />
-  </TabFavoritesStack.Navigator>
+  </TabEpdsStack.Navigator>
 );
 
 const TabAroundMeStack = createStackNavigator<TabAroundMeParamList>();

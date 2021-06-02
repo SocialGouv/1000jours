@@ -193,6 +193,7 @@ export default {
     calendarTitle: "Calendrier",
     favoritesTitle: "Favoris",
     homeTitle: "Accueil",
+    testEpds: "Test EPDS",
   },
   timeline: {
     description:
