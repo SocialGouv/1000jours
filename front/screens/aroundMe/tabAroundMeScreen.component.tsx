@@ -131,10 +131,11 @@ const TabAroundMeScreen: React.FC = () => {
             maxLength={AroundMeConstants.POSTAL_CODE_MAX_LENGTH}
           />
           <Button
-            buttonStyle={styles.callButton}
+            buttonStyle={styles.searchByPostalCodeButton}
             title={Labels.aroundMe.searchButton}
             titleStyle={styles.fontButton}
             rounded={true}
+            disabled={postalCodeInvalid}
             action={onSearchByPostalCodeButtonClick}
           />
         </View>
@@ -191,9 +192,6 @@ const TabAroundMeScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  callButton: {
-    marginHorizontal: Margins.smallest,
-  },
   fontButton: {
     fontSize: Sizes.xxs,
   },
@@ -238,6 +236,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 0,
+  },
+  searchByPostalCodeButton: {
+    marginHorizontal: Margins.smallest,
   },
   title: {
     color: Colors.primaryBlueDark,
