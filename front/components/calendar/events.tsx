@@ -20,7 +20,7 @@ import {
   Sizes,
 } from "../../constants";
 import type { Event } from "../../types";
-import { Icomoon, IcomoonIcons } from "..";
+import Icomoon, { IcomoonIcons } from "../icomoon.component";
 import { CommonText } from "../StyledText";
 
 interface Props {
