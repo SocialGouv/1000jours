@@ -47,3 +47,27 @@ export const AROUNDME_POIS_BY_POSTALCODE = gql`
     }
   }
 `;
+
+export const AROUNDME_POIS_BY_GPSCOORDS = gql`
+  query PoisByGPSCoords(
+    $long1: Float!
+    $lat1: Float!
+    $long2: Float!
+    $lat2: Float!
+  ) {
+    searchPois(perimetre: [$long1, $lat1, $long2, $lat2]) {
+      id
+      cartographie_categorie
+      type
+      nom
+      telephone
+      courriel
+      site_internet
+      geocode_adresse
+      geocode_code_postal
+      geocode_commune
+      geocode_position_latitude
+      geocode_position_longitude
+    }
+  }
+`;
