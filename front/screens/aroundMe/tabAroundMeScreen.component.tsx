@@ -31,6 +31,10 @@ const TabAroundMeScreen: React.FC = () => {
   const [region, setRegion] = useState<Region>(
     AroundMeConstants.INITIAL_REGION
   );
+  const [
+    moveToRegionBecauseOfPCResearch,
+    setMoveToRegionBecauseOfPCResearch,
+  ] = useState(false);
   // Variable utilisée pour trigger le useEffect lors du clic sur le bouton Rechercher
   const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] = useState(
     false
@@ -59,7 +63,13 @@ const TabAroundMeScreen: React.FC = () => {
 
   const onRegionChangeComplete = (newRegion: Region) => {
     setRegion(newRegion);
-    setShowSnackBar(false);
+    /* Lorsqu'on lance une recherche par CP, le moveToRegionBecauseOfPCResearch est mis à true
+    et donc on ne cache pas directement la snackBar si elle a été affichée (en cas d'erreur) */
+    if (moveToRegionBecauseOfPCResearch) {
+      setMoveToRegionBecauseOfPCResearch(false);
+    } else {
+      setShowSnackBar(false);
+    }
     setPostalCodeInvalid(false);
     setShowRelaunchResearchButton(true);
   };
@@ -103,6 +113,7 @@ const TabAroundMeScreen: React.FC = () => {
           mapRef.current?.animateToRegion(newRegion);
         }}
         triggerSearchByPostalCode={() => {
+          setMoveToRegionBecauseOfPCResearch(true);
           setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
         }}
         showSnackBarWithMessage={showSnackBarWithMessage}
