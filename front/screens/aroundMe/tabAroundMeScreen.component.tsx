@@ -3,6 +3,7 @@ import * as React from "react";
 import { StyleSheet, TextInput } from "react-native";
 import type { Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
+import { HelperText } from "react-native-paper";
 
 import {
   Button,
@@ -27,6 +28,7 @@ import { AroundMeUtils, KeyboardUtils } from "../../utils";
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
   const [postalCodeInput, setPostalCodeInput] = useState("");
+  const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
   const [region, setRegion] = useState<Region>(
     AroundMeConstants.INITIAL_REGION
   );
@@ -59,7 +61,13 @@ const TabAroundMeScreen: React.FC = () => {
   const onRegionChangeComplete = (newRegion: Region) => {
     setRegion(newRegion);
     setShowSnackBar(false);
+    setPostalCodeInvalid(false);
     setShowRelaunchResearchButton(true);
+  };
+
+  const onPostalCodeChanged = (newPostalCode: string) => {
+    setPostalCodeInput(newPostalCode);
+    setPostalCodeInvalid(false);
   };
 
   const onSearchByPostalCodeButtonClick = async () => {
@@ -70,6 +78,7 @@ const TabAroundMeScreen: React.FC = () => {
 
   const searchByPostalCodeAndGoToNewRegion = async () => {
     if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
+      setPostalCodeInvalid(true);
       return;
     }
     const newRegion = await AroundMeUtils.searchRegionByPostalCode(
@@ -111,22 +120,29 @@ const TabAroundMeScreen: React.FC = () => {
           {Labels.aroundMe.instruction}
         </SecondaryText>
       </View>
-      <View style={styles.postalCodeView}>
-        <TextInput
-          style={styles.postalCodeInput}
-          onChangeText={setPostalCodeInput}
-          value={postalCodeInput}
-          placeholder={Labels.aroundMe.postalCodeInputPlaceholder}
-          keyboardType="number-pad"
-          maxLength={AroundMeConstants.POSTAL_CODE_MAX_LENGTH}
-        />
-        <Button
-          buttonStyle={styles.callButton}
-          title={Labels.aroundMe.searchButton}
-          titleStyle={styles.fontButton}
-          rounded={true}
-          action={onSearchByPostalCodeButtonClick}
-        />
+      <View>
+        <View style={styles.postalCodeRow}>
+          <TextInput
+            style={styles.postalCodeInput}
+            onChangeText={onPostalCodeChanged}
+            value={postalCodeInput}
+            placeholder={Labels.aroundMe.postalCodeInputPlaceholder}
+            keyboardType="number-pad"
+            maxLength={AroundMeConstants.POSTAL_CODE_MAX_LENGTH}
+          />
+          <Button
+            buttonStyle={styles.callButton}
+            title={Labels.aroundMe.searchButton}
+            titleStyle={styles.fontButton}
+            rounded={true}
+            action={onSearchByPostalCodeButtonClick}
+          />
+        </View>
+        {postalCodeInvalid && (
+          <HelperText type="error">
+            {Labels.aroundMe.postalCodeInvalid}
+          </HelperText>
+        )}
       </View>
       <View style={styles.mapContainer}>
         <MapView
@@ -201,7 +217,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.cardGrey,
     paddingHorizontal: Paddings.smaller,
   },
-  postalCodeView: {
+  postalCodeRow: {
     flexDirection: "row",
     paddingLeft: Margins.default,
     paddingVertical: Paddings.smallest,
