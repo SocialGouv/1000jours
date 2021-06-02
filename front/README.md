@@ -34,14 +34,14 @@ yarn ios
 
 ## 🌓 Font d'icônes (Icomoon)
 
-Pour générer la font d'icônes nous utilisons Icomoon, pour se faire rendez-vous sur le site :
+Pour générer la font d'icônes nous utilisons Icomoon, pour ce faire rendez-vous sur le site :
 - https://icomoon.io/app/#/select  
-- importer les icônes au format svg (./assets/icomoon/svg/)
-- sélectionner les icônes précédement importées
-- cliquer sur "Generate Font" en bas de la page puis "Download"
-- une fois le zip téléchargé, importé les fichiers "icomoon.ttf" et "selection.json" présent dans le zip dans "./assets/icomoon/".
+- Importer les icônes au format svg (./assets/icomoon/svg/)
+- Sélectionner les icônes précédement importées
+- Cliquer sur "Generate Font" en bas de la page puis "Download"
+- une fois le zip téléchargé, importer les fichiers "icomoon.ttf" et "selection.json" présents dans le zip dans "./assets/icomoon/".
 - pour terminer, mettre à jour l'enum "IcomoonIcons" du composant "icomoon.component.tsx"
-(N.B : yarn start-clear est nécessaire pour charger les nouvelles icônes dans l'app)
+(N.B : `yarn start-clear` est nécessaire pour charger les nouvelles icônes dans l'app)
 
 
 ## 🚀 Publication
