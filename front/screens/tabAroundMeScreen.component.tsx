@@ -31,12 +31,9 @@ const TabAroundMeScreen: React.FC = () => {
   const [queryToUse, setQueryToUse] = useState(
     DatabaseQueries.AROUNDME_POIS_BY_POSTALCODE
   );
-  const [getPois, { data: fetchedPois, previousData }] = useLazyQuery(
-    queryToUse,
-    {
-      fetchPolicy: "no-cache",
-    }
-  );
+  const [getPois, { data: fetchedPois }] = useLazyQuery(queryToUse, {
+    fetchPolicy: "no-cache",
+  });
   const [region, setRegion] = useState<Region>(
     AroundMeConstants.INITIAL_REGION
   );
@@ -47,15 +44,10 @@ const TabAroundMeScreen: React.FC = () => {
   const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] = useState(
     false
   );
-  // Variable utilisée pour trigger le useEffect lors du déplacement sur la carte
+  // Variable utilisée pour trigger le useEffect lors du relancement de la Recherche
   const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] = useState(
     false
   );
-  // Variable utilisée pour éviter que les 2 useEffects ne se lancent l'un après l'autre (si le premier a été exécuté, le deuxième ne se lance pas)
-  const [
-    regionWasMovedBecauseOfPostalCode,
-    setRegionWasMovedBecauseOfPostalCode,
-  ] = useState(false);
 
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
@@ -74,17 +66,9 @@ const TabAroundMeScreen: React.FC = () => {
       cartographiePois: CartographiePoisFromDB[];
     }).cartographiePois;
     handleFetchedPois(fetchedData);
-    console.log("setRegionWasMovedBecauseOfPostalCode to true");
-    setRegionWasMovedBecauseOfPostalCode(true);
   }, [postalCodeInput, triggerSearchByPostalCode]);
 
   useEffect(() => {
-    console.log("useEffect");
-    if (regionWasMovedBecauseOfPostalCode) {
-      console.log("regionWasMovedBecauseOfPostalCode");
-      setRegionWasMovedBecauseOfPostalCode(false);
-      return;
-    }
     const topLeftPoint = AroundMeUtils.getLatLngPoint(
       region,
       AroundMeConstants.LatLngPointType.topLeft
@@ -93,30 +77,26 @@ const TabAroundMeScreen: React.FC = () => {
       region,
       AroundMeConstants.LatLngPointType.bottomRight
     );
-    // console.log(
-    //   `${JSON.stringify(topLeftPoint)} ${JSON.stringify(bottomRightPoint)}`
-    // );
     setQueryToUse(DatabaseQueries.AROUNDME_POIS_BY_GPSCOORDS);
-    console.log("getPois by coords...");
+    const variables = {
+      lat1: topLeftPoint.latitude,
+      lat2: bottomRightPoint.latitude,
+      long1: topLeftPoint.longitude,
+      long2: bottomRightPoint.longitude,
+    };
+    console.log(JSON.stringify(variables));
     getPois({
-      variables: {
-        lat1: topLeftPoint.latitude,
-        lat2: bottomRightPoint.latitude,
-        long1: topLeftPoint.longitude,
-        long2: bottomRightPoint.longitude,
-      },
+      variables,
     });
-    console.log("END OF getPois by coords...");
     if (!fetchedPois) return;
+    console.log(JSON.stringify(fetchedPois));
     const fetchedData = (fetchedPois as {
       searchPois: CartographiePoisFromDB[];
     }).searchPois;
-    console.log(fetchedData);
     handleFetchedPois(fetchedData);
-  }, [region]);
+  }, [triggerSearchByGpsCoords]);
 
   const handleFetchedPois = (pois: CartographiePoisFromDB[]) => {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (pois.length === 0) {
       showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
     }
@@ -126,7 +106,6 @@ const TabAroundMeScreen: React.FC = () => {
   const onRegionChangeComplete = (newRegion: Region) => {
     setRegion(newRegion);
     setShowSnackBar(false);
-    // setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
   };
 
   const onSearchByPostalCodeButtonClick = async () => {
@@ -205,6 +184,17 @@ const TabAroundMeScreen: React.FC = () => {
             </View>
           ))}
         </MapView>
+        <View style={styles.relaunchSearchView}>
+          <Button
+            buttonStyle={styles.relaunchSearchButton}
+            title={Labels.aroundMe.relaunchSearch}
+            titleStyle={styles.relaunchSearchButtonText}
+            rounded={true}
+            action={() => {
+              setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+            }}
+          />
+        </View>
       </View>
       <CustomSnackBar
         visible={showSnackBar}
@@ -248,6 +238,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingLeft: Margins.default,
     paddingVertical: Paddings.smallest,
+  },
+  relaunchSearchButton: {
+    backgroundColor: "white",
+    marginHorizontal: Margins.smallest,
+  },
+  relaunchSearchButtonText: {
+    color: Colors.primaryBlue,
+    fontSize: Sizes.xxs,
+  },
+  relaunchSearchView: {
+    backgroundColor: "transparent",
+    margin: Margins.smaller,
+    position: "absolute",
+    right: 0,
+    top: 0,
   },
   title: {
     color: Colors.primaryBlueDark,
