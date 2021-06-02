@@ -1,9 +1,8 @@
 import { useRef, useState } from "react";
 import * as React from "react";
-import { StyleSheet, TextInput } from "react-native";
+import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
-import { HelperText } from "react-native-paper";
 
 import {
   Button,
@@ -23,7 +22,7 @@ import {
   Sizes,
 } from "../../constants";
 import type { CartographiePoisFromDB } from "../../type";
-import { AroundMeUtils, KeyboardUtils } from "../../utils";
+import SearchByPostalCode from "./searchByPostalCode.component";
 
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
@@ -65,35 +64,6 @@ const TabAroundMeScreen: React.FC = () => {
     setShowRelaunchResearchButton(true);
   };
 
-  const onPostalCodeChanged = (newPostalCode: string) => {
-    setPostalCodeInput(newPostalCode);
-    setPostalCodeInvalid(false);
-  };
-
-  const onSearchByPostalCodeButtonClick = async () => {
-    KeyboardUtils.dismissKeyboard();
-    setShowSnackBar(false);
-    await searchByPostalCodeAndGoToNewRegion();
-  };
-
-  const searchByPostalCodeAndGoToNewRegion = async () => {
-    if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
-      setPostalCodeInvalid(true);
-      return;
-    }
-    const newRegion = await AroundMeUtils.searchRegionByPostalCode(
-      postalCodeInput
-    );
-
-    if (newRegion) {
-      setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
-      setRegion(newRegion);
-      mapRef.current?.animateToRegion(newRegion);
-    } else {
-      showSnackBarWithMessage(Labels.aroundMe.postalCodeNotFound);
-    }
-  };
-
   const showSnackBarWithMessage = (message: string) => {
     setSnackBarMessage(message);
     setShowSnackBar(true);
@@ -120,31 +90,23 @@ const TabAroundMeScreen: React.FC = () => {
           {Labels.aroundMe.instruction}
         </SecondaryText>
       </View>
-      <View>
-        <View style={styles.postalCodeRow}>
-          <TextInput
-            style={styles.postalCodeInput}
-            onChangeText={onPostalCodeChanged}
-            value={postalCodeInput}
-            placeholder={Labels.aroundMe.postalCodeInputPlaceholder}
-            keyboardType="number-pad"
-            maxLength={AroundMeConstants.POSTAL_CODE_MAX_LENGTH}
-          />
-          <Button
-            buttonStyle={styles.searchByPostalCodeButton}
-            title={Labels.aroundMe.searchButton}
-            titleStyle={styles.fontButton}
-            rounded={true}
-            disabled={postalCodeInvalid}
-            action={onSearchByPostalCodeButtonClick}
-          />
-        </View>
-        {postalCodeInvalid && (
-          <HelperText type="error">
-            {Labels.aroundMe.postalCodeInvalid}
-          </HelperText>
-        )}
-      </View>
+      <SearchByPostalCode
+        postalCodeInput={postalCodeInput}
+        setPostalCodeInput={setPostalCodeInput}
+        postalCodeInvalid={postalCodeInvalid}
+        setPostalCodeInvalid={setPostalCodeInvalid}
+        hideSnackBar={() => {
+          setShowSnackBar(false);
+        }}
+        setAndGoToNewRegion={(newRegion: Region) => {
+          setRegion(newRegion);
+          mapRef.current?.animateToRegion(newRegion);
+        }}
+        triggerSearchByPostalCode={() => {
+          setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
+        }}
+        showSnackBarWithMessage={showSnackBarWithMessage}
+      />
       <View style={styles.mapContainer}>
         <MapView
           ref={setMapViewRef}
@@ -211,15 +173,6 @@ const styles = StyleSheet.create({
     height: "80%",
     width: "100%",
   },
-  postalCodeInput: {
-    backgroundColor: Colors.cardGrey,
-    paddingHorizontal: Paddings.smaller,
-  },
-  postalCodeRow: {
-    flexDirection: "row",
-    paddingLeft: Margins.default,
-    paddingVertical: Paddings.smallest,
-  },
   relaunchSearchButton: {
     backgroundColor: "white",
     borderColor: Colors.primaryBlue,
@@ -236,9 +189,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 0,
-  },
-  searchByPostalCodeButton: {
-    marginHorizontal: Margins.smallest,
   },
   title: {
     color: Colors.primaryBlueDark,
