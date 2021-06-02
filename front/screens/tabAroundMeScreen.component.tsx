@@ -24,6 +24,7 @@ import {
 } from "../constants";
 import type { CartographiePoisFromDB } from "../type";
 import { AroundMeUtils, KeyboardUtils } from "../utils";
+import FetchPoisCoords from "./aroundMe/fetchPoisCoords.component";
 
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
@@ -68,34 +69,6 @@ const TabAroundMeScreen: React.FC = () => {
     handleFetchedPois(fetchedData);
   }, [postalCodeInput, triggerSearchByPostalCode]);
 
-  useEffect(() => {
-    const topLeftPoint = AroundMeUtils.getLatLngPoint(
-      region,
-      AroundMeConstants.LatLngPointType.topLeft
-    );
-    const bottomRightPoint = AroundMeUtils.getLatLngPoint(
-      region,
-      AroundMeConstants.LatLngPointType.bottomRight
-    );
-    setQueryToUse(DatabaseQueries.AROUNDME_POIS_BY_GPSCOORDS);
-    const variables = {
-      lat1: topLeftPoint.latitude,
-      lat2: bottomRightPoint.latitude,
-      long1: topLeftPoint.longitude,
-      long2: bottomRightPoint.longitude,
-    };
-    console.log(JSON.stringify(variables));
-    getPois({
-      variables,
-    });
-    if (!fetchedPois) return;
-    console.log(JSON.stringify(fetchedPois));
-    const fetchedData = (fetchedPois as {
-      searchPois: CartographiePoisFromDB[];
-    }).searchPois;
-    handleFetchedPois(fetchedData);
-  }, [triggerSearchByGpsCoords]);
-
   const handleFetchedPois = (pois: CartographiePoisFromDB[]) => {
     if (pois.length === 0) {
       showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
@@ -139,6 +112,11 @@ const TabAroundMeScreen: React.FC = () => {
 
   return (
     <View style={styles.mainContainer}>
+      <FetchPoisCoords
+        triggerSearchByGpsCoords={triggerSearchByGpsCoords}
+        region={region}
+        setFetchedPois={handleFetchedPois}
+      />
       <View style={styles.topContainer}>
         <SecondaryText style={styles.title}>
           {Labels.aroundMe.title}

@@ -7,6 +7,7 @@ export default {
     noAddressFound: "Aucune adresse n'a été trouvée dans cette zone",
     postalCodeInputPlaceholder: "Rechercher par code postal",
     postalCodeNotFound: "Le code postal que vous recherchez n'a pas été trouvé",
+    relaunchSearch: "Relancer la recherche",
     searchButton: "Rechercher",
     title: "Autour de moi",
   },
