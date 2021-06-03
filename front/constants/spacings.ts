@@ -2,6 +2,7 @@ import { scaleNormalize } from "../utils/scaleNormalize.util";
 
 /* eslint-disable sort-keys-fix/sort-keys-fix */
 export const Margins = {
+  evenMoreSmallest: scaleNormalize(2),
   smallest: scaleNormalize(4),
   smaller: scaleNormalize(8),
   light: scaleNormalize(10),

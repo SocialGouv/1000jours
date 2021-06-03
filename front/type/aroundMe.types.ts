@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
+import type { AroundMeConstants } from "../constants";
+
 export interface CartographiePoisFromDB {
   id: number;
-  cartographie_categorie: string;
-  type: string;
+  cartographie_categorie: AroundMeConstants.PoiCategorieEnum;
+  type: AroundMeConstants.PoiTypeEnum;
   nom: string | null;
   telephone: string | null;
   courriel: string | null;

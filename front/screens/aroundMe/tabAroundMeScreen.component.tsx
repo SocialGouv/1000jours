@@ -50,7 +50,10 @@ const TabAroundMeScreen: React.FC = () => {
   );
   const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
   const [displayAddressDetails, setDisplayAddressDetails] = useState(false);
-  const [addressDetails, setAddressDetails] = useState<CartographiePoisFromDB>();
+  const [
+    addressDetails,
+    setAddressDetails,
+  ] = useState<CartographiePoisFromDB>();
   const [showRelaunchResearchButton, setShowRelaunchResearchButton] = useState(
     true
   );
