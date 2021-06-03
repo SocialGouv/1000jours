@@ -8,6 +8,7 @@ export const Margins = {
   default: scaleNormalize(16),
   larger: scaleNormalize(24),
   largest: scaleNormalize(36),
+  step: scaleNormalize(60),
 };
 
 export const Paddings = {
@@ -17,4 +18,5 @@ export const Paddings = {
   default: scaleNormalize(16),
   larger: scaleNormalize(24),
   largest: scaleNormalize(40),
+  stepOffset: scaleNormalize(100),
 };

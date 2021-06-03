@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import * as React from "react";
-import { StyleSheet, TextInput } from "react-native";
-import type { LatLng, Region } from "react-native-maps";
+import { StyleSheet } from "react-native";
+import type { Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import {
@@ -9,8 +9,9 @@ import {
   CommonText,
   CustomSnackBar,
   SecondaryText,
-  View,
 } from "../../components";
+import FetchPoisCoords from "../../components/aroundMe/fetchPoisCoords.component";
+import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
   Colors,
@@ -20,65 +21,77 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
-import type { AddressDetailsType } from "../../type";
-import { AroundMeUtils, KeyboardUtils } from "../../utils";
+import type { AddressDetailsType, CartographiePoisFromDB } from "../../type";
 import AddressDetails from "./addressDetails.component";
+import SearchByPostalCode from "./searchByPostalCode.component";
 
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
   const [postalCodeInput, setPostalCodeInput] = useState("");
+  const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
   const [region, setRegion] = useState<Region>(
     AroundMeConstants.INITIAL_REGION
   );
-  const [markersArray, setMarkersArray] = useState<LatLng[]>([
-    AroundMeConstants.COORDINATE_PARIS,
-  ]);
-  const [showSnackBar, setShowSnackBar] = useState(false);
+  const [
+    moveToRegionBecauseOfPCResearch,
+    setMoveToRegionBecauseOfPCResearch,
+  ] = useState(false);
+  const [
+    moveToRegionBecauseOfMarkerClick,
+    setMoveToRegionBecauseOfMarkerClick,
+  ] = useState(false);
+  // Variable utilisée pour trigger le useEffect lors du clic sur le bouton Rechercher
+  const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] = useState(
+    false
+  );
+  // Variable utilisée pour trigger le useEffect lors du relancement de la Recherche
+  const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] = useState(
+    false
+  );
+  const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
   const [displayAddressDetails, setDisplayAddressDetails] = useState(false);
   const [addressDetails, setAddressDetails] = useState<AddressDetailsType>();
+  const [showRelaunchResearchButton, setShowRelaunchResearchButton] = useState(
+    true
+  );
+  const [showSnackBar, setShowSnackBar] = useState(false);
+  const [snackBarMessage, setSnackBarMessage] = useState("");
 
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
   };
 
-  const onRegionChange = (newRegion: Region) => {
-    setRegion(newRegion);
-  };
-
-  const onSearchByPostalCodeButtonClick = async () => {
-    KeyboardUtils.dismissKeyboard();
-    setShowSnackBar(false);
-    setDisplayAddressDetails(false);
-    await searchByPostalCodeAndGoToNewRegion();
-  };
-
-  const searchByPostalCodeAndGoToNewRegion = async () => {
-    const regionData = await AroundMeUtils.searchRegionByPostalCode(
-      postalCodeInput
-    );
-
-    if (regionData.regionIsFetched && regionData.newRegion) {
-      const newRegion = regionData.newRegion;
-      const newLatLngs = [
-        AroundMeUtils.getLatLngPoint(
-          newRegion,
-          AroundMeConstants.LatLngPointType.center
-        ),
-        AroundMeUtils.getLatLngPoint(
-          newRegion,
-          AroundMeConstants.LatLngPointType.topLeft
-        ),
-        AroundMeUtils.getLatLngPoint(
-          newRegion,
-          AroundMeConstants.LatLngPointType.bottomRight
-        ),
-      ];
-      setMarkersArray(newLatLngs);
-      setRegion(newRegion);
-      mapRef.current?.animateToRegion(newRegion);
-    } else {
-      setShowSnackBar(true);
+  const handleFetchedPois = (pois: CartographiePoisFromDB[]) => {
+    if (pois.length === 0) {
+      showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
     }
+    setPoisArray(pois.slice(0, AroundMeConstants.NUMBER_MAX_MARKERS_ON_MAP));
+  };
+
+  const onRegionChangeComplete = (newRegion: Region) => {
+    setRegion(newRegion);
+    /* Lorsqu'on lance une recherche par CP, le moveToRegionBecauseOfPCResearch est mis à true
+    et donc on ne cache pas directement la snackBar si elle a été affichée (en cas d'erreur) */
+    if (moveToRegionBecauseOfPCResearch) {
+      setMoveToRegionBecauseOfPCResearch(false);
+    } else {
+      setShowSnackBar(false);
+    }
+
+    /* Lorsqu'on clique sur un marqueur, le moveToRegionBecauseOfMarkerClick est mis à true
+    et donc on ne cache pas directement le AddressDetails s'il a été affiché */
+    if (moveToRegionBecauseOfMarkerClick) {
+      setMoveToRegionBecauseOfMarkerClick(false);
+    } else {
+      setDisplayAddressDetails(false);
+    }
+    setPostalCodeInvalid(false);
+    setShowRelaunchResearchButton(true);
+  };
+
+  const showSnackBarWithMessage = (message: string) => {
+    setSnackBarMessage(message);
+    setShowSnackBar(true);
   };
 
   const onSnackBarDismiss = () => {
@@ -97,10 +110,18 @@ const TabAroundMeScreen: React.FC = () => {
     };
     setAddressDetails(details);
     setDisplayAddressDetails(true);
+    setMoveToRegionBecauseOfMarkerClick(true);
   };
 
   return (
     <View style={styles.mainContainer}>
+      <FetchPoisCoords
+        triggerSearchByPostalCode={triggerSearchByPostalCode}
+        triggerSearchByGpsCoords={triggerSearchByGpsCoords}
+        postalCode={postalCodeInput}
+        region={region}
+        setFetchedPois={handleFetchedPois}
+      />
       <View style={styles.topContainer}>
         <SecondaryText style={styles.title}>
           {Labels.aroundMe.title}
@@ -109,46 +130,63 @@ const TabAroundMeScreen: React.FC = () => {
           {Labels.aroundMe.instruction}
         </SecondaryText>
       </View>
-      <View style={styles.postalCodeView}>
-        <TextInput
-          style={styles.postalCodeInput}
-          onChangeText={setPostalCodeInput}
-          value={postalCodeInput}
-          placeholder={Labels.aroundMe.postalCodeInputPlaceholder}
-          keyboardType="number-pad"
-          maxLength={AroundMeConstants.POSTAL_CODE_MAX_LENGTH}
-        />
-        <Button
-          buttonStyle={styles.callButton}
-          title={Labels.aroundMe.searchButton}
-          titleStyle={styles.fontButton}
-          rounded={true}
-          action={onSearchByPostalCodeButtonClick}
-        />
-      </View>
+      <SearchByPostalCode
+        postalCodeInput={postalCodeInput}
+        setPostalCodeInput={setPostalCodeInput}
+        postalCodeInvalid={postalCodeInvalid}
+        setPostalCodeInvalid={setPostalCodeInvalid}
+        hideSnackBar={() => {
+          setShowSnackBar(false);
+        }}
+        setAndGoToNewRegion={(newRegion: Region) => {
+          setDisplayAddressDetails(false);
+          setRegion(newRegion);
+          mapRef.current?.animateToRegion(newRegion);
+        }}
+        triggerSearchByPostalCode={() => {
+          setMoveToRegionBecauseOfPCResearch(true);
+          setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
+        }}
+        showSnackBarWithMessage={showSnackBarWithMessage}
+      />
       <View style={styles.map}>
         <MapView
-          onTouchEnd={() => {
-            setDisplayAddressDetails(false);
-          }}
           ref={setMapViewRef}
           provider={PROVIDER_DEFAULT}
           style={styles.map}
           initialRegion={region}
-          onRegionChange={onRegionChange}
+          onRegionChangeComplete={onRegionChangeComplete}
         >
-          {markersArray.map((marker, markerIndex) => (
-            <View key={markerIndex}>
+          {poisArray.map((poi, poiIndex) => (
+            <View key={poiIndex}>
               <Marker
-                coordinate={marker}
+                coordinate={{
+                  latitude: Number(poi.geocode_position_latitude),
+                  longitude: Number(poi.geocode_position_longitude),
+                }}
                 pinColor="red"
                 onPress={() => {
-                  onMarkerClick(markerIndex);
+                  onMarkerClick(poiIndex);
                 }}
-              ></Marker>
+              />
             </View>
           ))}
         </MapView>
+        {showRelaunchResearchButton && (
+          <View style={styles.relaunchSearchView}>
+            <Button
+              buttonStyle={styles.relaunchSearchButton}
+              title={Labels.aroundMe.relaunchSearch}
+              titleStyle={styles.relaunchSearchButtonText}
+              rounded={true}
+              action={() => {
+                setShowRelaunchResearchButton(false);
+                setDisplayAddressDetails(false);
+                setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+              }}
+            />
+          </View>
+        )}
       </View>
       {displayAddressDetails && addressDetails && (
         <AddressDetails details={addressDetails} />
@@ -158,24 +196,13 @@ const TabAroundMeScreen: React.FC = () => {
         duration={AroundMeConstants.SNACKBAR_DURATION}
         onDismiss={onSnackBarDismiss}
       >
-        <CommonText>{Labels.aroundMe.postalCodeNotFound}</CommonText>
+        <CommonText>{snackBarMessage}</CommonText>
       </CustomSnackBar>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  addressDetails: {
-    bottom: 0,
-    left: 0,
-    marginHorizontal: Margins.default,
-    marginVertical: Margins.smaller,
-    position: "absolute",
-    right: 0,
-  },
-  callButton: {
-    marginHorizontal: Margins.smallest,
-  },
   fontButton: {
     fontSize: Sizes.xxs,
   },
@@ -191,14 +218,22 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
-  postalCodeInput: {
-    backgroundColor: Colors.cardGrey,
-    paddingHorizontal: Paddings.smaller,
+  relaunchSearchButton: {
+    backgroundColor: "white",
+    borderColor: Colors.primaryBlue,
+    borderWidth: 1,
+    marginHorizontal: Margins.smallest,
   },
-  postalCodeView: {
-    flexDirection: "row",
-    paddingLeft: Margins.default,
-    paddingVertical: Paddings.smallest,
+  relaunchSearchButtonText: {
+    color: Colors.primaryBlue,
+    fontSize: Sizes.xxs,
+  },
+  relaunchSearchView: {
+    backgroundColor: "transparent",
+    margin: Margins.smaller,
+    position: "absolute",
+    right: 0,
+    top: 0,
   },
   title: {
     color: Colors.primaryBlueDark,

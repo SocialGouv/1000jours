@@ -4,8 +4,11 @@ export default {
   aroundMe: {
     instruction:
       "Trouvez tous les professionnels autour de vous qui pourront vous aider dans votre rôle de parents.",
+    noAddressFound: "Aucune adresse n'a été trouvée dans cette zone",
     postalCodeInputPlaceholder: "Rechercher par code postal",
+    postalCodeInvalid: "Le code postal que vous avez saisi n'est pas valide",
     postalCodeNotFound: "Le code postal que vous recherchez n'a pas été trouvé",
+    relaunchSearch: "Relancer la recherche",
     searchButton: "Rechercher",
     title: "Autour de moi",
   },
@@ -35,8 +38,9 @@ export default {
     listOfEvents: "Liste des événements",
     noChildBirthday: "Aucune date de naissance",
     noEventMessage: "Aucun événement",
+    today: "Aujourd'hui",
   },
-  dateFormatLabel: "dd/mm/yyyy",
+  dateFormatLabel: "Jour / Mois / Année",
   epdsSurvey: {
     description:
       "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.",
@@ -191,10 +195,12 @@ export default {
     calendarTitle: "Calendrier",
     favoritesTitle: "Favoris",
     homeTitle: "Accueil",
+    testEpds: "Test EPDS",
   },
   timeline: {
     description:
       "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. A chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
     title: "Choisissez l'étape que vous souhaitez approfondir",
   },
+  warning: "Attention",
 };

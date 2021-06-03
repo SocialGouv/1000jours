@@ -7,6 +7,7 @@ import Labels from "./Labels";
 import Layouts, { FontWeight } from "./Layout";
 import Locales from "./localizations";
 import * as PlatformConstants from "./platform.constants";
+import Shadow from "./shadow.constants";
 import Sizes from "./sizes";
 import { Margins, Paddings } from "./spacings";
 import * as StorageKeysConstants from "./storageKeys.constants";
@@ -24,6 +25,7 @@ export {
   Margins,
   Paddings,
   PlatformConstants,
+  Shadow,
   Sizes,
   StorageKeysConstants,
 };

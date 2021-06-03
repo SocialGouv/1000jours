@@ -37,7 +37,7 @@ const Filters: FC<Props> = ({ articles, applyFilter }) => {
 
   useEffect(() => {
     setFilters(getFilters(articles));
-  }, []);
+  }, [articles]);
 
   return (
     <View style={styles.paddingsDefault}>

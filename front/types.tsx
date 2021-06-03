@@ -29,6 +29,10 @@ export type TabCalendarParamList = {
   tabCalendarScreen: undefined;
 };
 
+export type TabEpdsParamList = {
+  tabEpdsScreen: undefined;
+};
+
 export type TabFavoritesParamList = {
   tabFavoritesScreen: undefined;
 };
@@ -38,7 +42,7 @@ export type TabAroundMeParamList = {
 };
 
 export type UserSituation = {
-  id: number;
+  id: string;
   label: string;
   isChecked: boolean;
 };
@@ -46,6 +50,15 @@ export type UserSituation = {
 export type UserContext = {
   situations: UserSituation[];
   childBirthday: Date | null;
+};
+
+export type UserInfos = {
+  projet?: boolean;
+  conception?: boolean;
+  grossesse?: boolean;
+  enfant?: boolean;
+  enfants?: boolean;
+  date?: string | null;
 };
 
 export type TabItem = {
@@ -60,6 +73,7 @@ export type Step = {
   ordre: number;
   nom: string;
   description: string | null;
+  active: boolean | null;
 };
 
 export type Event = {

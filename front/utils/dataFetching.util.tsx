@@ -1,4 +1,4 @@
-import type { DocumentNode } from "@apollo/client";
+import { DocumentNode, useLazyQuery } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import * as React from "react";
 import { ActivityIndicator } from "react-native";
@@ -21,6 +21,20 @@ export const fetchData = (query: DocumentNode): DataFetchingType => {
     return {
       isFetched: false,
       loadingOrErrorComponent: <CommonText>{Labels.errorMsg}</CommonText>,
+    };
+
+  return { isFetched: true, response: data };
+};
+
+export const fetchDataLazy = (query: DocumentNode): DataFetchingType => {
+  const [getDataLazy, { loading, data }] = useLazyQuery(query, {
+    fetchPolicy: "no-cache",
+  });
+
+  if (loading)
+    return {
+      isFetched: false,
+      loadingOrErrorComponent: <ActivityIndicator size="large" />,
     };
 
   return { isFetched: true, response: data };

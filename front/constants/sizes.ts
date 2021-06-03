@@ -19,6 +19,8 @@ const Sizes = {
   xxxxl: scaleNormalize(46),
   giant: scaleNormalize(300),
   logo: scaleNormalize(70),
+  step: scaleNormalize(80),
+  timelineBlock: scaleNormalize(100),
   thumbnail: scaleNormalize(100),
 };
 

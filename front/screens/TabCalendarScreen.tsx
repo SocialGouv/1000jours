@@ -1,16 +1,16 @@
 import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
+import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useEffect } from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 
-import { Button } from "../components";
+import { Button, CommonText } from "../components";
 import Agenda from "../components/calendar/agenda";
 import Events from "../components/calendar/events";
 import Icomoon, { IcomoonIcons } from "../components/icomoon.component";
-import { CommonText } from "../components";
 import { Text, View } from "../components/Themed";
 import {
   Colors,
@@ -22,13 +22,12 @@ import {
 } from "../constants";
 import type { Event } from "../types";
 import { StorageUtils, TrackerUtils } from "../utils";
-import { useMatomo } from "matomo-tracker-react-native";
 
 const TabCalendarScreen: FC = () => {
   const { trackScreenView } = useMatomo();
   trackScreenView(TrackerUtils.TrackingEvent.CALENDAR);
   const [childBirthday, setChildBirthday] = React.useState("");
-  const [isModeAgenda, setIsModeAgenda] = React.useState(true);
+  const [isModeAgenda, setIsModeAgenda] = React.useState(false);
 
   useEffect(() => {
     const loadChildBirthday = async () => {

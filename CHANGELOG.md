@@ -1,3 +1,43 @@
+# [1.33.0](https://github.com/SocialGouv/1000jours/compare/v1.32.1...v1.33.0) (2021-05-31)
+
+
+### Features
+
+* **carto:** Ajoute le géocoding des adresses de points d'intérêt ([#243](https://github.com/SocialGouv/1000jours/issues/243)) refs [#219](https://github.com/SocialGouv/1000jours/issues/219) ([e19233e](https://github.com/SocialGouv/1000jours/commit/e19233eda47e968997f9e407c4a1d2b12e57c926))
+
+## [1.32.1](https://github.com/SocialGouv/1000jours/compare/v1.32.0...v1.32.1) (2021-05-31)
+
+
+### Bug Fixes
+
+* **carto:** Corrige les liens de base de données vers les POIs ([#242](https://github.com/SocialGouv/1000jours/issues/242)) ([0199e44](https://github.com/SocialGouv/1000jours/commit/0199e44a146e8d363b3887d3e66d404b0c6ceda4))
+
+# [1.32.0](https://github.com/SocialGouv/1000jours/compare/v1.31.0...v1.32.0) (2021-05-31)
+
+
+### Features
+
+* **carto:** Ajoute les POIs dans le backoffice ([#241](https://github.com/SocialGouv/1000jours/issues/241)) refs [#219](https://github.com/SocialGouv/1000jours/issues/219) ([f03ce7b](https://github.com/SocialGouv/1000jours/commit/f03ce7b8cb09f4c748fa109b79b71fb1d8c2d4e4))
+
+# [1.31.0](https://github.com/SocialGouv/1000jours/compare/v1.30.1...v1.31.0) (2021-05-27)
+
+
+### Bug Fixes
+
+* **ci:** upgrade deps ([#234](https://github.com/SocialGouv/1000jours/issues/234)) ([bca8edc](https://github.com/SocialGouv/1000jours/commit/bca8edca3fc79caaa8eef2e75d77642a6900499d))
+
+
+### Features
+
+* 🎸 Affiche ma situation sur la timeline ([#231](https://github.com/SocialGouv/1000jours/issues/231)) ([e9363ea](https://github.com/SocialGouv/1000jours/commit/e9363ea9c38cf48e21fb6acc6012a84261e9b9f1)), closes [#30](https://github.com/SocialGouv/1000jours/issues/30) [#30](https://github.com/SocialGouv/1000jours/issues/30)
+
+## [1.30.1](https://github.com/SocialGouv/1000jours/compare/v1.30.0...v1.30.1) (2021-05-26)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'affichage des filtres ([#232](https://github.com/SocialGouv/1000jours/issues/232)) ([b6b39f8](https://github.com/SocialGouv/1000jours/commit/b6b39f83eee52f8dcfcbf2e2c03256341cc4a18c))
+
 # [1.30.0](https://github.com/SocialGouv/1000jours/compare/v1.29.0...v1.30.0) (2021-05-25)
 
 

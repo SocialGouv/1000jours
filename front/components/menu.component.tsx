@@ -106,6 +106,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
       onCloseEnd={() => {
         setShowMenu(false);
       }}
+      enabledContentTapInteraction={false}
     />
   ) : showLegalNotice ? (
     <LegalNotice setIsVisible={setShowLegalNotice} />

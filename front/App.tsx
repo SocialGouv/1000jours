@@ -13,6 +13,7 @@ import { StorageKeysConstants } from "./constants";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
+import { initMonitoring, reportError } from "./utils/logging.util";
 import { StorageUtils, TrackerUtils } from "./utils";
 
 const client = new ApolloClient({
@@ -22,6 +23,7 @@ const client = new ApolloClient({
 });
 
 initLocales();
+initMonitoring();
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const customFonts = { IcoMoon: IcomoonFont };
@@ -41,7 +43,7 @@ const App: FC = () => {
         setFontsLoaded(true);
       })
       .catch((error) => {
-        console.error(error);
+        reportError(error);
       });
   }, []);
 

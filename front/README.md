@@ -32,6 +32,18 @@ Pour lancer l'émulateur iOS, utilisez :
 yarn ios
 ```
 
+## 🌓 Font d'icônes (Icomoon)
+
+Pour générer la font d'icônes nous utilisons Icomoon, pour ce faire rendez-vous sur le site :
+- https://icomoon.io/app/#/select  
+- Importer les icônes au format svg (./assets/icomoon/svg/)
+- Sélectionner les icônes précédement importées
+- Cliquer sur "Generate Font" en bas de la page puis "Download"
+- Une fois le zip téléchargé, importer les fichiers "icomoon.ttf" et "selection.json" présents dans le zip dans "./assets/icomoon/".
+- Pour terminer, mettre à jour l'enum "IcomoonIcons" du composant "icomoon.component.tsx"
+(N.B : `yarn start-clear` est nécessaire pour charger les nouvelles icônes dans l'app)
+
+
 ## 🚀 Publication
 
 ### ✋ Manuellement
@@ -53,11 +65,6 @@ yarn build-dev
 Pour publier l'application (changements dans le bundle JS), utilisez :
 ```bash
 yarn publish-prod
-```
-
-Pour builder et publier l'application (changements dans le code natif), utilisez :
-```bash
-yarn build-prod
 ```
 
 ### 🪄 Automatiquement

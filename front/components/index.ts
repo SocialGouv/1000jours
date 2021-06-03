@@ -15,7 +15,6 @@ import Checkbox from "./form/Checkbox";
 import Datepicker from "./form/DatePicker";
 import HeaderApp from "./HeaderApp";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
-import Menu from "./menu.component";
 import Modal from "./modal.component";
 import {
   CommonText,
@@ -45,7 +44,6 @@ export {
   ImageBanner,
   InShort,
   Links,
-  Menu,
   Modal,
   SecondaryText,
   StepIcon,

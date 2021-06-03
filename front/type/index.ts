@@ -1,4 +1,4 @@
-import { AddressDetailsType } from "./aroundMe.types";
+import { AddressDetailsType, CartographiePoisFromDB } from "./aroundMe.types";
 import { DataFetchingType } from "./dataFetching.types";
 import {
   EpdsAnswer,
@@ -14,6 +14,7 @@ import {
 
 export {
   AddressDetailsType,
+  CartographiePoisFromDB,
   DataFetchingType,
   EpdsAnswer,
   EpdsGenders,
