@@ -14,11 +14,11 @@ import {
   Margins,
   Sizes,
 } from "../../constants";
-import type { AddressDetailsType } from "../../type";
-import { LinkingUtils } from "../../utils";
+import type { CartographiePoisFromDB } from "../../type";
+import { LinkingUtils, StringUtils } from "../../utils";
 
 interface AddressDetailsProps {
-  details: AddressDetailsType;
+  details: CartographiePoisFromDB;
 }
 
 const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
@@ -37,37 +37,40 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
 
   return (
     <View style={styles.rowContainer}>
-      <View style={styles.icon}>{getIcon(details.poiType)}</View>
+      {/* <View style={styles.icon}>{getIcon(details.poiType)}</View> */}
       <View style={styles.addressDetails}>
-        <CommonText style={styles.professionalName}>
-          {details.professionalName}
-        </CommonText>
+        {StringUtils.stringIsNotNullNorEmpty(details.nom) && (
+          <CommonText style={styles.professionalName}>{details.nom}</CommonText>
+        )}
         <View style={styles.rowView}>
           <DetailsAddressIcon />
-          <CommonText style={styles.text}>{details.postalAddress}</CommonText>
+          <View style={styles.columnView}>
+            <CommonText style={styles.text}>
+              {details.geocode_adresse}
+            </CommonText>
+            <CommonText style={styles.text}>
+              {details.geocode_code_postal} {details.geocode_commune}
+            </CommonText>
+          </View>
         </View>
-        <TouchableOpacity
-          style={styles.rowView}
-          onPress={async () => LinkingUtils.callContact(details.phoneNumber)}
-        >
-          <DetailsPhoneIcon />
-          <CommonText style={styles.contact}>{details.phoneNumber}</CommonText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.rowView}
-          onPress={async () => LinkingUtils.sendEmail(details.emailAddress)}
-        >
-          <DetailsMailIcon />
-          <CommonText style={styles.contact}>{details.emailAddress}</CommonText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.rowView}
-          onPress={async () => LinkingUtils.openWebsite(details.website)}
-        >
-          <DetailsWebIcon />
-          <CommonText style={styles.contact}>{details.website}</CommonText>
-        </TouchableOpacity>
-        <CommonText style={styles.text}>{details.accessibilityInfo}</CommonText>
+        {StringUtils.stringIsNotNullNorEmpty(details.telephone) && (
+          <TouchableOpacity
+            style={styles.rowView}
+            onPress={async () => LinkingUtils.callContact(details.telephone)}
+          >
+            <DetailsPhoneIcon />
+            <CommonText style={styles.contact}>{details.telephone}</CommonText>
+          </TouchableOpacity>
+        )}
+        {StringUtils.stringIsNotNullNorEmpty(details.courriel) && (
+          <TouchableOpacity
+            style={styles.rowView}
+            onPress={async () => LinkingUtils.sendEmail(details.courriel)}
+          >
+            <DetailsMailIcon />
+            <CommonText style={styles.contact}>{details.courriel}</CommonText>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -77,6 +80,9 @@ const styles = StyleSheet.create({
   addressDetails: {
     marginHorizontal: Margins.smaller,
     marginVertical: Margins.smaller,
+  },
+  columnView: {
+    flexDirection: "column",
   },
   contact: {
     color: Colors.primaryBlue,

@@ -1,4 +1,4 @@
-import { AddressDetailsType, CartographiePoisFromDB } from "./aroundMe.types";
+import { CartographiePoisFromDB } from "./aroundMe.types";
 import { DataFetchingType } from "./dataFetching.types";
 import {
   EpdsAnswer,
@@ -13,7 +13,6 @@ import {
 } from "./epdsSurvey.types";
 
 export {
-  AddressDetailsType,
   CartographiePoisFromDB,
   DataFetchingType,
   EpdsAnswer,

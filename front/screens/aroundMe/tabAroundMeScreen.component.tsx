@@ -21,7 +21,7 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
-import type { AddressDetailsType, CartographiePoisFromDB } from "../../type";
+import type { CartographiePoisFromDB } from "../../type";
 import AddressDetails from "./addressDetails.component";
 import SearchByPostalCode from "./searchByPostalCode.component";
 
@@ -50,7 +50,7 @@ const TabAroundMeScreen: React.FC = () => {
   );
   const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
   const [displayAddressDetails, setDisplayAddressDetails] = useState(false);
-  const [addressDetails, setAddressDetails] = useState<AddressDetailsType>();
+  const [addressDetails, setAddressDetails] = useState<CartographiePoisFromDB>();
   const [showRelaunchResearchButton, setShowRelaunchResearchButton] = useState(
     true
   );
@@ -99,16 +99,7 @@ const TabAroundMeScreen: React.FC = () => {
   };
 
   const onMarkerClick = (markerIndex: number) => {
-    const details: AddressDetailsType = {
-      accessibilityInfo: "Accessibilité simple",
-      emailAddress: "professionnel@email.com",
-      phoneNumber: "01 23 45 67 89",
-      poiType: AroundMeConstants.PoiTypeEnum.healthProfessional,
-      postalAddress: "25 rue du Sergent Bauchat, 75012 Paris",
-      professionalName: `Professionnel n°${markerIndex}`,
-      website: "www.professionnel.com",
-    };
-    setAddressDetails(details);
+    setAddressDetails(poisArray[markerIndex]);
     setDisplayAddressDetails(true);
     setMoveToRegionBecauseOfMarkerClick(true);
   };
