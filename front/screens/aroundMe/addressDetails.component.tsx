@@ -17,6 +17,7 @@ import {
   FontWeight,
   Labels,
   Margins,
+  Paddings,
   Sizes,
 } from "../../constants";
 import type { CartographiePoisFromDB } from "../../type";
@@ -161,6 +162,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
 
 const styles = StyleSheet.create({
   addressDetails: {
+    alignItems: "flex-start",
     marginHorizontal: Margins.smaller,
     marginVertical: Margins.smaller,
   },
@@ -208,7 +210,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryBlueLight,
     color: Colors.primaryBlueDark,
     fontSize: Sizes.xxs,
-    fontWeight: FontWeight.bold,
+    paddingHorizontal: Paddings.smaller,
     textAlign: "center",
   },
 });
