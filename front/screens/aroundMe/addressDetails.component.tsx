@@ -15,6 +15,7 @@ import {
   AroundMeConstants,
   Colors,
   FontWeight,
+  Labels,
   Margins,
   Sizes,
 } from "../../constants";
@@ -26,48 +27,80 @@ interface AddressDetailsProps {
 }
 
 const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
-  const getIcon = (
+  const getIconAndLabel = (
     categoriePoi: AroundMeConstants.PoiCategorieEnum,
     typePoi: AroundMeConstants.PoiTypeEnum
   ) => {
-    if (categoriePoi === AroundMeConstants.PoiCategorieEnum.professionnels)
-      return <CategorieProSanteIcon />;
-
-    const iconsMap = new Map<AroundMeConstants.PoiTypeEnum, React.ReactNode>();
-    iconsMap.set(
+    const poiTypeLabels = Labels.aroundMe.poiType;
+    const labelsMap = new Map<AroundMeConstants.PoiTypeEnum, string>();
+    labelsMap.set(
       AroundMeConstants.PoiTypeEnum.planning_familial,
-      <TypePlanningFamilialIcon />
+      poiTypeLabels.planningFamilial
     );
-    iconsMap.set(
+    labelsMap.set(
       AroundMeConstants.PoiTypeEnum.maison_de_naissance,
-      <TypeMaisonNaissanceIcon />
+      poiTypeLabels.maisonDeNaissance
     );
-    iconsMap.set(
+    labelsMap.set(
       AroundMeConstants.PoiTypeEnum.maternite,
-      <TypeMaterniteIcon />
+      poiTypeLabels.maternite
     );
-    iconsMap.set(
-      AroundMeConstants.PoiTypeEnum.maternite,
-      <TypeMaterniteIcon />
-    );
-    iconsMap.set(AroundMeConstants.PoiTypeEnum.saad, <TypeSaadIcon />);
-    const icon = iconsMap.get(typePoi);
-    if (!icon) return <CategorieProSanteIcon />;
-    return icon;
+    labelsMap.set(AroundMeConstants.PoiTypeEnum.pmi, poiTypeLabels.pmi);
+    labelsMap.set(AroundMeConstants.PoiTypeEnum.saad, poiTypeLabels.saad);
+    labelsMap.set(AroundMeConstants.PoiTypeEnum.cpam, poiTypeLabels.cpam);
+    labelsMap.set(AroundMeConstants.PoiTypeEnum.caf, poiTypeLabels.caf);
+    labelsMap.set(AroundMeConstants.PoiTypeEnum.mairie, poiTypeLabels.mairie);
+
+    const label = labelsMap.get(typePoi);
+
+    let icon = null;
+    if (categoriePoi === AroundMeConstants.PoiCategorieEnum.professionnels) {
+      icon = <CategorieProSanteIcon />;
+    } else {
+      const iconsMap = new Map<
+        AroundMeConstants.PoiTypeEnum,
+        React.ReactNode
+      >();
+      iconsMap.set(
+        AroundMeConstants.PoiTypeEnum.planning_familial,
+        <TypePlanningFamilialIcon />
+      );
+      iconsMap.set(
+        AroundMeConstants.PoiTypeEnum.maison_de_naissance,
+        <TypeMaisonNaissanceIcon />
+      );
+      iconsMap.set(
+        AroundMeConstants.PoiTypeEnum.maternite,
+        <TypeMaterniteIcon />
+      );
+      iconsMap.set(
+        AroundMeConstants.PoiTypeEnum.maternite,
+        <TypeMaterniteIcon />
+      );
+      iconsMap.set(AroundMeConstants.PoiTypeEnum.saad, <TypeSaadIcon />);
+      icon = iconsMap.get(typePoi);
+      // Si la catégorie n'a pas d'icône, en attendant de les recevoir, on affiche celle des pros de santé
+      if (!icon) icon = <CategorieProSanteIcon />;
+    }
+    return { icon, label };
   };
 
   details.cartographie_categorie =
     AroundMeConstants.PoiCategorieEnum[details.cartographie_categorie];
   details.type = AroundMeConstants.PoiTypeEnum[details.type];
+
+  const { icon: iconType, label: labelType } = getIconAndLabel(
+    details.cartographie_categorie,
+    details.type
+  );
   return (
     <View style={styles.rowContainer}>
-      <View style={styles.icon}>
-        {getIcon(details.cartographie_categorie, details.type)}
-      </View>
+      <View style={styles.icon}>{iconType}</View>
       <View style={styles.addressDetails}>
         {StringUtils.stringIsNotNullNorEmpty(details.nom) && (
-          <CommonText style={styles.professionalName}>{details.nom}</CommonText>
+          <CommonText style={styles.name}>{details.nom}</CommonText>
         )}
+        <CommonText style={styles.type}>{labelType}</CommonText>
         <View style={styles.rowView}>
           <DetailsAddressIcon />
           <View style={styles.columnView}>
@@ -146,7 +179,7 @@ const styles = StyleSheet.create({
   marginRight: {
     marginRight: Margins.smaller,
   },
-  professionalName: {
+  name: {
     color: Colors.primaryBlueDark,
     fontSize: Sizes.xs,
     fontWeight: FontWeight.bold,
@@ -170,6 +203,13 @@ const styles = StyleSheet.create({
     fontSize: Sizes.xxs,
     fontWeight: FontWeight.bold,
     marginLeft: Margins.smaller,
+  },
+  type: {
+    backgroundColor: Colors.primaryBlueLight,
+    color: Colors.primaryBlueDark,
+    fontSize: Sizes.xxs,
+    fontWeight: FontWeight.bold,
+    textAlign: "center",
   },
 });
 
