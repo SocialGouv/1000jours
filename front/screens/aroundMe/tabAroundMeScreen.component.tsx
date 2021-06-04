@@ -197,22 +197,27 @@ const TabAroundMeScreen: React.FC = () => {
             />
           </View>
         )}
-        <SlidingUpPanel
-          ref={setSlidingUpPanelRef}
-          // animatedValue={new Animated.Value(60)}
-        >
-          <View style={styles.slidingUpPanelView}>
-            <View style={styles.swipeIndicator} />
-            <CommonText>Test</CommonText>
-            {poisArrayInList.map((poi, poiIndex) => (
-              <View key={poiIndex}>
-                <Card style={styles.card}>
-                  <AddressDetails details={poi} />
-                </Card>
-              </View>
-            ))}
-          </View>
-        </SlidingUpPanel>
+        {poisArrayInList.length > 0 && (
+          <SlidingUpPanel
+            ref={setSlidingUpPanelRef}
+            // animatedValue={new Animated.Value(60)}
+          >
+            <View style={styles.slidingUpPanelView}>
+              <View style={styles.swipeIndicator} />
+              <CommonText style={styles.addressesListLabel}>
+                {Labels.aroundMe.addressesListLabelStart}{" "}
+                {poisArrayInList.length} {Labels.aroundMe.addressesListLabelEnd}
+              </CommonText>
+              {poisArrayInList.map((poi, poiIndex) => (
+                <View key={poiIndex}>
+                  <Card style={styles.card}>
+                    <AddressDetails details={poi} />
+                  </Card>
+                </View>
+              ))}
+            </View>
+          </SlidingUpPanel>
+        )}
       </View>
       {displayAddressDetails && addressDetails && (
         <View style={styles.addressDetails}>
@@ -239,10 +244,17 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
   },
+  addressesListLabel: {
+    color: Colors.primaryBlue,
+    fontSize: Sizes.xs,
+    fontWeight: FontWeight.bold,
+    marginHorizontal: Margins.default,
+    marginVertical: Margins.smaller,
+  },
   card: {
     backgroundColor: Colors.cardGrey,
     borderWidth: 1,
-    margin: Margins.smallest,
+    margin: Margins.smaller,
   },
   columnView: {
     flexDirection: "column",
