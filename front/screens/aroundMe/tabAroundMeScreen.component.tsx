@@ -22,6 +22,7 @@ import {
   Sizes,
 } from "../../constants";
 import type { CartographiePoisFromDB } from "../../type";
+import AddressDetails from "./addressDetails.component";
 import SearchByPostalCode from "./searchByPostalCode.component";
 
 const TabAroundMeScreen: React.FC = () => {
@@ -35,6 +36,10 @@ const TabAroundMeScreen: React.FC = () => {
     moveToRegionBecauseOfPCResearch,
     setMoveToRegionBecauseOfPCResearch,
   ] = useState(false);
+  const [
+    moveToRegionBecauseOfMarkerClick,
+    setMoveToRegionBecauseOfMarkerClick,
+  ] = useState(false);
   // Variable utilisée pour trigger le useEffect lors du clic sur le bouton Rechercher
   const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] = useState(
     false
@@ -44,6 +49,11 @@ const TabAroundMeScreen: React.FC = () => {
     false
   );
   const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
+  const [displayAddressDetails, setDisplayAddressDetails] = useState(false);
+  const [
+    addressDetails,
+    setAddressDetails,
+  ] = useState<CartographiePoisFromDB>();
   const [showRelaunchResearchButton, setShowRelaunchResearchButton] = useState(
     true
   );
@@ -70,6 +80,14 @@ const TabAroundMeScreen: React.FC = () => {
     } else {
       setShowSnackBar(false);
     }
+
+    /* Lorsqu'on clique sur un marqueur, le moveToRegionBecauseOfMarkerClick est mis à true
+    et donc on ne cache pas directement le AddressDetails s'il a été affiché */
+    if (moveToRegionBecauseOfMarkerClick) {
+      setMoveToRegionBecauseOfMarkerClick(false);
+    } else {
+      setDisplayAddressDetails(false);
+    }
     setPostalCodeInvalid(false);
     setShowRelaunchResearchButton(true);
   };
@@ -81,6 +99,12 @@ const TabAroundMeScreen: React.FC = () => {
 
   const onSnackBarDismiss = () => {
     setShowSnackBar(false);
+  };
+
+  const onMarkerClick = (markerIndex: number) => {
+    setAddressDetails(poisArray[markerIndex]);
+    setDisplayAddressDetails(true);
+    setMoveToRegionBecauseOfMarkerClick(true);
   };
 
   return (
@@ -109,6 +133,7 @@ const TabAroundMeScreen: React.FC = () => {
           setShowSnackBar(false);
         }}
         setAndGoToNewRegion={(newRegion: Region) => {
+          setDisplayAddressDetails(false);
           setRegion(newRegion);
           mapRef.current?.animateToRegion(newRegion);
         }}
@@ -118,7 +143,7 @@ const TabAroundMeScreen: React.FC = () => {
         }}
         showSnackBarWithMessage={showSnackBarWithMessage}
       />
-      <View style={styles.mapContainer}>
+      <View style={styles.map}>
         <MapView
           ref={setMapViewRef}
           provider={PROVIDER_DEFAULT}
@@ -134,6 +159,9 @@ const TabAroundMeScreen: React.FC = () => {
                   longitude: Number(poi.geocode_position_longitude),
                 }}
                 pinColor="red"
+                onPress={() => {
+                  onMarkerClick(poiIndex);
+                }}
               />
             </View>
           ))}
@@ -147,12 +175,16 @@ const TabAroundMeScreen: React.FC = () => {
               rounded={true}
               action={() => {
                 setShowRelaunchResearchButton(false);
+                setDisplayAddressDetails(false);
                 setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
               }}
             />
           </View>
         )}
       </View>
+      {displayAddressDetails && addressDetails && (
+        <AddressDetails details={addressDetails} />
+      )}
       <CustomSnackBar
         visible={showSnackBar}
         duration={AroundMeConstants.SNACKBAR_DURATION}
@@ -178,11 +210,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  mapContainer: {
-    height: "80%",
-    width: "100%",
+    flex: 1,
   },
   relaunchSearchButton: {
     backgroundColor: "white",

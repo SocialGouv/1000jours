@@ -27,3 +27,21 @@ export enum LatLngPointType {
 }
 
 export const SNACKBAR_DURATION = 3000;
+
+export enum PoiCategorieEnum {
+  structures = "structures",
+  professionnels = "professionnels",
+}
+
+export enum PoiTypeEnum {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  planning_familial = "planning_familial",
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  maison_de_naissance = "maison_de_naissance",
+  maternite = "maternite",
+  pmi = "pmi", // pas d'icône
+  saad = "saad",
+  cpam = "cpam", // pas d'icône
+  caf = "caf", // pas d'icône
+  mairie = "mairie", // pas d'icône
+}

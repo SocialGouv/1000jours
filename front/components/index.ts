@@ -1,24 +1,30 @@
-import DidYouKnow from "../components/article/DidYouKnow";
-import ImageBanner from "../components/article/ImageBanner";
-import InShort from "../components/article/InShort";
-import Links from "../components/article/Links";
-import SubTitle from "../components/article/SubTitle";
-import TextHtml from "../components/article/TextHtml";
-import Thematics from "../components/article/Thematics";
-import Title from "../components/article/Title";
-import BackButton from "../components/BackButton";
-import Agenda from "../components/calendar/agenda";
-import Button from "../components/form/Button";
-import Checkbox from "../components/form/Checkbox";
-import Datepicker from "../components/form/DatePicker";
-import HeaderApp from "../components/HeaderApp";
-import Modal from "../components/modal.component";
-import { CommonText, SecondaryText } from "../components/StyledText";
-import StepIcon from "../components/timeline/StepIcon";
-import TimlineStep from "../components/timeline/TimlineStep";
+import DidYouKnow from "./article/DidYouKnow";
+import ImageBanner from "./article/ImageBanner";
+import InShort from "./article/InShort";
+import Links from "./article/Links";
+import SubTitle from "./article/SubTitle";
+import TextHtml from "./article/TextHtml";
+import Thematics from "./article/Thematics";
+import Title from "./article/Title";
+import BackButton from "./BackButton";
 import Backdrop from "./backdrop.component";
+import Agenda from "./calendar/agenda";
 import CustomSnackBar from "./customSnackBar.component";
+import Button from "./form/Button";
+import Checkbox from "./form/Checkbox";
+import Datepicker from "./form/DatePicker";
+import HeaderApp from "./HeaderApp";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
+import Modal from "./modal.component";
+import {
+  CommonText,
+  FontNames,
+  getFontFamilyName,
+  SecondaryText,
+} from "./StyledText";
+import { Text, View } from "./Themed";
+import StepIcon from "./timeline/StepIcon";
+import TimlineStep from "./timeline/TimlineStep";
 
 export {
   Agenda,
@@ -30,6 +36,8 @@ export {
   CustomSnackBar,
   Datepicker,
   DidYouKnow,
+  FontNames,
+  getFontFamilyName,
   HeaderApp,
   Icomoon,
   IcomoonIcons,
@@ -40,8 +48,10 @@ export {
   SecondaryText,
   StepIcon,
   SubTitle,
+  Text,
   TextHtml,
   Thematics,
   TimlineStep,
   Title,
+  View,
 };
