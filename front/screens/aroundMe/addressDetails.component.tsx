@@ -10,7 +10,7 @@ import TypeMaisonNaissanceIcon from "../../assets/images/carto/type_maison_naiss
 import TypeMaterniteIcon from "../../assets/images/carto/type_maternite.svg";
 import TypePlanningFamilialIcon from "../../assets/images/carto/type_planning_familial.svg";
 import TypeSaadIcon from "../../assets/images/carto/type_saad.svg";
-import { CommonText, View } from "../../components";
+import { Button, CommonText, View } from "../../components";
 import {
   AroundMeConstants,
   Colors,
@@ -156,6 +156,20 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
           </TouchableOpacity>
         )}
       </View>
+      <View style={styles.goThereView}>
+        <Button
+          title={Labels.aroundMe.goThere}
+          titleStyle={styles.fontButton}
+          rounded={true}
+          disabled={false}
+          action={async () => {
+            await LinkingUtils.openNavigationApp(
+              details.geocode_position_latitude,
+              details.geocode_position_longitude
+            );
+          }}
+        />
+      </View>
     </View>
   );
 };
@@ -173,6 +187,15 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlue,
     fontSize: Sizes.xxs,
     marginLeft: Margins.smaller,
+  },
+  fontButton: {
+    fontSize: Sizes.xxs,
+  },
+  goThereView: {
+    alignSelf: "center",
+    marginRight: Margins.default,
+    position: "absolute",
+    right: 0,
   },
   icon: {
     marginLeft: Margins.smaller,

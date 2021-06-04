@@ -194,9 +194,10 @@ const TabAroundMeScreen: React.FC = () => {
             />
           </View>
         )}
-        {showAddressesList && poisArrayInList.length > 0 && (
-          <SlidingUpPanelAddressesList poisArray={poisArrayInList} />
-        )}
+        {showAddressesList &&
+          poisArrayInList.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
+            <SlidingUpPanelAddressesList poisArray={poisArrayInList} />
+          )}
       </View>
       {showAddressDetails && addressDetails && (
         <View style={styles.addressDetails}>
@@ -218,7 +219,7 @@ const styles = StyleSheet.create({
   addressDetails: {
     bottom: 0,
     left: 0,
-    marginHorizontal: Margins.default,
+    marginHorizontal: Margins.smaller,
     marginVertical: Margins.smaller,
     position: "absolute",
     right: 0,

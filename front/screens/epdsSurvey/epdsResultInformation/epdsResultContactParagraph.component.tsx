@@ -1,11 +1,12 @@
 import * as React from "react";
-import { Linking, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import Button from "../../../components/form/Button";
 import { CommonText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
 import { Colors, FontWeight, Labels, Margins, Sizes } from "../../../constants";
 import type { EpdsResultContactInformation } from "../../../type";
+import { LinkingUtils } from "../../../utils";
 
 interface EpdsResultContactParagraphProps {
   paragraphTitle?: string;
@@ -19,12 +20,6 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
   titleColor,
 }) => {
   const titleColorStyle = { color: titleColor };
-
-  const callContact = (phoneNumber: string) => {
-    // Delete spaces
-    phoneNumber = phoneNumber.replace(/ /g, "");
-    void Linking.openURL("tel:" + phoneNumber);
-  };
 
   const titleStyle = [styles.contactName, { fontSize: Sizes.xs }];
   return (
@@ -55,8 +50,8 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
             titleStyle={styles.fontButton}
             rounded={true}
             disabled={false}
-            action={() => {
-              callContact(contact.phoneNumber);
+            action={async () => {
+              await LinkingUtils.callContact(contact.phoneNumber);
             }}
           />
         </View>
