@@ -1,11 +1,8 @@
 import { useRef, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import type { Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
-import { Card } from "react-native-paper";
-import SlidingUpPanel from "rn-sliding-up-panel";
 
 import {
   Button,
@@ -27,6 +24,7 @@ import {
 import type { CartographiePoisFromDB } from "../../type";
 import AddressDetails from "./addressDetails.component";
 import SearchByPostalCode from "./searchByPostalCode.component";
+import SlidingUpPanelAddressesList from "./slidingUpPanelAddressesList.component";
 
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
@@ -197,24 +195,7 @@ const TabAroundMeScreen: React.FC = () => {
           </View>
         )}
         {showAddressesList && poisArrayInList.length > 0 && (
-          <SlidingUpPanel draggableRange={{ bottom: 100, top: 550 }}>
-            <View style={styles.slidingUpPanelView}>
-              <View style={styles.swipeIndicator} />
-              <CommonText style={styles.addressesListLabel}>
-                {Labels.aroundMe.addressesListLabelStart}{" "}
-                {poisArrayInList.length} {Labels.aroundMe.addressesListLabelEnd}
-              </CommonText>
-              <ScrollView>
-                {poisArrayInList.map((poi, poiIndex) => (
-                  <View key={poiIndex}>
-                    <Card style={styles.card}>
-                      <AddressDetails details={poi} />
-                    </Card>
-                  </View>
-                ))}
-              </ScrollView>
-            </View>
-          </SlidingUpPanel>
+          <SlidingUpPanelAddressesList poisArray={poisArrayInList} />
         )}
       </View>
       {showAddressDetails && addressDetails && (
@@ -288,23 +269,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 0,
-  },
-  slidingUpPanelScrollView: {
-    marginHorizontal: Margins.default,
-  },
-  slidingUpPanelView: {
-    borderTopEndRadius: Sizes.xxxl,
-    borderTopStartRadius: Sizes.xxxl,
-    height: "100%",
-  },
-  swipeIndicator: {
-    alignSelf: "center",
-    backgroundColor: Colors.navigation,
-    borderRadius: Sizes.xs,
-    height: Sizes.xxxxxxs,
-    marginBottom: Margins.smaller,
-    marginTop: Margins.larger,
-    width: Sizes.xxxl,
   },
   title: {
     color: Colors.primaryBlueDark,
