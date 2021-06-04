@@ -76,6 +76,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
         AroundMeConstants.PoiTypeEnum.maternite,
         <TypeMaterniteIcon />
       );
+
       iconsMap.set(AroundMeConstants.PoiTypeEnum.saad, <TypeSaadIcon />);
       iconsMap.set(AroundMeConstants.PoiTypeEnum.pmi, <TypePmiCafCpamIcon />);
       iconsMap.set(AroundMeConstants.PoiTypeEnum.caf, <TypePmiCafCpamIcon />);
