@@ -187,13 +187,7 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
   },
   rowContainer: {
-    bottom: 0,
     flexDirection: "row",
-    left: 0,
-    marginHorizontal: Margins.default,
-    marginVertical: Margins.smaller,
-    position: "absolute",
-    right: 0,
   },
   rowView: {
     alignItems: "center",

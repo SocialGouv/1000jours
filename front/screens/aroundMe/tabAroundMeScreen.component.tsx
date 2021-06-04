@@ -183,7 +183,9 @@ const TabAroundMeScreen: React.FC = () => {
         )}
       </View>
       {displayAddressDetails && addressDetails && (
-        <AddressDetails details={addressDetails} />
+        <View style={styles.addressDetails}>
+          <AddressDetails details={addressDetails} />
+        </View>
       )}
       <CustomSnackBar
         visible={showSnackBar}
@@ -197,6 +199,14 @@ const TabAroundMeScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  addressDetails: {
+    bottom: 0,
+    left: 0,
+    marginHorizontal: Margins.default,
+    marginVertical: Margins.smaller,
+    position: "absolute",
+    right: 0,
+  },
   fontButton: {
     fontSize: Sizes.xxs,
   },
