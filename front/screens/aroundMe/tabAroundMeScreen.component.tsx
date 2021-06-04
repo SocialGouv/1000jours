@@ -3,6 +3,8 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
+import { Card } from "react-native-paper";
+import SlidingUpPanel from "rn-sliding-up-panel";
 
 import {
   Button,
@@ -27,6 +29,7 @@ import SearchByPostalCode from "./searchByPostalCode.component";
 
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
+  const slidingUpPanelRef = useRef<SlidingUpPanel>();
   const [postalCodeInput, setPostalCodeInput] = useState("");
   const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
   const [region, setRegion] = useState<Region>(
@@ -48,7 +51,12 @@ const TabAroundMeScreen: React.FC = () => {
   const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] = useState(
     false
   );
-  const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
+  const [poisArrayOnMap, setPoisArrayOnMap] = useState<
+    CartographiePoisFromDB[]
+  >([]);
+  const [poisArrayInList, setPoisArrayInList] = useState<
+    CartographiePoisFromDB[]
+  >([]);
   const [displayAddressDetails, setDisplayAddressDetails] = useState(false);
   const [
     addressDetails,
@@ -64,11 +72,18 @@ const TabAroundMeScreen: React.FC = () => {
     mapRef.current = ref;
   };
 
+  const setSlidingUpPanelRef = (ref: SlidingUpPanel) => {
+    slidingUpPanelRef.current = ref;
+  };
+
   const handleFetchedPois = (pois: CartographiePoisFromDB[]) => {
     if (pois.length === 0) {
       showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
     }
-    setPoisArray(pois.slice(0, AroundMeConstants.NUMBER_MAX_MARKERS_ON_MAP));
+    setPoisArrayInList(pois);
+    setPoisArrayOnMap(
+      pois.slice(0, AroundMeConstants.NUMBER_MAX_MARKERS_ON_MAP)
+    );
   };
 
   const onRegionChangeComplete = (newRegion: Region) => {
@@ -102,7 +117,7 @@ const TabAroundMeScreen: React.FC = () => {
   };
 
   const onMarkerClick = (markerIndex: number) => {
-    setAddressDetails(poisArray[markerIndex]);
+    setAddressDetails(poisArrayOnMap[markerIndex]);
     setDisplayAddressDetails(true);
     setMoveToRegionBecauseOfMarkerClick(true);
   };
@@ -151,7 +166,7 @@ const TabAroundMeScreen: React.FC = () => {
           initialRegion={region}
           onRegionChangeComplete={onRegionChangeComplete}
         >
-          {poisArray.map((poi, poiIndex) => (
+          {poisArrayOnMap.map((poi, poiIndex) => (
             <View key={poiIndex}>
               <Marker
                 coordinate={{
@@ -174,6 +189,7 @@ const TabAroundMeScreen: React.FC = () => {
               titleStyle={styles.relaunchSearchButtonText}
               rounded={true}
               action={() => {
+                slidingUpPanelRef.current?.show();
                 setShowRelaunchResearchButton(false);
                 setDisplayAddressDetails(false);
                 setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
@@ -181,6 +197,22 @@ const TabAroundMeScreen: React.FC = () => {
             />
           </View>
         )}
+        <SlidingUpPanel
+          ref={setSlidingUpPanelRef}
+          // animatedValue={new Animated.Value(60)}
+        >
+          <View style={styles.slidingUpPanelView}>
+            <View style={styles.swipeIndicator} />
+            <CommonText>Test</CommonText>
+            {poisArrayInList.map((poi, poiIndex) => (
+              <View key={poiIndex}>
+                <Card style={styles.card}>
+                  <AddressDetails details={poi} />
+                </Card>
+              </View>
+            ))}
+          </View>
+        </SlidingUpPanel>
       </View>
       {displayAddressDetails && addressDetails && (
         <View style={styles.addressDetails}>
@@ -206,6 +238,14 @@ const styles = StyleSheet.create({
     marginVertical: Margins.smaller,
     position: "absolute",
     right: 0,
+  },
+  card: {
+    backgroundColor: Colors.cardGrey,
+    borderWidth: 1,
+    margin: Margins.smallest,
+  },
+  columnView: {
+    flexDirection: "column",
   },
   fontButton: {
     fontSize: Sizes.xxs,
@@ -238,6 +278,19 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 0,
+  },
+  slidingUpPanelView: {
+    borderTopEndRadius: Sizes.xxxl,
+    borderTopStartRadius: Sizes.xxxl,
+  },
+  swipeIndicator: {
+    alignSelf: "center",
+    backgroundColor: Colors.navigation,
+    borderRadius: Sizes.xs,
+    height: Sizes.xxxxxxs,
+    marginBottom: Margins.default,
+    marginTop: Margins.larger,
+    width: Sizes.xxxl,
   },
   title: {
     color: Colors.primaryBlueDark,
