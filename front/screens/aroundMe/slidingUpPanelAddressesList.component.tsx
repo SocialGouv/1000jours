@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Card } from "react-native-paper";
 import SlidingUpPanel from "rn-sliding-up-panel";
@@ -15,8 +15,9 @@ interface Props {
 }
 
 const SlidingUpPanelAddressesList: React.FC<Props> = ({ poisArray }) => {
+  const height = Dimensions.get("window").height;
   return (
-    <SlidingUpPanel draggableRange={{ bottom: 100, top: 550 }}>
+    <SlidingUpPanel draggableRange={{ bottom: height / 8, top: height - 120 }}>
       <View style={styles.slidingUpPanelView}>
         <View style={styles.swipeIndicator} />
         <CommonText style={styles.addressesListLabel}>
