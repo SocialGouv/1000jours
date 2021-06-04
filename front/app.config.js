@@ -6,7 +6,7 @@ export default {
         foregroundImage: "./assets/images/adaptive-icon.png",
       },
       package: "com.millejours.fabrique",
-      versionCode: 105,
+      versionCode: 5,
     },
     assetBundlePatterns: ["**/*"],
     hooks: {
