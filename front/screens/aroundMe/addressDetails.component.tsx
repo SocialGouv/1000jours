@@ -6,9 +6,11 @@ import DetailsAddressIcon from "../../assets/images/carto/details_adresse.svg";
 import DetailsMailIcon from "../../assets/images/carto/details_mail.svg";
 import DetailsPhoneIcon from "../../assets/images/carto/details_tel.svg";
 import DetailsWebIcon from "../../assets/images/carto/details_web.svg";
+import TypeMairieIcon from "../../assets/images/carto/type_mairie.svg";
 import TypeMaisonNaissanceIcon from "../../assets/images/carto/type_maison_naissance.svg";
 import TypeMaterniteIcon from "../../assets/images/carto/type_maternite.svg";
 import TypePlanningFamilialIcon from "../../assets/images/carto/type_planning_familial.svg";
+import TypePmiCafCpamIcon from "../../assets/images/carto/type_pmi_caf_cpam.svg";
 import TypeSaadIcon from "../../assets/images/carto/type_saad.svg";
 import { Button, CommonText, View } from "../../components";
 import {
@@ -74,13 +76,14 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
         AroundMeConstants.PoiTypeEnum.maternite,
         <TypeMaterniteIcon />
       );
-      iconsMap.set(
-        AroundMeConstants.PoiTypeEnum.maternite,
-        <TypeMaterniteIcon />
-      );
       iconsMap.set(AroundMeConstants.PoiTypeEnum.saad, <TypeSaadIcon />);
+      iconsMap.set(AroundMeConstants.PoiTypeEnum.pmi, <TypePmiCafCpamIcon />);
+      iconsMap.set(AroundMeConstants.PoiTypeEnum.caf, <TypePmiCafCpamIcon />);
+      iconsMap.set(AroundMeConstants.PoiTypeEnum.cpam, <TypePmiCafCpamIcon />);
+      iconsMap.set(AroundMeConstants.PoiTypeEnum.mairie, <TypeMairieIcon />);
+
       icon = iconsMap.get(typePoi);
-      // Si la catégorie n'a pas d'icône, en attendant de les recevoir, on affiche celle des pros de santé
+      // Au cas où la catégorie n'a pas d'icône, on affiche celle des pros de santé
       if (!icon) icon = <CategorieProSanteIcon />;
     }
     return { icon, label };
