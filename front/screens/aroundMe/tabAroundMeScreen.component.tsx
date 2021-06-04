@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import type { Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 import { Card } from "react-native-paper";
@@ -29,7 +30,6 @@ import SearchByPostalCode from "./searchByPostalCode.component";
 
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
-  const slidingUpPanelRef = useRef<SlidingUpPanel>();
   const [postalCodeInput, setPostalCodeInput] = useState("");
   const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
   const [region, setRegion] = useState<Region>(
@@ -57,7 +57,7 @@ const TabAroundMeScreen: React.FC = () => {
   const [poisArrayInList, setPoisArrayInList] = useState<
     CartographiePoisFromDB[]
   >([]);
-  const [displayAddressDetails, setDisplayAddressDetails] = useState(false);
+  const [showAddressDetails, setShowAddressDetails] = useState(false);
   const [
     addressDetails,
     setAddressDetails,
@@ -65,15 +65,12 @@ const TabAroundMeScreen: React.FC = () => {
   const [showRelaunchResearchButton, setShowRelaunchResearchButton] = useState(
     true
   );
+  const [showAddressesList, setShowAddressesList] = useState(false);
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
 
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
-  };
-
-  const setSlidingUpPanelRef = (ref: SlidingUpPanel) => {
-    slidingUpPanelRef.current = ref;
   };
 
   const handleFetchedPois = (pois: CartographiePoisFromDB[]) => {
@@ -84,6 +81,7 @@ const TabAroundMeScreen: React.FC = () => {
     setPoisArrayOnMap(
       pois.slice(0, AroundMeConstants.NUMBER_MAX_MARKERS_ON_MAP)
     );
+    setShowAddressesList(true);
   };
 
   const onRegionChangeComplete = (newRegion: Region) => {
@@ -101,7 +99,8 @@ const TabAroundMeScreen: React.FC = () => {
     if (moveToRegionBecauseOfMarkerClick) {
       setMoveToRegionBecauseOfMarkerClick(false);
     } else {
-      setDisplayAddressDetails(false);
+      setShowAddressDetails(false);
+      setShowAddressesList(true);
     }
     setPostalCodeInvalid(false);
     setShowRelaunchResearchButton(true);
@@ -118,7 +117,8 @@ const TabAroundMeScreen: React.FC = () => {
 
   const onMarkerClick = (markerIndex: number) => {
     setAddressDetails(poisArrayOnMap[markerIndex]);
-    setDisplayAddressDetails(true);
+    setShowAddressDetails(true);
+    setShowAddressesList(false);
     setMoveToRegionBecauseOfMarkerClick(true);
   };
 
@@ -148,7 +148,7 @@ const TabAroundMeScreen: React.FC = () => {
           setShowSnackBar(false);
         }}
         setAndGoToNewRegion={(newRegion: Region) => {
-          setDisplayAddressDetails(false);
+          setShowAddressDetails(false);
           setRegion(newRegion);
           mapRef.current?.animateToRegion(newRegion);
         }}
@@ -189,37 +189,35 @@ const TabAroundMeScreen: React.FC = () => {
               titleStyle={styles.relaunchSearchButtonText}
               rounded={true}
               action={() => {
-                slidingUpPanelRef.current?.show();
                 setShowRelaunchResearchButton(false);
-                setDisplayAddressDetails(false);
+                setShowAddressDetails(false);
                 setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
               }}
             />
           </View>
         )}
-        {poisArrayInList.length > 0 && (
-          <SlidingUpPanel
-            ref={setSlidingUpPanelRef}
-            // animatedValue={new Animated.Value(60)}
-          >
+        {showAddressesList && poisArrayInList.length > 0 && (
+          <SlidingUpPanel draggableRange={{ bottom: 100, top: 550 }}>
             <View style={styles.slidingUpPanelView}>
               <View style={styles.swipeIndicator} />
               <CommonText style={styles.addressesListLabel}>
                 {Labels.aroundMe.addressesListLabelStart}{" "}
                 {poisArrayInList.length} {Labels.aroundMe.addressesListLabelEnd}
               </CommonText>
-              {poisArrayInList.map((poi, poiIndex) => (
-                <View key={poiIndex}>
-                  <Card style={styles.card}>
-                    <AddressDetails details={poi} />
-                  </Card>
-                </View>
-              ))}
+              <ScrollView>
+                {poisArrayInList.map((poi, poiIndex) => (
+                  <View key={poiIndex}>
+                    <Card style={styles.card}>
+                      <AddressDetails details={poi} />
+                    </Card>
+                  </View>
+                ))}
+              </ScrollView>
             </View>
           </SlidingUpPanel>
         )}
       </View>
-      {displayAddressDetails && addressDetails && (
+      {showAddressDetails && addressDetails && (
         <View style={styles.addressDetails}>
           <AddressDetails details={addressDetails} />
         </View>
@@ -291,16 +289,20 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
   },
+  slidingUpPanelScrollView: {
+    marginHorizontal: Margins.default,
+  },
   slidingUpPanelView: {
     borderTopEndRadius: Sizes.xxxl,
     borderTopStartRadius: Sizes.xxxl,
+    height: "100%",
   },
   swipeIndicator: {
     alignSelf: "center",
     backgroundColor: Colors.navigation,
     borderRadius: Sizes.xs,
     height: Sizes.xxxxxxs,
-    marginBottom: Margins.default,
+    marginBottom: Margins.smaller,
     marginTop: Margins.larger,
     width: Sizes.xxxl,
   },
