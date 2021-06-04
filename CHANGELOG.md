@@ -1,3 +1,11 @@
+# [1.34.0](https://github.com/SocialGouv/1000jours/compare/v1.33.0...v1.34.0) (2021-06-04)
+
+
+### Features
+
+* 🎸 Ajoute le calendrier en mode liste par défaut ([#253](https://github.com/SocialGouv/1000jours/issues/253)) ([305a27c](https://github.com/SocialGouv/1000jours/commit/305a27ce0c73b642dc9b53593e1fbb5d30fb75b5)), closes [#245](https://github.com/SocialGouv/1000jours/issues/245)
+* met à jour les icones de la tabbar ([#252](https://github.com/SocialGouv/1000jours/issues/252)) ([d58b7a3](https://github.com/SocialGouv/1000jours/commit/d58b7a39ce8606905bec38ab07b2389e7658634e))
+
 # [1.33.0](https://github.com/SocialGouv/1000jours/compare/v1.32.1...v1.33.0) (2021-05-31)
 
 
