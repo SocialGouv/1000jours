@@ -1,48 +1,48 @@
 export default {
   expo: {
-    name: "1000jours",
-    slug: "1000jours",
-    version: "1.0.4",
-    orientation: "portrait",
+    android: {
+      adaptiveIcon: {
+        backgroundColor: "#FFFFFF",
+        foregroundImage: "./assets/images/adaptive-icon.png",
+      },
+      package: "com.millejours.fabrique",
+      versionCode: 5,
+    },
+    assetBundlePatterns: ["**/*"],
+    hooks: {
+      postPublish: [
+        {
+          config: {
+            authToken: process.env.SENTRY_TOKEN,
+            organization: "incubateur",
+            project: "nos-1000-jours",
+          },
+          file: "sentry-expo/upload-sourcemaps",
+        },
+      ],
+    },
     icon: "./assets/images/icon.png",
+    ios: {
+      buildNumber: "1.0.5",
+      bundleIdentifier: "com.millejours.fabrique",
+      supportsTablet: true,
+    },
+    name: "1000jours",
+    orientation: "portrait",
     scheme: "myapp",
-    userInterfaceStyle: "light",
+    slug: "1000jours",
     splash: {
+      backgroundColor: "#ffffff",
       image: "./assets/images/splash.png",
       resizeMode: "contain",
-      backgroundColor: "#ffffff",
     },
     updates: {
       fallbackToCacheTimeout: 0,
     },
-    assetBundlePatterns: ["**/*"],
-    ios: {
-      supportsTablet: true,
-      bundleIdentifier: "com.millejours.fabrique",
-      buildNumber: "1.0.4",
-    },
-    android: {
-      adaptiveIcon: {
-        foregroundImage: "./assets/images/adaptive-icon.png",
-        backgroundColor: "#FFFFFF",
-      },
-      package: "com.millejours.fabrique",
-      versionCode: 4,
-    },
+    userInterfaceStyle: "light",
+    version: "1.0.5",
     web: {
       favicon: "./assets/images/favicon.png",
-    },
-    hooks: {
-      postPublish: [
-        {
-          file: "sentry-expo/upload-sourcemaps",
-          config: {
-            organization: "incubateur",
-            project: "nos-1000-jours",
-            authToken: process.env.SENTRY_TOKEN,
-          },
-        },
-      ],
     },
   },
 };
