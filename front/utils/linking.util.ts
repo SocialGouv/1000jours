@@ -1,5 +1,7 @@
 import { Linking } from "react-native";
 
+import { PLATFORM_IS_ANDROID } from "../constants/platform.constants";
+
 export const callContact = async (
   phoneNumber: string | null | undefined
 ): Promise<void> => {
@@ -23,4 +25,14 @@ export const openWebsite = async (
   await Linking.openURL(
     website.includes("www") ? `https://${website}` : `https://www.${website}`
   );
+};
+
+export const openNavigationApp = async (
+  lat: number,
+  long: number
+): Promise<void> => {
+  const url = PLATFORM_IS_ANDROID
+    ? `google.navigation:q=${lat}+${long}`
+    : `maps://app?daddr=${lat}+${long}`;
+  await Linking.openURL(url);
 };

@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
   },
   bannerButton: {
     alignSelf: "flex-end",
+    marginHorizontal: Margins.default,
   },
   bannerDescription: {
     color: Colors.commonText,

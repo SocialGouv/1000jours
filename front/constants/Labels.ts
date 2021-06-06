@@ -2,6 +2,10 @@ import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
   aroundMe: {
+    addressesListLabelEnd:
+      "points d'intérêts qui correspondent à vos critères :",
+    addressesListLabelStart: "Il y a",
+    goThere: "M'y rendre",
     instruction:
       "Trouvez tous les professionnels autour de vous qui pourront vous aider dans votre rôle de parents.",
     noAddressFound: "Aucune adresse n'a été trouvée dans cette zone",

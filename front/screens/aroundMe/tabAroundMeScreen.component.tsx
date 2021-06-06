@@ -24,6 +24,7 @@ import {
 import type { CartographiePoisFromDB } from "../../type";
 import AddressDetails from "./addressDetails.component";
 import SearchByPostalCode from "./searchByPostalCode.component";
+import SlidingUpPanelAddressesList from "./slidingUpPanelAddressesList.component";
 
 const TabAroundMeScreen: React.FC = () => {
   const mapRef = useRef<MapView>();
@@ -48,8 +49,13 @@ const TabAroundMeScreen: React.FC = () => {
   const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] = useState(
     false
   );
-  const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
-  const [displayAddressDetails, setDisplayAddressDetails] = useState(false);
+  const [poisArrayOnMap, setPoisArrayOnMap] = useState<
+    CartographiePoisFromDB[]
+  >([]);
+  const [poisArrayInList, setPoisArrayInList] = useState<
+    CartographiePoisFromDB[]
+  >([]);
+  const [showAddressDetails, setShowAddressDetails] = useState(false);
   const [
     addressDetails,
     setAddressDetails,
@@ -57,6 +63,7 @@ const TabAroundMeScreen: React.FC = () => {
   const [showRelaunchResearchButton, setShowRelaunchResearchButton] = useState(
     true
   );
+  const [showAddressesList, setShowAddressesList] = useState(false);
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
 
@@ -68,7 +75,11 @@ const TabAroundMeScreen: React.FC = () => {
     if (pois.length === 0) {
       showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
     }
-    setPoisArray(pois.slice(0, AroundMeConstants.NUMBER_MAX_MARKERS_ON_MAP));
+    setPoisArrayInList(pois);
+    setPoisArrayOnMap(
+      pois.slice(0, AroundMeConstants.NUMBER_MAX_MARKERS_ON_MAP)
+    );
+    setShowAddressesList(true);
   };
 
   const onRegionChangeComplete = (newRegion: Region) => {
@@ -86,7 +97,8 @@ const TabAroundMeScreen: React.FC = () => {
     if (moveToRegionBecauseOfMarkerClick) {
       setMoveToRegionBecauseOfMarkerClick(false);
     } else {
-      setDisplayAddressDetails(false);
+      setShowAddressDetails(false);
+      setShowAddressesList(true);
     }
     setPostalCodeInvalid(false);
     setShowRelaunchResearchButton(true);
@@ -102,8 +114,9 @@ const TabAroundMeScreen: React.FC = () => {
   };
 
   const onMarkerClick = (markerIndex: number) => {
-    setAddressDetails(poisArray[markerIndex]);
-    setDisplayAddressDetails(true);
+    setAddressDetails(poisArrayOnMap[markerIndex]);
+    setShowAddressDetails(true);
+    setShowAddressesList(false);
     setMoveToRegionBecauseOfMarkerClick(true);
   };
 
@@ -133,7 +146,7 @@ const TabAroundMeScreen: React.FC = () => {
           setShowSnackBar(false);
         }}
         setAndGoToNewRegion={(newRegion: Region) => {
-          setDisplayAddressDetails(false);
+          setShowAddressDetails(false);
           setRegion(newRegion);
           mapRef.current?.animateToRegion(newRegion);
         }}
@@ -151,7 +164,7 @@ const TabAroundMeScreen: React.FC = () => {
           initialRegion={region}
           onRegionChangeComplete={onRegionChangeComplete}
         >
-          {poisArray.map((poi, poiIndex) => (
+          {poisArrayOnMap.map((poi, poiIndex) => (
             <View key={poiIndex}>
               <Marker
                 coordinate={{
@@ -175,15 +188,21 @@ const TabAroundMeScreen: React.FC = () => {
               rounded={true}
               action={() => {
                 setShowRelaunchResearchButton(false);
-                setDisplayAddressDetails(false);
+                setShowAddressDetails(false);
                 setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
               }}
             />
           </View>
         )}
+        {showAddressesList &&
+          poisArrayInList.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
+            <SlidingUpPanelAddressesList poisArray={poisArrayInList} />
+          )}
       </View>
-      {displayAddressDetails && addressDetails && (
-        <AddressDetails details={addressDetails} />
+      {showAddressDetails && addressDetails && (
+        <View style={styles.addressDetails}>
+          <AddressDetails details={addressDetails} />
+        </View>
       )}
       <CustomSnackBar
         visible={showSnackBar}
@@ -197,6 +216,29 @@ const TabAroundMeScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  addressDetails: {
+    bottom: 0,
+    left: 0,
+    marginHorizontal: Margins.smaller,
+    marginVertical: Margins.smaller,
+    position: "absolute",
+    right: 0,
+  },
+  addressesListLabel: {
+    color: Colors.primaryBlue,
+    fontSize: Sizes.xs,
+    fontWeight: FontWeight.bold,
+    marginHorizontal: Margins.default,
+    marginVertical: Margins.smaller,
+  },
+  card: {
+    backgroundColor: Colors.cardGrey,
+    borderWidth: 1,
+    margin: Margins.smaller,
+  },
+  columnView: {
+    flexDirection: "column",
+  },
   fontButton: {
     fontSize: Sizes.xxs,
   },

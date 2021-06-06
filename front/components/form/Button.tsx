@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
   roundedButton: {
     backgroundColor: Colors.primaryBlue,
     borderRadius: 40,
-    marginHorizontal: 20,
     paddingHorizontal: 20,
   },
   roundedButtonTitle: {
