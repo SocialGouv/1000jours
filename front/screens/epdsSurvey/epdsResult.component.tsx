@@ -40,7 +40,8 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
 
   useEffect(() => {
     const saveEpdsSurveyResults = async () => {
-      const newCounter = await EpdsSurveyUtils.incrementEpdsSurveyCounterAndGetNewValue();
+      const newCounter =
+        await EpdsSurveyUtils.incrementEpdsSurveyCounterAndGetNewValue();
       const genderValue = await StorageUtils.getStringValue(
         StorageKeysConstants.epdsGenderKey
       );
