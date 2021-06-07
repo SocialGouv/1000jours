@@ -88,6 +88,9 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
       <CommonText style={styles.text}>
         {resultData.resultLabels.explication}
       </CommonText>
+      <CommonText style={[styles.text, styles.fontBold]}>
+        {labelsResultats.retakeTestInvitation}
+      </CommonText>
       <EpdsResultInformation
         leftBorderColor={resultData.color}
         informationList={resultData.resultLabels.professionalsList}

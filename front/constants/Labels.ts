@@ -156,6 +156,8 @@ export default {
         ],
         stateOfMind: "Je ne vais pas bien",
       },
+      retakeTestInvitation:
+        "Vous serez invité à repasser le test dans une semaine",
     },
     title: "Autodépistage dépression post-partum",
   },
