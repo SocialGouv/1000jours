@@ -1,3 +1,10 @@
+## [1.35.2](https://github.com/SocialGouv/1000jours/compare/v1.35.1...v1.35.2) (2021-06-07)
+
+
+### Bug Fixes
+
+* corrige les workflows de prod ([#250](https://github.com/SocialGouv/1000jours/issues/250)) ([2a57635](https://github.com/SocialGouv/1000jours/commit/2a576359658ad9432875ab2fb7a0378e96bd4def))
+
 ## [1.35.1](https://github.com/SocialGouv/1000jours/compare/v1.35.0...v1.35.1) (2021-06-07)
 
 
