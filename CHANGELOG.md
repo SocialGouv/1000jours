@@ -1,3 +1,10 @@
+# [1.35.0](https://github.com/SocialGouv/1000jours/compare/v1.34.0...v1.35.0) (2021-06-07)
+
+
+### Features
+
+* **epds:** liens PDF + refacto ([#267](https://github.com/SocialGouv/1000jours/issues/267)) ([622f046](https://github.com/SocialGouv/1000jours/commit/622f0464673a2f0a3a9dec8c6397b49052b4b028))
+
 # [1.34.0](https://github.com/SocialGouv/1000jours/compare/v1.33.0...v1.34.0) (2021-06-04)
 
 
