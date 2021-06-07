@@ -1,10 +1,16 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import { Colors, FontWeight, Labels, Sizes } from "../constants";
-import Button from "./form/Button";
+import {
+  Colors,
+  FontNames,
+  FontWeight,
+  getFontFamilyName,
+  Labels,
+  Sizes,
+} from "../constants";
+import Button from "./form/button.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
-import { FontNames, getFontFamilyName } from "./StyledText";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

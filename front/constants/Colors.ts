@@ -35,4 +35,5 @@ export default {
   cardWhite: "#FEFEFE",
   disabled: "#BDBDBD",
   borderGrey: "#E7E7E7",
+  white: "#FFFFFF",
 };
