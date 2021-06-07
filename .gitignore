@@ -103,3 +103,8 @@ dist
 # TernJS port file
 .tern-port
 front/play-store-api-key.json
+
+# Front AppStore files
+front/play-store-api-key.json
+front/AppStoreConnectApiKey.json
+front/*.ipa
