@@ -10,11 +10,15 @@ import { SwiperFlatList } from "react-native-swiper-flatlist";
 import ThirdSlideImage from "../assets/images/Humaaans_2_Characters.svg";
 import FirstSlideImage from "../assets/images/Humaaans_3_Characters.svg";
 import SecondSlideImage from "../assets/images/Humaaans_Sitting.svg";
-import { CommonText, SecondaryText } from "../components";
-import Button from "../components/form/button.component";
-import HeaderApp from "../components/HeaderApp";
-import Icomoon, { IcomoonIcons } from "../components/icomoon.component";
-import { View } from "../components/Themed";
+import {
+  Button,
+  CommonText,
+  HeaderApp,
+  Icomoon,
+  IcomoonIcons,
+  SecondaryText,
+  View,
+} from "../components";
 import {
   Colors,
   FontWeight,
