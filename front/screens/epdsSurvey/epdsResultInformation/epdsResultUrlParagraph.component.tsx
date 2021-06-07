@@ -4,6 +4,7 @@ import { Linking, StyleSheet, TouchableOpacity } from "react-native";
 import { CommonText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
 import { Colors, FontWeight, Margins, Sizes } from "../../../constants";
+import { LinkingUtils } from "../../../utils";
 
 interface EpdsResultUrlParagraphProps {
   paragraphTitle?: string;
@@ -22,9 +23,7 @@ const EpdsResultUrlParagraph: React.FC<EpdsResultUrlParagraphProps> = ({
       )}
       {urls.map((url, index) => (
         <View key={index}>
-          <TouchableOpacity
-            onPress={async () => Linking.openURL(`https://www.${url}`)}
-          >
+          <TouchableOpacity onPress={async () => LinkingUtils.openWebsite(url)}>
             <CommonText style={[styles.urls, styles.underline]}>
               {url}
             </CommonText>

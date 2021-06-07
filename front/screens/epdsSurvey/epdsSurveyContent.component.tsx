@@ -28,24 +28,23 @@ interface Props {
 const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const swiperRef = useRef<SwiperFlatList>(null);
-  const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
-    EpdsQuestionAndAnswers[]
-  >(epdsSurvey);
+  const [questionsAndAnswers, setQuestionsAndAnswers] =
+    useState<EpdsQuestionAndAnswers[]>(epdsSurvey);
   const [displayResult, setDisplayResult] = useState(false);
   const [score, setScore] = useState(0);
   const [surveyCanBeStarted, setSurveyCanBeStarted] = useState(false);
 
   useEffect(() => {
     const getPreviousSurvey = async () => {
-      const values: [
-        EpdsQuestionAndAnswers[] | undefined,
-        number | undefined
-      ] = await Promise.all([
-        StorageUtils.getObjectValue(
-          StorageKeysConstants.epdsQuestionAndAnswersKey
-        ),
-        StorageUtils.getObjectValue(StorageKeysConstants.epdsQuestionIndexKey),
-      ]);
+      const values: [EpdsQuestionAndAnswers[] | undefined, number | undefined] =
+        await Promise.all([
+          StorageUtils.getObjectValue(
+            StorageKeysConstants.epdsQuestionAndAnswersKey
+          ),
+          StorageUtils.getObjectValue(
+            StorageKeysConstants.epdsQuestionIndexKey
+          ),
+        ]);
 
       const previousDataSaved = Boolean(values[0]) && Boolean(values[1]);
       setSurveyCanBeStarted(!previousDataSaved);

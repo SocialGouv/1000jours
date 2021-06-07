@@ -65,6 +65,7 @@ export interface EpdsResultData {
 export interface EpdsResultSimpleInformation {
   title?: string;
   description?: string;
+  pdfUrl?: string;
 }
 
 export interface EpdsResultContactInformation {

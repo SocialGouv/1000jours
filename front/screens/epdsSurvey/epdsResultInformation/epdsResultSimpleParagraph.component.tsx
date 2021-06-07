@@ -1,10 +1,11 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { CommonText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
 import { Colors, FontWeight, Margins, Sizes } from "../../../constants";
 import type { EpdsResultSimpleInformation } from "../../../type";
+import { LinkingUtils } from "../../../utils";
 
 interface EpdsResultSimpleParagraphProps {
   paragraph: EpdsResultSimpleInformation;
@@ -22,6 +23,15 @@ const EpdsResultSimpleParagraph: React.FC<EpdsResultSimpleParagraphProps> = ({
         <CommonText style={styles.paragraphDescription}>
           {paragraph.description}
         </CommonText>
+      )}
+      {paragraph.pdfUrl && (
+        <TouchableOpacity
+          onPress={async () => LinkingUtils.openWebsite(paragraph.pdfUrl)}
+        >
+          <CommonText style={[styles.pdfUrl, styles.underline]}>
+            ({paragraph.pdfUrl})
+          </CommonText>
+        </TouchableOpacity>
       )}
     </View>
   );
@@ -45,6 +55,12 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
     lineHeight: Sizes.mmd,
   },
+  pdfUrl: {
+    color: Colors.primaryBlue,
+    fontSize: Sizes.xxs,
+    lineHeight: Sizes.mmd,
+  },
+  underline: { textDecorationLine: "underline" },
 });
 
 export default EpdsResultSimpleParagraph;

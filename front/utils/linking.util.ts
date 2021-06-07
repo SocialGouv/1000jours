@@ -22,9 +22,17 @@ export const openWebsite = async (
   website: string | null | undefined
 ): Promise<void> => {
   if (!website) return;
-  await Linking.openURL(
-    website.includes("www") ? `https://${website}` : `https://www.${website}`
-  );
+  let completeWebsite = undefined;
+  if (!website.includes("https://")) {
+    const websiteWithWww = website.includes("www") ? website : `www.${website}`;
+    completeWebsite = websiteWithWww.includes("https://")
+      ? websiteWithWww
+      : `https://${websiteWithWww}`;
+  } else {
+    completeWebsite = website;
+  }
+
+  await Linking.openURL(completeWebsite);
 };
 
 export const openNavigationApp = async (

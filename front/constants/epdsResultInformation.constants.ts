@@ -111,7 +111,8 @@ export const epdsInformation = {
     },
     {
       description:
-        "C’est un traitement à part entière de la dépression, efficace qui consiste à aider le couple, la mère ou le père à reprendre confiance en lui ou en eux, de s’adapter à l’arrivée de bébé et à son rythme de vie, de renforcer leurs compétences de parents tout facilitant la mise en œuvre d’un nouvel équilibre familial.  Un psychologue, un psychothérapeute ou un psychiatre sont les professionnels vers lesquels vous serez orienté. Ses premiers effets (un soulagement lié à une écoute adaptée) peuvent se faire sentir immédiatement, les changements durables interviennent au bout de quelques semaines. Après la guérison d’un épisode dépressif, la psychothérapie sert aussi à prévenir la réapparition des symptômes. (https://solidarites-sante.gouv.fr/IMG/pdf/guide-8.pdf)",
+        "C’est un traitement à part entière de la dépression, efficace qui consiste à aider le couple, la mère ou le père à reprendre confiance en lui ou en eux, de s’adapter à l’arrivée de bébé et à son rythme de vie, de renforcer leurs compétences de parents tout facilitant la mise en œuvre d’un nouvel équilibre familial.  Un psychologue, un psychothérapeute ou un psychiatre sont les professionnels vers lesquels vous serez orienté. Ses premiers effets (un soulagement lié à une écoute adaptée) peuvent se faire sentir immédiatement, les changements durables interviennent au bout de quelques semaines. Après la guérison d’un épisode dépressif, la psychothérapie sert aussi à prévenir la réapparition des symptômes",
+      pdfUrl: "https://solidarites-sante.gouv.fr/IMG/pdf/guide-8.pdf",
       title: "La psychothérapie",
     },
     {
@@ -126,7 +127,9 @@ export const epdsInformation = {
     },
     {
       description:
-        "Une aide à domicile permet aux parents de reprendre confiance en eux. Le soutien sur les aspects matériels ne sont donc pas à négliger, comme un soutien pour les tâches ménagères (recours à une aide-ménagère) et les soins au bébé (recours à une technicienne de l’intervention sociale et familiale – TISF), consulter le site la CAF et la cartographie pour identifier les associations de services d’aide et d’accompagnement à domicile (https://www.perinatalite-occitanie.fr/sites/rpo/files/pdf/TROUBLES%20EMOTIONNELS%20ET%20PSYCHIQUES%20DES%20MERES%20EN%20P.pdf)",
+        "Une aide à domicile permet aux parents de reprendre confiance en eux. Le soutien sur les aspects matériels ne sont donc pas à négliger, comme un soutien pour les tâches ménagères (recours à une aide-ménagère) et les soins au bébé (recours à une technicienne de l’intervention sociale et familiale – TISF), consulter le site la CAF et la cartographie pour identifier les associations de services d’aide et d’accompagnement à domicile",
+      pdfUrl:
+        "https://www.perinatalite-occitanie.fr/sites/rpo/files/pdf/TROUBLES%20EMOTIONNELS%20ET%20PSYCHIQUES%20DES%20MERES%20EN%20P.pdf",
       title: "Les visites à domicile",
     },
   ],
