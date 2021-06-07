@@ -3,15 +3,16 @@ import { gql } from "@apollo/client/core";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import _ from "lodash";
+import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
 
+import { CommonText, SecondaryText } from "../components";
 import Filters from "../components/article/Filters";
 import Button from "../components/form/Button";
-import { CommonText, SecondaryText } from "../components";
 import { View } from "../components/Themed";
 import {
   Colors,
@@ -22,8 +23,8 @@ import {
   Sizes,
 } from "../constants";
 import type { Article, Step, TabHomeParamList } from "../types";
-import { useMatomo } from "matomo-tracker-react-native";
 import { TrackerUtils } from "../utils";
+
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList, "listArticles">;
   route: RouteProp<{ params: { step: Step } }, "params">;
@@ -225,6 +226,7 @@ const styles = StyleSheet.create({
     color: Colors.secondaryGreen,
     fontSize: Sizes.xs,
     fontStyle: "italic",
+    paddingVertical: Paddings.smallest,
   },
   listContainer: {
     paddingHorizontal: Paddings.default,
