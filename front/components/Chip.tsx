@@ -2,8 +2,15 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Chip as RNChip } from "react-native-elements";
 
-import { Colors, FontWeight, Margins, Paddings, Sizes } from "../constants";
-import { FontNames, getFontFamilyName } from "./StyledText";
+import {
+  Colors,
+  FontNames,
+  FontWeight,
+  getFontFamilyName,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../constants";
 
 interface Props {
   id: number;

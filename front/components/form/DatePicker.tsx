@@ -22,7 +22,7 @@ import {
 } from "../../constants/platform.constants";
 import Shadow from "../../constants/shadow.constants";
 import Icomoon, { IcomoonIcons } from "../icomoon.component";
-import Button from "./Button";
+import Button from "./button.component";
 
 interface Props {
   date?: Date;

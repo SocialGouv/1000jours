@@ -7,7 +7,7 @@ import { StyleSheet } from "react-native";
 import { Colors, Labels, Paddings, Sizes } from "../../constants";
 import type { Article, ArticleFilter } from "../../types";
 import Chip from "../Chip";
-import Button from "../form/Button";
+import Button from "../form/button.component";
 import Icomoon, { IcomoonIcons } from "../icomoon.component";
 import { View } from "../Themed";
 

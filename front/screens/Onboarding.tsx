@@ -1,4 +1,5 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
+import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
@@ -9,10 +10,10 @@ import { SwiperFlatList } from "react-native-swiper-flatlist";
 import ThirdSlideImage from "../assets/images/Humaaans_2_Characters.svg";
 import FirstSlideImage from "../assets/images/Humaaans_3_Characters.svg";
 import SecondSlideImage from "../assets/images/Humaaans_Sitting.svg";
-import Button from "../components/form/Button";
+import { CommonText, SecondaryText } from "../components";
+import Button from "../components/form/button.component";
 import HeaderApp from "../components/HeaderApp";
 import Icomoon, { IcomoonIcons } from "../components/icomoon.component";
-import { CommonText, SecondaryText } from "../components";
 import { View } from "../components/Themed";
 import {
   Colors,
@@ -25,7 +26,6 @@ import {
 } from "../constants";
 import type { RootStackParamList } from "../types";
 import { StorageUtils, TrackerUtils } from "../utils";
-import { useMatomo } from "matomo-tracker-react-native";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,

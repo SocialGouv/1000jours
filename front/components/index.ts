@@ -1,5 +1,5 @@
 import DidYouKnow from "./article/DidYouKnow";
-import Filters from "./article/Filters";
+import Filters from "./article/filters.component";
 import ImageBanner from "./article/ImageBanner";
 import InShort from "./article/InShort";
 import Links from "./article/Links";
@@ -11,18 +11,13 @@ import BackButton from "./BackButton";
 import Backdrop from "./backdrop.component";
 import Agenda from "./calendar/agenda";
 import CustomSnackBar from "./customSnackBar.component";
-import Button from "./form/Button";
+import Button from "./form/button.component";
 import Checkbox from "./form/Checkbox";
 import Datepicker from "./form/DatePicker";
 import HeaderApp from "./HeaderApp";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 import Modal from "./modal.component";
-import {
-  CommonText,
-  FontNames,
-  getFontFamilyName,
-  SecondaryText,
-} from "./StyledText";
+import { CommonText, SecondaryText } from "./StyledText";
 import { Text, View } from "./Themed";
 import StepIcon from "./timeline/StepIcon";
 import TimlineStep from "./timeline/TimlineStep";
@@ -38,8 +33,6 @@ export {
   Datepicker,
   DidYouKnow,
   Filters,
-  FontNames,
-  getFontFamilyName,
   HeaderApp,
   Icomoon,
   IcomoonIcons,

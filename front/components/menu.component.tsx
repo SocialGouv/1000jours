@@ -7,7 +7,9 @@ import BottomSheet from "reanimated-bottom-sheet";
 
 import {
   Colors,
+  FontNames,
   FontWeight,
+  getFontFamilyName,
   Labels,
   Margins,
   Paddings,
@@ -17,7 +19,6 @@ import { ConditionsOfUse, LegalNotice } from "../screens";
 import type { MenuItem } from "../types";
 import { Icomoon } from ".";
 import { IcomoonIcons } from "./icomoon.component";
-import { FontNames, getFontFamilyName } from "./StyledText";
 import { View } from "./Themed";
 
 interface Props {

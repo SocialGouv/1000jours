@@ -4,10 +4,14 @@ import { StyleSheet } from "react-native";
 import { Button as RNEButton } from "react-native-elements";
 import type { IconNode } from "react-native-elements/dist/icons/Icon";
 
-import { Paddings, Sizes } from "../../constants";
-import Colors from "../../constants/Colors";
-import { FontWeight } from "../../constants/Layout";
-import { FontNames, getFontFamilyName } from "../StyledText";
+import {
+  Colors,
+  FontNames,
+  FontWeight,
+  getFontFamilyName,
+  Paddings,
+  Sizes,
+} from "../../constants";
 
 interface Props {
   title: string;
@@ -72,7 +76,7 @@ const styles = StyleSheet.create({
     paddingVertical: Paddings.smaller,
   },
   roundedButtonTitle: {
-    color: "white",
+    color: Colors.white,
     textAlign: "center",
   },
 });
