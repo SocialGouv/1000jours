@@ -15,7 +15,7 @@ import AppLogo from "../assets/images/logo.svg";
 import { Backdrop, Icomoon, IcomoonIcons } from "../components";
 import Menu from "../components/menu.component";
 import { Text, View } from "../components/Themed";
-import { Sizes } from "../constants";
+import { Paddings, Sizes } from "../constants";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
 import ConditionsOfUse from "../screens/ConditionsOfUse";
@@ -89,7 +89,7 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => (
           >
             <Icomoon
               name={IcomoonIcons.menu}
-              size={Sizes.xxxxxxs}
+              size={Sizes.xxxxxs}
               color={Colors.primaryBlue}
             />
             <Text style={[styles.headerRightButtonText]}>
@@ -121,15 +121,16 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => (
 
 const styles = StyleSheet.create({
   headerLeft: {
-    paddingLeft: 15,
+    paddingLeft: Paddings.default,
   },
   headerRight: {
     alignItems: "center",
-    paddingRight: 15,
+    paddingRight: Paddings.default,
   },
   headerRightButtonText: {
     color: Colors.primaryBlue,
-    paddingTop: 5,
+    fontSize: Sizes.xs,
+    paddingTop: Paddings.smallest,
   },
 });
 

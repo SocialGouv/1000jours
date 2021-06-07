@@ -1,4 +1,5 @@
 import DidYouKnow from "./article/DidYouKnow";
+import Filters from "./article/Filters";
 import ImageBanner from "./article/ImageBanner";
 import InShort from "./article/InShort";
 import Links from "./article/Links";
@@ -36,6 +37,7 @@ export {
   CustomSnackBar,
   Datepicker,
   DidYouKnow,
+  Filters,
   FontNames,
   getFontFamilyName,
   HeaderApp,

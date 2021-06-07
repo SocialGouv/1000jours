@@ -6,9 +6,9 @@ import { StyleSheet } from "react-native";
 
 import { Colors, Labels, Paddings, Sizes } from "../../constants";
 import type { Article, ArticleFilter } from "../../types";
-import { Button, Icomoon } from "..";
 import Chip from "../Chip";
-import { IcomoonIcons } from "../icomoon.component";
+import Button from "../form/Button";
+import Icomoon, { IcomoonIcons } from "../icomoon.component";
 import { View } from "../Themed";
 
 interface Props {
@@ -78,7 +78,7 @@ const Filters: FC<Props> = ({ articles, applyFilter }) => {
 const styles = StyleSheet.create({
   filterButton: {
     alignSelf: "flex-start",
-    backgroundColor: "white",
+    backgroundColor: Colors.cardWhite,
     borderColor: Colors.primaryBlue,
     borderWidth: 1,
   },

@@ -10,10 +10,13 @@ import { useEffect } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
 
-import { CommonText, SecondaryText } from "../components";
-import Filters from "../components/article/Filters";
-import Button from "../components/form/Button";
-import { View } from "../components/Themed";
+import {
+  Button,
+  CommonText,
+  Filters,
+  SecondaryText,
+  View,
+} from "../components";
 import {
   Colors,
   FontWeight,
@@ -226,7 +229,7 @@ const styles = StyleSheet.create({
     color: Colors.secondaryGreen,
     fontSize: Sizes.xs,
     fontStyle: "italic",
-    paddingVertical: Paddings.smallest,
+    paddingVertical: Paddings.smaller,
   },
   listContainer: {
     paddingHorizontal: Paddings.default,
