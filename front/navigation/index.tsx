@@ -96,17 +96,7 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => (
           </TouchableOpacity>
         ),
         headerShown: true,
-        headerTitle: () => (
-          <View
-            style={{
-              alignItems: "center",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <AppLogo height={30} />
-          </View>
-        ),
+        headerTitle: () => <AppLogo height={Sizes.xxxl} />,
       }}
     />
     <Stack.Screen

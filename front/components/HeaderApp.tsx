@@ -9,7 +9,7 @@ import { Paddings, Sizes } from "../constants";
 const HeaderApp: FC = () => (
   <View>
     <View style={styles.logoMinistere}>
-      <LogoMinistere height={32} />
+      <LogoMinistere height={Sizes.xxl} />
     </View>
     <View style={styles.appLogo}>
       <AppLogo height={Sizes.logo} />
