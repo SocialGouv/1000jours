@@ -1,6 +1,7 @@
 import * as AroundMeUtils from "./aroundMe.util";
 import * as AssestUtils from "./asset.util";
 import * as DataFetchingUtils from "./dataFetching.util";
+import * as DateUtils from "./date.util";
 import * as EpdsSurveyUtils from "./epdsSurvey.util";
 import * as KeyboardUtils from "./keyboard.util";
 import * as LinkingUtils from "./linking.util";
@@ -13,6 +14,7 @@ export {
   AroundMeUtils,
   AssestUtils,
   DataFetchingUtils,
+  DateUtils,
   EpdsSurveyUtils,
   KeyboardUtils,
   LinkingUtils,

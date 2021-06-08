@@ -21,7 +21,7 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../constants";
-import { EpdsSurveyUtils, StorageUtils } from "../../utils";
+import { DateUtils, EpdsSurveyUtils, StorageUtils } from "../../utils";
 import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation.component";
 
 interface Props {
@@ -49,7 +49,20 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
         variables: { compteur: newCounter, genre: genderValue, score: result },
       });
     };
+
+    const saveReminderForNextSurveyPass = async () => {
+      const dateToSave = DateUtils.addDays(
+        new Date(),
+        EpdsConstants.NUMBER_OF_DAYS_NOTIF_REMINDER
+      );
+      await StorageUtils.storeObjectValue(
+        StorageKeysConstants.epdsSurveyDaysNotifReminderKey,
+        dateToSave
+      );
+    };
+
     void saveEpdsSurveyResults();
+    void saveReminderForNextSurveyPass();
   }, []);
   // Delete saved storage keys for EPDS survey
   void EpdsSurveyUtils.removeEpdsStorageItems();
@@ -89,7 +102,9 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
         {resultData.resultLabels.explication}
       </CommonText>
       <CommonText style={[styles.text, styles.fontBold]}>
-        {labelsResultats.retakeTestInvitation}
+        {labelsResultats.retakeTestInvitationBegin}{" "}
+        {EpdsConstants.NUMBER_OF_DAYS_NOTIF_REMINDER}{" "}
+        {labelsResultats.retakeTestInvitationEnd}
       </CommonText>
       <EpdsResultInformation
         leftBorderColor={resultData.color}
