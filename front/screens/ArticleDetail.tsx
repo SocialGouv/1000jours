@@ -2,10 +2,12 @@ import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
+import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 
+import { CommonText, SecondaryText } from "../components";
 import DidYouKnow from "../components/article/DidYouKnow";
 import ImageBanner from "../components/article/ImageBanner";
 import InShort from "../components/article/InShort";
@@ -15,10 +17,8 @@ import TextHtml from "../components/article/TextHtml";
 import Thematics from "../components/article/Thematics";
 import Title from "../components/article/Title";
 import BackButton from "../components/BackButton";
-import { CommonText, SecondaryText } from "../components";
 import { View } from "../components/Themed";
-import { Colors, Labels } from "../constants";
-import { FontWeight } from "../constants";
+import { Colors, FontWeight, Labels } from "../constants";
 import type {
   Article,
   ArticleInShortItem,
@@ -26,7 +26,6 @@ import type {
   Step,
   TabHomeParamList,
 } from "../types";
-import { useMatomo } from "matomo-tracker-react-native";
 import { TrackerUtils } from "../utils";
 
 interface Props {

@@ -3,7 +3,7 @@ import * as React from "react";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 
-import Button from "../../components/form/Button";
+import Button from "../../components/form/button.component";
 import Checkbox from "../../components/form/Checkbox";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";

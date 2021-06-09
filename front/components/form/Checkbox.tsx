@@ -4,10 +4,14 @@ import { CheckBox as RNECheckBox } from "react-native-elements";
 
 import CheckedIcon from "../../assets/images/radio_checked.svg";
 import UncheckedIcon from "../../assets/images/radio_unchecked.svg";
-import { Paddings, Sizes } from "../../constants";
-import Colors from "../../constants/Colors";
-import { FontWeight } from "../../constants/Layout";
-import { FontNames, getFontFamilyName } from "../StyledText";
+import {
+  Colors,
+  FontNames,
+  FontWeight,
+  getFontFamilyName,
+  Paddings,
+  Sizes,
+} from "../../constants";
 
 interface Props {
   title: string;

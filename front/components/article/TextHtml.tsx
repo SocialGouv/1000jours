@@ -3,23 +3,26 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import HTML from "react-native-render-html";
 
-import Colors from "../../constants/Colors";
-import { FontWeight } from "../../constants/Layout";
-import { FontNames, getFontFamilyName } from "../StyledText";
+import {
+  Colors,
+  FontNames,
+  FontWeight,
+  getFontFamilyName,
+} from "../../constants";
 
 interface Props {
   html: string;
 }
 
 const TextHtml: FC<Props> = ({ html }) => {
-  return (
+  return html ? (
     <HTML
       containerStyle={styles.containerStyle}
       baseFontStyle={styles.baseFontStyle}
       source={{ html }}
       tagsStyles={{ b: styles.bold, strong: styles.bold }}
     />
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({

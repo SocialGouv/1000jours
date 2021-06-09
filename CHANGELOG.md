@@ -1,3 +1,24 @@
+# [1.36.0](https://github.com/SocialGouv/1000jours/compare/v1.35.2...v1.36.0) (2021-06-08)
+
+
+### Features
+
+* 🎸 Ajoute le nouveau logo ([#269](https://github.com/SocialGouv/1000jours/issues/269)) ([d9e5a99](https://github.com/SocialGouv/1000jours/commit/d9e5a991c70aadfe31d8f62005e85e73b4c98383))
+
+## [1.35.2](https://github.com/SocialGouv/1000jours/compare/v1.35.1...v1.35.2) (2021-06-07)
+
+
+### Bug Fixes
+
+* corrige les workflows de prod ([#250](https://github.com/SocialGouv/1000jours/issues/250)) ([2a57635](https://github.com/SocialGouv/1000jours/commit/2a576359658ad9432875ab2fb7a0378e96bd4def))
+
+## [1.35.1](https://github.com/SocialGouv/1000jours/compare/v1.35.0...v1.35.1) (2021-06-07)
+
+
+### Bug Fixes
+
+* 🐛 Corrige les retours design sur la liste articles ([#268](https://github.com/SocialGouv/1000jours/issues/268)) ([b8d16fa](https://github.com/SocialGouv/1000jours/commit/b8d16fa2df66f5753b3390e399f3ee980f427afc)), closes [#26](https://github.com/SocialGouv/1000jours/issues/26) [#226](https://github.com/SocialGouv/1000jours/issues/226)
+
 # [1.35.0](https://github.com/SocialGouv/1000jours/compare/v1.34.0...v1.35.0) (2021-06-07)
 
 
