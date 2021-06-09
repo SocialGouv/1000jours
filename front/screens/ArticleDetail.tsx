@@ -116,8 +116,6 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
   setInShortArray(result.article);
   setLinksArray(result.article);
 
-  const html =
-    '<p style="text-align:justify;"><strong>Deux préventions compatibles :</strong></p><figure class="media"><oembed url="https://www.youtube.com/watch?v=Hmj3LToi4W8"></oembed></figure><p style="text-align:justify;">L’aplatissement du crâne, sans gravité, se produit si bébé bouge peu la tête. On peut l’éviter, en variant ses positions à l’éveil&nbsp;:</p><ul><li style="text-align:justify;">dans les bras</li><li style="text-align:justify;">sur un tapis avec ses jouets autour de lui</li><li style="text-align:justify;">sur le ventre lors du change</li><li style="text-align:justify;">limitez le temps d’immobilisation&nbsp;(le cosy, juste pour le trajet)</li></ul><p style="text-align:justify;">Dormir sur le dos est primordial pour sa sécurité. Mais il bouge en dormant (sans cale-bébé) et regarde autour de lui&nbsp;(sans tour de lit). &nbsp;</p>';
   return (
     <ScrollView>
       <View style={[styles.mainContainer]}>
@@ -147,7 +145,7 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
             <DidYouKnow description={result.article.leSaviezVous} />
             <SubTitle title={result.article.texteTitre2} />
             <TextHtml
-              html={html}
+              html={result.article.texte2}
               offsetTotal={paddingMainContent + paddingArticleContent}
             />
             <InShort inShortArray={inShortArray} />
