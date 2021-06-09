@@ -1,3 +1,4 @@
+import { EpdsConstants } from ".";
 import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
@@ -60,6 +61,10 @@ export default {
   },
   dateFormatLabel: "Jour / Mois / Année",
   epdsSurvey: {
+    notification: {
+      body: `${EpdsConstants.NUMBER_OF_DAYS_NOTIF_REMINDER} jours se sont écoulés depuis la dernière fois que vous avez passé le test EPDS. Vous pouvez maintenant le repasser si vous le souhaitez`,
+      title: "Rappel EPDS",
+    },
     description:
       "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.",
     genderEntry: {
@@ -156,8 +161,7 @@ export default {
         ],
         stateOfMind: "Je ne vais pas bien",
       },
-      retakeTestInvitationBegin: "Vous serez invité à repasser le test dans",
-      retakeTestInvitationEnd: "jours",
+      retakeTestInvitation: `Vous serez invité à repasser le test dans ${EpdsConstants.NUMBER_OF_DAYS_NOTIF_REMINDER} jours`,
     },
     title: "Autodépistage dépression post-partum",
   },

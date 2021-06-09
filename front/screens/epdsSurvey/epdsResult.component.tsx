@@ -21,7 +21,7 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../constants";
-import { DateUtils, EpdsSurveyUtils, StorageUtils } from "../../utils";
+import { EpdsSurveyUtils, NotificationUtils, StorageUtils } from "../../utils";
 import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation.component";
 
 interface Props {
@@ -42,6 +42,10 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
     const saveEpdsSurveyResults = async () => {
       const newCounter =
         await EpdsSurveyUtils.incrementEpdsSurveyCounterAndGetNewValue();
+      // Si newCounter est égal à 1, cela signifie que c'est la première fois que le test EPDS a été passé, on peut alors programmer la notif de rappel
+      if (newCounter === 1) {
+        await NotificationUtils.scheduleEpdsNotification();
+      }
       const genderValue = await StorageUtils.getStringValue(
         StorageKeysConstants.epdsGenderKey
       );
@@ -50,19 +54,7 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
       });
     };
 
-    const saveReminderForNextSurveyPass = async () => {
-      const dateToSave = DateUtils.addDays(
-        new Date(),
-        EpdsConstants.NUMBER_OF_DAYS_NOTIF_REMINDER
-      );
-      await StorageUtils.storeObjectValue(
-        StorageKeysConstants.epdsSurveyDaysNotifReminderKey,
-        dateToSave
-      );
-    };
-
     void saveEpdsSurveyResults();
-    void saveReminderForNextSurveyPass();
   }, []);
   // Delete saved storage keys for EPDS survey
   void EpdsSurveyUtils.removeEpdsStorageItems();
@@ -102,9 +94,7 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
         {resultData.resultLabels.explication}
       </CommonText>
       <CommonText style={[styles.text, styles.fontBold]}>
-        {labelsResultats.retakeTestInvitationBegin}{" "}
-        {EpdsConstants.NUMBER_OF_DAYS_NOTIF_REMINDER}{" "}
-        {labelsResultats.retakeTestInvitationEnd}
+        {labelsResultats.retakeTestInvitation}
       </CommonText>
       <EpdsResultInformation
         leftBorderColor={resultData.color}
