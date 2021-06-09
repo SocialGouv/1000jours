@@ -43,7 +43,7 @@ const TextHtml: FC<Props> = ({ html, offsetTotal }) => {
   };
 
   React.useEffect(() => {
-    fixVideoContent(html);
+    if (html) fixVideoContent(html);
   }, [htmlContent]);
 
   return isReady ? (
