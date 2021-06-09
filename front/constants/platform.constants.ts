@@ -1,6 +1,6 @@
 import { Dimensions, Platform } from "react-native";
 
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
+export const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 // Based on iPhone 6's scale : 375 x 667
 const IPHONE6_WIDTH_SCALE = 375;
