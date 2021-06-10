@@ -2209,6 +2209,15 @@
   dependencies:
     css-to-react-native "^3.0.0"
 
+"@native-html/iframe-plugin@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@native-html/iframe-plugin/-/iframe-plugin-1.1.2.tgz#949890cd360a6841ee5b88bd8cc97289f2c25c39"
+  integrity sha512-9baVbTE6Fojw8VsuFduHrO6QXFbg2kWV37eipgOlDBT5sCi72gYJMpbaDIYMK7eOHqsehDVflfNnjPYZNmKN9A==
+  dependencies:
+    "@formidable-webview/webshell" "^2.3.0"
+    "@types/prop-types" "^15.7.3"
+    prop-types "^15.7.2"
+
 "@native-html/table-plugin@^3.1.1":
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@native-html/table-plugin/-/table-plugin-3.1.1.tgz#7400ccd242290a48ae390dc15fe76f7577a39e02"
