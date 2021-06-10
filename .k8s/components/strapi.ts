@@ -1,139 +1,198 @@
-import env from "@kosko/env";
-
-import { create } from "@socialgouv/kosko-charts/components/app";
 import gitlab from "@socialgouv/kosko-charts/environments/gitlab";
 import { getHarborImagePath } from "@socialgouv/kosko-charts/utils/getHarborImagePath";
-import { addEnv } from "@socialgouv/kosko-charts/utils/addEnv";
-import { getManifestByKind } from "@socialgouv/kosko-charts/utils/getManifestByKind";
-import { Deployment } from "kubernetes-models/api/apps/v1/Deployment";
-import { EnvVar } from "kubernetes-models/api/core/v1/EnvVar";
 import { PersistentVolume } from "kubernetes-models/v1/PersistentVolume";
 import { PersistentVolumeClaim } from "kubernetes-models/v1/PersistentVolumeClaim";
-
-type AnyObject = {
-  [any: string]: any;
-};
-
-interface AddEnvsParams {
-  deployment: Deployment;
-  data: AnyObject;
-  containerIndex?: number;
-}
+import { StatefulSet } from "kubernetes-models/api/apps/v1/StatefulSet";
 
 const gitlabEnv = gitlab(process.env);
 
-const addEnvs = ({ deployment, data, containerIndex = 0 }: AddEnvsParams) => {
-  Object.keys(data).forEach((key) => {
-    addEnv({
-      deployment,
-      data: new EnvVar({ name: key, value: data[key] }),
-      containerIndex,
-    });
-  });
-};
-
 const manifests = [];
 
-const strapiManifests = create("strapi", {
-  env,
-  config: {
-    containerPort: 1337,
-    withPostgres: true,
-    subDomainPrefix: "backoffice-",
-  },
-  deployment: {
-    image: getHarborImagePath({ name: "les1000jours-strapi" }),
-    container: {
-      // override probes path
-      livenessProbe: {
-        httpGet: {
-          path: "/_health",
-          port: "http",
-        },
-      },
-      readinessProbe: {
-        httpGet: {
-          path: "/_health",
-          port: "http",
-        },
-      },
-      // increase startup delay
-      startupProbe: {
-        httpGet: {
-          path: "/_health",
-          port: "http",
-        },
-      },
-      resources: {
-        requests: {
-          cpu: "5m",
-          memory: "128Mi",
-        },
-        limits: {
-          cpu: "500m",
-          memory: "256Mi",
-        },
-      },
-      volumeMounts: [
-        {
-          mountPath: "/app/public/uploads",
-          name: "uploads",
-        },
-      ],
-    },
-  },
-});
-
-//@ts-expect-error
-const deployment = getManifestByKind(strapiManifests, Deployment) as Deployment;
-
-const pvcName = "1000jours-strapi-uploads";
-
-if (deployment && deployment?.spec?.template.spec) {
-  deployment.spec.template.spec.volumes = [
-    {
-      persistentVolumeClaim: {
-        claimName: pvcName,
-      },
-      name: "uploads",
-    },
-  ];
-  deployment.spec.template.spec.nodeSelector = {
-    workload: "les1000jours-strapi",
-  };
+const metadata = {
+  name: "strapi"
 }
-
+const labels = {
+  app: "strapi",
+  application: "les1000jours",
+  "kapp.k14s.io/association": "v1.0ca971a8780eb9d97118810a6b8e657a",
+  owner: "les1000jours",
+  team: "les1000jours"
+}
+const annotations = {
+  "app.gitlab.com/app": "socialgouv-1000jours-les1000jours",
+  "app.gitlab.com/env": "prod2",
+  "app.gitlab.com/env.name": "prod2",
+  "kapp.k14s.io/disable-default-label-scoping-rules": "",
+  "kapp.k14s.io/disable-default-ownership-label-rules": ""
+}
 const pvc = new PersistentVolumeClaim({
   metadata: {
-    name: pvcName,
+    name: "uploads",
     annotations: {},
   },
   spec: {
-    accessModes: ["ReadWriteOnce"],
+    accessModes: ["ReadWriteMany"],
     resources: {
       requests: {
-        storage: "1Gi",
+        storage: "10Gi",
       },
     },
-    volumeMode: "Filesystem",
+    storageClassName: "les1000jours"
   },
 });
 
-addEnvs({
-  deployment,
-  data: {
-    BACKOFFICE_URL: `https://backoffice-${gitlabEnv.subdomain}.${gitlabEnv.domain}`,
-    DATABASE_CLIENT: "postgres",
-    DATABASE_NAME: "$(PGDATABASE)",
-    DATABASE_HOST: "$(PGHOST)",
-    DATABASE_PORT: "$(PGPORT)",
-    DATABASE_USERNAME: "$(PGUSER)",
-    DATABASE_PASSWORD: "$(PGPASSWORD)",
-    DATABASE_SSL: "true",
-  },
-});
+const statefulSet = new StatefulSet({
+  metadata,
+  spec: {
+    serviceName: "strapi",
+    replicas: 1,
+    selector: {
+      matchLabels: {
+        app: "strapi"
+      }
+    },
+    template: {
+      metadata: {
+        annotations,
+        labels
+      },
+      spec: {
+        containers: [
+          {
+            name: "strapi",
+            image: getHarborImagePath({ name: "les1000jours-strapi" }),
+            livenessProbe: {
+              httpGet: {
+                path: "/_health",
+                port: "http",
+              },
+            },
+            readinessProbe: {
+              httpGet: {
+                path: "/_health",
+                port: "http",
+              },
+            },
+            // increase startup delay
+            startupProbe: {
+              httpGet: {
+                path: "/_health",
+                port: "http",
+              },
+            },
+            resources: {
+              requests: {
+                cpu: "5m",
+                memory: "128Mi",
+              },
+              limits: {
+                cpu: "500m",
+                memory: "256Mi",
+              },
+            },
+            volumeMounts: [
+              {
+                mountPath: "/app/public/uploads",
+                name: "uploads",
+              },
+            ],
+            env: [
+              {
+                name: "BACKOFFICE_URL",
+                value: "https://backoffice-" + gitlabEnv.subdomain + "." + gitlabEnv.domain,
+              },
+              {
+                name: "DATABASE_CLIENT",
+                value: "postgres",
+              },
+              {
+                name: "DATABASE_NAME",
+                value: "$(PGDATABASE)",
+              },
+              {
+                name: "DATABASE_HOST",
+                value: "$(PGHOST)",
+              },
+              {
+                name: "DATABASE_PORT",
+                value: "$(PGPORT)",
+              },
+              {
+                name: "DATABASE_USERNAME",
+                value: "$(PGUSER)",
+              },
+              {
+                name: "DATABASE_PASSWORD",
+                value: "$(PGPASSWORD)",
+              },
+              {
+                name: "DATABASE_SSL",
+                value: "true",
+              },
+            ],
+          },
+        ],
+        initContainers: [
+          {
+            name: "wait-for-postgres",
+            image: "ghcr.io/socialgouv/docker/wait-for-postgres:6.0.1",
+            imagePullPolicy: "Always",
+            resources: {
+              requests: {
+                cpu: "5m",
+                memory: "16Mi",
+              },
+              limits: {
+                cpu: "20m",
+                memory: "32Mi",
+              },
+            },
+            terminationMessagePath: "/dev/termination-log",
+            terminationMessagePolicy: "File",
+            env: [
+              {
+                name: "WAIT_FOR_RETRIES",
+                value: "24"
+              }
+            ],
+            envFrom: [
+              {
+                secretRef: {
+                  name: "azure-pg-user"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    volumeClaimTemplates: [pvc]
+  }
+})
 
-manifests.push(strapiManifests);
-manifests.push(pvc);
+const persistentVolume = new PersistentVolume({
+  metadata: {
+    name: "les1000jours-pv",
+    labels: {
+      usage: "les1000jours-pv"
+    }
+  },
+  spec: {
+    capacity: {
+      storage: "10Gi"
+    },
+    accessModes: ["ReadWriteMany"],
+    storageClassName: "les1000jours",
+    persistentVolumeReclaimPolicy: "Retain",
+    azureFile: {
+      secretName: "azure-les1000joursprod-volume",
+      secretNamespace: "les1000jours-secret",
+      shareName: "uploads"
+    }
+  }
+})
+
+manifests.push(persistentVolume);
+manifests.push(statefulSet);
 
 export default manifests;
