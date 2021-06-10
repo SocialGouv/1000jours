@@ -1,3 +1,10 @@
+## [1.36.1](https://github.com/SocialGouv/1000jours/compare/v1.36.0...v1.36.1) (2021-06-10)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'affichage des vidéos dans la fiche article ([#276](https://github.com/SocialGouv/1000jours/issues/276)) ([be7bdbc](https://github.com/SocialGouv/1000jours/commit/be7bdbc882d8a187f63af719611cab1d81fa7734)), closes [#275](https://github.com/SocialGouv/1000jours/issues/275)
+
 # [1.36.0](https://github.com/SocialGouv/1000jours/compare/v1.35.2...v1.36.0) (2021-06-08)
 
 
