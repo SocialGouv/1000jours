@@ -21,7 +21,7 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../constants";
-import { EpdsSurveyUtils, StorageUtils } from "../../utils";
+import { EpdsSurveyUtils, NotificationUtils, StorageUtils } from "../../utils";
 import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation.component";
 
 interface Props {
@@ -42,6 +42,10 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
     const saveEpdsSurveyResults = async () => {
       const newCounter =
         await EpdsSurveyUtils.incrementEpdsSurveyCounterAndGetNewValue();
+      // Si newCounter est égal à 1, cela signifie que c'est la première fois que le test EPDS a été passé, on peut alors programmer la notif de rappel
+      if (newCounter === 1) {
+        await NotificationUtils.scheduleEpdsNotification();
+      }
       const genderValue = await StorageUtils.getStringValue(
         StorageKeysConstants.epdsGenderKey
       );
@@ -49,6 +53,7 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
         variables: { compteur: newCounter, genre: genderValue, score: result },
       });
     };
+
     void saveEpdsSurveyResults();
   }, []);
   // Delete saved storage keys for EPDS survey
@@ -87,6 +92,9 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
       </CommonText>
       <CommonText style={styles.text}>
         {resultData.resultLabels.explication}
+      </CommonText>
+      <CommonText style={[styles.text, styles.fontBold]}>
+        {labelsResultats.retakeTestInvitation}
       </CommonText>
       <EpdsResultInformation
         leftBorderColor={resultData.color}

@@ -13,3 +13,5 @@ export enum ResultIconValueEnum {
   moyen = "moyen",
   pasBien = "pasBien",
 }
+
+export const NUMBER_OF_DAYS_NOTIF_REMINDER = 14;

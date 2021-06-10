@@ -126,14 +126,18 @@ export const removeEpdsStorageItems = async (): Promise<any> => {
   await multiRemove(StorageKeysConstants.epdsSurveyKeys);
 };
 
-export const incrementEpdsSurveyCounterAndGetNewValue = async (): Promise<number> => {
-  const counterObject = await getObjectValue(
-    StorageKeysConstants.epdsSurveyCounterKey
-  );
+export const incrementEpdsSurveyCounterAndGetNewValue =
+  async (): Promise<number> => {
+    const counterObject = await getObjectValue(
+      StorageKeysConstants.epdsSurveyCounterKey
+    );
 
-  const surveyCounter = counterObject ? Number(counterObject) : 0;
-  const newCounter = surveyCounter + 1;
-  await storeObjectValue(StorageKeysConstants.epdsSurveyCounterKey, newCounter);
+    const surveyCounter = counterObject ? Number(counterObject) : 0;
+    const newCounter = surveyCounter + 1;
+    await storeObjectValue(
+      StorageKeysConstants.epdsSurveyCounterKey,
+      newCounter
+    );
 
-  return newCounter;
-};
+    return newCounter;
+  };

@@ -88,6 +88,7 @@ const TabAroundMeScreen: React.FC = () => {
     et donc on ne cache pas directement la snackBar si elle a été affichée (en cas d'erreur) */
     if (moveToRegionBecauseOfPCResearch) {
       setMoveToRegionBecauseOfPCResearch(false);
+      setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
     } else {
       setShowSnackBar(false);
     }
@@ -152,7 +153,7 @@ const TabAroundMeScreen: React.FC = () => {
         }}
         triggerSearchByPostalCode={() => {
           setMoveToRegionBecauseOfPCResearch(true);
-          setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
+          // setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
         }}
         showSnackBarWithMessage={showSnackBarWithMessage}
       />
@@ -194,10 +195,6 @@ const TabAroundMeScreen: React.FC = () => {
             />
           </View>
         )}
-        {showAddressesList &&
-          poisArrayInList.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
-            <SlidingUpPanelAddressesList poisArray={poisArrayInList} />
-          )}
       </View>
       {showAddressDetails && addressDetails && (
         <View style={styles.addressDetails}>
@@ -211,6 +208,10 @@ const TabAroundMeScreen: React.FC = () => {
       >
         <CommonText>{snackBarMessage}</CommonText>
       </CustomSnackBar>
+      {showAddressesList &&
+        poisArrayInList.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
+          <SlidingUpPanelAddressesList poisArray={poisArrayInList} />
+        )}
     </View>
   );
 };
