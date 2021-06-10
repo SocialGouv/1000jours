@@ -2,6 +2,7 @@ import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
+import { Margins, Sizes } from "../../constants";
 import Colors from "../../constants/Colors";
 import type { Thematique } from "../../types";
 import { CommonText } from "../StyledText";
@@ -38,10 +39,10 @@ const styles = StyleSheet.create({
   },
   thematiqueContainer: {
     backgroundColor: Colors.primaryBlueLight,
-    borderRadius: 8,
-    marginBottom: 5,
-    marginRight: 8,
-    padding: 6,
+    borderRadius: Sizes.xxxxxs,
+    marginBottom: Margins.smallest,
+    marginRight: Margins.smaller,
+    padding: Margins.smaller,
   },
 });
 
