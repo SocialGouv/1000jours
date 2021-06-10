@@ -87,7 +87,7 @@ const createStrapiComponent = async (
     },
   };
 
-  const strapiManifests = create("strapi", {
+  const strapiManifests = await create("strapi", {
     env,
     config,
     deployment: deploymentConfig,
@@ -149,8 +149,7 @@ const createStrapiComponent = async (
   return await manifests;
 };
 
-const getManifests = async () => {
-
+export default async () => {
   // generate basic strapi manifests
   const manifests = await createStrapiComponent("strapi", {
     config: {
@@ -167,9 +166,5 @@ const getManifests = async () => {
       workload: "les1000jours-strapi",
     };
   }
-  
   return manifests;
 };
-
-const manifests = getManifests();
-export default manifests;
