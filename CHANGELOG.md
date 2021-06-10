@@ -1,3 +1,10 @@
+## [1.36.2](https://github.com/SocialGouv/1000jours/compare/v1.36.1...v1.36.2) (2021-06-10)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la version des packages incompatible (expo) ([#284](https://github.com/SocialGouv/1000jours/issues/284)) ([f741b4d](https://github.com/SocialGouv/1000jours/commit/f741b4de106d48bca750cc5d9b0163f09da90e01))
+
 ## [1.36.1](https://github.com/SocialGouv/1000jours/compare/v1.36.0...v1.36.1) (2021-06-10)
 
 
