@@ -81,6 +81,10 @@ module.exports = {
       required: true,
       via: "related",
     },
+    notifications: {
+      type: "boolean",
+      default: false
+    }
   },
   collectionName: "articles",
   info: {
