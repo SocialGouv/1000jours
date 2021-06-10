@@ -135,10 +135,10 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 256Mi
+              memory: 512Mi
             requests:
-              cpu: 5m
-              memory: 128Mi
+              cpu: 50m
+              memory: 256Mi
           startupProbe:
             failureThreshold: 12
             httpGet:
@@ -283,7 +283,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 5Gi
   volumeMode: Filesystem
 "
 `;
