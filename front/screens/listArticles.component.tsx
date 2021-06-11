@@ -27,7 +27,13 @@ import {
   Paddings,
   Sizes,
 } from "../constants";
-import type { Article, Step, TabHomeParamList } from "../types";
+import type {
+  Article,
+  ArticleFilter,
+  Step,
+  TabHomeParamList,
+  Thematique,
+} from "../types";
 import { TrackerUtils } from "../utils";
 
 interface Props {
@@ -89,10 +95,24 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     navigation.navigate("epdsSurvey");
   };
 
-  const applyFilter = (id: number, active: boolean) => {
+  const matchWithFilters = (article: Article, filters: ArticleFilter[]) => {
+    let isMatching = false;
+    article.thematiques.map((thematique: Thematique) => {
+      const res = _.filter(filters, ["thematique", thematique]);
+      if (res.length > 0) {
+        isMatching = true;
+      }
+    });
+    return isMatching;
+  };
+
+  const applyFilters = (filters: ArticleFilter[]) => {
+    const activeFilters = _.filter(filters, { active: true });
     const result = filteredArticles.map((article) => {
-      const thematique = _.find(article.thematiques, { id: id });
-      if (thematique) article.hide = !active;
+      if (activeFilters.length > 0)
+        article.hide = !matchWithFilters(article, activeFilters);
+      else article.hide = false;
+
       return article;
     });
     setFilteredArticles(result);
@@ -126,7 +146,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
         </View>
       )}
 
-      <Filters articles={filteredArticles} applyFilter={applyFilter} />
+      <Filters articles={filteredArticles} applyFilters={applyFilters} />
 
       <View style={styles.listContainer}>
         <SecondaryText style={styles.headerListInfo}>
