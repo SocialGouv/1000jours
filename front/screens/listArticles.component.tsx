@@ -8,8 +8,10 @@ import type { FC } from "react";
 import * as React from "react";
 import { useEffect } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
+import * as Animatable from "react-native-animatable";
 import { Image, ListItem } from "react-native-elements";
 
+import DefaultImage from "../assets/images/default.png";
 import {
   Button,
   CommonText,
@@ -133,45 +135,55 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
         </SecondaryText>
         {_.filter(filteredArticles, (article) => !article.hide).map(
           (article, index) => (
-            <ListItem
+            <Animatable.View
               key={index}
-              bottomDivider
-              onPress={() => {
-                navigation.navigate("article", {
-                  id: article.id,
-                  step: route.params.step,
-                });
-              }}
-              pad={0}
-              containerStyle={[
-                styles.listItemContainer,
-                styles.borderLeftRadius,
-              ]}
-              style={[styles.listItem, styles.borderLeftRadius]}
+              animation="fadeInUp"
+              duration={1000}
+              delay={500 * index}
             >
-              <Image
-                source={{
-                  uri: article.visuel?.url,
+              <ListItem
+                bottomDivider
+                onPress={() => {
+                  navigation.navigate("article", {
+                    id: article.id,
+                    step: route.params.step,
+                  });
                 }}
-                containerStyle={[styles.articleImage, styles.borderLeftRadius]}
-              />
-              <ListItem.Content style={styles.articleContent}>
-                <ListItem.Title style={styles.articleTitleContainer}>
-                  <CommonText style={styles.articleTitle}>
-                    {article.titre}
-                  </CommonText>
-                </ListItem.Title>
-                <ListItem.Subtitle style={styles.articleDescription}>
-                  <SecondaryText
-                    style={styles.articleDescriptionFont}
-                    numberOfLines={3}
-                    allowFontScaling={true}
-                  >
-                    {article.resume}
-                  </SecondaryText>
-                </ListItem.Subtitle>
-              </ListItem.Content>
-            </ListItem>
+                pad={0}
+                containerStyle={[
+                  styles.listItemContainer,
+                  styles.borderLeftRadius,
+                ]}
+                style={[styles.listItem, styles.borderLeftRadius]}
+              >
+                <Image
+                  defaultSource={DefaultImage}
+                  source={{
+                    uri: article.visuel?.url,
+                  }}
+                  containerStyle={[
+                    styles.articleImage,
+                    styles.borderLeftRadius,
+                  ]}
+                />
+                <ListItem.Content style={styles.articleContent}>
+                  <ListItem.Title style={styles.articleTitleContainer}>
+                    <CommonText style={styles.articleTitle}>
+                      {article.titre}
+                    </CommonText>
+                  </ListItem.Title>
+                  <ListItem.Subtitle style={styles.articleDescription}>
+                    <SecondaryText
+                      style={styles.articleDescriptionFont}
+                      numberOfLines={3}
+                      allowFontScaling={true}
+                    >
+                      {article.resume}
+                    </SecondaryText>
+                  </ListItem.Subtitle>
+                </ListItem.Content>
+              </ListItem>
+            </Animatable.View>
           )
         )}
       </View>
