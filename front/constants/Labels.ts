@@ -61,10 +61,6 @@ export default {
   },
   dateFormatLabel: "Jour / Mois / Année",
   epdsSurvey: {
-    notification: {
-      body: `${EpdsConstants.NUMBER_OF_DAYS_NOTIF_REMINDER} jours se sont écoulés depuis la dernière fois que vous avez passé le test EPDS. Vous pouvez maintenant le repasser si vous le souhaitez`,
-      title: "Rappel EPDS",
-    },
     description:
       "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.",
     genderEntry: {
@@ -78,6 +74,10 @@ export default {
     },
     instruction:
       "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement aujourd'hui.",
+    notification: {
+      body: `${EpdsConstants.NUMBER_OF_DAYS_NOTIF_REMINDER} jours se sont écoulés depuis la dernière fois que vous avez passé le test EPDS. Vous pouvez maintenant le repasser si vous le souhaitez`,
+      title: "Rappel EPDS",
+    },
     previousSurvey: {
       continueButton: "Continuer",
       messsage:
@@ -219,7 +219,7 @@ export default {
     calendarTitle: "Calendrier",
     favoritesTitle: "Favoris",
     homeTitle: "Accueil",
-    testEpds: "Test EPDS",
+    testEpds: "Post-partum",
   },
   timeline: {
     description:
