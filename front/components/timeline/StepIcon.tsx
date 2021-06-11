@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import * as React from "react";
 
-import { Colors, Sizes } from "../../constants";
+import Colors from "../../constants/Colors";
 import Icomoon from "../icomoon.component";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const StepIcon: FC<Props> = ({ name }) => (
-  <Icomoon name={name} color={Colors.primaryYellow} size={Sizes.xxxxl} />
+  <Icomoon name={name} color={Colors.primaryYellow} size={45} />
 );
 
 export default StepIcon;

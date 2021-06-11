@@ -6,7 +6,6 @@ import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
-import * as Animatable from "react-native-animatable";
 
 import { CommonText, SecondaryText } from "../components";
 import DidYouKnow from "../components/article/DidYouKnow";
@@ -128,14 +127,10 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
               }}
             />
           </View>
-          <Animatable.View animation="slideInRight" duration={1500}>
-            <SecondaryText style={[styles.title]}>{screenTitle}</SecondaryText>
-            {description && (
-              <CommonText style={[styles.description]}>
-                {description}
-              </CommonText>
-            )}
-          </Animatable.View>
+          <SecondaryText style={[styles.title]}>{screenTitle}</SecondaryText>
+          {description && (
+            <CommonText style={[styles.description]}>{description}</CommonText>
+          )}
         </View>
         <View>
           <ImageBanner imageUrl={result.article.visuel?.url} />
