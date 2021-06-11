@@ -1,13 +1,13 @@
 import env from "@kosko/env";
 
 import { create } from "@socialgouv/kosko-charts/components/app";
-import gitlab from "@socialgouv/kosko-charts/environments/gitlab";
+import { addEnvs } from "@socialgouv/kosko-charts/utils/addEnvs";
 import { getHarborImagePath } from "@socialgouv/kosko-charts/utils/getHarborImagePath";
-import { addEnv } from "@socialgouv/kosko-charts/utils/addEnv";
+import { getIngressHost } from "@socialgouv/kosko-charts/utils/getIngressHost";
 import { getManifestByKind } from "@socialgouv/kosko-charts/utils/getManifestByKind";
-import { Deployment } from "kubernetes-models/api/apps/v1/Deployment";
-import { EnvVar } from "kubernetes-models/api/core/v1/EnvVar";
-import { PersistentVolume } from "kubernetes-models/v1/PersistentVolume";
+import {
+  Deployment,
+} from "kubernetes-models/api/apps/v1/Deployment";
 import { PersistentVolumeClaim } from "kubernetes-models/v1/PersistentVolumeClaim";
 
 type AnyObject = {
@@ -20,30 +20,31 @@ interface AddEnvsParams {
   containerIndex?: number;
 }
 
-const gitlabEnv = gitlab(process.env);
+type configKey = "pvcName" | string;
 
-const addEnvs = ({ deployment, data, containerIndex = 0 }: AddEnvsParams) => {
-  Object.keys(data).forEach((key) => {
-    addEnv({
-      deployment,
-      data: new EnvVar({ name: key, value: data[key] }),
-      containerIndex,
-    });
-  });
+type StrapiOptions = {
+  config?: Record<configKey, any>;
+  deployment?: Record<string, any>;
 };
 
-const manifests = [];
+const createStrapiComponent = async (
+  name: string,
+  options: StrapiOptions
+): Promise<{ kind: string }[]> => {
+  const manifests = [];
 
-const strapiManifests = create("strapi", {
-  env,
-  config: {
+  const config = {
     containerPort: 1337,
     withPostgres: true,
-    subDomainPrefix: "backoffice-",
-  },
-  deployment: {
-    image: getHarborImagePath({ name: "les1000jours-strapi" }),
+    subDomainPrefix: "strapi-",
+    pvcName: "strapi-uploads",
+    ...(options.config || {}),
+  };
+
+  const deploymentConfig = {
+    ...(options.deployment || {}),
     container: {
+      ...((options.deployment && options.deployment.container) || {}),
       // override probes path
       livenessProbe: {
         httpGet: {
@@ -66,12 +67,12 @@ const strapiManifests = create("strapi", {
       },
       resources: {
         requests: {
-          cpu: "5m",
-          memory: "128Mi",
+          cpu: "50m",
+          memory: "256Mi",
         },
         limits: {
           cpu: "500m",
-          memory: "256Mi",
+          memory: "1Gi",
         },
       },
       volumeMounts: [
@@ -81,59 +82,88 @@ const strapiManifests = create("strapi", {
         },
       ],
     },
-  },
-});
-
-//@ts-expect-error
-const deployment = getManifestByKind(strapiManifests, Deployment) as Deployment;
-
-const pvcName = "1000jours-strapi-uploads";
-
-if (deployment && deployment?.spec?.template.spec) {
-  deployment.spec.template.spec.volumes = [
-    {
-      persistentVolumeClaim: {
-        claimName: pvcName,
-      },
-      name: "uploads",
-    },
-  ];
-  deployment.spec.template.spec.nodeSelector = {
-    workload: "les1000jours-strapi",
   };
-}
 
-const pvc = new PersistentVolumeClaim({
-  metadata: {
-    name: pvcName,
-    annotations: {},
-  },
-  spec: {
-    accessModes: ["ReadWriteOnce"],
-    resources: {
-      requests: {
-        storage: "1Gi",
+  const strapiManifests = await create("strapi", {
+    env,
+    config,
+    deployment: deploymentConfig,
+  });
+
+  const deployment = getManifestByKind(
+    strapiManifests,
+    //@ts-expect-error
+    Deployment
+  ) as Deployment;
+
+  const projectName = process.env.CI_PROJECT_NAME;
+  const pvcName = config.pvcName || `${projectName}-strapi-uploads`;
+
+  if (deployment && deployment?.spec?.template.spec) {
+    deployment.spec.template.spec.volumes = [
+      {
+        persistentVolumeClaim: {
+          claimName: pvcName,
+        },
+        name: "uploads",
       },
+    ];
+  }
+
+  const deploymentUrl = "https://" + getIngressHost(strapiManifests)
+
+  const pvc = new PersistentVolumeClaim({
+    metadata: {
+      name: pvcName,
+      annotations: {},
     },
-    volumeMode: "Filesystem",
-  },
-});
+    spec: {
+      accessModes: ["ReadWriteOnce"],
+      resources: {
+        requests: {
+          storage: "5Gi",
+        },
+      },
+      volumeMode: "Filesystem",
+    },
+  });
 
-addEnvs({
-  deployment,
-  data: {
-    BACKOFFICE_URL: `https://backoffice-${gitlabEnv.subdomain}.${gitlabEnv.domain}`,
-    DATABASE_CLIENT: "postgres",
-    DATABASE_NAME: "$(PGDATABASE)",
-    DATABASE_HOST: "$(PGHOST)",
-    DATABASE_PORT: "$(PGPORT)",
-    DATABASE_USERNAME: "$(PGUSER)",
-    DATABASE_PASSWORD: "$(PGPASSWORD)",
-    DATABASE_SSL: "true",
-  },
-});
+  addEnvs({
+    deployment,
+    data: {
+      BACKOFFICE_URL: deploymentUrl,
+      DATABASE_CLIENT: "postgres",
+      DATABASE_NAME: "$(PGDATABASE)",
+      DATABASE_HOST: "$(PGHOST)",
+      DATABASE_PORT: "$(PGPORT)",
+      DATABASE_USERNAME: "$(PGUSER)",
+      DATABASE_PASSWORD: "$(PGPASSWORD)",
+      DATABASE_SSL: "true",
+    },
+  });
 
-manifests.push(strapiManifests);
-manifests.push(pvc);
+  manifests.push(...strapiManifests);
+  manifests.push(pvc);
 
-export default manifests;
+  return await manifests;
+};
+
+export default async () => {
+  // generate basic strapi manifests
+  const manifests = await createStrapiComponent("strapi", {
+    config: {
+      subDomainPrefix: "backoffice-",
+      image: getHarborImagePath({ name: "les1000jours-strapi" }),
+      pvcName: "1000jours-strapi-uploads" // persistant storage name
+    },
+  });
+
+  // add a nodeSelector to improve volume/deploy performance  // TODO
+  const deployment = manifests.find(m=>m.kind==="Deployment") as Deployment;
+  if (deployment && deployment?.spec?.template.spec) {
+    deployment.spec.template.spec.nodeSelector = {
+      workload: "les1000jours-strapi",
+    };
+  }
+  return manifests;
+};

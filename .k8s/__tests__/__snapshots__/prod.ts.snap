@@ -113,10 +113,10 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 256Mi
+              memory: 1Gi
             requests:
-              cpu: 5m
-              memory: 128Mi
+              cpu: 50m
+              memory: 256Mi
           startupProbe:
             failureThreshold: 12
             httpGet:
@@ -172,8 +172,8 @@ spec:
       nodeSelector:
         workload: les1000jours-strapi
 ---
-apiVersion: v1
 kind: ConfigMap
+apiVersion: v1
 metadata:
   name: strapi-configmap
   annotations:
@@ -262,7 +262,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 5Gi
   volumeMode: Filesystem
 "
 `;
