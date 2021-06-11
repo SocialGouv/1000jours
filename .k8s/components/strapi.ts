@@ -1,13 +1,12 @@
 import env from "@kosko/env";
 
 import { create } from "@socialgouv/kosko-charts/components/app";
-import gitlab from "@socialgouv/kosko-charts/environments/gitlab";
 import { addEnvs } from "@socialgouv/kosko-charts/utils/addEnvs";
 import { getHarborImagePath } from "@socialgouv/kosko-charts/utils/getHarborImagePath";
+import { getIngressHost } from "@socialgouv/kosko-charts/utils/getIngressHost";
 import { getManifestByKind } from "@socialgouv/kosko-charts/utils/getManifestByKind";
 import {
   Deployment,
-  IDeployment,
 } from "kubernetes-models/api/apps/v1/Deployment";
 import { PersistentVolumeClaim } from "kubernetes-models/v1/PersistentVolumeClaim";
 
@@ -20,8 +19,6 @@ interface AddEnvsParams {
   data: AnyObject;
   containerIndex?: number;
 }
-
-const gitlabEnv = gitlab(process.env);
 
 type configKey = "pvcName" | string;
 
@@ -113,6 +110,8 @@ const createStrapiComponent = async (
     ];
   }
 
+  const deploymentUrl = "https://" + getIngressHost(strapiManifests)
+
   const pvc = new PersistentVolumeClaim({
     metadata: {
       name: pvcName,
@@ -132,7 +131,7 @@ const createStrapiComponent = async (
   addEnvs({
     deployment,
     data: {
-      BACKOFFICE_URL: `https://${config.subDomainPrefix}${gitlabEnv.subdomain}.${gitlabEnv.domain}`,
+      BACKOFFICE_URL: deploymentUrl,
       DATABASE_CLIENT: "postgres",
       DATABASE_NAME: "$(PGDATABASE)",
       DATABASE_HOST: "$(PGHOST)",
