@@ -97,6 +97,9 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => (
         ),
         headerShown: true,
         headerTitle: () => <AppLogo height={Sizes.xxxl} />,
+        headerTitleContainerStyle: {
+          alignItems: "center",
+        },
       }}
     />
     <Stack.Screen
