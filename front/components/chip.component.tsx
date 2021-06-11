@@ -29,7 +29,7 @@ const Chip: React.FC<Props> = ({ id, title, selected, action }) => {
   return (
     <RNChip
       buttonStyle={[styles.chip, isSelected ? styles.chipSelected : null]}
-      title={title}
+      title={title + (isSelected ? "  -" : "  +")}
       type={isSelected ? "solid" : "outline"}
       titleStyle={[
         styles.chipTitle,
@@ -42,19 +42,24 @@ const Chip: React.FC<Props> = ({ id, title, selected, action }) => {
 
 const styles = StyleSheet.create({
   chip: {
-    borderColor: Colors.primaryBlue,
-    marginHorizontal: Paddings.smallest,
-    marginVertical: Margins.smallest,
+    borderColor: Colors.primaryBlueLight,
+    borderRadius: Sizes.xxxxxs,
+    borderWidth: 1,
+    marginBottom: Margins.smallest,
+    marginRight: Margins.smaller,
+    marginVertical: Margins.smaller,
+    paddingHorizontal: Paddings.smaller,
+    paddingVertical: Paddings.smallest,
   },
   chipSelected: {
-    backgroundColor: Colors.primaryBlue,
+    backgroundColor: Colors.primaryBlueLight,
   },
   chipSelectedTitle: {
-    color: "white",
+    color: Colors.primaryBlue,
   },
   chipTitle: {
     color: Colors.primaryBlue,
-    fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
     fontSize: Sizes.xs,
   },
 });

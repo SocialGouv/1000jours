@@ -117,12 +117,14 @@ const styles = StyleSheet.create({
     color: Colors.secondaryGreenLight,
   },
   inShortContainer: {
-    backgroundColor: Colors.cardGrey,
-    borderColor: Colors.borderGrey,
+    backgroundColor: Colors.cardWhite,
+    borderBottomColor: Colors.borderGrey,
     borderLeftColor: Colors.secondaryGreen,
     borderLeftWidth: 4,
+    borderRightColor: Colors.borderGrey,
+    borderTopColor: Colors.borderGrey,
     borderWidth: 1,
-    marginBottom: Margins.light,
+    marginVertical: Margins.light,
     paddingVertical: Paddings.smallest,
   },
   inShortListItemsContainer: {

@@ -4,9 +4,9 @@ import * as React from "react";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 
-import { Colors, Labels, Paddings, Sizes } from "../../constants";
+import { Colors, Labels, Margins, Paddings, Sizes } from "../../constants";
 import type { Article, ArticleFilter } from "../../types";
-import Chip from "../Chip";
+import Chip from "../chip.component";
 import Button from "../form/button.component";
 import Icomoon, { IcomoonIcons } from "../icomoon.component";
 import { View } from "../Themed";
@@ -79,11 +79,21 @@ const styles = StyleSheet.create({
   filterButton: {
     alignSelf: "flex-start",
     backgroundColor: Colors.cardWhite,
-    borderColor: Colors.primaryBlue,
+    borderColor: Colors.cardGrey,
     borderWidth: 1,
+    marginBottom: Margins.evenMoreSmallest,
+    marginLeft: Margins.evenMoreSmallest,
+    shadowColor: Colors.navigation,
+    shadowOffset: {
+      height: 1,
+      width: 0,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 1,
   },
   filterButtonTitle: {
     color: Colors.primaryBlue,
+    fontSize: Sizes.sm,
   },
   filterContainer: {
     flex: 1,
