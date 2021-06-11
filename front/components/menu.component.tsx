@@ -2,6 +2,7 @@ import type { NavigationContainerRef } from "@react-navigation/native";
 import * as React from "react";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native";
+import * as Animatable from "react-native-animatable";
 import { ListItem } from "react-native-elements";
 import BottomSheet from "reanimated-bottom-sheet";
 
@@ -56,41 +57,43 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
   ];
 
   const renderContent = () => (
-    <View style={styles.menuContainer}>
-      <View>
-        <View style={styles.swipeIndicator}></View>
-      </View>
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Title style={styles.title}>
-            {Labels.menu.title}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-      {menuItems.map((menuItem, index) => (
-        <ListItem
-          key={index}
-          onPress={() => {
-            setShowMenu(false);
-            menuItem.onPress();
-          }}
-          bottomDivider
-        >
-          <View style={styles.menuItemIcon}>
-            <Icomoon
-              name={menuItem.icon}
-              size={Sizes.xl}
-              color={Colors.primaryBlueDark}
-            />
-          </View>
+    <Animatable.View animation="slideInUp" duration={500}>
+      <View style={styles.menuContainer}>
+        <View>
+          <View style={styles.swipeIndicator}></View>
+        </View>
+        <ListItem bottomDivider>
           <ListItem.Content>
-            <ListItem.Title style={styles.menuItemTitle}>
-              {menuItem.title}
+            <ListItem.Title style={styles.title}>
+              {Labels.menu.title}
             </ListItem.Title>
           </ListItem.Content>
         </ListItem>
-      ))}
-    </View>
+        {menuItems.map((menuItem, index) => (
+          <ListItem
+            key={index}
+            onPress={() => {
+              setShowMenu(false);
+              menuItem.onPress();
+            }}
+            bottomDivider
+          >
+            <View style={styles.menuItemIcon}>
+              <Icomoon
+                name={menuItem.icon}
+                size={Sizes.xl}
+                color={Colors.primaryBlueDark}
+              />
+            </View>
+            <ListItem.Content>
+              <ListItem.Title style={styles.menuItemTitle}>
+                {menuItem.title}
+              </ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
+        ))}
+      </View>
+    </Animatable.View>
   );
   const sheetRef = React.useRef<BottomSheet>(null);
 
