@@ -42,6 +42,10 @@
     },
     "fin": {
       "type": "integer"
+    },
+    "cartographie_types": {
+      "via": "etapes",
+      "collection": "cartographie-types"
     }
   }
 }

@@ -1,0 +1,75 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cartographie_sources",
+  "info": {
+    "name": "Cartographie Source",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "identifiant": {
+      "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "fichier",
+        "api"
+      ],
+      "required": true
+    },
+    "source": {
+      "type": "string"
+    },
+    "fichier": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "files"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "version": {
+      "type": "decimal"
+    },
+    "champs": {
+      "type": "text"
+    },
+    "lignes_total": {
+      "type": "integer"
+    },
+    "lignes_insertion": {
+      "type": "integer"
+    },
+    "pret_a_traiter": {
+      "type": "boolean",
+      "default": false
+    },
+    "traitement": {
+      "type": "enumeration",
+      "enum": [
+        "non_fait",
+        "en_cours",
+        "fait"
+      ],
+      "default": "non_fait"
+    },
+    "regles": {
+      "type": "component",
+      "repeatable": false,
+      "component": "cartographie.regles-champs"
+    },
+    "regles_script": {
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_cartographie_source_references",
+  "info": {
+    "name": "POI Reference",
+    "icon": "database"
+  },
+  "options": {},
+  "attributes": {
+    "identifiant": {
+      "type": "string"
+    },
+    "valeur": {
+      "type": "string"
+    },
+    "data": {
+      "type": "json"
+    },
+    "cartographie_source": {
+      "model": "cartographie-source"
+    }
+  }
+}

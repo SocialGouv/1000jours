@@ -33,22 +33,15 @@ const TabAroundMeScreen: React.FC = () => {
   const [region, setRegion] = useState<Region>(
     AroundMeConstants.INITIAL_REGION
   );
-  const [
-    moveToRegionBecauseOfPCResearch,
-    setMoveToRegionBecauseOfPCResearch,
-  ] = useState(false);
+  const [moveToRegionBecauseOfPCResearch, setMoveToRegionBecauseOfPCResearch] =
+    useState(false);
   const [
     moveToRegionBecauseOfMarkerClick,
     setMoveToRegionBecauseOfMarkerClick,
   ] = useState(false);
-  // Variable utilisée pour trigger le useEffect lors du clic sur le bouton Rechercher
-  const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] = useState(
-    false
-  );
   // Variable utilisée pour trigger le useEffect lors du relancement de la Recherche
-  const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] = useState(
-    false
-  );
+  const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] =
+    useState(false);
   const [poisArrayOnMap, setPoisArrayOnMap] = useState<
     CartographiePoisFromDB[]
   >([]);
@@ -56,13 +49,10 @@ const TabAroundMeScreen: React.FC = () => {
     CartographiePoisFromDB[]
   >([]);
   const [showAddressDetails, setShowAddressDetails] = useState(false);
-  const [
-    addressDetails,
-    setAddressDetails,
-  ] = useState<CartographiePoisFromDB>();
-  const [showRelaunchResearchButton, setShowRelaunchResearchButton] = useState(
-    true
-  );
+  const [addressDetails, setAddressDetails] =
+    useState<CartographiePoisFromDB>();
+  const [showRelaunchResearchButton, setShowRelaunchResearchButton] =
+    useState(true);
   const [showAddressesList, setShowAddressesList] = useState(false);
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
@@ -124,7 +114,6 @@ const TabAroundMeScreen: React.FC = () => {
   return (
     <View style={styles.mainContainer}>
       <FetchPoisCoords
-        triggerSearchByPostalCode={triggerSearchByPostalCode}
         triggerSearchByGpsCoords={triggerSearchByGpsCoords}
         postalCode={postalCodeInput}
         region={region}
@@ -151,10 +140,6 @@ const TabAroundMeScreen: React.FC = () => {
           setRegion(newRegion);
           mapRef.current?.animateToRegion(newRegion);
         }}
-        triggerSearchByPostalCode={() => {
-          setMoveToRegionBecauseOfPCResearch(true);
-          // setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
-        }}
         showSnackBarWithMessage={showSnackBarWithMessage}
       />
       <View style={styles.map}>
@@ -169,8 +154,8 @@ const TabAroundMeScreen: React.FC = () => {
             <View key={poiIndex}>
               <Marker
                 coordinate={{
-                  latitude: Number(poi.geocode_position_latitude),
-                  longitude: Number(poi.geocode_position_longitude),
+                  latitude: Number(poi.position_latitude),
+                  longitude: Number(poi.position_longitude),
                 }}
                 pinColor="red"
                 onPress={() => {

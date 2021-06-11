@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cartographie_pois",
+  "info": {
+    "name": "Cartographie POI",
+    "description": "Points d'intérêt"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "identifiant": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "type": {
+      "model": "cartographie-types",
+      "required": true
+    },
+    "nom": {
+      "type": "string",
+      "required": true
+    },
+    "telephone": {
+      "type": "string"
+    },
+    "courriel": {
+      "type": "email"
+    },
+    "site_internet": {
+      "type": "string"
+    },
+    "cartographie_adresses": {
+      "type": "component",
+      "repeatable": true,
+      "component": "cartographie.adresse"
+    },
+    "cartographie_adresses_json": {
+      "type": "json"
+    },
+    "references": {
+      "type": "component",
+      "repeatable": true,
+      "component": "cartographie.source-reference"
+    },
+    "cartographie_references_json": {
+      "type": "json"
+    }
+  }
+}

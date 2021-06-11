@@ -3,7 +3,7 @@
 const PoiService = require("../services");
 
 const getPoisResolver = async (_1, _2, { context }) => {
-  const perimetre = context.params._perimetre;
+  const { _perimetre: perimetre } = context.params;
 
   try {
     return PoiService.search(perimetre);
@@ -13,10 +13,25 @@ const getPoisResolver = async (_1, _2, { context }) => {
 };
 
 module.exports = {
+  definition: `
+    type CartographiePoiAdresse {
+      nom: String
+      type: String
+      categorie: String
+      telephone: String
+      courriel: String
+      site_internet: String
+      adresse: String
+      code_postal: String
+      commune: String
+      position_longitude: Float
+      position_latitude: Float
+    }
+  `,
   query: `
     searchPois (
       perimetre: [Float!]
-    ): [CartographiePoi]
+    ): [CartographiePoiAdresse]
   `,
   resolver: {
     Query: {

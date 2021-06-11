@@ -90,12 +90,11 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
     return { icon, label };
   };
 
-  details.cartographie_categorie =
-    AroundMeConstants.PoiCategorieEnum[details.cartographie_categorie];
+  details.categorie = AroundMeConstants.PoiCategorieEnum[details.categorie];
   details.type = AroundMeConstants.PoiTypeEnum[details.type];
 
   const { icon: iconType, label: labelType } = getIconAndLabel(
-    details.cartographie_categorie,
+    details.categorie,
     details.type
   );
   return (
@@ -109,11 +108,9 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
         <View style={styles.rowView}>
           <DetailsAddressIcon />
           <View style={styles.columnView}>
+            <CommonText style={styles.text}>{details.adresse}</CommonText>
             <CommonText style={styles.text}>
-              {details.geocode_adresse}
-            </CommonText>
-            <CommonText style={styles.text}>
-              {details.geocode_code_postal} {details.geocode_commune}
+              {details.code_postal} {details.commune}
             </CommonText>
           </View>
         </View>
@@ -168,8 +165,8 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
           disabled={false}
           action={async () => {
             await LinkingUtils.openNavigationApp(
-              details.geocode_position_latitude,
-              details.geocode_position_longitude
+              details.position_latitude,
+              details.position_longitude
             );
           }}
         />

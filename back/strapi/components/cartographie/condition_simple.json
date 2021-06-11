@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_cartographie_condition_simple",
+  "info": {
+    "name": "Regle Condition Simple",
+    "icon": "question-circle",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "identifiant": {
+      "type": "string"
+    },
+    "condition_source": {
+      "type": "string"
+    },
+    "condition_valeur": {
+      "type": "string"
+    }
+  }
+}
