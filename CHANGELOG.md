@@ -1,3 +1,10 @@
+# [1.38.0](https://github.com/SocialGouv/1000jours/compare/v1.37.0...v1.38.0) (2021-06-11)
+
+
+### Features
+
+* 🎸 Ajoute les animations (Menu, card article, article) ([#299](https://github.com/SocialGouv/1000jours/issues/299)) ([9d0a908](https://github.com/SocialGouv/1000jours/commit/9d0a90874215a98572a264e50b6b0d002224a8ba)), closes [#283](https://github.com/SocialGouv/1000jours/issues/283)
+
 # [1.37.0](https://github.com/SocialGouv/1000jours/compare/v1.36.3...v1.37.0) (2021-06-11)
 
 
