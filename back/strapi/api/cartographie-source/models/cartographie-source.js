@@ -51,18 +51,18 @@ const formatRegles = async (data) => {
       if (!regle.valeur) return reglesScript;
 
       reglesScript += reglesScript ? "\n\n" : "";
-      reglesScript += `champ \$\{${key}\} est `;
+      reglesScript += `champ $\{${key}} est `;
       reglesScript +=
         regle.valeur[0] === '"' || key === "type"
           ? `"${regle.valeur}"`
-          : `\$\{${regle.valeur}\}`;
+          : `$\{${regle.valeur}}`;
 
       if (!regle.conditions || !regle.conditions.length) return reglesScript;
 
       return regle.conditions.reduce((reglesScript, condition) => {
         condition.condition_source = condition.condition_source.trim();
 
-        condition.identifiant = `si \$\{${condition.condition_source}\} `;
+        condition.identifiant = `si $\{${condition.condition_source}} `;
 
         if (condition.condition_valeur) {
           condition.condition_valeur = condition.condition_valeur.trim();

@@ -24,6 +24,9 @@ const beforeSave = async (data) => {
     reference.identifiant = slugLower(source.identifiant, reference.valeur);
   }
 
+  data.cartographie_references_json = data.references;
+  data.references = [];
+
   for (const adresse of data.cartographie_adresses) {
     trimStringFields(CartographieAdresse.attributes, adresse);
 
@@ -33,10 +36,21 @@ const beforeSave = async (data) => {
       Object.assign(adresse, geocode);
     }
   }
+
+  data.cartographie_adresses_json = data.cartographie_adresses;
+
+  data.cartographie_adresses = [];
+};
+
+const afterFind = (data) => {
+  data.cartographie_adresses = data.cartographie_adresses_json;
+  data.references = data.cartographie_references_json;
 };
 
 module.exports = {
   lifecycles: {
+    afterFind: (results) => results.map(afterFind),
+    afterFindOne: afterFind,
     beforeCreate: beforeSave,
     beforeUpdate: (params, data) => beforeSave(data),
   },

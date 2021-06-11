@@ -3,7 +3,7 @@
 const CartographieGeocodeBatchService = require("../../api/cartographie-geocode/services/batch");
 const CartographieSourceService = require("../../api/cartographie-source/services");
 
-let isGeoProcessing = false
+let isGeoProcessing = false;
 
 module.exports = {
   // every 20 seconds
@@ -24,7 +24,11 @@ module.exports = {
     try {
       const processedGeocodes = await CartographieGeocodeBatchService.processMissingGeocodes();
 
-      console.log("[cron] carto-geocode processed:", processedGeocodes, "item(s)");
+      console.log(
+        "[cron] carto-geocode processed:",
+        processedGeocodes,
+        "item(s)"
+      );
     } catch (e) {
       console.error(`[cron] carto-geocode error: ${e.message}`);
       console.error(e.stack);

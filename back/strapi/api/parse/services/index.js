@@ -1,5 +1,3 @@
-const toArray = (obj) => (!Array.isArray(obj) ? [obj] : obj);
-
 const getValueDot = (obj, key) =>
   key.split(".").reduce((obj, key) => obj && obj[key], obj);
 
@@ -33,7 +31,7 @@ const processValue = (line, valeur, fileType = "csv") => {
     isNumber = true;
     valeur = valeur.slice(1);
   } else if (valeur[0] === "/") {
-    let [, key, regExp] = valeur.split("/");
+    const [, key, regExp] = valeur.split("/");
 
     const reg = new RegExp(regExp);
 
@@ -74,7 +72,8 @@ const processRegles = (line, key, keyRegles, fileType = "csv") => {
   let value;
 
   for (const keyRegle of keyRegles) {
-    let { valeur, conditions } = keyRegle;
+    const { conditions } = keyRegle;
+    let { valeur } = keyRegle;
 
     if (key === "type") {
       // get cartographie-type id value

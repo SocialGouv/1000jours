@@ -41,7 +41,7 @@ const process = async (
 };
 
 const processHeader = async (filePath) => {
-  let fileType = getType(filePath);
+  const fileType = getType(filePath);
   if (!fileType) return {};
 
   return services[fileType].parseHeader(filePath);
@@ -57,7 +57,7 @@ const getColumns = async (filePath) => {
 };
 
 module.exports = {
-  getType,
   getColumns,
+  getType,
   process,
 };

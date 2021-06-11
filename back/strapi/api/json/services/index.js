@@ -38,4 +38,4 @@ const parseHeader = async (filePath) => {
   return { columns: [...columnsSet].sort() };
 };
 
-module.exports = { parseHeader, getProcessors };
+module.exports = { getProcessors, parseHeader };

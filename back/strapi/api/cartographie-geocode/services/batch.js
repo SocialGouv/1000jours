@@ -18,14 +18,41 @@ const GEOCODE_SERVICE_URL = "https://api-adresse.data.gouv.fr";
 
 const BUCKET_SIZE = 1000;
 
-const knex = (...args) => strapi.connections.default(...args);
-
 const updateGeocode = async (geocode, cartographie_identifiant) => {
   if (!cartographie_identifiant) return null;
 
-  await knex("components_cartographie_adresses")
-    .where({ cartographie_identifiant })
-    .update(geocode);
+  const knex = strapi.connections.default;
+
+  const pois = await knex("cartographie_pois")
+    .distinct("identifiant", "nom", "type", "cartographie_adresses_json")
+    .crossJoin(
+      knex.raw("jsonb_array_elements(??) as elements", [
+        "cartographie_adresses_json",
+      ])
+    )
+    .whereRaw("elements->>'cartographie_identifiant' = ?", [
+      cartographie_identifiant,
+    ]);
+
+  if (!pois.length) return;
+
+  pois.forEach((poi) => {
+    const adresses = poi.cartographie_adresses_json.filter(
+      (adresse) => adresse.cartographie_identifiant === cartographie_identifiant
+    );
+    if (!adresses.length) return;
+
+    adresses.forEach((adresse) => Object.assign(adresse, geocode));
+
+    poi.cartographie_adresses_json = JSON.stringify(
+      poi.cartographie_adresses_json
+    );
+  });
+
+  await knex("cartographie_pois")
+    .insert(pois)
+    .onConflict("identifiant")
+    .merge();
 
   return true;
 };
@@ -57,6 +84,7 @@ const geoStream = (adresses, type = "geocode", options = {}) =>
 
     const geocodeStream = streamCoding(GEOCODE_SERVICE_URL, {
       ...options,
+      BUCKET_SIZE,
       resultColumns: [
         "longitude",
         "latitude",
@@ -65,7 +93,6 @@ const geoStream = (adresses, type = "geocode", options = {}) =>
         "result_postcode",
         "result_city",
       ],
-      BUCKET_SIZE,
     }).on("error", reject);
 
     const stream = streamChain([
@@ -109,15 +136,22 @@ const geocodeAdresses = async (adresses) => {
 
 const reverseGeocodeAdresses = async (adresses) =>
   geoStream(adresses, "reverse", {
-    longitude: "position_longitude",
     latitude: "position_latitude",
+    longitude: "position_longitude",
   });
 
 const processMissingGeocodes = async () => {
   const adresses = await fetchAdressesToGeocode(BUCKET_SIZE);
   if (!adresses.length) return 0;
 
-  return geocodeAdresses(adresses);
+  try {
+    return await geocodeAdresses(adresses);
+  } catch (e) {
+    require("fs").writeFileSync(
+      "batch-error-502.json",
+      JSON.stringify(adresses, null, 2)
+    );
+  }
 };
 
 const processMissingAdresses = async () => {
@@ -128,7 +162,7 @@ const processMissingAdresses = async () => {
 };
 
 module.exports = {
-  updateGeocode,
-  processMissingGeocodes,
   processMissingAdresses,
+  processMissingGeocodes,
+  updateGeocode,
 };

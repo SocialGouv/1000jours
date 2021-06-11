@@ -2,8 +2,6 @@
 
 const { sanitizeEntity } = require("strapi-utils");
 
-const { attributes } = require("../models/article.settings");
-
 const recurseWalk = (obj, func) =>
   Object.keys(obj).reduce((obj, key) => {
     if (obj[key] && typeof obj[key] === "object") {
@@ -48,6 +46,6 @@ const format = (article) => {
 
 module.exports = {
   completeUrls,
-  sanitizeTexts,
   format,
+  sanitizeTexts,
 };

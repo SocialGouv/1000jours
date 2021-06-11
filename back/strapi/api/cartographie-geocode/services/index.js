@@ -2,8 +2,6 @@
 
 const axios = require("axios");
 
-const { slugLower } = require("../../string/services");
-
 const {
   GEOCODE_FIELDS,
   concatFields,
@@ -42,12 +40,10 @@ const geocodeData = async (data) => {
       if (lon) params.lon = lon;
       if (lat) params.lat = lat;
 
-      console.log({ params });
-
       return geocodeRequest(data, "search", params);
     }
 
-    if (lon && lat) return geocodeRequest(data, "reverse", { lon, lat });
+    if (lon && lat) return geocodeRequest(data, "reverse", { lat, lon });
   } catch (e) {
     console.error("[geocode] error:", e);
   }

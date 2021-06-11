@@ -11,6 +11,11 @@
     "draftAndPublish": false
   },
   "attributes": {
+    "identifiant": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
     "type": {
       "model": "cartographie-types",
       "required": true
@@ -33,10 +38,16 @@
       "repeatable": true,
       "component": "cartographie.adresse"
     },
+    "cartographie_adresses_json": {
+      "type": "json"
+    },
     "references": {
       "type": "component",
       "repeatable": true,
       "component": "cartographie.source-reference"
+    },
+    "cartographie_references_json": {
+      "type": "json"
     }
   }
 }

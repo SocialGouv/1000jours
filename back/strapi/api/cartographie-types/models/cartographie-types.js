@@ -1,7 +1,5 @@
 "use strict";
 
-const { slugLower } = require("../../string/services");
-
 const beforeSave = async (data) => {
   if (!data.categorie) throw new Error("Choisir une catégorie");
 

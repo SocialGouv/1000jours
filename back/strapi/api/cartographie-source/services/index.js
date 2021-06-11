@@ -7,7 +7,6 @@ const ParseService = require("../../parse/services");
 
 const { fetchUnprocessedSource } = require("./fetch");
 const { formatPoiFromData } = require("./format");
-const { upsertPoiData } = require("./update");
 
 const knex = (...args) => strapi.connections.default(...args);
 
@@ -16,21 +15,99 @@ const processData = (source, data, fileType) => {
 
   if (!entity || !entity.type || !entity.references) return null;
 
-  formatPoiFromData(source, entity);
+  return formatPoiFromData(source, entity, data);
+};
 
-  return { data, entity };
+const transferTempTableToPois = async () => {
+  const knex = strapi.connections.default;
+
+  const sql = `
+ (
+   type,
+   nom,
+   telephone,
+   courriel,
+   site_internet,
+   identifiant,
+   cartographie_adresses_json,
+   cartographie_references_json
+ )
+ SELECT
+   type,
+   nom,
+   telephone,
+   courriel,
+   site_internet,
+   identifiant,
+   array_to_json(array_agg(cartographie_adresses_json)) AS cartographie_adresses_json,
+   array_to_json(array_agg(cartographie_references_json)) AS cartographie_references_json
+ FROM import_pois
+ GROUP BY identifiant, type, nom, telephone, courriel, site_internet
+`;
+
+  await knex("cartographie_pois")
+    .insert(knex.raw(sql))
+    .onConflict("identifiant")
+    .ignore()
+    .debug();
 };
 
 const BUFFER_BATCH_SIZE = 1000;
 
-const updateCounts = async (source, linesCount, insertCount) => {
-  console.log(
-    `[cartographie-source] file process "${source.nom}" processed ${linesCount} lines, inserted ${insertCount} item(s)`
-  );
+const importToTempTable = async (source) => {
+  let linesCount = 0;
+  let insertCount = 0;
 
-  await knex("cartographie_sources")
-    .update({ lignes_total: linesCount, lignes_insertion: insertCount })
-    .where("id", source.id);
+  const updateCounts = async (source) => {
+    console.log(
+      `[cartographie-source] file process "${source.nom}" processed ${linesCount} lines, inserted ${insertCount} item(s)`
+    );
+
+    await knex("cartographie_sources")
+      .update({ lignes_insertion: insertCount, lignes_total: linesCount })
+      .where("id", source.id);
+  };
+
+  const filePath = path.join("public", source.fichier.url);
+
+  await FileService.process(filePath, {
+    batchSize: BUFFER_BATCH_SIZE,
+    bufferProcessor: async (buffer) => {
+      await knex("import_pois").insert(buffer);
+
+      insertCount += buffer.length;
+
+      await updateCounts(source);
+    },
+    lineProcessor: async (data, fileType) => {
+      linesCount += 1;
+
+      const result = processData(source, data, fileType);
+
+      return result;
+    },
+  });
+
+  if (linesCount) {
+    await updateCounts(source);
+  }
+};
+
+const cleanTempTable = async () => {
+  const knex = strapi.connections.default;
+
+  await knex.schema.dropTableIfExists("import_pois");
+};
+
+const initTempTable = async () => {
+  const knex = strapi.connections.default;
+
+  await knex.transaction(async (transaction) => {
+    await transaction.schema.dropTableIfExists("import_pois");
+    await transaction.raw(
+      `create table import_pois as table cartographie_pois WITH NO DATA`
+    );
+  });
 };
 
 const processSource = async (source) => {
@@ -41,27 +118,10 @@ const processSource = async (source) => {
     .where("id", source.id);
 
   try {
-    let linesCount = 0;
-    let insertCount = 0;
-
-    const filePath = path.join("public", source.fichier.url);
-
-    await FileService.process(filePath, {
-      batchSize: BUFFER_BATCH_SIZE,
-      lineProcessor: async (data, fileType) => {
-        linesCount += 1;
-
-        const result = processData(source, data, fileType);
-        if (result) insertCount += await upsertPoiData(source, result);
-
-        if (linesCount % BUFFER_BATCH_SIZE === 0)
-          await updateCounts(source, linesCount, insertCount);
-      },
-    });
-
-    if (linesCount) {
-      await updateCounts(source, linesCount, insertCount);
-    }
+    await initTempTable();
+    await importToTempTable(source);
+    await transferTempTableToPois();
+    await cleanTempTable();
 
     await knex("cartographie_sources")
       .update({ pret_a_traiter: false, traitement: "fait" })

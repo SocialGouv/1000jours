@@ -11,21 +11,21 @@ const components = {
 };
 
 module.exports = {
-  collectionName: "components_cartographie_regles_champs",
-  info: {
-    name: "Source Regles",
-    icon: "cogs",
-    description: "",
-  },
-  options: {},
   attributes: Object.fromEntries(
     champs.map((champ) => [
       champ,
       {
-        type: "component",
-        repeatable: true,
         component: components[champ] || "cartographie.regle-champ",
+        repeatable: true,
+        type: "component",
       },
     ])
   ),
+  collectionName: "components_cartographie_regles_champs",
+  info: {
+    description: "",
+    icon: "cogs",
+    name: "Source Regles",
+  },
+  options: {},
 };

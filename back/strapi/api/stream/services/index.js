@@ -47,7 +47,7 @@ Batch.prototype._flush = function (callback) {
 };
 
 const streamProcessFile = (filePath, processors) =>
-  new Promise(async (resolve, reject) => {
+  new Promise((resolve, reject) => {
     const stream = streamChain([fs.createReadStream(filePath), ...processors])
       .on("error", reject)
       .on("data", () => {})

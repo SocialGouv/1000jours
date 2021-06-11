@@ -3,8 +3,8 @@ const csvtojson = require("csvtojson");
 const { detect: detectDelimiter } = require("csv-string");
 
 const detectColumns = (string, options) =>
-  new Promise((resolve, reject) => {
-    const stream = csvtojson(options)
+  new Promise((resolve, reject) =>
+    csvtojson(options)
       .on("error", reject)
       .on("header", (columns) => {
         if (!columns || !columns.length)
@@ -12,8 +12,8 @@ const detectColumns = (string, options) =>
 
         resolve(columns);
       })
-      .write(`${string}\n`);
-  });
+      .write(`${string}\n`)
+  );
 
 const readFirstLine = async (filePath) =>
   new Promise((resolve, reject) => {
@@ -42,7 +42,7 @@ const parseHeader = async (filePath, options = {}) => {
   const columns = await detectColumns(line, { ...options, delimiter });
   if (!columns.length) throw new Error(`${filePath} no columns, abort`);
 
-  return { delimiter, columns };
+  return { columns, delimiter };
 };
 
 const getProcessors = async (filePath) => {
@@ -51,4 +51,4 @@ const getProcessors = async (filePath) => {
   return [csvtojson({ delimiter, flatKeys: true }, { objectMode: true })];
 };
 
-module.exports = { parseHeader, getProcessors };
+module.exports = { getProcessors, parseHeader };

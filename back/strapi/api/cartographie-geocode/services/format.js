@@ -41,8 +41,8 @@ const formatGeocodeResultGeojson = ({ properties, geometry }) =>
     geocode_code_postal: properties.postcode || "",
     geocode_commune: properties.city || "",
 
-    geocode_position_longitude: geometry.coordinates[0],
     geocode_position_latitude: geometry.coordinates[1],
+    geocode_position_longitude: geometry.coordinates[0],
   });
 
 const formatGeocodeResultBatch = (data) =>
@@ -56,15 +56,15 @@ const formatGeocodeResultBatch = (data) =>
     geocode_code_postal: data.result_postcode || "",
     geocode_commune: data.result_city || "",
 
-    geocode_position_longitude:
-      typeof data.longitude === "string" ? +data.longitude : null,
     geocode_position_latitude:
       typeof data.latitude === "string" ? +data.latitude : null,
+    geocode_position_longitude:
+      typeof data.longitude === "string" ? +data.longitude : null,
   });
 
 module.exports = {
   GEOCODE_FIELDS: FIELDS_ADRESSE,
   concatFields,
-  formatGeocodeResultGeojson,
   formatGeocodeResultBatch,
+  formatGeocodeResultGeojson,
 };
