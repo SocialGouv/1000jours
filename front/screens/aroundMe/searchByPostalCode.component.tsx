@@ -22,7 +22,6 @@ interface Props {
   setPostalCodeInvalid: (value: boolean) => void;
   hideSnackBar: () => void;
   setAndGoToNewRegion: (region: Region) => void;
-  triggerSearchByPostalCode: () => void;
   showSnackBarWithMessage: (message: string) => void;
 }
 
@@ -33,7 +32,6 @@ const SearchByPostalCode: React.FC<Props> = ({
   setPostalCodeInvalid,
   hideSnackBar,
   setAndGoToNewRegion,
-  triggerSearchByPostalCode,
   showSnackBarWithMessage,
 }) => {
   const onPostalCodeChanged = (newPostalCode: string) => {
@@ -58,7 +56,6 @@ const SearchByPostalCode: React.FC<Props> = ({
 
     if (newRegion) {
       setAndGoToNewRegion(newRegion);
-      triggerSearchByPostalCode();
     } else {
       showSnackBarWithMessage(Labels.aroundMe.postalCodeNotFound);
     }

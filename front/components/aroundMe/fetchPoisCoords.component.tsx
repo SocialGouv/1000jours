@@ -9,7 +9,6 @@ import { AroundMeUtils } from "../../utils";
 
 interface Props {
   children?: React.ReactNode;
-  triggerSearchByPostalCode: boolean;
   triggerSearchByGpsCoords: boolean;
   postalCode: string;
   region: Region;
@@ -18,42 +17,24 @@ interface Props {
 
 const FetchPoisCoords: React.FC<Props> = ({
   children,
-  triggerSearchByPostalCode,
   triggerSearchByGpsCoords,
-  postalCode,
   region,
   setFetchedPois,
 }) => {
-  const [getPoisByPostalCode] = useLazyQuery(
-    DatabaseQueries.AROUNDME_POIS_BY_POSTALCODE,
-    {
-      fetchPolicy: "no-cache",
-      onCompleted: (data) => {
-        const fetchedData = (data as {
-          cartographiePois: CartographiePoisFromDB[];
-        }).cartographiePois;
-        setFetchedPois(fetchedData);
-      },
-    }
-  );
   const [getPoisByGpsCoords] = useLazyQuery(
     DatabaseQueries.AROUNDME_POIS_BY_GPSCOORDS,
     {
       fetchPolicy: "no-cache",
       onCompleted: (data) => {
-        const fetchedData = (data as {
-          searchPois: CartographiePoisFromDB[];
-        }).searchPois;
+        const fetchedData = (
+          data as {
+            searchPois: CartographiePoisFromDB[];
+          }
+        ).searchPois;
         setFetchedPois(fetchedData);
       },
     }
   );
-
-  useEffect(() => {
-    getPoisByPostalCode({
-      variables: { codePostal: postalCode },
-    });
-  }, [triggerSearchByPostalCode]);
 
   useEffect(() => {
     const topLeftPoint = AroundMeUtils.getLatLngPoint(

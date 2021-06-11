@@ -2,44 +2,81 @@
 
 const sortNumbers = (a, b) => a - b;
 
-const search = async (perimetre, code_postal) => {
-  if (!code_postal && !perimetre && !perimetre.length) return [];
+const search = async (perimetre) => {
+  if (!perimetre && !perimetre.length) return [];
 
   const knex = strapi.connections.default;
 
   const poisQuery = knex("cartographie_pois")
-    .select("cartographie_pois.*")
+    .select(
+      "cartographie_pois.nom",
+      "cartographie_pois.telephone",
+      "cartographie_pois.courriel",
+      "cartographie_pois.site_internet",
+      "cartographie_types.nom as type_nom",
+      "cartographie_types.categorie as type_categorie",
+      knex.raw(`
+        adresse_elements->>'geocode_adresse' as adresse,
+        adresse_elements->>'geocode_code_postal' as code_postal,
+        adresse_elements->>'geocode_commune' as commune,
+        adresse_elements->>'geocode_position_longitude' as position_longitude,
+        adresse_elements->>'geocode_position_latitude' as position_latitude
+      `)
+    )
     .crossJoin(
-      knex.raw("jsonb_array_elements(??) as elements", [
+      knex.raw("jsonb_array_elements(??) as adresse_elements", [
         "cartographie_adresses_json",
       ])
-    );
+    )
+    .join("cartographie_types", "cartographie_pois.type", "=", "cartographie_types.id")
+    .debug();
 
-  if (code_postal) {
-    poisQuery.whereRaw(`elements->>'geocode_code_postal' = ?`, [code_postal]);
-  }
+  const lngs = [perimetre[0], perimetre[2]].sort(sortNumbers);
+  const lats = [perimetre[1], perimetre[3]].sort(sortNumbers);
 
-  if (perimetre) {
-    const lngs = [perimetre[0], perimetre[2]].sort(sortNumbers);
-    const lats = [perimetre[1], perimetre[3]].sort(sortNumbers);
-
-    poisQuery.whereRaw(
-      `
-elements->>'geocode_position_longitude' > ? AND
-elements->>'geocode_position_longitude' < ? AND
-elements->>'geocode_position_latitude' > ? AND
-elements->>'geocode_position_latitude' < ?
+  poisQuery.whereRaw(
+    `
+adresse_elements->>'geocode_position_longitude' > ? AND
+adresse_elements->>'geocode_position_longitude' < ? AND
+adresse_elements->>'geocode_position_latitude' > ? AND
+adresse_elements->>'geocode_position_latitude' < ?
 `,
-      [lngs[0], lngs[1], lats[0], lats[1]]
-    );
-  }
+    [lngs[0], lngs[1], lats[0], lats[1]]
+  );
 
   const pois = await poisQuery;
 
-  return pois.map((p) => {
-    p.cartographie_adresses = p.cartographie_adresses_json;
-    return p;
+  return pois.map((poi) => {
+    const {
+      nom,
+      telephone,
+      courriel,
+      site_internet,
+      type_nom: type,
+      type_categorie: categorie,
+      adresse,
+      code_postal,
+      commune,
+      position_longitude,
+      position_latitude,
+    } = poi;
+
+    return {
+      nom,
+      type,
+      categorie,
+      telephone,
+      courriel,
+      site_internet,
+      adresse,
+      code_postal,
+      commune,
+      position_longitude,
+      position_latitude,
+    }
   });
 };
 
-module.exports = { search };
+module.exports = {
+  search
+};

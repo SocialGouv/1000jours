@@ -53,5 +53,7 @@ module.exports = {
     afterFindOne: afterFind,
     beforeCreate: beforeSave,
     beforeUpdate: (params, data) => beforeSave(data),
+    afterCreate: afterFind,
+    afterUpdate: afterFind,
   },
 };
