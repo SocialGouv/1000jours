@@ -1,3 +1,10 @@
+## [1.36.3](https://github.com/SocialGouv/1000jours/compare/v1.36.2...v1.36.3) (2021-06-11)
+
+
+### Bug Fixes
+
+* Ci ([#297](https://github.com/SocialGouv/1000jours/issues/297)) ([210c528](https://github.com/SocialGouv/1000jours/commit/210c5287aa3b3c81e1cd7d42e7d748f0a21914ca))
+
 ## [1.36.2](https://github.com/SocialGouv/1000jours/compare/v1.36.1...v1.36.2) (2021-06-10)
 
 
