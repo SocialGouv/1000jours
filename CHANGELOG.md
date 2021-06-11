@@ -1,3 +1,10 @@
+# [1.37.0](https://github.com/SocialGouv/1000jours/compare/v1.36.3...v1.37.0) (2021-06-11)
+
+
+### Features
+
+* **carto:** Ajoute l'import de données sources dans le backoffice ([#261](https://github.com/SocialGouv/1000jours/issues/261)) ([84aa87e](https://github.com/SocialGouv/1000jours/commit/84aa87efa8199eef9684ef1a59aa96c579895b80))
+
 ## [1.36.3](https://github.com/SocialGouv/1000jours/compare/v1.36.2...v1.36.3) (2021-06-11)
 
 
