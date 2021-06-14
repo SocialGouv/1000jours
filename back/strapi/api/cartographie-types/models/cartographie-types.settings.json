@@ -23,6 +23,9 @@
       "enum": ["structure", "professionnel"],
       "required": true
     },
+    "description": {
+      "type": "text"
+    },
     "etapes": {
       "collection": "etape",
       "via": "cartographie_types",
