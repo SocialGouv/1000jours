@@ -1,3 +1,10 @@
+## [1.38.2](https://github.com/SocialGouv/1000jours/compare/v1.38.1...v1.38.2) (2021-06-14)
+
+
+### Bug Fixes
+
+* **carto:** recherche par CP automatique ([#304](https://github.com/SocialGouv/1000jours/issues/304)) ([29ea646](https://github.com/SocialGouv/1000jours/commit/29ea646b3f6b06f0274887aa18f067d23a586725))
+
 ## [1.38.1](https://github.com/SocialGouv/1000jours/compare/v1.38.0...v1.38.1) (2021-06-14)
 
 
