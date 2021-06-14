@@ -1,3 +1,10 @@
+# [1.39.0](https://github.com/SocialGouv/1000jours/compare/v1.38.3...v1.39.0) (2021-06-14)
+
+
+### Features
+
+* **carto:** Ajoute des descriptions pour les types de POIs et les sources de données ([#305](https://github.com/SocialGouv/1000jours/issues/305)) ([14e2246](https://github.com/SocialGouv/1000jours/commit/14e2246ac60ff2b51ffd1cf36be7161cd548c102))
+
 ## [1.38.3](https://github.com/SocialGouv/1000jours/compare/v1.38.2...v1.38.3) (2021-06-14)
 
 
