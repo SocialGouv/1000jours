@@ -30,73 +30,42 @@ interface AddressDetailsProps {
 }
 
 const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
-  const getIconAndLabel = (
+  const getIcon = (
     categoriePoi: AroundMeConstants.PoiCategorieEnum,
     typePoi: AroundMeConstants.PoiTypeEnum
   ) => {
     const poiTypeLabels = Labels.aroundMe.poiType;
-    const labelsMap = new Map<AroundMeConstants.PoiTypeEnum, string>();
-    labelsMap.set(
-      AroundMeConstants.PoiTypeEnum.planning_familial,
-      poiTypeLabels.planningFamilial
-    );
-    labelsMap.set(
-      AroundMeConstants.PoiTypeEnum.maison_de_naissance,
-      poiTypeLabels.maisonDeNaissance
-    );
-    labelsMap.set(
-      AroundMeConstants.PoiTypeEnum.maternite,
-      poiTypeLabels.maternite
-    );
-    labelsMap.set(AroundMeConstants.PoiTypeEnum.pmi, poiTypeLabels.pmi);
-    labelsMap.set(AroundMeConstants.PoiTypeEnum.saad, poiTypeLabels.saad);
-    labelsMap.set(AroundMeConstants.PoiTypeEnum.cpam, poiTypeLabels.cpam);
-    labelsMap.set(AroundMeConstants.PoiTypeEnum.caf, poiTypeLabels.caf);
-    labelsMap.set(AroundMeConstants.PoiTypeEnum.mairie, poiTypeLabels.mairie);
-
-    const label = labelsMap.get(typePoi);
-
-    let icon = null;
+    let iconType = null;
     if (categoriePoi === AroundMeConstants.PoiCategorieEnum.professionnels) {
-      icon = <CategorieProSanteIcon />;
+      iconType = <CategorieProSanteIcon />;
     } else {
-      const iconsMap = new Map<
-        AroundMeConstants.PoiTypeEnum,
-        React.ReactNode
-      >();
+      const iconsMap = new Map<string, React.ReactNode>();
       iconsMap.set(
-        AroundMeConstants.PoiTypeEnum.planning_familial,
+        poiTypeLabels.planningFamilial,
         <TypePlanningFamilialIcon />
       );
       iconsMap.set(
-        AroundMeConstants.PoiTypeEnum.maison_de_naissance,
+        poiTypeLabels.maisonDeNaissance,
         <TypeMaisonNaissanceIcon />
       );
-      iconsMap.set(
-        AroundMeConstants.PoiTypeEnum.maternite,
-        <TypeMaterniteIcon />
-      );
+      iconsMap.set(poiTypeLabels.maternite, <TypeMaterniteIcon />);
 
-      iconsMap.set(AroundMeConstants.PoiTypeEnum.saad, <TypeSaadIcon />);
-      iconsMap.set(AroundMeConstants.PoiTypeEnum.pmi, <TypePmiCafCpamIcon />);
-      iconsMap.set(AroundMeConstants.PoiTypeEnum.caf, <TypePmiCafCpamIcon />);
-      iconsMap.set(AroundMeConstants.PoiTypeEnum.cpam, <TypePmiCafCpamIcon />);
-      iconsMap.set(AroundMeConstants.PoiTypeEnum.mairie, <TypeMairieIcon />);
+      iconsMap.set(poiTypeLabels.saad, <TypeSaadIcon />);
+      iconsMap.set(poiTypeLabels.pmi, <TypePmiCafCpamIcon />);
+      iconsMap.set(poiTypeLabels.caf, <TypePmiCafCpamIcon />);
+      iconsMap.set(poiTypeLabels.cpam, <TypePmiCafCpamIcon />);
+      iconsMap.set(poiTypeLabels.mairie, <TypeMairieIcon />);
 
-      icon = iconsMap.get(typePoi);
+      iconType = iconsMap.get(typePoi);
       // Au cas où la catégorie n'a pas d'icône, on affiche celle des pros de santé
-      if (!icon) icon = <CategorieProSanteIcon />;
+      if (!iconType) iconType = <CategorieProSanteIcon />;
     }
-    return { icon, label };
+    return iconType;
   };
 
   details.categorie = AroundMeConstants.PoiCategorieEnum[details.categorie];
-  details.type = AroundMeConstants.PoiTypeEnum[details.type];
 
-  const { icon: iconType, label: labelType } = getIconAndLabel(
-    details.categorie,
-    details.type
-  );
+  const iconType = getIcon(details.categorie, details.type);
   return (
     <View style={styles.rowContainer}>
       <View style={styles.icon}>{iconType}</View>
@@ -104,7 +73,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
         {StringUtils.stringIsNotNullNorEmpty(details.nom) && (
           <CommonText style={styles.name}>{details.nom}</CommonText>
         )}
-        <CommonText style={styles.type}>{labelType}</CommonText>
+        <CommonText style={styles.type}>{details.type}</CommonText>
         <View style={styles.rowView}>
           <DetailsAddressIcon />
           <View style={styles.columnView}>
