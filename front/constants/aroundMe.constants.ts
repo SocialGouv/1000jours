@@ -45,3 +45,5 @@ export enum PoiTypeEnum {
   caf = "caf", // pas d'icône
   mairie = "mairie", // pas d'icône
 }
+
+export const MAPVIEW_MIN_ZOOM_LEVEL = 10;

@@ -22,6 +22,7 @@ import {
   Sizes,
 } from "../../constants";
 import type { CartographiePoisFromDB } from "../../type";
+import { KeyboardUtils } from "../../utils";
 import AddressDetails from "./addressDetails.component";
 import SearchByPostalCode from "./searchByPostalCode.component";
 import SlidingUpPanelAddressesList from "./slidingUpPanelAddressesList.component";
@@ -145,6 +146,7 @@ const TabAroundMeScreen: React.FC = () => {
       />
       <View style={styles.map}>
         <MapView
+          minZoomLevel={AroundMeConstants.MAPVIEW_MIN_ZOOM_LEVEL}
           ref={setMapViewRef}
           provider={PROVIDER_DEFAULT}
           style={styles.map}
@@ -174,6 +176,7 @@ const TabAroundMeScreen: React.FC = () => {
               titleStyle={styles.relaunchSearchButtonText}
               rounded={true}
               action={() => {
+                KeyboardUtils.dismissKeyboard();
                 setShowRelaunchResearchButton(false);
                 setShowAddressDetails(false);
                 setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);

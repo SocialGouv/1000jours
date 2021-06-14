@@ -66,7 +66,7 @@ export const getUpdatedSurvey = (
     const answers = questionIsCurrent
       ? question.answers.map((answer) => {
           if (answer.id === selectedAnswer.id) {
-            question.isAnswered = true;
+            question.isAnswered = !selectedAnswer.isChecked;
             return { ...answer, isChecked: !selectedAnswer.isChecked };
           } else {
             return { ...answer, isChecked: false };
