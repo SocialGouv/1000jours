@@ -13,10 +13,10 @@ import { View } from "../Themed";
 
 interface Props {
   articles: Article[];
-  applyFilter: (id: number, active: boolean) => void;
+  applyFilters: (filters: ArticleFilter[]) => void;
 }
 
-const Filters: FC<Props> = ({ articles, applyFilter }) => {
+const Filters: FC<Props> = ({ articles, applyFilters }) => {
   const getFilters = (articlesToFilter: Article[]) => {
     return _.chain(articlesToFilter)
       .flatMap(({ thematiques }) => {
@@ -25,7 +25,7 @@ const Filters: FC<Props> = ({ articles, applyFilter }) => {
       .groupBy("id")
       .map((thematiques) => {
         return {
-          active: true,
+          active: false,
           nbArticles: thematiques.length,
           thematique: thematiques[0],
         };
@@ -36,7 +36,7 @@ const Filters: FC<Props> = ({ articles, applyFilter }) => {
   const [filters, setFilters] = React.useState<ArticleFilter[]>([]);
 
   useEffect(() => {
-    setFilters(getFilters(articles));
+    if (filters.length === 0) setFilters(getFilters(articles));
   }, [articles]);
 
   return (
@@ -65,8 +65,11 @@ const Filters: FC<Props> = ({ articles, applyFilter }) => {
               id={filter.thematique.id}
               key={index}
               title={`${filter.thematique.nom} (${filter.nbArticles})`}
-              selected={true}
-              action={applyFilter}
+              selected={filter.active}
+              action={() => {
+                filter.active = !filter.active;
+                applyFilters(filters);
+              }}
             />
           ))}
         </View>
