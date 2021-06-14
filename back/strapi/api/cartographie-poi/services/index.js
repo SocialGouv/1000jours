@@ -28,18 +28,22 @@ const search = async (perimetre) => {
         "cartographie_adresses_json",
       ])
     )
-    .join("cartographie_types", "cartographie_pois.type", "=", "cartographie_types.id")
-    .debug();
+    .join(
+      "cartographie_types",
+      "cartographie_pois.type",
+      "=",
+      "cartographie_types.id"
+    );
 
   const lngs = [perimetre[0], perimetre[2]].sort(sortNumbers);
   const lats = [perimetre[1], perimetre[3]].sort(sortNumbers);
 
   poisQuery.whereRaw(
     `
-adresse_elements->>'geocode_position_longitude' > ? AND
-adresse_elements->>'geocode_position_longitude' < ? AND
-adresse_elements->>'geocode_position_latitude' > ? AND
-adresse_elements->>'geocode_position_latitude' < ?
+(adresse_elements->>'geocode_position_longitude')::float > ? AND
+(adresse_elements->>'geocode_position_longitude')::float < ? AND
+(adresse_elements->>'geocode_position_latitude')::float > ? AND
+(adresse_elements->>'geocode_position_latitude')::float < ?
 `,
     [lngs[0], lngs[1], lats[0], lats[1]]
   );
@@ -73,10 +77,10 @@ adresse_elements->>'geocode_position_latitude' < ?
       commune,
       position_longitude,
       position_latitude,
-    }
+    };
   });
 };
 
 module.exports = {
-  search
+  search,
 };
