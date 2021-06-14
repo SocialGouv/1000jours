@@ -1,3 +1,10 @@
+## [1.38.3](https://github.com/SocialGouv/1000jours/compare/v1.38.2...v1.38.3) (2021-06-14)
+
+
+### Bug Fixes
+
+* **carto:** correction affichage type ([#306](https://github.com/SocialGouv/1000jours/issues/306)) ([f0ee742](https://github.com/SocialGouv/1000jours/commit/f0ee7426a8ceca70ffa7bb58681d2923d9121f4a))
+
 ## [1.38.2](https://github.com/SocialGouv/1000jours/compare/v1.38.1...v1.38.2) (2021-06-14)
 
 
