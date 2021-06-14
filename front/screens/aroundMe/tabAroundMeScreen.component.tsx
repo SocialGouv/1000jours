@@ -139,6 +139,7 @@ const TabAroundMeScreen: React.FC = () => {
           setShowAddressDetails(false);
           setRegion(newRegion);
           mapRef.current?.animateToRegion(newRegion);
+          setMoveToRegionBecauseOfPCResearch(true);
         }}
         showSnackBarWithMessage={showSnackBarWithMessage}
       />
