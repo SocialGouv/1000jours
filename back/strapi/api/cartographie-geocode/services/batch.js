@@ -147,10 +147,7 @@ const processMissingGeocodes = async () => {
   try {
     return await geocodeAdresses(adresses);
   } catch (e) {
-    require("fs").writeFileSync(
-      "batch-error-502.json",
-      JSON.stringify(adresses, null, 2)
-    );
+    console.error("[geocode-batch] error:", e);
   }
 };
 

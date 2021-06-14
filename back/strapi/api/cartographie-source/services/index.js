@@ -48,8 +48,7 @@ const transferTempTableToPois = async () => {
   await knex("cartographie_pois")
     .insert(knex.raw(sql))
     .onConflict("identifiant")
-    .ignore()
-    .debug();
+    .ignore();
 };
 
 const BUFFER_BATCH_SIZE = 1000;
