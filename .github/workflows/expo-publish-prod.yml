@@ -52,7 +52,7 @@ jobs:
       - name: Yarn
         run: |
           cd front
-          echo $PLAY_STORE_API_KEY | base64 -d > play-store-api-key.json
+          echo $PLAY_STORE_API_KEY | base64 -d > api-key-play-store.json
           yarn install
           yarn upload:android
 
@@ -104,5 +104,5 @@ jobs:
           cd front
           yarn install
           curl -o app.ipa "$(expo url:ipa --non-interactive)"
-          npx fastlane spaceauth -u benjaminguedj@hotmail.fr --copy_to_clipboard && export FASTLANE_SESSION=$(pbpaste)
+          echo $APP_STORE_CONNECT_API_KEY | base64 -d > api-key-app-store.json
           yarn upload:ios
