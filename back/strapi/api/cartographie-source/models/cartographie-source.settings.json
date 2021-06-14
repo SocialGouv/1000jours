@@ -17,12 +17,12 @@
     "identifiant": {
       "type": "string"
     },
+    "description": {
+      "type": "text"
+    },
     "type": {
       "type": "enumeration",
-      "enum": [
-        "fichier",
-        "api"
-      ],
+      "enum": ["fichier", "api"],
       "required": true
     },
     "source": {
@@ -31,9 +31,7 @@
     "fichier": {
       "model": "file",
       "via": "related",
-      "allowedTypes": [
-        "files"
-      ],
+      "allowedTypes": ["files"],
       "plugin": "upload",
       "required": false,
       "pluginOptions": {}
@@ -56,11 +54,7 @@
     },
     "traitement": {
       "type": "enumeration",
-      "enum": [
-        "non_fait",
-        "en_cours",
-        "fait"
-      ],
+      "enum": ["non_fait", "en_cours", "fait"],
       "default": "non_fait"
     },
     "regles": {
