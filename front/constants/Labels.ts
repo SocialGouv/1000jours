@@ -1,4 +1,4 @@
-import { EpdsConstants } from ".";
+import { NUMBER_OF_DAYS_NOTIF_REMINDER } from "./epdsConstants.constants";
 import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
@@ -75,7 +75,7 @@ export default {
     instruction:
       "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement aujourd'hui.",
     notification: {
-      body: `${EpdsConstants.NUMBER_OF_DAYS_NOTIF_REMINDER} jours se sont écoulés depuis la dernière fois que vous avez passé le test EPDS. Vous pouvez maintenant le repasser si vous le souhaitez`,
+      body: `${NUMBER_OF_DAYS_NOTIF_REMINDER} jours se sont écoulés depuis la dernière fois que vous avez passé le test EPDS. Vous pouvez maintenant le repasser si vous le souhaitez`,
       title: "Rappel EPDS",
     },
     previousSurvey: {
@@ -161,7 +161,7 @@ export default {
         ],
         stateOfMind: "Je ne vais pas bien",
       },
-      retakeTestInvitation: `Vous serez invité à repasser le test dans ${EpdsConstants.NUMBER_OF_DAYS_NOTIF_REMINDER} jours`,
+      retakeTestInvitation: `Vous serez invité à repasser le test dans ${NUMBER_OF_DAYS_NOTIF_REMINDER} jours`,
     },
     title: "Autodépistage dépression post-partum",
   },
