@@ -57,43 +57,44 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
   ];
 
   const renderContent = () => (
-    <Animatable.View animation="slideInUp" duration={500}>
-      <View style={styles.menuContainer}>
-        <View>
-          <View style={styles.swipeIndicator}></View>
-        </View>
-        <ListItem bottomDivider>
+    // L'annimation est désactivée temporairement à cause d'un crash lors de l'ouverture du menu sur iOS
+    // <Animatable.View animation="slideInUp" duration={500}>
+    <View style={styles.menuContainer}>
+      <View>
+        <View style={styles.swipeIndicator}></View>
+      </View>
+      <ListItem bottomDivider>
+        <ListItem.Content>
+          <ListItem.Title style={styles.title}>
+            {Labels.menu.title}
+          </ListItem.Title>
+        </ListItem.Content>
+      </ListItem>
+      {menuItems.map((menuItem, index) => (
+        <ListItem
+          key={index}
+          onPress={() => {
+            setShowMenu(false);
+            menuItem.onPress();
+          }}
+          bottomDivider
+        >
+          <View style={styles.menuItemIcon}>
+            <Icomoon
+              name={menuItem.icon}
+              size={Sizes.xl}
+              color={Colors.primaryBlueDark}
+            />
+          </View>
           <ListItem.Content>
-            <ListItem.Title style={styles.title}>
-              {Labels.menu.title}
+            <ListItem.Title style={styles.menuItemTitle}>
+              {menuItem.title}
             </ListItem.Title>
           </ListItem.Content>
         </ListItem>
-        {menuItems.map((menuItem, index) => (
-          <ListItem
-            key={index}
-            onPress={() => {
-              setShowMenu(false);
-              menuItem.onPress();
-            }}
-            bottomDivider
-          >
-            <View style={styles.menuItemIcon}>
-              <Icomoon
-                name={menuItem.icon}
-                size={Sizes.xl}
-                color={Colors.primaryBlueDark}
-              />
-            </View>
-            <ListItem.Content>
-              <ListItem.Title style={styles.menuItemTitle}>
-                {menuItem.title}
-              </ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-        ))}
-      </View>
-    </Animatable.View>
+      ))}
+    </View>
+    // </Animatable.View>
   );
   const sheetRef = React.useRef<BottomSheet>(null);
 
