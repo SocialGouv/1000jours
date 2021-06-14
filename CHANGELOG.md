@@ -1,3 +1,10 @@
+## [1.38.1](https://github.com/SocialGouv/1000jours/compare/v1.38.0...v1.38.1) (2021-06-14)
+
+
+### Bug Fixes
+
+* **carto:** Corrige la requête pour les points à l'ouest du méridien de Greenwitch ([#302](https://github.com/SocialGouv/1000jours/issues/302)) ([50fdefb](https://github.com/SocialGouv/1000jours/commit/50fdefbb4c78e786ae34983af85f952dc87a7409))
+
 # [1.38.0](https://github.com/SocialGouv/1000jours/compare/v1.37.0...v1.38.0) (2021-06-11)
 
 
