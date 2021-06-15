@@ -40,6 +40,7 @@ export default {
       title: "Autodépistage dépression post-partum",
     },
     inShortTitle: "En bref :",
+    learnMoreAboutIt: "En savoir plus à ce sujet :",
   },
   buttons: {
     back: "Retour",
