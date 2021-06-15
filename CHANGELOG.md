@@ -1,3 +1,10 @@
+## [1.39.1](https://github.com/SocialGouv/1000jours/compare/v1.39.0...v1.39.1) (2021-06-15)
+
+
+### Bug Fixes
+
+* **epds:** fix décoche case questionnaire ([#311](https://github.com/SocialGouv/1000jours/issues/311)) ([af5c64e](https://github.com/SocialGouv/1000jours/commit/af5c64ed46915c8f1dc6b29b1002dce34264d449))
+
 # [1.39.0](https://github.com/SocialGouv/1000jours/compare/v1.38.3...v1.39.0) (2021-06-14)
 
 
