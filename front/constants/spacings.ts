@@ -10,6 +10,7 @@ export const Margins = {
   larger: scaleNormalize(24),
   largest: scaleNormalize(36),
   step: scaleNormalize(60),
+  snackbarMargin: scaleNormalize(80),
 };
 
 export const Paddings = {

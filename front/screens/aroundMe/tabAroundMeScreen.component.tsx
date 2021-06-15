@@ -184,19 +184,22 @@ const TabAroundMeScreen: React.FC = () => {
             />
           </View>
         )}
+        <View style={styles.snackbarView}>
+          <CustomSnackBar
+            duration={AroundMeConstants.SNACKBAR_DURATION}
+            visible={true}
+            backgroundColor={Colors.primaryYellowLight}
+            onDismiss={onSnackBarDismiss}
+            textColor={Colors.primaryYellowDark}
+            text={Labels.aroundMe.postalCodeNotFound}
+          />
+        </View>
       </View>
       {showAddressDetails && addressDetails && (
         <View style={styles.addressDetails}>
           <AddressDetails details={addressDetails} />
         </View>
       )}
-      <CustomSnackBar
-        visible={showSnackBar}
-        duration={AroundMeConstants.SNACKBAR_DURATION}
-        onDismiss={onSnackBarDismiss}
-      >
-        <CommonText>{snackBarMessage}</CommonText>
-      </CustomSnackBar>
       {showAddressesList &&
         poisArrayInList.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
           <SlidingUpPanelAddressesList poisArray={poisArrayInList} />
@@ -245,7 +248,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   relaunchSearchButton: {
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderColor: Colors.primaryBlue,
     borderWidth: 1,
     marginHorizontal: Margins.smallest,
@@ -257,6 +260,13 @@ const styles = StyleSheet.create({
   relaunchSearchView: {
     backgroundColor: "transparent",
     margin: Margins.smaller,
+    position: "absolute",
+    right: 0,
+    top: 0,
+  },
+  snackbarView: {
+    left: 0,
+    marginTop: Margins.snackbarMargin,
     position: "absolute",
     right: 0,
     top: 0,
