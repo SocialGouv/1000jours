@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
-import { Button, CustomSnackBar, SecondaryText } from "../../components";
+import { Button, CustomSnackbar, SecondaryText } from "../../components";
 import FetchPoisCoords from "../../components/aroundMe/fetchPoisCoords.component";
 import { View } from "../../components/Themed";
 import {
@@ -179,16 +179,15 @@ const TabAroundMeScreen: React.FC = () => {
             />
           </View>
         )}
-        <View style={styles.snackbarView}>
-          <CustomSnackBar
-            duration={AroundMeConstants.SNACKBAR_DURATION}
-            visible={true}
-            backgroundColor={Colors.primaryYellowLight}
-            onDismiss={onSnackBarDismiss}
-            textColor={Colors.primaryYellowDark}
-            text={Labels.aroundMe.postalCodeNotFound}
-          />
-        </View>
+        <CustomSnackbar
+          duration={AroundMeConstants.SNACKBAR_DURATION}
+          visible={showSnackBar}
+          isOnTop={true}
+          backgroundColor={Colors.primaryYellowLight}
+          onDismiss={onSnackBarDismiss}
+          textColor={Colors.primaryYellowDark}
+          text={snackBarMessage}
+        />
       </View>
       {showAddressDetails && addressDetails && (
         <View style={styles.addressDetails}>
@@ -255,14 +254,6 @@ const styles = StyleSheet.create({
   relaunchSearchView: {
     backgroundColor: "transparent",
     margin: Margins.smaller,
-    position: "absolute",
-    right: 0,
-    top: 0,
-  },
-  snackbarView: {
-    backgroundColor: "transparent",
-    height: "13%",
-    left: 0,
     position: "absolute",
     right: 0,
     top: 0,

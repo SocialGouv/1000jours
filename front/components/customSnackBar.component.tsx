@@ -1,44 +1,89 @@
 import * as React from "react";
-import { Snackbar } from "react-native-paper";
+import { useEffect } from "react";
+import { StyleSheet } from "react-native";
 
-import { Colors, FontWeight } from "../constants";
+import {
+  Colors,
+  FontNames,
+  FontWeight,
+  getFontFamilyName,
+  Margins,
+  Paddings,
+} from "../constants";
 import { CommonText } from ".";
+import { View } from "./Themed";
 
 interface Props {
   duration: number;
   visible: boolean;
+  isOnTop?: boolean;
   backgroundColor?: string;
   onDismiss: () => void;
   textColor?: string;
   text: string;
 }
 
-const CustomSnackBar: React.FC<Props> = ({
+const CustomSnackbar: React.FC<Props> = ({
   duration,
   visible,
+  isOnTop,
   backgroundColor,
   onDismiss,
   textColor,
   text,
 }) => {
+  useEffect(() => {
+    if (visible) {
+      setTimeout(() => {
+        onDismiss();
+      }, duration);
+    }
+  }, [visible]);
+
   const snackbarStyle = {
     backgroundColor: backgroundColor ?? Colors.white,
   };
-  const textStyle = {
+  const textColorStyle = {
     color: textColor ?? Colors.dark.text,
-    fontWeight: FontWeight.bold,
   };
 
   return (
-    <Snackbar
-      duration={duration}
-      visible={visible}
-      style={snackbarStyle}
-      onDismiss={onDismiss}
-    >
-      <CommonText style={textStyle}>{text}</CommonText>
-    </Snackbar>
+    <>
+      {visible && (
+        <View
+          style={[
+            isOnTop ? styles.snackbarViewTop : styles.snackbarViewBottom,
+            styles.snackbarView,
+            snackbarStyle,
+          ]}
+        >
+          <CommonText style={[styles.defaultTextStyle, textColorStyle]}>
+            {text}
+          </CommonText>
+        </View>
+      )}
+    </>
   );
 };
 
-export default CustomSnackBar;
+const styles = StyleSheet.create({
+  defaultTextStyle: {
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
+    fontWeight: FontWeight.bold,
+    padding: Paddings.default,
+  },
+  snackbarView: {
+    left: 0,
+    margin: Margins.smaller,
+    position: "absolute",
+    right: 0,
+  },
+  snackbarViewBottom: {
+    bottom: 0,
+  },
+  snackbarViewTop: {
+    top: 0,
+  },
+});
+
+export default CustomSnackbar;
