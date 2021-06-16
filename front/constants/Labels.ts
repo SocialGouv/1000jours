@@ -40,6 +40,7 @@ export default {
       title: "Autodépistage dépression post-partum",
     },
     inShortTitle: "En bref :",
+    learnMoreAboutIt: "En savoir plus à ce sujet :",
   },
   buttons: {
     back: "Retour",
@@ -166,6 +167,8 @@ export default {
     title: "Autodépistage dépression post-partum",
   },
   errorMsg: "Une erreur est survenue, merci de réessayer plus tard",
+  errorNetworkMsg:
+    "Vous êtes très nombreux à vous connecter en ce moment mais nous faisons tout notre possible pour que vous puissiez vous connecter rapidement. Nous vous invitons à vous reconnecter dans quelques minutes.",
   invalidDate: "La date saisie n'est pas valide.",
   invalidLink: "Ce lien n'est pas valide.",
   listArticles: {
