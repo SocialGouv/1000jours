@@ -10,7 +10,7 @@ metadata:
     app.gitlab.com/env: prod
     app.gitlab.com/env.name: prod
   name: azure-pg-user
-  namespace: 1000jours
+  namespace: les1000jours
   labels:
     application: 1000jours
     owner: 1000jours
@@ -63,7 +63,7 @@ metadata:
     owner: 1000jours
     team: 1000jours
   name: strapi
-  namespace: 1000jours
+  namespace: les1000jours
 spec:
   replicas: 1
   selector:
@@ -182,7 +182,7 @@ metadata:
     application: 1000jours
     owner: 1000jours
     team: 1000jours
-  namespace: 1000jours
+  namespace: les1000jours
 data:
   STRAPI_LOG_LEVEL: info
   NODE_ENV: production
@@ -202,7 +202,7 @@ metadata:
     app.gitlab.com/app: socialgouv-1000jours
     app.gitlab.com/env: prod
     app.gitlab.com/env.name: prod
-  namespace: 1000jours
+  namespace: les1000jours
 spec:
   ports:
     - name: http
@@ -230,7 +230,7 @@ metadata:
     owner: 1000jours
     team: 1000jours
   name: strapi
-  namespace: 1000jours
+  namespace: les1000jours
 spec:
   rules:
     - host: backoffice-1000jours.fabrique.social.gouv.fr
