@@ -149,7 +149,7 @@ export default async () => {
   const deployment = manifests.find(m=>m.kind==="Deployment") as Deployment;
   if (deployment && deployment?.spec?.template.spec) {
     deployment.spec.template.spec.nodeSelector = {
-      workload: "les1000jours-strapi",
+      workload: "1000jours-strapi",
     };
   }
   return manifests;
