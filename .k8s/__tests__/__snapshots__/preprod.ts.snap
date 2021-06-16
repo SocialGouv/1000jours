@@ -8,34 +8,34 @@ metadata:
   annotations:
     field.cattle.io/creatorId: gitlab
     field.cattle.io/projectId: c-bd7z2:p-7ms8p
-    git/branch: chore-db-schema2
+    git/branch: v1.2.3
     git/remote: >-
       https://gitlab-ci-token:[MASKED]@gitlab.factory.social.gouv.fr/SocialGouv/1000jours.git
-    app.gitlab.com/app: socialgouv-1000jours-les1000jours
-    app.gitlab.com/env: chore-d-u8fps8
-    app.gitlab.com/env.name: chore-db-schema2-dev2
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: preprod-dev42
+    app.gitlab.com/env.name: preprod-dev42
   labels:
-    azure-pg-admin-user: les1000jours
-    application: v1-2-3-les1000jours
-    owner: les1000jours
-    team: les1000jours
+    azure-pg-admin-user: 1000jours
+    application: v1-2-3-1000jours
+    owner: 1000jours
+    team: 1000jours
     cert: wildcard
-  name: 1000jours-85-preprod-dev2
+  name: 1000jours-85-preprod-dev42
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
   annotations:
     sealedsecrets.bitnami.com/cluster-wide: 'true'
-    app.gitlab.com/app: socialgouv-1000jours-les1000jours
-    app.gitlab.com/env: chore-d-u8fps8
-    app.gitlab.com/env.name: chore-db-schema2-dev2
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: preprod-dev42
+    app.gitlab.com/env.name: preprod-dev42
   name: azure-pg-user
-  namespace: 1000jours-85-preprod-dev2
+  namespace: 1000jours-85-preprod-dev42
   labels:
-    application: v1-2-3-les1000jours
-    owner: les1000jours
-    team: les1000jours
+    application: v1-2-3-1000jours
+    owner: 1000jours
+    team: 1000jours
     cert: wildcard
 spec:
   encryptedData:
@@ -61,14 +61,14 @@ spec:
     metadata:
       annotations:
         sealedsecrets.bitnami.com/cluster-wide: 'true'
-        app.gitlab.com/app: socialgouv-1000jours-les1000jours
-        app.gitlab.com/env: chore-d-u8fps8
-        app.gitlab.com/env.name: chore-db-schema2-dev2
+        app.gitlab.com/app: socialgouv-1000jours
+        app.gitlab.com/env: preprod-dev42
+        app.gitlab.com/env.name: preprod-dev42
       name: azure-pg-user
       labels:
-        application: v1-2-3-les1000jours
-        owner: les1000jours
-        team: les1000jours
+        application: v1-2-3-1000jours
+        owner: 1000jours
+        team: 1000jours
         cert: wildcard
     type: Opaque
 ---
@@ -78,17 +78,17 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: socialgouv-1000jours-les1000jours
-    app.gitlab.com/env: chore-d-u8fps8
-    app.gitlab.com/env.name: chore-db-schema2-dev2
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: preprod-dev42
+    app.gitlab.com/env.name: preprod-dev42
   labels:
     app: strapi
-    application: v1-2-3-les1000jours
-    owner: les1000jours
-    team: les1000jours
+    application: v1-2-3-1000jours
+    owner: 1000jours
+    team: 1000jours
     cert: wildcard
   name: strapi
-  namespace: 1000jours-85-preprod-dev2
+  namespace: 1000jours-85-preprod-dev42
 spec:
   replicas: 1
   selector:
@@ -99,14 +99,14 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
-        app.gitlab.com/app: socialgouv-1000jours-les1000jours
-        app.gitlab.com/env: chore-d-u8fps8
-        app.gitlab.com/env.name: chore-db-schema2-dev2
+        app.gitlab.com/app: socialgouv-1000jours
+        app.gitlab.com/env: preprod-dev42
+        app.gitlab.com/env.name: preprod-dev42
       labels:
         app: strapi
-        application: v1-2-3-les1000jours
-        owner: les1000jours
-        team: les1000jours
+        application: v1-2-3-1000jours
+        owner: 1000jours
+        team: 1000jours
         cert: wildcard
     spec:
       containers:
@@ -156,7 +156,7 @@ spec:
           env:
             - name: BACKOFFICE_URL
               value: >-
-                https://backoffice-v1-2-3-les1000jours.dev2.fabrique.social.gouv.fr
+                https://backoffice-preprod-1000jours.dev42.fabrique.social.gouv.fr
             - name: DATABASE_CLIENT
               value: postgres
             - name: DATABASE_NAME
@@ -193,24 +193,24 @@ spec:
             claimName: 1000jours-strapi-uploads
           name: uploads
       nodeSelector:
-        workload: les1000jours-strapi
+        workload: 1000jours-strapi
 ---
-kind: ConfigMap
 apiVersion: v1
+kind: ConfigMap
 metadata:
   name: strapi-configmap
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: socialgouv-1000jours-les1000jours
-    app.gitlab.com/env: chore-d-u8fps8
-    app.gitlab.com/env.name: chore-db-schema2-dev2
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: preprod-dev42
+    app.gitlab.com/env.name: preprod-dev42
   labels:
-    application: v1-2-3-les1000jours
-    owner: les1000jours
-    team: les1000jours
+    application: v1-2-3-1000jours
+    owner: 1000jours
+    team: 1000jours
     cert: wildcard
-  namespace: 1000jours-85-preprod-dev2
+  namespace: 1000jours-85-preprod-dev42
 data:
   STRAPI_LOG_LEVEL: debug
   NODE_ENV: production
@@ -220,18 +220,18 @@ kind: Service
 metadata:
   labels:
     app: strapi
-    application: v1-2-3-les1000jours
-    owner: les1000jours
-    team: les1000jours
+    application: v1-2-3-1000jours
+    owner: 1000jours
+    team: 1000jours
     cert: wildcard
   name: strapi
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: socialgouv-1000jours-les1000jours
-    app.gitlab.com/env: chore-d-u8fps8
-    app.gitlab.com/env.name: chore-db-schema2-dev2
-  namespace: 1000jours-85-preprod-dev2
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: preprod-dev42
+    app.gitlab.com/env.name: preprod-dev42
+  namespace: 1000jours-85-preprod-dev42
 spec:
   ports:
     - name: http
@@ -248,20 +248,20 @@ metadata:
     kubernetes.io/ingress.class: nginx
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: socialgouv-1000jours-les1000jours
-    app.gitlab.com/env: chore-d-u8fps8
-    app.gitlab.com/env.name: chore-db-schema2-dev2
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: preprod-dev42
+    app.gitlab.com/env.name: preprod-dev42
   labels:
     app: strapi
-    application: v1-2-3-les1000jours
-    owner: les1000jours
-    team: les1000jours
+    application: v1-2-3-1000jours
+    owner: 1000jours
+    team: 1000jours
     cert: wildcard
   name: strapi
-  namespace: 1000jours-85-preprod-dev2
+  namespace: 1000jours-85-preprod-dev42
 spec:
   rules:
-    - host: backoffice-v1-2-3-les1000jours.dev2.fabrique.social.gouv.fr
+    - host: backoffice-preprod-1000jours.dev42.fabrique.social.gouv.fr
       http:
         paths:
           - backend:
@@ -270,7 +270,7 @@ spec:
             path: /
   tls:
     - hosts:
-        - backoffice-v1-2-3-les1000jours.dev2.fabrique.social.gouv.fr
+        - backoffice-preprod-1000jours.dev42.fabrique.social.gouv.fr
       secretName: wildcard-crt
 ---
 apiVersion: v1
