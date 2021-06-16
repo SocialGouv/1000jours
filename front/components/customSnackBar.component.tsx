@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native";
+import * as Animatable from "react-native-animatable";
 
 import {
   Colors,
@@ -11,7 +12,6 @@ import {
   Paddings,
 } from "../constants";
 import { CommonText } from ".";
-import { View } from "./Themed";
 
 interface Props {
   duration: number;
@@ -50,7 +50,9 @@ const CustomSnackbar: React.FC<Props> = ({
   return (
     <>
       {visible && (
-        <View
+        <Animatable.View
+          animation="fadeIn"
+          duration={200}
           style={[
             isOnTop ? styles.snackbarViewTop : styles.snackbarViewBottom,
             styles.snackbarView,
@@ -60,7 +62,7 @@ const CustomSnackbar: React.FC<Props> = ({
           <CommonText style={[styles.defaultTextStyle, textColorStyle]}>
             {text}
           </CommonText>
-        </View>
+        </Animatable.View>
       )}
     </>
   );
