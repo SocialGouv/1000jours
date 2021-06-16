@@ -6,9 +6,9 @@ import { StyleSheet } from "react-native";
 
 import { Colors, Labels, Margins, Paddings, Sizes } from "../../constants";
 import type { Article, ArticleFilter } from "../../types";
-import Chip from "../chip.component";
-import Button from "../form/button.component";
-import Icomoon, { IcomoonIcons } from "../icomoon.component";
+import Button from "../base/button.component";
+import Chip from "../base/chip.component";
+import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
 import { View } from "../Themed";
 
 interface Props {

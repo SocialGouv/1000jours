@@ -7,7 +7,7 @@ import { Colors, Labels, Paddings, Sizes } from "../../constants";
 import type { ArticleLink } from "../../types";
 import { CommonText } from "../StyledText";
 import { View } from "../Themed";
-import SubTitle from "./SubTitle";
+import SubTitle from "./subTitle.component";
 
 interface Props {
   linksArray: ArticleLink[];
