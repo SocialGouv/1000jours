@@ -4,12 +4,7 @@ import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
-import {
-  Button,
-  CommonText,
-  CustomSnackBar,
-  SecondaryText,
-} from "../../components";
+import { Button, CustomSnackBar, SecondaryText } from "../../components";
 import FetchPoisCoords from "../../components/aroundMe/fetchPoisCoords.component";
 import { View } from "../../components/Themed";
 import {
@@ -265,8 +260,9 @@ const styles = StyleSheet.create({
     top: 0,
   },
   snackbarView: {
+    backgroundColor: "transparent",
+    height: "13%",
     left: 0,
-    marginTop: Margins.snackbarMargin,
     position: "absolute",
     right: 0,
     top: 0,

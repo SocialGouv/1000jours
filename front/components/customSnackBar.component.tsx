@@ -21,7 +21,9 @@ const CustomSnackBar: React.FC<Props> = ({
   textColor,
   text,
 }) => {
-  const snackbarStyle = { backgroundColor: backgroundColor ?? Colors.white };
+  const snackbarStyle = {
+    backgroundColor: backgroundColor ?? Colors.white,
+  };
   const textStyle = {
     color: textColor ?? Colors.dark.text,
     fontWeight: FontWeight.bold,
