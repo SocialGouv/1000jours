@@ -1,3 +1,18 @@
+# [1.40.0](https://github.com/SocialGouv/1000jours/compare/v1.39.1...v1.40.0) (2021-06-16)
+
+
+### Bug Fixes
+
+* **carto:** rename customSnackbar file ([fc0d269](https://github.com/SocialGouv/1000jours/commit/fc0d26962d6f861e4a387a573ff3ad812d5c009f))
+* **carto:** review design ([#327](https://github.com/SocialGouv/1000jours/issues/327)) ([0d51357](https://github.com/SocialGouv/1000jours/commit/0d51357d5d6f71cdd5477b5191b17938f9c53294))
+* **deps:** update all dependencies ([#301](https://github.com/SocialGouv/1000jours/issues/301)) ([72dbbae](https://github.com/SocialGouv/1000jours/commit/72dbbaee790df22197ecb060ac4cebe2286e0f31))
+* **deps:** update dependency socialgouv/gitlab-ci-yml to v23 ([#318](https://github.com/SocialGouv/1000jours/issues/318)) ([8d601c9](https://github.com/SocialGouv/1000jours/commit/8d601c92d236e99e737422849f5abe3aff42debc))
+
+
+### Features
+
+* 🎸 Ajoute un titre au dessus des liens (article) ([#316](https://github.com/SocialGouv/1000jours/issues/316)) ([b8c7ffe](https://github.com/SocialGouv/1000jours/commit/b8c7ffe6c0170d7d7982611108cb6f750e521408)), closes [#294](https://github.com/SocialGouv/1000jours/issues/294)
+
 ## [1.39.1](https://github.com/SocialGouv/1000jours/compare/v1.39.0...v1.39.1) (2021-06-15)
 
 
