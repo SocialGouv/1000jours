@@ -10,7 +10,7 @@ import Title from "./article/Title";
 import BackButton from "./BackButton";
 import Backdrop from "./backdrop.component";
 import Agenda from "./calendar/agenda";
-import CustomSnackbar from "./customSnackbar.component";
+import CustomSnackbar from "./customSnackBar.component";
 import Button from "./form/button.component";
 import Checkbox from "./form/Checkbox";
 import Datepicker from "./form/DatePicker";
