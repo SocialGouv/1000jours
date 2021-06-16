@@ -17,7 +17,10 @@ export default {
     text: "#000",
     tint: tintColorLight,
   },
-
+  aroundMeSnackbar: {
+    text: "#E86405",
+    background: "#FFEDDF",
+  },
   primaryBlue: "#5770BE",
   primaryBlueDark: "#26366E",
   primaryBlueLight: "#EBF6F8",

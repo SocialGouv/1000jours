@@ -183,9 +183,9 @@ const TabAroundMeScreen: React.FC = () => {
           duration={AroundMeConstants.SNACKBAR_DURATION}
           visible={showSnackBar}
           isOnTop={true}
-          backgroundColor={Colors.primaryYellowLight}
+          backgroundColor={Colors.aroundMeSnackbar.background}
           onDismiss={onSnackBarDismiss}
-          textColor={Colors.primaryYellowDark}
+          textColor={Colors.aroundMeSnackbar.text}
           text={snackBarMessage}
         />
       </View>

@@ -3,15 +3,8 @@ import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-import {
-  Colors,
-  FontNames,
-  FontWeight,
-  getFontFamilyName,
-  Margins,
-  Paddings,
-} from "../constants";
-import { CommonText } from ".";
+import { Colors, FontWeight, Margins, Paddings } from "../constants";
+import { SecondaryText } from "./StyledText";
 
 interface Props {
   duration: number;
@@ -59,9 +52,9 @@ const CustomSnackbar: React.FC<Props> = ({
             snackbarStyle,
           ]}
         >
-          <CommonText style={[styles.defaultTextStyle, textColorStyle]}>
+          <SecondaryText style={[styles.defaultTextStyle, textColorStyle]}>
             {text}
-          </CommonText>
+          </SecondaryText>
         </Animatable.View>
       )}
     </>
@@ -70,7 +63,6 @@ const CustomSnackbar: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   defaultTextStyle: {
-    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
     fontWeight: FontWeight.bold,
     padding: Paddings.default,
   },
