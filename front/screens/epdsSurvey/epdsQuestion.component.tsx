@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Dimensions, StyleSheet } from "react-native";
 
-import Checkbox from "../../components/form/Checkbox";
+import Checkbox from "../../components/base/checkbox.component";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import { FontWeight, Paddings, Sizes } from "../../constants";

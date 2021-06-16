@@ -7,10 +7,10 @@ import type { IconNode } from "react-native-elements/dist/icons/Icon";
 
 import { Margins, Paddings, Sizes } from "../../constants";
 import Colors from "../../constants/Colors";
-import { IcomoonIcons } from "../icomoon.component";
+import { IcomoonIcons } from "../base/icomoon.component";
 import { CommonText } from "../StyledText";
 import { View } from "../Themed";
-import StepIcon from "./StepIcon";
+import StepIcon from "./stepIcon.component";
 
 interface TimelineStepProps {
   active: boolean | null;

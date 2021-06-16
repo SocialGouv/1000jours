@@ -3,9 +3,9 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { Alert, StyleSheet } from "react-native";
 
-import { Labels, Paddings } from "../constants";
-import type { ApolloHealthResponse } from "../types";
-import { Text, View } from "./Themed";
+import { Labels, Paddings } from "../../constants";
+import type { ApolloHealthResponse } from "../../types";
+import { Text, View } from "../Themed";
 
 interface Props {
   error: ApolloError;

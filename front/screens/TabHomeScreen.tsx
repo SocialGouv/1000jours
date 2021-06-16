@@ -10,10 +10,13 @@ import type { LayoutChangeEvent } from "react-native";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { CommonText, SecondaryText } from "../components";
-import ErrorMessage from "../components/errorMessage.component";
-import { View } from "../components/Themed";
-import TimelineStep from "../components/timeline/TimlineStep";
+import {
+  CommonText,
+  ErrorMessage,
+  SecondaryText,
+  TimelineStep,
+  View,
+} from "../components";
 import {
   FontWeight,
   Margins,

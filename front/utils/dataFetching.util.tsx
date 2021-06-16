@@ -1,5 +1,5 @@
-import { DocumentNode, useLazyQuery } from "@apollo/client";
-import { useQuery } from "@apollo/client";
+import type { DocumentNode } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import * as React from "react";
 import { ActivityIndicator } from "react-native";
 

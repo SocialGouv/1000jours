@@ -8,8 +8,8 @@ import {
   getFontFamilyName,
   Labels,
   Sizes,
-} from "../constants";
-import Button from "./form/button.component";
+} from "../../constants";
+import Button from "./button.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 
 interface Props {

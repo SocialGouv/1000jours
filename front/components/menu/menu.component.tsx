@@ -14,12 +14,12 @@ import {
   Margins,
   Paddings,
   Sizes,
-} from "../constants";
-import { ConditionsOfUse, LegalNotice } from "../screens";
-import type { MenuItem } from "../types";
-import { Icomoon } from ".";
-import { IcomoonIcons } from "./icomoon.component";
-import { View } from "./Themed";
+} from "../../constants";
+import type { MenuItem } from "../../types";
+import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
+import { View } from "../Themed";
+import ConditionsOfUse from "./conditionsOfUse.component";
+import LegalNotice from "./legalNotice.component";
 
 interface Props {
   showMenu: boolean;
@@ -56,46 +56,45 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
   ];
 
   const renderContent = () => (
-    // L'annimation est désactivée temporairement à cause d'un crash lors de l'ouverture du menu sur iOS
-    // <Animatable.View animation="slideInUp" duration={500}>
-    <View style={styles.menuContainer}>
-      <View>
-        <View style={styles.swipeIndicator}></View>
-      </View>
-      <View>
-        <ListItem bottomDivider>
-          <ListItem.Content>
-            <ListItem.Title style={styles.title}>
-              {Labels.menu.title}
-            </ListItem.Title>
-          </ListItem.Content>
-        </ListItem>
-        {menuItems.map((menuItem, index) => (
-          <ListItem
-            key={index}
-            onPress={() => {
-              setShowMenu(false);
-              menuItem.onPress();
-            }}
-            bottomDivider
-          >
-            <View style={styles.menuItemIcon}>
-              <Icomoon
-                name={menuItem.icon}
-                size={Sizes.xl}
-                color={Colors.primaryBlueDark}
-              />
-            </View>
+    <Animatable.View animation="slideInUp" duration={500}>
+      <View style={styles.menuContainer}>
+        <View>
+          <View style={styles.swipeIndicator}></View>
+        </View>
+        <View>
+          <ListItem bottomDivider>
             <ListItem.Content>
-              <ListItem.Title style={styles.menuItemTitle}>
-                {menuItem.title}
+              <ListItem.Title style={styles.title}>
+                {Labels.menu.title}
               </ListItem.Title>
             </ListItem.Content>
           </ListItem>
-        ))}
+          {menuItems.map((menuItem, index) => (
+            <ListItem
+              key={index}
+              onPress={() => {
+                setShowMenu(false);
+                menuItem.onPress();
+              }}
+              bottomDivider
+            >
+              <View style={styles.menuItemIcon}>
+                <Icomoon
+                  name={menuItem.icon}
+                  size={Sizes.xl}
+                  color={Colors.primaryBlueDark}
+                />
+              </View>
+              <ListItem.Content>
+                <ListItem.Title style={styles.menuItemTitle}>
+                  {menuItem.title}
+                </ListItem.Title>
+              </ListItem.Content>
+            </ListItem>
+          ))}
+        </View>
       </View>
-    </View>
-    // </Animatable.View>
+    </Animatable.View>
   );
   const sheetRef = React.useRef<BottomSheet>(null);
 
