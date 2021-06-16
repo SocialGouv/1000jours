@@ -96,15 +96,17 @@ const styles = StyleSheet.create({
   },
   postalCodeInput: {
     backgroundColor: Colors.cardGrey,
+    borderColor: Colors.primaryBlue,
+    borderWidth: 1,
     paddingHorizontal: Paddings.smaller,
   },
   postalCodeRow: {
     flexDirection: "row",
     paddingLeft: Margins.default,
-    paddingVertical: Paddings.smallest,
+    paddingVertical: Paddings.smaller,
   },
   searchByPostalCodeButton: {
-    marginHorizontal: Margins.smallest,
+    marginHorizontal: Margins.smaller,
   },
 });
 
