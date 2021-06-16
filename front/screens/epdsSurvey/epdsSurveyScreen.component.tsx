@@ -3,7 +3,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
-import { CommonText } from "../../components/StyledText";
+import { SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
   Colors,
@@ -40,9 +40,8 @@ const EpdsSurveyScreen: FC = () => {
     return fetchedData.loadingOrErrorComponent;
   }
 
-  const questionAndAnswers: EpdsQuestionAndAnswers[] = EpdsSurveyUtils.getQuestionsAndAnswersFromData(
-    fetchedData.response
-  );
+  const questionAndAnswers: EpdsQuestionAndAnswers[] =
+    EpdsSurveyUtils.getQuestionsAndAnswersFromData(fetchedData.response);
 
   const goToEpdsSurvey = () => {
     setGenderIsEntered(true);
@@ -50,7 +49,9 @@ const EpdsSurveyScreen: FC = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <CommonText style={styles.title}>{Labels.epdsSurvey.title}</CommonText>
+      <SecondaryText style={styles.title}>
+        {Labels.epdsSurvey.title}
+      </SecondaryText>
       {genderIsEntered ? (
         <EpdsSurveyContent epdsSurvey={questionAndAnswers} />
       ) : (
@@ -70,6 +71,7 @@ const styles = StyleSheet.create({
     fontSize: Sizes.md,
     fontWeight: FontWeight.bold,
     paddingHorizontal: Paddings.default,
+    textTransform: "uppercase",
   },
 });
 

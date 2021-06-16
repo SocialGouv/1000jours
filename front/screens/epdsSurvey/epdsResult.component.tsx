@@ -8,7 +8,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
 import IconeResultatMoyen from "../../assets/images/icone_resultats_moyen.svg";
 import IconeResultatPasBien from "../../assets/images/icone_resultats_pasbien.svg";
-import { CommonText } from "../../components/StyledText";
+import { CommonText, SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
   Colors,
@@ -86,16 +86,16 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
           {resultData.resultLabels.stateOfMind}
         </CommonText>
       </View>
-      <CommonText style={[styles.text, styles.fontBold]}>
+      <SecondaryText style={[styles.text, styles.fontBold]}>
         {labelsResultats.introduction}
         {result} {resultData.resultLabels.intervalle}.
-      </CommonText>
-      <CommonText style={styles.text}>
+      </SecondaryText>
+      <SecondaryText style={styles.text}>
         {resultData.resultLabels.explication}
-      </CommonText>
-      <CommonText style={[styles.text, styles.fontBold]}>
+      </SecondaryText>
+      <SecondaryText style={[styles.text, styles.fontBold]}>
         {labelsResultats.retakeTestInvitation}
-      </CommonText>
+      </SecondaryText>
       <EpdsResultInformation
         leftBorderColor={resultData.color}
         informationList={resultData.resultLabels.professionalsList}
@@ -106,7 +106,6 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
 
 const styles = StyleSheet.create({
   fontBold: {
-    fontSize: Sizes.xs,
     fontWeight: FontWeight.bold,
   },
   itemBorder: {
@@ -133,7 +132,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.commonText,
-    fontSize: Sizes.xxs,
+    fontSize: Sizes.sm,
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.mmd,
     paddingHorizontal: Paddings.default,
