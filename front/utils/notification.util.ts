@@ -13,7 +13,11 @@ export const scheduleEpdsNotification = async (): Promise<string> => {
     data: { data: "epds" },
     title: Labels.epdsSurvey.notification.title,
   };
-  const trigger = { day: EpdsConstants.NUMBER_OF_DAYS_NOTIF_REMINDER };
+  /* Si on utilise le trigger "day", on se  prend l'exception "Error: Failed to schedule the notification. Trigger of type: calendar is not supported on Android."
+  et seul le trigger seconds passe, donc on convertit en secondes (3600  secondes dans une heure x 24 heures x le nombre de jours ) */
+  const trigger = {
+    seconds: 3600 * 24 * EpdsConstants.NUMBER_OF_DAYS_NOTIF_REMINDER,
+  };
   return sendNotificationReminder(content, trigger);
 };
 
