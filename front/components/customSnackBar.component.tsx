@@ -26,11 +26,10 @@ const CustomSnackbar: React.FC<Props> = ({
   text,
 }) => {
   useEffect(() => {
-    if (visible) {
-      setTimeout(() => {
-        onDismiss();
-      }, duration);
-    }
+    if (!visible) return;
+    setTimeout(() => {
+      onDismiss();
+    }, duration);
   }, [visible]);
 
   const snackbarStyle = {
