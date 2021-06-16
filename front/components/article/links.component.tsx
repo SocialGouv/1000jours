@@ -7,6 +7,7 @@ import { Colors, Labels, Paddings, Sizes } from "../../constants";
 import type { ArticleLink } from "../../types";
 import { CommonText } from "../StyledText";
 import { View } from "../Themed";
+import SubTitle from "./subTitle.component";
 
 interface Props {
   linksArray: ArticleLink[];
@@ -22,21 +23,24 @@ const Links: FC<Props> = ({ linksArray }) => {
     } else Alert.alert(Labels.invalidLink);
   };
 
-  return (
-    <View style={styles.linksContainer}>
-      {filter(linksArray, "label").map((item, index) => (
-        <CommonText
-          key={index}
-          style={[styles.link]}
-          onPress={() => {
-            goToUrl(item.url);
-          }}
-        >
-          {item.label}
-        </CommonText>
-      ))}
+  return filter(linksArray, "label").length > 0 ? (
+    <View>
+      <SubTitle title={Labels.article.learnMoreAboutIt} />
+      <View style={styles.linksContainer}>
+        {filter(linksArray, "label").map((item, index) => (
+          <CommonText
+            key={index}
+            style={[styles.link]}
+            onPress={() => {
+              goToUrl(item.url);
+            }}
+          >
+            {item.label}
+          </CommonText>
+        ))}
+      </View>
     </View>
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({

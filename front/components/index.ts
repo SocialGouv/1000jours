@@ -1,26 +1,29 @@
-import DidYouKnow from "./article/DidYouKnow";
+import DidYouKnow from "./article/didYouKnow.component";
 import Filters from "./article/filters.component";
-import ImageBanner from "./article/ImageBanner";
-import InShort from "./article/InShort";
-import Links from "./article/Links";
-import SubTitle from "./article/SubTitle";
-import TextHtml from "./article/TextHtml";
-import Thematics from "./article/Thematics";
-import Title from "./article/Title";
-import BackButton from "./BackButton";
-import Backdrop from "./backdrop.component";
-import Agenda from "./calendar/agenda";
-import CustomSnackBar from "./customSnackBar.component";
-import Button from "./form/button.component";
-import Checkbox from "./form/Checkbox";
-import Datepicker from "./form/DatePicker";
-import HeaderApp from "./HeaderApp";
-import Icomoon, { IcomoonIcons } from "./icomoon.component";
-import Modal from "./modal.component";
+import ImageBanner from "./article/imageBanner.component";
+import InShort from "./article/inShort.component";
+import Links from "./article/links.component";
+import SubTitle from "./article/subTitle.component";
+import TextHtml from "./article/textHtml.component";
+import Thematics from "./article/thematics.component";
+import Title from "./article/title.component";
+import BackButton from "./base/backButton.component";
+import Backdrop from "./base/backdrop.component";
+import Button from "./base/button.component";
+import Checkbox from "./base/checkbox.component";
+import CustomSnackbar from "./base/customSnackbar.component";
+import Datepicker from "./base/datePicker.component";
+import ErrorMessage from "./base/errorMessage.component";
+import HeaderApp from "./base/headerApp.component";
+import Icomoon, { IcomoonIcons } from "./base/icomoon.component";
+import Modal from "./base/modal.component";
+import Agenda from "./calendar/agenda.component";
+import Events from "./calendar/events.component";
+import Menu from "./menu/menu.component";
 import { CommonText, SecondaryText } from "./StyledText";
 import { Text, View } from "./Themed";
-import StepIcon from "./timeline/StepIcon";
-import TimlineStep from "./timeline/TimlineStep";
+import StepIcon from "./timeline/stepIcon.component";
+import TimelineStep from "./timeline/timelineStep.component";
 
 export {
   Agenda,
@@ -29,9 +32,11 @@ export {
   Button,
   Checkbox,
   CommonText,
-  CustomSnackBar,
+  CustomSnackbar,
   Datepicker,
   DidYouKnow,
+  ErrorMessage,
+  Events,
   Filters,
   HeaderApp,
   Icomoon,
@@ -39,6 +44,7 @@ export {
   ImageBanner,
   InShort,
   Links,
+  Menu,
   Modal,
   SecondaryText,
   StepIcon,
@@ -46,7 +52,7 @@ export {
   Text,
   TextHtml,
   Thematics,
-  TimlineStep,
+  TimelineStep,
   Title,
   View,
 };

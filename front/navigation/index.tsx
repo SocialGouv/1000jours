@@ -12,12 +12,17 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 
 import LogoMinistere from "../assets/images/Logo ministere.svg";
 import AppLogo from "../assets/images/logo.svg";
-import { Backdrop, Icomoon, IcomoonIcons } from "../components";
-import Menu from "../components/menu.component";
-import { Text, View } from "../components/Themed";
+import {
+  Backdrop,
+  Icomoon,
+  IcomoonIcons,
+  Menu,
+  Text,
+  View,
+} from "../components";
+import ConditionsOfUse from "../components/menu/conditionsOfUse.component";
+import LegalNotice from "../components/menu/legalNotice.component";
 import { Colors, Labels, Paddings, Sizes } from "../constants";
-import ConditionsOfUse from "../screens/ConditionsOfUse";
-import LegalNotice from "../screens/LegalNotice";
 import LoadingScreen from "../screens/LoadingScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import Onboarding from "../screens/Onboarding";

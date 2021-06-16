@@ -1,24 +1,11 @@
 import env from "@kosko/env";
-
 import { create } from "@socialgouv/kosko-charts/components/app";
 import { addEnvs } from "@socialgouv/kosko-charts/utils/addEnvs";
 import { getHarborImagePath } from "@socialgouv/kosko-charts/utils/getHarborImagePath";
 import { getIngressHost } from "@socialgouv/kosko-charts/utils/getIngressHost";
 import { getManifestByKind } from "@socialgouv/kosko-charts/utils/getManifestByKind";
-import {
-  Deployment,
-} from "kubernetes-models/api/apps/v1/Deployment";
-import { PersistentVolumeClaim } from "kubernetes-models/v1/PersistentVolumeClaim";
-
-type AnyObject = {
-  [any: string]: any;
-};
-
-interface AddEnvsParams {
-  deployment: Deployment;
-  data: AnyObject;
-  containerIndex?: number;
-}
+import { Deployment } from "kubernetes-models/apps/v1";
+import { PersistentVolumeClaim } from "kubernetes-models/v1";
 
 type configKey = "pvcName" | string;
 
@@ -162,7 +149,7 @@ export default async () => {
   const deployment = manifests.find(m=>m.kind==="Deployment") as Deployment;
   if (deployment && deployment?.spec?.template.spec) {
     deployment.spec.template.spec.nodeSelector = {
-      workload: "les1000jours-strapi",
+      workload: "1000jours-strapi",
     };
   }
   return manifests;

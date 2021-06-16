@@ -4,16 +4,19 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import { range } from "lodash";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as React from "react";
 import type { LayoutChangeEvent } from "react-native";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { CommonText, SecondaryText } from "../components";
-import ErrorMessage from "../components/errorMessage.component";
-import { View } from "../components/Themed";
-import TimelineStep from "../components/timeline/TimlineStep";
+import {
+  CommonText,
+  ErrorMessage,
+  SecondaryText,
+  TimelineStep,
+  View,
+} from "../components";
 import {
   FontWeight,
   Margins,
@@ -96,6 +99,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     void getUserSituations();
   }, []);
 
+  const [loadStepsAlreadyInError, setLoadStepsAlreadyInError] = useState(false);
   const [loadSteps, { called, loading, error, data }] = useLazyQuery(
     ALL_STEPS_AND_CURRENT,
     {
@@ -115,7 +119,11 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 
   if (!called || loading) return <ActivityIndicator size="large" />;
   if (error) {
-    loadSteps({ variables: { infos: defaultUserInfos } });
+    // En cas d'erreur on essaye de charger les étapes avec 'defaultUserInfos'
+    if (!loadStepsAlreadyInError) {
+      setLoadStepsAlreadyInError(true);
+      loadSteps({ variables: { infos: defaultUserInfos } });
+    }
     return <ErrorMessage error={error} />;
   }
 

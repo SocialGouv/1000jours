@@ -9,15 +9,15 @@ import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
 import { CommonText, SecondaryText } from "../components";
-import DidYouKnow from "../components/article/DidYouKnow";
-import ImageBanner from "../components/article/ImageBanner";
-import InShort from "../components/article/InShort";
-import Links from "../components/article/Links";
-import SubTitle from "../components/article/SubTitle";
-import TextHtml from "../components/article/TextHtml";
-import Thematics from "../components/article/Thematics";
-import Title from "../components/article/Title";
-import BackButton from "../components/BackButton";
+import DidYouKnow from "../components/article/didYouKnow.component";
+import ImageBanner from "../components/article/imageBanner.component";
+import InShort from "../components/article/inShort.component";
+import Links from "../components/article/links.component";
+import SubTitle from "../components/article/subTitle.component";
+import TextHtml from "../components/article/textHtml.component";
+import Thematics from "../components/article/thematics.component";
+import Title from "../components/article/title.component";
+import BackButton from "../components/base/backButton.component";
 import { View } from "../components/Themed";
 import {
   Colors,

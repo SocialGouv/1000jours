@@ -7,10 +7,14 @@ import * as React from "react";
 import { useEffect } from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 
-import { Button, CommonText } from "../components";
-import Agenda from "../components/calendar/agenda";
-import Events from "../components/calendar/events";
-import Icomoon, { IcomoonIcons } from "../components/icomoon.component";
+import {
+  Agenda,
+  Button,
+  CommonText,
+  Events,
+  Icomoon,
+  IcomoonIcons,
+} from "../components";
 import { Text, View } from "../components/Themed";
 import {
   Colors,

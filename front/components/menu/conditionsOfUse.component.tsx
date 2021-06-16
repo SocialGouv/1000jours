@@ -1,15 +1,15 @@
 import type { FC } from "react";
 import * as React from "react";
 
-import htmlFile from "../assets/html/mentions_legales.html";
-import { Modal } from "../components";
+import htmlFile from "../../assets/html/cgu.html";
+import Modal from "../base/modal.component";
 
 interface Props {
   setIsVisible: (showMenu: boolean) => void;
 }
 
-const LegalNotice: FC<Props> = ({ setIsVisible }) => {
+const ConditionsOfUse: FC<Props> = ({ setIsVisible }) => {
   return <Modal setIsVisible={setIsVisible} htmlFile={htmlFile} />;
 };
 
-export default LegalNotice;
+export default ConditionsOfUse;

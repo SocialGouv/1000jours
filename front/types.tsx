@@ -143,3 +143,7 @@ export type MenuItem = {
   title: string;
   onPress: () => void;
 };
+
+export type ApolloHealthResponse = {
+  status: string;
+};

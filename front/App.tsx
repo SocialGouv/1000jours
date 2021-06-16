@@ -13,8 +13,8 @@ import { StorageKeysConstants } from "./constants";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
-import { initMonitoring, reportError } from "./utils/logging.util";
 import { StorageUtils, TrackerUtils } from "./utils";
+import { initMonitoring, reportError } from "./utils/logging.util";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
