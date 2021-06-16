@@ -4,12 +4,7 @@ import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
-import {
-  Button,
-  CommonText,
-  CustomSnackBar,
-  SecondaryText,
-} from "../../components";
+import { Button, CustomSnackbar, SecondaryText } from "../../components";
 import FetchPoisCoords from "../../components/aroundMe/fetchPoisCoords.component";
 import { View } from "../../components/Themed";
 import {
@@ -184,19 +179,21 @@ const TabAroundMeScreen: React.FC = () => {
             />
           </View>
         )}
+        <CustomSnackbar
+          duration={AroundMeConstants.SNACKBAR_DURATION}
+          visible={showSnackBar}
+          isOnTop={true}
+          backgroundColor={Colors.aroundMeSnackbar.background}
+          onDismiss={onSnackBarDismiss}
+          textColor={Colors.aroundMeSnackbar.text}
+          text={snackBarMessage}
+        />
       </View>
       {showAddressDetails && addressDetails && (
         <View style={styles.addressDetails}>
           <AddressDetails details={addressDetails} />
         </View>
       )}
-      <CustomSnackBar
-        visible={showSnackBar}
-        duration={AroundMeConstants.SNACKBAR_DURATION}
-        onDismiss={onSnackBarDismiss}
-      >
-        <CommonText>{snackBarMessage}</CommonText>
-      </CustomSnackBar>
       {showAddressesList &&
         poisArrayInList.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
           <SlidingUpPanelAddressesList poisArray={poisArrayInList} />
@@ -245,7 +242,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   relaunchSearchButton: {
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderColor: Colors.primaryBlue,
     borderWidth: 1,
     marginHorizontal: Margins.smallest,

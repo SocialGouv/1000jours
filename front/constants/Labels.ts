@@ -24,7 +24,7 @@ export default {
       saad: "SAAD",
       sageFemme: "Sage-femme",
     },
-    postalCodeInputPlaceholder: "Rechercher par code postal",
+    postalCodeInputPlaceholder: "Renseigner le code postal",
     postalCodeInvalid: "Le code postal que vous avez saisi n'est pas valide",
     postalCodeNotFound: "Le code postal que vous recherchez n'a pas été trouvé",
     relaunchSearch: "Relancer la recherche",

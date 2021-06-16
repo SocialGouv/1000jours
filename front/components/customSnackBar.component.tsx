@@ -1,21 +1,82 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { Snackbar } from "react-native-paper";
+import * as Animatable from "react-native-animatable";
 
-import { Colors } from "../constants";
+import { Colors, FontWeight, Margins, Paddings } from "../constants";
+import { SecondaryText } from "./StyledText";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const CustomSnackBar: React.FC<any> = (props) => {
-  return <Snackbar {...props} style={styles.snackBar} />;
+interface Props {
+  duration: number;
+  visible: boolean;
+  isOnTop?: boolean;
+  backgroundColor?: string;
+  onDismiss: () => void;
+  textColor?: string;
+  text: string;
+}
+
+const CustomSnackbar: React.FC<Props> = ({
+  duration,
+  visible,
+  isOnTop,
+  backgroundColor,
+  onDismiss,
+  textColor,
+  text,
+}) => {
+  useEffect(() => {
+    if (!visible) return;
+    setTimeout(() => {
+      onDismiss();
+    }, duration);
+  }, [visible]);
+
+  const snackbarStyle = {
+    backgroundColor: backgroundColor ?? Colors.white,
+  };
+  const textColorStyle = {
+    color: textColor ?? Colors.dark.text,
+  };
+
+  return (
+    <>
+      {visible && (
+        <Animatable.View
+          animation="fadeIn"
+          duration={200}
+          style={[
+            isOnTop ? styles.snackbarViewTop : styles.snackbarViewBottom,
+            styles.snackbarView,
+            snackbarStyle,
+          ]}
+        >
+          <SecondaryText style={[styles.defaultTextStyle, textColorStyle]}>
+            {text}
+          </SecondaryText>
+        </Animatable.View>
+      )}
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
-  snackBar: {
-    backgroundColor: Colors.cardWhite,
+  defaultTextStyle: {
+    fontWeight: FontWeight.bold,
+    padding: Paddings.default,
   },
-  text: {
-    color: Colors.dark.text,
+  snackbarView: {
+    left: 0,
+    margin: Margins.smaller,
+    position: "absolute",
+    right: 0,
+  },
+  snackbarViewBottom: {
+    bottom: 0,
+  },
+  snackbarViewTop: {
+    top: 0,
   },
 });
 
-export default CustomSnackBar;
+export default CustomSnackbar;
