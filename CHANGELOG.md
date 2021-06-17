@@ -1,3 +1,10 @@
+## [1.40.2](https://github.com/SocialGouv/1000jours/compare/v1.40.1...v1.40.2) (2021-06-17)
+
+
+### Bug Fixes
+
+* **epds:** fix bouton Accueil ([#334](https://github.com/SocialGouv/1000jours/issues/334)) ([7c155b3](https://github.com/SocialGouv/1000jours/commit/7c155b35960823cbea6ca1236cba0aff202f1c5e))
+
 ## [1.40.1](https://github.com/SocialGouv/1000jours/compare/v1.40.0...v1.40.1) (2021-06-17)
 
 
