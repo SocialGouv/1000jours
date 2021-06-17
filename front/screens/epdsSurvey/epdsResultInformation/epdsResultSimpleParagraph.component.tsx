@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-import { CommonText } from "../../../components/StyledText";
+import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
 import { Colors, FontWeight, Margins, Sizes } from "../../../constants";
 import type { EpdsResultSimpleInformation } from "../../../type";
@@ -17,20 +17,22 @@ const EpdsResultSimpleParagraph: React.FC<EpdsResultSimpleParagraphProps> = ({
   return (
     <View style={styles.itemBorder}>
       {paragraph.title && (
-        <CommonText style={styles.paragraphTitle}>{paragraph.title}</CommonText>
+        <SecondaryText style={styles.paragraphTitle}>
+          {paragraph.title}
+        </SecondaryText>
       )}
       {paragraph.description && (
-        <CommonText style={styles.paragraphDescription}>
+        <SecondaryText style={styles.paragraphDescription}>
           {paragraph.description}
-        </CommonText>
+        </SecondaryText>
       )}
       {paragraph.pdfUrl && (
         <TouchableOpacity
           onPress={async () => LinkingUtils.openWebsite(paragraph.pdfUrl)}
         >
-          <CommonText style={[styles.pdfUrl, styles.underline]}>
+          <SecondaryText style={[styles.pdfUrl, styles.underline]}>
             ({paragraph.pdfUrl})
-          </CommonText>
+          </SecondaryText>
         </TouchableOpacity>
       )}
     </View>
@@ -46,18 +48,18 @@ const styles = StyleSheet.create({
   },
   paragraphDescription: {
     color: Colors.commonText,
-    fontSize: Sizes.xxs,
+    fontSize: Sizes.sm,
     lineHeight: Sizes.mmd,
   },
   paragraphTitle: {
     color: Colors.commonText,
-    fontSize: Sizes.xs,
+    fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
     lineHeight: Sizes.mmd,
   },
   pdfUrl: {
     color: Colors.primaryBlue,
-    fontSize: Sizes.xxs,
+    fontSize: Sizes.sm,
     lineHeight: Sizes.mmd,
   },
   underline: { textDecorationLine: "underline" },

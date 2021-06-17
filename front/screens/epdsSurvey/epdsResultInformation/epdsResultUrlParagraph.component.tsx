@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Linking, StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
-import { CommonText } from "../../../components/StyledText";
+import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
 import { Colors, FontWeight, Margins, Sizes } from "../../../constants";
 import { LinkingUtils } from "../../../utils";
@@ -15,18 +15,19 @@ const EpdsResultUrlParagraph: React.FC<EpdsResultUrlParagraphProps> = ({
   paragraphTitle,
   urls,
 }) => {
-  const titleStyle = [styles.paragraphTitle, { fontSize: Sizes.xs }];
   return (
     <View style={styles.itemBorder}>
       {paragraphTitle && paragraphTitle.length > 0 && (
-        <CommonText style={titleStyle}>{paragraphTitle}</CommonText>
+        <SecondaryText style={styles.paragraphTitle}>
+          {paragraphTitle}
+        </SecondaryText>
       )}
       {urls.map((url, index) => (
         <View key={index}>
           <TouchableOpacity onPress={async () => LinkingUtils.openWebsite(url)}>
-            <CommonText style={[styles.urls, styles.underline]}>
+            <SecondaryText style={[styles.urls, styles.underline]}>
               {url}
-            </CommonText>
+            </SecondaryText>
           </TouchableOpacity>
         </View>
       ))}
@@ -46,14 +47,14 @@ const styles = StyleSheet.create({
   },
   paragraphTitle: {
     color: Colors.commonText,
-    fontSize: Sizes.xxs,
+    fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
     lineHeight: Sizes.mmd,
   },
   underline: { textDecorationLine: "underline" },
   urls: {
     color: Colors.primaryBlue,
-    fontSize: Sizes.xxs,
+    fontSize: Sizes.sm,
     lineHeight: Sizes.mmd,
   },
 });
