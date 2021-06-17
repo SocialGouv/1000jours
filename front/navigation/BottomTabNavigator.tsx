@@ -94,6 +94,7 @@ const BottomTabNavigator: FC = () => {
           options={{
             tabBarIcon: ({ color }) => tabItem.getIcon(color),
             title: tabItem.title,
+            unmountOnBlur: true,
           }}
         />
       ))}
