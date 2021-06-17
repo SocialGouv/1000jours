@@ -17,6 +17,7 @@ import {
   CommonText,
   Filters,
   SecondaryText,
+  TitleH1,
   View,
 } from "../components";
 import {
@@ -121,12 +122,11 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
   return (
     <ScrollView>
       <View style={styles.topContainer}>
-        <SecondaryText style={styles.title}>{screenTitle}</SecondaryText>
-        {description !== null && description.length > 0 && (
-          <SecondaryText style={styles.description}>
-            {description}
-          </SecondaryText>
-        )}
+        <TitleH1
+          title={screenTitle}
+          description={description}
+          animated={false}
+        />
       </View>
       {stepIsFirstThreeMonths && (
         <View style={styles.threeFirstMonthsBanner}>

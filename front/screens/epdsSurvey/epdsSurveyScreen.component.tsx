@@ -2,16 +2,18 @@ import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
+import { TitleH1 } from "../../components";
 
+<<<<<<< HEAD
 import { SecondaryText } from "../../components/StyledText";
+=======
+import { TitleH1 } from "../../components";
+>>>>>>> 437c5d6 (feat: 🎸 Modifie le design des titres principaux)
 import { View } from "../../components/Themed";
 import {
-  Colors,
   DatabaseQueries,
-  FontWeight,
   Labels,
   Paddings,
-  Sizes,
   StorageKeysConstants,
 } from "../../constants";
 import type { DataFetchingType, EpdsQuestionAndAnswers } from "../../type";
@@ -49,9 +51,11 @@ const EpdsSurveyScreen: FC = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <SecondaryText style={styles.title}>
-        {Labels.epdsSurvey.title}
-      </SecondaryText>
+      <TitleH1
+        title={Labels.epdsSurvey.title}
+        animated={false}
+        style={styles.title}
+      />
       {genderIsEntered ? (
         <EpdsSurveyContent epdsSurvey={questionAndAnswers} />
       ) : (
@@ -67,9 +71,6 @@ const styles = StyleSheet.create({
     paddingTop: Paddings.default,
   },
   title: {
-    color: Colors.primaryBlueDark,
-    fontSize: Sizes.md,
-    fontWeight: FontWeight.bold,
     paddingHorizontal: Paddings.default,
     textTransform: "uppercase",
   },

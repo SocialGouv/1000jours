@@ -10,20 +10,8 @@ import type { LayoutChangeEvent } from "react-native";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import {
-  CommonText,
-  ErrorMessage,
-  SecondaryText,
-  TimelineStep,
-  View,
-} from "../components";
-import {
-  FontWeight,
-  Margins,
-  Paddings,
-  Sizes,
-  StorageKeysConstants,
-} from "../constants";
+import { ErrorMessage, TimelineStep, TitleH2, View } from "../components";
+import { Paddings, Sizes, StorageKeysConstants } from "../constants";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
 import type {
@@ -49,8 +37,6 @@ interface Props {
 const TabHomeScreen: FC<Props> = ({ navigation }) => {
   const { trackScreenView } = useMatomo();
   trackScreenView(TrackerUtils.TrackingEvent.HOME);
-  const screenTitle = Labels.timeline.title;
-  const description = Labels.timeline.description;
   const ALL_STEPS_AND_CURRENT = gql`
     query GetAllSteps($infos: Informations!) {
       etapes(sort: "id") {
@@ -136,12 +122,11 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 
   return (
     <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>
-      <View>
-        <CommonText style={[styles.title]}>{screenTitle}</CommonText>
-        <SecondaryText style={[styles.description]}>
-          {description}
-        </SecondaryText>
-      </View>
+      <TitleH2
+        title={Labels.timeline.title}
+        description={Labels.timeline.description}
+        animated={false}
+      />
       <View style={[styles.timelineStepContainer]}>
         <View style={[styles.timelineContainer]}>
           <View
@@ -188,11 +173,6 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  description: {
-    color: Colors.commonText,
-    fontSize: Sizes.xs,
-    fontWeight: FontWeight.medium,
-  },
   mainContainer: {
     backgroundColor: "white",
     paddingLeft: Paddings.default,
@@ -236,12 +216,6 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
     marginRight: "5%",
     marginTop: Sizes.step,
-  },
-  title: {
-    color: Colors.primaryBlueDark,
-    fontSize: Sizes.sm,
-    fontWeight: "bold",
-    marginBottom: Margins.larger,
   },
 });
 
