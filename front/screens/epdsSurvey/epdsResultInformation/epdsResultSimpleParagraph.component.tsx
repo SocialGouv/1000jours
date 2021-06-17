@@ -3,7 +3,13 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
-import { Colors, FontWeight, Margins, Sizes } from "../../../constants";
+import {
+  Colors,
+  FontWeight,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../../../constants";
 import type { EpdsResultSimpleInformation } from "../../../type";
 import { LinkingUtils } from "../../../utils";
 
@@ -43,8 +49,8 @@ const styles = StyleSheet.create({
   itemBorder: {
     borderBottomColor: Colors.disabled,
     borderBottomWidth: 1,
-    paddingBottom: Margins.smaller,
-    paddingTop: Margins.smallest,
+    marginHorizontal: Margins.smaller,
+    paddingVertical: Paddings.smaller,
   },
   paragraphDescription: {
     color: Colors.commonText,
