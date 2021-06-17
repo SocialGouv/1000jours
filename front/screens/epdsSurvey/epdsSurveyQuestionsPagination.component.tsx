@@ -10,39 +10,37 @@ interface EpdsSurveyQuestionsPaginationProps {
   totalNumberOfQuestions: number;
 }
 
-const EpdsSurveyQuestionsPagination: React.FC<EpdsSurveyQuestionsPaginationProps> = ({
-  currentQuestionIndex,
-  totalNumberOfQuestions,
-}) => {
-  const questionAnsweredStyle = [styles.defaultStyle, styles.answeredColor];
-  const questionNotAnsweredStyle = [
-    styles.defaultStyle,
-    styles.notAnsweredColor,
-  ];
+const EpdsSurveyQuestionsPagination: React.FC<EpdsSurveyQuestionsPaginationProps> =
+  ({ currentQuestionIndex, totalNumberOfQuestions }) => {
+    const questionAnsweredStyle = [styles.defaultStyle, styles.answeredColor];
+    const questionNotAnsweredStyle = [
+      styles.defaultStyle,
+      styles.notAnsweredColor,
+    ];
 
-  return (
-    <View style={styles.mainContainer}>
-      <View style={styles.gaugeView}>
-        {range(totalNumberOfQuestions).map((index) => (
-          <View
-            key={index}
-            style={
-              index < currentQuestionIndex
-                ? questionAnsweredStyle
-                : questionNotAnsweredStyle
-            }
-          />
-        ))}
+    return (
+      <View style={styles.mainContainer}>
+        <View style={styles.gaugeView}>
+          {range(totalNumberOfQuestions).map((index) => (
+            <View
+              key={index}
+              style={
+                index < currentQuestionIndex
+                  ? questionAnsweredStyle
+                  : questionNotAnsweredStyle
+              }
+            />
+          ))}
+        </View>
+        <View style={styles.textView}>
+          <CommonText style={styles.textStyle}>1</CommonText>
+          <CommonText style={styles.textStyle}>
+            {totalNumberOfQuestions}
+          </CommonText>
+        </View>
       </View>
-      <View style={styles.textView}>
-        <CommonText style={styles.textStyle}>1</CommonText>
-        <CommonText style={styles.textStyle}>
-          {totalNumberOfQuestions}
-        </CommonText>
-      </View>
-    </View>
-  );
-};
+    );
+  };
 
 const styles = StyleSheet.create({
   answeredColor: {

@@ -6,9 +6,8 @@ import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
-import * as Animatable from "react-native-animatable";
 
-import { CommonText, SecondaryText } from "../components";
+import { CommonText, TitleH1 } from "../components";
 import DidYouKnow from "../components/article/didYouKnow.component";
 import ImageBanner from "../components/article/imageBanner.component";
 import InShort from "../components/article/inShort.component";
@@ -19,14 +18,7 @@ import Thematics from "../components/article/thematics.component";
 import Title from "../components/article/title.component";
 import BackButton from "../components/base/backButton.component";
 import { View } from "../components/Themed";
-import {
-  Colors,
-  FontWeight,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../constants";
+import { Labels, Paddings } from "../constants";
 import type {
   Article,
   ArticleInShortItem,
@@ -128,14 +120,11 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
               }}
             />
           </View>
-          <Animatable.View animation="slideInRight" duration={1500}>
-            <SecondaryText style={[styles.title]}>{screenTitle}</SecondaryText>
-            {description && (
-              <CommonText style={[styles.description]}>
-                {description}
-              </CommonText>
-            )}
-          </Animatable.View>
+          <TitleH1
+            title={screenTitle}
+            description={description}
+            animated={true}
+          />
         </View>
         <View>
           <ImageBanner imageUrl={result.article.visuel?.url} />
@@ -167,9 +156,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: paddingArticleContent,
     paddingTop: Paddings.light,
   },
-  description: {
-    color: Colors.commonText,
-  },
   flexStart: {
     alignItems: "flex-start",
     flexDirection: "row",
@@ -177,13 +163,6 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     paddingHorizontal: paddingMainContent,
-  },
-  title: {
-    color: Colors.primaryBlueDark,
-    fontSize: Sizes.sm,
-    fontWeight: FontWeight.black,
-    marginVertical: Margins.smallest,
-    textTransform: "uppercase",
   },
 });
 

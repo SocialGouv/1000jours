@@ -17,6 +17,8 @@ import ErrorMessage from "./base/errorMessage.component";
 import HeaderApp from "./base/headerApp.component";
 import Icomoon, { IcomoonIcons } from "./base/icomoon.component";
 import Modal from "./base/modal.component";
+import TitleH1 from "./base/titleH1.component";
+import TitleH2 from "./base/titleH2.component";
 import Agenda from "./calendar/agenda.component";
 import Events from "./calendar/events.component";
 import Menu from "./menu/menu.component";
@@ -54,5 +56,7 @@ export {
   Thematics,
   TimelineStep,
   Title,
+  TitleH1,
+  TitleH2,
   View,
 };

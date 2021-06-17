@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
-import { Button, CustomSnackbar, SecondaryText } from "../../components";
+import { Button, CustomSnackbar, TitleH1 } from "../../components";
 import FetchPoisCoords from "../../components/aroundMe/fetchPoisCoords.component";
 import { View } from "../../components/Themed";
 import {
@@ -116,12 +116,11 @@ const TabAroundMeScreen: React.FC = () => {
         setFetchedPois={handleFetchedPois}
       />
       <View style={styles.topContainer}>
-        <SecondaryText style={styles.title}>
-          {Labels.aroundMe.title}
-        </SecondaryText>
-        <SecondaryText style={styles.instruction}>
-          {Labels.aroundMe.instruction}
-        </SecondaryText>
+        <TitleH1
+          title={Labels.aroundMe.title}
+          description={Labels.aroundMe.instruction}
+          animated={false}
+        />
       </View>
       <SearchByPostalCode
         postalCodeInput={postalCodeInput}

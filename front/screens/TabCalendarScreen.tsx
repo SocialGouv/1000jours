@@ -14,12 +14,12 @@ import {
   Events,
   Icomoon,
   IcomoonIcons,
+  TitleH1,
 } from "../components";
 import { Text, View } from "../components/Themed";
 import {
   Colors,
   Labels,
-  Margins,
   Paddings,
   Sizes,
   StorageKeysConstants,
@@ -64,9 +64,11 @@ const TabCalendarScreen: FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{Labels.tabs.calendarTitle}</Text>
-      <Text style={styles.description}>{Labels.calendar.description}</Text>
-
+      <TitleH1
+        title={Labels.tabs.calendarTitle}
+        description={Labels.calendar.description}
+        animated={false}
+      />
       <View style={styles.calendarContainer}>
         <View style={styles.switchViewMode}>
           <Button
@@ -115,17 +117,8 @@ const styles = StyleSheet.create({
     height: "100%",
     padding: Paddings.default,
   },
-  description: {
-    color: Colors.commonText,
-  },
   switchViewMode: {
     alignItems: "flex-end",
-  },
-  title: {
-    color: Colors.primaryBlue,
-    fontSize: Sizes.xs,
-    fontWeight: "bold",
-    marginBottom: Margins.light,
   },
 });
 
