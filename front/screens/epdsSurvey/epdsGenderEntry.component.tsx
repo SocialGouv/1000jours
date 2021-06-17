@@ -3,8 +3,8 @@ import * as React from "react";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 
-import Button from "../../components/form/button.component";
-import Checkbox from "../../components/form/Checkbox";
+import Button from "../../components/base/button.component";
+import Checkbox from "../../components/base/checkbox.component";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
@@ -40,9 +40,8 @@ const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
     };
   });
 
-  const [epdsGenders, setEpdsGenders] = useState<EpdsGenderType[]>(
-    gendersArray
-  );
+  const [epdsGenders, setEpdsGenders] =
+    useState<EpdsGenderType[]>(gendersArray);
   const [selectedGender, setSelectedGender] = useState<string | undefined>();
   const [genderIsSelected, setGenderIsSelected] = useState(false);
 

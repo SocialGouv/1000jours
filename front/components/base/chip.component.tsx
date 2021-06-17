@@ -10,7 +10,7 @@ import {
   Margins,
   Paddings,
   Sizes,
-} from "../constants";
+} from "../../constants";
 
 interface Props {
   id: number;

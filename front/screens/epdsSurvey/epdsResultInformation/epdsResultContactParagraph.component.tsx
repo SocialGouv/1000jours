@@ -1,8 +1,8 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import Button from "../../../components/form/button.component";
-import { CommonText, SecondaryText } from "../../../components/StyledText";
+import Button from "../../../components/base/button.component";
+import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
 import { Colors, FontWeight, Labels, Margins, Sizes } from "../../../constants";
 import type { EpdsResultContactInformation } from "../../../type";

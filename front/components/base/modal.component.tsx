@@ -7,10 +7,10 @@ import { ScrollView } from "react-native-gesture-handler";
 import HTML from "react-native-render-html";
 import { WebView } from "react-native-webview";
 
-import { FontWeight, Paddings } from "../constants";
-import { AssestUtils } from "../utils";
-import Button from "./form/button.component";
-import { View } from "./Themed";
+import { FontWeight, Paddings } from "../../constants";
+import { AssestUtils } from "../../utils";
+import { View } from "../Themed";
+import Button from "./button.component";
 
 interface Props {
   content?: React.ReactNode;

@@ -2,9 +2,9 @@ import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
-import LogoMinistere from "../assets/images/Logo ministere.svg";
-import AppLogo from "../assets/images/logo.svg";
-import { Paddings, Sizes } from "../constants";
+import LogoMinistere from "../../assets/images/Logo ministere.svg";
+import AppLogo from "../../assets/images/logo.svg";
+import { Paddings, Sizes } from "../../constants";
 
 const HeaderApp: FC = () => (
   <View>

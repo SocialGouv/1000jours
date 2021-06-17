@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
 
-import Icomoon, { IcomoonIcons } from "../components/icomoon.component";
+import { Icomoon, IcomoonIcons } from "../components";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
 import {
@@ -12,7 +12,6 @@ import {
   ListArticles,
   TabAroundMeScreen,
   TabCalendarScreen,
-  TabFavoritesScreen,
   TabHomeScreen,
 } from "../screens";
 import type {
@@ -20,7 +19,6 @@ import type {
   TabAroundMeParamList,
   TabCalendarParamList,
   TabEpdsParamList,
-  TabFavoritesParamList,
   TabHomeParamList,
   TabItem,
 } from "../types";
