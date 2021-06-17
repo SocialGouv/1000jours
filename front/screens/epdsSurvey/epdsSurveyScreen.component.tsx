@@ -2,13 +2,8 @@ import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import { TitleH1 } from "../../components";
 
-<<<<<<< HEAD
-import { SecondaryText } from "../../components/StyledText";
-=======
 import { TitleH1 } from "../../components";
->>>>>>> 437c5d6 (feat: 🎸 Modifie le design des titres principaux)
 import { View } from "../../components/Themed";
 import {
   DatabaseQueries,
