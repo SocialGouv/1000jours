@@ -4,7 +4,7 @@ const Adresse = require("./adresse.json");
 const champs = [
   ...Object.keys(CartographiePoi.attributes),
   ...Object.keys(Adresse.attributes),
-].filter((champ) => !champ.match(/^cartographie|geocode/));
+].filter((champ) => !champ.match(/^cartographie|geocode|identifiant/));
 
 const components = {
   type: "cartographie.regle-type",

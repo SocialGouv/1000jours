@@ -1,16 +1,17 @@
-const selectFieldsGeocode = [
-  "cartographie_identifiant",
-  "adresse",
-  "code_postal",
-  "commune",
-]
+const { GEOCODE_ADRESSE_FIELDS, GEOCODE_POSITION_FIELDS } = require("./format");
+
+const selectFieldsGeocode = ["identifiant", ...GEOCODE_ADRESSE_FIELDS]
   .map((field) => `LOWER(elements->>'${field}') as ${field}`)
   .join(", ");
 
-const fetchAdressesToGeocode = async (bucketSize) => {
+const selectFieldsReverse = ["identifiant", ...GEOCODE_POSITION_FIELDS]
+  .map((field) => `elements->>'${field}' as ${field}`)
+  .join(", ");
+
+const fetchAdressesToGeocode = (bucketSize) => {
   const knex = strapi.connections.default;
 
-  return knex("cartographie_pois")
+  const query = knex("cartographie_pois")
     .distinct(knex.raw(selectFieldsGeocode))
     .crossJoin(
       knex.raw("jsonb_array_elements(??) as elements", [
@@ -22,22 +23,17 @@ const fetchAdressesToGeocode = async (bucketSize) => {
       q.whereRaw("elements->>'adresse' is not null")
         .orWhereRaw("elements->>'code_postal' is not null")
         .orWhereRaw("elements->>'commune' is not null");
-    })
-    .limit(bucketSize);
+    });
+
+  if (bucketSize) query.limit(bucketSize);
+
+  return query;
 };
 
-const selectFieldsReverse = [
-  "cartographie_identifiant",
-  "position_longitude",
-  "position_latitude",
-]
-  .map((field) => `elements->>'${field}' as ${field}`)
-  .join(", ");
-
-const fetchAdressesToReverseGeocode = async (bucketSize) => {
+const fetchAdressesToReverseGeocode = (bucketSize) => {
   const knex = strapi.connections.default;
 
-  return knex("cartographie_pois")
+  const query = knex("cartographie_pois")
     .distinct(knex.raw(selectFieldsReverse))
     .crossJoin(
       knex.raw("jsonb_array_elements(??) as elements", [
@@ -47,11 +43,36 @@ const fetchAdressesToReverseGeocode = async (bucketSize) => {
     .whereRaw("elements->>'geocode' = ?", [false])
     .whereRaw("elements->>'adresse' is null")
     .whereRaw("elements->>'code_postal' is null")
-    .whereRaw("elements->>'commune' is null")
-    .limit(bucketSize);
+    .whereRaw("elements->>'commune' is null");
+
+  if (bucketSize) query.limit(bucketSize);
+
+  return query;
+};
+
+const countAdressesToGeocode = async () => {
+  const knex = strapi.connections.default;
+
+  const subQuery = fetchAdressesToGeocode();
+
+  const result = await knex.count("identifiant").from(subQuery.as("test"));
+
+  return result && result[0] && result[0].count;
+};
+
+const countAdressesToReverseGeocode = async () => {
+  const knex = strapi.connections.default;
+
+  const subQuery = fetchAdressesToReverseGeocode();
+
+  const result = await knex.count("identifiant").from(subQuery.as("test"));
+
+  return result && result[0] && result[0].count;
 };
 
 module.exports = {
+  countAdressesToGeocode,
+  countAdressesToReverseGeocode,
   fetchAdressesToGeocode,
   fetchAdressesToReverseGeocode,
 };

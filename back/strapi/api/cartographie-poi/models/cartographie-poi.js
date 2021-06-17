@@ -1,20 +1,13 @@
 "use strict";
 
+const StringService = require("../../string/services");
+
 const CartographiePoi = require("./cartographie-poi.settings");
 const CartographieAdresse = require("../../../components/cartographie/adresse");
 const CartographieGeocodeService = require("../../cartographie-geocode/services");
 const { slugLower } = require("../../string/services");
 
-const trimStringFields = (attributes, data) =>
-  Object.keys(attributes).forEach((key) => {
-    if (data[key] && attributes[key].type === "string") {
-      data[key] = data[key].trim();
-    }
-  });
-
-const beforeSave = async (data) => {
-  trimStringFields(CartographiePoi.attributes, data);
-
+const formatReferences = async (data) => {
   for (const reference of data.references) {
     const source = await strapi
       .query("cartographie-source")
@@ -26,20 +19,44 @@ const beforeSave = async (data) => {
 
   data.cartographie_references_json = data.references;
   data.references = [];
+};
 
+const formatAndGeocodeAdresses = async (data) => {
   for (const adresse of data.cartographie_adresses) {
-    trimStringFields(CartographieAdresse.attributes, adresse);
+    StringService.trimObjectFields(CartographieAdresse.attributes, adresse);
 
     const geocode = await CartographieGeocodeService.geocodeData(adresse);
+    if (!geocode) continue;
 
-    if (geocode) {
-      Object.assign(adresse, geocode);
-    }
+    Object.assign(adresse, geocode);
   }
 
   data.cartographie_adresses_json = data.cartographie_adresses;
-
   data.cartographie_adresses = [];
+};
+
+const formatIdentifiant = async (data) => {
+  const type = await strapi
+    .query("cartographie-types")
+    .findOne({ id: data.type });
+  if (!type) throw new Error(`Type inconnu: ${data.type}`);
+
+  data.identifiant = StringService.slugLower(
+    type.nom,
+    data.nom,
+    StringService.randomHash()
+  );
+};
+
+const beforeSave = async (data) => {
+  if (!data.type) throw new Error("Le type d'un POI est obligatoire");
+
+  StringService.trimObjectFields(CartographiePoi.attributes, data);
+
+  await formatReferences(data);
+  await formatAndGeocodeAdresses(data);
+
+  await formatIdentifiant(data);
 };
 
 const afterFind = (data) => {

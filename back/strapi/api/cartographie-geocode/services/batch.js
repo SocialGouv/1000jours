@@ -4,24 +4,61 @@ const {
   createReverseGeocodeStream: streamReverseGeocoding,
 } = require("addok-geocode-stream");
 
+const { Batch } = require("../../stream/services");
+
+const StringService = require("../../string/services");
+
 const {
-  GEOCODE_FIELDS,
+  GEOCODE_ADRESSE_FIELDS,
+  GEOCODE_RESULT_FIELDS,
   concatFields,
   formatGeocodeResultBatch,
 } = require("./format");
 const {
+  countAdressesToGeocode,
+  countAdressesToReverseGeocode,
   fetchAdressesToGeocode,
   fetchAdressesToReverseGeocode,
 } = require("./fetch");
+
+const { geocodeRequestStream } = require("./request");
 
 const GEOCODE_SERVICE_URL = "https://api-adresse.data.gouv.fr";
 
 const BUCKET_SIZE = 1000;
 
-const updateGeocode = async (geocode, cartographie_identifiant) => {
-  if (!cartographie_identifiant) return null;
+const initTempTable = async () => {
+  const knex = strapi.connections.default;
+
+  await knex.transaction(async (transaction) => {
+    await transaction.schema.dropTableIfExists("import_geocode");
+    await transaction.raw(
+      `create table import_geocode as table components_cartographie_adresses WITH NO DATA`
+    );
+  });
+};
+
+const updateGeocodes = async (geocodes) => {
+  console.log("[geocode] update:", geocodes.length, "geocode(s)");
 
   const knex = strapi.connections.default;
+
+  const poisToUpdate = [];
+
+  const identifiants = geocodes.reduce(
+    (identifiants, { identifiant, geocode }) => {
+      if (identifiant) {
+        identifiants.push(identifiant);
+      }
+
+      return identifiants;
+    },
+    []
+  );
+
+  if (!identifiants.length) return 0;
+
+  const identifiantsParams = identifiants.map(() => "?").join(",");
 
   const pois = await knex("cartographie_pois")
     .distinct("identifiant", "nom", "type", "cartographie_adresses_json")
@@ -30,136 +67,158 @@ const updateGeocode = async (geocode, cartographie_identifiant) => {
         "cartographie_adresses_json",
       ])
     )
-    .whereRaw("elements->>'cartographie_identifiant' = ?", [
-      cartographie_identifiant,
-    ]);
+    .whereRaw(
+      `elements->>'identifiant' IN (${identifiantsParams})`,
+      identifiants
+    )
+    .whereRaw("(elements->>'geocode')::boolean = false");
+  if (!pois.length) return 0;
 
-  if (!pois.length) return;
+  for (const poi of pois) {
+    let shouldUpdate = false;
 
-  pois.forEach((poi) => {
-    const adresses = poi.cartographie_adresses_json.filter(
-      (adresse) => adresse.cartographie_identifiant === cartographie_identifiant
-    );
-    if (!adresses.length) return;
+    for (const { identifiant, geocode } of geocodes) {
+      if (!identifiant) continue;
 
-    adresses.forEach((adresse) => Object.assign(adresse, geocode));
+      shouldUpdate = poi.cartographie_adresses_json.reduce(
+        (shouldUpdate, adresse) => {
+          if (adresse.identifiant !== identifiant) return shouldUpdate;
 
-    poi.cartographie_adresses_json = JSON.stringify(
-      poi.cartographie_adresses_json
-    );
-  });
+          Object.assign(adresse, geocode);
+
+          return true;
+        },
+        shouldUpdate
+      );
+    }
+
+    if (shouldUpdate) {
+      poi.cartographie_adresses_json = JSON.stringify(
+        poi.cartographie_adresses_json
+      );
+
+      poisToUpdate.push(poi);
+    }
+  }
+
+  if (!poisToUpdate.length) return 0;
 
   await knex("cartographie_pois")
-    .insert(pois)
+    .insert(poisToUpdate)
     .onConflict("identifiant")
     .merge();
 
-  return true;
+  return poisToUpdate.length;
 };
 
-const handleResult = async (result) => {
+const handleResult = (result) => {
   if (!result) return null;
 
   // previous identifiant returned by service, to update database
-  const { cartographie_identifiant } = result;
+  const { identifiant } = result;
 
   // if format returns null, then geocode failed
   // setting geocode to `true` anyway
   // problematic addresses will be processed manually
-  const geocode = formatGeocodeResultBatch(result) || { geocode: true };
+  const geocode = formatGeocodeResultBatch(result);
 
-  try {
-    return updateGeocode(geocode, cartographie_identifiant);
-  } catch (e) {
-    console.error("[geocode] batch error", e);
-  }
+  return { identifiant, geocode };
 };
 
-const geoStream = (adresses, type = "geocode", options = {}) =>
-  new Promise((resolve, reject) => {
-    let resultsCount = 0;
+const geoStream = (adressesStream, type = "geocode", options = {}) =>
+  new Promise(async (resolve, reject) => {
+    let updatedGeocodesCount = 0;
 
-    const streamCoding =
-      type === "reverse" ? streamReverseGeocoding : streamGeocoding;
-
-    const geocodeStream = streamCoding(GEOCODE_SERVICE_URL, {
+    const stream = await geocodeRequestStream("search/csv", adressesStream, [
+      "identifiant",
       ...options,
-      BUCKET_SIZE,
-      resultColumns: [
-        "longitude",
-        "latitude",
-        "result_housenumber",
-        "result_name",
-        "result_postcode",
-        "result_city",
-      ],
-    }).on("error", reject);
-
-    const stream = streamChain([
-      async (result) => (resultsCount += await handleResult(result)),
     ]);
 
-    geocodeStream
-      .pipe(stream)
-      .on("error", reject)
-      .on("finish", () => resolve(resultsCount));
+    try {
+      const chain = streamChain([
+        stream(),
+        handleResult,
+        new Batch({ size: BUCKET_SIZE }),
+        async (geocodes) => {
+          if (!geocodes.length) return updatedGeocodesCount;
 
-    stream.resume();
+          const updatedPoisCount = await updateGeocodes(geocodes);
 
-    adresses.forEach((adresse) => geocodeStream.write(adresse));
+          updatedGeocodesCount += updatedPoisCount;
 
-    geocodeStream.end();
+          console.log(`[geocode] updated: ${updatedGeocodesCount} pois(s)`);
+
+          return updatedGeocodesCount;
+        },
+        resolve,
+      ]);
+    } catch (e) {
+      reject(e);
+    }
   });
 
 const fixColumn = (data) =>
   data
     ? // fixes geocode API 502 bad gateway error
-      data.replace(/’/g, "'")
+      StringService.slugLower(data.replace(/’/g, "'")).replace(/-/g, " ")
     : // fixes geocode stream trim() error
       "";
 
-const geocodeAdresses = async (adresses) => {
+const geocodeAdresses = async (adressesStream) => {
   // fix data
-  adresses.forEach((adresse) =>
-    GEOCODE_FIELDS.forEach(
-      (field) => (adresse[field] = fixColumn(adresse[field]))
-    )
-  );
+  const stream = streamChain([
+    adressesStream,
+    (adresse) => {
+      GEOCODE_ADRESSE_FIELDS.forEach(
+        (field) => (adresse[field] = fixColumn(adresse[field]))
+      );
 
-  // filter out empty queries
-  adresses = adresses.filter((adresse) =>
-    concatFields(GEOCODE_FIELDS, adresse)
-  );
+      // filter out empty queries
+      return concatFields(GEOCODE_ADRESSE_FIELDS, adresse) ? adresse : null;
+    },
+  ]);
 
-  return geoStream(adresses, "geocode", { columns: GEOCODE_FIELDS });
+  return geoStream(stream, "geocode", GEOCODE_ADRESSE_FIELDS);
 };
 
 const reverseGeocodeAdresses = async (adresses) =>
+  // TODO: fix
   geoStream(adresses, "reverse", {
     latitude: "position_latitude",
     longitude: "position_longitude",
   });
 
 const processMissingGeocodes = async () => {
-  const adresses = await fetchAdressesToGeocode(BUCKET_SIZE);
-  if (!adresses.length) return 0;
+  const count = await countAdressesToGeocode();
+  if (count <= 0) return 0;
+
+  const adressesStream = fetchAdressesToGeocode(BUCKET_SIZE).stream();
 
   try {
-    return await geocodeAdresses(adresses);
+    return await geocodeAdresses(adressesStream);
   } catch (e) {
-    console.error("[geocode-batch] error:", e);
+    console.error("[geocode-batch] geocode, error:", e);
+
+    return 0;
   }
 };
 
 const processMissingAdresses = async () => {
-  const adresses = await fetchAdressesToReverseGeocode(BUCKET_SIZE);
-  if (!adresses.length) return 0;
+  const count = await countAdressesToReverseGeocode();
+  if (count <= 0) return 0;
 
-  return reverseGeocodeAdresses(adresses);
+  const adressesStream = fetchAdressesToReverseGeocode(BUCKET_SIZE).stream();
+
+  try {
+    return await reverseGeocodeAdresses(adressesStream);
+  } catch (e) {
+    console.error("[geocode-batch] reverse geocode, error:", e);
+
+    return 0;
+  }
 };
 
 module.exports = {
   processMissingAdresses,
   processMissingGeocodes,
-  updateGeocode,
 };
