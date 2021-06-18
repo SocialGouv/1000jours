@@ -77,6 +77,12 @@ const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
         animated={false}
       />
       <View>
+        <TitleH1
+          title={`${Labels.epdsSurvey.title} : ${Labels.epdsSurvey.genderEntry.titleInformation}`}
+          animated={false}
+        />
+      </View>
+      <View>
         <CommonText style={styles.instruction}>
           {Labels.epdsSurvey.genderEntry.instruction}
         </CommonText>
