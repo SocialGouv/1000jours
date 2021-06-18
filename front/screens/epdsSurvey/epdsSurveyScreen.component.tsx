@@ -18,6 +18,7 @@ import EpdsSurveyContent from "./epdsSurveyContent.component";
 
 const EpdsSurveyScreen: FC = () => {
   const [genderIsEntered, setGenderIsEntered] = useState(false);
+  const [showResultTitle, setShowResultTitle] = useState(false);
 
   useEffect(() => {
     const getGenderFromStorage = async () => {
@@ -47,12 +48,19 @@ const EpdsSurveyScreen: FC = () => {
   return (
     <View style={styles.mainContainer}>
       <TitleH1
-        title={Labels.epdsSurvey.title}
+        title={
+          showResultTitle
+            ? Labels.epdsSurvey.titleResults
+            : Labels.epdsSurvey.title
+        }
         animated={false}
         style={styles.title}
       />
       {genderIsEntered ? (
-        <EpdsSurveyContent epdsSurvey={questionAndAnswers} />
+        <EpdsSurveyContent
+          epdsSurvey={questionAndAnswers}
+          setShowResultTitle={setShowResultTitle}
+        />
       ) : (
         <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />
       )}

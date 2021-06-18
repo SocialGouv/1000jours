@@ -23,14 +23,18 @@ import EpdsSurveyQuestionsList from "./epdsSurveyQuestionsList.component";
 
 interface Props {
   epdsSurvey: EpdsQuestionAndAnswers[];
+  setShowResultTitle: (value: boolean) => void;
 }
 
-const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
+const EpdsSurveyContent: React.FC<Props> = ({
+  epdsSurvey,
+  setShowResultTitle,
+}) => {
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const swiperRef = useRef<SwiperFlatList>(null);
   const [questionsAndAnswers, setQuestionsAndAnswers] =
     useState<EpdsQuestionAndAnswers[]>(epdsSurvey);
-  const [displayResult, setDisplayResult] = useState(false);
+  const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [surveyCanBeStarted, setSurveyCanBeStarted] = useState(false);
 
@@ -100,7 +104,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
 
   return (
     <View style={styles.mainContainer}>
-      {!displayResult ? (
+      {!showResult ? (
         surveyCanBeStarted ? (
           <>
             <View>
@@ -120,7 +124,10 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
               swiperRef={swiperRef}
               showValidateButton={showValidateButton}
               questionIsAnswered={questionIsAnswered}
-              setDisplayResult={setDisplayResult}
+              setShowResult={(value: boolean) => {
+                setShowResultTitle(value);
+                setShowResult(value);
+              }}
             />
           </>
         ) : (
