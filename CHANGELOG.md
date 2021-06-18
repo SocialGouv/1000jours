@@ -1,3 +1,11 @@
+# [1.41.0](https://github.com/SocialGouv/1000jours/compare/v1.40.3...v1.41.0) (2021-06-18)
+
+
+### Features
+
+* **epds:** onboarding screen ([#350](https://github.com/SocialGouv/1000jours/issues/350)) ([fe3da66](https://github.com/SocialGouv/1000jours/commit/fe3da6647aef9a9b35d26fa9a604b89561c14bab))
+* **epds:** restart button ([#351](https://github.com/SocialGouv/1000jours/issues/351)) ([dc12eaa](https://github.com/SocialGouv/1000jours/commit/dc12eaac9d3f9a7be84d246606e63e1362a49911))
+
 ## [1.40.3](https://github.com/SocialGouv/1000jours/compare/v1.40.2...v1.40.3) (2021-06-18)
 
 
