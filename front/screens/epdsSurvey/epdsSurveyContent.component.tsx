@@ -4,13 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import type { SwiperFlatList } from "react-native-swiper-flatlist";
 
+import { TitleH1 } from "../../components";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
   Colors,
   FontWeight,
   Labels,
-  Paddings,
+  Margins,
   Sizes,
   StorageKeysConstants,
 } from "../../constants";
@@ -23,13 +24,9 @@ import EpdsSurveyQuestionsList from "./epdsSurveyQuestionsList.component";
 
 interface Props {
   epdsSurvey: EpdsQuestionAndAnswers[];
-  setShowResultTitle: (value: boolean) => void;
 }
 
-const EpdsSurveyContent: React.FC<Props> = ({
-  epdsSurvey,
-  setShowResultTitle,
-}) => {
+const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const swiperRef = useRef<SwiperFlatList>(null);
   const [questionsAndAnswers, setQuestionsAndAnswers] =
@@ -108,6 +105,7 @@ const EpdsSurveyContent: React.FC<Props> = ({
         surveyCanBeStarted ? (
           <>
             <View>
+              <TitleH1 title={Labels.epdsSurvey.title} animated={false} />
               <CommonText style={styles.instruction}>
                 {Labels.epdsSurvey.instruction}
               </CommonText>
@@ -124,10 +122,7 @@ const EpdsSurveyContent: React.FC<Props> = ({
               swiperRef={swiperRef}
               showValidateButton={showValidateButton}
               questionIsAnswered={questionIsAnswered}
-              setShowResult={(value: boolean) => {
-                setShowResultTitle(value);
-                setShowResult(value);
-              }}
+              setShowResult={setShowResult}
             />
           </>
         ) : (
@@ -149,11 +144,10 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.mmd,
-    paddingHorizontal: Paddings.default,
   },
   mainContainer: {
     flex: 1,
-    paddingTop: Paddings.smaller,
+    margin: Margins.default,
   },
 });
 
