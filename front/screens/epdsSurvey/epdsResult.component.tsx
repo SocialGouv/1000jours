@@ -8,7 +8,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
 import IconeResultatMoyen from "../../assets/images/icone_resultats_moyen.svg";
 import IconeResultatPasBien from "../../assets/images/icone_resultats_pasbien.svg";
-import { TitleH1 } from "../../components";
+import { Button, TitleH1 } from "../../components";
 import { CommonText, SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
@@ -27,9 +27,10 @@ import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation
 
 interface Props {
   result: number;
+  startSurveyOver: () => void;
 }
 
-const EpdsResult: React.FC<Props> = ({ result }) => {
+const EpdsResult: React.FC<Props> = ({ result, startSurveyOver }) => {
   const [addReponseQuery] = useMutation(DatabaseQueries.EPDS_ADD_RESPONSE, {
     onError: (err) => {
       console.log(err);
@@ -105,6 +106,17 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
         leftBorderColor={resultData.color}
         informationList={resultData.resultLabels.professionalsList}
       />
+      <View style={styles.validateButton}>
+        <Button
+          title={Labels.epdsSurvey.restartSurvey}
+          titleStyle={styles.fontButton}
+          rounded={true}
+          disabled={false}
+          action={() => {
+            startSurveyOver();
+          }}
+        />
+      </View>
     </ScrollView>
   );
 };
@@ -112,6 +124,10 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
 const styles = StyleSheet.create({
   fontBold: {
     fontWeight: FontWeight.bold,
+  },
+  fontButton: {
+    fontSize: Sizes.xs,
+    textTransform: "uppercase",
   },
   itemBorder: {
     borderBottomColor: Colors.disabled,
@@ -141,6 +157,9 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.mmd,
     paddingTop: Paddings.default,
+  },
+  validateButton: {
+    alignItems: "center",
   },
 });
 
