@@ -12,7 +12,7 @@ interface Props {
   swiperRef: React.RefObject<SwiperFlatListRefProps>;
   showValidateButton: boolean | undefined;
   questionIsAnswered: boolean | undefined;
-  setDisplayResult: (value: boolean) => void;
+  setShowResult: (value: boolean) => void;
 }
 
 const EpdsSurveyFooter: React.FC<Props> = ({
@@ -20,7 +20,7 @@ const EpdsSurveyFooter: React.FC<Props> = ({
   swiperRef,
   showValidateButton,
   questionIsAnswered,
-  setDisplayResult,
+  setShowResult,
 }) => {
   return (
     <View style={styles.footer}>
@@ -54,7 +54,7 @@ const EpdsSurveyFooter: React.FC<Props> = ({
                 rounded={true}
                 disabled={false}
                 action={() => {
-                  setDisplayResult(true);
+                  setShowResult(true);
                 }}
               />
             </View>
