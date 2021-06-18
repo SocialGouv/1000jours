@@ -101,7 +101,6 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
 const styles = StyleSheet.create({
   card: {
     borderStartWidth: Margins.smaller,
-    marginHorizontal: Margins.default,
     marginVertical: Margins.smaller,
   },
   sectionDescription: {

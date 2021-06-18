@@ -3,14 +3,8 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
-import { TitleH1 } from "../../components";
 import { View } from "../../components/Themed";
-import {
-  DatabaseQueries,
-  Labels,
-  Paddings,
-  StorageKeysConstants,
-} from "../../constants";
+import { DatabaseQueries, StorageKeysConstants } from "../../constants";
 import type { DataFetchingType, EpdsQuestionAndAnswers } from "../../type";
 import { DataFetchingUtils, EpdsSurveyUtils, StorageUtils } from "../../utils";
 import EpdsGenderEntry from "./epdsGenderEntry.component";
@@ -20,7 +14,6 @@ import EpdsSurveyContent from "./epdsSurveyContent.component";
 const EpdsSurveyScreen: FC = () => {
   const [onboardingIsDone, setOnboardingIsDone] = useState(false);
   const [genderIsEntered, setGenderIsEntered] = useState(false);
-  const [showResultTitle, setShowResultTitle] = useState(false);
 
   useEffect(() => {
     const getGenderFromStorage = async () => {
@@ -49,21 +42,9 @@ const EpdsSurveyScreen: FC = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <TitleH1
-        title={
-          showResultTitle
-            ? Labels.epdsSurvey.titleResults
-            : Labels.epdsSurvey.title
-        }
-        animated={false}
-        style={styles.title}
-      />
       {onboardingIsDone ? (
         genderIsEntered ? (
-          <EpdsSurveyContent
-            epdsSurvey={questionAndAnswers}
-            setShowResultTitle={setShowResultTitle}
-          />
+          <EpdsSurveyContent epdsSurvey={questionAndAnswers} />
         ) : (
           <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />
         )
@@ -81,11 +62,6 @@ const EpdsSurveyScreen: FC = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    paddingTop: Paddings.default,
-  },
-  title: {
-    paddingHorizontal: Paddings.default,
-    textTransform: "uppercase",
   },
 });
 

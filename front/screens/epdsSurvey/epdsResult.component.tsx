@@ -8,6 +8,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
 import IconeResultatMoyen from "../../assets/images/icone_resultats_moyen.svg";
 import IconeResultatPasBien from "../../assets/images/icone_resultats_pasbien.svg";
+import { TitleH1 } from "../../components";
 import { CommonText, SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
@@ -80,6 +81,10 @@ const EpdsResult: React.FC<Props> = ({ result }) => {
 
   return (
     <ScrollView>
+      <TitleH1
+        title={`${Labels.epdsSurvey.titleResults} : ${Labels.epdsSurvey.title}`}
+        animated={false}
+      />
       <View style={styles.rowView}>
         <View>{getIcon(resultData.icon)}</View>
         <CommonText style={[styles.stateOfMind, colorStyle]}>
@@ -135,7 +140,6 @@ const styles = StyleSheet.create({
     fontSize: Sizes.sm,
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.mmd,
-    paddingHorizontal: Paddings.default,
     paddingTop: Paddings.default,
   },
 });

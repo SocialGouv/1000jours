@@ -72,6 +72,7 @@ export default {
         nonBinary: "Non-binaire",
       },
       instruction: "Veuillez renseigner votre genre",
+      titleInformation: "Informations",
     },
     instruction:
       "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement aujourd'hui.",
@@ -195,7 +196,7 @@ export default {
       retakeTestInvitation: `Vous serez invité à repasser le test dans ${NUMBER_OF_DAYS_NOTIF_REMINDER} jours`,
     },
     title: "Autodépistage dépression post-partum",
-    titleResults: "Résultats Autodépistage dépression post-partum",
+    titleResults: "Résultats",
   },
   errorMsg: "Une erreur est survenue, merci de réessayer plus tard",
   errorNetworkMsg:

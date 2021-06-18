@@ -3,6 +3,7 @@ import * as React from "react";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 
+import { TitleH1 } from "../../components";
 import Button from "../../components/base/button.component";
 import Checkbox from "../../components/base/checkbox.component";
 import { CommonText } from "../../components/StyledText";
@@ -72,6 +73,12 @@ const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
   return (
     <View style={styles.mainContainer}>
       <View>
+        <TitleH1
+          title={`${Labels.epdsSurvey.title} : ${Labels.epdsSurvey.genderEntry.titleInformation}`}
+          animated={false}
+        />
+      </View>
+      <View>
         <CommonText style={styles.instruction}>
           {Labels.epdsSurvey.genderEntry.instruction}
         </CommonText>
@@ -115,7 +122,8 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: "space-between",
+    margin: Margins.default,
   },
   validateButton: {
     alignItems: "center",

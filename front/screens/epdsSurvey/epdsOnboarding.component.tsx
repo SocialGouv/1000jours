@@ -45,11 +45,7 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
 
   return (
     <View style={styles.mainContainer}>
-      <TitleH1
-        title={Labels.epdsSurvey.onboarding.title}
-        animated={false}
-        style={styles.title}
-      />
+      <TitleH1 title={Labels.epdsSurvey.onboarding.title} animated={false} />
       {Labels.epdsSurvey.onboarding.paragraphs.map((paragraph, index) => (
         <View key={index}>
           <SecondaryText style={styles.paragraph}>
@@ -125,9 +121,6 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlueDark,
     fontSize: Sizes.xs,
     fontWeight: "bold",
-  },
-  title: {
-    paddingHorizontal: Paddings.default,
   },
   validateButton: {
     alignItems: "center",
