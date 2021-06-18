@@ -42,8 +42,7 @@ const styles = StyleSheet.create({
   itemBorder: {
     borderBottomColor: Colors.disabled,
     borderBottomWidth: 1,
-    paddingBottom: Margins.smaller,
-    paddingTop: Margins.smallest,
+    padding: Margins.smaller,
   },
   paragraphTitle: {
     color: Colors.commonText,
