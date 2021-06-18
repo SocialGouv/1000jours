@@ -55,7 +55,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
 
   const getEpdsLoadPreviousSurveyReponse = async (startOver: boolean) => {
     if (startOver) {
-      await EpdsSurveyUtils.removeEpdsStorageItems();
+      await restartSurvey();
     } else {
       const values: [EpdsQuestionAndAnswers[], number] = await Promise.all([
         StorageUtils.getObjectValue(
@@ -99,6 +99,11 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
     ]);
   };
 
+  const restartSurvey = async () => {
+    await EpdsSurveyUtils.removeEpdsStorageItems();
+    setShowResult(false);
+  };
+
   return (
     <View style={styles.mainContainer}>
       {!showResult ? (
@@ -131,7 +136,12 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
           />
         )
       ) : (
-        <EpdsResult result={score} />
+        <EpdsResult
+          result={score}
+          startSurveyOver={async () => {
+            await restartSurvey();
+          }}
+        />
       )}
     </View>
   );

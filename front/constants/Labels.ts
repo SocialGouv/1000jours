@@ -116,6 +116,7 @@ export default {
         "Il semble que vous n'ayez pas terminé le précédent questionnaire. Voulez-vous le continuer ou le recommencer ?",
       startOverButton: "Recommencer",
     },
+    restartSurvey: "Repasser le test",
     resultats: {
       call: "Appeler",
       entreDixEtDouze: {
