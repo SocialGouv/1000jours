@@ -14,9 +14,11 @@ import {
 import type { DataFetchingType, EpdsQuestionAndAnswers } from "../../type";
 import { DataFetchingUtils, EpdsSurveyUtils, StorageUtils } from "../../utils";
 import EpdsGenderEntry from "./epdsGenderEntry.component";
+import EpdsOnboarding from "./epdsOnboarding.component";
 import EpdsSurveyContent from "./epdsSurveyContent.component";
 
 const EpdsSurveyScreen: FC = () => {
+  const [onboardingIsDone, setOnboardingIsDone] = useState(false);
   const [genderIsEntered, setGenderIsEntered] = useState(false);
   const [showResultTitle, setShowResultTitle] = useState(false);
 
@@ -56,13 +58,21 @@ const EpdsSurveyScreen: FC = () => {
         animated={false}
         style={styles.title}
       />
-      {genderIsEntered ? (
-        <EpdsSurveyContent
-          epdsSurvey={questionAndAnswers}
-          setShowResultTitle={setShowResultTitle}
-        />
+      {onboardingIsDone ? (
+        genderIsEntered ? (
+          <EpdsSurveyContent
+            epdsSurvey={questionAndAnswers}
+            setShowResultTitle={setShowResultTitle}
+          />
+        ) : (
+          <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />
+        )
       ) : (
-        <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />
+        <EpdsOnboarding
+          onBoardingIsDone={() => {
+            setOnboardingIsDone(true);
+          }}
+        />
       )}
     </View>
   );

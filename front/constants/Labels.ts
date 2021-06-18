@@ -79,6 +79,36 @@ export default {
       body: `${NUMBER_OF_DAYS_NOTIF_REMINDER} jours se sont écoulés depuis la dernière fois que vous avez passé le test EPDS. Vous pouvez maintenant le repasser si vous le souhaitez`,
       title: "Rappel EPDS",
     },
+    onboarding: {
+      paragraphs: [
+        {
+          description:
+            "La dépression post-partum touche 1 femme sur 5 en France (ainsi que les hommes).\nCe sujet est tabou car mal identifié et sous-estimé.\nLes difficultés parentales / Le baby blues / Le burn-out /La dépression post-partum",
+          title: "Constat",
+        },
+        {
+          description: "Prévenir de façon anonyme la dépression post-partum.",
+          title: "Objectif",
+        },
+        {
+          description:
+            "Passer le test EPDS (Edinburgh Postnatal Depression Scale) est un outil psychométrique internationalement reconnu",
+          title: "Comment",
+        },
+      ],
+      reminder:
+        "Ce questionnaire n'est pas un diagnostic et ne remplace pas un professionnel de la santé.",
+      steps: {
+        elements: [
+          "Être accompagné·e",
+          "Répondre aux 10 questions",
+          "Accéder aux résultats",
+          "Trouver mon aide",
+        ],
+        title: "Étapes",
+      },
+      title: "Pourquoi faire un test ?",
+    },
     previousSurvey: {
       continueButton: "Continuer",
       messsage:
