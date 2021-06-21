@@ -6,6 +6,12 @@ export default {
     addressesListLabelEnd:
       "points d'intérêts qui correspondent à vos critères :",
     addressesListLabelStart: "Il y a",
+    filter: {
+      pointsOfInterest: "Points d'intérêts",
+      steps: "Étapes du parcours 1000 jours",
+      thematics: "Thématiques",
+      title: "Filtrer",
+    },
     goThere: "M'y rendre",
     instruction:
       "Trouvez tous les professionnels autour de vous qui pourront vous aider dans votre rôle de parents.",

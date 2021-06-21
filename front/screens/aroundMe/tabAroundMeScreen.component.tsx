@@ -25,6 +25,7 @@ import {
 import type { CartographiePoisFromDB } from "../../type";
 import { KeyboardUtils } from "../../utils";
 import AddressDetails from "./addressDetails.component";
+import AroundMeFilter from "./aroundMeFilter.component";
 import SearchByPostalCode from "./searchByPostalCode.component";
 import SlidingUpPanelAddressesList from "./slidingUpPanelAddressesList.component";
 
@@ -222,6 +223,12 @@ const TabAroundMeScreen: React.FC = () => {
         poisArrayInList.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
           <SlidingUpPanelAddressesList poisArray={poisArrayInList} />
         )}
+      <AroundMeFilter
+        visible={showFilter}
+        hideModal={() => {
+          setShowFilter(false);
+        }}
+      />
     </View>
   );
 };
