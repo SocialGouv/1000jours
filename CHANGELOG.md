@@ -1,3 +1,10 @@
+## [1.41.1](https://github.com/SocialGouv/1000jours/compare/v1.41.0...v1.41.1) (2021-06-21)
+
+
+### Bug Fixes
+
+* **epds:** fix double titles and margins ([#353](https://github.com/SocialGouv/1000jours/issues/353)) ([ea2c98d](https://github.com/SocialGouv/1000jours/commit/ea2c98ddbe10565222d0d13c2fbbb229b718a25c))
+
 # [1.41.0](https://github.com/SocialGouv/1000jours/compare/v1.40.3...v1.41.0) (2021-06-18)
 
 
