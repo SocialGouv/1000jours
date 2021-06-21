@@ -4,7 +4,7 @@ import { SwiperFlatList } from "react-native-swiper-flatlist";
 import type { SwiperFlatListRefProps } from "react-native-swiper-flatlist/src/components/SwiperFlatList/SwiperFlatListProps";
 
 import { View } from "../../components/Themed";
-import { Margins, Paddings, Sizes } from "../../constants";
+import { Margins, Sizes } from "../../constants";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import EpdsQuestion from "./epdsQuestion.component";
 import EpdsSurveyQuestionsPagination from "./epdsSurveyQuestionsPagination.component";
@@ -55,10 +55,6 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
 const styles = StyleSheet.create({
   flatListView: {
     flex: 7,
-  },
-  mainContainer: {
-    flex: 1,
-    paddingTop: Paddings.larger,
   },
   swipePaginationItem: {
     height: Sizes.xxxs,
