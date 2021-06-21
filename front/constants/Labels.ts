@@ -7,6 +7,7 @@ export default {
       "points d'intérêts qui correspondent à vos critères :",
     addressesListLabelStart: "Il y a",
     filter: {
+      healthProfessional: "Professionnels de santé",
       pointsOfInterest: "Points d'intérêts",
       steps: "Étapes du parcours 1000 jours",
       thematics: "Thématiques",

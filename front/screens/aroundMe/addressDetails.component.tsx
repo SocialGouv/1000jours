@@ -36,7 +36,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
   ) => {
     const poiTypeLabels = Labels.aroundMe.poiType;
     let iconType = null;
-    if (categoriePoi === AroundMeConstants.PoiCategorieEnum.professionnels) {
+    if (categoriePoi === AroundMeConstants.PoiCategorieEnum.professionnel) {
       iconType = <CategorieProSanteIcon />;
     } else {
       const iconsMap = new Map<string, React.ReactNode>();

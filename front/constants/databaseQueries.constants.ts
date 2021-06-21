@@ -29,6 +29,15 @@ export const EPDS_ADD_RESPONSE = gql`
   }
 `;
 
+export const AROUNDME_TYPES_FILTER = gql`
+  query {
+    cartographieTypes {
+      nom
+      categorie
+    }
+  }
+`;
+
 export const AROUNDME_POIS_BY_GPSCOORDS = gql`
   query PoisByGPSCoords(
     $long1: Float!
