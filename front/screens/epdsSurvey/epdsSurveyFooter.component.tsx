@@ -5,7 +5,7 @@ import type SwiperFlatListRefProps from "react-native-swiper-flatlist";
 import Button from "../../components/base/button.component";
 import Icomoon, { IcomoonIcons } from "../../components/base/icomoon.component";
 import { View } from "../../components/Themed";
-import { Colors, Labels, Paddings } from "../../constants";
+import { Colors, Labels } from "../../constants";
 
 interface Props {
   swiperCurrentIndex: number;
@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
-    paddingVertical: Paddings.default,
   },
   justifyContentCenter: {
     alignItems: "center",

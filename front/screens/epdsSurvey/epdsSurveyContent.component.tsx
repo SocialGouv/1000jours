@@ -109,12 +109,10 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
       {!showResult ? (
         surveyCanBeStarted ? (
           <>
-            <View>
-              <TitleH1 title={Labels.epdsSurvey.title} animated={false} />
-              <CommonText style={styles.instruction}>
-                {Labels.epdsSurvey.instruction}
-              </CommonText>
-            </View>
+            <TitleH1 title={Labels.epdsSurvey.title} animated={false} />
+            <CommonText style={styles.instruction}>
+              {Labels.epdsSurvey.instruction}
+            </CommonText>
             <EpdsSurveyQuestionsList
               epdsSurvey={questionsAndAnswers}
               swiperRef={swiperRef}
