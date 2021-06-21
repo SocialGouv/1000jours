@@ -2,8 +2,8 @@
 
 const sortNumbers = (a, b) => a - b;
 
-const search = async (perimetre) => {
-  if (!perimetre && !perimetre.length) return [];
+const search = async ({ perimetre, types, thematiques }) => {
+  if (!perimetre || !perimetre.length) return [];
 
   const knex = strapi.connections.default;
 
@@ -47,6 +47,21 @@ const search = async (perimetre) => {
 `,
     [lngs[0], lngs[1], lats[0], lats[1]]
   );
+
+  if (types && types.length) {
+    poisQuery.whereIn("cartographie_types.nom", types);
+  }
+
+  if (thematiques && thematiques.length) {
+    poisQuery.join(
+      "cartographie_types__thematiques as ct",
+      "ct.cartographie_type_id",
+      "=",
+      "cartographie_types.id"
+    );
+    poisQuery.join("thematiques", "thematiques.id", "=", "ct.thematique_id");
+    poisQuery.whereIn("thematiques.nom", thematiques);
+  }
 
   const pois = await poisQuery;
 

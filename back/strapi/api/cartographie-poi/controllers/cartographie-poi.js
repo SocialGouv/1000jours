@@ -2,13 +2,19 @@
 
 const PoiService = require("../services");
 
+const params = ["perimetre", "types", "thematiques"];
+
 const search = async (context) => {
-  let { perimetre } = context.request.query;
-
-  perimetre = perimetre ? JSON.parse(perimetre) : null;
-
   try {
-    return PoiService.search(perimetre);
+    return PoiService.search(
+      params.reduce((result, param) => {
+        const value = context.request.query[param];
+
+        result[param] = value ? JSON.parse(value) : null;
+
+        return result;
+      }, {})
+    );
   } catch (e) {
     context.badRequest(e.message);
   }
