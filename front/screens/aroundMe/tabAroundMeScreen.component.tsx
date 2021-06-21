@@ -4,7 +4,13 @@ import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
-import { Button, CustomSnackbar, TitleH1 } from "../../components";
+import {
+  Button,
+  CustomSnackbar,
+  Icomoon,
+  IcomoonIcons,
+  TitleH1,
+} from "../../components";
 import FetchPoisCoords from "../../components/aroundMe/fetchPoisCoords.component";
 import { View } from "../../components/Themed";
 import {
@@ -52,6 +58,7 @@ const TabAroundMeScreen: React.FC = () => {
   const [showAddressesList, setShowAddressesList] = useState(false);
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
+  const [showFilter, setShowFilter] = useState(false);
 
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
@@ -162,6 +169,24 @@ const TabAroundMeScreen: React.FC = () => {
             </View>
           ))}
         </MapView>
+        <View style={styles.filterView}>
+          <Button
+            buttonStyle={styles.relaunchSearchButton}
+            title={Labels.listArticles.filters}
+            titleStyle={styles.relaunchSearchButtonText}
+            rounded={true}
+            icon={
+              <Icomoon
+                name={IcomoonIcons.filtrer}
+                size={Sizes.sm}
+                color={Colors.primaryBlue}
+              />
+            }
+            action={() => {
+              setShowFilter(true);
+            }}
+          />
+        </View>
         {showRelaunchResearchButton && (
           <View style={styles.relaunchSearchView}>
             <Button
@@ -224,6 +249,13 @@ const styles = StyleSheet.create({
   },
   columnView: {
     flexDirection: "column",
+  },
+  filterView: {
+    backgroundColor: "transparent",
+    left: 0,
+    margin: Margins.smaller,
+    position: "absolute",
+    top: 0,
   },
   fontButton: {
     fontSize: Sizes.xxs,
