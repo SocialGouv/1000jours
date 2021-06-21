@@ -20,7 +20,10 @@
     },
     "categorie": {
       "type": "enumeration",
-      "enum": ["structure", "professionnel"],
+      "enum": [
+        "structure",
+        "professionnel"
+      ],
       "required": true
     },
     "description": {
@@ -30,6 +33,9 @@
       "collection": "etape",
       "via": "cartographie_types",
       "dominant": true
+    },
+    "thematiques": {
+      "collection": "thematique"
     }
   }
 }
