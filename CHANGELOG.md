@@ -1,3 +1,15 @@
+# [1.42.0](https://github.com/SocialGouv/1000jours/compare/v1.41.2...v1.42.0) (2021-06-22)
+
+
+### Bug Fixes
+
+* **epds:** review design ([#357](https://github.com/SocialGouv/1000jours/issues/357)) ([21fd16b](https://github.com/SocialGouv/1000jours/commit/21fd16b79cf722401a2790f0eba0bbff7480f0d7))
+
+
+### Features
+
+* **carto:** Ajoute les paramètres de recherche de POI par types et thématiques ([#355](https://github.com/SocialGouv/1000jours/issues/355)) ([d31eff6](https://github.com/SocialGouv/1000jours/commit/d31eff6bab499563dd9efe85ce30e4de013c0df2)), closes [#354](https://github.com/SocialGouv/1000jours/issues/354)
+
 ## [1.41.2](https://github.com/SocialGouv/1000jours/compare/v1.41.1...v1.41.2) (2021-06-21)
 
 
