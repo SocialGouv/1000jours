@@ -23,6 +23,6 @@ export interface PoiType {
 }
 
 export interface CartoFilter {
-  thematique: string;
+  name: string;
   active: boolean;
 }

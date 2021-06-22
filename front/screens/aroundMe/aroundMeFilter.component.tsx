@@ -32,9 +32,16 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     useState<PoiType[]>();
 
   const [structureFilters, setStructureFilters] = useState<CartoFilter[]>([]);
-  const [professionnelsFilters, setProfessionnelsFilters] = useState<
+  const [professionnelFilters, setProfessionnelFilters] = useState<
     CartoFilter[]
   >([]);
+
+  const [queryFilter, setQueryFilter] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (poiTypesAndCategories && poiTypesAndCategories.length > 0)
+      extractPoiTypeAndCategorieFilters(poiTypesAndCategories);
+  }, [poiTypesAndCategories]);
 
   const extractPoiTypeAndCategorieFilters = (poiTypesToFilter: PoiType[]) => {
     setStructureFilters(
@@ -44,7 +51,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
       ).map((poiType) => convertToCartoFilter(poiType))
     );
 
-    setProfessionnelsFilters(
+    setProfessionnelFilters(
       filterToPoiCategorie(
         poiTypesToFilter,
         AroundMeConstants.PoiCategorieEnum.professionnel
@@ -68,10 +75,13 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     return typeFilter;
   };
 
-  useEffect(() => {
-    if (poiTypesAndCategories && poiTypesAndCategories.length > 0)
-      extractPoiTypeAndCategorieFilters(poiTypesAndCategories);
-  }, [poiTypesAndCategories]);
+  const updateQueryFilter = (filterName: string) => {
+    const tempQueryFilter = queryFilter;
+    if (!tempQueryFilter.includes(filterName)) tempQueryFilter.push(filterName);
+    else tempQueryFilter.slice(tempQueryFilter.indexOf(filterName), 1);
+    setQueryFilter(tempQueryFilter);
+  };
+
   return (
     <>
       <FetchFilterData setPoiTypes={setPoiTypesAndCategories} />
@@ -101,7 +111,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                 title={filter.name}
                 selected={filter.active}
                 action={() => {
-                  console.log("LOOL");
+                  updateQueryFilter(filter.name);
                 }}
               />
             ))}
@@ -110,14 +120,14 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
             {Labels.aroundMe.filter.healthProfessional}
           </CommonText>
           <View style={styles.filterContainer}>
-            {professionnelsFilters.map((filter, index) => (
+            {professionnelFilters.map((filter, index) => (
               <Chip
                 id={index}
                 key={index}
                 title={filter.name}
                 selected={filter.active}
                 action={() => {
-                  console.log("LOOL");
+                  updateQueryFilter(filter.name);
                 }}
               />
             ))}
@@ -148,6 +158,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                 rounded={true}
                 disabled={false}
                 action={() => {
+                  console.log(queryFilter);
                   hideModal();
                 }}
               />
