@@ -1,3 +1,5 @@
+import { IcomoonIcons } from "../components";
+
 const epdsContacts = [
   {
     contactName: "FNEPE",
@@ -147,6 +149,7 @@ export const epdsInformation = {
       },
       sitesEnLigneBienEtMoinsBien,
     ],
+    sectionIcon: IcomoonIcons.telephone,
     sectionTitle:
       "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",
   },
@@ -158,6 +161,7 @@ export const epdsInformation = {
       },
       sitesEnLignePasBien,
     ],
+    sectionIcon: IcomoonIcons.telephone,
     sectionTitle:
       "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",
   },
