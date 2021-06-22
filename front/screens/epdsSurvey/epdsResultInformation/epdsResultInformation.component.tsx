@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     color: Colors.primaryBlueDark,
     fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
-    fontSize: Sizes.sm,
+    fontSize: Sizes.xs,
   },
 });
 
