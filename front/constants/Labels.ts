@@ -1,3 +1,4 @@
+import { IcomoonIcons } from "../components";
 import { NUMBER_OF_DAYS_NOTIF_REMINDER } from "./epdsConstants.constants";
 import { epdsInformation } from "./epdsResultInformation.constants";
 
@@ -130,6 +131,7 @@ export default {
               epdsInformation.pmiVeritableAllieParents,
               epdsInformation.reseauPerinatalSante,
             ],
+            sectionIcon: IcomoonIcons.proSante,
             sectionTitle:
               "Les professionnels qui peuvent vous accompagner pour faire le point",
           },
@@ -139,6 +141,7 @@ export default {
               epdsInformation.laep,
               epdsInformation.associationsLocalesNationalesSoutienParentalite,
             ],
+            sectionIcon: IcomoonIcons.entourage,
             sectionTitle:
               "Les ressources qui peuvent vous aider les premiers mois de l’enfant",
           },
@@ -164,6 +167,7 @@ export default {
                   "Votre entourage peut se mobiliser pour vous aider : sagefemme, psychologue, infirmière puéricultrice",
               },
             ],
+            sectionIcon: IcomoonIcons.proSante,
             sectionTitle:
               "Les professionnels qui peuvent vous accompagner pour faire le point",
           },
@@ -178,6 +182,7 @@ export default {
         professionalsList: [
           {
             paragraphs: epdsInformation.professionnelsAccompagnerPasBien,
+            sectionIcon: IcomoonIcons.proSante,
             sectionTitle:
               "Les professionnels qui peuvent vous accompagner pour faire le point",
           },
@@ -188,6 +193,7 @@ export default {
               epdsInformation.laep,
               epdsInformation.associationsLocalesNationalesSoutienParentalite,
             ],
+            sectionIcon: IcomoonIcons.entourage,
             sectionTitle:
               "Les ressources qui peuvent vous aider les premiers mois de l’enfant",
           },

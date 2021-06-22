@@ -1,10 +1,18 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
+import { TitleH1 } from "../../components";
 import Button from "../../components/base/button.component";
-import { CommonText } from "../../components/StyledText";
+import { SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
-import { Colors, FontWeight, Labels, Paddings, Sizes } from "../../constants";
+import {
+  Colors,
+  FontWeight,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../../constants";
 
 interface EpdsLoadPreviousSurveyProps {
   startSurveyOver: (value: boolean) => void;
@@ -15,14 +23,16 @@ const EpdsLoadPreviousSurvey: React.FC<EpdsLoadPreviousSurveyProps> = ({
 }) => {
   return (
     <View style={styles.mainContainer}>
-      <CommonText style={styles.instruction}>
+      <TitleH1 title={Labels.epdsSurvey.title} animated={false} />
+      <SecondaryText style={styles.instruction}>
         {Labels.epdsSurvey.previousSurvey.messsage}
-      </CommonText>
+      </SecondaryText>
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonContainer}>
           <Button
             title={Labels.epdsSurvey.previousSurvey.continueButton}
             titleStyle={styles.titleButtonStyle}
+            buttonStyle={styles.buttonStyle}
             rounded={true}
             action={() => {
               startSurveyOver(false);
@@ -33,6 +43,7 @@ const EpdsLoadPreviousSurvey: React.FC<EpdsLoadPreviousSurveyProps> = ({
           <Button
             title={Labels.epdsSurvey.previousSurvey.startOverButton}
             titleStyle={styles.titleButtonStyle}
+            buttonStyle={styles.buttonStyle}
             rounded={true}
             action={() => {
               startSurveyOver(true);
@@ -48,19 +59,21 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
   },
+  buttonStyle: {
+    marginHorizontal: Margins.default,
+  },
   buttonsContainer: {
     flexDirection: "row",
   },
   instruction: {
     color: Colors.commonText,
-    fontSize: Sizes.xs,
+    fontSize: Sizes.sm,
     fontWeight: FontWeight.medium,
     padding: Paddings.default,
   },
   mainContainer: {
-    alignSelf: "center",
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
   titleButtonStyle: {
     fontSize: Sizes.xs,
