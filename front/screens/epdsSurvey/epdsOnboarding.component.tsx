@@ -36,6 +36,7 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
     return (
       <View style={styles.iconWithTitle}>
         <View>{getIcon(index)}</View>
+        <CommonText style={styles.stepNum}>{index + 1}</CommonText>
         <CommonText style={styles.stepTitle}>
           {Labels.epdsSurvey.onboarding.steps.elements[index]}
         </CommonText>
@@ -116,6 +117,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     marginHorizontal: Margins.smaller,
+  },
+  stepNum: {
+    color: Colors.primaryBlueLight,
+    fontSize: Sizes.xxxxl,
+    fontWeight: "bold",
+    left: 0,
+    paddingTop: Margins.larger,
+    position: "absolute",
   },
   stepTitle: {
     color: Colors.primaryBlueDark,
