@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
     marginVertical: Margins.smaller,
   },
   card: {
-    backgroundColor: Colors.cardGrey,
-    borderWidth: 1,
+    borderBottomColor: Colors.cardGrey,
+    borderBottomWidth: 1,
     margin: Margins.smaller,
   },
   slidingUpPanelScrollView: {
