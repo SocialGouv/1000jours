@@ -11,7 +11,6 @@ import {
   IcomoonIcons,
   TitleH1,
 } from "../../components";
-import FetchFilterData from "../../components/aroundMe/fetchFilterData.component";
 import FetchPoisCoords from "../../components/aroundMe/fetchPoisCoords.component";
 import { View } from "../../components/Themed";
 import {
@@ -23,7 +22,7 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
-import type { CartographiePoisFromDB, PoiType } from "../../type";
+import type { CartographiePoisFromDB } from "../../type";
 import { KeyboardUtils } from "../../utils";
 import AddressDetails from "./addressDetails.component";
 import AroundMeFilter from "./aroundMeFilter.component";
@@ -61,7 +60,6 @@ const TabAroundMeScreen: React.FC = () => {
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
   const [showFilter, setShowFilter] = useState(false);
-  const [poiTypes, setPoiTypes] = useState<PoiType[]>();
 
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
@@ -125,7 +123,6 @@ const TabAroundMeScreen: React.FC = () => {
         region={region}
         setFetchedPois={handleFetchedPois}
       />
-      <FetchFilterData setPoiTypes={setPoiTypes} />
       <View style={styles.topContainer}>
         <TitleH1
           title={Labels.aroundMe.title}
@@ -228,7 +225,6 @@ const TabAroundMeScreen: React.FC = () => {
         )}
       <AroundMeFilter
         visible={showFilter}
-        poiTypes={poiTypes}
         hideModal={() => {
           setShowFilter(false);
         }}

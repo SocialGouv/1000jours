@@ -9,105 +9,153 @@ import {
   IcomoonIcons,
   TitleH1,
 } from "../../components";
+import FetchFilterData from "../../components/aroundMe/fetchFilterData.component";
 import Chip from "../../components/base/chip.component";
-import { Colors, Labels, Margins, Paddings, Sizes } from "../../constants";
+import {
+  AroundMeConstants,
+  Colors,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../../constants";
 import type { PoiType } from "../../type";
 import type { CartoFilter } from "../../type/aroundMe.types";
 
-interface ListModalMenuProps {
+interface Props {
   visible: boolean;
-  poiTypes: PoiType[] | undefined;
   hideModal: () => void;
 }
 
-const AroundMeFilter: React.FC<ListModalMenuProps> = ({
-  visible,
-  poiTypes,
-  hideModal,
-}) => {
-  const [filters, setFilters] = useState<CartoFilter[]>([]);
-  const getFilters = (poiTypesToFilter: PoiType[]) => {
-    return poiTypesToFilter.map((poiType) => {
-      const typeFilter: CartoFilter = {
-        active: false,
-        thematique: poiType.nom,
-      };
-      return typeFilter;
-    });
+const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
+  const [poiTypesAndCategories, setPoiTypesAndCategories] =
+    useState<PoiType[]>();
+
+  const [structureFilters, setStructureFilters] = useState<CartoFilter[]>([]);
+  const [professionnelsFilters, setProfessionnelsFilters] = useState<
+    CartoFilter[]
+  >([]);
+
+  const extractPoiTypeAndCategorieFilters = (poiTypesToFilter: PoiType[]) => {
+    setStructureFilters(
+      filterToPoiCategorie(
+        poiTypesToFilter,
+        AroundMeConstants.PoiCategorieEnum.structure
+      ).map((poiType) => convertToCartoFilter(poiType))
+    );
+
+    setProfessionnelsFilters(
+      filterToPoiCategorie(
+        poiTypesToFilter,
+        AroundMeConstants.PoiCategorieEnum.professionnel
+      ).map((poiType) => convertToCartoFilter(poiType))
+    );
+  };
+
+  const filterToPoiCategorie = (
+    poiTypesToFilter: PoiType[],
+    categorie: AroundMeConstants.PoiCategorieEnum
+  ): PoiType[] => {
+    return poiTypesToFilter.filter(
+      (poiType) => poiType.categorie === categorie
+    );
+  };
+  const convertToCartoFilter = (type: PoiType): CartoFilter => {
+    const typeFilter: CartoFilter = {
+      active: false,
+      name: type.nom,
+    };
+    return typeFilter;
   };
 
   useEffect(() => {
-    if (poiTypes && poiTypes.length > 0) setFilters(getFilters(poiTypes));
-  }, [poiTypes]);
+    if (poiTypesAndCategories && poiTypesAndCategories.length > 0)
+      extractPoiTypeAndCategorieFilters(poiTypesAndCategories);
+  }, [poiTypesAndCategories]);
   return (
-    <Modal transparent={true} visible={visible}>
-      <View style={styles.mainContainer}>
-        <TitleH1 title={Labels.aroundMe.filter.title} animated={false} />
-        <TouchableOpacity
-          style={styles.closeModalView}
-          onPress={() => {
-            hideModal();
-          }}
-        >
-          <Icomoon
-            name={IcomoonIcons.fermer}
-            size={14}
-            color={Colors.primaryBlue}
-          />
-        </TouchableOpacity>
-        <CommonText style={styles.partsTitle}>
-          {Labels.aroundMe.filter.pointsOfInterest}
-        </CommonText>
-        <View style={styles.filterContainer}>
-          {filters.map((filter, index) => (
-            <Chip
-              id={index}
-              key={index}
-              title={filter.thematique}
-              selected={filter.active}
-            //   action={() => {
-            //     filter.active = !filter.active;
-            //     applyFilters(filters);
-            //   }}
+    <>
+      <FetchFilterData setPoiTypes={setPoiTypesAndCategories} />
+      <Modal transparent={true} visible={visible}>
+        <View style={styles.mainContainer}>
+          <TitleH1 title={Labels.aroundMe.filter.title} animated={false} />
+          <TouchableOpacity
+            style={styles.closeModalView}
+            onPress={() => {
+              hideModal();
+            }}
+          >
+            <Icomoon
+              name={IcomoonIcons.fermer}
+              size={Sizes.xs}
+              color={Colors.primaryBlue}
             />
-          ))}
-        </View>
-        <CommonText style={styles.partsTitle}>
-          {Labels.aroundMe.filter.healthProfessional}
-        </CommonText>
-        <View style={styles.buttonsContainer}>
-          <View style={styles.buttonContainer}>
-            <Button
-              title={Labels.buttons.cancel}
-              titleStyle={styles.buttonTitleStyle}
-              rounded={false}
-              disabled={false}
-              icon={
-                <Icomoon
-                  name={IcomoonIcons.fermer}
-                  size={14}
-                  color={Colors.primaryBlue}
-                />
-              }
-              action={() => {
-                hideModal();
-              }}
-            />
+          </TouchableOpacity>
+          <CommonText style={styles.partsTitle}>
+            {Labels.aroundMe.filter.pointsOfInterest}
+          </CommonText>
+          <View style={styles.filterContainer}>
+            {structureFilters.map((filter, index) => (
+              <Chip
+                id={index}
+                key={index}
+                title={filter.name}
+                selected={filter.active}
+                action={() => {
+                  console.log("LOOL");
+                }}
+              />
+            ))}
           </View>
-          <View style={styles.buttonContainer}>
-            <Button
-              title={Labels.buttons.validate}
-              titleStyle={styles.buttonTitleStyle}
-              rounded={true}
-              disabled={false}
-              action={() => {
-                hideModal();
-              }}
-            />
+          <CommonText style={styles.partsTitle}>
+            {Labels.aroundMe.filter.healthProfessional}
+          </CommonText>
+          <View style={styles.filterContainer}>
+            {professionnelsFilters.map((filter, index) => (
+              <Chip
+                id={index}
+                key={index}
+                title={filter.name}
+                selected={filter.active}
+                action={() => {
+                  console.log("LOOL");
+                }}
+              />
+            ))}
+          </View>
+          <View style={styles.buttonsContainer}>
+            <View style={styles.buttonContainer}>
+              <Button
+                title={Labels.buttons.cancel}
+                titleStyle={styles.buttonTitleStyle}
+                rounded={false}
+                disabled={false}
+                icon={
+                  <Icomoon
+                    name={IcomoonIcons.fermer}
+                    size={14}
+                    color={Colors.primaryBlue}
+                  />
+                }
+                action={() => {
+                  hideModal();
+                }}
+              />
+            </View>
+            <View style={styles.buttonContainer}>
+              <Button
+                title={Labels.buttons.validate}
+                titleStyle={styles.buttonTitleStyle}
+                rounded={true}
+                disabled={false}
+                action={() => {
+                  hideModal();
+                }}
+              />
+            </View>
           </View>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+    </>
   );
 };
 
