@@ -44,8 +44,9 @@ export const AROUNDME_POIS_BY_GPSCOORDS = gql`
     $lat1: Float!
     $long2: Float!
     $lat2: Float!
+    $types: [String!]
   ) {
-    searchPois(perimetre: [$long1, $lat1, $long2, $lat2]) {
+    searchPois(perimetre: [$long1, $lat1, $long2, $lat2], types: $types) {
       nom
       type
       categorie

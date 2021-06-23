@@ -225,8 +225,11 @@ const TabAroundMeScreen: React.FC = () => {
         )}
       <AroundMeFilter
         visible={showFilter}
-        hideModal={() => {
+        hideModal={(filterWasSaved: boolean) => {
           setShowFilter(false);
+          if (filterWasSaved) {
+            setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+          }
         }}
       />
     </View>

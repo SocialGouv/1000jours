@@ -25,7 +25,7 @@ import { StorageUtils } from "../../utils";
 
 interface Props {
   visible: boolean;
-  hideModal: () => void;
+  hideModal: (filterWasSaved: boolean) => void;
 }
 
 const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
@@ -134,7 +134,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
               style={styles.closeModalView}
               onPress={() => {
                 setPoiTypeArray([]);
-                hideModal();
+                hideModal(false);
               }}
             >
               <Icomoon
@@ -191,7 +191,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                   }
                   action={() => {
                     setPoiTypeArray([]);
-                    hideModal();
+                    hideModal(false);
                   }}
                 />
               </View>
@@ -207,7 +207,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                       poiTypeArray
                     );
                     setPoiTypeArray([]);
-                    hideModal();
+                    hideModal(true);
                   }}
                 />
               </View>
