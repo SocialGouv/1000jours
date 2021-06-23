@@ -1,3 +1,10 @@
+# [1.43.0](https://github.com/SocialGouv/1000jours/compare/v1.42.1...v1.43.0) (2021-06-23)
+
+
+### Features
+
+* 🎸 Ajoute les notifications changement d'étapes ([#358](https://github.com/SocialGouv/1000jours/issues/358)) ([a3b53e4](https://github.com/SocialGouv/1000jours/commit/a3b53e43686972aa886fc484f75b0363160c4b11)), closes [#309](https://github.com/SocialGouv/1000jours/issues/309)
+
 ## [1.42.1](https://github.com/SocialGouv/1000jours/compare/v1.42.0...v1.42.1) (2021-06-23)
 
 
