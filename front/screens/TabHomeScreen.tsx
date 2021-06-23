@@ -1,7 +1,7 @@
 import { useLazyQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
-import { range } from "lodash";
+import _, { range } from "lodash";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
@@ -21,6 +21,7 @@ import type {
   UserSituation,
 } from "../types";
 import { StorageUtils, TrackerUtils } from "../utils";
+import { scheduleNextStepNotification } from "../utils/notification.util";
 
 export enum UserInfo {
   projet = "projet",
@@ -44,12 +45,13 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
         nom
         ordre
         description
+        debut
+        fin
       }
       getCurrentEtape(infos: $infos) {
         id
         nom
         ordre
-        description
       }
     }
   `;
@@ -81,10 +83,6 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     loadSteps({ variables: { infos: infos } });
   };
 
-  useEffect(() => {
-    void getUserSituations();
-  }, []);
-
   const [loadStepsAlreadyInError, setLoadStepsAlreadyInError] = useState(false);
   const [loadSteps, { called, loading, error, data }] = useLazyQuery(
     ALL_STEPS_AND_CURRENT,
@@ -103,6 +101,17 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     });
   };
 
+  useEffect(() => {
+    void getUserSituations();
+  }, []);
+
+  const prepareNextStepNotification = (activeStep: Step | null) => {
+    if (activeStep) {
+      const nextStep = _.filter(etapes, { ordre: activeStep.ordre + 1 });
+      if (nextStep.length > 0) void scheduleNextStepNotification(nextStep[0]);
+    }
+  };
+
   if (!called || loading) return <ActivityIndicator size="large" />;
   if (error) {
     // En cas d'erreur on essaye de charger les étapes avec 'defaultUserInfos'
@@ -119,6 +128,9 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     active: result.getCurrentEtape && result.getCurrentEtape.id === etape.id,
   }));
   const numberOfStepsWithoutTheFirstAndLast = etapes.length - 1 - 2;
+
+  if (result.getCurrentEtape)
+    prepareNextStepNotification(result.getCurrentEtape);
 
   return (
     <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>

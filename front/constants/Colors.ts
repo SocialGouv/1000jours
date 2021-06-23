@@ -39,4 +39,5 @@ export default {
   disabled: "#BDBDBD",
   borderGrey: "#E7E7E7",
   white: "#FFFFFF",
+  backdrop: "#00000080",
 };
