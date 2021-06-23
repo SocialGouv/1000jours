@@ -109,6 +109,27 @@ const beforeSave = async (data, hasFileChanged = false) => {
   }
 };
 
+const deleteSourcePois = async (source) => {
+  const { id } = source;
+
+  const knex = strapi.connections.default;
+
+  const res = await knex("cartographie_pois")
+    .whereExists(
+      knex
+        .from(
+          knex.raw(
+            "jsonb_array_elements(cartographie_references_json) as reference_elements"
+          )
+        )
+        .whereRaw("(reference_elements->>'cartographie_source')::int = ?", [id])
+    )
+    .delete()
+    .debug();
+
+  console.log(res);
+};
+
 module.exports = {
   lifecycles: {
     beforeCreate: (data) => beforeSave(data, true),
@@ -124,5 +145,6 @@ module.exports = {
 
       await beforeSave(data, hasFileChanged);
     },
+    afterDelete: deleteSourcePois,
   },
 };

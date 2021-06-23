@@ -10,24 +10,37 @@ const FIELDS_POSITION = ["position_longitude", "position_latitude"];
 const FIELDS_ADRESSE_GEOCODE = geocodePrefix(FIELDS_ADRESSE);
 const FIELDS_POSITION_GEOCODE = geocodePrefix(FIELDS_POSITION);
 
+const FIELDS_GEOCODE_RESULS = [
+  "longitude",
+  "latitude",
+  "result_housenumber",
+  "result_name",
+  "result_postcode",
+  "result_city",
+];
+
 const concatFields = (fields, data) =>
   fields
     .map((field) => (typeof data[field] === "string" ? data[field].trim() : ""))
     .join(" ")
     .trim();
 
-const createLigne = (geocode) =>
+const createNonGeocodedAdresseLigne = (geocode) =>
+  concatFields(FIELDS_ADRESSE, geocode) ||
+  concatFields(FIELDS_POSITION, geocode);
+
+const createGeocodedAdresseLigne = (geocode) =>
   concatFields(FIELDS_ADRESSE_GEOCODE, geocode) ||
   concatFields(FIELDS_POSITION_GEOCODE, geocode);
 
 const formatLigneIdentifiant = (geocode) => {
   if (!geocode) return null;
 
-  const ligne = createLigne(geocode);
+  const ligne = createGeocodedAdresseLigne(geocode);
   if (!ligne) return null;
 
   geocode.cartographie_ligne = ligne;
-  geocode.cartographie_identifiant = slugLower(ligne);
+  geocode.identifiant = slugLower(ligne);
 
   return geocode;
 };
@@ -45,8 +58,8 @@ const formatGeocodeResultGeojson = ({ properties, geometry }) =>
     geocode_position_longitude: geometry.coordinates[0],
   });
 
-const formatGeocodeResultBatch = (data) =>
-  formatLigneIdentifiant({
+const formatGeocodeResultBatch = (data) => {
+  const geocode = {
     // TODO: handle 'no result'
     geocode: true,
 
@@ -60,10 +73,22 @@ const formatGeocodeResultBatch = (data) =>
       typeof data.latitude === "string" ? +data.latitude : null,
     geocode_position_longitude:
       typeof data.longitude === "string" ? +data.longitude : null,
-  });
+  };
 
+  const result = formatLigneIdentifiant(geocode);
+  if (!result) {
+    // if geocoding didn't return result
+    // then keep old identifiant
+    // to set `geocode` column to true later on
+    geocode.identifiant = data.identifiant;
+  }
+
+  return geocode;
+};
 module.exports = {
-  GEOCODE_FIELDS: FIELDS_ADRESSE,
+  GEOCODE_ADRESSE_FIELDS: FIELDS_ADRESSE,
+  GEOCODE_POSITION_FIELDS: FIELDS_POSITION,
+  GEOCODE_RESULT_FIELDS: FIELDS_GEOCODE_RESULS,
   concatFields,
   formatGeocodeResultBatch,
   formatGeocodeResultGeojson,

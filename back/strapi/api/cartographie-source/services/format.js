@@ -38,9 +38,7 @@ const formatAdresse = (source, entity) => {
 
   if (!adresse.cartographie_ligne) return null;
 
-  adresse.cartographie_identifiant = StringService.slugLower(
-    adresse.cartographie_ligne
-  );
+  adresse.identifiant = StringService.slugLower(adresse.cartographie_ligne);
 
   return adresse;
 };
