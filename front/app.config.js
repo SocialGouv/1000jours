@@ -6,7 +6,7 @@ export default {
         foregroundImage: "./assets/images/adaptive-icon.png",
       },
       package: "com.millejours.fabrique",
-      versionCode: 7,
+      versionCode: 8,
     },
     assetBundlePatterns: ["**/*"],
     hooks: {
@@ -23,7 +23,7 @@ export default {
     },
     icon: "./assets/images/icon.png",
     ios: {
-      buildNumber: "1.0.7",
+      buildNumber: "1.0.8",
       bundleIdentifier: "com.millejours.fabrique",
       supportsTablet: true,
     },
@@ -40,7 +40,7 @@ export default {
       fallbackToCacheTimeout: 0,
     },
     userInterfaceStyle: "light",
-    version: "1.0.7",
+    version: "1.0.8",
     web: {
       favicon: "./assets/images/favicon.png",
     },
