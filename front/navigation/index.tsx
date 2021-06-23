@@ -5,6 +5,7 @@ import {
   NavigationContainer,
 } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import type * as Notifications from "expo-notifications";
 import type { FC } from "react";
 import * as React from "react";
 import type { ColorSchemeName } from "react-native";
@@ -20,6 +21,7 @@ import {
   Text,
   View,
 } from "../components";
+import Notification from "../components/base/notification.component";
 import ConditionsOfUse from "../components/menu/conditionsOfUse.component";
 import LegalNotice from "../components/menu/legalNotice.component";
 import { Colors, Labels, Paddings, Sizes } from "../constants";
@@ -33,9 +35,17 @@ import LinkingConfiguration from "./LinkingConfiguration";
 
 interface NavigationProps {
   colorScheme: ColorSchemeName;
+  notification: Notifications.Notification | null;
+  setNotification: (
+    value: React.SetStateAction<Notifications.Notification | null>
+  ) => void;
 }
 
-const Navigation: FC<NavigationProps> = ({ colorScheme }) => {
+const Navigation: FC<NavigationProps> = ({
+  colorScheme,
+  notification,
+  setNotification,
+}) => {
   const [showMenu, setShowMenu] = React.useState(false);
 
   const navigationRef = React.useRef<NavigationContainerRef>(null);
@@ -58,6 +68,15 @@ const Navigation: FC<NavigationProps> = ({ colorScheme }) => {
         setShowMenu={setShowMenu}
         navigation={navigationRef.current}
       />
+      {notification ? (
+        <Notification
+          notification={notification}
+          onDismiss={() => {
+            setNotification(null);
+          }}
+          navigation={navigationRef.current}
+        />
+      ) : null}
     </NavigationContainer>
   );
 };

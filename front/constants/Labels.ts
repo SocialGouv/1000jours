@@ -1,3 +1,4 @@
+import { IcomoonIcons } from "../components/base/icomoon.component";
 import { NUMBER_OF_DAYS_NOTIF_REMINDER } from "./epdsConstants.constants";
 import { epdsInformation } from "./epdsResultInformation.constants";
 
@@ -85,6 +86,7 @@ export default {
       "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement aujourd'hui.",
     notification: {
       body: `${NUMBER_OF_DAYS_NOTIF_REMINDER} jours se sont écoulés depuis la dernière fois que vous avez passé le test EPDS. Vous pouvez maintenant le repasser si vous le souhaitez`,
+      redirectTitle: "Passer le test",
       title: "Rappel EPDS",
     },
     onboarding: {
@@ -137,6 +139,7 @@ export default {
               epdsInformation.pmiVeritableAllieParents,
               epdsInformation.reseauPerinatalSante,
             ],
+            sectionIcon: IcomoonIcons.proSante,
             sectionTitle:
               "Les professionnels qui peuvent vous accompagner pour faire le point",
           },
@@ -146,6 +149,7 @@ export default {
               epdsInformation.laep,
               epdsInformation.associationsLocalesNationalesSoutienParentalite,
             ],
+            sectionIcon: IcomoonIcons.entourage,
             sectionTitle:
               "Les ressources qui peuvent vous aider les premiers mois de l’enfant",
           },
@@ -171,6 +175,7 @@ export default {
                   "Votre entourage peut se mobiliser pour vous aider : sagefemme, psychologue, infirmière puéricultrice",
               },
             ],
+            sectionIcon: IcomoonIcons.proSante,
             sectionTitle:
               "Les professionnels qui peuvent vous accompagner pour faire le point",
           },
@@ -185,6 +190,7 @@ export default {
         professionalsList: [
           {
             paragraphs: epdsInformation.professionnelsAccompagnerPasBien,
+            sectionIcon: IcomoonIcons.proSante,
             sectionTitle:
               "Les professionnels qui peuvent vous accompagner pour faire le point",
           },
@@ -195,6 +201,7 @@ export default {
               epdsInformation.laep,
               epdsInformation.associationsLocalesNationalesSoutienParentalite,
             ],
+            sectionIcon: IcomoonIcons.entourage,
             sectionTitle:
               "Les ressources qui peuvent vous aider les premiers mois de l’enfant",
           },
@@ -267,6 +274,11 @@ export default {
   timeline: {
     description:
       "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. A chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
+    notification: {
+      body: "Vous entrez dans une nouvelle étape du parcours 1000 jours : ",
+      redirectTitle: "Modifier ma situation",
+      title: "Votre situation a changé ?",
+    },
     title: "Choisissez l'étape que vous souhaitez approfondir",
   },
   warning: "Attention",

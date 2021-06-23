@@ -1,3 +1,38 @@
+# [1.43.0](https://github.com/SocialGouv/1000jours/compare/v1.42.1...v1.43.0) (2021-06-23)
+
+
+### Features
+
+* 🎸 Ajoute les notifications changement d'étapes ([#358](https://github.com/SocialGouv/1000jours/issues/358)) ([a3b53e4](https://github.com/SocialGouv/1000jours/commit/a3b53e43686972aa886fc484f75b0363160c4b11)), closes [#309](https://github.com/SocialGouv/1000jours/issues/309)
+
+## [1.42.1](https://github.com/SocialGouv/1000jours/compare/v1.42.0...v1.42.1) (2021-06-23)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la condition sur CLEAR_STORAGE (var Env) ([#362](https://github.com/SocialGouv/1000jours/issues/362)) ([fd0daa9](https://github.com/SocialGouv/1000jours/commit/fd0daa9bf662e2d8158ac66bf19341b874d0afcb))
+* 🐛 Corrige le document des cgu ([#359](https://github.com/SocialGouv/1000jours/issues/359)) ([f907a4c](https://github.com/SocialGouv/1000jours/commit/f907a4c1fb537bc3da534ecc892ebe24d597da10)), closes [#235](https://github.com/SocialGouv/1000jours/issues/235)
+* 🐛 Corrige un problème d'import (require cycle) ([#360](https://github.com/SocialGouv/1000jours/issues/360)) ([4bb7905](https://github.com/SocialGouv/1000jours/commit/4bb7905904b5fb90e4fdfb3e52ec9728052a0951))
+
+# [1.42.0](https://github.com/SocialGouv/1000jours/compare/v1.41.2...v1.42.0) (2021-06-22)
+
+
+### Bug Fixes
+
+* **epds:** review design ([#357](https://github.com/SocialGouv/1000jours/issues/357)) ([21fd16b](https://github.com/SocialGouv/1000jours/commit/21fd16b79cf722401a2790f0eba0bbff7480f0d7))
+
+
+### Features
+
+* **carto:** Ajoute les paramètres de recherche de POI par types et thématiques ([#355](https://github.com/SocialGouv/1000jours/issues/355)) ([d31eff6](https://github.com/SocialGouv/1000jours/commit/d31eff6bab499563dd9efe85ce30e4de013c0df2)), closes [#354](https://github.com/SocialGouv/1000jours/issues/354)
+
+## [1.41.2](https://github.com/SocialGouv/1000jours/compare/v1.41.1...v1.41.2) (2021-06-21)
+
+
+### Bug Fixes
+
+* **deps:** update all dependencies ([#352](https://github.com/SocialGouv/1000jours/issues/352)) ([2b7d6dc](https://github.com/SocialGouv/1000jours/commit/2b7d6dc7a02863f2f97b1fd8ac2fc39efafb34ed))
+
 ## [1.41.1](https://github.com/SocialGouv/1000jours/compare/v1.41.0...v1.41.1) (2021-06-21)
 
 

@@ -4,7 +4,14 @@ import { StyleSheet } from "react-native";
 import Button from "../../../components/base/button.component";
 import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
-import { Colors, FontWeight, Labels, Margins, Sizes } from "../../../constants";
+import {
+  Colors,
+  FontWeight,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../../../constants";
 import type { EpdsResultContactInformation } from "../../../type";
 import { LinkingUtils } from "../../../utils";
 
@@ -68,6 +75,7 @@ const styles = StyleSheet.create({
     color: Colors.commonText,
     fontSize: Sizes.sm,
     lineHeight: Sizes.mmd,
+    marginVertical: Margins.smallest,
   },
   contactName: {
     color: Colors.commonText,
@@ -85,7 +93,8 @@ const styles = StyleSheet.create({
   itemBorder: {
     borderBottomColor: Colors.disabled,
     borderBottomWidth: 1,
-    padding: Margins.smaller,
+    paddingHorizontal: Paddings.smaller,
+    paddingVertical: Paddings.default,
   },
 });
 

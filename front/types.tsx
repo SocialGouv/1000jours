@@ -74,6 +74,8 @@ export type Step = {
   nom: string;
   description: string | null;
   active: boolean | null;
+  debut: number;
+  fin: number;
 };
 
 export type Event = {
@@ -146,4 +148,9 @@ export type MenuItem = {
 
 export type ApolloHealthResponse = {
   status: string;
+};
+
+export type NotificationStyle = {
+  icon: string;
+  color: string;
 };

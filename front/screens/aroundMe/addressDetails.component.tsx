@@ -12,7 +12,7 @@ import TypeMaterniteIcon from "../../assets/images/carto/type_maternite.svg";
 import TypePlanningFamilialIcon from "../../assets/images/carto/type_planning_familial.svg";
 import TypePmiCafCpamIcon from "../../assets/images/carto/type_pmi_caf_cpam.svg";
 import TypeSaadIcon from "../../assets/images/carto/type_saad.svg";
-import { Button, CommonText, View } from "../../components";
+import { Button, CommonText, SecondaryText, View } from "../../components";
 import {
   AroundMeConstants,
   Colors,
@@ -77,15 +77,15 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
         <View style={styles.rowView}>
           <DetailsAddressIcon />
           <View style={styles.columnView}>
-            <CommonText style={styles.text}>{details.adresse}</CommonText>
-            <CommonText style={styles.text}>
+            <SecondaryText style={styles.text}>{details.adresse}</SecondaryText>
+            <SecondaryText style={styles.text}>
               {details.code_postal} {details.commune}
-            </CommonText>
+            </SecondaryText>
           </View>
         </View>
         {(StringUtils.stringIsNotNullNorEmpty(details.telephone) ||
           StringUtils.stringIsNotNullNorEmpty(details.courriel)) && (
-          <View style={styles.rowView}>
+          <View style={styles.phoneAndMail}>
             {StringUtils.stringIsNotNullNorEmpty(details.telephone) && (
               <TouchableOpacity
                 style={[styles.rowView, styles.marginRight]}
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
   },
   columnView: {
     flexDirection: "column",
+    maxWidth: "80%",
   },
   contact: {
     color: Colors.primaryBlue,
@@ -178,6 +179,13 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlueDark,
     fontSize: Sizes.xs,
     fontWeight: FontWeight.bold,
+    width: "95%",
+  },
+  phoneAndMail: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginVertical: Margins.evenMoreSmallest,
+    maxWidth: "80%",
   },
   rowContainer: {
     flexDirection: "row",
@@ -185,11 +193,10 @@ const styles = StyleSheet.create({
   rowView: {
     alignItems: "center",
     flexDirection: "row",
-    marginVertical: Margins.evenMoreSmallest,
   },
   text: {
     color: Colors.commonText,
-    fontSize: Sizes.xxs,
+    fontSize: Sizes.xs,
     fontWeight: FontWeight.bold,
     marginLeft: Margins.smaller,
   },
@@ -197,6 +204,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryBlueLight,
     color: Colors.primaryBlueDark,
     fontSize: Sizes.xxs,
+    marginVertical: Margins.smaller,
     paddingHorizontal: Paddings.smaller,
     textAlign: "center",
   },
