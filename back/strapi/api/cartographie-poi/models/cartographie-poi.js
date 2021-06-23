@@ -59,9 +59,22 @@ const beforeSave = async (data) => {
   await formatIdentifiant(data);
 };
 
-const afterFind = (data) => {
+const afterFind = async (data) => {
   data.cartographie_adresses = data.cartographie_adresses_json;
-  data.references = data.cartographie_references_json;
+
+  if (data.cartographie_references_json) {
+    for (const reference of data.cartographie_references_json) {
+      if (!reference.cartographie_source) continue;
+
+      const source = await strapi
+        .query("cartographie-source")
+        .findOne({ id: reference.cartographie_source });
+
+      reference.cartographie_source = source;
+    }
+
+    data.references = data.cartographie_references_json;
+  }
 };
 
 module.exports = {

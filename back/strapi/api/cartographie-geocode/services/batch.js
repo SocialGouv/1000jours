@@ -1,8 +1,4 @@
 const { chain: streamChain } = require("stream-chain");
-const {
-  createGeocodeStream: streamGeocoding,
-  createReverseGeocodeStream: streamReverseGeocoding,
-} = require("addok-geocode-stream");
 
 const { Batch } = require("../../stream/services");
 
@@ -10,6 +6,7 @@ const StringService = require("../../string/services");
 
 const {
   GEOCODE_ADRESSE_FIELDS,
+  GEOCODE_POSITION_FIELDS,
   GEOCODE_RESULT_FIELDS,
   concatFields,
   formatGeocodeResultBatch,
@@ -26,17 +23,6 @@ const { geocodeRequestStream } = require("./request");
 const GEOCODE_SERVICE_URL = "https://api-adresse.data.gouv.fr";
 
 const BUCKET_SIZE = 1000;
-
-const initTempTable = async () => {
-  const knex = strapi.connections.default;
-
-  await knex.transaction(async (transaction) => {
-    await transaction.schema.dropTableIfExists("import_geocode");
-    await transaction.raw(
-      `create table import_geocode as table components_cartographie_adresses WITH NO DATA`
-    );
-  });
-};
 
 const updateGeocodes = async (geocodes) => {
   console.log("[geocode] update:", geocodes.length, "geocode(s)");
@@ -125,13 +111,13 @@ const handleResult = (result) => {
   return { identifiant, geocode };
 };
 
-const geoStream = (adressesStream, type = "geocode", options = {}) =>
+const geoStream = (adressesStream, service = "search/csv", fields) =>
   new Promise(async (resolve, reject) => {
     let updatedGeocodesCount = 0;
 
-    const stream = await geocodeRequestStream("search/csv", adressesStream, [
+    const stream = await geocodeRequestStream(service, adressesStream, [
       "identifiant",
-      ...options,
+      ...fields,
     ]);
 
     try {
@@ -174,23 +160,37 @@ const geocodeAdresses = async (adressesStream) => {
       );
 
       // filter out empty queries
-      return concatFields(GEOCODE_ADRESSE_FIELDS, adresse) ? adresse : null;
+      const query = concatFields(GEOCODE_ADRESSE_FIELDS, adresse);
+      if (!query) return null;
+
+      return {
+        identifiant: adresse.identifiant,
+        query,
+      };
     },
   ]);
 
-  return geoStream(stream, "geocode", GEOCODE_ADRESSE_FIELDS);
+  return geoStream(stream, "search/csv", ["query"]);
 };
 
-const reverseGeocodeAdresses = async (adresses) =>
-  // TODO: fix
-  geoStream(adresses, "reverse", {
-    latitude: "position_latitude",
-    longitude: "position_longitude",
-  });
+const reverseGeocodeAdresses = async (adressesStream) => {
+  const stream = streamChain([
+    adressesStream,
+    (adresse) => ({
+      identifiant: adresse.identifiant,
+      longitude: adresse.position_longitude,
+      latitude: adresse.position_latitude,
+    }),
+  ]);
+
+  return geoStream(stream, "reverse/csv", ["longitude", "latitude"]);
+};
 
 const processMissingGeocodes = async () => {
   const count = await countAdressesToGeocode();
   if (count <= 0) return 0;
+
+  console.log(`[geocode-batch] geocode, ${count} remaining`);
 
   const adressesStream = fetchAdressesToGeocode(BUCKET_SIZE).stream();
 
@@ -206,6 +206,8 @@ const processMissingGeocodes = async () => {
 const processMissingAdresses = async () => {
   const count = await countAdressesToReverseGeocode();
   if (count <= 0) return 0;
+
+  console.log(`[geocode-batch] reverse geocode, ${count} remaining`);
 
   const adressesStream = fetchAdressesToReverseGeocode(BUCKET_SIZE).stream();
 

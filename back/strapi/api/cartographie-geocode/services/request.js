@@ -10,32 +10,19 @@ const toJson = require("csvtojson");
 const { Batch } = require("../../stream/services");
 
 const {
-  GEOCODE_ADRESSE_FIELDS,
   GEOCODE_RESULT_FIELDS,
   formatGeocodeResultGeojson,
 } = require("./format");
 
 const GEOCODE_SERVICE_URL = "https://api-adresse.data.gouv.fr";
 
-const BATCH_SIZE = 1000;
-
-const geocodeRequestStream = (service, stream, fields) =>
+const geocodeRequestStream = (service, adressesStream, fields) =>
   new Promise((resolve, reject) => {
     const opts = { fields };
 
-    const csvStream = stream.pipe(new toCsv(opts, { objectMode: true }));
-
-    // set to -1 to skip header
-    let requestedGeocodes = -1;
-
-    const fileStream = require("fs").createWriteStream("./geocode-request.csv");
-
-    csvStream
-      .on("data", () => (requestedGeocodes += 1))
-      .pipe(fileStream)
-      .on("end", () => {
-        console.log(`[geocode] requested ${requestedGeocodes} geocode(s)`);
-      });
+    const csvStream = adressesStream.pipe(
+      new toCsv(opts, { objectMode: true })
+    );
 
     const form = new FormData();
 
@@ -44,7 +31,12 @@ const geocodeRequestStream = (service, stream, fields) =>
       contentType: "text/csv",
     });
 
-    GEOCODE_ADRESSE_FIELDS.forEach((field) => form.append("columns", field));
+    fields.forEach((field) => {
+      if (field === "identifiant") return;
+
+      form.append("columns", field);
+    });
+
     GEOCODE_RESULT_FIELDS.forEach((field) =>
       form.append("result_columns", field)
     );
