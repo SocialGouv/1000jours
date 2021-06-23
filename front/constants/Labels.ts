@@ -1,4 +1,4 @@
-import { IcomoonIcons } from "../components";
+import { IcomoonIcons } from "../components/base/icomoon.component";
 import { NUMBER_OF_DAYS_NOTIF_REMINDER } from "./epdsConstants.constants";
 import { epdsInformation } from "./epdsResultInformation.constants";
 
