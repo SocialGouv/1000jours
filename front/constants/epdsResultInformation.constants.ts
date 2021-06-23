@@ -1,4 +1,4 @@
-import { IcomoonIcons } from "../components";
+import { IcomoonIcons } from "../components/base/icomoon.component";
 
 const epdsContacts = [
   {
