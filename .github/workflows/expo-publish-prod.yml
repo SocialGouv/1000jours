@@ -104,5 +104,5 @@ jobs:
           cd front
           yarn install
           curl -o app.ipa "$(expo url:ipa --non-interactive)"
-          echo $APP_STORE_CONNECT_API_KEY | base64 -d > api-key-app-store.json
+          echo $APP_STORE_API_KEY | base64 -d > api-key-app-store.json
           yarn upload:ios
