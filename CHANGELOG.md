@@ -1,3 +1,10 @@
+# [1.44.0](https://github.com/SocialGouv/1000jours/compare/v1.43.0...v1.44.0) (2021-06-23)
+
+
+### Features
+
+* **carto:** Supprime les POIs lorsqu'on supprime les sources et améliore les performances du geocoding ([#346](https://github.com/SocialGouv/1000jours/issues/346)) ([06ba1eb](https://github.com/SocialGouv/1000jours/commit/06ba1eb2b64bbf9a21440d618ddab58831263900))
+
 # [1.43.0](https://github.com/SocialGouv/1000jours/compare/v1.42.1...v1.43.0) (2021-06-23)
 
 
