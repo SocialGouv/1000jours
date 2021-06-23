@@ -8,8 +8,8 @@ export default {
     addressesListLabelStart: "Il y a",
     filter: {
       healthProfessional: "Professionnels de santé",
-      pointsOfInterest: "Points d'intérêts",
       steps: "Étapes du parcours 1000 jours",
+      structures: "Structures",
       thematics: "Thématiques",
       title: "Filtrer",
     },

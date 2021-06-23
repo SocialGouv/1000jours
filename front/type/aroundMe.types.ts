@@ -17,7 +17,7 @@ export interface CartographiePoisFromDB {
   position_longitude: number;
 }
 
-export interface PoiType {
+export interface PoiTypeFromDB {
   nom: string;
   categorie: string;
 }
@@ -25,4 +25,9 @@ export interface PoiType {
 export interface CartoFilter {
   name: string;
   active: boolean;
+}
+
+export interface CartoFilters {
+  structures: CartoFilter[];
+  professionnels: CartoFilter[];
 }

@@ -3,11 +3,11 @@ import * as React from "react";
 import { useEffect } from "react";
 
 import { DatabaseQueries } from "../../constants";
-import type { PoiType } from "../../type";
+import type { PoiTypeFromDB } from "../../type";
 
 interface Props {
   children?: React.ReactNode;
-  setPoiTypes: (poiTypes: PoiType[]) => void;
+  setPoiTypes: (poiTypes: PoiTypeFromDB[]) => void;
 }
 
 const FetchFilterData: React.FC<Props> = ({ children, setPoiTypes }) => {
@@ -16,7 +16,7 @@ const FetchFilterData: React.FC<Props> = ({ children, setPoiTypes }) => {
     onCompleted: (data) => {
       const fetchedData = (
         data as {
-          cartographieTypes: PoiType[];
+          cartographieTypes: PoiTypeFromDB[];
         }
       ).cartographieTypes;
       setPoiTypes(fetchedData);
