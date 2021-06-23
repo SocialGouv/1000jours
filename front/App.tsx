@@ -47,7 +47,7 @@ const App: FC = () => {
       });
   }, []);
 
-  if (process.env.CLEAR_STORAGE && process.env.CLEAR_STORAGE === "true")
+  if (process.env.CLEAR_STORAGE === "true")
     void StorageUtils.multiRemove(StorageKeysConstants.allStorageKeys);
 
   if (!fontsLoaded || !isLoadingComplete) {
