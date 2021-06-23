@@ -148,45 +148,36 @@ spec:
         - image: >-
             harbor.fabrique.social.gouv.fr/1000jours/les1000jours-strapi:0123456789abcdefghijklmnopqrstuvwxyz0123
           livenessProbe:
-            failureThreshold: 6
             httpGet:
               path: /_health
               port: http
-            initialDelaySeconds: 30
-            periodSeconds: 5
-            timeoutSeconds: 5
           name: strapi
           ports:
             - containerPort: 1337
               name: http
           readinessProbe:
-            failureThreshold: 15
             httpGet:
               path: /_health
               port: http
-            initialDelaySeconds: 0
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 1
           resources:
-            limits:
-              cpu: 500m
-              memory: 1Gi
             requests:
               cpu: 50m
               memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
           startupProbe:
-            failureThreshold: 12
             httpGet:
               path: /_health
               port: http
-            periodSeconds: 5
           volumeMounts:
             - mountPath: /app/public/uploads
               name: uploads
           envFrom:
             - secretRef:
                 name: azure-pg-user-0123456
+            - secretRef:
+                name: azure-les1000jours-volume
             - configMapRef:
                 name: strapi-configmap
           env:
@@ -207,6 +198,10 @@ spec:
               value: $(PGPASSWORD)
             - name: DATABASE_SSL
               value: 'true'
+      volumes:
+        - persistentVolumeClaim:
+            claimName: uploads
+          name: uploads
       initContainers:
         - env:
             - name: WAIT_FOR_RETRIES
@@ -224,12 +219,46 @@ spec:
             requests:
               cpu: 5m
               memory: 16Mi
-      volumes:
-        - persistentVolumeClaim:
-            claimName: 1000jours-strapi-uploads
-          name: uploads
-      nodeSelector:
-        workload: 1000jours-strapi
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: master-dev42
+    app.gitlab.com/env.name: master-dev42
+  name: azure-les1000jours-volume
+  labels:
+    application: master-dev42-1000jours
+    owner: 1000jours
+    team: 1000jours
+    cert: wildcard
+  namespace: 1000jours-85-master-dev42
+spec:
+  encryptedData:
+    azurestorageaccountkey: >-
+      AgASgwrqJJTwfTReL3VNlrenQa04pi/Ul80Bi/gzw5qWi6FbcDjMp+UjzNvGx+EL3VkuNspitCh5L1+Hz+zF49mBjE7joNtIUI5d6rnVkS/DSsei6wthpfU747hEpwSd1ZNNYobmMcmCDtcwX1RrgMcukQqRM/pSCTzLTs8mCvB1AYZ8FaOwOTmnG9R+OzoTIop7HNbgJEyCOdxWY+4UQNHGb3tVLfgE8wpZECYQ1c21kx63vAQyEdHlg6eKaMHqPNHufPhDy6E6cYsUNN/vW5oeeZs6AYeAPiXPMTvIH4OdVUMhPzffP1MdrLbwBOvOb1QQmtomH/nhbttO+2mtEQ4Qp4Aqvh7rtD0sUaS4UONd9gm6FrTpg2WZct5xya5s9VPg1bG3iQnQCZEsfzGIoIbrLo02DadPLQvY/5V/PbmzyK9jrMB0P2M25OvY7noS9c4IJ6p4XlPSGmfkMzYNQcM6KkTJT/794EeQVuu8E/gypTByaSSPgBXjqZJk3MckGATQvQ5YQ1cjPysyTNxAnYDq/ouPIIYiQF6Lg7kSj+N4NZZg5HyMBcOUrDqynG8cBkyHZVuwkS0agxXCk/fxTjG2Vi/gZhNAYbaAi1UPI59hT8xs0uqzuwn4a97tFnvhAD0Y6Sngjv0OLXniLp1D0lpSWwZL0HQCAo/qHea5ifkA1tOavluB5Xmk7BKVioJsNsTfK7kHcf+oeWWq4X9MA0S4Ap0D4a3aQJGu6cB/WR3U80aLYvnYHpUE+iwLRUp6+p0YfTeXXQKYBdqH/UGSzIy4Xzk03yXfbwJ5deWQCoPTYJYAhC+JT7Eq
+    azurestorageaccountname: >-
+      AgANbUFD/dvNvvdc7tbxYvarpvhi3VQ/qr9V+XO92ZL6hWhQ9dJnMJjMH4tP+8EJCbAoeAPD9gFvrRZZIJlWQip1ONRkDlcHFqEqoa1R/YmbfY9Hx9bAG2vhV4He6dwyRJGXEDD45uh5asL2g/zEh9e7eSJzzDbQbENloOnH/g8y/RUf7d851U8eP2G1fwXbBMLTGCCmuPWhk471rW0E0Dhr340pL6K2iVEfhxUTrhfcgnuotG/wgrkkTyX17DJdTs5xHS63chvf52akk35PRhAFHQXPBK9mcopeLlackGpECcoCMbtO0E63/8MXjj+keoHO6yaWoFtV5nI6E15lSpBRCC9L79/SvdjbYXb2zIOPIlket6Tdeu0wIRY3pza1thaP2cx3XqEMa25M5oRUpSdYt7jiC/63DPTrkpTnuyaIshvcIZ4KUl8YRdGTZOtWSJU6lSMWjhFXNS1Hpf1NZdb3L2uJeOYUesqFTRl0aod65O91Sn2Utfwh2Pvg9ENjQ/yI/3II5Gca1TEINty2KHqMXa3cB5/ZK9yuspLlAnv2cS9Xlm2R4S+EOO43hDPrkzmFDaWwcW+6dmbrJKNlNGKpKJmZ/4ACqh1f2wH6gTlTYodD+M+w946+K02KgWTAVmTmVvySo/okj5o4PDjp2QRU0GDOMgbVr87Yb71VoM5HGesyR9mPPbo+TXsFZVDRjUNLA4QcJle8NP8+fIu/qMw=
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.gitlab.com/app: socialgouv-1000jours
+        app.gitlab.com/env: master-dev42
+        app.gitlab.com/env.name: master-dev42
+      name: azure-les1000jours-volume
+      labels:
+        application: master-dev42-1000jours
+        owner: 1000jours
+        team: 1000jours
+        cert: wildcard
+    type: Opaque
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -312,14 +341,53 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: 1000jours-strapi-uploads
-  annotations: {}
+  name: uploads
+  annotations:
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: master-dev42
+    app.gitlab.com/env.name: master-dev42
+  labels:
+    application: master-dev42-1000jours
+    owner: 1000jours
+    team: 1000jours
+    cert: wildcard
+  namespace: 1000jours-85-master-dev42
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 5Gi
-  volumeMode: Filesystem
+  storageClassName: ''
+  selector:
+    matchLabels:
+      usage: master-dev42-1000jours-uploads
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: master-dev42-1000jours-uploads
+  labels:
+    usage: master-dev42-1000jours-uploads
+    application: master-dev42-1000jours
+    owner: 1000jours
+    team: 1000jours
+    cert: wildcard
+  annotations:
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: master-dev42
+    app.gitlab.com/env.name: master-dev42
+  namespace: 1000jours-85-master-dev42
+spec:
+  storageClassName: ''
+  accessModes:
+    - ReadWriteMany
+  azureFile:
+    secretName: azure-1000jours-volume
+    secretNamespace: 1000jours-85-master-dev42
+    shareName: uploads
+  capacity:
+    storage: 5Gi
+  persistentVolumeReclaimPolicy: Delete
 "
 `;

@@ -86,39 +86,28 @@ spec:
       containers:
         - image: harbor.fabrique.social.gouv.fr/1000jours/les1000jours-strapi:1.2.3
           livenessProbe:
-            failureThreshold: 6
             httpGet:
               path: /_health
               port: http
-            initialDelaySeconds: 30
-            periodSeconds: 5
-            timeoutSeconds: 5
           name: strapi
           ports:
             - containerPort: 1337
               name: http
           readinessProbe:
-            failureThreshold: 15
             httpGet:
               path: /_health
               port: http
-            initialDelaySeconds: 0
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 1
           resources:
-            limits:
-              cpu: 500m
-              memory: 1Gi
             requests:
               cpu: 50m
               memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
           startupProbe:
-            failureThreshold: 12
             httpGet:
               path: /_health
               port: http
-            periodSeconds: 5
           volumeMounts:
             - mountPath: /app/public/uploads
               name: uploads
@@ -144,6 +133,10 @@ spec:
               value: $(PGPASSWORD)
             - name: DATABASE_SSL
               value: 'true'
+      volumes:
+        - persistentVolumeClaim:
+            claimName: uploads
+          name: uploads
       initContainers:
         - env:
             - name: WAIT_FOR_RETRIES
@@ -161,12 +154,6 @@ spec:
             requests:
               cpu: 5m
               memory: 16Mi
-      volumes:
-        - persistentVolumeClaim:
-            claimName: 1000jours-strapi-uploads
-          name: uploads
-      nodeSelector:
-        workload: 1000jours-strapi
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -248,14 +235,51 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: 1000jours-strapi-uploads
-  annotations: {}
+  name: uploads
+  annotations:
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: prod
+    app.gitlab.com/env.name: prod
+  labels:
+    application: 1000jours
+    owner: 1000jours
+    team: 1000jours
+  namespace: les1000jours
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 5Gi
-  volumeMode: Filesystem
+  storageClassName: ''
+  selector:
+    matchLabels:
+      usage: 1000jours-uploads
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: 1000jours-uploads
+  labels:
+    usage: 1000jours-uploads
+    application: 1000jours
+    owner: 1000jours
+    team: 1000jours
+  annotations:
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: prod
+    app.gitlab.com/env.name: prod
+  namespace: les1000jours
+spec:
+  storageClassName: ''
+  accessModes:
+    - ReadWriteMany
+  azureFile:
+    secretName: azure-1000jours-volume
+    secretNamespace: les1000jours
+    shareName: uploads
+  capacity:
+    storage: 5Gi
+  persistentVolumeReclaimPolicy: Delete
 "
 `;
