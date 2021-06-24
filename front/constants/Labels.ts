@@ -105,7 +105,7 @@ export default {
         {
           boldIndexes: [12, 13],
           description:
-            "Passer le test EPDS (Edinburgh Postnatal Depression Scale) est un outil psychométrique internationalement reconnu.",
+            "Passer le test EPDS (Edinburgh Postnatal Depression Scale). C’est un outil psychométrique internationalement reconnu.",
           title: "Comment",
         },
       ],
