@@ -3,8 +3,8 @@ const CsvService = require("../../csv/services");
 const JsonService = require("../../json/services");
 
 const getType = (filePath) => {
-  if (filePath.match(/.csv$/)) return "csv";
   if (filePath.match(/\.(geo)?json$/)) return "json";
+  if (filePath.match(/.(csv|txt)$/)) return "csv";
 };
 
 const services = {

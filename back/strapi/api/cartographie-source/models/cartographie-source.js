@@ -124,10 +124,9 @@ const deleteSourcePois = async (source) => {
         )
         .whereRaw("(reference_elements->>'cartographie_source')::int = ?", [id])
     )
-    .delete()
-    .debug();
+    .delete();
 
-  console.log(res);
+  if (res) console.log(`[cartographie-source], deleting ${res} item(s)`);
 };
 
 module.exports = {
