@@ -1,3 +1,11 @@
+## [1.46.1](https://github.com/SocialGouv/1000jours/compare/v1.46.0...v1.46.1) (2021-06-24)
+
+
+### Bug Fixes
+
+* 🐛 Remplace les messages d'erreurs par un composant ([#382](https://github.com/SocialGouv/1000jours/issues/382)) ([54c4d01](https://github.com/SocialGouv/1000jours/commit/54c4d014048baa7ad2e285ee2cc4ef7b8c9a65bb))
+* **epds:** review design ([#385](https://github.com/SocialGouv/1000jours/issues/385)) ([30278e7](https://github.com/SocialGouv/1000jours/commit/30278e71e677ecd3acacd603e470c09f40d43a0c))
+
 # [1.46.0](https://github.com/SocialGouv/1000jours/compare/v1.45.2...v1.46.0) (2021-06-24)
 
 
