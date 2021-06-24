@@ -19,6 +19,7 @@ export default {
       "Trouvez tous les professionnels autour de vous qui pourront vous aider dans votre rôle de parents.",
     noAddressFound: "Aucune adresse n'a été trouvée dans cette zone",
     poiType: {
+      bibliothequePublique: "Bibliothèque publique",
       caf: "CAF",
       cpam: "CPAM",
       infirmier: "Infirmier",
@@ -26,6 +27,7 @@ export default {
       maisonDeNaissance: "Maison de naissance",
       maternite: "Maternité",
       medecin: "Médecin",
+      mediatheque: "Médiathèque",
       pediatre: "Pédiatre",
       planningFamilial: "Planning familial",
       pmi: "PMI",

@@ -6,6 +6,8 @@ import DetailsAddressIcon from "../../assets/images/carto/details_adresse.svg";
 import DetailsMailIcon from "../../assets/images/carto/details_mail.svg";
 import DetailsPhoneIcon from "../../assets/images/carto/details_tel.svg";
 import DetailsWebIcon from "../../assets/images/carto/details_web.svg";
+import TypeBibliothequeMediatheque from "../../assets/images/carto/type_bibliotheque_mediatheque.svg";
+import TypeDefaut from "../../assets/images/carto/type_defaut.svg";
 import TypeMairieIcon from "../../assets/images/carto/type_mairie.svg";
 import TypeMaisonNaissanceIcon from "../../assets/images/carto/type_maison_naissance.svg";
 import TypeMaterniteIcon from "../../assets/images/carto/type_maternite.svg";
@@ -56,10 +58,14 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
       iconsMap.set(poiTypeLabels.caf, <TypePmiCafCpamIcon />);
       iconsMap.set(poiTypeLabels.cpam, <TypePmiCafCpamIcon />);
       iconsMap.set(poiTypeLabels.mairie, <TypeMairieIcon />);
+      iconsMap.set(
+        poiTypeLabels.bibliothequePublique,
+        <TypeBibliothequeMediatheque />
+      );
+      iconsMap.set(poiTypeLabels.mediatheque, <TypeBibliothequeMediatheque />);
 
       iconType = iconsMap.get(typePoi);
-      // Au cas où la catégorie n'a pas d'icône, on affiche celle des pros de santé
-      if (!iconType) iconType = <CategorieProSanteIcon />;
+      if (!iconType) iconType = <TypeDefaut />;
     }
     return iconType;
   };
