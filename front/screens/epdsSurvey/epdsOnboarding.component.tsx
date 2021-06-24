@@ -32,7 +32,10 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
   ) => {
     return label.split(" ").map((eachWord: string, index: number) => {
       return (
-        <SecondaryText style={boldIndexes.includes(index) && styles.fontBold}>
+        <SecondaryText
+          key={`text_${index}`}
+          style={boldIndexes.includes(index) && styles.fontBold}
+        >
           {eachWord}{" "}
         </SecondaryText>
       );
