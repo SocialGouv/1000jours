@@ -1,3 +1,10 @@
+## [1.45.2](https://github.com/SocialGouv/1000jours/compare/v1.45.1...v1.45.2) (2021-06-24)
+
+
+### Bug Fixes
+
+* **carto:** Traite les fichiers .txt comme des csv ([#373](https://github.com/SocialGouv/1000jours/issues/373)) ([03d6bb3](https://github.com/SocialGouv/1000jours/commit/03d6bb36a17f39d41b84e8a3e4eb10bd58c54562))
+
 ## [1.45.1](https://github.com/SocialGouv/1000jours/compare/v1.45.0...v1.45.1) (2021-06-24)
 
 
