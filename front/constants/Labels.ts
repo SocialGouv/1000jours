@@ -92,17 +92,20 @@ export default {
     onboarding: {
       paragraphs: [
         {
+          boldIndexes: [4, 5, 6, 7],
           description:
-            "La dépression post-partum touche 1 femme sur 5 en France (ainsi que les hommes).\nCe sujet est tabou car mal identifié et sous-estimé.\nLes difficultés parentales / Le baby blues / Le burn-out /La dépression post-partum",
+            "La dépression post-partum touche 1 femme sur 5 en France (ainsi que les hommes).\nCe sujet est tabou car ses maux sont mal identifiés et sous-estimés (les difficultés parentales / le baby blues / le burn-out / la dépression post-partum).",
           title: "Constat",
         },
         {
+          boldIndexes: [3],
           description: "Prévenir de façon anonyme la dépression post-partum.",
           title: "Objectif",
         },
         {
+          boldIndexes: [12, 13],
           description:
-            "Passer le test EPDS (Edinburgh Postnatal Depression Scale) est un outil psychométrique internationalement reconnu",
+            "Passer le test EPDS (Edinburgh Postnatal Depression Scale) est un outil psychométrique internationalement reconnu.",
           title: "Comment",
         },
       ],
@@ -110,10 +113,10 @@ export default {
         "Ce questionnaire n'est pas un diagnostic et ne remplace pas un professionnel de la santé.",
       steps: {
         elements: [
-          "Être accompagné·e",
-          "Répondre aux 10 questions",
+          "Passer le test",
           "Accéder aux résultats",
-          "Trouver mon aide",
+          "Trouver une aide adaptée",
+          "Repasser le test",
         ],
         title: "Étapes",
       },
@@ -210,7 +213,7 @@ export default {
       },
       retakeTestInvitation: `Vous serez invité à repasser le test dans ${NUMBER_OF_DAYS_NOTIF_REMINDER} jours`,
     },
-    title: "Autodépistage dépression post-partum",
+    title: "Et si c'était une dépression post-partum ?",
     titleResults: "Résultats",
   },
   errorMsg: "Une erreur est survenue, merci de réessayer plus tard",

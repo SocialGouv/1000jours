@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
   itemBorder: {
     borderBottomColor: Colors.disabled,
     borderBottomWidth: 1,
-    marginHorizontal: Margins.smaller,
+    marginLeft: -Margins.epdsResultLeftMargin,
+    marginRight: Margins.smaller,
     paddingVertical: Paddings.smaller,
   },
   paragraphDescription: {
