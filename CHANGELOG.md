@@ -1,3 +1,10 @@
+## [1.45.1](https://github.com/SocialGouv/1000jours/compare/v1.45.0...v1.45.1) (2021-06-24)
+
+
+### Bug Fixes
+
+* **k8s:** Augmente la limite de taille des fichiers téléchargés vers le backoffice ([#372](https://github.com/SocialGouv/1000jours/issues/372)) ([479983d](https://github.com/SocialGouv/1000jours/commit/479983d4dd7f5329de526f1e3d53db0c19292be6))
+
 # [1.45.0](https://github.com/SocialGouv/1000jours/compare/v1.44.0...v1.45.0) (2021-06-24)
 
 
