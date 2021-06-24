@@ -13,6 +13,10 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
+import {
+  PLATFORM_IS_IOS,
+  SCREEN_WIDTH,
+} from "../../constants/platform.constants";
 import { AroundMeUtils, KeyboardUtils } from "../../utils";
 
 interface Props {
@@ -65,7 +69,10 @@ const SearchByPostalCode: React.FC<Props> = ({
     <View>
       <View style={styles.postalCodeRow}>
         <TextInput
-          style={styles.postalCodeInput}
+          style={[
+            styles.postalCodeInput,
+            PLATFORM_IS_IOS && styles.widthForIos,
+          ]}
           onChangeText={onPostalCodeChanged}
           value={postalCodeInput}
           placeholder={Labels.aroundMe.postalCodeInputPlaceholder}
@@ -107,6 +114,9 @@ const styles = StyleSheet.create({
   },
   searchByPostalCodeButton: {
     marginHorizontal: Margins.smaller,
+  },
+  widthForIos: {
+    width: SCREEN_WIDTH / 2.2,
   },
 });
 

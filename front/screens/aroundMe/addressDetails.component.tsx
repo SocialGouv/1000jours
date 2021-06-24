@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
   columnView: {
     flexDirection: "column",
-    width: SCREEN_WIDTH / 2.16,
+    width: SCREEN_WIDTH / 2.4,
   },
   contact: {
     color: Colors.primaryBlue,
