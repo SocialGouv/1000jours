@@ -2,7 +2,7 @@
 
 const PoiService = require("../services");
 
-const params = ["perimetre", "types", "thematiques"];
+const params = ["perimetre", "types", "thematiques", "etapes"];
 
 const search = async (context) => {
   try {
