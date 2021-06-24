@@ -1,3 +1,10 @@
+# [1.46.0](https://github.com/SocialGouv/1000jours/compare/v1.45.2...v1.46.0) (2021-06-24)
+
+
+### Features
+
+* **carto:** Ajoute le filtre de POIs par étapes dans l'API ([#381](https://github.com/SocialGouv/1000jours/issues/381)) ([a383a2b](https://github.com/SocialGouv/1000jours/commit/a383a2b0e8371785d487388566d10962047205b6))
+
 ## [1.45.2](https://github.com/SocialGouv/1000jours/compare/v1.45.1...v1.45.2) (2021-06-24)
 
 
