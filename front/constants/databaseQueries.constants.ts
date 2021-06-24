@@ -29,14 +29,24 @@ export const EPDS_ADD_RESPONSE = gql`
   }
 `;
 
+export const AROUNDME_TYPES_FILTER = gql`
+  query {
+    cartographieTypes {
+      nom
+      categorie
+    }
+  }
+`;
+
 export const AROUNDME_POIS_BY_GPSCOORDS = gql`
   query PoisByGPSCoords(
     $long1: Float!
     $lat1: Float!
     $long2: Float!
     $lat2: Float!
+    $types: [String!]
   ) {
-    searchPois(perimetre: [$long1, $lat1, $long2, $lat2]) {
+    searchPois(perimetre: [$long1, $lat1, $long2, $lat2], types: $types) {
       nom
       type
       categorie

@@ -16,3 +16,18 @@ export interface CartographiePoisFromDB {
   position_latitude: number;
   position_longitude: number;
 }
+
+export interface PoiTypeFromDB {
+  nom: string;
+  categorie: string;
+}
+
+export interface CartoFilter {
+  name: string;
+  active: boolean;
+}
+
+export interface CartoFilters {
+  structures: CartoFilter[];
+  professionnels: CartoFilter[];
+}
