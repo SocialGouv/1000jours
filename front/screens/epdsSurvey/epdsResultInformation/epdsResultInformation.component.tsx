@@ -80,11 +80,13 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
             <List.Accordion
               style={styles.accordion}
               left={() => (
-                <Icomoon
-                  name={professional.sectionIcon}
-                  size={Sizes.xxl}
-                  color={Colors.primaryBlue}
-                />
+                <View style={styles.icon}>
+                  <Icomoon
+                    name={professional.sectionIcon}
+                    size={Sizes.xxl}
+                    color={Colors.primaryBlue}
+                  />
+                </View>
               )}
               expanded={expandedAccordions[professionalIndex]}
               onPress={() => {
@@ -117,6 +119,9 @@ const styles = StyleSheet.create({
     borderWidth: Margins.smallest,
     marginVertical: Margins.smaller,
   },
+  icon: {
+    marginHorizontal: Margins.smaller,
+  },
   sectionDescription: {
     color: Colors.commonText,
     paddingVertical: Paddings.smaller,
@@ -124,7 +129,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     color: Colors.primaryBlueDark,
     fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
-    fontSize: Sizes.xs,
+    fontSize: Sizes.sm,
   },
 });
 

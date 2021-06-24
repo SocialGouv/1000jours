@@ -143,7 +143,6 @@ const styles = StyleSheet.create({
   },
   rowView: {
     flexDirection: "row",
-    marginLeft: Margins.default,
   },
   stateOfMind: {
     alignSelf: "center",
