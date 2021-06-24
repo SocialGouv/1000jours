@@ -35,11 +35,7 @@ const Chip: React.FC<Props> = ({
   };
 
   const fontSize = {
-    fontSize: changeSizeForIos
-      ? PLATFORM_IS_IOS
-        ? Sizes.xxs
-        : Sizes.xs
-      : Sizes.xs,
+    fontSize: changeSizeForIos && PLATFORM_IS_IOS ? Sizes.xxs : Sizes.xs,
   };
 
   return (
