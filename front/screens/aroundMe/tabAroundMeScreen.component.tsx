@@ -22,6 +22,7 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
+import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import type { CartographiePoisFromDB } from "../../type";
 import { KeyboardUtils } from "../../utils";
 import AddressDetails from "./addressDetails.component";
@@ -82,7 +83,16 @@ const TabAroundMeScreen: React.FC = () => {
     et donc on ne cache pas directement la snackBar si elle a été affichée (en cas d'erreur) */
     if (moveToRegionBecauseOfPCResearch) {
       setMoveToRegionBecauseOfPCResearch(false);
-      setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+      /* sur iOS, cette fonction est appelée juste avant que la carte ait terminé de se déplacer,
+      du coup on se retrouve avec des mauvaises adresses qui ne s'affichent pas sur la bonne zone,
+      donc on est obligé de mettre un petit timeout */
+      if (PLATFORM_IS_IOS) {
+        setTimeout(() => {
+          setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+        }, 1000);
+      } else {
+        setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+      }
     } else {
       setShowSnackBar(false);
     }
