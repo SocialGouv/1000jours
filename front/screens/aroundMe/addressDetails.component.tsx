@@ -22,6 +22,7 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
+import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import type { CartographiePoisFromDB } from "../../type";
 import { LinkingUtils, StringUtils } from "../../utils";
 
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
   },
   columnView: {
     flexDirection: "column",
-    maxWidth: "80%",
+    width: SCREEN_WIDTH / 2.16,
   },
   contact: {
     color: Colors.primaryBlue,
@@ -179,13 +180,13 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlueDark,
     fontSize: Sizes.xs,
     fontWeight: FontWeight.bold,
-    width: "95%",
+    width: SCREEN_WIDTH / 1.28,
   },
   phoneAndMail: {
     flexDirection: "row",
     flexWrap: "wrap",
     marginVertical: Margins.evenMoreSmallest,
-    maxWidth: "80%",
+    width: SCREEN_WIDTH / 1.28,
   },
   rowContainer: {
     flexDirection: "row",
