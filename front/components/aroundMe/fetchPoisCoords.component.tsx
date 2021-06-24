@@ -30,12 +30,10 @@ const FetchPoisCoords: React.FC<Props> = ({
     {
       fetchPolicy: "no-cache",
       onCompleted: (data) => {
-        const fetchedData = (
-          data as {
-            searchPois: CartographiePoisFromDB[];
-          }
-        ).searchPois;
-        setFetchedPois(fetchedData);
+        const { searchPois } = data as {
+          searchPois: CartographiePoisFromDB[];
+        };
+        setFetchedPois(searchPois);
       },
     }
   );

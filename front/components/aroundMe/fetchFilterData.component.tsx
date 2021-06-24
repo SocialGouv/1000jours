@@ -14,12 +14,10 @@ const FetchFilterData: React.FC<Props> = ({ children, setPoiTypes }) => {
   const [getFilterData] = useLazyQuery(DatabaseQueries.AROUNDME_TYPES_FILTER, {
     fetchPolicy: "no-cache",
     onCompleted: (data) => {
-      const fetchedData = (
-        data as {
-          cartographieTypes: PoiTypeFromDB[];
-        }
-      ).cartographieTypes;
-      setPoiTypes(fetchedData);
+      const { cartographieTypes } = data as {
+        cartographieTypes: PoiTypeFromDB[];
+      };
+      setPoiTypes(cartographieTypes);
     },
   });
 
