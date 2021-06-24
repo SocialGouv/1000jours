@@ -1,3 +1,10 @@
+# [1.45.0](https://github.com/SocialGouv/1000jours/compare/v1.44.0...v1.45.0) (2021-06-24)
+
+
+### Features
+
+* **carto:** filtre pour les POI ([#369](https://github.com/SocialGouv/1000jours/issues/369)) ([c21aebc](https://github.com/SocialGouv/1000jours/commit/c21aebc035390f6148ae56f40ac1bdf88d0267dd))
+
 # [1.44.0](https://github.com/SocialGouv/1000jours/compare/v1.43.0...v1.44.0) (2021-06-23)
 
 
