@@ -213,7 +213,7 @@ export default {
       },
       retakeTestInvitation: `Vous serez invité à repasser le test dans ${NUMBER_OF_DAYS_NOTIF_REMINDER} jours`,
     },
-    title: "Autodépistage dépression post-partum",
+    title: "Et si c'était une dépression post-partum ?",
     titleResults: "Résultats",
   },
   errorMsg: "Une erreur est survenue, merci de réessayer plus tard",

@@ -24,31 +24,33 @@ const EpdsLoadPreviousSurvey: React.FC<EpdsLoadPreviousSurveyProps> = ({
   return (
     <View style={styles.mainContainer}>
       <TitleH1 title={Labels.epdsSurvey.title} animated={false} />
-      <SecondaryText style={styles.instruction}>
-        {Labels.epdsSurvey.previousSurvey.messsage}
-      </SecondaryText>
-      <View style={styles.buttonsContainer}>
-        <View style={styles.buttonContainer}>
-          <Button
-            title={Labels.epdsSurvey.previousSurvey.continueButton}
-            titleStyle={styles.titleButtonStyle}
-            buttonStyle={styles.buttonStyle}
-            rounded={true}
-            action={() => {
-              startSurveyOver(false);
-            }}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            title={Labels.epdsSurvey.previousSurvey.startOverButton}
-            titleStyle={styles.titleButtonStyle}
-            buttonStyle={styles.buttonStyle}
-            rounded={true}
-            action={() => {
-              startSurveyOver(true);
-            }}
-          />
+      <View style={styles.content}>
+        <SecondaryText style={styles.instruction}>
+          {Labels.epdsSurvey.previousSurvey.messsage}
+        </SecondaryText>
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <Button
+              title={Labels.epdsSurvey.previousSurvey.continueButton}
+              titleStyle={styles.titleButtonStyle}
+              buttonStyle={styles.buttonStyle}
+              rounded={true}
+              action={() => {
+                startSurveyOver(false);
+              }}
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              title={Labels.epdsSurvey.previousSurvey.startOverButton}
+              titleStyle={styles.titleButtonStyle}
+              buttonStyle={styles.buttonStyle}
+              rounded={true}
+              action={() => {
+                startSurveyOver(true);
+              }}
+            />
+          </View>
         </View>
       </View>
     </View>
@@ -65,6 +67,10 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: "row",
   },
+  content: {
+    flex: 1,
+    justifyContent: "center",
+  },
   instruction: {
     color: Colors.commonText,
     fontSize: Sizes.sm,
@@ -73,7 +79,6 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    justifyContent: "space-between",
   },
   titleButtonStyle: {
     fontSize: Sizes.xs,
