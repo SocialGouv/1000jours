@@ -1,4 +1,4 @@
-name: Expo Publish Dev
+name: Publish on ExpoGo (PreProd)
 on:
   push:
     branches:
@@ -11,10 +11,10 @@ on:
 
 jobs:
   Publish:
-    name: Publish Dev
+    name: Publish PreProd
     runs-on: ubuntu-latest
     env:
-      API_URL: ${{ secrets.API_URL }}
+      API_URL: ${{ secrets.API_URL_PREPROD }}
       CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
       MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
       MATOMO_URL: ${{ secrets.MATOMO_URL }}
@@ -32,4 +32,5 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn publish-dev
+          yarn publish-preprod
+          

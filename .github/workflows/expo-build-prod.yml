@@ -1,4 +1,4 @@
-name: Expo Build Dev
+name: Expo Build Prod
 on:
   workflow_dispatch:
     name:
@@ -6,10 +6,10 @@ on:
 
 jobs:
   Build-android:
-    name: Build and publish Android for staging
+    name: Build and publish Android for Prod
     runs-on: ubuntu-latest
     env:
-      API_URL: ${{ secrets.API_URL }}
+      API_URL: ${{ secrets.API_URL_PROD }}
       CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
       MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
       MATOMO_URL: ${{ secrets.MATOMO_URL }}
@@ -27,13 +27,13 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn build-staging:android
+          yarn build-prod:android
 
   Build-ios:
-    name: Build and publish iOS for staging
+    name: Build and publish iOS for Prod
     runs-on: ubuntu-latest
     env:
-      API_URL: ${{ secrets.API_URL }}
+      API_URL: ${{ secrets.API_URL_PROD }}
       CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
       MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
       MATOMO_URL: ${{ secrets.MATOMO_URL }}
@@ -51,4 +51,4 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn build-staging:ios
+          yarn build-prod:ios
