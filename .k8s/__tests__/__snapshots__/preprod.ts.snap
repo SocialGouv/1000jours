@@ -251,6 +251,7 @@ metadata:
     app.gitlab.com/app: socialgouv-1000jours
     app.gitlab.com/env: preprod-dev42
     app.gitlab.com/env.name: preprod-dev42
+    nginx.ingress.kubernetes.io/proxy-body-size: 1g
   labels:
     app: strapi
     application: v1-2-3-1000jours
