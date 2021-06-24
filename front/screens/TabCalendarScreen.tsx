@@ -11,12 +11,13 @@ import {
   Agenda,
   Button,
   CommonText,
+  ErrorMessage,
   Events,
   Icomoon,
   IcomoonIcons,
   TitleH1,
 } from "../components";
-import { Text, View } from "../components/Themed";
+import { View } from "../components/Themed";
 import {
   Colors,
   Labels,
@@ -58,7 +59,7 @@ const TabCalendarScreen: FC = () => {
   const { loading, error, data } = useQuery(ALL_STEPS);
 
   if (loading) return <ActivityIndicator size="large" />;
-  if (error) return <Text>{Labels.errorMsg}</Text>;
+  if (error) return <ErrorMessage error={error} />;
 
   const evenements = (data as { evenements: Event[] }).evenements;
 
