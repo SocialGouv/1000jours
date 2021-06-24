@@ -145,6 +145,15 @@ export default async () => {
     },
   });
 
+  // add nginx annotation for nginx upload limit
+  const ingress = manifests.find(m=>m.kind==="Ingress") as Deployment;
+  if (ingress && ingress.metadata?.annotations) {
+    ingress.metadata.annotations = {
+      ...ingress.metadata.annotations,
+      "nginx.ingress.kubernetes.io/proxy-body-size": "1g"
+    }
+  }
+
   // add a nodeSelector to improve volume/deploy performance  // TODO
   const deployment = manifests.find(m=>m.kind==="Deployment") as Deployment;
   if (deployment && deployment?.spec?.template.spec) {
