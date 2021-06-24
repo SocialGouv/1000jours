@@ -30,13 +30,16 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
 
   const titleStyle = [styles.contactName, { fontSize: Sizes.sm }];
   return (
-    <View style={styles.itemBorder}>
+    <View style={[styles.itemBorder, styles.marginLeft]}>
       {paragraphTitle && paragraphTitle.length > 0 && (
         <SecondaryText style={titleStyle}>{paragraphTitle}</SecondaryText>
       )}
       {contacts.map((contact, index) => (
         <View
-          style={index !== contacts.length - 1 && styles.itemBorder}
+          style={[
+            index !== contacts.length - 1 && styles.itemBorder,
+            styles.paddingVertical,
+          ]}
           key={index}
         >
           <SecondaryText style={[styles.contactName, titleColorStyle]}>
@@ -93,7 +96,12 @@ const styles = StyleSheet.create({
   itemBorder: {
     borderBottomColor: Colors.disabled,
     borderBottomWidth: 1,
-    paddingHorizontal: Paddings.smaller,
+    paddingRight: Paddings.smaller,
+  },
+  marginLeft: {
+    marginLeft: -Margins.epdsResultLeftMargin,
+  },
+  paddingVertical: {
     paddingVertical: Paddings.default,
   },
 });
