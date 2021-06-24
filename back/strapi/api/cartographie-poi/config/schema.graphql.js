@@ -7,10 +7,11 @@ const getPoisResolver = async (_1, _2, { context }) => {
     _perimetre: perimetre,
     _types: types,
     _thematiques: thematiques,
+    _etapes: etapes,
   } = context.params;
 
   try {
-    return PoiService.search({ perimetre, types, thematiques });
+    return PoiService.search({ perimetre, types, thematiques, etapes });
   } catch (e) {
     context.badRequest(e.message);
   }
@@ -37,6 +38,7 @@ module.exports = {
       perimetre: [Float!]!
       types: [String!]
       thematiques: [String!]
+      etapes: [String!]
     ): [CartographiePoiAdresse]
   `,
   resolver: {
