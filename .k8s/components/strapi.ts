@@ -1,14 +1,10 @@
 import env from "@kosko/env";
 import { create } from "@socialgouv/kosko-charts/components/app";
-
-import { updateMetadata } from "@socialgouv/kosko-charts/utils/updateMetadata";
+import { azureProjectVolume } from "@socialgouv/kosko-charts/components/azure-storage/azureProjectVolume";
 import { addEnvs } from "@socialgouv/kosko-charts/utils/addEnvs";
-import gitlab from "@socialgouv/kosko-charts/environments/gitlab";
 import { getIngressHost } from "@socialgouv/kosko-charts/utils/getIngressHost";
 import { getDeployment } from "@socialgouv/kosko-charts/utils/getDeployment";
 import { getHarborImagePath } from "@socialgouv/kosko-charts/utils/getHarborImagePath";
-import { PersistentVolume } from "kubernetes-models/v1";
-import { PersistentVolumeClaim } from "kubernetes-models/v1";
 import {
   VolumeMount,
   Probe,
@@ -16,11 +12,6 @@ import {
   Volume,
 } from "kubernetes-models/v1";
 
-const globalEnv = gitlab(process.env);
-
-const metadata = {
-  name: "uploads",
-};
 const prob = new Probe({
   httpGet: {
     path: "/_health",
@@ -93,60 +84,3 @@ export default async () => {
 
   return manifests.concat([persistentVolumeClaim, persistentVolume]);
 };
-
-function azureProjectVolume(name: string, { storage }: { storage: string }) {
-  const globalEnv = gitlab(process.env);
-  const application = globalEnv.labels!.application;
-  const metadata = {
-    annotations: globalEnv.annotations || {},
-    labels: globalEnv.labels || {},
-    namespace: globalEnv.namespace,
-  };
-  const pv = `${application}-${name}`;
-
-  const persistentVolumeClaim = new PersistentVolumeClaim({
-    metadata: {
-      name,
-    },
-    spec: {
-      accessModes: ["ReadWriteMany"],
-      resources: {
-        requests: {
-          storage,
-        },
-      },
-      storageClassName: "",
-      selector: {
-        matchLabels: {
-          usage: pv,
-        },
-      },
-    },
-  });
-
-  const persistentVolume = new PersistentVolume({
-    metadata: {
-      name: pv,
-      labels: {
-        usage: pv,
-      },
-    },
-    spec: {
-      storageClassName: "",
-      accessModes: ["ReadWriteMany"],
-      azureFile: {
-        secretName: `azure-${globalEnv.labels!.team}-volume`,
-        secretNamespace: globalEnv.namespace.name,
-        shareName: name,
-      },
-      capacity: {
-        storage,
-      },
-      persistentVolumeReclaimPolicy: "Delete",
-    },
-  });
-
-  updateMetadata(persistentVolumeClaim, metadata);
-  updateMetadata(persistentVolume, metadata);
-  return [persistentVolumeClaim, persistentVolume];
-}
