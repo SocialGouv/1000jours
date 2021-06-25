@@ -11,11 +11,7 @@ jobs:
 #    needs: Build-android
     runs-on: ubuntu-latest
     env:
-      API_URL: ${{ secrets.API_URL_PROD }}
-      CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
       PLAY_STORE_API_KEY: ${{ secrets.PLAY_STORE_API_KEY }}
-      MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
-      MATOMO_URL: ${{ secrets.MATOMO_URL }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -38,10 +34,7 @@ jobs:
  #   needs: Build-ios
     runs-on: macOS-latest
     env:
-      API_URL: ${{ secrets.API_URL_PROD }}
-      CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
-      FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
-      FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+      APP_STORE_API_KEY: ${{ secrets.APP_STORE_API_KEY }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2

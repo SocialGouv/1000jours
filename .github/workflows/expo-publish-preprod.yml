@@ -17,7 +17,12 @@ jobs:
       API_URL: ${{ secrets.API_URL_PREPROD }}
       CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
       MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
+      MATOMO_ENABLED: ${{ secrets.MATOMO_ENABLED }}
       MATOMO_URL: ${{ secrets.MATOMO_URL }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      SENTRY_ENABLED: ${{ secrets.SENTRY_ENABLED }}
+      SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
+      GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
