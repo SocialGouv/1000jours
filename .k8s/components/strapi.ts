@@ -13,6 +13,8 @@ import {
 } from "kubernetes-models/v1";
 import { Ingress } from "kubernetes-models/api/networking/v1";
 
+const component = "strapi";
+const params = env.component(component);
 const prob = new Probe({
   httpGet: {
     path: "/_health",
@@ -40,6 +42,7 @@ export default async () => {
     persistentVolumeClaim: { claimName: persistentVolumeClaim.metadata!.name! },
     name,
   });
+  const emptyDir = new Volume({ name, emptyDir: {} });
 
   const uploadsVolumeMount = new VolumeMount({
     mountPath: "/app/public/uploads",
@@ -47,7 +50,7 @@ export default async () => {
   });
 
   // generate basic strapi manifests
-  const manifests = await create("strapi", {
+  const manifests = await create(component, {
     env,
     config: {
       withPostgres: true,
@@ -63,7 +66,7 @@ export default async () => {
         resources,
         volumeMounts: [uploadsVolumeMount],
       },
-      volumes: [uploadsVolume],
+      volumes: [params.useEmptyDirAsVolume ? emptyDir : uploadsVolume],
     },
   });
   const deployment = getDeployment(manifests);
@@ -92,5 +95,7 @@ export default async () => {
     },
   });
 
-  return manifests.concat([persistentVolumeClaim, persistentVolume]);
+  return manifests.concat(
+    params.useEmptyDirAsVolume ? [] : [persistentVolumeClaim, persistentVolume]
+  );
 };
