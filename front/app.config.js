@@ -5,6 +5,11 @@ export default {
         backgroundColor: "#FFFFFF",
         foregroundImage: "./assets/images/adaptive-icon.png",
       },
+      config: {
+        googleMaps: {
+          apiKey: process.env.GOOGLE_MAPS_API_KEY,
+        },
+      },
       package: "com.fabrique.millejours",
       versionCode: 8,
     },
