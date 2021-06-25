@@ -1,3 +1,12 @@
+## [1.46.2](https://github.com/SocialGouv/1000jours/compare/v1.46.1...v1.46.2) (2021-06-25)
+
+
+### Bug Fixes
+
+* **android:** ajout l'apiKey pour Google Maps ([#390](https://github.com/SocialGouv/1000jours/issues/390)) ([5529599](https://github.com/SocialGouv/1000jours/commit/55295993656eaf0ba30bf2d3b2269290742a9881))
+* 🐛 Supprime la page LoadingScreen du StackNavigatior ([#386](https://github.com/SocialGouv/1000jours/issues/386)) ([e7b7377](https://github.com/SocialGouv/1000jours/commit/e7b7377156356379748c2173f36749c9ad86fdcb))
+* **carto:** corrections de bugs sur la carto et l'EPDS ([#387](https://github.com/SocialGouv/1000jours/issues/387)) ([c320da1](https://github.com/SocialGouv/1000jours/commit/c320da173ff1eb12328ef72114e2d7e9aea4191f))
+
 ## [1.46.1](https://github.com/SocialGouv/1000jours/compare/v1.46.0...v1.46.1) (2021-06-24)
 
 
