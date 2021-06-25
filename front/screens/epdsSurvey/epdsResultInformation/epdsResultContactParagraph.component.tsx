@@ -4,7 +4,14 @@ import { StyleSheet } from "react-native";
 import Button from "../../../components/base/button.component";
 import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
-import { Colors, FontWeight, Labels, Margins, Sizes } from "../../../constants";
+import {
+  Colors,
+  FontWeight,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../../../constants";
 import type { EpdsResultContactInformation } from "../../../type";
 import { LinkingUtils } from "../../../utils";
 
@@ -23,13 +30,16 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
 
   const titleStyle = [styles.contactName, { fontSize: Sizes.sm }];
   return (
-    <View style={styles.itemBorder}>
+    <View style={[styles.itemBorder, styles.marginLeft]}>
       {paragraphTitle && paragraphTitle.length > 0 && (
         <SecondaryText style={titleStyle}>{paragraphTitle}</SecondaryText>
       )}
       {contacts.map((contact, index) => (
         <View
-          style={index !== contacts.length - 1 && styles.itemBorder}
+          style={[
+            index !== contacts.length - 1 && styles.itemBorder,
+            styles.paddingVertical,
+          ]}
           key={index}
         >
           <SecondaryText style={[styles.contactName, titleColorStyle]}>
@@ -68,6 +78,7 @@ const styles = StyleSheet.create({
     color: Colors.commonText,
     fontSize: Sizes.sm,
     lineHeight: Sizes.mmd,
+    marginVertical: Margins.smallest,
   },
   contactName: {
     color: Colors.commonText,
@@ -85,7 +96,13 @@ const styles = StyleSheet.create({
   itemBorder: {
     borderBottomColor: Colors.disabled,
     borderBottomWidth: 1,
-    padding: Margins.smaller,
+    paddingRight: Paddings.smaller,
+  },
+  marginLeft: {
+    marginLeft: -Margins.epdsResultLeftMargin,
+  },
+  paddingVertical: {
+    paddingVertical: Paddings.default,
   },
 });
 

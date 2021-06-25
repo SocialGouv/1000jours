@@ -7,6 +7,7 @@ import { useState } from "react";
 import { StyleSheet } from "react-native";
 import { Card, List } from "react-native-paper";
 
+import { Icomoon } from "../../../components";
 import { View } from "../../../components/Themed";
 import {
   Colors,
@@ -77,6 +78,16 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
         <View key={professionalIndex}>
           <Card style={[styles.card, borderColorStyle]}>
             <List.Accordion
+              style={styles.accordion}
+              left={() => (
+                <View style={styles.icon}>
+                  <Icomoon
+                    name={professional.sectionIcon}
+                    size={Sizes.xxl}
+                    color={Colors.primaryBlue}
+                  />
+                </View>
+              )}
               expanded={expandedAccordions[professionalIndex]}
               onPress={() => {
                 onAccordionPressed(professionalIndex);
@@ -99,9 +110,17 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
 };
 
 const styles = StyleSheet.create({
+  accordion: {
+    backgroundColor: Colors.cardWhite,
+  },
   card: {
+    borderColor: Colors.cardGrey,
     borderStartWidth: Margins.smaller,
+    borderWidth: Margins.smallest,
     marginVertical: Margins.smaller,
+  },
+  icon: {
+    marginHorizontal: Margins.smaller,
   },
   sectionDescription: {
     color: Colors.commonText,

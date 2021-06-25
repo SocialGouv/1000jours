@@ -4,7 +4,13 @@ import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
-import { Button, CustomSnackbar, TitleH1 } from "../../components";
+import {
+  Button,
+  CustomSnackbar,
+  Icomoon,
+  IcomoonIcons,
+  TitleH1,
+} from "../../components";
 import FetchPoisCoords from "../../components/aroundMe/fetchPoisCoords.component";
 import { View } from "../../components/Themed";
 import {
@@ -16,9 +22,11 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
+import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import type { CartographiePoisFromDB } from "../../type";
 import { KeyboardUtils } from "../../utils";
 import AddressDetails from "./addressDetails.component";
+import AroundMeFilter from "./aroundMeFilter.component";
 import SearchByPostalCode from "./searchByPostalCode.component";
 import SlidingUpPanelAddressesList from "./slidingUpPanelAddressesList.component";
 
@@ -52,6 +60,7 @@ const TabAroundMeScreen: React.FC = () => {
   const [showAddressesList, setShowAddressesList] = useState(false);
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
+  const [showFilter, setShowFilter] = useState(false);
 
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
@@ -74,7 +83,16 @@ const TabAroundMeScreen: React.FC = () => {
     et donc on ne cache pas directement la snackBar si elle a été affichée (en cas d'erreur) */
     if (moveToRegionBecauseOfPCResearch) {
       setMoveToRegionBecauseOfPCResearch(false);
-      setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+      /* sur iOS, cette fonction est appelée juste avant que la carte ait terminé de se déplacer,
+      du coup on se retrouve avec des mauvaises adresses qui ne s'affichent pas sur la bonne zone,
+      donc on est obligé de mettre un petit timeout */
+      if (PLATFORM_IS_IOS) {
+        setTimeout(() => {
+          setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+        }, 1000);
+      } else {
+        setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+      }
     } else {
       setShowSnackBar(false);
     }
@@ -162,6 +180,24 @@ const TabAroundMeScreen: React.FC = () => {
             </View>
           ))}
         </MapView>
+        <View style={styles.filterView}>
+          <Button
+            buttonStyle={styles.relaunchSearchButton}
+            title={Labels.listArticles.filters}
+            titleStyle={styles.relaunchSearchButtonText}
+            rounded={true}
+            icon={
+              <Icomoon
+                name={IcomoonIcons.filtrer}
+                size={Sizes.sm}
+                color={Colors.primaryBlue}
+              />
+            }
+            action={() => {
+              setShowFilter(true);
+            }}
+          />
+        </View>
         {showRelaunchResearchButton && (
           <View style={styles.relaunchSearchView}>
             <Button
@@ -197,6 +233,15 @@ const TabAroundMeScreen: React.FC = () => {
         poisArrayInList.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
           <SlidingUpPanelAddressesList poisArray={poisArrayInList} />
         )}
+      <AroundMeFilter
+        visible={showFilter}
+        hideModal={(filterWasSaved: boolean) => {
+          setShowFilter(false);
+          if (filterWasSaved) {
+            setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+          }
+        }}
+      />
     </View>
   );
 };
@@ -224,6 +269,13 @@ const styles = StyleSheet.create({
   },
   columnView: {
     flexDirection: "column",
+  },
+  filterView: {
+    backgroundColor: "transparent",
+    left: 0,
+    margin: Margins.smaller,
+    position: "absolute",
+    top: 0,
   },
   fontButton: {
     fontSize: Sizes.xxs,

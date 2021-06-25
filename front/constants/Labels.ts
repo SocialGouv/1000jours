@@ -1,3 +1,4 @@
+import { IcomoonIcons } from "../components/base/icomoon.component";
 import { NUMBER_OF_DAYS_NOTIF_REMINDER } from "./epdsConstants.constants";
 import { epdsInformation } from "./epdsResultInformation.constants";
 
@@ -6,11 +7,18 @@ export default {
     addressesListLabelEnd:
       "points d'intérêts qui correspondent à vos critères :",
     addressesListLabelStart: "Il y a",
+    filter: {
+      healthProfessional: "Professionnels de santé",
+      steps: "Étapes du parcours 1000 jours",
+      structures: "Structures",
+      thematics: "Thématiques",
+      title: "Filtrer",
+    },
     goThere: "M'y rendre",
-    instruction:
-      "Trouvez tous les professionnels autour de vous qui pourront vous aider dans votre rôle de parents.",
+    instruction: "Renseignez le code postal de votre recherche.",
     noAddressFound: "Aucune adresse n'a été trouvée dans cette zone",
     poiType: {
+      bibliothequePublique: "Bibliothèque publique",
       caf: "CAF",
       cpam: "CPAM",
       infirmier: "Infirmier",
@@ -18,13 +26,14 @@ export default {
       maisonDeNaissance: "Maison de naissance",
       maternite: "Maternité",
       medecin: "Médecin",
+      mediatheque: "Médiathèque",
       pediatre: "Pédiatre",
       planningFamilial: "Planning familial",
       pmi: "PMI",
       saad: "SAAD",
       sageFemme: "Sage-femme",
     },
-    postalCodeInputPlaceholder: "Renseigner le code postal",
+    postalCodeInputPlaceholder: "Écrivez ici le code postal",
     postalCodeInvalid: "Le code postal que vous avez saisi n'est pas valide",
     postalCodeNotFound: "Le code postal que vous recherchez n'a pas été trouvé",
     relaunchSearch: "Relancer la recherche",
@@ -78,22 +87,26 @@ export default {
       "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement aujourd'hui.",
     notification: {
       body: `${NUMBER_OF_DAYS_NOTIF_REMINDER} jours se sont écoulés depuis la dernière fois que vous avez passé le test EPDS. Vous pouvez maintenant le repasser si vous le souhaitez`,
+      redirectTitle: "Passer le test",
       title: "Rappel EPDS",
     },
     onboarding: {
       paragraphs: [
         {
+          boldIndexes: [4, 5, 6, 7],
           description:
-            "La dépression post-partum touche 1 femme sur 5 en France (ainsi que les hommes).\nCe sujet est tabou car mal identifié et sous-estimé.\nLes difficultés parentales / Le baby blues / Le burn-out /La dépression post-partum",
+            "La dépression post-partum touche 1 femme sur 5 en France (ainsi que les hommes).\nCe sujet est tabou car ses maux sont mal identifiés et sous-estimés (les difficultés parentales / le baby blues / le burn-out / la dépression post-partum).",
           title: "Constat",
         },
         {
+          boldIndexes: [3],
           description: "Prévenir de façon anonyme la dépression post-partum.",
           title: "Objectif",
         },
         {
+          boldIndexes: [12, 13],
           description:
-            "Passer le test EPDS (Edinburgh Postnatal Depression Scale) est un outil psychométrique internationalement reconnu",
+            "Passer le test EPDS (Edinburgh Postnatal Depression Scale). C’est un outil psychométrique internationalement reconnu.",
           title: "Comment",
         },
       ],
@@ -101,10 +114,10 @@ export default {
         "Ce questionnaire n'est pas un diagnostic et ne remplace pas un professionnel de la santé.",
       steps: {
         elements: [
-          "Être accompagné·e",
-          "Répondre aux 10 questions",
+          "Passer le test",
           "Accéder aux résultats",
-          "Trouver mon aide",
+          "Trouver une aide adaptée",
+          "Repasser le test",
         ],
         title: "Étapes",
       },
@@ -130,6 +143,7 @@ export default {
               epdsInformation.pmiVeritableAllieParents,
               epdsInformation.reseauPerinatalSante,
             ],
+            sectionIcon: IcomoonIcons.proSante,
             sectionTitle:
               "Les professionnels qui peuvent vous accompagner pour faire le point",
           },
@@ -139,6 +153,7 @@ export default {
               epdsInformation.laep,
               epdsInformation.associationsLocalesNationalesSoutienParentalite,
             ],
+            sectionIcon: IcomoonIcons.entourage,
             sectionTitle:
               "Les ressources qui peuvent vous aider les premiers mois de l’enfant",
           },
@@ -164,6 +179,7 @@ export default {
                   "Votre entourage peut se mobiliser pour vous aider : sagefemme, psychologue, infirmière puéricultrice",
               },
             ],
+            sectionIcon: IcomoonIcons.proSante,
             sectionTitle:
               "Les professionnels qui peuvent vous accompagner pour faire le point",
           },
@@ -178,6 +194,7 @@ export default {
         professionalsList: [
           {
             paragraphs: epdsInformation.professionnelsAccompagnerPasBien,
+            sectionIcon: IcomoonIcons.proSante,
             sectionTitle:
               "Les professionnels qui peuvent vous accompagner pour faire le point",
           },
@@ -188,6 +205,7 @@ export default {
               epdsInformation.laep,
               epdsInformation.associationsLocalesNationalesSoutienParentalite,
             ],
+            sectionIcon: IcomoonIcons.entourage,
             sectionTitle:
               "Les ressources qui peuvent vous aider les premiers mois de l’enfant",
           },
@@ -196,7 +214,7 @@ export default {
       },
       retakeTestInvitation: `Vous serez invité à repasser le test dans ${NUMBER_OF_DAYS_NOTIF_REMINDER} jours`,
     },
-    title: "Autodépistage dépression post-partum",
+    title: "Et si c'était une dépression post-partum ?",
     titleResults: "Résultats",
   },
   errorMsg: "Une erreur est survenue, merci de réessayer plus tard",
@@ -260,6 +278,11 @@ export default {
   timeline: {
     description:
       "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. A chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
+    notification: {
+      body: "Vous entrez dans une nouvelle étape du parcours 1000 jours : ",
+      redirectTitle: "Modifier ma situation",
+      title: "Votre situation a changé ?",
+    },
     title: "Choisissez l'étape que vous souhaitez approfondir",
   },
   warning: "Attention",

@@ -7,7 +7,7 @@ import type { FC } from "react";
 import * as React from "react";
 import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 
-import { CommonText, TitleH1 } from "../components";
+import { ErrorMessage, TitleH1 } from "../components";
 import DidYouKnow from "../components/article/didYouKnow.component";
 import ImageBanner from "../components/article/imageBanner.component";
 import InShort from "../components/article/inShort.component";
@@ -18,7 +18,7 @@ import Thematics from "../components/article/thematics.component";
 import Title from "../components/article/title.component";
 import BackButton from "../components/base/backButton.component";
 import { View } from "../components/Themed";
-import { Labels, Paddings } from "../constants";
+import { Paddings } from "../constants";
 import type {
   Article,
   ArticleInShortItem,
@@ -100,7 +100,7 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
   };
 
   if (loading) return <ActivityIndicator size="large" />;
-  if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
+  if (error) return <ErrorMessage error={error} />;
 
   const result = data as { article: Article };
   trackScreenView(

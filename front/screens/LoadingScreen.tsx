@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/native";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
@@ -14,15 +15,18 @@ interface LoadingScreenProps {
 }
 
 const LoadingScreen: FC<LoadingScreenProps> = ({ navigation }) => {
+  const redirectTo = (pageName: string) => {
+    navigation.dispatch(StackActions.replace(pageName));
+  };
   useEffect(() => {
     const handleFirstLaunch = async () => {
       const isFirstLaunch = await StorageUtils.getObjectValue(
         StorageKeysConstants.isFirstLaunchKey
       );
       if (isFirstLaunch === null) {
-        navigation.navigate("onboarding");
+        redirectTo("onboarding");
       } else {
-        navigation.navigate("root");
+        redirectTo("root");
       }
     };
     void handleFirstLaunch();

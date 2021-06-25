@@ -15,6 +15,7 @@ import DefaultImage from "../assets/images/default.png";
 import {
   Button,
   CommonText,
+  ErrorMessage,
   Filters,
   SecondaryText,
   TitleH1,
@@ -90,7 +91,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
   }, [loading, data]);
 
   if (loading) return <ActivityIndicator size="large" />;
-  if (error) return <CommonText>{Labels.errorMsg}</CommonText>;
+  if (error) return <ErrorMessage error={error} />;
 
   const navigateToSurvey = () => {
     navigation.navigate("epdsSurvey");

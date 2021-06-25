@@ -13,12 +13,10 @@
   "attributes": {
     "identifiant": {
       "type": "string",
-      "required": true,
       "unique": true
     },
     "type": {
-      "model": "cartographie-types",
-      "required": true
+      "model": "cartographie-types"
     },
     "nom": {
       "type": "string",

@@ -1,4 +1,9 @@
-import { CartographiePoisFromDB } from "./aroundMe.types";
+import {
+  CartoFilter,
+  CartoFilters,
+  CartographiePoisFromDB,
+  PoiTypeFromDB,
+} from "./aroundMe.types";
 import { DataFetchingType } from "./dataFetching.types";
 import {
   EpdsAnswer,
@@ -13,6 +18,8 @@ import {
 } from "./epdsSurvey.types";
 
 export {
+  CartoFilter,
+  CartoFilters,
   CartographiePoisFromDB,
   DataFetchingType,
   EpdsAnswer,
@@ -23,5 +30,6 @@ export {
   EpdsResultData,
   EpdsResultInformationType,
   EpdsResultSimpleInformation,
+  PoiTypeFromDB,
   QuestionnaireEpdsFromDB,
 };

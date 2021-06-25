@@ -5,8 +5,13 @@ export default {
         backgroundColor: "#FFFFFF",
         foregroundImage: "./assets/images/adaptive-icon.png",
       },
-      package: "com.millejours.fabrique",
-      versionCode: 6,
+      config: {
+        googleMaps: {
+          apiKey: process.env.GOOGLE_MAPS_API_KEY,
+        },
+      },
+      package: "com.fabrique.millejours",
+      versionCode: 9,
     },
     assetBundlePatterns: ["**/*"],
     hooks: {
@@ -15,7 +20,7 @@ export default {
           config: {
             authToken: process.env.SENTRY_TOKEN,
             organization: "incubateur",
-            project: "nos-1000-jours",
+            project: "1000-premiers-jours",
           },
           file: "sentry-expo/upload-sourcemaps",
         },
@@ -23,11 +28,11 @@ export default {
     },
     icon: "./assets/images/icon.png",
     ios: {
-      buildNumber: "1.0.6",
-      bundleIdentifier: "com.millejours.fabrique",
+      buildNumber: "1.0.9",
+      bundleIdentifier: "com.fabrique.millejours",
       supportsTablet: true,
     },
-    name: "1000jours",
+    name: "1000 jours",
     orientation: "portrait",
     scheme: "myapp",
     slug: "1000jours",
@@ -40,7 +45,7 @@ export default {
       fallbackToCacheTimeout: 0,
     },
     userInterfaceStyle: "light",
-    version: "1.0.6",
+    version: "1.0.9",
     web: {
       favicon: "./assets/images/favicon.png",
     },

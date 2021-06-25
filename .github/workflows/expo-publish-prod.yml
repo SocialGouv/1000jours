@@ -1,44 +1,17 @@
-name: Expo Publish Prod
+name: Publish on Stores (Prod)
 on:
   workflow_dispatch:
     name:
       description: 'Manual workflow'
 
 jobs:
-#  Build-android:
-#    name: Build Android for prod
-#    runs-on: ubuntu-latest
-#    env:
-#      API_URL: ${{ secrets.API_URL }}
-#      CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
-#      MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
-#      MATOMO_URL: ${{ secrets.MATOMO_URL }}
-#    steps:
-#      - uses: actions/checkout@v2
-#      - uses: actions/setup-node@v2
-#        with:
-#          node-version: 14.x
-#      - uses: expo/expo-github-action@v5
-#        with:
-#          expo-version: 4.x
-#          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
-#          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
-#      - name: Yarn
-#        run: |
-#          cd front
-#          yarn install
-#          yarn build-prod:android
 
   Publish-android:
-    name: Publish Android for prod
+    name: Publish Android for Prod
 #    needs: Build-android
     runs-on: ubuntu-latest
     env:
-      API_URL: ${{ secrets.API_URL }}
-      CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
       PLAY_STORE_API_KEY: ${{ secrets.PLAY_STORE_API_KEY }}
-      MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
-      MATOMO_URL: ${{ secrets.MATOMO_URL }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -56,39 +29,12 @@ jobs:
           yarn install
           yarn upload:android
 
-#  Build-ios:
-#    name: Build iOS for prod
-#    runs-on: ubuntu-latest
-#    env:
-#      API_URL: ${{ secrets.API_URL }}
-#      CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
-#      MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
-#      MATOMO_URL: ${{ secrets.MATOMO_URL }}
-#    steps:
-#      - uses: actions/checkout@v2
-#      - uses: actions/setup-node@v2
-#        with:
-#          node-version: 14.x
-#      - uses: expo/expo-github-action@v5
-#        with:
-#          expo-version: 4.x
-#          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
-#          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
-#      - name: Yarn
-#        run: |
-#          cd front
-#          yarn install
-#          yarn build-prod:ios
-
   Publish-ios:
-    name: Publish iOS for prod
+    name: Publish iOS for Prod
  #   needs: Build-ios
     runs-on: macOS-latest
     env:
-      API_URL: ${{ secrets.API_URL }}
-      CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
-      FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
-      FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+      APP_STORE_API_KEY: ${{ secrets.APP_STORE_API_KEY }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -104,5 +50,5 @@ jobs:
           cd front
           yarn install
           curl -o app.ipa "$(expo url:ipa --non-interactive)"
-          echo $APP_STORE_CONNECT_API_KEY | base64 -d > api-key-app-store.json
+          echo $APP_STORE_API_KEY | base64 -d > api-key-app-store.json
           yarn upload:ios

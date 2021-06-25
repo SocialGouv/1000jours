@@ -1,3 +1,90 @@
+## [1.46.3](https://github.com/SocialGouv/1000jours/compare/v1.46.2...v1.46.3) (2021-06-25)
+
+
+### Bug Fixes
+
+* **labels:** modifications labels epds et carto ([#398](https://github.com/SocialGouv/1000jours/issues/398)) ([d05a419](https://github.com/SocialGouv/1000jours/commit/d05a419d2a8d2f9fc3977da04ec73f9b741d920c))
+
+## [1.46.2](https://github.com/SocialGouv/1000jours/compare/v1.46.1...v1.46.2) (2021-06-25)
+
+
+### Bug Fixes
+
+* **android:** ajout l'apiKey pour Google Maps ([#390](https://github.com/SocialGouv/1000jours/issues/390)) ([5529599](https://github.com/SocialGouv/1000jours/commit/55295993656eaf0ba30bf2d3b2269290742a9881))
+* 🐛 Supprime la page LoadingScreen du StackNavigatior ([#386](https://github.com/SocialGouv/1000jours/issues/386)) ([e7b7377](https://github.com/SocialGouv/1000jours/commit/e7b7377156356379748c2173f36749c9ad86fdcb))
+* **carto:** corrections de bugs sur la carto et l'EPDS ([#387](https://github.com/SocialGouv/1000jours/issues/387)) ([c320da1](https://github.com/SocialGouv/1000jours/commit/c320da173ff1eb12328ef72114e2d7e9aea4191f))
+
+## [1.46.1](https://github.com/SocialGouv/1000jours/compare/v1.46.0...v1.46.1) (2021-06-24)
+
+
+### Bug Fixes
+
+* 🐛 Remplace les messages d'erreurs par un composant ([#382](https://github.com/SocialGouv/1000jours/issues/382)) ([54c4d01](https://github.com/SocialGouv/1000jours/commit/54c4d014048baa7ad2e285ee2cc4ef7b8c9a65bb))
+* **epds:** review design ([#385](https://github.com/SocialGouv/1000jours/issues/385)) ([30278e7](https://github.com/SocialGouv/1000jours/commit/30278e71e677ecd3acacd603e470c09f40d43a0c))
+
+# [1.46.0](https://github.com/SocialGouv/1000jours/compare/v1.45.2...v1.46.0) (2021-06-24)
+
+
+### Features
+
+* **carto:** Ajoute le filtre de POIs par étapes dans l'API ([#381](https://github.com/SocialGouv/1000jours/issues/381)) ([a383a2b](https://github.com/SocialGouv/1000jours/commit/a383a2b0e8371785d487388566d10962047205b6))
+
+## [1.45.2](https://github.com/SocialGouv/1000jours/compare/v1.45.1...v1.45.2) (2021-06-24)
+
+
+### Bug Fixes
+
+* **carto:** Traite les fichiers .txt comme des csv ([#373](https://github.com/SocialGouv/1000jours/issues/373)) ([03d6bb3](https://github.com/SocialGouv/1000jours/commit/03d6bb36a17f39d41b84e8a3e4eb10bd58c54562))
+
+## [1.45.1](https://github.com/SocialGouv/1000jours/compare/v1.45.0...v1.45.1) (2021-06-24)
+
+
+### Bug Fixes
+
+* **k8s:** Augmente la limite de taille des fichiers téléchargés vers le backoffice ([#372](https://github.com/SocialGouv/1000jours/issues/372)) ([479983d](https://github.com/SocialGouv/1000jours/commit/479983d4dd7f5329de526f1e3d53db0c19292be6))
+
+# [1.45.0](https://github.com/SocialGouv/1000jours/compare/v1.44.0...v1.45.0) (2021-06-24)
+
+
+### Features
+
+* **carto:** filtre pour les POI ([#369](https://github.com/SocialGouv/1000jours/issues/369)) ([c21aebc](https://github.com/SocialGouv/1000jours/commit/c21aebc035390f6148ae56f40ac1bdf88d0267dd))
+
+# [1.44.0](https://github.com/SocialGouv/1000jours/compare/v1.43.0...v1.44.0) (2021-06-23)
+
+
+### Features
+
+* **carto:** Supprime les POIs lorsqu'on supprime les sources et améliore les performances du geocoding ([#346](https://github.com/SocialGouv/1000jours/issues/346)) ([06ba1eb](https://github.com/SocialGouv/1000jours/commit/06ba1eb2b64bbf9a21440d618ddab58831263900))
+
+# [1.43.0](https://github.com/SocialGouv/1000jours/compare/v1.42.1...v1.43.0) (2021-06-23)
+
+
+### Features
+
+* 🎸 Ajoute les notifications changement d'étapes ([#358](https://github.com/SocialGouv/1000jours/issues/358)) ([a3b53e4](https://github.com/SocialGouv/1000jours/commit/a3b53e43686972aa886fc484f75b0363160c4b11)), closes [#309](https://github.com/SocialGouv/1000jours/issues/309)
+
+## [1.42.1](https://github.com/SocialGouv/1000jours/compare/v1.42.0...v1.42.1) (2021-06-23)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la condition sur CLEAR_STORAGE (var Env) ([#362](https://github.com/SocialGouv/1000jours/issues/362)) ([fd0daa9](https://github.com/SocialGouv/1000jours/commit/fd0daa9bf662e2d8158ac66bf19341b874d0afcb))
+* 🐛 Corrige le document des cgu ([#359](https://github.com/SocialGouv/1000jours/issues/359)) ([f907a4c](https://github.com/SocialGouv/1000jours/commit/f907a4c1fb537bc3da534ecc892ebe24d597da10)), closes [#235](https://github.com/SocialGouv/1000jours/issues/235)
+* 🐛 Corrige un problème d'import (require cycle) ([#360](https://github.com/SocialGouv/1000jours/issues/360)) ([4bb7905](https://github.com/SocialGouv/1000jours/commit/4bb7905904b5fb90e4fdfb3e52ec9728052a0951))
+
+# [1.42.0](https://github.com/SocialGouv/1000jours/compare/v1.41.2...v1.42.0) (2021-06-22)
+
+
+### Bug Fixes
+
+* **epds:** review design ([#357](https://github.com/SocialGouv/1000jours/issues/357)) ([21fd16b](https://github.com/SocialGouv/1000jours/commit/21fd16b79cf722401a2790f0eba0bbff7480f0d7))
+
+
+### Features
+
+* **carto:** Ajoute les paramètres de recherche de POI par types et thématiques ([#355](https://github.com/SocialGouv/1000jours/issues/355)) ([d31eff6](https://github.com/SocialGouv/1000jours/commit/d31eff6bab499563dd9efe85ce30e4de013c0df2)), closes [#354](https://github.com/SocialGouv/1000jours/issues/354)
+
 ## [1.41.2](https://github.com/SocialGouv/1000jours/compare/v1.41.1...v1.41.2) (2021-06-21)
 
 

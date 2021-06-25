@@ -3,8 +3,7 @@ import { useLazyQuery, useQuery } from "@apollo/client";
 import * as React from "react";
 import { ActivityIndicator } from "react-native";
 
-import { CommonText } from "../components/StyledText";
-import { Labels } from "../constants";
+import ErrorMessage from "../components/base/errorMessage.component";
 import type { DataFetchingType } from "../type";
 
 export const fetchData = (query: DocumentNode): DataFetchingType => {
@@ -20,7 +19,7 @@ export const fetchData = (query: DocumentNode): DataFetchingType => {
   if (error)
     return {
       isFetched: false,
-      loadingOrErrorComponent: <CommonText>{Labels.errorMsg}</CommonText>,
+      loadingOrErrorComponent: <ErrorMessage error={error} />,
     };
 
   return { isFetched: true, response: data };

@@ -1,8 +1,9 @@
 import * as React from "react";
+import { useRef } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Card } from "react-native-paper";
-import SlidingUpPanel from "rn-sliding-up-panel";
+import BottomSheet from "reanimated-bottom-sheet";
 
 import { CommonText } from "../../components";
 import { View } from "../../components/Themed";
@@ -16,8 +17,9 @@ interface Props {
 
 const SlidingUpPanelAddressesList: React.FC<Props> = ({ poisArray }) => {
   const height = Dimensions.get("window").height;
-  return (
-    <SlidingUpPanel draggableRange={{ bottom: height / 8, top: height - 120 }}>
+  const sheetRef = useRef<BottomSheet>(null);
+  const renderContent = () => {
+    return (
       <View style={styles.slidingUpPanelView}>
         <View style={styles.swipeIndicator} />
         <CommonText style={styles.addressesListLabel}>
@@ -34,7 +36,16 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({ poisArray }) => {
           ))}
         </ScrollView>
       </View>
-    </SlidingUpPanel>
+    );
+  };
+
+  return (
+    <BottomSheet
+      ref={sheetRef}
+      snapPoints={[height / 8, height / 2.5, height - 170]}
+      borderRadius={10}
+      renderContent={renderContent}
+    />
   );
 };
 
@@ -47,8 +58,8 @@ const styles = StyleSheet.create({
     marginVertical: Margins.smaller,
   },
   card: {
-    backgroundColor: Colors.cardGrey,
-    borderWidth: 1,
+    borderBottomColor: Colors.cardGrey,
+    borderBottomWidth: 1,
     margin: Margins.smaller,
   },
   slidingUpPanelScrollView: {

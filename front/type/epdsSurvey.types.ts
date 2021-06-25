@@ -17,10 +17,10 @@ export const EpdsGenders = [
     label: Labels.epdsSurvey.genderEntry.choices.female,
     value: EpdsConstants.EpdsGender.feminin,
   },
-  {
-    label: Labels.epdsSurvey.genderEntry.choices.nonBinary,
-    value: EpdsConstants.EpdsGender.nonBinaire,
-  },
+  // {
+  //   label: Labels.epdsSurvey.genderEntry.choices.nonBinary,
+  //   value: EpdsConstants.EpdsGender.nonBinaire,
+  // },
   {
     label: Labels.epdsSurvey.genderEntry.choices.noInformation,
     value: EpdsConstants.EpdsGender.inconnu,

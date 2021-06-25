@@ -6,13 +6,15 @@ import DetailsAddressIcon from "../../assets/images/carto/details_adresse.svg";
 import DetailsMailIcon from "../../assets/images/carto/details_mail.svg";
 import DetailsPhoneIcon from "../../assets/images/carto/details_tel.svg";
 import DetailsWebIcon from "../../assets/images/carto/details_web.svg";
+import TypeBibliothequeMediatheque from "../../assets/images/carto/type_bibliotheque_mediatheque.svg";
+import TypeDefaut from "../../assets/images/carto/type_defaut.svg";
 import TypeMairieIcon from "../../assets/images/carto/type_mairie.svg";
 import TypeMaisonNaissanceIcon from "../../assets/images/carto/type_maison_naissance.svg";
 import TypeMaterniteIcon from "../../assets/images/carto/type_maternite.svg";
 import TypePlanningFamilialIcon from "../../assets/images/carto/type_planning_familial.svg";
 import TypePmiCafCpamIcon from "../../assets/images/carto/type_pmi_caf_cpam.svg";
 import TypeSaadIcon from "../../assets/images/carto/type_saad.svg";
-import { Button, CommonText, View } from "../../components";
+import { Button, CommonText, SecondaryText, View } from "../../components";
 import {
   AroundMeConstants,
   Colors,
@@ -22,6 +24,7 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
+import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import type { CartographiePoisFromDB } from "../../type";
 import { LinkingUtils, StringUtils } from "../../utils";
 
@@ -36,7 +39,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
   ) => {
     const poiTypeLabels = Labels.aroundMe.poiType;
     let iconType = null;
-    if (categoriePoi === AroundMeConstants.PoiCategorieEnum.professionnels) {
+    if (categoriePoi === AroundMeConstants.PoiCategorieEnum.professionnel) {
       iconType = <CategorieProSanteIcon />;
     } else {
       const iconsMap = new Map<string, React.ReactNode>();
@@ -55,10 +58,14 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
       iconsMap.set(poiTypeLabels.caf, <TypePmiCafCpamIcon />);
       iconsMap.set(poiTypeLabels.cpam, <TypePmiCafCpamIcon />);
       iconsMap.set(poiTypeLabels.mairie, <TypeMairieIcon />);
+      iconsMap.set(
+        poiTypeLabels.bibliothequePublique,
+        <TypeBibliothequeMediatheque />
+      );
+      iconsMap.set(poiTypeLabels.mediatheque, <TypeBibliothequeMediatheque />);
 
       iconType = iconsMap.get(typePoi);
-      // Au cas où la catégorie n'a pas d'icône, on affiche celle des pros de santé
-      if (!iconType) iconType = <CategorieProSanteIcon />;
+      if (!iconType) iconType = <TypeDefaut />;
     }
     return iconType;
   };
@@ -77,15 +84,15 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
         <View style={styles.rowView}>
           <DetailsAddressIcon />
           <View style={styles.columnView}>
-            <CommonText style={styles.text}>{details.adresse}</CommonText>
-            <CommonText style={styles.text}>
+            <SecondaryText style={styles.text}>{details.adresse}</SecondaryText>
+            <SecondaryText style={styles.text}>
               {details.code_postal} {details.commune}
-            </CommonText>
+            </SecondaryText>
           </View>
         </View>
         {(StringUtils.stringIsNotNullNorEmpty(details.telephone) ||
           StringUtils.stringIsNotNullNorEmpty(details.courriel)) && (
-          <View style={styles.rowView}>
+          <View style={styles.phoneAndMail}>
             {StringUtils.stringIsNotNullNorEmpty(details.telephone) && (
               <TouchableOpacity
                 style={[styles.rowView, styles.marginRight]}
@@ -152,6 +159,7 @@ const styles = StyleSheet.create({
   },
   columnView: {
     flexDirection: "column",
+    width: SCREEN_WIDTH / 2.4,
   },
   contact: {
     color: Colors.primaryBlue,
@@ -178,6 +186,13 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlueDark,
     fontSize: Sizes.xs,
     fontWeight: FontWeight.bold,
+    width: SCREEN_WIDTH / 1.28,
+  },
+  phoneAndMail: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginVertical: Margins.evenMoreSmallest,
+    width: SCREEN_WIDTH / 1.28,
   },
   rowContainer: {
     flexDirection: "row",
@@ -185,11 +200,10 @@ const styles = StyleSheet.create({
   rowView: {
     alignItems: "center",
     flexDirection: "row",
-    marginVertical: Margins.evenMoreSmallest,
   },
   text: {
     color: Colors.commonText,
-    fontSize: Sizes.xxs,
+    fontSize: Sizes.xs,
     fontWeight: FontWeight.bold,
     marginLeft: Margins.smaller,
   },
@@ -197,6 +211,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryBlueLight,
     color: Colors.primaryBlueDark,
     fontSize: Sizes.xxs,
+    marginVertical: Margins.smaller,
     paddingHorizontal: Paddings.smaller,
     textAlign: "center",
   },

@@ -1,4 +1,4 @@
-name: Expo Build Dev
+name: Expo Build Prod
 on:
   workflow_dispatch:
     name:
@@ -6,13 +6,18 @@ on:
 
 jobs:
   Build-android:
-    name: Build and publish Android for staging
+    name: Build and publish Android for Prod
     runs-on: ubuntu-latest
     env:
-      API_URL: ${{ secrets.API_URL }}
+      API_URL: ${{ secrets.API_URL_PROD }}
       CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
       MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
+      MATOMO_ENABLED: ${{ secrets.MATOMO_ENABLED }}
       MATOMO_URL: ${{ secrets.MATOMO_URL }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      SENTRY_ENABLED: ${{ secrets.SENTRY_ENABLED }}
+      SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
+      GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -27,16 +32,21 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn build-staging:android
+          yarn build-prod:android
 
   Build-ios:
-    name: Build and publish iOS for staging
+    name: Build and publish iOS for Prod
     runs-on: ubuntu-latest
     env:
-      API_URL: ${{ secrets.API_URL }}
+      API_URL: ${{ secrets.API_URL_PROD }}
       CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
       MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
+      MATOMO_ENABLED: ${{ secrets.MATOMO_ENABLED }}
       MATOMO_URL: ${{ secrets.MATOMO_URL }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      SENTRY_ENABLED: ${{ secrets.SENTRY_ENABLED }}
+      SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
+      GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -51,4 +61,4 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn build-staging:ios
+          yarn build-prod:ios

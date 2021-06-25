@@ -8,7 +8,7 @@
     "searchable": true
   },
   "attributes": {
-    "cartographie_identifiant": {
+    "identifiant": {
       "type": "string"
     },
     "cartographie_ligne": {

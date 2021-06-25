@@ -2,21 +2,14 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import IconeAccederResultats from "../../assets/images/epds/onboarding_acceder_resultats.svg";
-import IconeEtreAccompagne from "../../assets/images/epds/onboarding_etre_accompagne.svg";
+import IconeRepasserTest from "../../assets/images/epds/onboarding_repasser_test.svg";
 import IconeRepondreQuestions from "../../assets/images/epds/onboarding_repondre_questions.svg";
 import IconeTrouverAide from "../../assets/images/epds/onboarding_trouver_aide.svg";
 import { TitleH1 } from "../../components";
 import Button from "../../components/base/button.component";
 import { CommonText, SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
-import {
-  Colors,
-  FontWeight,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../../constants";
+import { Colors, FontWeight, Labels, Margins, Sizes } from "../../constants";
 
 interface Props {
   onBoardingIsDone: () => void;
@@ -25,17 +18,35 @@ interface Props {
 const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
   const getIcon = (index: number) => {
     const iconsMap = new Map<number, React.ReactNode>();
-    iconsMap.set(0, <IconeEtreAccompagne />);
-    iconsMap.set(1, <IconeRepondreQuestions />);
-    iconsMap.set(2, <IconeAccederResultats />);
-    iconsMap.set(3, <IconeTrouverAide />);
+    iconsMap.set(0, <IconeRepondreQuestions />);
+    iconsMap.set(1, <IconeAccederResultats />);
+    iconsMap.set(2, <IconeTrouverAide />);
+    iconsMap.set(3, <IconeRepasserTest />);
+
     return iconsMap.get(index);
+  };
+
+  const getDescriptionWithBoldWords = (
+    boldIndexes: number[],
+    label: string
+  ) => {
+    return label.split(" ").map((eachWord: string, index: number) => {
+      return (
+        <SecondaryText
+          key={`text_${index}`}
+          style={boldIndexes.includes(index) && styles.fontBold}
+        >
+          {eachWord}{" "}
+        </SecondaryText>
+      );
+    });
   };
 
   const renderStep = (index: number) => {
     return (
       <View style={styles.iconWithTitle}>
         <View>{getIcon(index)}</View>
+        <CommonText style={styles.stepNum}>{index + 1}</CommonText>
         <CommonText style={styles.stepTitle}>
           {Labels.epdsSurvey.onboarding.steps.elements[index]}
         </CommonText>
@@ -53,7 +64,10 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
               {paragraph.title}
               {" : "}
             </SecondaryText>
-            <SecondaryText>{paragraph.description}</SecondaryText>
+            {getDescriptionWithBoldWords(
+              paragraph.boldIndexes,
+              paragraph.description
+            )}
           </SecondaryText>
         </View>
       ))}
@@ -88,6 +102,9 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
 };
 
 const styles = StyleSheet.create({
+  fontBold: {
+    fontWeight: FontWeight.bold,
+  },
   fontButton: {
     fontSize: Sizes.xs,
     textTransform: "uppercase",
@@ -116,6 +133,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     marginHorizontal: Margins.smaller,
+  },
+  stepNum: {
+    color: Colors.primaryBlueLight,
+    fontSize: Sizes.xxxxl,
+    fontWeight: "bold",
+    left: 0,
+    paddingTop: Margins.larger,
+    position: "absolute",
   },
   stepTitle: {
     color: Colors.primaryBlueDark,
