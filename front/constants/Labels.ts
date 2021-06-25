@@ -15,8 +15,7 @@ export default {
       title: "Filtrer",
     },
     goThere: "M'y rendre",
-    instruction:
-      "Trouvez tous les professionnels autour de vous qui pourront vous aider dans votre rôle de parents.",
+    instruction: "Renseignez le code postal de votre recherche.",
     noAddressFound: "Aucune adresse n'a été trouvée dans cette zone",
     poiType: {
       bibliothequePublique: "Bibliothèque publique",
@@ -34,7 +33,7 @@ export default {
       saad: "SAAD",
       sageFemme: "Sage-femme",
     },
-    postalCodeInputPlaceholder: "Renseigner le code postal",
+    postalCodeInputPlaceholder: "Écrivez ici le code postal",
     postalCodeInvalid: "Le code postal que vous avez saisi n'est pas valide",
     postalCodeNotFound: "Le code postal que vous recherchez n'a pas été trouvé",
     relaunchSearch: "Relancer la recherche",
