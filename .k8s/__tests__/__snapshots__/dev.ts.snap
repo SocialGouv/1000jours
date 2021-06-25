@@ -43,7 +43,7 @@ spec:
           envFrom:
             - secretRef:
                 name: azure-pg-admin-user
-          image: ghcr.io/socialgouv/docker/azure-db:6.0.1
+          image: ghcr.io/socialgouv/docker/azure-db:6.26.2
           imagePullPolicy: IfNotPresent
           name: create-db-user
           resources:
@@ -209,7 +209,7 @@ spec:
           envFrom:
             - secretRef:
                 name: azure-pg-user-0123456
-          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.0.1
+          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.26.1
           imagePullPolicy: Always
           name: wait-for-postgres
           resources:
@@ -358,28 +358,27 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: ''
   selector:
     matchLabels:
       usage: master-dev42-1000jours-uploads
+  storageClassName: ''
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: master-dev42-1000jours-uploads
   labels:
     usage: master-dev42-1000jours-uploads
     application: master-dev42-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
+  name: master-dev42-1000jours-uploads
   annotations:
     app.gitlab.com/app: socialgouv-1000jours
     app.gitlab.com/env: master-dev42
     app.gitlab.com/env.name: master-dev42
   namespace: 1000jours-85-master-dev42
 spec:
-  storageClassName: ''
   accessModes:
     - ReadWriteMany
   azureFile:
@@ -389,5 +388,6 @@ spec:
   capacity:
     storage: 5Gi
   persistentVolumeReclaimPolicy: Delete
+  storageClassName: ''
 "
 `;

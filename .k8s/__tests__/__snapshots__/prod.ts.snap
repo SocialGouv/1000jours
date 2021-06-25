@@ -144,7 +144,7 @@ spec:
           envFrom:
             - secretRef:
                 name: azure-pg-user
-          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.0.1
+          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.26.1
           imagePullPolicy: Always
           name: wait-for-postgres
           resources:
@@ -251,27 +251,26 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: ''
   selector:
     matchLabels:
       usage: 1000jours-uploads
+  storageClassName: ''
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: 1000jours-uploads
   labels:
     usage: 1000jours-uploads
     application: 1000jours
     owner: 1000jours
     team: 1000jours
+  name: 1000jours-uploads
   annotations:
     app.gitlab.com/app: socialgouv-1000jours
     app.gitlab.com/env: prod
     app.gitlab.com/env.name: prod
   namespace: les1000jours
 spec:
-  storageClassName: ''
   accessModes:
     - ReadWriteMany
   azureFile:
@@ -281,5 +280,6 @@ spec:
   capacity:
     storage: 5Gi
   persistentVolumeReclaimPolicy: Delete
+  storageClassName: ''
 "
 `;
