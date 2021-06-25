@@ -7,7 +7,7 @@ export default {
       },
       config: {
         googleMaps: {
-          apiKey: "AIzaSyBh4I3B8R5Qrf2Sj-maDxwrbQXVcHuDlR0",
+          apiKey: process.env.GOOGLE_MAPS_API_KEY,
         },
       },
       package: "com.fabrique.millejours",
