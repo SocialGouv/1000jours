@@ -63,7 +63,7 @@ export default {
   },
   calendar: {
     description:
-      "Ici vous pouvez suivre tous vos rendez-vous et autres événements prévus. Vous pouvez y ajouter plusieurs informations.",
+      "Grâce à la date de naissance que vous avez saisie, accédez à votre calendrier personnalisé et suivez chaque étape du parcours 1000 jours.",
     listOfEvents: "Liste des événements",
     noChildBirthday: "Aucune date de naissance",
     noEventMessage: "Aucun événement",
@@ -236,7 +236,7 @@ export default {
     slidesText: [
       {
         description:
-          "« Nos 1000 jours », c’est votre compagnon unique des 1000 premiers jours pour prendre soin de vous, votre famille et votre enfant. Tout au long du parcours et au moment où vous en avez besoin, l’application vous guide « pas à pas » pour vous accompagner au quotidien.",
+          "« 1000 premiers jours », c’est votre compagnon unique des 1000 premiers jours pour prendre soin de vous, votre famille et votre enfant. Tout au long du parcours et au moment où vous en avez besoin, l’application vous guide « pas à pas » pour vous accompagner au quotidien.",
         title: "Bienvenue sur l'application",
       },
       {
@@ -246,7 +246,7 @@ export default {
       },
       {
         description:
-          "Pour vous apporter la bonne information au bon moment, vous pouvez nous informer précisément du moment 1000 jours que vous vivez. Les 8 étapes du parcours « Nos 1000 jours » sont l’occasion de répondre précisément à votre besoin.",
+          "Pour vous apporter la bonne information au bon moment, vous pouvez nous informer précisément du moment 1000 jours que vous vivez. Les 8 étapes du parcours « 1000 premiers jours » sont l’occasion de répondre précisément à votre besoin.",
         title: "Connaître les différentes étapes",
       },
     ],
