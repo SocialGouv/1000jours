@@ -37,6 +37,7 @@ import type {
   Thematique,
 } from "../types";
 import { TrackerUtils } from "../utils";
+import { getVisuelFormat, VisuelFormat } from "../utils/visuel.util";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList, "listArticles">;
@@ -108,6 +109,9 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     return isMatching;
   };
 
+  const minAnimDelay = 100;
+  const maxAnimDelay = 750;
+
   const applyFilters = (filters: ArticleFilter[]) => {
     const activeFilters = _.filter(filters, { active: true });
     const result = filteredArticles.map((article) => {
@@ -160,7 +164,11 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
               key={index}
               animation="fadeInUp"
               duration={1000}
-              delay={500 * index}
+              delay={
+                minAnimDelay * index < maxAnimDelay
+                  ? minAnimDelay * index
+                  : maxAnimDelay
+              }
             >
               <ListItem
                 bottomDivider
@@ -180,7 +188,10 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
                 <Image
                   defaultSource={DefaultImage}
                   source={{
-                    uri: article.visuel?.url,
+                    uri: getVisuelFormat(
+                      article.visuel?.url,
+                      VisuelFormat.thumbnail
+                    ),
                   }}
                   containerStyle={[
                     styles.articleImage,
