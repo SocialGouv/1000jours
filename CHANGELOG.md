@@ -1,3 +1,10 @@
+## [1.46.4](https://github.com/SocialGouv/1000jours/compare/v1.46.3...v1.46.4) (2021-06-27)
+
+
+### Bug Fixes
+
+* **k8s:** use shared azure volume ([#370](https://github.com/SocialGouv/1000jours/issues/370)) ([e58181b](https://github.com/SocialGouv/1000jours/commit/e58181bc4f726bad826b2d3d2ee4f4a43e50006e))
+
 ## [1.46.3](https://github.com/SocialGouv/1000jours/compare/v1.46.2...v1.46.3) (2021-06-25)
 
 
