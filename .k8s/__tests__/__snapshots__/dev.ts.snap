@@ -43,7 +43,7 @@ spec:
           envFrom:
             - secretRef:
                 name: azure-pg-admin-user
-          image: ghcr.io/socialgouv/docker/azure-db:6.0.1
+          image: ghcr.io/socialgouv/docker/azure-db:6.26.2
           imagePullPolicy: IfNotPresent
           name: create-db-user
           resources:
@@ -148,39 +148,31 @@ spec:
         - image: >-
             harbor.fabrique.social.gouv.fr/1000jours/les1000jours-strapi:0123456789abcdefghijklmnopqrstuvwxyz0123
           livenessProbe:
-            failureThreshold: 6
             httpGet:
               path: /_health
               port: http
             initialDelaySeconds: 30
-            periodSeconds: 5
-            timeoutSeconds: 5
           name: strapi
           ports:
             - containerPort: 1337
               name: http
           readinessProbe:
-            failureThreshold: 15
             httpGet:
               path: /_health
               port: http
-            initialDelaySeconds: 0
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 1
+            initialDelaySeconds: 30
           resources:
-            limits:
-              cpu: 500m
-              memory: 1Gi
             requests:
               cpu: 50m
               memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
           startupProbe:
-            failureThreshold: 12
             httpGet:
               path: /_health
               port: http
-            periodSeconds: 5
+            initialDelaySeconds: 30
           volumeMounts:
             - mountPath: /app/public/uploads
               name: uploads
@@ -207,6 +199,9 @@ spec:
               value: $(PGPASSWORD)
             - name: DATABASE_SSL
               value: 'true'
+      volumes:
+        - name: uploads
+          emptyDir: {}
       initContainers:
         - env:
             - name: WAIT_FOR_RETRIES
@@ -214,7 +209,7 @@ spec:
           envFrom:
             - secretRef:
                 name: azure-pg-user-0123456
-          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.0.1
+          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.26.1
           imagePullPolicy: Always
           name: wait-for-postgres
           resources:
@@ -224,12 +219,6 @@ spec:
             requests:
               cpu: 5m
               memory: 16Mi
-      volumes:
-        - persistentVolumeClaim:
-            claimName: 1000jours-strapi-uploads
-          name: uploads
-      nodeSelector:
-        workload: 1000jours-strapi
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -309,18 +298,5 @@ spec:
     - hosts:
         - backoffice-master-dev42-1000jours.dev42.fabrique.social.gouv.fr
       secretName: wildcard-crt
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: 1000jours-strapi-uploads
-  annotations: {}
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
-  volumeMode: Filesystem
 "
 `;
