@@ -151,6 +151,7 @@ spec:
             httpGet:
               path: /_health
               port: http
+            initialDelaySeconds: 30
           name: strapi
           ports:
             - containerPort: 1337
@@ -159,6 +160,7 @@ spec:
             httpGet:
               path: /_health
               port: http
+            initialDelaySeconds: 30
           resources:
             requests:
               cpu: 50m
@@ -170,6 +172,7 @@ spec:
             httpGet:
               path: /_health
               port: http
+            initialDelaySeconds: 30
           volumeMounts:
             - mountPath: /app/public/uploads
               name: uploads

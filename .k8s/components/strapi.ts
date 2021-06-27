@@ -20,6 +20,7 @@ const prob = new Probe({
     path: "/_health",
     port: "http",
   },
+  initialDelaySeconds: 30
 });
 
 const resources = new ResourceRequirements({
