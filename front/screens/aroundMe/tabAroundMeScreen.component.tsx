@@ -71,9 +71,7 @@ const TabAroundMeScreen: React.FC = () => {
       showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
     }
     setPoisArrayInList(pois);
-    setPoisArrayOnMap(
-      pois.slice(0, AroundMeConstants.NUMBER_MAX_MARKERS_ON_MAP)
-    );
+    setPoisArrayOnMap(pois);
     setShowAddressesList(true);
   };
 
@@ -132,6 +130,9 @@ const TabAroundMeScreen: React.FC = () => {
         postalCode={postalCodeInput}
         region={region}
         setFetchedPois={handleFetchedPois}
+        chooseFilterMessage={() => {
+          showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
+        }}
       />
       <View style={styles.topContainer}>
         <TitleH1
@@ -235,6 +236,9 @@ const TabAroundMeScreen: React.FC = () => {
         )}
       <AroundMeFilter
         visible={showFilter}
+        showModal={() => {
+          setShowFilter(true);
+        }}
         hideModal={(filterWasSaved: boolean) => {
           setShowFilter(false);
           if (filterWasSaved) {
