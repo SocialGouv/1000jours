@@ -101,6 +101,8 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
 
   const restartSurvey = async () => {
     await EpdsSurveyUtils.removeEpdsStorageItems();
+    setQuestionsAndAnswers(epdsSurvey);
+    setSwiperCurrentIndex(0);
     setShowResult(false);
   };
 
