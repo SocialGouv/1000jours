@@ -40,4 +40,5 @@ export default {
   borderGrey: "#E7E7E7",
   white: "#FFFFFF",
   backdrop: "#00000080",
+  transparentGrey: "rgba(52, 52, 52, 0.8)",
 };

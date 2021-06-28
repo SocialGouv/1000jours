@@ -40,6 +40,9 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
 
   const [fetchedFiltersFromDB, setFetchedFiltersFromDB] =
     useState<DisplayedCartoFilters>();
+  const [filtersFromDbInList, setFiltersFromDbInList] = useState<
+    { title: string; filters: CartoFilter[] }[]
+  >([]);
   const [cartoFilterStorage, setCartoFilterStorage] =
     useState<CartoFilterStorage>({ etapes: [], types: [] });
   const [showModalContent, setShowModalContent] = useState(false);
@@ -104,6 +107,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
         }
 
         setFetchedFiltersFromDB(fetchedFiltersFromDB);
+        convertFetchedFiltersToDisplayedFilters();
       }
       setShowModalContent(true);
     };
@@ -111,6 +115,24 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
     void getSavedFilter();
   }, [visible]);
 
+  const convertFetchedFiltersToDisplayedFilters = () => {
+    if (fetchedFiltersFromDB) {
+      setFiltersFromDbInList([
+        {
+          filters: fetchedFiltersFromDB.structures,
+          title: Labels.aroundMe.filter.structures,
+        },
+        {
+          filters: fetchedFiltersFromDB.professionnels,
+          title: Labels.aroundMe.filter.healthProfessional,
+        },
+        {
+          filters: fetchedFiltersFromDB.etapes,
+          title: Labels.aroundMe.filter.steps,
+        },
+      ]);
+    }
+  };
   const checkSavedFiltersInFetchedFilters = (
     savedFilters: string[],
     cartoFilters: CartoFilter[]
@@ -150,6 +172,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
         convertToCartoFilter(poiType, AroundMeConstants.CartoFilterEnum.type)
       ),
     });
+    convertFetchedFiltersToDisplayedFilters();
   };
 
   const filterToPoiCategorie = (
@@ -191,6 +214,20 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
     setCartoFilterStorage(cartoFilterStorage);
   };
 
+  const renderSection = (section: {
+    title: string;
+    filters: CartoFilter[];
+  }) => {
+    return (
+      <View style={styles.filterView}>
+        <CommonText style={styles.partsTitle}>{section.title}</CommonText>
+        <View style={styles.behindOfModal}></View>
+        <View style={styles.filterContainer}>
+          {renderChips(section.filters)}
+        </View>
+      </View>
+    );
+  };
   const renderChips = (cartoFilters: CartoFilter[] | undefined) => {
     return cartoFilters?.map((filter, index) => (
       <Chip
@@ -209,76 +246,68 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
   return (
     <>
       <FetchFilterData setFilterData={setFilterDataFromDb} />
-      <Modal transparent={true} visible={visible}>
+      <Modal transparent={true} visible={visible} animationType="fade">
         {showModalContent && (
-          <View style={styles.mainContainer}>
-            <TitleH1 title={Labels.aroundMe.filter.title} animated={false} />
-            <TouchableOpacity
-              style={styles.closeModalView}
-              onPress={() => {
-                setCartoFilterStorage({ etapes: [], types: [] });
-                hideModal(false);
-              }}
-            >
-              <Icomoon
-                name={IcomoonIcons.fermer}
-                size={Sizes.xs}
-                color={Colors.primaryBlue}
-              />
-            </TouchableOpacity>
-            <CommonText style={styles.partsTitle}>
-              {Labels.aroundMe.filter.structures}
-            </CommonText>
-            <View style={styles.filterContainer}>
-              {renderChips(fetchedFiltersFromDB?.structures)}
-            </View>
-            <CommonText style={styles.partsTitle}>
-              {Labels.aroundMe.filter.healthProfessional}
-            </CommonText>
-            <View style={styles.filterContainer}>
-              {renderChips(fetchedFiltersFromDB?.professionnels)}
-            </View>
-            <CommonText style={styles.partsTitle}>
-              {Labels.aroundMe.filter.steps}
-            </CommonText>
-            <View style={styles.filterContainer}>
-              {renderChips(fetchedFiltersFromDB?.etapes)}
-            </View>
-            <View style={styles.buttonsContainer}>
-              <View style={styles.buttonContainer}>
-                <Button
-                  title={Labels.buttons.cancel}
-                  titleStyle={styles.buttonTitleStyle}
-                  rounded={false}
-                  disabled={false}
-                  icon={
-                    <Icomoon
-                      name={IcomoonIcons.fermer}
-                      size={14}
-                      color={Colors.primaryBlue}
-                    />
-                  }
-                  action={() => {
-                    setCartoFilterStorage({ etapes: [], types: [] });
-                    hideModal(false);
-                  }}
+          <View style={styles.behindOfModal}>
+            <View style={styles.mainContainer}>
+              <TitleH1 title={Labels.aroundMe.filter.title} animated={false} />
+              <TouchableOpacity
+                style={styles.closeModalView}
+                onPress={() => {
+                  setCartoFilterStorage({ etapes: [], types: [] });
+                  hideModal(false);
+                }}
+              >
+                <Icomoon
+                  name={IcomoonIcons.fermer}
+                  size={Sizes.xs}
+                  color={Colors.primaryBlue}
                 />
-              </View>
-              <View style={styles.buttonContainer}>
-                <Button
-                  title={Labels.buttons.validate}
-                  titleStyle={styles.buttonTitleStyle}
-                  rounded={true}
-                  disabled={false}
-                  action={() => {
-                    void StorageUtils.storeObjectValue(
-                      StorageKeysConstants.cartoFilterKey,
-                      cartoFilterStorage
-                    );
-                    setCartoFilterStorage({ etapes: [], types: [] });
-                    hideModal(true);
-                  }}
-                />
+              </TouchableOpacity>
+              {filtersFromDbInList.map(
+                (
+                  filterFromDb: { title: string; filters: CartoFilter[] },
+                  index: number
+                ) => (
+                  <View key={index}>{renderSection(filterFromDb)}</View>
+                )
+              )}
+              <View style={styles.buttonsContainer}>
+                <View style={styles.buttonContainer}>
+                  <Button
+                    title={Labels.buttons.cancel}
+                    titleStyle={styles.buttonTitleStyle}
+                    rounded={false}
+                    disabled={false}
+                    icon={
+                      <Icomoon
+                        name={IcomoonIcons.fermer}
+                        size={14}
+                        color={Colors.primaryBlue}
+                      />
+                    }
+                    action={() => {
+                      setCartoFilterStorage({ etapes: [], types: [] });
+                      hideModal(false);
+                    }}
+                  />
+                </View>
+                <View style={styles.buttonContainer}>
+                  <Button
+                    title={Labels.buttons.validate}
+                    titleStyle={styles.buttonTitleStyle}
+                    rounded={true}
+                    disabled={false}
+                    action={() => {
+                      void StorageUtils.storeObjectValue(
+                        StorageKeysConstants.cartoFilterKey,
+                        cartoFilterStorage
+                      );
+                      setCartoFilterStorage({ etapes: [], types: [] });
+                      hideModal(true);
+                    }}
+                  />
+                </View>
               </View>
             </View>
           </View>
@@ -289,6 +318,10 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
 };
 
 const styles = StyleSheet.create({
+  behindOfModal: {
+    backgroundColor: Colors.transparentGrey,
+    flex: 1,
+  },
   buttonContainer: {
     flex: 1,
   },
@@ -296,7 +329,10 @@ const styles = StyleSheet.create({
     fontSize: Sizes.sm,
   },
   buttonsContainer: {
+    bottom: 0,
     flexDirection: "row",
+    marginBottom: Margins.default,
+    position: "absolute",
   },
   closeModalView: {
     margin: Margins.default,
@@ -305,9 +341,11 @@ const styles = StyleSheet.create({
     top: 0,
   },
   filterContainer: {
-    flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
+  },
+  filterView: {
+    marginBottom: Margins.default,
   },
   mainContainer: {
     backgroundColor: Colors.white,
@@ -315,7 +353,6 @@ const styles = StyleSheet.create({
     borderRadius: Sizes.xs,
     borderWidth: 1,
     flex: 1,
-    justifyContent: "flex-start",
     margin: Margins.default,
     padding: Paddings.default,
   },
