@@ -1,6 +1,7 @@
 import {
   CartoFilter,
-  CartoFilters,
+  CartoFiltersStructuresEtPros,
+  CartoFilterStorage,
   CartographiePoisFromDB,
   PoiTypeFromDB,
   StepFromDB,
@@ -20,7 +21,8 @@ import {
 
 export {
   CartoFilter,
-  CartoFilters,
+  CartoFiltersStructuresEtPros,
+  CartoFilterStorage,
   CartographiePoisFromDB,
   DataFetchingType,
   EpdsAnswer,

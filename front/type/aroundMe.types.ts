@@ -28,9 +28,15 @@ export interface StepFromDB {
 export interface CartoFilter {
   name: string;
   active: boolean;
+  filterType: AroundMeConstants.CartoFilterEnum;
 }
 
-export interface CartoFilters {
+export interface CartoFiltersStructuresEtPros {
   structures: CartoFilter[];
   professionnels: CartoFilter[];
+}
+
+export interface CartoFilterStorage {
+  types: string[];
+  etapes: string[];
 }

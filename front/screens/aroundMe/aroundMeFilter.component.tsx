@@ -22,11 +22,12 @@ import {
 } from "../../constants";
 import type {
   CartoFilter,
-  CartoFilters,
+  CartoFiltersStructuresEtPros,
+  CartoFilterStorage,
   PoiTypeFromDB,
   StepFromDB,
 } from "../../type";
-import { StorageUtils } from "../../utils";
+import { StorageUtils, StringUtils } from "../../utils";
 
 interface Props {
   visible: boolean;
@@ -40,22 +41,24 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
   const [steps, setSteps] = useState<StepFromDB[]>([]);
 
   const [fetchedTypeFiltersFromDB, setFetchedTypeFiltersFromDB] =
-    useState<CartoFilters>();
+    useState<CartoFiltersStructuresEtPros>();
   const [fetchedStepFiltersFromDB, setFetchedStepFiltersFromDB] =
     useState<CartoFilter[]>();
-  const [poiTypeArray, setPoiTypeArray] = useState<string[]>([]);
-  const [poiStepArray, setPoiStepArray] = useState<string[]>([]);
+  const [cartoFilterStorage, setCartoFilterStorage] =
+    useState<CartoFilterStorage>({ etapes: [], types: [] });
   const [showModalContent, setShowModalContent] = useState(false);
 
   useEffect(() => {
-    const checkIfSavedFilters = async () => {
-      const savedFilters: string[] = await StorageUtils.getObjectValue(
-        StorageKeysConstants.cartoFilterTypeKey
-      );
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (!savedFilters || savedFilters.length === 0) showModal();
+    const checkSavedFilters = async () => {
+      const savedFilters: CartoFilterStorage =
+        await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
+      if (
+        StringUtils.stringArrayIsNullOrEmpty(savedFilters.types) &&
+        StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes)
+      )
+        showModal();
     };
-    void checkIfSavedFilters();
+    void checkSavedFilters();
   }, []);
 
   useEffect(() => {
@@ -72,9 +75,9 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
 
     setShowModalContent(false);
     const getSavedFilter = async () => {
-      const savedTypeFilters: string[] = await StorageUtils.getObjectValue(
-        StorageKeysConstants.cartoFilterTypeKey
-      );
+      const savedFilters: CartoFilterStorage =
+        await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
+
       if (fetchedTypeFiltersFromDB) {
         fetchedTypeFiltersFromDB.professionnels.forEach(
           (filter) => (filter.active = false)
@@ -83,32 +86,27 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
           (filter) => (filter.active = false)
         );
 
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        if (savedTypeFilters?.length > 0) {
+        if (!StringUtils.stringArrayIsNullOrEmpty(savedFilters.types)) {
           setFetchedTypeFiltersFromDB({
             professionnels: checkSavedFiltersInFetchedFilters(
-              savedTypeFilters,
+              savedFilters.types,
               fetchedTypeFiltersFromDB.professionnels
             ),
             structures: checkSavedFiltersInFetchedFilters(
-              savedTypeFilters,
+              savedFilters.types,
               fetchedTypeFiltersFromDB.structures
             ),
           });
         }
       }
 
-      const savedStepFilters: string[] = await StorageUtils.getObjectValue(
-        StorageKeysConstants.cartoFilterStepKey
-      );
       if (fetchedStepFiltersFromDB) {
         fetchedStepFiltersFromDB.forEach((filter) => (filter.active = false));
 
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        if (savedStepFilters && savedStepFilters.length > 0) {
+        if (!StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes)) {
           setFetchedStepFiltersFromDB(
             checkSavedFiltersInFetchedFilters(
-              savedStepFilters,
+              savedFilters.etapes,
               fetchedStepFiltersFromDB
             )
           );
@@ -127,8 +125,12 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
     cartoFilters.forEach((cartoFilter) => {
       if (!savedFilters.includes(cartoFilter.name)) return;
       cartoFilter.active = true;
-      poiTypeArray.push(cartoFilter.name);
-      setPoiTypeArray(poiTypeArray);
+
+      if (cartoFilter.filterType === AroundMeConstants.CartoFilterEnum.type)
+        cartoFilterStorage.types.push(cartoFilter.name);
+      else cartoFilterStorage.etapes.push(cartoFilter.name);
+
+      setCartoFilterStorage(cartoFilterStorage);
     });
 
     return cartoFilters;
@@ -141,17 +143,23 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
       professionnels: filterToPoiCategorie(
         poiTypesToFilter,
         AroundMeConstants.PoiCategorieEnum.professionnel
-      ).map((poiType) => convertToCartoFilter(poiType)),
+      ).map((poiType) =>
+        convertToCartoFilter(poiType, AroundMeConstants.CartoFilterEnum.type)
+      ),
       structures: filterToPoiCategorie(
         poiTypesToFilter,
         AroundMeConstants.PoiCategorieEnum.structure
-      ).map((poiType) => convertToCartoFilter(poiType)),
+      ).map((poiType) =>
+        convertToCartoFilter(poiType, AroundMeConstants.CartoFilterEnum.type)
+      ),
     });
   };
 
   const extractStepFilters = (stepsFilter: StepFromDB[]) => {
     setFetchedStepFiltersFromDB(
-      stepsFilter.map((step) => convertToCartoFilter(step))
+      stepsFilter.map((step) =>
+        convertToCartoFilter(step, AroundMeConstants.CartoFilterEnum.etape)
+      )
     );
   };
 
@@ -165,37 +173,36 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
   };
 
   const convertToCartoFilter = (
-    type: PoiTypeFromDB | StepFromDB
+    filter: PoiTypeFromDB | StepFromDB,
+    filterType: AroundMeConstants.CartoFilterEnum
   ): CartoFilter => {
     return {
       active: false,
-      name: type.nom,
+      filterType: filterType,
+      name: filter.nom,
     };
   };
 
-  const updateQueryFilter = (
-    filterName: string,
-    filterType: AroundMeConstants.CartoFilterEnum
-  ) => {
+  const updateQueryFilter = (filter: CartoFilter) => {
     let tempQueryFilter =
-      filterType === AroundMeConstants.CartoFilterEnum.type
-        ? poiTypeArray
-        : poiStepArray;
-    if (!tempQueryFilter.includes(filterName)) tempQueryFilter.push(filterName);
+      filter.filterType === AroundMeConstants.CartoFilterEnum.type
+        ? cartoFilterStorage.types
+        : cartoFilterStorage.etapes;
+    if (!tempQueryFilter.includes(filter.name))
+      tempQueryFilter.push(filter.name);
     else {
       tempQueryFilter = tempQueryFilter.filter(
-        (element) => element !== filterName
+        (element) => element !== filter.name
       );
     }
-    if (filterType === AroundMeConstants.CartoFilterEnum.type)
-      setPoiTypeArray(tempQueryFilter);
-    else setPoiStepArray(tempQueryFilter);
+
+    if (filter.filterType === AroundMeConstants.CartoFilterEnum.type)
+      cartoFilterStorage.types = tempQueryFilter;
+    else cartoFilterStorage.etapes = tempQueryFilter;
+    setCartoFilterStorage(cartoFilterStorage);
   };
 
-  const renderChips = (
-    cartoFilters: CartoFilter[] | undefined,
-    filterType: AroundMeConstants.CartoFilterEnum
-  ) => {
+  const renderChips = (cartoFilters: CartoFilter[] | undefined) => {
     return cartoFilters?.map((filter, index) => (
       <Chip
         id={index}
@@ -203,7 +210,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
         title={filter.name}
         selected={filter.active}
         action={() => {
-          updateQueryFilter(filter.name, filterType);
+          updateQueryFilter(filter);
         }}
         changeSizeForIos={true}
       />
@@ -223,7 +230,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
             <TouchableOpacity
               style={styles.closeModalView}
               onPress={() => {
-                setPoiTypeArray([]);
+                setCartoFilterStorage({ etapes: [], types: [] });
                 hideModal(false);
               }}
             >
@@ -237,28 +244,19 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
               {Labels.aroundMe.filter.structures}
             </CommonText>
             <View style={styles.filterContainer}>
-              {renderChips(
-                fetchedTypeFiltersFromDB?.structures,
-                AroundMeConstants.CartoFilterEnum.type
-              )}
+              {renderChips(fetchedTypeFiltersFromDB?.structures)}
             </View>
             <CommonText style={styles.partsTitle}>
               {Labels.aroundMe.filter.healthProfessional}
             </CommonText>
             <View style={styles.filterContainer}>
-              {renderChips(
-                fetchedTypeFiltersFromDB?.professionnels,
-                AroundMeConstants.CartoFilterEnum.type
-              )}
+              {renderChips(fetchedTypeFiltersFromDB?.professionnels)}
             </View>
             <CommonText style={styles.partsTitle}>
               {Labels.aroundMe.filter.steps}
             </CommonText>
             <View style={styles.filterContainer}>
-              {renderChips(
-                fetchedStepFiltersFromDB,
-                AroundMeConstants.CartoFilterEnum.etape
-              )}
+              {renderChips(fetchedStepFiltersFromDB)}
             </View>
             <View style={styles.buttonsContainer}>
               <View style={styles.buttonContainer}>
@@ -275,7 +273,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
                     />
                   }
                   action={() => {
-                    setPoiTypeArray([]);
+                    setCartoFilterStorage({ etapes: [], types: [] });
                     hideModal(false);
                   }}
                 />
@@ -288,15 +286,10 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
                   disabled={false}
                   action={() => {
                     void StorageUtils.storeObjectValue(
-                      StorageKeysConstants.cartoFilterTypeKey,
-                      poiTypeArray
+                      StorageKeysConstants.cartoFilterKey,
+                      cartoFilterStorage
                     );
-                    setPoiTypeArray([]);
-                    void StorageUtils.storeObjectValue(
-                      StorageKeysConstants.cartoFilterStepKey,
-                      poiStepArray
-                    );
-                    setPoiTypeArray([]);
+                    setCartoFilterStorage({ etapes: [], types: [] });
                     hideModal(true);
                   }}
                 />
