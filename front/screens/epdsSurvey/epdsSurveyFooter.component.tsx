@@ -23,7 +23,7 @@ const EpdsSurveyFooter: React.FC<Props> = ({
   setShowResult,
 }) => {
   return (
-    <View style={styles.footer}>
+    <View>
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonContainer}>
           {swiperCurrentIndex > 0 && (
@@ -91,9 +91,6 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: "row",
-  },
-  footer: {
-    flex: 1,
   },
   justifyContentCenter: {
     alignItems: "center",
