@@ -1,3 +1,10 @@
+## [1.46.7](https://github.com/SocialGouv/1000jours/compare/v1.46.6...v1.46.7) (2021-06-28)
+
+
+### Bug Fixes
+
+* **carto:** filtre obligatoire + pagination locale ([#404](https://github.com/SocialGouv/1000jours/issues/404)) ([5731d39](https://github.com/SocialGouv/1000jours/commit/5731d39b194f64914a6791b407558ff8bdcac3ad))
+
 ## [1.46.6](https://github.com/SocialGouv/1000jours/compare/v1.46.5...v1.46.6) (2021-06-28)
 
 
