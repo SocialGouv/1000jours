@@ -30,9 +30,9 @@ const BottomTabNavigator: FC = () => {
   const tabItems: TabItem[] = [
     {
       component: TabHomeNavigator,
-      getIcon: (tintColor) => (
+      getIcon: (tintColor, focused) => (
         <Icomoon
-          name={IcomoonIcons.accueil}
+          name={focused ? IcomoonIcons.accueilActive : IcomoonIcons.accueil}
           color={tintColor}
           size={iconSize}
         />
@@ -42,9 +42,11 @@ const BottomTabNavigator: FC = () => {
     },
     {
       component: TabCalendarNavigator,
-      getIcon: (tintColor) => (
+      getIcon: (tintColor, focused) => (
         <Icomoon
-          name={IcomoonIcons.calendrier}
+          name={
+            focused ? IcomoonIcons.calendrierActive : IcomoonIcons.calendrier
+          }
           color={tintColor}
           size={iconSize}
         />
@@ -54,9 +56,11 @@ const BottomTabNavigator: FC = () => {
     },
     {
       component: TabEpdsNavigator,
-      getIcon: (tintColor) => (
+      getIcon: (tintColor, focused) => (
         <Icomoon
-          name={IcomoonIcons.testEPDS}
+          name={
+            focused ? IcomoonIcons.postPartumActive : IcomoonIcons.postPartum
+          }
           color={tintColor}
           size={iconSize}
         />
@@ -66,9 +70,11 @@ const BottomTabNavigator: FC = () => {
     },
     {
       component: TabAroundMeNavigator,
-      getIcon: (tintColor) => (
+      getIcon: (tintColor, focused) => (
         <Icomoon
-          name={IcomoonIcons.autourDeMoi}
+          name={
+            focused ? IcomoonIcons.autourDeMoiActive : IcomoonIcons.autourDeMoi
+          }
           color={tintColor}
           size={iconSize}
         />
@@ -82,7 +88,7 @@ const BottomTabNavigator: FC = () => {
     <BottomTab.Navigator
       initialRouteName="tabHome"
       tabBarOptions={{
-        activeTintColor: Colors.primaryYellowDark,
+        activeTintColor: Colors.primaryBlueDark,
         inactiveTintColor: Colors.primaryBlueDark,
       }}
     >
@@ -92,7 +98,7 @@ const BottomTabNavigator: FC = () => {
           name={tabItem.name}
           component={tabItem.component}
           options={{
-            tabBarIcon: ({ color }) => tabItem.getIcon(color),
+            tabBarIcon: ({ color, focused }) => tabItem.getIcon(color, focused),
             title: tabItem.title,
             unmountOnBlur: true,
           }}

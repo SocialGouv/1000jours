@@ -8,9 +8,7 @@ import { Paddings, Sizes } from "../../constants";
 
 const HeaderApp: FC = () => (
   <View>
-    <View style={styles.logoMinistere}>
-      <LogoMinistere height={Sizes.xxl} />
-    </View>
+    <LogoMinistere height={Sizes.xxxxl} style={styles.logoMinistere} />
     <View style={styles.appLogo}>
       <AppLogo height={Sizes.logo} />
     </View>
@@ -23,7 +21,8 @@ const styles = StyleSheet.create({
     display: "flex",
   },
   logoMinistere: {
-    padding: Paddings.default,
+    aspectRatio: 1,
+    margin: Paddings.light,
   },
 });
 

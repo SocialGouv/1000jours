@@ -109,9 +109,6 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     return isMatching;
   };
 
-  const minAnimDelay = 100;
-  const maxAnimDelay = 750;
-
   const applyFilters = (filters: ArticleFilter[]) => {
     const activeFilters = _.filter(filters, { active: true });
     const result = filteredArticles.map((article) => {
@@ -163,12 +160,8 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
             <Animatable.View
               key={index}
               animation="fadeInUp"
-              duration={1000}
-              delay={
-                minAnimDelay * index < maxAnimDelay
-                  ? minAnimDelay * index
-                  : maxAnimDelay
-              }
+              duration={1500}
+              delay={0}
             >
               <ListItem
                 bottomDivider

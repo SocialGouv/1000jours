@@ -17,6 +17,7 @@ const Sizes = {
   xxl: scaleNormalize(28),
   xxxl: scaleNormalize(36),
   xxxxl: scaleNormalize(46),
+  xxxxxl: scaleNormalize(60),
   giant: scaleNormalize(300),
   logo: scaleNormalize(70),
   step: scaleNormalize(80),

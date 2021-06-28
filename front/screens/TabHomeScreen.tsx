@@ -10,7 +10,7 @@ import type { LayoutChangeEvent } from "react-native";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { ErrorMessage, TimelineStep, TitleH2, View } from "../components";
+import { ErrorMessage, TimelineStep, TitleH1, View } from "../components";
 import { Paddings, Sizes, StorageKeysConstants } from "../constants";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
@@ -134,7 +134,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 
   return (
     <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>
-      <TitleH2
+      <TitleH1
         title={Labels.timeline.title}
         description={Labels.timeline.description}
         animated={false}

@@ -10,6 +10,7 @@ import {
   FontNames,
   FontWeight,
   getFontFamilyName,
+  Sizes,
 } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
   baseFontStyle: {
     color: Colors.commonText,
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
-    fontSize: 16,
+    fontSize: Sizes.xs,
     lineHeight: 25,
   },
   bold: {
