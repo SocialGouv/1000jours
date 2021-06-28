@@ -1,3 +1,10 @@
+## [1.46.8](https://github.com/SocialGouv/1000jours/compare/v1.46.7...v1.46.8) (2021-06-28)
+
+
+### Bug Fixes
+
+* **epds:** restart survey fix + design review ([#405](https://github.com/SocialGouv/1000jours/issues/405)) ([8f5c79d](https://github.com/SocialGouv/1000jours/commit/8f5c79d68e9a9e01aafc852606ab8ebbe5a3d81e))
+
 ## [1.46.7](https://github.com/SocialGouv/1000jours/compare/v1.46.6...v1.46.7) (2021-06-28)
 
 
