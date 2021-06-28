@@ -8,8 +8,8 @@ import {
   DatabaseQueries,
   StorageKeysConstants,
 } from "../../constants";
-import type { CartographiePoisFromDB } from "../../type";
-import { AroundMeUtils, StorageUtils } from "../../utils";
+import type { CartoFilterStorage, CartographiePoisFromDB } from "../../type";
+import { AroundMeUtils, StorageUtils, StringUtils } from "../../utils";
 
 interface Props {
   children?: React.ReactNode;
@@ -49,21 +49,23 @@ const FetchPoisCoords: React.FC<Props> = ({
         region,
         AroundMeConstants.LatLngPointType.bottomRight
       );
-      const savedTypeFilter: string[] = await StorageUtils.getObjectValue(
-        StorageKeysConstants.cartoFilterKey
-      );
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (!savedTypeFilter || savedTypeFilter.length === 0) {
+
+      const savedFilters: CartoFilterStorage =
+        await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
+      if (
+        StringUtils.stringArrayIsNullOrEmpty(savedFilters.types) &&
+        StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes)
+      ) {
         chooseFilterMessage();
         return;
       }
-
       const variables = {
+        etapes: savedFilters.etapes,
         lat1: topLeftPoint.latitude,
         lat2: bottomRightPoint.latitude,
         long1: topLeftPoint.longitude,
         long2: bottomRightPoint.longitude,
-        types: savedTypeFilter,
+        types: savedFilters.types,
       };
       getPoisByGpsCoords({
         variables,

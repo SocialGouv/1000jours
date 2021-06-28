@@ -26,7 +26,7 @@ import type {
   UserInfos,
   UserSituation,
 } from "../types";
-import { StorageUtils, TrackerUtils } from "../utils";
+import { AroundMeUtils, StorageUtils, TrackerUtils } from "../utils";
 import { scheduleNextStepNotification } from "../utils/notification.util";
 
 export enum UserInfo {
@@ -135,8 +135,10 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   }));
   const numberOfStepsWithoutTheFirstAndLast = etapes.length - 1 - 2;
 
-  if (result.getCurrentEtape)
+  if (result.getCurrentEtape) {
     prepareNextStepNotification(result.getCurrentEtape);
+    void AroundMeUtils.saveCurrentEtapeForCartoFilter(result.getCurrentEtape);
+  }
 
   return (
     <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>

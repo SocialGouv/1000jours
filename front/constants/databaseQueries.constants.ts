@@ -29,9 +29,13 @@ export const EPDS_ADD_RESPONSE = gql`
   }
 `;
 
-export const AROUNDME_TYPES_FILTER = gql`
+export const AROUNDME_FILTER_DATA = gql`
   query {
-    cartographieTypes {
+    etapes(sort: "nom") {
+      nom
+    }
+
+    cartographieTypes(sort: "nom") {
       nom
       categorie
     }
@@ -45,8 +49,13 @@ export const AROUNDME_POIS_BY_GPSCOORDS = gql`
     $long2: Float!
     $lat2: Float!
     $types: [String!]
+    $etapes: [String!]
   ) {
-    searchPois(perimetre: [$long1, $lat1, $long2, $lat2], types: $types) {
+    searchPois(
+      perimetre: [$long1, $lat1, $long2, $lat2]
+      types: $types
+      etapes: $etapes
+    ) {
       nom
       type
       categorie

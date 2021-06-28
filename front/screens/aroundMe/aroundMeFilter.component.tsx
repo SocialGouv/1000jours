@@ -1,6 +1,12 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Modal, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  Modal,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import {
   Button,
@@ -20,8 +26,14 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../constants";
-import type { CartoFilter, CartoFilters, PoiTypeFromDB } from "../../type";
-import { StorageUtils } from "../../utils";
+import type {
+  CartoFilter,
+  CartoFilterStorage,
+  DisplayedCartoFilters,
+  PoiTypeFromDB,
+  StepFromDB,
+} from "../../type";
+import { StorageUtils, StringUtils } from "../../utils";
 
 interface Props {
   visible: boolean;
@@ -30,59 +42,78 @@ interface Props {
 }
 
 const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
-  const [poiTypesAndCategories, setPoiTypesAndCategories] =
-    useState<PoiTypeFromDB[]>();
+  const [filterDataFromDb, setFilterDataFromDb] = useState<unknown>();
 
   const [fetchedFiltersFromDB, setFetchedFiltersFromDB] =
-    useState<CartoFilters>();
-  const [poiTypeArray, setPoiTypeArray] = useState<string[]>([]);
+    useState<DisplayedCartoFilters>();
+  const [filtersFromDbInList, setFiltersFromDbInList] = useState<
+    { title: string; filters: CartoFilter[] }[]
+  >([]);
+  const [cartoFilterStorage, setCartoFilterStorage] =
+    useState<CartoFilterStorage>({ etapes: [], types: [] });
   const [showModalContent, setShowModalContent] = useState(false);
 
   useEffect(() => {
-    const checkIfSavedFilters = async () => {
-      const savedFilters: string[] = await StorageUtils.getObjectValue(
-        StorageKeysConstants.cartoFilterKey
-      );
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (!savedFilters || savedFilters.length === 0) showModal();
+    const checkSavedFilters = async () => {
+      const savedFilters: CartoFilterStorage =
+        await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
+      if (
+        StringUtils.stringArrayIsNullOrEmpty(savedFilters.types) &&
+        StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes)
+      )
+        showModal();
     };
-    void checkIfSavedFilters();
+    void checkSavedFilters();
   }, []);
 
   useEffect(() => {
-    if (poiTypesAndCategories && poiTypesAndCategories.length > 0)
-      extractPoiTypeAndCategorieFilters(poiTypesAndCategories);
-  }, [poiTypesAndCategories]);
+    if (!filterDataFromDb) return;
+    const { cartographieTypes, etapes } = filterDataFromDb as {
+      cartographieTypes: PoiTypeFromDB[];
+      etapes: StepFromDB[];
+    };
+    extractFilterData(cartographieTypes, etapes);
+  }, [filterDataFromDb]);
 
   useEffect(() => {
     if (!visible) return;
 
     setShowModalContent(false);
     const getSavedFilter = async () => {
-      const savedFilters: string[] = await StorageUtils.getObjectValue(
-        StorageKeysConstants.cartoFilterKey
-      );
-      if (fetchedFiltersFromDB) {
-        fetchedFiltersFromDB.professionnels.forEach(
-          (filter) => (filter.active = false)
-        );
-        fetchedFiltersFromDB.structures.forEach(
-          (filter) => (filter.active = false)
-        );
+      const savedFilters: CartoFilterStorage =
+        await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
 
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        if (savedFilters?.length > 0) {
-          setFetchedFiltersFromDB({
-            professionnels: checkSavedFiltersInFetchedFilters(
-              savedFilters,
+      if (fetchedFiltersFromDB) {
+        if (!StringUtils.stringArrayIsNullOrEmpty(savedFilters.types)) {
+          fetchedFiltersFromDB.professionnels.forEach(
+            (filter) => (filter.active = false)
+          );
+          fetchedFiltersFromDB.structures.forEach(
+            (filter) => (filter.active = false)
+          );
+          fetchedFiltersFromDB.professionnels =
+            checkSavedFiltersInFetchedFilters(
+              savedFilters.types,
               fetchedFiltersFromDB.professionnels
-            ),
-            structures: checkSavedFiltersInFetchedFilters(
-              savedFilters,
-              fetchedFiltersFromDB.structures
-            ),
-          });
+            );
+          fetchedFiltersFromDB.structures = checkSavedFiltersInFetchedFilters(
+            savedFilters.types,
+            fetchedFiltersFromDB.structures
+          );
         }
+
+        if (!StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes)) {
+          fetchedFiltersFromDB.etapes.forEach(
+            (filter) => (filter.active = false)
+          );
+          fetchedFiltersFromDB.etapes = checkSavedFiltersInFetchedFilters(
+            savedFilters.etapes,
+            fetchedFiltersFromDB.etapes
+          );
+        }
+
+        setFetchedFiltersFromDB(fetchedFiltersFromDB);
+        convertFetchedFiltersToDisplayedFilters();
       }
       setShowModalContent(true);
     };
@@ -90,6 +121,24 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
     void getSavedFilter();
   }, [visible]);
 
+  const convertFetchedFiltersToDisplayedFilters = () => {
+    if (fetchedFiltersFromDB) {
+      setFiltersFromDbInList([
+        {
+          filters: fetchedFiltersFromDB.structures,
+          title: Labels.aroundMe.filter.structures,
+        },
+        {
+          filters: fetchedFiltersFromDB.professionnels,
+          title: Labels.aroundMe.filter.healthProfessional,
+        },
+        {
+          filters: fetchedFiltersFromDB.etapes,
+          title: Labels.aroundMe.filter.steps,
+        },
+      ]);
+    }
+  };
   const checkSavedFiltersInFetchedFilters = (
     savedFilters: string[],
     cartoFilters: CartoFilter[]
@@ -97,26 +146,39 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
     cartoFilters.forEach((cartoFilter) => {
       if (!savedFilters.includes(cartoFilter.name)) return;
       cartoFilter.active = true;
-      poiTypeArray.push(cartoFilter.name);
-      setPoiTypeArray(poiTypeArray);
+
+      if (cartoFilter.filterType === AroundMeConstants.CartoFilterEnum.type)
+        cartoFilterStorage.types.push(cartoFilter.name);
+      else cartoFilterStorage.etapes.push(cartoFilter.name);
+
+      setCartoFilterStorage(cartoFilterStorage);
     });
 
     return cartoFilters;
   };
 
-  const extractPoiTypeAndCategorieFilters = (
-    poiTypesToFilter: PoiTypeFromDB[]
+  const extractFilterData = (
+    poiTypesToFilter: PoiTypeFromDB[],
+    stepToFilter: StepFromDB[]
   ) => {
     setFetchedFiltersFromDB({
+      etapes: stepToFilter.map((step) =>
+        convertToCartoFilter(step, AroundMeConstants.CartoFilterEnum.etape)
+      ),
       professionnels: filterToPoiCategorie(
         poiTypesToFilter,
         AroundMeConstants.PoiCategorieEnum.professionnel
-      ).map((poiType) => convertToCartoFilter(poiType)),
+      ).map((poiType) =>
+        convertToCartoFilter(poiType, AroundMeConstants.CartoFilterEnum.type)
+      ),
       structures: filterToPoiCategorie(
         poiTypesToFilter,
         AroundMeConstants.PoiCategorieEnum.structure
-      ).map((poiType) => convertToCartoFilter(poiType)),
+      ).map((poiType) =>
+        convertToCartoFilter(poiType, AroundMeConstants.CartoFilterEnum.type)
+      ),
     });
+    convertFetchedFiltersToDisplayedFilters();
   };
 
   const filterToPoiCategorie = (
@@ -128,24 +190,50 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
     );
   };
 
-  const convertToCartoFilter = (type: PoiTypeFromDB): CartoFilter => {
+  const convertToCartoFilter = (
+    filter: PoiTypeFromDB | StepFromDB,
+    filterType: AroundMeConstants.CartoFilterEnum
+  ): CartoFilter => {
     return {
       active: false,
-      name: type.nom,
+      filterType: filterType,
+      name: filter.nom,
     };
   };
 
-  const updateQueryFilter = (filterName: string) => {
-    let tempQueryFilter = poiTypeArray;
-    if (!tempQueryFilter.includes(filterName)) tempQueryFilter.push(filterName);
+  const updateQueryFilter = (filter: CartoFilter) => {
+    let tempQueryFilter =
+      filter.filterType === AroundMeConstants.CartoFilterEnum.type
+        ? cartoFilterStorage.types
+        : cartoFilterStorage.etapes;
+    if (!tempQueryFilter.includes(filter.name))
+      tempQueryFilter.push(filter.name);
     else {
       tempQueryFilter = tempQueryFilter.filter(
-        (element) => element !== filterName
+        (element) => element !== filter.name
       );
     }
-    setPoiTypeArray(tempQueryFilter);
+
+    if (filter.filterType === AroundMeConstants.CartoFilterEnum.type)
+      cartoFilterStorage.types = tempQueryFilter;
+    else cartoFilterStorage.etapes = tempQueryFilter;
+    setCartoFilterStorage(cartoFilterStorage);
   };
 
+  const renderSection = (section: {
+    title: string;
+    filters: CartoFilter[];
+  }) => {
+    return (
+      <View style={styles.filterView}>
+        <CommonText style={styles.partsTitle}>{section.title}</CommonText>
+        <View style={styles.behindOfModal}></View>
+        <View style={styles.filterContainer}>
+          {renderChips(section.filters)}
+        </View>
+      </View>
+    );
+  };
   const renderChips = (cartoFilters: CartoFilter[] | undefined) => {
     return cartoFilters?.map((filter, index) => (
       <Chip
@@ -154,7 +242,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
         title={filter.name}
         selected={filter.active}
         action={() => {
-          updateQueryFilter(filter.name);
+          updateQueryFilter(filter);
         }}
         changeSizeForIos={true}
       />
@@ -163,71 +251,71 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
 
   return (
     <>
-      <FetchFilterData setPoiTypes={setPoiTypesAndCategories} />
-      <Modal transparent={true} visible={visible}>
+      <FetchFilterData setFilterData={setFilterDataFromDb} />
+      <Modal transparent={true} visible={visible} animationType="fade">
         {showModalContent && (
-          <View style={styles.mainContainer}>
-            <TitleH1 title={Labels.aroundMe.filter.title} animated={false} />
-            <TouchableOpacity
-              style={styles.closeModalView}
-              onPress={() => {
-                setPoiTypeArray([]);
-                hideModal(false);
-              }}
-            >
-              <Icomoon
-                name={IcomoonIcons.fermer}
-                size={Sizes.xs}
-                color={Colors.primaryBlue}
-              />
-            </TouchableOpacity>
-            <CommonText style={styles.partsTitle}>
-              {Labels.aroundMe.filter.structures}
-            </CommonText>
-            <View style={styles.filterContainer}>
-              {renderChips(fetchedFiltersFromDB?.structures)}
-            </View>
-            <CommonText style={styles.partsTitle}>
-              {Labels.aroundMe.filter.healthProfessional}
-            </CommonText>
-            <View style={styles.filterContainer}>
-              {renderChips(fetchedFiltersFromDB?.professionnels)}
-            </View>
-            <View style={styles.buttonsContainer}>
-              <View style={styles.buttonContainer}>
-                <Button
-                  title={Labels.buttons.cancel}
-                  titleStyle={styles.buttonTitleStyle}
-                  rounded={false}
-                  disabled={false}
-                  icon={
-                    <Icomoon
-                      name={IcomoonIcons.fermer}
-                      size={14}
-                      color={Colors.primaryBlue}
-                    />
-                  }
-                  action={() => {
-                    setPoiTypeArray([]);
-                    hideModal(false);
-                  }}
+          <View style={styles.behindOfModal}>
+            <View style={styles.mainContainer}>
+              <TitleH1 title={Labels.aroundMe.filter.title} animated={false} />
+              <TouchableOpacity
+                style={styles.closeModalView}
+                onPress={() => {
+                  setCartoFilterStorage({ etapes: [], types: [] });
+                  hideModal(false);
+                }}
+              >
+                <Icomoon
+                  name={IcomoonIcons.fermer}
+                  size={Sizes.xs}
+                  color={Colors.primaryBlue}
                 />
-              </View>
-              <View style={styles.buttonContainer}>
-                <Button
-                  title={Labels.buttons.validate}
-                  titleStyle={styles.buttonTitleStyle}
-                  rounded={true}
-                  disabled={false}
-                  action={() => {
-                    void StorageUtils.storeObjectValue(
-                      StorageKeysConstants.cartoFilterKey,
-                      poiTypeArray
-                    );
-                    setPoiTypeArray([]);
-                    hideModal(true);
-                  }}
-                />
+              </TouchableOpacity>
+              <ScrollView>
+                {filtersFromDbInList.map(
+                  (
+                    filterFromDb: { title: string; filters: CartoFilter[] },
+                    index: number
+                  ) => (
+                    <View key={index}>{renderSection(filterFromDb)}</View>
+                  )
+                )}
+              </ScrollView>
+              <View style={styles.buttonsContainer}>
+                <View style={styles.buttonContainer}>
+                  <Button
+                    title={Labels.buttons.cancel}
+                    titleStyle={styles.buttonTitleStyle}
+                    rounded={false}
+                    disabled={false}
+                    icon={
+                      <Icomoon
+                        name={IcomoonIcons.fermer}
+                        size={14}
+                        color={Colors.primaryBlue}
+                      />
+                    }
+                    action={() => {
+                      setCartoFilterStorage({ etapes: [], types: [] });
+                      hideModal(false);
+                    }}
+                  />
+                </View>
+                <View style={styles.buttonContainer}>
+                  <Button
+                    title={Labels.buttons.validate}
+                    titleStyle={styles.buttonTitleStyle}
+                    rounded={true}
+                    disabled={false}
+                    action={() => {
+                      void StorageUtils.storeObjectValue(
+                        StorageKeysConstants.cartoFilterKey,
+                        cartoFilterStorage
+                      );
+                      setCartoFilterStorage({ etapes: [], types: [] });
+                      hideModal(true);
+                    }}
+                  />
+                </View>
               </View>
             </View>
           </View>
@@ -238,6 +326,10 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
 };
 
 const styles = StyleSheet.create({
+  behindOfModal: {
+    backgroundColor: Colors.transparentGrey,
+    flex: 1,
+  },
   buttonContainer: {
     flex: 1,
   },
@@ -254,9 +346,11 @@ const styles = StyleSheet.create({
     top: 0,
   },
   filterContainer: {
-    flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
+  },
+  filterView: {
+    marginBottom: Margins.default,
   },
   mainContainer: {
     backgroundColor: Colors.white,
@@ -264,7 +358,6 @@ const styles = StyleSheet.create({
     borderRadius: Sizes.xs,
     borderWidth: 1,
     flex: 1,
-    justifyContent: "space-between",
     margin: Margins.default,
     padding: Paddings.default,
   },

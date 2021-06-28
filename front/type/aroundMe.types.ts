@@ -21,13 +21,23 @@ export interface PoiTypeFromDB {
   nom: string;
   categorie: string;
 }
+export interface StepFromDB {
+  nom: string;
+}
 
 export interface CartoFilter {
   name: string;
   active: boolean;
+  filterType: AroundMeConstants.CartoFilterEnum;
 }
 
-export interface CartoFilters {
+export interface DisplayedCartoFilters {
   structures: CartoFilter[];
   professionnels: CartoFilter[];
+  etapes: CartoFilter[];
+}
+
+export interface CartoFilterStorage {
+  types: string[];
+  etapes: string[];
 }

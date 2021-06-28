@@ -1,8 +1,10 @@
 import {
   CartoFilter,
-  CartoFilters,
+  CartoFilterStorage,
   CartographiePoisFromDB,
+  DisplayedCartoFilters,
   PoiTypeFromDB,
+  StepFromDB,
 } from "./aroundMe.types";
 import { DataFetchingType } from "./dataFetching.types";
 import {
@@ -19,9 +21,10 @@ import {
 
 export {
   CartoFilter,
-  CartoFilters,
+  CartoFilterStorage,
   CartographiePoisFromDB,
   DataFetchingType,
+  DisplayedCartoFilters,
   EpdsAnswer,
   EpdsGenders,
   EpdsGenderType,
@@ -32,4 +35,5 @@ export {
   EpdsResultSimpleInformation,
   PoiTypeFromDB,
   QuestionnaireEpdsFromDB,
+  StepFromDB,
 };
