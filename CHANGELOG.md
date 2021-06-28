@@ -1,3 +1,15 @@
+# [1.47.0](https://github.com/SocialGouv/1000jours/compare/v1.46.9...v1.47.0) (2021-06-28)
+
+
+### Bug Fixes
+
+* 🐛 Corrige un problème d'affichage (EPDS sur petit écran) ([#407](https://github.com/SocialGouv/1000jours/issues/407)) ([37a9aa8](https://github.com/SocialGouv/1000jours/commit/37a9aa84513d11c1ff2fa3c686f0e1eec50add8e))
+
+
+### Features
+
+* 🎸 Ajoute un loader lors des appels WS ([#409](https://github.com/SocialGouv/1000jours/issues/409)) ([637d946](https://github.com/SocialGouv/1000jours/commit/637d94675cd7d08f2daa56738f21401d29e3d459))
+
 ## [1.46.9](https://github.com/SocialGouv/1000jours/compare/v1.46.8...v1.46.9) (2021-06-28)
 
 
