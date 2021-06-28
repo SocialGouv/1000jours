@@ -8,7 +8,7 @@ const search = async ({ perimetre, types, thematiques, etapes }) => {
   const knex = strapi.connections.default;
 
   const poisQuery = knex("cartographie_pois")
-    .select(
+    .distinct(
       "cartographie_pois.nom",
       "cartographie_pois.telephone",
       "cartographie_pois.courriel",
