@@ -53,8 +53,12 @@ const FetchPoisCoords: React.FC<Props> = ({
       const savedFilters: CartoFilterStorage =
         await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
       if (
-        StringUtils.stringArrayIsNullOrEmpty(savedFilters.types) &&
-        StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes)
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        !savedFilters ||
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        (savedFilters &&
+          StringUtils.stringArrayIsNullOrEmpty(savedFilters.types) &&
+          StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes))
       ) {
         chooseFilterMessage();
         return;

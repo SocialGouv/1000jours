@@ -54,25 +54,27 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
   const [showModalContent, setShowModalContent] = useState(false);
 
   useEffect(() => {
-    const checkSavedFilters = async () => {
+    if (!filterDataFromDb) return;
+    const extractFilterDataAndCheckSavedFilters = async () => {
+      const { cartographieTypes, etapes } = filterDataFromDb as {
+        cartographieTypes: PoiTypeFromDB[];
+        etapes: StepFromDB[];
+      };
+      extractFilterData(cartographieTypes, etapes);
+
       const savedFilters: CartoFilterStorage =
         await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
       if (
-        StringUtils.stringArrayIsNullOrEmpty(savedFilters.types) &&
-        StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes)
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        !savedFilters ||
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        (savedFilters &&
+          StringUtils.stringArrayIsNullOrEmpty(savedFilters.types) &&
+          StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes))
       )
         showModal();
     };
-    void checkSavedFilters();
-  }, []);
-
-  useEffect(() => {
-    if (!filterDataFromDb) return;
-    const { cartographieTypes, etapes } = filterDataFromDb as {
-      cartographieTypes: PoiTypeFromDB[];
-      etapes: StepFromDB[];
-    };
-    extractFilterData(cartographieTypes, etapes);
+    void extractFilterDataAndCheckSavedFilters();
   }, [filterDataFromDb]);
 
   useEffect(() => {
@@ -84,7 +86,11 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
         await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
 
       if (fetchedFiltersFromDB) {
-        if (!StringUtils.stringArrayIsNullOrEmpty(savedFilters.types)) {
+        if (
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          savedFilters &&
+          !StringUtils.stringArrayIsNullOrEmpty(savedFilters.types)
+        ) {
           fetchedFiltersFromDB.professionnels.forEach(
             (filter) => (filter.active = false)
           );
@@ -102,7 +108,11 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
           );
         }
 
-        if (!StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes)) {
+        if (
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          savedFilters &&
+          !StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes)
+        ) {
           fetchedFiltersFromDB.etapes.forEach(
             (filter) => (filter.active = false)
           );
