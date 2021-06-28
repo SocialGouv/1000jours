@@ -247,6 +247,7 @@ const TabAroundMeScreen: React.FC = () => {
         hideModal={(filterWasSaved: boolean) => {
           setShowFilter(false);
           if (filterWasSaved) {
+            setIsLoading(true);
             setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
           }
         }}
