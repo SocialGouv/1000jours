@@ -7,7 +7,7 @@ import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect } from "react";
-import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Image, ListItem } from "react-native-elements";
 
@@ -17,6 +17,7 @@ import {
   CommonText,
   ErrorMessage,
   Filters,
+  Loader,
   SecondaryText,
   TitleH1,
   View,
@@ -91,7 +92,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     }
   }, [loading, data]);
 
-  if (loading) return <ActivityIndicator size="large" />;
+  if (loading) return <Loader />;
   if (error) return <ErrorMessage error={error} />;
 
   const navigateToSurvey = () => {

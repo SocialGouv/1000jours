@@ -5,9 +5,9 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
-import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
-import { ErrorMessage, TitleH1 } from "../components";
+import { ErrorMessage, Loader, TitleH1 } from "../components";
 import DidYouKnow from "../components/article/didYouKnow.component";
 import ImageBanner from "../components/article/imageBanner.component";
 import InShort from "../components/article/inShort.component";
@@ -99,7 +99,7 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
     ];
   };
 
-  if (loading) return <ActivityIndicator size="large" />;
+  if (loading) return <Loader />;
   if (error) return <ErrorMessage error={error} />;
 
   const result = data as { article: Article };

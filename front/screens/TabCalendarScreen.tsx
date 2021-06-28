@@ -5,7 +5,7 @@ import type { FC } from "react";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useEffect } from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import {
   Agenda,
@@ -15,6 +15,7 @@ import {
   Events,
   Icomoon,
   IcomoonIcons,
+  Loader,
   TitleH1,
 } from "../components";
 import { View } from "../components/Themed";
@@ -58,7 +59,7 @@ const TabCalendarScreen: FC = () => {
   `;
   const { loading, error, data } = useQuery(ALL_STEPS);
 
-  if (loading) return <ActivityIndicator size="large" />;
+  if (loading) return <Loader />;
   if (error) return <ErrorMessage error={error} />;
 
   const evenements = (data as { evenements: Event[] }).evenements;

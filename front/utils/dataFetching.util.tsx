@@ -1,9 +1,8 @@
 import type { DocumentNode } from "@apollo/client";
 import { useLazyQuery, useQuery } from "@apollo/client";
 import * as React from "react";
-import { ActivityIndicator } from "react-native";
 
-import ErrorMessage from "../components/base/errorMessage.component";
+import { ErrorMessage, Loader } from "../components";
 import type { DataFetchingType } from "../type";
 
 export const fetchData = (query: DocumentNode): DataFetchingType => {
@@ -14,7 +13,7 @@ export const fetchData = (query: DocumentNode): DataFetchingType => {
   if (loading)
     return {
       isFetched: false,
-      loadingOrErrorComponent: <ActivityIndicator size="large" />,
+      loadingOrErrorComponent: <Loader />,
     };
   if (error)
     return {
@@ -33,7 +32,7 @@ export const fetchDataLazy = (query: DocumentNode): DataFetchingType => {
   if (loading)
     return {
       isFetched: false,
-      loadingOrErrorComponent: <ActivityIndicator size="large" />,
+      loadingOrErrorComponent: <Loader />,
     };
 
   return { isFetched: true, response: data };
