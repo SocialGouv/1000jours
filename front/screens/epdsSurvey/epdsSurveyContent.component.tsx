@@ -115,13 +115,15 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
             <CommonText style={styles.instruction}>
               {Labels.epdsSurvey.instruction}
             </CommonText>
-            <EpdsSurveyQuestionsList
-              epdsSurvey={questionsAndAnswers}
-              swiperRef={swiperRef}
-              swiperCurrentIndex={swiperCurrentIndex}
-              saveCurrentSurvey={saveCurrentSurvey}
-              updatePressedAnswer={updatePressedAnswer}
-            />
+            <View style={styles.surveyContainer}>
+              <EpdsSurveyQuestionsList
+                epdsSurvey={questionsAndAnswers}
+                swiperRef={swiperRef}
+                swiperCurrentIndex={swiperCurrentIndex}
+                saveCurrentSurvey={saveCurrentSurvey}
+                updatePressedAnswer={updatePressedAnswer}
+              />
+            </View>
             <EpdsSurveyFooter
               swiperCurrentIndex={swiperCurrentIndex}
               swiperRef={swiperRef}
@@ -158,6 +160,10 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     margin: Margins.default,
+  },
+  surveyContainer: {
+    flex: 1,
+    justifyContent: "center",
   },
 });
 
