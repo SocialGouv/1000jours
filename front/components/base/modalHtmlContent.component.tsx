@@ -18,7 +18,11 @@ interface Props {
   setIsVisible: (showMenu: boolean) => void;
 }
 
-const Modal: React.FC<Props> = ({ content, setIsVisible, htmlFile }) => {
+const ModalHtmlContent: React.FC<Props> = ({
+  content,
+  setIsVisible,
+  htmlFile,
+}) => {
   const hideModal = () => {
     setIsVisible(false);
   };
@@ -78,4 +82,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Modal;
+export default ModalHtmlContent;

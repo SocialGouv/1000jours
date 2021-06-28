@@ -1,3 +1,29 @@
+# [1.47.0](https://github.com/SocialGouv/1000jours/compare/v1.46.9...v1.47.0) (2021-06-28)
+
+
+### Bug Fixes
+
+* 🐛 Corrige un problème d'affichage (EPDS sur petit écran) ([#407](https://github.com/SocialGouv/1000jours/issues/407)) ([37a9aa8](https://github.com/SocialGouv/1000jours/commit/37a9aa84513d11c1ff2fa3c686f0e1eec50add8e))
+
+
+### Features
+
+* 🎸 Ajoute un loader lors des appels WS ([#409](https://github.com/SocialGouv/1000jours/issues/409)) ([637d946](https://github.com/SocialGouv/1000jours/commit/637d94675cd7d08f2daa56738f21401d29e3d459))
+
+## [1.46.9](https://github.com/SocialGouv/1000jours/compare/v1.46.8...v1.46.9) (2021-06-28)
+
+
+### Bug Fixes
+
+* 🐛 Corrige des retours design et accessibilité ([#406](https://github.com/SocialGouv/1000jours/issues/406)) ([583ab19](https://github.com/SocialGouv/1000jours/commit/583ab192f949b3535a4a184df4c998fd1c61a832)), closes [#367](https://github.com/SocialGouv/1000jours/issues/367) [#325](https://github.com/SocialGouv/1000jours/issues/325) [#312](https://github.com/SocialGouv/1000jours/issues/312) [#313](https://github.com/SocialGouv/1000jours/issues/313) [#314](https://github.com/SocialGouv/1000jours/issues/314) [#282](https://github.com/SocialGouv/1000jours/issues/282)
+
+## [1.46.8](https://github.com/SocialGouv/1000jours/compare/v1.46.7...v1.46.8) (2021-06-28)
+
+
+### Bug Fixes
+
+* **epds:** restart survey fix + design review ([#405](https://github.com/SocialGouv/1000jours/issues/405)) ([8f5c79d](https://github.com/SocialGouv/1000jours/commit/8f5c79d68e9a9e01aafc852606ab8ebbe5a3d81e))
+
 ## [1.46.7](https://github.com/SocialGouv/1000jours/compare/v1.46.6...v1.46.7) (2021-06-28)
 
 

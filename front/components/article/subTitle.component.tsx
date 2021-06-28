@@ -2,6 +2,7 @@ import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
+import { Margins, Sizes } from "../../constants";
 import Colors from "../../constants/Colors";
 import { FontWeight } from "../../constants/Layout";
 import { CommonText } from "../StyledText";
@@ -10,16 +11,15 @@ interface Props {
   title: string;
 }
 
-const SubTitle: FC<Props> = ({ title }) => (
-  <CommonText style={styles.title}>{title}</CommonText>
-);
+const SubTitle: FC<Props> = ({ title }) =>
+  title.length ? <CommonText style={styles.title}>{title}</CommonText> : null;
 
 const styles = StyleSheet.create({
   title: {
     color: Colors.primaryBlue,
-    fontSize: 14,
+    fontSize: Sizes.xs,
     fontWeight: FontWeight.bold,
-    marginTop: 15,
+    marginTop: Margins.default,
   },
 });
 

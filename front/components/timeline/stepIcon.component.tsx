@@ -6,10 +6,15 @@ import Icomoon from "../base/icomoon.component";
 
 interface Props {
   name: string;
+  active: boolean;
 }
 
-const StepIcon: FC<Props> = ({ name }) => (
-  <Icomoon name={name} color={Colors.primaryYellow} size={Sizes.xxxxl} />
+const StepIcon: FC<Props> = ({ name, active }) => (
+  <Icomoon
+    name={name}
+    color={active ? Colors.white : Colors.primaryYellow}
+    size={Sizes.xxxxl}
+  />
 );
 
 export default StepIcon;

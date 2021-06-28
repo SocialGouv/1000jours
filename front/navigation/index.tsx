@@ -99,7 +99,7 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => (
       options={{
         headerLeft: () => (
           <View style={[styles.headerLeft]}>
-            <LogoMinistere />
+            <LogoMinistere height={Sizes.xxxl} style={styles.logoMinistere} />
           </View>
         ),
         headerRight: () => (
@@ -146,6 +146,9 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlue,
     fontSize: Sizes.xs,
     paddingTop: Paddings.smallest,
+  },
+  logoMinistere: {
+    aspectRatio: 1,
   },
 });
 

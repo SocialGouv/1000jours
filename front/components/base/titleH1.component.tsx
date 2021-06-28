@@ -29,7 +29,7 @@ const TitleH1: React.FC<Props> = ({ title, animated, description, style }) => (
 const styles = StyleSheet.create({
   description: {
     color: Colors.commonText,
-    fontSize: Sizes.xs,
+    fontSize: Sizes.xxs,
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.md,
   },

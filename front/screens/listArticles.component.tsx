@@ -7,7 +7,7 @@ import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect } from "react";
-import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Image, ListItem } from "react-native-elements";
 
@@ -17,6 +17,7 @@ import {
   CommonText,
   ErrorMessage,
   Filters,
+  Loader,
   SecondaryText,
   TitleH1,
   View,
@@ -91,7 +92,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     }
   }, [loading, data]);
 
-  if (loading) return <ActivityIndicator size="large" />;
+  if (loading) return <Loader />;
   if (error) return <ErrorMessage error={error} />;
 
   const navigateToSurvey = () => {
@@ -108,9 +109,6 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     });
     return isMatching;
   };
-
-  const minAnimDelay = 100;
-  const maxAnimDelay = 750;
 
   const applyFilters = (filters: ArticleFilter[]) => {
     const activeFilters = _.filter(filters, { active: true });
@@ -163,12 +161,8 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
             <Animatable.View
               key={index}
               animation="fadeInUp"
-              duration={1000}
-              delay={
-                minAnimDelay * index < maxAnimDelay
-                  ? minAnimDelay * index
-                  : maxAnimDelay
-              }
+              duration={1500}
+              delay={0}
             >
               <ListItem
                 bottomDivider
