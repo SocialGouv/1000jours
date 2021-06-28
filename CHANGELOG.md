@@ -1,3 +1,10 @@
+## [1.46.9](https://github.com/SocialGouv/1000jours/compare/v1.46.8...v1.46.9) (2021-06-28)
+
+
+### Bug Fixes
+
+* 🐛 Corrige des retours design et accessibilité ([#406](https://github.com/SocialGouv/1000jours/issues/406)) ([583ab19](https://github.com/SocialGouv/1000jours/commit/583ab192f949b3535a4a184df4c998fd1c61a832)), closes [#367](https://github.com/SocialGouv/1000jours/issues/367) [#325](https://github.com/SocialGouv/1000jours/issues/325) [#312](https://github.com/SocialGouv/1000jours/issues/312) [#313](https://github.com/SocialGouv/1000jours/issues/313) [#314](https://github.com/SocialGouv/1000jours/issues/314) [#282](https://github.com/SocialGouv/1000jours/issues/282)
+
 ## [1.46.8](https://github.com/SocialGouv/1000jours/compare/v1.46.7...v1.46.8) (2021-06-28)
 
 
