@@ -176,7 +176,7 @@ spec:
           envFrom:
             - secretRef:
                 name: azure-pg-user
-          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.26.1
+          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.26.2
           imagePullPolicy: Always
           name: wait-for-postgres
           resources:
@@ -328,19 +328,19 @@ spec:
       storage: 5Gi
   selector:
     matchLabels:
-      usage: v1-2-3-1000jours-uploads
+      usage: preprod-dev42-uploads
   storageClassName: ''
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   labels:
-    usage: v1-2-3-1000jours-uploads
+    usage: preprod-dev42-uploads
     application: v1-2-3-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
-  name: v1-2-3-1000jours-uploads
+  name: preprod-dev42-uploads
   annotations:
     app.gitlab.com/app: socialgouv-1000jours
     app.gitlab.com/env: preprod-dev42
