@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, ScrollView, StyleSheet } from "react-native";
 
 import Checkbox from "../../components/base/checkbox.component";
 import { CommonText } from "../../components/StyledText";
@@ -18,7 +18,10 @@ const EpdsQuestion: React.FC<Props> = ({
   updatePressedAnswer,
 }) => {
   return (
-    <View style={[styles.swipeView, styles.justifyContentCenter]}>
+    <ScrollView
+      style={styles.swipeView}
+      contentContainerStyle={styles.justifyContentCenter}
+    >
       <View style={styles.swipeViewMargin}>
         <CommonText style={styles.question}>
           {questionAndAnswers.questionNumber}. {questionAndAnswers.question}
@@ -35,7 +38,7 @@ const EpdsQuestion: React.FC<Props> = ({
           />
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
