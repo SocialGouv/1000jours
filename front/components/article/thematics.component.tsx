@@ -2,10 +2,10 @@ import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import { Margins, Sizes } from "../../constants";
+import { FontWeight, Margins, Sizes } from "../../constants";
 import Colors from "../../constants/Colors";
 import type { Thematique } from "../../types";
-import { CommonText } from "../StyledText";
+import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 
 interface Props {
@@ -18,9 +18,9 @@ const Thematics: FC<Props> = ({ items }) => {
       {items.map((thematique, index) => {
         return (
           <View style={[styles.thematiqueContainer]} key={index}>
-            <CommonText style={[styles.thematique]}>
+            <SecondaryText style={[styles.thematique]}>
               {thematique.nom}
-            </CommonText>
+            </SecondaryText>
           </View>
         );
       })}
@@ -36,6 +36,8 @@ const styles = StyleSheet.create({
   },
   thematique: {
     color: Colors.primaryBlue,
+    fontSize: Sizes.sm,
+    fontWeight: FontWeight.bold,
   },
   thematiqueContainer: {
     backgroundColor: Colors.primaryBlueLight,

@@ -5,10 +5,10 @@ import { StyleSheet } from "react-native";
 import { Button as RNEButton } from "react-native-elements";
 import type { IconNode } from "react-native-elements/dist/icons/Icon";
 
-import { Margins, Paddings, Sizes } from "../../constants";
+import { FontWeight, Margins, Paddings, Sizes } from "../../constants";
 import Colors from "../../constants/Colors";
 import { IcomoonIcons } from "../base/icomoon.component";
-import { CommonText } from "../StyledText";
+import { CommonText, SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 import StepIcon from "./stepIcon.component";
 
@@ -32,54 +32,20 @@ const TimelineStep: FC<TimelineStepProps> = ({
   onLayout,
 }) => {
   const stepIcons: IconNode[] = [
+    <StepIcon name={IcomoonIcons.stepProjetParent} active={active ?? false} />,
+    <StepIcon name={IcomoonIcons.stepConception} active={active ?? false} />,
     <StepIcon
-      name={
-        active
-          ? IcomoonIcons.stepProjetParentActive
-          : IcomoonIcons.stepProjetParent
-      }
+      name={IcomoonIcons.stepDebutDeGrossesse}
+      active={active ?? false}
     />,
     <StepIcon
-      name={
-        active ? IcomoonIcons.stepConceptionActive : IcomoonIcons.stepConception
-      }
+      name={IcomoonIcons.stepFinDeGrossesse}
+      active={active ?? false}
     />,
-    <StepIcon
-      name={
-        active
-          ? IcomoonIcons.stepDebutDeGrossesseActive
-          : IcomoonIcons.stepDebutDeGrossesse
-      }
-    />,
-    <StepIcon
-      name={
-        active
-          ? IcomoonIcons.stepFinDeGrossesseActive
-          : IcomoonIcons.stepFinDeGrossesse
-      }
-    />,
-    <StepIcon
-      name={
-        active
-          ? IcomoonIcons.stepAccouchementActive
-          : IcomoonIcons.stepAccouchement
-      }
-    />,
-    <StepIcon
-      name={
-        active
-          ? IcomoonIcons.step4PremiersMoisActive
-          : IcomoonIcons.step4PremiersMois
-      }
-    />,
-    <StepIcon
-      name={
-        active ? IcomoonIcons.step4MoisA1AnActive : IcomoonIcons.step4MoisA1An
-      }
-    />,
-    <StepIcon
-      name={active ? IcomoonIcons.step1A2AnsActive : IcomoonIcons.step1A2Ans}
-    />,
+    <StepIcon name={IcomoonIcons.stepAccouchement} active={active ?? false} />,
+    <StepIcon name={IcomoonIcons.step4PremiersMois} active={active ?? false} />,
+    <StepIcon name={IcomoonIcons.step4MoisA1An} active={active ?? false} />,
+    <StepIcon name={IcomoonIcons.step1A2Ans} active={active ?? false} />,
   ];
 
   const getStepStyles = (index: number, isLast: boolean) => {
@@ -119,7 +85,11 @@ const TimelineStep: FC<TimelineStepProps> = ({
         <RNEButton
           icon={stepIcons[order - 1]}
           onPress={onPress}
-          buttonStyle={[styles.stepIconButton, styles.justifyContentCenter]}
+          buttonStyle={[
+            styles.stepIconButton,
+            styles.justifyContentCenter,
+            active ? styles.stepActive : null,
+          ]}
           type="clear"
         />
       </View>
@@ -134,13 +104,15 @@ const TimelineStep: FC<TimelineStepProps> = ({
         ]}
       >
         <CommonText style={[styles.stepTitle]}>{name}</CommonText>
-        <CommonText style={getStepNumStyles(listIndex)}>{order}</CommonText>
+        <SecondaryText style={getStepNumStyles(listIndex)}>
+          {order}
+        </SecondaryText>
       </View>
     </View>
   );
 };
 
-const sizeOfStepNum = Sizes.xxxxl;
+const sizeOfStepNum = Sizes.xxxxxl;
 const styles = StyleSheet.create({
   justifyContentCenter: {
     alignItems: "center",
@@ -153,10 +125,14 @@ const styles = StyleSheet.create({
     height: Sizes.step,
     position: "absolute",
   },
+  stepActive: {
+    backgroundColor: Colors.primaryYellowDark,
+  },
   stepFirst: {
     marginBottom: Margins.step,
   },
   stepIconButton: {
+    backgroundColor: "white",
     borderColor: Colors.primaryYellow,
     borderRadius: Sizes.step / 2,
     borderWidth: 1,
@@ -177,7 +153,7 @@ const styles = StyleSheet.create({
   stepNum: {
     color: Colors.primaryBlueLight,
     fontSize: sizeOfStepNum,
-    fontWeight: "bold",
+    fontWeight: FontWeight.bold,
     paddingHorizontal: Paddings.smallest,
     position: "absolute",
     zIndex: -1,

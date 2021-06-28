@@ -64,7 +64,7 @@ export type UserInfos = {
 export type TabItem = {
   name: keyof BottomTabParamList;
   component: FC;
-  getIcon: (color: string) => React.ReactNode;
+  getIcon: (color: string, focused: boolean) => React.ReactNode;
   title: string;
 };
 

@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
     marginBottom: Margins.smallest,
     marginRight: Margins.smaller,
     marginVertical: Margins.smaller,
-    paddingHorizontal: Paddings.smaller,
-    paddingVertical: Paddings.smallest,
+    paddingHorizontal: Paddings.light,
+    paddingVertical: Paddings.light,
   },
   chipSelected: {
     backgroundColor: Colors.primaryBlueLight,
