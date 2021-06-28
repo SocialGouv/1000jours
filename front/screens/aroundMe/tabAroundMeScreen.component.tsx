@@ -9,6 +9,7 @@ import {
   CustomSnackbar,
   Icomoon,
   IcomoonIcons,
+  Loader,
   TitleH1,
 } from "../../components";
 import FetchPoisCoords from "../../components/aroundMe/fetchPoisCoords.component";
@@ -61,6 +62,7 @@ const TabAroundMeScreen: React.FC = () => {
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
   const [showFilter, setShowFilter] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
@@ -73,6 +75,7 @@ const TabAroundMeScreen: React.FC = () => {
     setPoisArrayInList(pois);
     setPoisArrayOnMap(pois);
     setShowAddressesList(true);
+    setIsLoading(false);
   };
 
   const onRegionChangeComplete = (newRegion: Region) => {
@@ -80,6 +83,7 @@ const TabAroundMeScreen: React.FC = () => {
     /* Lorsqu'on lance une recherche par CP, le moveToRegionBecauseOfPCResearch est mis à true
     et donc on ne cache pas directement la snackBar si elle a été affichée (en cas d'erreur) */
     if (moveToRegionBecauseOfPCResearch) {
+      setIsLoading(true);
       setMoveToRegionBecauseOfPCResearch(false);
       /* sur iOS, cette fonction est appelée juste avant que la carte ait terminé de se déplacer,
       du coup on se retrouve avec des mauvaises adresses qui ne s'affichent pas sur la bonne zone,
@@ -208,6 +212,7 @@ const TabAroundMeScreen: React.FC = () => {
               rounded={true}
               action={() => {
                 KeyboardUtils.dismissKeyboard();
+                setIsLoading(true);
                 setShowRelaunchResearchButton(false);
                 setShowAddressDetails(false);
                 setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
@@ -242,10 +247,12 @@ const TabAroundMeScreen: React.FC = () => {
         hideModal={(filterWasSaved: boolean) => {
           setShowFilter(false);
           if (filterWasSaved) {
+            setIsLoading(true);
             setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
           }
         }}
       />
+      {isLoading && <Loader />}
     </View>
   );
 };
