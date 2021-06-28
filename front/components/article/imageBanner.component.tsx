@@ -3,6 +3,8 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Image } from "react-native-elements";
 
+import { getVisuelFormat, VisuelFormat } from "../../utils/visuel.util";
+
 interface Props {
   imageUrl: string | undefined;
 }
@@ -11,7 +13,7 @@ const ImageBanner: FC<Props> = ({ imageUrl }) => {
   return (
     <Image
       source={{
-        uri: imageUrl,
+        uri: getVisuelFormat(imageUrl, VisuelFormat.medium),
       }}
       containerStyle={[styles.articleImage]}
     />
