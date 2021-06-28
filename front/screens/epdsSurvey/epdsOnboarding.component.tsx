@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 import IconeAccederResultats from "../../assets/images/epds/onboarding_acceder_resultats.svg";
 import IconeRepasserTest from "../../assets/images/epds/onboarding_repasser_test.svg";
@@ -55,7 +55,10 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
   };
 
   return (
-    <View style={styles.mainContainer}>
+    <ScrollView
+      style={styles.mainContainer}
+      contentContainerStyle={styles.mainContentContainer}
+    >
       <TitleH1 title={Labels.epdsSurvey.onboarding.title} animated={false} />
       {Labels.epdsSurvey.onboarding.paragraphs.map((paragraph, index) => (
         <View key={index}>
@@ -97,7 +100,7 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
           }}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -114,8 +117,10 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    justifyContent: "space-around",
     margin: Margins.default,
+  },
+  mainContentContainer: {
+    justifyContent: "space-around",
   },
   paragraph: {
     marginVertical: Margins.smallest,
