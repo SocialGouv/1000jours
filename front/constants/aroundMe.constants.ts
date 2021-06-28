@@ -15,7 +15,7 @@ export const INITIAL_REGION = {
 };
 
 export const POSTAL_CODE_MAX_LENGTH = 5;
-export const NUMBER_MAX_MARKERS_ON_MAP = 20;
+export const PAGINATION_NUMBER_ADDRESSES_LIST = 20;
 
 export const getApiUrlWithParam = (postalCode: string): string =>
   `https://api-adresse.data.gouv.fr/search/?q=${postalCode}&type=municipality&limit=1`;
