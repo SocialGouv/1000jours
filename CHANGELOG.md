@@ -1,3 +1,10 @@
+## [1.46.6](https://github.com/SocialGouv/1000jours/compare/v1.46.5...v1.46.6) (2021-06-28)
+
+
+### Bug Fixes
+
+* 🐛 Modifie certains textes (Nos 1000 jours + calendrier) ([#400](https://github.com/SocialGouv/1000jours/issues/400)) ([dec79c2](https://github.com/SocialGouv/1000jours/commit/dec79c24c64a8e493b574a9218cf9b1453ce9415)), closes [#342](https://github.com/SocialGouv/1000jours/issues/342)
+
 ## [1.46.5](https://github.com/SocialGouv/1000jours/compare/v1.46.4...v1.46.5) (2021-06-27)
 
 
