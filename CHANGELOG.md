@@ -1,3 +1,10 @@
+# [1.48.0](https://github.com/SocialGouv/1000jours/compare/v1.47.0...v1.48.0) (2021-06-28)
+
+
+### Features
+
+* **carto:** ajout des étapes dans le filtre + branchement avec l'étape en cours ([#408](https://github.com/SocialGouv/1000jours/issues/408)) ([5f21807](https://github.com/SocialGouv/1000jours/commit/5f21807fbeef558e9e960d318270644e45f9a8b8))
+
 # [1.47.0](https://github.com/SocialGouv/1000jours/compare/v1.46.9...v1.47.0) (2021-06-28)
 
 
