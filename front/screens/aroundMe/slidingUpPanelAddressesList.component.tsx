@@ -64,15 +64,14 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({ poisArray }) => {
         </CommonText>
         <ScrollView
           onScroll={({ nativeEvent }) => {
-            if (isCloseToBottom(nativeEvent)) {
-              const newEndIndex = currentEndIndex + currentEndIndex;
-              setPoisToDisplay(
-                poisToDisplay.concat(
-                  poisArray.slice(currentEndIndex, newEndIndex)
-                )
-              );
-              setCurrentEndIndex(newEndIndex);
-            }
+            if (!isCloseToBottom(nativeEvent)) return;
+            const newEndIndex = currentEndIndex + currentEndIndex;
+            setPoisToDisplay(
+              poisToDisplay.concat(
+                poisArray.slice(currentEndIndex, newEndIndex)
+              )
+            );
+            setCurrentEndIndex(newEndIndex);
           }}
         >
           {poisToDisplay.map((poi, poiIndex) => (

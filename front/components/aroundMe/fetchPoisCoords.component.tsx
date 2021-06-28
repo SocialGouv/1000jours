@@ -55,18 +55,19 @@ const FetchPoisCoords: React.FC<Props> = ({
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (!savedTypeFilter || savedTypeFilter.length === 0) {
         chooseFilterMessage();
-      } else {
-        const variables = {
-          lat1: topLeftPoint.latitude,
-          lat2: bottomRightPoint.latitude,
-          long1: topLeftPoint.longitude,
-          long2: bottomRightPoint.longitude,
-          types: savedTypeFilter,
-        };
-        getPoisByGpsCoords({
-          variables,
-        });
+        return;
       }
+
+      const variables = {
+        lat1: topLeftPoint.latitude,
+        lat2: bottomRightPoint.latitude,
+        long1: topLeftPoint.longitude,
+        long2: bottomRightPoint.longitude,
+        types: savedTypeFilter,
+      };
+      getPoisByGpsCoords({
+        variables,
+      });
     };
     void searchByGPSCoords();
   }, [triggerSearchByGpsCoords]);
