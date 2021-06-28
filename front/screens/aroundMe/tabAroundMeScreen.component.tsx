@@ -88,13 +88,12 @@ const TabAroundMeScreen: React.FC = () => {
       /* sur iOS, cette fonction est appelée juste avant que la carte ait terminé de se déplacer,
       du coup on se retrouve avec des mauvaises adresses qui ne s'affichent pas sur la bonne zone,
       donc on est obligé de mettre un petit timeout */
-      if (PLATFORM_IS_IOS) {
-        setTimeout(() => {
+      setTimeout(
+        () => {
           setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
-        }, 1000);
-      } else {
-        setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
-      }
+        },
+        PLATFORM_IS_IOS ? 1000 : 0
+      );
     } else {
       setShowSnackBar(false);
     }
@@ -135,7 +134,12 @@ const TabAroundMeScreen: React.FC = () => {
         region={region}
         setFetchedPois={handleFetchedPois}
         chooseFilterMessage={() => {
-          setIsLoading(false);
+          setTimeout(
+            () => {
+              setIsLoading(false);
+            },
+            PLATFORM_IS_IOS ? 500 : 0
+          );
           showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
         }}
       />
