@@ -1,6 +1,12 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Modal, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  Modal,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import {
   Button,
@@ -264,14 +270,16 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
                   color={Colors.primaryBlue}
                 />
               </TouchableOpacity>
-              {filtersFromDbInList.map(
-                (
-                  filterFromDb: { title: string; filters: CartoFilter[] },
-                  index: number
-                ) => (
-                  <View key={index}>{renderSection(filterFromDb)}</View>
-                )
-              )}
+              <ScrollView>
+                {filtersFromDbInList.map(
+                  (
+                    filterFromDb: { title: string; filters: CartoFilter[] },
+                    index: number
+                  ) => (
+                    <View key={index}>{renderSection(filterFromDb)}</View>
+                  )
+                )}
+              </ScrollView>
               <View style={styles.buttonsContainer}>
                 <View style={styles.buttonContainer}>
                   <Button
@@ -329,10 +337,7 @@ const styles = StyleSheet.create({
     fontSize: Sizes.sm,
   },
   buttonsContainer: {
-    bottom: 0,
     flexDirection: "row",
-    marginBottom: Margins.default,
-    position: "absolute",
   },
   closeModalView: {
     margin: Margins.default,
