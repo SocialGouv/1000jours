@@ -7,6 +7,8 @@ export default {
     addressesListLabelEnd:
       "points d'intérêts qui correspondent à vos critères :",
     addressesListLabelStart: "Il y a",
+    chooseFilter:
+      "Veuillez choisir un au moins un élément dans le filtre afin de lancer la recherche",
     filter: {
       healthProfessional: "Professionnels de santé",
       steps: "Étapes du parcours 1000 jours",

@@ -17,6 +17,7 @@ interface Props {
   postalCode: string;
   region: Region;
   setFetchedPois: (pois: CartographiePoisFromDB[]) => void;
+  chooseFilterMessage: () => void;
 }
 
 const FetchPoisCoords: React.FC<Props> = ({
@@ -24,6 +25,7 @@ const FetchPoisCoords: React.FC<Props> = ({
   triggerSearchByGpsCoords,
   region,
   setFetchedPois,
+  chooseFilterMessage,
 }) => {
   const [getPoisByGpsCoords] = useLazyQuery(
     DatabaseQueries.AROUNDME_POIS_BY_GPSCOORDS,
@@ -50,6 +52,12 @@ const FetchPoisCoords: React.FC<Props> = ({
       const savedTypeFilter: string[] = await StorageUtils.getObjectValue(
         StorageKeysConstants.cartoFilterKey
       );
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (!savedTypeFilter || savedTypeFilter.length === 0) {
+        chooseFilterMessage();
+        return;
+      }
+
       const variables = {
         lat1: topLeftPoint.latitude,
         lat2: bottomRightPoint.latitude,

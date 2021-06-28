@@ -25,10 +25,11 @@ import { StorageUtils } from "../../utils";
 
 interface Props {
   visible: boolean;
+  showModal: () => void;
   hideModal: (filterWasSaved: boolean) => void;
 }
 
-const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
+const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
   const [poiTypesAndCategories, setPoiTypesAndCategories] =
     useState<PoiTypeFromDB[]>();
 
@@ -36,6 +37,17 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     useState<CartoFilters>();
   const [poiTypeArray, setPoiTypeArray] = useState<string[]>([]);
   const [showModalContent, setShowModalContent] = useState(false);
+
+  useEffect(() => {
+    const checkIfSavedFilters = async () => {
+      const savedFilters: string[] = await StorageUtils.getObjectValue(
+        StorageKeysConstants.cartoFilterKey
+      );
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (!savedFilters || savedFilters.length === 0) showModal();
+    };
+    void checkIfSavedFilters();
+  }, []);
 
   useEffect(() => {
     if (poiTypesAndCategories && poiTypesAndCategories.length > 0)
@@ -50,22 +62,27 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
       const savedFilters: string[] = await StorageUtils.getObjectValue(
         StorageKeysConstants.cartoFilterKey
       );
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (savedFilters?.length > 0 && fetchedFiltersFromDB) {
+      if (fetchedFiltersFromDB) {
+        fetchedFiltersFromDB.professionnels.forEach(
+          (filter) => (filter.active = false)
+        );
         fetchedFiltersFromDB.structures.forEach(
           (filter) => (filter.active = false)
         );
 
-        setFetchedFiltersFromDB({
-          professionnels: checkSavedFiltersInFetchedFilters(
-            savedFilters,
-            fetchedFiltersFromDB.professionnels
-          ),
-          structures: checkSavedFiltersInFetchedFilters(
-            savedFilters,
-            fetchedFiltersFromDB.structures
-          ),
-        });
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (savedFilters?.length > 0) {
+          setFetchedFiltersFromDB({
+            professionnels: checkSavedFiltersInFetchedFilters(
+              savedFilters,
+              fetchedFiltersFromDB.professionnels
+            ),
+            structures: checkSavedFiltersInFetchedFilters(
+              savedFilters,
+              fetchedFiltersFromDB.structures
+            ),
+          });
+        }
       }
       setShowModalContent(true);
     };
