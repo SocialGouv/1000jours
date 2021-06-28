@@ -1,3 +1,10 @@
+## [1.48.1](https://github.com/SocialGouv/1000jours/compare/v1.48.0...v1.48.1) (2021-06-28)
+
+
+### Bug Fixes
+
+* **carto:** Corrige les POIs dupliqués s'il y a plusieurs étapes dans les filtres ([#411](https://github.com/SocialGouv/1000jours/issues/411)) ([90d9079](https://github.com/SocialGouv/1000jours/commit/90d907951743aec3f79d4f23b82f357e5a241492))
+
 # [1.48.0](https://github.com/SocialGouv/1000jours/compare/v1.47.0...v1.48.0) (2021-06-28)
 
 
