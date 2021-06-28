@@ -135,6 +135,7 @@ const TabAroundMeScreen: React.FC = () => {
         region={region}
         setFetchedPois={handleFetchedPois}
         chooseFilterMessage={() => {
+          setIsLoading(false);
           showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
         }}
       />
