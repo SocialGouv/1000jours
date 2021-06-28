@@ -62,22 +62,27 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
       const savedFilters: string[] = await StorageUtils.getObjectValue(
         StorageKeysConstants.cartoFilterKey
       );
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (savedFilters?.length > 0 && fetchedFiltersFromDB) {
+      if (fetchedFiltersFromDB) {
+        fetchedFiltersFromDB.professionnels.forEach(
+          (filter) => (filter.active = false)
+        );
         fetchedFiltersFromDB.structures.forEach(
           (filter) => (filter.active = false)
         );
 
-        setFetchedFiltersFromDB({
-          professionnels: checkSavedFiltersInFetchedFilters(
-            savedFilters,
-            fetchedFiltersFromDB.professionnels
-          ),
-          structures: checkSavedFiltersInFetchedFilters(
-            savedFilters,
-            fetchedFiltersFromDB.structures
-          ),
-        });
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (savedFilters?.length > 0) {
+          setFetchedFiltersFromDB({
+            professionnels: checkSavedFiltersInFetchedFilters(
+              savedFilters,
+              fetchedFiltersFromDB.professionnels
+            ),
+            structures: checkSavedFiltersInFetchedFilters(
+              savedFilters,
+              fetchedFiltersFromDB.structures
+            ),
+          });
+        }
       }
       setShowModalContent(true);
     };
