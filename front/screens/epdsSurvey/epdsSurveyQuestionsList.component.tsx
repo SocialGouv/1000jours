@@ -25,7 +25,7 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
   updatePressedAnswer,
 }) => {
   return (
-    <View style={styles.flatListView}>
+    <View>
       <SwiperFlatList
         ref={swiperRef}
         index={swiperCurrentIndex}
@@ -51,16 +51,5 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  flatListView: {
-    flex: 7,
-  },
-  swipePaginationItem: {
-    height: Sizes.xxxs,
-    marginHorizontal: Margins.smaller,
-    width: Sizes.mmd,
-  },
-});
 
 export default EpdsSurveyQuestionsList;
