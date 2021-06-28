@@ -22,8 +22,8 @@ import {
 } from "../../constants";
 import type {
   CartoFilter,
-  CartoFiltersStructuresEtPros,
   CartoFilterStorage,
+  DisplayedCartoFilters,
   PoiTypeFromDB,
   StepFromDB,
 } from "../../type";
@@ -36,14 +36,10 @@ interface Props {
 }
 
 const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
-  const [poiTypesAndCategories, setPoiTypesAndCategories] =
-    useState<PoiTypeFromDB[]>();
-  const [steps, setSteps] = useState<StepFromDB[]>([]);
+  const [filterDataFromDb, setFilterDataFromDb] = useState<unknown>();
 
-  const [fetchedTypeFiltersFromDB, setFetchedTypeFiltersFromDB] =
-    useState<CartoFiltersStructuresEtPros>();
-  const [fetchedStepFiltersFromDB, setFetchedStepFiltersFromDB] =
-    useState<CartoFilter[]>();
+  const [fetchedFiltersFromDB, setFetchedFiltersFromDB] =
+    useState<DisplayedCartoFilters>();
   const [cartoFilterStorage, setCartoFilterStorage] =
     useState<CartoFilterStorage>({ etapes: [], types: [] });
   const [showModalContent, setShowModalContent] = useState(false);
@@ -62,13 +58,13 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
   }, []);
 
   useEffect(() => {
-    if (poiTypesAndCategories && poiTypesAndCategories.length > 0)
-      extractPoiTypeAndCategorieFilters(poiTypesAndCategories);
-  }, [poiTypesAndCategories]);
-
-  useEffect(() => {
-    if (steps.length > 0) extractStepFilters(steps);
-  }, [steps]);
+    if (!filterDataFromDb) return;
+    const { cartographieTypes, etapes } = filterDataFromDb as {
+      cartographieTypes: PoiTypeFromDB[];
+      etapes: StepFromDB[];
+    };
+    extractFilterData(cartographieTypes, etapes);
+  }, [filterDataFromDb]);
 
   useEffect(() => {
     if (!visible) return;
@@ -78,39 +74,36 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
       const savedFilters: CartoFilterStorage =
         await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
 
-      if (fetchedTypeFiltersFromDB) {
-        fetchedTypeFiltersFromDB.professionnels.forEach(
-          (filter) => (filter.active = false)
-        );
-        fetchedTypeFiltersFromDB.structures.forEach(
-          (filter) => (filter.active = false)
-        );
-
+      if (fetchedFiltersFromDB) {
         if (!StringUtils.stringArrayIsNullOrEmpty(savedFilters.types)) {
-          setFetchedTypeFiltersFromDB({
-            professionnels: checkSavedFiltersInFetchedFilters(
-              savedFilters.types,
-              fetchedTypeFiltersFromDB.professionnels
-            ),
-            structures: checkSavedFiltersInFetchedFilters(
-              savedFilters.types,
-              fetchedTypeFiltersFromDB.structures
-            ),
-          });
-        }
-      }
-
-      if (fetchedStepFiltersFromDB) {
-        fetchedStepFiltersFromDB.forEach((filter) => (filter.active = false));
-
-        if (!StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes)) {
-          setFetchedStepFiltersFromDB(
+          fetchedFiltersFromDB.professionnels.forEach(
+            (filter) => (filter.active = false)
+          );
+          fetchedFiltersFromDB.structures.forEach(
+            (filter) => (filter.active = false)
+          );
+          fetchedFiltersFromDB.professionnels =
             checkSavedFiltersInFetchedFilters(
-              savedFilters.etapes,
-              fetchedStepFiltersFromDB
-            )
+              savedFilters.types,
+              fetchedFiltersFromDB.professionnels
+            );
+          fetchedFiltersFromDB.structures = checkSavedFiltersInFetchedFilters(
+            savedFilters.types,
+            fetchedFiltersFromDB.structures
           );
         }
+
+        if (!StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes)) {
+          fetchedFiltersFromDB.etapes.forEach(
+            (filter) => (filter.active = false)
+          );
+          fetchedFiltersFromDB.etapes = checkSavedFiltersInFetchedFilters(
+            savedFilters.etapes,
+            fetchedFiltersFromDB.etapes
+          );
+        }
+
+        setFetchedFiltersFromDB(fetchedFiltersFromDB);
       }
       setShowModalContent(true);
     };
@@ -136,10 +129,14 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
     return cartoFilters;
   };
 
-  const extractPoiTypeAndCategorieFilters = (
-    poiTypesToFilter: PoiTypeFromDB[]
+  const extractFilterData = (
+    poiTypesToFilter: PoiTypeFromDB[],
+    stepToFilter: StepFromDB[]
   ) => {
-    setFetchedTypeFiltersFromDB({
+    setFetchedFiltersFromDB({
+      etapes: stepToFilter.map((step) =>
+        convertToCartoFilter(step, AroundMeConstants.CartoFilterEnum.etape)
+      ),
       professionnels: filterToPoiCategorie(
         poiTypesToFilter,
         AroundMeConstants.PoiCategorieEnum.professionnel
@@ -153,14 +150,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
         convertToCartoFilter(poiType, AroundMeConstants.CartoFilterEnum.type)
       ),
     });
-  };
-
-  const extractStepFilters = (stepsFilter: StepFromDB[]) => {
-    setFetchedStepFiltersFromDB(
-      stepsFilter.map((step) =>
-        convertToCartoFilter(step, AroundMeConstants.CartoFilterEnum.etape)
-      )
-    );
   };
 
   const filterToPoiCategorie = (
@@ -219,10 +208,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
 
   return (
     <>
-      <FetchFilterData
-        setPoiTypes={setPoiTypesAndCategories}
-        setSteps={setSteps}
-      />
+      <FetchFilterData setFilterData={setFilterDataFromDb} />
       <Modal transparent={true} visible={visible}>
         {showModalContent && (
           <View style={styles.mainContainer}>
@@ -244,19 +230,19 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
               {Labels.aroundMe.filter.structures}
             </CommonText>
             <View style={styles.filterContainer}>
-              {renderChips(fetchedTypeFiltersFromDB?.structures)}
+              {renderChips(fetchedFiltersFromDB?.structures)}
             </View>
             <CommonText style={styles.partsTitle}>
               {Labels.aroundMe.filter.healthProfessional}
             </CommonText>
             <View style={styles.filterContainer}>
-              {renderChips(fetchedTypeFiltersFromDB?.professionnels)}
+              {renderChips(fetchedFiltersFromDB?.professionnels)}
             </View>
             <CommonText style={styles.partsTitle}>
               {Labels.aroundMe.filter.steps}
             </CommonText>
             <View style={styles.filterContainer}>
-              {renderChips(fetchedStepFiltersFromDB)}
+              {renderChips(fetchedFiltersFromDB?.etapes)}
             </View>
             <View style={styles.buttonsContainer}>
               <View style={styles.buttonContainer}>

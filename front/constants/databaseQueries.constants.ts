@@ -29,19 +29,15 @@ export const EPDS_ADD_RESPONSE = gql`
   }
 `;
 
-export const AROUNDME_TYPES_FILTER = gql`
+export const AROUNDME_FILTER_DATA = gql`
   query {
-    cartographieTypes {
+    etapes(sort: "nom") {
+      nom
+    }
+
+    cartographieTypes(sort: "nom") {
       nom
       categorie
-    }
-  }
-`;
-
-export const AROUNDME_STEPS_FILTER = gql`
-  query {
-    etapes {
-      nom
     }
   }
 `;

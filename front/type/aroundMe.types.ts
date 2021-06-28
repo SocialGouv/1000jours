@@ -31,9 +31,10 @@ export interface CartoFilter {
   filterType: AroundMeConstants.CartoFilterEnum;
 }
 
-export interface CartoFiltersStructuresEtPros {
+export interface DisplayedCartoFilters {
   structures: CartoFilter[];
   professionnels: CartoFilter[];
+  etapes: CartoFilter[];
 }
 
 export interface CartoFilterStorage {

@@ -1,8 +1,8 @@
 import {
   CartoFilter,
-  CartoFiltersStructuresEtPros,
   CartoFilterStorage,
   CartographiePoisFromDB,
+  DisplayedCartoFilters,
   PoiTypeFromDB,
   StepFromDB,
 } from "./aroundMe.types";
@@ -21,10 +21,10 @@ import {
 
 export {
   CartoFilter,
-  CartoFiltersStructuresEtPros,
   CartoFilterStorage,
   CartographiePoisFromDB,
   DataFetchingType,
+  DisplayedCartoFilters,
   EpdsAnswer,
   EpdsGenders,
   EpdsGenderType,
