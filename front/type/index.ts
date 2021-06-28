@@ -3,6 +3,7 @@ import {
   CartoFilters,
   CartographiePoisFromDB,
   PoiTypeFromDB,
+  StepFromDB,
 } from "./aroundMe.types";
 import { DataFetchingType } from "./dataFetching.types";
 import {
@@ -32,4 +33,5 @@ export {
   EpdsResultSimpleInformation,
   PoiTypeFromDB,
   QuestionnaireEpdsFromDB,
+  StepFromDB,
 };

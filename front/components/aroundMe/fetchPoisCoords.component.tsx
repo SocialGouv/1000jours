@@ -9,7 +9,7 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import type { CartographiePoisFromDB } from "../../type";
-import { AroundMeUtils, StorageUtils } from "../../utils";
+import { AroundMeUtils, StorageUtils, StringUtils } from "../../utils";
 
 interface Props {
   children?: React.ReactNode;
@@ -50,15 +50,22 @@ const FetchPoisCoords: React.FC<Props> = ({
         AroundMeConstants.LatLngPointType.bottomRight
       );
       const savedTypeFilter: string[] = await StorageUtils.getObjectValue(
-        StorageKeysConstants.cartoFilterKey
+        StorageKeysConstants.cartoFilterTypeKey
+      );
+      const savedStepFilter: string[] = await StorageUtils.getObjectValue(
+        StorageKeysConstants.cartoFilterStepKey
       );
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (!savedTypeFilter || savedTypeFilter.length === 0) {
+      if (
+        StringUtils.stringArrayIsNullOrEmpty(savedTypeFilter) &&
+        StringUtils.stringArrayIsNullOrEmpty(savedStepFilter)
+      ) {
         chooseFilterMessage();
         return;
       }
 
       const variables = {
+        etapes: savedStepFilter,
         lat1: topLeftPoint.latitude,
         lat2: bottomRightPoint.latitude,
         long1: topLeftPoint.longitude,

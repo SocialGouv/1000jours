@@ -21,6 +21,9 @@ export interface PoiTypeFromDB {
   nom: string;
   categorie: string;
 }
+export interface StepFromDB {
+  nom: string;
+}
 
 export interface CartoFilter {
   name: string;

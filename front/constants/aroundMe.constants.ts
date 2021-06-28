@@ -46,4 +46,9 @@ export enum PoiTypeEnum {
   mairie = "mairie", // pas d'icône
 }
 
+export enum CartoFilterEnum {
+  type = "type",
+  etape = "etape",
+}
+
 export const MAPVIEW_MIN_ZOOM_LEVEL = 10;

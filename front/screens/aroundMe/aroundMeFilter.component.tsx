@@ -20,7 +20,12 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../constants";
-import type { CartoFilter, CartoFilters, PoiTypeFromDB } from "../../type";
+import type {
+  CartoFilter,
+  CartoFilters,
+  PoiTypeFromDB,
+  StepFromDB,
+} from "../../type";
 import { StorageUtils } from "../../utils";
 
 interface Props {
@@ -32,16 +37,20 @@ interface Props {
 const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
   const [poiTypesAndCategories, setPoiTypesAndCategories] =
     useState<PoiTypeFromDB[]>();
+  const [steps, setSteps] = useState<StepFromDB[]>([]);
 
-  const [fetchedFiltersFromDB, setFetchedFiltersFromDB] =
+  const [fetchedTypeFiltersFromDB, setFetchedTypeFiltersFromDB] =
     useState<CartoFilters>();
+  const [fetchedStepFiltersFromDB, setFetchedStepFiltersFromDB] =
+    useState<CartoFilter[]>();
   const [poiTypeArray, setPoiTypeArray] = useState<string[]>([]);
+  const [poiStepArray, setPoiStepArray] = useState<string[]>([]);
   const [showModalContent, setShowModalContent] = useState(false);
 
   useEffect(() => {
     const checkIfSavedFilters = async () => {
       const savedFilters: string[] = await StorageUtils.getObjectValue(
-        StorageKeysConstants.cartoFilterKey
+        StorageKeysConstants.cartoFilterTypeKey
       );
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (!savedFilters || savedFilters.length === 0) showModal();
@@ -55,33 +64,54 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
   }, [poiTypesAndCategories]);
 
   useEffect(() => {
+    if (steps.length > 0) extractStepFilters(steps);
+  }, [steps]);
+
+  useEffect(() => {
     if (!visible) return;
 
     setShowModalContent(false);
     const getSavedFilter = async () => {
-      const savedFilters: string[] = await StorageUtils.getObjectValue(
-        StorageKeysConstants.cartoFilterKey
+      const savedTypeFilters: string[] = await StorageUtils.getObjectValue(
+        StorageKeysConstants.cartoFilterTypeKey
       );
-      if (fetchedFiltersFromDB) {
-        fetchedFiltersFromDB.professionnels.forEach(
+      if (fetchedTypeFiltersFromDB) {
+        fetchedTypeFiltersFromDB.professionnels.forEach(
           (filter) => (filter.active = false)
         );
-        fetchedFiltersFromDB.structures.forEach(
+        fetchedTypeFiltersFromDB.structures.forEach(
           (filter) => (filter.active = false)
         );
 
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        if (savedFilters?.length > 0) {
-          setFetchedFiltersFromDB({
+        if (savedTypeFilters?.length > 0) {
+          setFetchedTypeFiltersFromDB({
             professionnels: checkSavedFiltersInFetchedFilters(
-              savedFilters,
-              fetchedFiltersFromDB.professionnels
+              savedTypeFilters,
+              fetchedTypeFiltersFromDB.professionnels
             ),
             structures: checkSavedFiltersInFetchedFilters(
-              savedFilters,
-              fetchedFiltersFromDB.structures
+              savedTypeFilters,
+              fetchedTypeFiltersFromDB.structures
             ),
           });
+        }
+      }
+
+      const savedStepFilters: string[] = await StorageUtils.getObjectValue(
+        StorageKeysConstants.cartoFilterStepKey
+      );
+      if (fetchedStepFiltersFromDB) {
+        fetchedStepFiltersFromDB.forEach((filter) => (filter.active = false));
+
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (savedStepFilters && savedStepFilters.length > 0) {
+          setFetchedStepFiltersFromDB(
+            checkSavedFiltersInFetchedFilters(
+              savedStepFilters,
+              fetchedStepFiltersFromDB
+            )
+          );
         }
       }
       setShowModalContent(true);
@@ -107,7 +137,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
   const extractPoiTypeAndCategorieFilters = (
     poiTypesToFilter: PoiTypeFromDB[]
   ) => {
-    setFetchedFiltersFromDB({
+    setFetchedTypeFiltersFromDB({
       professionnels: filterToPoiCategorie(
         poiTypesToFilter,
         AroundMeConstants.PoiCategorieEnum.professionnel
@@ -119,6 +149,12 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
     });
   };
 
+  const extractStepFilters = (stepsFilter: StepFromDB[]) => {
+    setFetchedStepFiltersFromDB(
+      stepsFilter.map((step) => convertToCartoFilter(step))
+    );
+  };
+
   const filterToPoiCategorie = (
     poiTypesToFilter: PoiTypeFromDB[],
     categorie: AroundMeConstants.PoiCategorieEnum
@@ -128,25 +164,38 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
     );
   };
 
-  const convertToCartoFilter = (type: PoiTypeFromDB): CartoFilter => {
+  const convertToCartoFilter = (
+    type: PoiTypeFromDB | StepFromDB
+  ): CartoFilter => {
     return {
       active: false,
       name: type.nom,
     };
   };
 
-  const updateQueryFilter = (filterName: string) => {
-    let tempQueryFilter = poiTypeArray;
+  const updateQueryFilter = (
+    filterName: string,
+    filterType: AroundMeConstants.CartoFilterEnum
+  ) => {
+    let tempQueryFilter =
+      filterType === AroundMeConstants.CartoFilterEnum.type
+        ? poiTypeArray
+        : poiStepArray;
     if (!tempQueryFilter.includes(filterName)) tempQueryFilter.push(filterName);
     else {
       tempQueryFilter = tempQueryFilter.filter(
         (element) => element !== filterName
       );
     }
-    setPoiTypeArray(tempQueryFilter);
+    if (filterType === AroundMeConstants.CartoFilterEnum.type)
+      setPoiTypeArray(tempQueryFilter);
+    else setPoiStepArray(tempQueryFilter);
   };
 
-  const renderChips = (cartoFilters: CartoFilter[] | undefined) => {
+  const renderChips = (
+    cartoFilters: CartoFilter[] | undefined,
+    filterType: AroundMeConstants.CartoFilterEnum
+  ) => {
     return cartoFilters?.map((filter, index) => (
       <Chip
         id={index}
@@ -154,7 +203,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
         title={filter.name}
         selected={filter.active}
         action={() => {
-          updateQueryFilter(filter.name);
+          updateQueryFilter(filter.name, filterType);
         }}
         changeSizeForIos={true}
       />
@@ -163,7 +212,10 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
 
   return (
     <>
-      <FetchFilterData setPoiTypes={setPoiTypesAndCategories} />
+      <FetchFilterData
+        setPoiTypes={setPoiTypesAndCategories}
+        setSteps={setSteps}
+      />
       <Modal transparent={true} visible={visible}>
         {showModalContent && (
           <View style={styles.mainContainer}>
@@ -185,13 +237,28 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
               {Labels.aroundMe.filter.structures}
             </CommonText>
             <View style={styles.filterContainer}>
-              {renderChips(fetchedFiltersFromDB?.structures)}
+              {renderChips(
+                fetchedTypeFiltersFromDB?.structures,
+                AroundMeConstants.CartoFilterEnum.type
+              )}
             </View>
             <CommonText style={styles.partsTitle}>
               {Labels.aroundMe.filter.healthProfessional}
             </CommonText>
             <View style={styles.filterContainer}>
-              {renderChips(fetchedFiltersFromDB?.professionnels)}
+              {renderChips(
+                fetchedTypeFiltersFromDB?.professionnels,
+                AroundMeConstants.CartoFilterEnum.type
+              )}
+            </View>
+            <CommonText style={styles.partsTitle}>
+              {Labels.aroundMe.filter.steps}
+            </CommonText>
+            <View style={styles.filterContainer}>
+              {renderChips(
+                fetchedStepFiltersFromDB,
+                AroundMeConstants.CartoFilterEnum.etape
+              )}
             </View>
             <View style={styles.buttonsContainer}>
               <View style={styles.buttonContainer}>
@@ -221,8 +288,13 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
                   disabled={false}
                   action={() => {
                     void StorageUtils.storeObjectValue(
-                      StorageKeysConstants.cartoFilterKey,
+                      StorageKeysConstants.cartoFilterTypeKey,
                       poiTypeArray
+                    );
+                    setPoiTypeArray([]);
+                    void StorageUtils.storeObjectValue(
+                      StorageKeysConstants.cartoFilterStepKey,
+                      poiStepArray
                     );
                     setPoiTypeArray([]);
                     hideModal(true);
@@ -264,7 +336,7 @@ const styles = StyleSheet.create({
     borderRadius: Sizes.xs,
     borderWidth: 1,
     flex: 1,
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     margin: Margins.default,
     padding: Paddings.default,
   },
