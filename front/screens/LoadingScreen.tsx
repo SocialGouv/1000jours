@@ -3,8 +3,9 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect } from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
+import { Loader } from "../components";
 import { View } from "../components/Themed";
 import { StorageKeysConstants } from "../constants";
 import type { RootStackParamList } from "../types";
@@ -34,7 +35,7 @@ const LoadingScreen: FC<LoadingScreenProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ActivityIndicator size="large" />
+      <Loader />
     </View>
   );
 };

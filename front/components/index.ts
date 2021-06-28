@@ -16,7 +16,7 @@ import Datepicker from "./base/datePicker.component";
 import ErrorMessage from "./base/errorMessage.component";
 import HeaderApp from "./base/headerApp.component";
 import Icomoon, { IcomoonIcons } from "./base/icomoon.component";
-import Modal from "./base/modal.component";
+import Loader from "./base/loader.component";
 import TitleH1 from "./base/titleH1.component";
 import TitleH2 from "./base/titleH2.component";
 import Agenda from "./calendar/agenda.component";
@@ -46,8 +46,8 @@ export {
   ImageBanner,
   InShort,
   Links,
+  Loader,
   Menu,
-  Modal,
   SecondaryText,
   StepIcon,
   SubTitle,

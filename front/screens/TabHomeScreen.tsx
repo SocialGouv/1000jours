@@ -7,10 +7,16 @@ import type { FC } from "react";
 import { useEffect, useState } from "react";
 import * as React from "react";
 import type { LayoutChangeEvent } from "react-native";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { ErrorMessage, TimelineStep, TitleH1, View } from "../components";
+import {
+  ErrorMessage,
+  Loader,
+  TimelineStep,
+  TitleH1,
+  View,
+} from "../components";
 import { Paddings, Sizes, StorageKeysConstants } from "../constants";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
@@ -112,7 +118,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     }
   };
 
-  if (!called || loading) return <ActivityIndicator size="large" />;
+  if (!called || loading) return <Loader />;
   if (error) {
     // En cas d'erreur on essaye de charger les étapes avec 'defaultUserInfos'
     if (!loadStepsAlreadyInError) {
