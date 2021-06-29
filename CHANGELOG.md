@@ -1,3 +1,10 @@
+## [1.52.2](https://github.com/SocialGouv/1000jours/compare/v1.52.1...v1.52.2) (2021-06-29)
+
+
+### Bug Fixes
+
+* **epds:** score et intro commentés dans les résultats ([#428](https://github.com/SocialGouv/1000jours/issues/428)) ([02131bb](https://github.com/SocialGouv/1000jours/commit/02131bb6bd3ad4978413ffdc00917f9456277eb1))
+
 ## [1.52.1](https://github.com/SocialGouv/1000jours/compare/v1.52.0...v1.52.1) (2021-06-29)
 
 
