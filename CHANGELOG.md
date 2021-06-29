@@ -1,3 +1,10 @@
+## [1.50.1](https://github.com/SocialGouv/1000jours/compare/v1.50.0...v1.50.1) (2021-06-29)
+
+
+### Bug Fixes
+
+* **articles:** Initialise les champs textes vides par défaut ([#418](https://github.com/SocialGouv/1000jours/issues/418)) ([51e6fbc](https://github.com/SocialGouv/1000jours/commit/51e6fbc54a8f733235ea9b90e0f887d722066834))
+
 # [1.50.0](https://github.com/SocialGouv/1000jours/compare/v1.49.0...v1.50.0) (2021-06-29)
 
 
