@@ -71,6 +71,8 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
         lienUrl4: lien_4_url
         visuel {
           url
+          height
+          width
         }
         thematiques {
           nom
@@ -127,7 +129,7 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
           />
         </View>
         <View>
-          <ImageBanner imageUrl={result.article.visuel?.url} />
+          <ImageBanner visuel={result.article.visuel} />
           <View style={styles.articleDetails}>
             <Title title={result.article.titre} />
             <Thematics items={result.article.thematiques} />
