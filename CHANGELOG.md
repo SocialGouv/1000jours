@@ -1,3 +1,10 @@
+## [1.52.1](https://github.com/SocialGouv/1000jours/compare/v1.52.0...v1.52.1) (2021-06-29)
+
+
+### Bug Fixes
+
+* 🐛 Ajoute la permission de recevoir les notifications ([#424](https://github.com/SocialGouv/1000jours/issues/424)) ([3ae4157](https://github.com/SocialGouv/1000jours/commit/3ae415755066b7f3a84ccc2ac0aad1da7a7a0780))
+
 # [1.52.0](https://github.com/SocialGouv/1000jours/compare/v1.51.1...v1.52.0) (2021-06-29)
 
 
