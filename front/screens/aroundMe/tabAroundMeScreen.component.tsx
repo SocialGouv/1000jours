@@ -48,12 +48,7 @@ const TabAroundMeScreen: React.FC = () => {
   // Variable utilisée pour trigger le useEffect lors du relancement de la Recherche
   const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] =
     useState(false);
-  const [poisArrayOnMap, setPoisArrayOnMap] = useState<
-    CartographiePoisFromDB[]
-  >([]);
-  const [poisArrayInList, setPoisArrayInList] = useState<
-    CartographiePoisFromDB[]
-  >([]);
+  const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
   const [showAddressDetails, setShowAddressDetails] = useState(false);
   const [addressDetails, setAddressDetails] =
     useState<CartographiePoisFromDB>();
@@ -85,8 +80,7 @@ const TabAroundMeScreen: React.FC = () => {
     if (pois.length === 0) {
       showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
     }
-    setPoisArrayInList(pois);
-    setPoisArrayOnMap(pois);
+    setPoisArray(pois);
     setShowAddressesList(true);
     setIsLoading(false);
   };
@@ -137,7 +131,7 @@ const TabAroundMeScreen: React.FC = () => {
   };
 
   const onMarkerClick = (markerIndex: number) => {
-    setAddressDetails(poisArrayOnMap[markerIndex]);
+    setAddressDetails(poisArray[markerIndex]);
     setShowAddressDetails(true);
     setShowAddressesList(false);
     setMoveToRegionBecauseOfMarkerClick(true);
@@ -193,7 +187,7 @@ const TabAroundMeScreen: React.FC = () => {
           initialRegion={region}
           onRegionChangeComplete={onRegionChangeComplete}
         >
-          {poisArrayOnMap.map((poi, poiIndex) => (
+          {poisArray.map((poi, poiIndex) => (
             <View key={poiIndex}>
               <Marker
                 coordinate={{
@@ -259,8 +253,8 @@ const TabAroundMeScreen: React.FC = () => {
         </View>
       )}
       {showAddressesList &&
-        poisArrayInList.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
-          <SlidingUpPanelAddressesList poisArray={poisArrayInList} />
+        poisArray.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
+          <SlidingUpPanelAddressesList poisArray={poisArray} />
         )}
       <AroundMeFilter
         visible={showFilter}
