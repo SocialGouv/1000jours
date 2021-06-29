@@ -1,3 +1,15 @@
+# [1.49.0](https://github.com/SocialGouv/1000jours/compare/v1.48.1...v1.49.0) (2021-06-29)
+
+
+### Bug Fixes
+
+* **carto:** correction des bugs sur la carto ([#414](https://github.com/SocialGouv/1000jours/issues/414)) ([478d0f5](https://github.com/SocialGouv/1000jours/commit/478d0f51f2c010f7150267f4bdc549a71426fa3a))
+
+
+### Features
+
+* **carto:** ajout du loader sur la carto ([#413](https://github.com/SocialGouv/1000jours/issues/413)) ([d57931e](https://github.com/SocialGouv/1000jours/commit/d57931ef6eee271371a6285e621e33ffb6dc7ca9))
+
 ## [1.48.1](https://github.com/SocialGouv/1000jours/compare/v1.48.0...v1.48.1) (2021-06-28)
 
 
