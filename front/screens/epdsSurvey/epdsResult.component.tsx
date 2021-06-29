@@ -88,14 +88,14 @@ const EpdsResult: React.FC<Props> = ({ result, startSurveyOver }) => {
       />
       <View style={styles.rowView}>
         <View>{getIcon(resultData.icon)}</View>
-        <CommonText style={[styles.stateOfMind, colorStyle]}>
+        {/* <CommonText style={[styles.stateOfMind, colorStyle]}>
           {resultData.resultLabels.stateOfMind}
-        </CommonText>
+        </CommonText> */}
       </View>
-      <SecondaryText style={[styles.text, styles.fontBold]}>
+      {/* <SecondaryText style={[styles.text, styles.fontBold]}>
         {labelsResultats.introduction}
         {result} {resultData.resultLabels.intervalle}.
-      </SecondaryText>
+      </SecondaryText> */}
       <SecondaryText style={styles.text}>
         {resultData.resultLabels.explication}
       </SecondaryText>
