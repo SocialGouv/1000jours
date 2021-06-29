@@ -165,6 +165,7 @@ const TabAroundMeScreen: React.FC = () => {
           setMoveToRegionBecauseOfPCResearch(true);
         }}
         showSnackBarWithMessage={showSnackBarWithMessage}
+        setIsLoading={setIsLoading}
       />
       <View style={styles.map}>
         <MapView

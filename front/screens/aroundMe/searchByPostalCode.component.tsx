@@ -27,6 +27,7 @@ interface Props {
   hideSnackBar: () => void;
   setAndGoToNewRegion: (region: Region) => void;
   showSnackBarWithMessage: (message: string) => void;
+  setIsLoading: (value: boolean) => void;
 }
 
 const SearchByPostalCode: React.FC<Props> = ({
@@ -37,6 +38,7 @@ const SearchByPostalCode: React.FC<Props> = ({
   hideSnackBar,
   setAndGoToNewRegion,
   showSnackBarWithMessage,
+  setIsLoading,
 }) => {
   const onPostalCodeChanged = (newPostalCode: string) => {
     setPostalCodeInput(newPostalCode);
@@ -44,6 +46,7 @@ const SearchByPostalCode: React.FC<Props> = ({
   };
 
   const onSearchByPostalCodeButtonClick = async () => {
+    setIsLoading(true);
     KeyboardUtils.dismissKeyboard();
     hideSnackBar();
     await searchByPostalCodeAndGoToNewRegion();
@@ -63,6 +66,7 @@ const SearchByPostalCode: React.FC<Props> = ({
     } else {
       showSnackBarWithMessage(Labels.aroundMe.postalCodeNotFound);
     }
+    setIsLoading(false);
   };
 
   return (
