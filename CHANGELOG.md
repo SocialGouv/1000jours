@@ -1,3 +1,12 @@
+## [1.52.3](https://github.com/SocialGouv/1000jours/compare/v1.52.2...v1.52.3) (2021-06-29)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'optimisation des images des articles ([#434](https://github.com/SocialGouv/1000jours/issues/434)) ([b9b4af5](https://github.com/SocialGouv/1000jours/commit/b9b4af5300b64d2ebd453f3176af07e639217b57))
+* **articles:** Corrige les urls des formats d'image ([#431](https://github.com/SocialGouv/1000jours/issues/431)) ([6e8fada](https://github.com/SocialGouv/1000jours/commit/6e8fada95399731dc6c2d8a528bceb9060ec2e5b))
+* **epds:** modification des textes du questionnaire ([#432](https://github.com/SocialGouv/1000jours/issues/432)) ([665c1e0](https://github.com/SocialGouv/1000jours/commit/665c1e0b1a5789e99f5a2d521dbc6a3053464000))
+
 ## [1.52.2](https://github.com/SocialGouv/1000jours/compare/v1.52.1...v1.52.2) (2021-06-29)
 
 
