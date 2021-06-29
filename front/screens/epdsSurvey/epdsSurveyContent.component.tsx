@@ -116,21 +116,25 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
               {Labels.epdsSurvey.instruction}
             </CommonText>
             <View style={styles.surveyContainer}>
-              <EpdsSurveyQuestionsList
-                epdsSurvey={questionsAndAnswers}
-                swiperRef={swiperRef}
-                swiperCurrentIndex={swiperCurrentIndex}
-                saveCurrentSurvey={saveCurrentSurvey}
-                updatePressedAnswer={updatePressedAnswer}
-              />
+              <View style={styles.questionList}>
+                <EpdsSurveyQuestionsList
+                  epdsSurvey={questionsAndAnswers}
+                  swiperRef={swiperRef}
+                  swiperCurrentIndex={swiperCurrentIndex}
+                  saveCurrentSurvey={saveCurrentSurvey}
+                  updatePressedAnswer={updatePressedAnswer}
+                />
+              </View>
+              <View style={styles.footer}>
+                <EpdsSurveyFooter
+                  swiperCurrentIndex={swiperCurrentIndex}
+                  swiperRef={swiperRef}
+                  showValidateButton={showValidateButton}
+                  questionIsAnswered={questionIsAnswered}
+                  setShowResult={setShowResult}
+                />
+              </View>
             </View>
-            <EpdsSurveyFooter
-              swiperCurrentIndex={swiperCurrentIndex}
-              swiperRef={swiperRef}
-              showValidateButton={showValidateButton}
-              questionIsAnswered={questionIsAnswered}
-              setShowResult={setShowResult}
-            />
           </>
         ) : (
           <EpdsLoadPreviousSurvey
@@ -150,6 +154,12 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
 };
 
 const styles = StyleSheet.create({
+  footer: {
+    bottom: 0,
+    left: 0,
+    position: "absolute",
+    right: 0,
+  },
   instruction: {
     color: Colors.commonText,
     fontSize: Sizes.xs,
@@ -160,6 +170,9 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     margin: Margins.default,
+  },
+  questionList: {
+    marginBottom: Margins.step,
   },
   surveyContainer: {
     flex: 1,
