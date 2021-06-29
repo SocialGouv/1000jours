@@ -20,7 +20,7 @@ const NGINX_DOCKER_VERSION = "1.19.6";
 //
 // users-->nginx ingress-->nginx cache-->api
 //
-const manifests = create("serving-ml-cache", {
+const asyncManifests = create("strapi-cache", {
   env,
   config: {
     image: `nginx:${NGINX_DOCKER_VERSION}`,
@@ -77,58 +77,60 @@ const manifests = create("serving-ml-cache", {
   },
 });
 
-// add the config map that holds nginx.conf
-const configMap = new ConfigMap({
-  metadata: {
-    name: "nginx-config",
-  },
-  data: {
-    "nginx.conf": fs
-      .readFileSync(path.join(__dirname, "nginx.conf"))
-      .toString(),
-  },
-});
-
-manifests.push(configMap);
-
-const pvcName = `serving-ml-cache-${process.env.CI_COMMIT_SHORT_SHA}`;
-
-//@ts-expect-error
-const deploy = getDeployment(manifests);
-ok(deploy.spec);
-ok(deploy.spec.template);
-ok(deploy.spec.template.spec);
-deploy.spec.template.spec.volumes = [
-  {
-    persistentVolumeClaim: {
-      claimName: pvcName,
-    },
-    name: "cache",
-  },
-  {
-    name: "config",
-    configMap: {
+export default async () => {
+  const manifests = await asyncManifests;
+  // add the config map that holds nginx.conf
+  const configMap = new ConfigMap({
+    metadata: {
       name: "nginx-config",
     },
-  },
-];
+    data: {
+      "nginx.conf": fs
+        .readFileSync(path.join(__dirname, "nginx.conf"))
+        .toString(),
+    },
+  });
 
-const pvc = new PersistentVolumeClaim({
-  metadata: {
-    name: pvcName,
-    annotations: {},
-  },
-  spec: {
-    accessModes: ["ReadWriteOnce"],
-    resources: {
-      requests: {
-        storage: "2Gi",
+  manifests.push(configMap);
+
+  const pvcName = `strapi-cache-${process.env.CI_COMMIT_SHORT_SHA}`;
+
+  const deploy = getDeployment(manifests);
+  ok(deploy.spec);
+  ok(deploy.spec.template);
+  ok(deploy.spec.template.spec);
+  deploy.spec.template.spec.volumes = [
+    {
+      persistentVolumeClaim: {
+        claimName: pvcName,
+      },
+      name: "cache",
+    },
+    {
+      name: "config",
+      configMap: {
+        name: "nginx-config",
       },
     },
-    volumeMode: "Filesystem",
-  },
-});
+  ];
 
-manifests.push(pvc);
+  const pvc = new PersistentVolumeClaim({
+    metadata: {
+      name: pvcName,
+      annotations: {},
+    },
+    spec: {
+      accessModes: ["ReadWriteOnce"],
+      resources: {
+        requests: {
+          storage: "2Gi",
+        },
+      },
+      volumeMode: "Filesystem",
+    },
+  });
 
-export default manifests;
+  manifests.push(pvc);
+
+  return manifests;
+};

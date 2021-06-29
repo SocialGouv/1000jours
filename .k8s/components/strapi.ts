@@ -20,7 +20,7 @@ const prob = new Probe({
     path: "/_health",
     port: "http",
   },
-  initialDelaySeconds: 30
+  initialDelaySeconds: 30,
 });
 
 const resources = new ResourceRequirements({
@@ -54,9 +54,9 @@ export default async () => {
   const manifests = await create(component, {
     env,
     config: {
+      ingress: false,
       withPostgres: true,
       containerPort: 1337,
-      subDomainPrefix: "backoffice-",
       image: getHarborImagePath({ name: "les1000jours-strapi" }),
     },
     deployment: {
@@ -80,7 +80,16 @@ export default async () => {
       "nginx.ingress.kubernetes.io/proxy-body-size": "1g",
     };
   }
-  const deploymentUrl = "https://" + getIngressHost(manifests);
+  const deploymentUrl =
+    "https://" +
+    getIngressHost(
+      await create(component, {
+        env,
+        config: {
+          subDomainPrefix: "backoffice-",
+        },
+      })
+    );
 
   addEnvs({
     deployment,

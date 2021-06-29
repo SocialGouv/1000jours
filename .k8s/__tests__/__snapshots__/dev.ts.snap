@@ -22,6 +22,214 @@ metadata:
     cert: wildcard
   name: 1000jours-85-master-dev42
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: master-dev42
+    app.gitlab.com/env.name: master-dev42
+  labels:
+    app: strapi-cache
+    application: master-dev42-1000jours
+    owner: 1000jours
+    team: 1000jours
+    cert: wildcard
+  name: strapi-cache
+  namespace: 1000jours-85-master-dev42
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strapi-cache
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.gitlab.com/app: socialgouv-1000jours
+        app.gitlab.com/env: master-dev42
+        app.gitlab.com/env.name: master-dev42
+      labels:
+        app: strapi-cache
+        application: master-dev42-1000jours
+        owner: 1000jours
+        team: 1000jours
+        cert: wildcard
+    spec:
+      containers:
+        - image: nginx:1.19.6
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            timeoutSeconds: 15
+          name: strapi-cache
+          ports:
+            - containerPort: 80
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 0.5Gi
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /_health
+              port: http
+            periodSeconds: 5
+            initialDelaySeconds: 0
+            timeoutSeconds: 15
+          env:
+            - name: UPSTREAM
+              value: http://strapi
+            - name: MAX_SIZE
+              value: 1024m
+          volumeMounts:
+            - mountPath: /var/cache/nginx
+              name: cache
+            - mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              name: config
+      volumes:
+        - persistentVolumeClaim:
+            claimName: strapi-cache-0123456
+          name: cache
+        - name: config
+          configMap:
+            name: nginx-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: strapi-cache
+    application: master-dev42-1000jours
+    owner: 1000jours
+    team: 1000jours
+    cert: wildcard
+  name: strapi-cache
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: master-dev42
+    app.gitlab.com/env.name: master-dev42
+  namespace: 1000jours-85-master-dev42
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: strapi-cache
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: master-dev42
+    app.gitlab.com/env.name: master-dev42
+  labels:
+    app: strapi-cache
+    application: master-dev42-1000jours
+    owner: 1000jours
+    team: 1000jours
+    cert: wildcard
+  name: strapi-cache
+  namespace: 1000jours-85-master-dev42
+spec:
+  rules:
+    - host: master-dev42-1000jours.dev42.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              serviceName: strapi-cache
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - master-dev42-1000jours.dev42.fabrique.social.gouv.fr
+      secretName: wildcard-crt
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  nginx.conf: |-
+
+    events {
+      worker_connections 1024;
+    }
+
+    http {
+      include mime.types;
+      default_type application/octet-stream;
+      sendfile on;
+      keepalive_timeout 65;
+      client_max_body_size 200k;
+
+      proxy_buffering on;
+      proxy_cache_path /cache levels=1:2 keys_zone=small:1m inactive=1w use_temp_path=off;
+
+      server {
+        listen 80;
+        server_name localhost;
+
+        location / {
+          try_files $uri @backend;
+        }
+
+        location @backend {
+          proxy_cache small;
+          proxy_cache_methods POST;
+          proxy_pass http://serving-ml:80;
+          proxy_cache_key \\"$request_uri|$request_body\\";
+          proxy_cache_valid any 1w;
+          proxy_buffers 8 32k;
+          proxy_buffer_size 64k;
+          proxy_cache_use_stale updating;
+          add_header X-Cached $upstream_cache_status;
+        }
+      }
+    }
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: strapi-cache-0123456
+  annotations: {}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  volumeMode: Filesystem
+---
 apiVersion: batch/v1
 kind: Job
 spec:
@@ -265,38 +473,5 @@ spec:
   selector:
     app: strapi
   type: ClusterIP
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    kapp.k14s.io/disable-default-ownership-label-rules: ''
-    kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: master-dev42
-    app.gitlab.com/env.name: master-dev42
-    nginx.ingress.kubernetes.io/proxy-body-size: 1g
-  labels:
-    app: strapi
-    application: master-dev42-1000jours
-    owner: 1000jours
-    team: 1000jours
-    cert: wildcard
-  name: strapi
-  namespace: 1000jours-85-master-dev42
-spec:
-  rules:
-    - host: backoffice-master-dev42-1000jours.dev42.fabrique.social.gouv.fr
-      http:
-        paths:
-          - backend:
-              serviceName: strapi
-              servicePort: 80
-            path: /
-  tls:
-    - hosts:
-        - backoffice-master-dev42-1000jours.dev42.fabrique.social.gouv.fr
-      secretName: wildcard-crt
 "
 `;
