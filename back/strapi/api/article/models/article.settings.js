@@ -8,14 +8,17 @@ module.exports = {
     enbref_1_icone: enBrefIconeType,
     enbref_1_texte: {
       type: "text",
+      default: "",
     },
     enbref_2_icone: enBrefIconeType,
     enbref_2_texte: {
       type: "text",
+      default: "",
     },
     enbref_3_icone: enBrefIconeType,
     enbref_3_texte: {
       type: "text",
+      default: "",
     },
     etapes: {
       collection: "etape",
@@ -24,30 +27,39 @@ module.exports = {
     },
     le_saviez_vous: {
       type: "text",
+      default: "",
     },
     lien_1_titre: {
       type: "string",
+      default: "",
     },
     lien_1_url: {
       type: "string",
+      default: "",
     },
     lien_2_titre: {
       type: "string",
+      default: "",
     },
     lien_2_url: {
       type: "string",
+      default: "",
     },
     lien_3_titre: {
       type: "string",
+      default: "",
     },
     lien_3_url: {
       type: "string",
+      default: "",
     },
     lien_4_titre: {
       type: "string",
+      default: "",
     },
     lien_4_url: {
       type: "string",
+      default: "",
     },
     resume: {
       required: true,
@@ -55,15 +67,19 @@ module.exports = {
     },
     texte_1: {
       type: "richtext",
+      default: "",
     },
     texte_1_titre: {
       type: "string",
+      default: "",
     },
     texte_2: {
       type: "richtext",
+      default: "",
     },
     texte_2_titre: {
       type: "string",
+      default: "",
     },
     thematiques: {
       collection: "thematique",
@@ -83,8 +99,8 @@ module.exports = {
     },
     notifications: {
       type: "boolean",
-      default: false
-    }
+      default: false,
+    },
   },
   collectionName: "articles",
   info: {

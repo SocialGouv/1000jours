@@ -20,7 +20,8 @@
       "via": "etapes"
     },
     "description": {
-      "type": "text"
+      "type": "text",
+      "default": ""
     },
     "parcours": {
       "collection": "parcours",
