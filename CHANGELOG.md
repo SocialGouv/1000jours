@@ -1,3 +1,10 @@
+# [1.52.0](https://github.com/SocialGouv/1000jours/compare/v1.51.1...v1.52.0) (2021-06-29)
+
+
+### Features
+
+* **carto:** enregistrement de la dernière Region ([#423](https://github.com/SocialGouv/1000jours/issues/423)) ([f384ab6](https://github.com/SocialGouv/1000jours/commit/f384ab6273396a2e6a4c3d87cf09cb8c7044d283))
+
 ## [1.51.1](https://github.com/SocialGouv/1000jours/compare/v1.51.0...v1.51.1) (2021-06-29)
 
 
