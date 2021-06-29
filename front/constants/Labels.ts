@@ -95,21 +95,34 @@ export default {
     onboarding: {
       paragraphs: [
         {
-          boldIndexes: [4, 5, 6, 7],
+          boldIndexes: [],
           description:
-            "La dépression post-partum touche 1 femme sur 5 en France (ainsi que les hommes).\nCe sujet est tabou car ses maux sont mal identifiés et sous-estimés (les difficultés parentales / le baby blues / le burn-out / la dépression post-partum).",
+            "La dépression post-partum touche 1 femme sur 5 en France (ainsi que les hommes).",
           title: "Constat",
         },
         {
-          boldIndexes: [3],
-          description: "Prévenir de façon anonyme la dépression post-partum.",
+          boldIndexes: [],
+          description:
+            "Se poser les bonnes questions en se basant sur des questions spécifiques pour détecter les risques qu’une dépression post partum soit présente.",
           title: "Objectif",
         },
         {
-          boldIndexes: [12, 13],
+          boldIndexes: [],
           description:
-            "Passer le test EPDS (Edinburgh Postnatal Depression Scale). C’est un outil psychométrique internationalement reconnu.",
+            "Cochez la réponse qui vous semble le mieux décrire la façon dont vous vous êtes senti durant la semaine passée.",
           title: "Comment",
+        },
+        {
+          boldIndexes: [],
+          description:
+            "Parce que nous souhaitons que vous puissiez échanger avec votre professionnel de confiance, le score n’est ni indiqué, ni accessible. II est important de le passer en présence d’un professionnel de santé, qui est le seul à pouvoir poser un diagnostic.",
+          title: "Informations",
+        },
+        {
+          boldIndexes: [],
+          description:
+            "Bénéficier de soutien limite les facteurs de stress, tout à fait normal, durant les premiers mois de bébé. Des ressources et solutions existent pour vous accompagner..",
+          title: "Recommandations",
         },
       ],
       reminder:
@@ -123,7 +136,7 @@ export default {
         ],
         title: "Étapes",
       },
-      title: "Pourquoi faire un test ?",
+      title: "Dépression post partum, en parler c’est soigner !",
     },
     previousSurvey: {
       continueButton: "Continuer",
