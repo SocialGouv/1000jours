@@ -8,24 +8,14 @@ import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 
 import {
-  Agenda,
-  Button,
   CommonText,
   ErrorMessage,
   Events,
-  Icomoon,
-  IcomoonIcons,
   Loader,
   TitleH1,
 } from "../components";
 import { View } from "../components/Themed";
-import {
-  Colors,
-  Labels,
-  Paddings,
-  Sizes,
-  StorageKeysConstants,
-} from "../constants";
+import { Labels, Paddings, StorageKeysConstants } from "../constants";
 import type { Event } from "../types";
 import { StorageUtils, TrackerUtils } from "../utils";
 
@@ -33,7 +23,6 @@ const TabCalendarScreen: FC = () => {
   const { trackScreenView } = useMatomo();
   trackScreenView(TrackerUtils.TrackingEvent.CALENDAR);
   const [childBirthday, setChildBirthday] = React.useState("");
-  const [isModeAgenda, setIsModeAgenda] = React.useState(false);
 
   useEffect(() => {
     const loadChildBirthday = async () => {
@@ -73,11 +62,7 @@ const TabCalendarScreen: FC = () => {
       />
       <View style={styles.calendarContainer}>
         {childBirthday.length > 0 ? (
-          isModeAgenda ? (
-            <Agenda evenements={evenements} childBirthday={childBirthday} />
-          ) : (
-            <Events evenements={evenements} childBirthday={childBirthday} />
-          )
+          <Events evenements={evenements} childBirthday={childBirthday} />
         ) : (
           <View style={styles.center}>
             <CommonText>{Labels.calendar.noChildBirthday}</CommonText>

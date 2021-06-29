@@ -94,6 +94,8 @@ export type Thematique = {
 };
 export type Visuel = {
   url: string;
+  height: number;
+  width: number;
 };
 
 export type Article = {

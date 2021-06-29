@@ -73,6 +73,8 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
         resume
         visuel {
           url
+          height
+          width
         }
         thematiques {
           nom
@@ -192,7 +194,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
                   defaultSource={DefaultImage}
                   source={{
                     uri: getVisuelFormat(
-                      article.visuel?.url,
+                      article.visuel,
                       VisuelFormat.thumbnail
                     ),
                   }}
