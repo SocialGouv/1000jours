@@ -24,6 +24,7 @@ const asyncManifests = create("strapi-cache", {
   env,
   config: {
     image: `nginx:${NGINX_DOCKER_VERSION}`,
+    subDomainPrefix: "backoffice-",
     containerPort: 80,
     container: {
       env: [
