@@ -29,7 +29,7 @@ import {
 import type {
   CartoFilter,
   CartoFilterStorage,
-  DisplayedCartoFilters,
+  FetchedFilterFromDb,
   PoiTypeFromDB,
   StepFromDB,
 } from "../../type";
@@ -45,8 +45,8 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
   const [filterDataFromDb, setFilterDataFromDb] = useState<unknown>();
 
   const [fetchedFiltersFromDB, setFetchedFiltersFromDB] =
-    useState<DisplayedCartoFilters>();
-  const [filtersFromDbInList, setFiltersFromDbInList] = useState<
+    useState<FetchedFilterFromDb>();
+  const [displayedCartoFilters, setDisplayedCartoFilters] = useState<
     { title: string; filters: CartoFilter[] }[]
   >([]);
   const [cartoFilterStorage, setCartoFilterStorage] =
@@ -86,17 +86,20 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
         await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
 
       if (fetchedFiltersFromDB) {
+        fetchedFiltersFromDB.professionnels.forEach(
+          (filter) => (filter.active = false)
+        );
+        fetchedFiltersFromDB.structures.forEach(
+          (filter) => (filter.active = false)
+        );
+        fetchedFiltersFromDB.etapes.forEach(
+          (filter) => (filter.active = false)
+        );
         if (
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           savedFilters &&
           !StringUtils.stringArrayIsNullOrEmpty(savedFilters.types)
         ) {
-          fetchedFiltersFromDB.professionnels.forEach(
-            (filter) => (filter.active = false)
-          );
-          fetchedFiltersFromDB.structures.forEach(
-            (filter) => (filter.active = false)
-          );
           fetchedFiltersFromDB.professionnels =
             checkSavedFiltersInFetchedFilters(
               savedFilters.types,
@@ -113,9 +116,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
           savedFilters &&
           !StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes)
         ) {
-          fetchedFiltersFromDB.etapes.forEach(
-            (filter) => (filter.active = false)
-          );
           fetchedFiltersFromDB.etapes = checkSavedFiltersInFetchedFilters(
             savedFilters.etapes,
             fetchedFiltersFromDB.etapes
@@ -133,7 +133,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
 
   const convertFetchedFiltersToDisplayedFilters = () => {
     if (fetchedFiltersFromDB) {
-      setFiltersFromDbInList([
+      setDisplayedCartoFilters([
         {
           filters: fetchedFiltersFromDB.structures,
           title: Labels.aroundMe.filter.structures,
@@ -280,7 +280,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
                 />
               </TouchableOpacity>
               <ScrollView>
-                {filtersFromDbInList.map(
+                {displayedCartoFilters.map(
                   (
                     filterFromDb: { title: string; filters: CartoFilter[] },
                     index: number
