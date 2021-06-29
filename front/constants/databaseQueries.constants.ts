@@ -31,7 +31,7 @@ export const EPDS_ADD_RESPONSE = gql`
 
 export const AROUNDME_FILTER_DATA = gql`
   query {
-    etapes(sort: "nom") {
+    etapes(sort: "id") {
       nom
     }
 
