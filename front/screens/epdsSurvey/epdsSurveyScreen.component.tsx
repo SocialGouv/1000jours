@@ -1,3 +1,4 @@
+import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -6,12 +7,19 @@ import { StyleSheet } from "react-native";
 import { View } from "../../components/Themed";
 import { DatabaseQueries, StorageKeysConstants } from "../../constants";
 import type { DataFetchingType, EpdsQuestionAndAnswers } from "../../type";
-import { DataFetchingUtils, EpdsSurveyUtils, StorageUtils } from "../../utils";
+import {
+  DataFetchingUtils,
+  EpdsSurveyUtils,
+  StorageUtils,
+  TrackerUtils,
+} from "../../utils";
 import EpdsGenderEntry from "./epdsGenderEntry.component";
 import EpdsOnboarding from "./epdsOnboarding.component";
 import EpdsSurveyContent from "./epdsSurveyContent.component";
 
 const EpdsSurveyScreen: FC = () => {
+  const { trackScreenView } = useMatomo();
+  trackScreenView(TrackerUtils.TrackingEvent.EPDS);
   const [onboardingIsDone, setOnboardingIsDone] = useState(false);
   const [genderIsEntered, setGenderIsEntered] = useState(false);
 

@@ -56,6 +56,7 @@ export default {
   buttons: {
     back: "Retour",
     cancel: "Annuler",
+    contact: "Contacter",
     finish: "Terminer",
     next: "Suivant",
     ok: "Ok",
@@ -86,7 +87,9 @@ export default {
       titleInformation: "Informations",
     },
     instruction:
-      "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes sentie au cours des 7 derniers jours et pas seulement aujourd'hui.",
+      "Veuillez cocher la réponse qui vous semble décrire le mieux comment vous vous êtes senti(e) au cours des 7 derniers jours et pas seulement aujourd'hui.",
+    mailContact: "1000joursblues@fabrique.social.gouv.fr",
+    mailSubject: "1000 premiers jours",
     notification: {
       body: `${NUMBER_OF_DAYS_NOTIF_REMINDER} jours se sont écoulés depuis la dernière fois que vous avez passé le test EPDS. Vous pouvez maintenant le repasser si vous le souhaitez`,
       redirectTitle: "Passer le test",
@@ -95,21 +98,34 @@ export default {
     onboarding: {
       paragraphs: [
         {
-          boldIndexes: [4, 5, 6, 7],
+          boldIndexes: [],
           description:
-            "La dépression post-partum touche 1 femme sur 5 en France (ainsi que les hommes).\nCe sujet est tabou car ses maux sont mal identifiés et sous-estimés (les difficultés parentales / le baby blues / le burn-out / la dépression post-partum).",
+            "La dépression post-partum touche 1 femme sur 5 en France (ainsi que les hommes).",
           title: "Constat",
         },
         {
-          boldIndexes: [3],
-          description: "Prévenir de façon anonyme la dépression post-partum.",
+          boldIndexes: [],
+          description:
+            "Se poser les bonnes questions en se basant sur des questions spécifiques pour détecter les risques qu’une dépression post partum soit présente.",
           title: "Objectif",
         },
         {
-          boldIndexes: [12, 13],
+          boldIndexes: [],
           description:
-            "Passer le test EPDS (Edinburgh Postnatal Depression Scale). C’est un outil psychométrique internationalement reconnu.",
+            "Cochez la réponse qui vous semble le mieux décrire la façon dont vous vous êtes senti(e) durant la semaine passée.",
           title: "Comment",
+        },
+        {
+          boldIndexes: [],
+          description:
+            "Parce que nous souhaitons que vous puissiez échanger avec votre professionnel de confiance, le score n’est ni indiqué, ni accessible. II est important de le passer en présence d’un professionnel de santé, qui est le seul à pouvoir poser un diagnostic.",
+          title: "Informations",
+        },
+        {
+          boldIndexes: [],
+          description:
+            "Bénéficier de soutien limite les facteurs de stress, tout à fait normal, durant les premiers mois de bébé. Des ressources et solutions existent pour vous accompagner.",
+          title: "Recommandations",
         },
       ],
       reminder:
@@ -123,7 +139,7 @@ export default {
         ],
         title: "Étapes",
       },
-      title: "Pourquoi faire un test ?",
+      title: "Dépression post partum, en parler c’est soigner !",
     },
     previousSurvey: {
       continueButton: "Continuer",
@@ -135,9 +151,13 @@ export default {
     resultats: {
       call: "Appeler",
       entreDixEtDouze: {
+        contacterNotrePartenaire:
+          "Contacter notre partenaire composé par des volontaires ayant connu la difficulté maternelle, elles mettent leur expérience personnelle au service du collectif.",
         explication:
           "Il est possible que vous souffriez de problèmes liés à une dépression, mais ce n’est pas certain. N'hésitez pas à transmettre ces résultats ou à parler de votre ressenti actuel avec votre médecin ou le professionnel de santé qui suit votre grossesse. Il pourra poser un diagnostic plus précis. Vous pouvez également en parler à votre conjoint, des amis ou un membre de votre famille.",
         intervalle: "(10, 11, 12)",
+        oserEnParler:
+          "Oser en parler, c'est déjà prendre soin de soi et de son enfant !",
         professionalsList: [
           {
             paragraphs: [
@@ -166,7 +186,7 @@ export default {
       introduction: "Vous avez obtenu le score suivant : ",
       moinsDeNeuf: {
         explication:
-          "Un score de 9 ou moins est très rassurant au regard de la dépression. Mais, si vous en ressentez le besoin, vous pouvez consulter votre médecin traitant ou le professionnel qui suit votre grossesse pour faire le point sur votre état émotionnel. Si vous pensez que vous êtes une personne à risque de dépression, n’hésitez pas à refaire régulièrement ce test, en laissant au moins deux semaines entre chaque usage.",
+          "Votre résultat est très rassurant au regard de la dépression. Mais, si vous en ressentez le besoin, vous pouvez consulter votre médecin traitant ou le professionnel qui suit votre grossesse pour faire le point sur votre état émotionnel. Si vous pensez que vous êtes une personne à risque de dépression, n’hésitez pas à refaire régulièrement ce test, en laissant au moins deux semaines entre chaque usage.",
         intervalle: "(9 ou moins)",
         professionalsList: [
           {
@@ -190,9 +210,13 @@ export default {
         stateOfMind: "Je vais bien",
       },
       plusDeTreize: {
+        contacterNotrePartenaire:
+          "Contacter notre partenaire composé par des volontaires ayant connu la difficulté maternelle, elles mettent leur expérience personnelle au service du collectif.",
         explication:
           "Votre score laisse penser que vous êtes en train de faire une dépression. Il faut consulter un professionnel de santé qui confirmera ou non, par un diagnostic. Si vous ne l’avez pas déjà fait, nous vous conseillons de consulter votre médecin (généraliste ou spécialiste) ou de contacter un professionnel de santé mentale afin de faire avec lui un bilan approfondi de votre état émotionnel et psychologique. Ce n’est pas une fatalité, la dépression peut être guérie grâce à un soutien de votre famille, de vos amis ou d’un professionnel de santé, ou par une psychothérapie ou d’autres moyens, comme une aide médicamenteuse...",
         intervalle: "(13 ou plus)",
+        oserEnParler:
+          "Oser en parler, c'est déjà prendre soin de soi et de son enfant !",
         professionalsList: [
           {
             paragraphs: epdsInformation.professionnelsAccompagnerPasBien,
@@ -217,7 +241,7 @@ export default {
       retakeTestInvitation: `Vous serez invité à repasser le test dans ${NUMBER_OF_DAYS_NOTIF_REMINDER} jours`,
     },
     title: "Et si c'était une dépression post-partum ?",
-    titleResults: "Résultats",
+    titleResults: "Résultat",
   },
   errorMsg: "Une erreur est survenue, merci de réessayer plus tard",
   errorNetworkMsg:

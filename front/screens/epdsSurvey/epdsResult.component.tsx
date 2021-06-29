@@ -22,7 +22,12 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../constants";
-import { EpdsSurveyUtils, NotificationUtils, StorageUtils } from "../../utils";
+import {
+  EpdsSurveyUtils,
+  LinkingUtils,
+  NotificationUtils,
+  StorageUtils,
+} from "../../utils";
 import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation.component";
 
 interface Props {
@@ -88,10 +93,34 @@ const EpdsResult: React.FC<Props> = ({ result, startSurveyOver }) => {
       />
       <View style={styles.rowView}>
         <View>{getIcon(resultData.icon)}</View>
-        {/* <CommonText style={[styles.stateOfMind, colorStyle]}>
+        <CommonText style={[styles.stateOfMind, colorStyle]}>
           {resultData.resultLabels.stateOfMind}
-        </CommonText> */}
+        </CommonText>
       </View>
+      {resultData.resultLabels.contacterNotrePartenaire && (
+        <>
+          <SecondaryText style={[styles.text, styles.fontBold]}>
+            {resultData.resultLabels.oserEnParler}
+          </SecondaryText>
+          <SecondaryText style={[styles.text]}>
+            {resultData.resultLabels.contacterNotrePartenaire}
+          </SecondaryText>
+          <View style={styles.validateButton}>
+            <Button
+              title={Labels.buttons.contact}
+              titleStyle={styles.fontButton}
+              rounded={true}
+              disabled={false}
+              action={async () =>
+                LinkingUtils.sendEmail(
+                  Labels.epdsSurvey.mailContact,
+                  Labels.epdsSurvey.mailSubject
+                )
+              }
+            />
+          </View>
+        </>
+      )}
       {/* <SecondaryText style={[styles.text, styles.fontBold]}>
         {labelsResultats.introduction}
         {result} {resultData.resultLabels.intervalle}.

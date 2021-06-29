@@ -347,6 +347,7 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: "row",
+    marginTop: Margins.default,
   },
   closeModalView: {
     margin: Margins.default,

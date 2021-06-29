@@ -1,3 +1,4 @@
+import { useMatomo } from "matomo-tracker-react-native";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -26,13 +27,15 @@ import {
 } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import type { CartographiePoisFromDB } from "../../type";
-import { KeyboardUtils, StorageUtils } from "../../utils";
+import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
 import AddressDetails from "./addressDetails.component";
 import AroundMeFilter from "./aroundMeFilter.component";
 import SearchByPostalCode from "./searchByPostalCode.component";
 import SlidingUpPanelAddressesList from "./slidingUpPanelAddressesList.component";
 
 const TabAroundMeScreen: React.FC = () => {
+  const { trackScreenView } = useMatomo();
+  trackScreenView(TrackerUtils.TrackingEvent.CARTO);
   const mapRef = useRef<MapView>();
   const [postalCodeInput, setPostalCodeInput] = useState("");
   const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
