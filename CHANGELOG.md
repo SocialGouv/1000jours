@@ -1,3 +1,10 @@
+# [1.50.0](https://github.com/SocialGouv/1000jours/compare/v1.49.0...v1.50.0) (2021-06-29)
+
+
+### Features
+
+* **k8s:** Ajoute la variable SENTRY_DSN dans l'environnement ([#417](https://github.com/SocialGouv/1000jours/issues/417)) ([e6712c1](https://github.com/SocialGouv/1000jours/commit/e6712c1269ab47c1efa4fccd65f1efcb71ca7270)), closes [#23](https://github.com/SocialGouv/1000jours/issues/23)
+
 # [1.49.0](https://github.com/SocialGouv/1000jours/compare/v1.48.1...v1.49.0) (2021-06-29)
 
 
