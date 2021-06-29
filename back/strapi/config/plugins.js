@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = ({ env }) => ({
   graphql: {
     amountLimit: 100,
     apolloServer: {
@@ -9,4 +9,7 @@ module.exports = {
     playgroundAlways: true,
     shadowCRUD: true,
   },
-};
+  sentry: {
+    dsn: env("SENTRY_DSN"),
+  },
+});
