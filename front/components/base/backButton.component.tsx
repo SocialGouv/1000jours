@@ -36,11 +36,13 @@ const BackButton: React.FC<Props> = ({
       disabled={false}
       action={action}
       titleStyle={[{ color }, styles.font]}
+      buttonStyle={styles.buttonStyle}
     />
   );
 };
 
 const styles = StyleSheet.create({
+  buttonStyle: { paddingHorizontal: 0, paddingTop: 0 },
   font: {
     fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
     fontSize: Sizes.xs,

@@ -72,23 +72,6 @@ const TabCalendarScreen: FC = () => {
         animated={false}
       />
       <View style={styles.calendarContainer}>
-        <View style={styles.switchViewMode}>
-          <Button
-            title=""
-            rounded={false}
-            disabled={false}
-            icon={
-              <Icomoon
-                name={IcomoonIcons.calendrier}
-                size={Sizes.mmd}
-                color={Colors.primaryBlue}
-              />
-            }
-            action={() => {
-              setIsModeAgenda(!isModeAgenda);
-            }}
-          />
-        </View>
         {childBirthday.length > 0 ? (
           isModeAgenda ? (
             <Agenda evenements={evenements} childBirthday={childBirthday} />

@@ -8,11 +8,13 @@ import { FontWeight } from "../../constants/Layout";
 import { CommonText } from "../StyledText";
 
 interface Props {
-  title: string;
+  title: string | null;
 }
 
 const Title: FC<Props> = ({ title }) =>
-  title.length ? <CommonText style={[styles.title]}>{title}</CommonText> : null;
+  title?.length ? (
+    <CommonText style={[styles.title]}>{title}</CommonText>
+  ) : null;
 
 const styles = StyleSheet.create({
   title: {

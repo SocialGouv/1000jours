@@ -13,6 +13,7 @@ import { Image, ListItem } from "react-native-elements";
 
 import DefaultImage from "../assets/images/default.png";
 import {
+  BackButton,
   Button,
   CommonText,
   ErrorMessage,
@@ -125,6 +126,13 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
   return (
     <ScrollView>
       <View style={styles.topContainer}>
+        <View style={[styles.flexStart]}>
+          <BackButton
+            action={() => {
+              navigation.goBack();
+            }}
+          />
+        </View>
         <TitleH1
           title={screenTitle}
           description={description}
@@ -136,11 +144,12 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
           <CommonText style={styles.bannerTitle}>
             {Labels.article.firstThreeMonths.title}
           </CommonText>
-          <CommonText style={styles.bannerDescription}>
+          <SecondaryText style={styles.bannerDescription}>
             {Labels.article.firstThreeMonths.description}
-          </CommonText>
+          </SecondaryText>
           <Button
             buttonStyle={styles.bannerButton}
+            titleStyle={styles.bannerButtonTitle}
             title={Labels.article.firstThreeMonths.buttonLabel}
             rounded={true}
             disabled={false}
@@ -248,12 +257,16 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     marginHorizontal: Margins.default,
   },
+  bannerButtonTitle: {
+    fontSize: Sizes.sm,
+    textTransform: "uppercase",
+  },
   bannerDescription: {
     color: Colors.commonText,
     marginVertical: Margins.light,
   },
   bannerTitle: {
-    color: Colors.primaryBlueDark,
+    color: Colors.primaryYellowDark,
     fontSize: Sizes.sm,
   },
   borderLeftRadius: {
@@ -262,6 +275,11 @@ const styles = StyleSheet.create({
   },
   description: {
     color: Colors.commonText,
+  },
+  flexStart: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   headerListInfo: {
     color: Colors.secondaryGreen,
@@ -283,8 +301,6 @@ const styles = StyleSheet.create({
   },
   threeFirstMonthsBanner: {
     backgroundColor: Colors.primaryYellowLight,
-    borderStartColor: Colors.primaryYellowDark,
-    borderStartWidth: 5,
     padding: Paddings.default,
   },
   title: {

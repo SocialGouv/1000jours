@@ -21,7 +21,7 @@ import {
 } from "../../constants";
 import type { Event } from "../../types";
 import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
-import { CommonText } from "../StyledText";
+import { CommonText, SecondaryText } from "../StyledText";
 
 interface Props {
   evenements: Event[];
@@ -114,17 +114,17 @@ const Events: FC<Props> = ({ evenements, childBirthday }) => {
                     style={styles.eventTypeBackground}
                   >
                     <Icomoon
-                      name={IcomoonIcons.proSante}
-                      size={Sizes.xxxxl}
+                      name={IcomoonIcons.calendrier}
+                      size={Sizes.xxxl}
                       color={Colors.primaryBlue}
                     />
                   </ImageBackground>
                 </View>
                 <View style={styles.eventContentContainer}>
                   <CommonText style={styles.eventTitle}>{event.nom}</CommonText>
-                  <CommonText style={styles.eventDescription}>
+                  <SecondaryText style={styles.eventDescription}>
                     {event.description}
-                  </CommonText>
+                  </SecondaryText>
                 </View>
               </View>
             </ListItem>
@@ -168,14 +168,14 @@ const styles = StyleSheet.create({
   },
   eventDescription: {
     color: Colors.commonText,
-    fontSize: Sizes.xxxs,
+    fontSize: Sizes.xs,
   },
   eventIconContainer: {
     flex: 1,
   },
   eventTitle: {
     color: Colors.primaryBlueDark,
-    fontSize: Sizes.xxs,
+    fontSize: Sizes.xs,
     fontWeight: FontWeight.bold,
     paddingBottom: Paddings.light,
   },

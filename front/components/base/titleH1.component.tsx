@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
 import { Colors, FontWeight, Margins, Sizes } from "../../constants";
-import { CommonText, SecondaryText } from "../StyledText";
+import { SecondaryText } from "../StyledText";
 
 interface Props {
   title: string;
@@ -21,7 +21,7 @@ const TitleH1: React.FC<Props> = ({ title, animated, description, style }) => (
   >
     <SecondaryText style={styles.title}>{title}</SecondaryText>
     {description && (
-      <CommonText style={styles.description}>{description}</CommonText>
+      <SecondaryText style={styles.description}>{description}</SecondaryText>
     )}
   </Animatable.View>
 );
@@ -29,7 +29,7 @@ const TitleH1: React.FC<Props> = ({ title, animated, description, style }) => (
 const styles = StyleSheet.create({
   description: {
     color: Colors.commonText,
-    fontSize: Sizes.xxs,
+    fontSize: Sizes.xs,
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.md,
   },
@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.black,
     letterSpacing: 0,
     lineHeight: Sizes.lg,
-    marginVertical: Margins.smallest,
+    marginBottom: Margins.smaller,
+    marginTop: Margins.smallest,
     textAlign: "left",
     textTransform: "uppercase",
   },
