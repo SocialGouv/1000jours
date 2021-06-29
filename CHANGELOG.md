@@ -1,3 +1,15 @@
+# [1.51.0](https://github.com/SocialGouv/1000jours/compare/v1.50.1...v1.51.0) (2021-06-29)
+
+
+### Bug Fixes
+
+* **carto:** refactos sur le tri et corrections sur le filtre et l'affichage EPDS ([#420](https://github.com/SocialGouv/1000jours/issues/420)) ([7028e7c](https://github.com/SocialGouv/1000jours/commit/7028e7cccdedca204f6a35a1f7a4e34c094b9864))
+
+
+### Features
+
+* **carto:** ajout du loader lors de la recherche par CP ([#421](https://github.com/SocialGouv/1000jours/issues/421)) ([d138509](https://github.com/SocialGouv/1000jours/commit/d138509780a744506a0e98b2747ece9adbab5653))
+
 ## [1.50.1](https://github.com/SocialGouv/1000jours/compare/v1.50.0...v1.50.1) (2021-06-29)
 
 
