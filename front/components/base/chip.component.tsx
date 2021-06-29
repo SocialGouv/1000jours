@@ -11,31 +11,19 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
-import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 
 interface Props {
   id: number;
   title: string;
   selected: boolean;
   action: (id: number, active: boolean) => void;
-  changeSizeForIos?: boolean;
 }
 
-const Chip: React.FC<Props> = ({
-  id,
-  title,
-  selected,
-  action,
-  changeSizeForIos,
-}) => {
+const Chip: React.FC<Props> = ({ id, title, selected, action }) => {
   const [isSelected, setIsSelected] = React.useState(selected);
   const onPress = () => {
     action(id, !isSelected);
     setIsSelected(!isSelected);
-  };
-
-  const fontSize = {
-    fontSize: changeSizeForIos && PLATFORM_IS_IOS ? Sizes.xxs : Sizes.xs,
   };
 
   return (
@@ -46,7 +34,6 @@ const Chip: React.FC<Props> = ({
       titleStyle={[
         styles.chipTitle,
         isSelected ? styles.chipSelectedTitle : null,
-        fontSize,
       ]}
       onPress={onPress}
     />
@@ -73,6 +60,7 @@ const styles = StyleSheet.create({
   chipTitle: {
     color: Colors.primaryBlue,
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
+    fontSize: Sizes.xs,
   },
 });
 

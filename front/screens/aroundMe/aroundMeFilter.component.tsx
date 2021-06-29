@@ -254,7 +254,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
         action={() => {
           updateQueryFilter(filter);
         }}
-        changeSizeForIos={true}
       />
     ));
   };
