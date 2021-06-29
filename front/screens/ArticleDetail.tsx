@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   mainContainer: {
-    paddingHorizontal: paddingMainContent,
+    padding: paddingMainContent,
   },
 });
 

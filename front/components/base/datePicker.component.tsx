@@ -98,6 +98,7 @@ const Datepicker: React.FC<Props> = ({ date, onChange }) => {
             color={Colors.primaryBlue}
           />
         }
+        titleStyle={styles.pickerButtonStyle}
       />
       {modalVisible ? (
         PLATFORM_IS_ANDROID ? (
@@ -187,6 +188,9 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: Shadow.opacity,
     shadowRadius: Shadow.radius,
+  },
+  pickerButtonStyle: {
+    fontSize: Sizes.sm,
   },
 });
 

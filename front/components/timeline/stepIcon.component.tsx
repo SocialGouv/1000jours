@@ -13,7 +13,7 @@ const StepIcon: FC<Props> = ({ name, active }) => (
   <Icomoon
     name={name}
     color={active ? Colors.white : Colors.primaryYellow}
-    size={Sizes.xxxxl}
+    size={Sizes.xxxxxl}
   />
 );
 

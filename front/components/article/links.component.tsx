@@ -5,7 +5,7 @@ import { Alert, Linking, StyleSheet } from "react-native";
 
 import { Colors, Labels, Paddings, Sizes } from "../../constants";
 import type { ArticleLink } from "../../types";
-import { CommonText } from "../StyledText";
+import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 import SubTitle from "./subTitle.component";
 
@@ -28,7 +28,7 @@ const Links: FC<Props> = ({ linksArray }) => {
       <SubTitle title={Labels.article.learnMoreAboutIt} />
       <View style={styles.linksContainer}>
         {filter(linksArray, "label").map((item, index) => (
-          <CommonText
+          <SecondaryText
             key={index}
             style={[styles.link]}
             onPress={() => {
@@ -36,7 +36,7 @@ const Links: FC<Props> = ({ linksArray }) => {
             }}
           >
             {item.label}
-          </CommonText>
+          </SecondaryText>
         ))}
       </View>
     </View>
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   link: {
     color: Colors.commonText,
     flexDirection: "column",
-    fontSize: Sizes.xxs,
+    fontSize: Sizes.sm,
     paddingHorizontal: Paddings.light,
     paddingVertical: Paddings.smaller,
     textDecorationLine: "underline",

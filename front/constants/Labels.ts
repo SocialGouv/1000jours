@@ -45,10 +45,10 @@ export default {
   article: {
     didYouKnowTitle: "Le saviez-vous ?",
     firstThreeMonths: {
-      buttonLabel: "Faire le test",
+      buttonLabel: "Commencer",
       description:
-        "Vous venez d'avoir un bébé. Vous souhaitez savoir comment vous vous portez psychologiquement ?",
-      title: "Autodépistage dépression post-partum",
+        "Se poser les bonnes questions pour en parler à un professionnel de santé, c’est l’objectif de cet outil.",
+      title: "Et si c'était la dépression post-partum ?",
     },
     inShortTitle: "En bref :",
     learnMoreAboutIt: "En savoir plus à ce sujet :",

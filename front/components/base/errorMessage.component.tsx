@@ -5,6 +5,7 @@ import { Alert, StyleSheet } from "react-native";
 
 import { Labels, Paddings } from "../../constants";
 import type { ApolloHealthResponse } from "../../types";
+import { reportError } from "../../utils/logging.util";
 import { Text, View } from "../Themed";
 
 interface Props {
@@ -24,6 +25,7 @@ const ErrorMessage: React.FC<Props> = ({ error }) => {
   };
 
   useEffect(() => {
+    reportError(error);
     if (error.graphQLErrors.length > 0) createAlertMessage();
   }, []);
 
@@ -31,9 +33,13 @@ const ErrorMessage: React.FC<Props> = ({ error }) => {
   fetch(`${process.env.API_URL}/.well-known/apollo/server-health`)
     .then(async (data) => data.json())
     .then((jsonData: ApolloHealthResponse) => {
-      if (jsonData.status !== "pass") setErrorMessage(Labels.errorNetworkMsg);
+      if (jsonData.status !== "pass") {
+        reportError(jsonData);
+        setErrorMessage(Labels.errorNetworkMsg);
+      }
     })
-    .catch(() => {
+    .catch((e) => {
+      reportError(e);
       setErrorMessage(Labels.errorNetworkMsg);
     })
     .finally(() => {

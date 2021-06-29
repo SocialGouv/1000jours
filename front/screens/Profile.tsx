@@ -201,22 +201,21 @@ const Profile: FC<Props> = ({ navigation }) => {
                 </View>
               ))}
             </View>
-            <View
-              style={[
-                styles.birthdayConatiner,
-                childBirthdayIsNeeded() ? null : styles.hide,
-              ]}
-            >
-              <Text style={[styles.colorPrimaryDark, styles.textAlignCenter]}>
-                {getChildBirthdayLabel()}
-              </Text>
-              {datePickerIsReady && (
-                <View
-                  onLayout={(event: LayoutChangeEvent) => {
-                    const { layout } = event.nativeEvent;
-                    scrollTo(layout.y);
-                  }}
-                >
+            {datePickerIsReady && (
+              <View
+                style={[
+                  styles.birthdayConatiner,
+                  childBirthdayIsNeeded() ? null : styles.hide,
+                ]}
+                onLayout={(event: LayoutChangeEvent) => {
+                  const { layout } = event.nativeEvent;
+                  scrollTo(layout.y + layout.height);
+                }}
+              >
+                <Text style={[styles.colorPrimaryDark, styles.textAlignCenter]}>
+                  {getChildBirthdayLabel()}
+                </Text>
+                <View>
                   <Datepicker
                     date={
                       childBirthday.length > 0
@@ -228,8 +227,8 @@ const Profile: FC<Props> = ({ navigation }) => {
                     }}
                   />
                 </View>
-              )}
-            </View>
+              </View>
+            )}
           </ScrollView>
         </View>
 
