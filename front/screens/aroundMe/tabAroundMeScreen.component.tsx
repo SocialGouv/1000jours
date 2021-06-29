@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
@@ -22,10 +22,11 @@ import {
   Margins,
   Paddings,
   Sizes,
+  StorageKeysConstants,
 } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import type { CartographiePoisFromDB } from "../../type";
-import { KeyboardUtils } from "../../utils";
+import { KeyboardUtils, StorageUtils } from "../../utils";
 import AddressDetails from "./addressDetails.component";
 import AroundMeFilter from "./aroundMeFilter.component";
 import SearchByPostalCode from "./searchByPostalCode.component";
@@ -64,6 +65,18 @@ const TabAroundMeScreen: React.FC = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    const checkIfSavedRegion = async () => {
+      const savedRegion: Region | undefined = await StorageUtils.getObjectValue(
+        StorageKeysConstants.cartoSavedRegion
+      );
+      if (!savedRegion) return;
+      mapRef.current?.animateToRegion(savedRegion);
+      setMoveToRegionBecauseOfPCResearch(true);
+    };
+    void checkIfSavedRegion();
+  }, []);
+
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
   };
@@ -79,6 +92,10 @@ const TabAroundMeScreen: React.FC = () => {
   };
 
   const onRegionChangeComplete = (newRegion: Region) => {
+    void StorageUtils.storeObjectValue(
+      StorageKeysConstants.cartoSavedRegion,
+      newRegion
+    );
     setRegion(newRegion);
     /* Lorsqu'on lance une recherche par CP, le moveToRegionBecauseOfPCResearch est mis à true
     et donc on ne cache pas directement la snackBar si elle a été affichée (en cas d'erreur) */
