@@ -162,7 +162,7 @@ metadata:
   namespace: 1000jours-85-preprod-dev42
 spec:
   rules:
-    - host: preprod-1000jours.dev42.fabrique.social.gouv.fr
+    - host: backoffice-preprod-1000jours.dev42.fabrique.social.gouv.fr
       http:
         paths:
           - backend:
@@ -171,7 +171,7 @@ spec:
             path: /
   tls:
     - hosts:
-        - preprod-1000jours.dev42.fabrique.social.gouv.fr
+        - backoffice-preprod-1000jours.dev42.fabrique.social.gouv.fr
       secretName: wildcard-crt
 ---
 apiVersion: v1
@@ -193,22 +193,40 @@ data:
       client_max_body_size 200k;
 
       proxy_buffering on;
-      proxy_cache_path /cache levels=1:2 keys_zone=small:1m inactive=1w use_temp_path=off;
+      proxy_cache_path /cache levels=1:2 keys_zone=small:1m inactive=1h use_temp_path=off;
 
       server {
         listen 80;
         server_name localhost;
 
         location / {
-          try_files $uri @backend;
+          proxy_pass http://strapi:80;
         }
 
-        location @backend {
+        location /uploads {
+          try_files $uri @files_backend;
+        }
+
+        location /graphql {
+          try_files $uri @api_backend;
+        }
+
+        location @api_backend {
           proxy_cache small;
           proxy_cache_methods POST;
           proxy_pass http://strapi:80;
           proxy_cache_key \\"$request_uri|$request_body\\";
-          proxy_cache_valid any 1w;
+          proxy_cache_valid any 1h;
+          proxy_buffers 8 32k;
+          proxy_buffer_size 64k;
+          proxy_cache_use_stale updating;
+          add_header X-Cached $upstream_cache_status;
+        }
+
+        location @files_backend {
+          proxy_cache small;
+          proxy_pass http://strapi:80;
+          proxy_cache_valid any 1h;
           proxy_buffers 8 32k;
           proxy_buffer_size 64k;
           proxy_cache_use_stale updating;
