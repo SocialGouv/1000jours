@@ -5,4 +5,4 @@ metadata:
 data:
   STRAPI_LOG_LEVEL: "info"
   NODE_ENV: "production"
-
+  SENTRY_DSN: "https://5dbac413000f4a43a073841acebc82f5@sentry.fabrique.social.gouv.fr/55"
