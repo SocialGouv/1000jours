@@ -1,3 +1,10 @@
+## [1.53.2](https://github.com/SocialGouv/1000jours/compare/v1.53.1...v1.53.2) (2021-06-30)
+
+
+### Bug Fixes
+
+* 🐛 Corrige un crash lors d'un rapport d'erreur ([#445](https://github.com/SocialGouv/1000jours/issues/445)) ([cea1a21](https://github.com/SocialGouv/1000jours/commit/cea1a21c9502d3db6b1e79fca29f029db061a502))
+
 ## [1.53.1](https://github.com/SocialGouv/1000jours/compare/v1.53.0...v1.53.1) (2021-06-30)
 
 
