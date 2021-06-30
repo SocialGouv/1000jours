@@ -94,6 +94,8 @@ const styles = StyleSheet.create({
   underline: { textDecorationLine: "underline" },
   validateButton: {
     alignItems: "center",
+    marginBottom: Margins.smallest,
+    marginTop: Margins.default,
   },
 });
 

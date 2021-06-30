@@ -147,7 +147,7 @@ export default {
         "Il semble que vous n'ayez pas terminé le précédent questionnaire. Voulez-vous le continuer ou le recommencer ?",
       startOverButton: "Recommencer",
     },
-    restartSurvey: "Repasser le test",
+    restartSurvey: "Se questionner de nouveau",
     resultats: {
       call: "Appeler",
       entreDixEtDouze: {
@@ -266,18 +266,12 @@ export default {
               "N’hésitez pas à parler à vos proches, amis et famille, de vos sentiments et de vos craintes.",
             title: "Votre entourage peut se mobiliser pour vous aider :",
           },
-          {
-            description:
-              "Pris en charge, il permet de vous rassurer sur vos compétences et d’activer si besoin des aides spécifiques: suivi postnatal, allaitement, soutien à la parentalité, aide à domicile.",
-            title:
-              "Un entretien auprès du professionnel de santé qui vous suit (référent maternité, médecin traitant, sage-femme, gynécologue, infirmière puéricultrice) :",
-          },
+          epdsInformation.entretienAupresProfessionnelSante,
           {
             description:
               "Centre d’informations, d’accompagnement, et d’orientation pour vous et votre enfant, A l’écoute des parents, les nombreux professionnels de santé pourront vous proposer une prise en charge complète.",
             title: "La PMI est un véritable allié pour les (futurs) parents :",
           },
-          epdsInformation.entretienAupresProfessionnelSante,
           epdsInformation.reseauPerinatalSante,
           {
             description:
@@ -292,7 +286,7 @@ export default {
           },
           {
             description:
-              "Une aide à domicile permet aux parents de reprendre confiance en eux. Le soutien sur les aspects matériels ne sont donc pas à négliger, comme un soutien pour les tâches ménagères (recours à une aide-ménagère) et les soins au bébé (recours à une technicienne de l’intervention sociale et familiale – TISF), consulter le site la CAF et la cartographie pour identifier les associations de services d’aide et d’accompagnement à domicile",
+              "Une aide à domicile permet aux parents de reprendre confiance en eux. Le soutien sur les aspects matériels ne sont donc pas à négliger, comme un soutien pour les tâches ménagères (recours à une aide-ménagère) et les soins au bébé (recours à une technicienne de l’intervention sociale et familiale – TISF), consulter le site de la CAF pour identifier les associations de services d’aide et d’accompagnement à domicile",
             pdfUrl:
               "https://www.perinatalite-occitanie.fr/sites/rpo/files/pdf/TROUBLES%20EMOTIONNELS%20ET%20PSYCHIQUES%20DES%20MERES%20EN%20P.pdf",
             title: "Les visites à domicile",
@@ -325,7 +319,7 @@ export default {
         paragraphs: [
           {
             description:
-              "Si vous souhaitez disposer d’informations complémentaires sur ce sujet, contactez notre partenaire Maman Blues, une association de bénévoles qui met au service des parents, son expertise accumulée depuis plusieurs années sur la dépression post partum. Les conseils de l’association ne remplaceront jamais le conseil d’un professionnel de santé. Pour être accompagné, il est donc indispensable de prendre avec lui dans les meilleurs délais.",
+              "Si vous souhaitez disposer d’informations complémentaires sur ce sujet, contactez notre partenaire Maman Blues, une association de bénévoles qui met au service des parents, son expertise accumulée depuis plusieurs années sur la dépression post partum. Les conseils de l’association ne remplaceront jamais le conseil d’un professionnel de santé. Pour être accompagné, il est donc indispensable de prendre rendez-vous avec lui dans les meilleurs délais.",
             title: "Contacter",
           },
         ],
