@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   },
   surveyContainer: {
     flex: 1,
-    marginTop: Margins.default,
+    justifyContent: "center",
   },
 });
 
