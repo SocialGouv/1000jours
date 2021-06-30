@@ -252,6 +252,7 @@ export default {
     articlesToRead: "article(s) à lire",
     filters: "Filtrer",
   },
+  version: "v.",
   menu: {
     conditionsOfUse: "Politiques de confidentialité",
     legalNotice: "Mentions légales",

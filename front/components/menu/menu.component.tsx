@@ -1,4 +1,5 @@
 import type { NavigationContainerRef } from "@react-navigation/native";
+import Constants from "expo-constants";
 import * as React from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
@@ -92,6 +93,14 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
               </ListItem.Content>
             </ListItem>
           ))}
+          {/* App Version */}
+          <ListItem>
+            <ListItem.Content>
+              <ListItem.Title style={styles.version}>
+                {`${Labels.version}${Constants.manifest.version}`}
+              </ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
         </View>
       </View>
     </Animatable.View>
@@ -149,6 +158,12 @@ const styles = StyleSheet.create({
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.black),
     paddingHorizontal: Paddings.default,
     textTransform: "uppercase",
+  },
+  version: {
+    alignSelf: "center",
+    color: Colors.commonText,
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.light),
+    fontSize: Sizes.xs,
   },
 });
 
