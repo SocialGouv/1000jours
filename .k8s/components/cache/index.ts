@@ -142,6 +142,8 @@ export default async () => {
     },
   });
 
+  pvc.spec!.storageClassName = "azurefile-retain";
+
   manifests.push(pvc);
 
   return manifests;
