@@ -87,7 +87,7 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
       </View>
       <View style={styles.row}>
         {renderStep(2)}
-        <View style={styles.marginLeft}>{renderStep(3)}</View>
+        {renderStep(3)}
       </View>
       <View style={styles.validateButton}>
         <Button
@@ -118,9 +118,6 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     margin: Margins.default,
-  },
-  marginLeft: {
-    marginLeft: Margins.default,
   },
   mainContentContainer: {
     justifyContent: "space-around",
@@ -154,6 +151,7 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlueDark,
     fontSize: Sizes.xs,
     fontWeight: "bold",
+    textAlign: "center",
   },
   validateButton: {
     alignItems: "center",
