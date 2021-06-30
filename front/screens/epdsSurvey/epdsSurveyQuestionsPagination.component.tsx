@@ -20,12 +20,6 @@ const EpdsSurveyQuestionsPagination: React.FC<EpdsSurveyQuestionsPaginationProps
 
     return (
       <View style={styles.mainContainer}>
-        <View style={styles.textView}>
-          <CommonText style={styles.textStyle}>1</CommonText>
-          <CommonText style={styles.textStyle}>
-            {totalNumberOfQuestions}
-          </CommonText>
-        </View>
         <View style={styles.gaugeView}>
           {range(totalNumberOfQuestions).map((index) => (
             <View
@@ -37,6 +31,12 @@ const EpdsSurveyQuestionsPagination: React.FC<EpdsSurveyQuestionsPaginationProps
               }
             />
           ))}
+        </View>
+        <View style={styles.textView}>
+          <CommonText style={styles.textStyle}>1</CommonText>
+          <CommonText style={styles.textStyle}>
+            {totalNumberOfQuestions}
+          </CommonText>
         </View>
       </View>
     );
