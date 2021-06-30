@@ -7,6 +7,7 @@ import { getDeployment } from "@socialgouv/kosko-charts/utils/getDeployment";
 import { IIoK8sApiCoreV1HTTPGetAction } from "kubernetes-models/v1";
 import { ConfigMap } from "kubernetes-models/v1/ConfigMap";
 import { PersistentVolumeClaim } from "kubernetes-models/v1/PersistentVolumeClaim";
+import { Ingress } from "kubernetes-models/api/networking/v1";
 
 const httpGet: IIoK8sApiCoreV1HTTPGetAction = {
   path: "/_health",
@@ -91,6 +92,15 @@ export default async () => {
         .toString(),
     },
   });
+
+  // add nginx annotation for nginx upload limit
+  const ingress = manifests.find((m) => m.kind === "Ingress") as Ingress;
+  if (ingress && ingress.metadata?.annotations) {
+    ingress.metadata.annotations = {
+      ...ingress.metadata.annotations,
+      "nginx.ingress.kubernetes.io/proxy-body-size": "1g",
+    };
+  }
 
   manifests.push(configMap);
 

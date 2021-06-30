@@ -152,6 +152,7 @@ metadata:
     app.gitlab.com/app: socialgouv-1000jours
     app.gitlab.com/env: master-dev42
     app.gitlab.com/env.name: master-dev42
+    nginx.ingress.kubernetes.io/proxy-body-size: 1g
   labels:
     app: strapi-cache
     application: master-dev42-1000jours

@@ -11,7 +11,6 @@ import {
   ResourceRequirements,
   Volume,
 } from "kubernetes-models/v1";
-import { Ingress } from "kubernetes-models/api/networking/v1";
 
 const component = "strapi";
 const params = env.component(component);
@@ -72,14 +71,6 @@ export default async () => {
   });
   const deployment = getDeployment(manifests);
 
-  // add nginx annotation for nginx upload limit
-  const ingress = manifests.find((m) => m.kind === "Ingress") as Ingress;
-  if (ingress && ingress.metadata?.annotations) {
-    ingress.metadata.annotations = {
-      ...ingress.metadata.annotations,
-      "nginx.ingress.kubernetes.io/proxy-body-size": "1g",
-    };
-  }
   const deploymentUrl =
     "https://" +
     getIngressHost(
