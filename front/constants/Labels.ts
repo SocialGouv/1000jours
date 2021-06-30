@@ -134,8 +134,8 @@ export default {
         elements: [
           "Se questionner",
           "Accéder aux ressources",
-          "Trouver une aide adaptée",
-          "Se questionner de nouveau",
+          "Trouver une\naide adaptée",
+          "Se questionner\nde nouveau",
         ],
         title: "Étapes",
       },
