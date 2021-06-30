@@ -1,3 +1,10 @@
+## [1.54.3](https://github.com/SocialGouv/1000jours/compare/v1.54.2...v1.54.3) (2021-06-30)
+
+
+### Bug Fixes
+
+* **k8s:** allow strapi to go up to 1 CPU ([5c4ff71](https://github.com/SocialGouv/1000jours/commit/5c4ff7196995d7747045b6675e0654629fc7079d))
+
 ## [1.54.2](https://github.com/SocialGouv/1000jours/compare/v1.54.1...v1.54.2) (2021-06-30)
 
 
