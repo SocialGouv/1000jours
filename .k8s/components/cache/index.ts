@@ -3,16 +3,19 @@ import path from "path";
 import { ok } from "assert";
 import env from "@kosko/env";
 import { create } from "@socialgouv/kosko-charts/components/app";
+import { fileSharePersistentVolumeClaim } from "@socialgouv/kosko-charts/components/azure-storage/fileshare.pvc";
 import { getDeployment } from "@socialgouv/kosko-charts/utils/getDeployment";
 import { IIoK8sApiCoreV1HTTPGetAction } from "kubernetes-models/v1";
 import { ConfigMap } from "kubernetes-models/v1/ConfigMap";
 import { PersistentVolumeClaim } from "kubernetes-models/v1/PersistentVolumeClaim";
 import { Ingress } from "kubernetes-models/api/networking/v1";
+import gitlab from "@socialgouv/kosko-charts/environments/gitlab";
 
 const httpGet: IIoK8sApiCoreV1HTTPGetAction = {
   path: "/_health",
   port: "http",
 };
+const envParams = gitlab(process.env);
 
 // renovate: datasource=docker depName=nginx versioning=1.19.6
 const NGINX_DOCKER_VERSION = "1.19.6";
@@ -85,6 +88,9 @@ export default async () => {
   const configMap = new ConfigMap({
     metadata: {
       name: "nginx-config",
+      labels: envParams.labels,
+      annotations: envParams.annotations,
+      namespace: envParams.namespace.name,
     },
     data: {
       "nginx.conf": fs
@@ -125,19 +131,14 @@ export default async () => {
     },
   ];
 
-  const pvc = new PersistentVolumeClaim({
+  const pvc = fileSharePersistentVolumeClaim({
     metadata: {
       name: pvcName,
-      annotations: {},
     },
-    spec: {
-      accessModes: ["ReadWriteOnce"],
-      resources: {
-        requests: {
-          storage: "2Gi",
-        },
+    resources: {
+      requests: {
+        storage: "2Gi",
       },
-      volumeMode: "Filesystem",
     },
   });
 
