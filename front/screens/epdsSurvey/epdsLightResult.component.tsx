@@ -70,7 +70,7 @@ const EpdsLightResult: React.FC<Props> = ({ result, startSurveyOver }) => {
         {labelsResultats.retakeTestInvitation}
       </SecondaryText>
       <EpdsResultInformation
-        leftBorderColor={Colors.secondaryGreenDark}
+        leftBorderColor={Colors.white}
         informationList={resultData.resultLabels.professionalsList}
       />
       <View style={styles.validateButton}>
