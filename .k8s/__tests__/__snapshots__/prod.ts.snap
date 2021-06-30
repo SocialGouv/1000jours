@@ -87,9 +87,8 @@ spec:
               subPath: nginx.conf
               name: config
       volumes:
-        - persistentVolumeClaim:
-            claimName: strapi-cache
-          name: strapi-cache
+        - name: strapi-cache
+          emptyDir: {}
         - name: config
           configMap:
             name: strapi-cache
@@ -254,56 +253,6 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: strapi-cache
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: strapi-cache
-  annotations:
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: prod
-    app.gitlab.com/env.name: prod
-  labels:
-    application: 1000jours
-    owner: 1000jours
-    team: 1000jours
-  namespace: les1000jours
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 5Gi
-  selector:
-    matchLabels:
-      usage: prod-strapi-cache
-  storageClassName: ''
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  labels:
-    usage: prod-strapi-cache
-    application: 1000jours
-    owner: 1000jours
-    team: 1000jours
-  name: prod-strapi-cache
-  annotations:
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: prod
-    app.gitlab.com/env.name: prod
-  namespace: les1000jours
-spec:
-  accessModes:
-    - ReadWriteMany
-  azureFile:
-    secretName: azure-1000jours-volume
-    secretNamespace: les1000jours
-    shareName: strapi-cache
-  capacity:
-    storage: 5Gi
-  persistentVolumeReclaimPolicy: Delete
-  storageClassName: ''
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
