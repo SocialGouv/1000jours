@@ -194,7 +194,9 @@ data:
         }
 
         location @api_backend {
-          if (!$epds) {
+          if ($epds) {
+            proxy_pass http://strapi:80;
+          } else {
             proxy_cache small;
             proxy_cache_methods POST;
             proxy_pass http://strapi:80;
