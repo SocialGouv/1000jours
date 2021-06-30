@@ -17,8 +17,9 @@ import {
 } from "../../constants";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, StorageUtils } from "../../utils";
+import EpdsLightResult from "./epdsLightResult.component";
 import EpdsLoadPreviousSurvey from "./epdsLoadPreviousSurvey.component";
-import EpdsResult from "./epdsResult.component";
+// import EpdsResult from "./epdsResult.component";
 import EpdsSurveyFooter from "./epdsSurveyFooter.component";
 import EpdsSurveyQuestionsList from "./epdsSurveyQuestionsList.component";
 
@@ -142,12 +143,18 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
           />
         )
       ) : (
-        <EpdsResult
+        <EpdsLightResult
           result={score}
           startSurveyOver={async () => {
             await restartSurvey();
           }}
         />
+        // <EpdsResult
+        //   result={score}
+        //   startSurveyOver={async () => {
+        //     await restartSurvey();
+        //   }}
+        // />
       )}
     </View>
   );

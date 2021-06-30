@@ -74,7 +74,7 @@ const sitesEnLigneBienEtMoinsBien = {
 };
 
 const sitesEnLignePasBien = {
-  title: "Les sites en ligne d’accompagnement à la parentalité et de santé",
+  title: "Les sites d'information",
   urls: [...sitesEnLigneBienEtMoinsBien.urls, "maman-blues.fr"],
 };
 
@@ -157,13 +157,12 @@ export const epdsInformation = {
     paragraphs: [
       {
         contacts: epdsContacts,
-        title: "Les lignes téléphoniques d'aide aux parents",
+        title: "Les lignes téléphoniques",
       },
       sitesEnLignePasBien,
     ],
     sectionIcon: IcomoonIcons.telephone,
-    sectionTitle:
-      "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",
+    sectionTitle: "Les sites et les lignes d'information et d'orientation",
   },
   servicesAidesAccompagnementDomicile: {
     description:
