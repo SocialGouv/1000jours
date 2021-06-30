@@ -52,13 +52,13 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlueDark,
     fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
-    paddingBottom: Paddings.default,
+    paddingBottom: Paddings.smaller,
   },
   swipeView: {
     width,
   },
   swipeViewMargin: {
-    margin: "10%",
+    marginHorizontal: "10%",
   },
 });
 

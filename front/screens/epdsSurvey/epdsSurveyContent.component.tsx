@@ -117,7 +117,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
               {Labels.epdsSurvey.instruction}
             </CommonText>
             <View style={styles.surveyContainer}>
-              <View style={styles.questionList}>
+              <View>
                 <EpdsSurveyQuestionsList
                   epdsSurvey={questionsAndAnswers}
                   swiperRef={swiperRef}
@@ -176,14 +176,11 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    margin: Margins.default,
-  },
-  questionList: {
-    marginBottom: Margins.step,
+    margin: Margins.smaller,
   },
   surveyContainer: {
     flex: 1,
-    justifyContent: "center",
+    marginTop: Margins.default,
   },
 });
 
