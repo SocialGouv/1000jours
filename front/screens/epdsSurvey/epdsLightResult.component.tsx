@@ -28,6 +28,7 @@ interface Props {
 
 const EpdsLightResult: React.FC<Props> = ({ result, startSurveyOver }) => {
   const [addReponseQuery] = useMutation(DatabaseQueries.EPDS_ADD_RESPONSE, {
+    fetchPolicy: "no-cache",
     onError: (err) => {
       console.log(err);
     },
