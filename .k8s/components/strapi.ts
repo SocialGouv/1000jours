@@ -101,7 +101,7 @@ export default async () => {
 
   return manifests.concat(
     params.useEmptyDirAsVolume
-      ? []
+      ? [hpa]
       : [hpa, persistentVolumeClaim, persistentVolume]
   );
 };
