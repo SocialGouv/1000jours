@@ -1,3 +1,10 @@
+# [1.55.0](https://github.com/SocialGouv/1000jours/compare/v1.54.3...v1.55.0) (2021-06-30)
+
+
+### Features
+
+* **api:** ingress rate-limit ([#451](https://github.com/SocialGouv/1000jours/issues/451)) ([1fb9765](https://github.com/SocialGouv/1000jours/commit/1fb976540f37f136110f42c2e93993d67a8842ae))
+
 ## [1.54.3](https://github.com/SocialGouv/1000jours/compare/v1.54.2...v1.54.3) (2021-06-30)
 
 
