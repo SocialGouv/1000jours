@@ -62,7 +62,7 @@ spec:
             timeoutSeconds: 3
           resources:
             limits:
-              cpu: 1000m
+              cpu: 200m
               memory: 1Gi
             requests:
               cpu: 100m
@@ -235,7 +235,7 @@ metadata:
   name: strapi-cache
   namespace: les1000jours
 spec:
-  maxReplicas: 10
+  maxReplicas: 15
   metrics:
     - resource:
         name: cpu
@@ -249,7 +249,7 @@ spec:
           averageUtilization: 100
           type: Utilization
       type: Resource
-  minReplicas: 1
+  minReplicas: 5
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
@@ -545,6 +545,32 @@ spec:
   selector:
     app: strapi
   type: ClusterIP
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: strapi
+  namespace: les1000jours
+spec:
+  maxReplicas: 15
+  metrics:
+    - resource:
+        name: cpu
+        target:
+          averageUtilization: 100
+          type: Utilization
+      type: Resource
+    - resource:
+        name: memory
+        target:
+          averageUtilization: 100
+          type: Utilization
+      type: Resource
+  minReplicas: 5
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: strapi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

@@ -65,7 +65,7 @@ const asyncManifests = create("strapi-cache", {
         },
         // cpu=1000, memory=3Gi offers 17req/s
         limits: {
-          cpu: "1000m",
+          cpu: "200m",
           memory: "1Gi",
         },
       },
@@ -135,8 +135,8 @@ export default async () => {
     },
   ];
 
-  const hpa = createAutoscale(deploy);
+  const hpa = createAutoscale(deploy, { minReplicas: 5, maxReplicas: 15 });
   return manifests.concat(
-    strapiParams.useEmptyDirAsVolume ? [hpa] : [hpa, pvc, pv]
+    strapiParams.useEmptyDirAsVolume ? [] : [hpa, pvc, pv]
   );
 };

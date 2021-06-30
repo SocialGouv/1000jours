@@ -84,7 +84,7 @@ spec:
             timeoutSeconds: 3
           resources:
             limits:
-              cpu: 1000m
+              cpu: 200m
               memory: 1Gi
             requests:
               cpu: 100m
@@ -250,32 +250,6 @@ data:
         }
       }
     }
----
-apiVersion: autoscaling/v2beta2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: strapi-cache
-  namespace: 1000jours-85-master-dev42
-spec:
-  maxReplicas: 10
-  metrics:
-    - resource:
-        name: cpu
-        target:
-          averageUtilization: 100
-          type: Utilization
-      type: Resource
-    - resource:
-        name: memory
-        target:
-          averageUtilization: 100
-          type: Utilization
-      type: Resource
-  minReplicas: 1
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: strapi-cache
 ---
 apiVersion: batch/v1
 kind: Job
