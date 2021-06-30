@@ -2,6 +2,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: strapi-configmap
+  namespace: les1000jours
 data:
   STRAPI_LOG_LEVEL: "info"
   NODE_ENV: "production"

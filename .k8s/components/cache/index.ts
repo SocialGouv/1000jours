@@ -3,11 +3,10 @@ import path from "path";
 import { ok } from "assert";
 import env from "@kosko/env";
 import { create } from "@socialgouv/kosko-charts/components/app";
-import { fileSharePersistentVolumeClaim } from "@socialgouv/kosko-charts/components/azure-storage/fileshare.pvc";
+import { azureProjectVolume } from "@socialgouv/kosko-charts/components/azure-storage/azureProjectVolume";
 import { getDeployment } from "@socialgouv/kosko-charts/utils/getDeployment";
-import { IIoK8sApiCoreV1HTTPGetAction } from "kubernetes-models/v1";
+import { IIoK8sApiCoreV1HTTPGetAction, Volume } from "kubernetes-models/v1";
 import { ConfigMap } from "kubernetes-models/v1/ConfigMap";
-import { PersistentVolumeClaim } from "kubernetes-models/v1/PersistentVolumeClaim";
 import { Ingress } from "kubernetes-models/api/networking/v1";
 import gitlab from "@socialgouv/kosko-charts/environments/gitlab";
 
@@ -16,9 +15,11 @@ const httpGet: IIoK8sApiCoreV1HTTPGetAction = {
   port: "http",
 };
 const envParams = gitlab(process.env);
+const strapiParams = env.component("strapi");
 
 // renovate: datasource=docker depName=nginx versioning=1.19.6
 const NGINX_DOCKER_VERSION = "1.19.6";
+const CACHE_VOLUME_NAME = "strapi-cache";
 
 // create a front nginx container that will handle cache
 //
@@ -70,7 +71,7 @@ const asyncManifests = create("strapi-cache", {
       volumeMounts: [
         {
           mountPath: "/var/cache/nginx",
-          name: "cache",
+          name: CACHE_VOLUME_NAME,
         },
         {
           mountPath: "/etc/nginx/nginx.conf",
@@ -87,7 +88,7 @@ export default async () => {
   // add the config map that holds nginx.conf
   const configMap = new ConfigMap({
     metadata: {
-      name: "nginx-config",
+      name: "strapi-cache",
       labels: envParams.labels,
       annotations: envParams.annotations,
       namespace: envParams.namespace.name,
@@ -111,40 +112,27 @@ export default async () => {
   manifests.push(configMap);
 
   const pvcName = `strapi-cache-${process.env.CI_COMMIT_SHORT_SHA}`;
+  const [pvc, pv] = azureProjectVolume(CACHE_VOLUME_NAME, { storage: "5Gi" });
+  ok(pvc.metadata?.name);
+  const cacheVolume = new Volume({
+    persistentVolumeClaim: { claimName: pvc.metadata.name },
+    name: CACHE_VOLUME_NAME,
+  });
+  const emptyDir = new Volume({ name: CACHE_VOLUME_NAME, emptyDir: {} });
 
   const deploy = getDeployment(manifests);
   ok(deploy.spec);
   ok(deploy.spec.template);
   ok(deploy.spec.template.spec);
   deploy.spec.template.spec.volumes = [
-    {
-      persistentVolumeClaim: {
-        claimName: pvcName,
-      },
-      name: "cache",
-    },
+    strapiParams.useEmptyDirAsVolume ? emptyDir : cacheVolume,
     {
       name: "config",
       configMap: {
-        name: "nginx-config",
+        name: configMap.metadata!.name,
       },
     },
   ];
 
-  const pvc = fileSharePersistentVolumeClaim({
-    metadata: {
-      name: pvcName,
-    },
-    resources: {
-      requests: {
-        storage: "2Gi",
-      },
-    },
-  });
-
-  pvc.spec!.storageClassName = "azurefile-retain";
-
-  manifests.push(pvc);
-
-  return manifests;
+  return manifests.concat(strapiParams.useEmptyDirAsVolume ? [] : [pvc, pv]);
 };

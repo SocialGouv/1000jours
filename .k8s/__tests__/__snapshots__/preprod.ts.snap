@@ -104,17 +104,17 @@ spec:
               value: 1024m
           volumeMounts:
             - mountPath: /var/cache/nginx
-              name: cache
+              name: strapi-cache
             - mountPath: /etc/nginx/nginx.conf
               subPath: nginx.conf
               name: config
       volumes:
         - persistentVolumeClaim:
-            claimName: strapi-cache-0123456
-          name: cache
+            claimName: strapi-cache
+          name: strapi-cache
         - name: config
           configMap:
-            name: nginx-config
+            name: strapi-cache
 ---
 apiVersion: v1
 kind: Service
@@ -178,7 +178,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nginx-config
+  name: strapi-cache
   labels:
     application: v1-2-3-1000jours
     owner: 1000jours
@@ -244,6 +244,7 @@ data:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  name: strapi-cache
   annotations:
     app.gitlab.com/app: socialgouv-1000jours
     app.gitlab.com/env: preprod-dev42
@@ -254,14 +255,43 @@ metadata:
     team: 1000jours
     cert: wildcard
   namespace: 1000jours-85-preprod-dev42
-  name: strapi-cache-0123456
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 2Gi
-  storageClassName: azurefile-retain
+      storage: 5Gi
+  selector:
+    matchLabels:
+      usage: preprod-dev42-strapi-cache
+  storageClassName: ''
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    usage: preprod-dev42-strapi-cache
+    application: v1-2-3-1000jours
+    owner: 1000jours
+    team: 1000jours
+    cert: wildcard
+  name: preprod-dev42-strapi-cache
+  annotations:
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: preprod-dev42
+    app.gitlab.com/env.name: preprod-dev42
+  namespace: 1000jours-85-preprod-dev42
+spec:
+  accessModes:
+    - ReadWriteMany
+  azureFile:
+    secretName: azure-1000jours-volume
+    secretNamespace: 1000jours-85-preprod-dev42
+    shareName: strapi-cache
+  capacity:
+    storage: 5Gi
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: ''
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret

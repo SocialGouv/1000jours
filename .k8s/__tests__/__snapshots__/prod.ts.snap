@@ -82,17 +82,17 @@ spec:
               value: 1024m
           volumeMounts:
             - mountPath: /var/cache/nginx
-              name: cache
+              name: strapi-cache
             - mountPath: /etc/nginx/nginx.conf
               subPath: nginx.conf
               name: config
       volumes:
         - persistentVolumeClaim:
-            claimName: strapi-cache-0123456
-          name: cache
+            claimName: strapi-cache
+          name: strapi-cache
         - name: config
           configMap:
-            name: nginx-config
+            name: strapi-cache
 ---
 apiVersion: v1
 kind: Service
@@ -156,7 +156,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nginx-config
+  name: strapi-cache
   labels:
     application: 1000jours
     owner: 1000jours
@@ -221,6 +221,7 @@ data:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  name: strapi-cache
   annotations:
     app.gitlab.com/app: socialgouv-1000jours
     app.gitlab.com/env: prod
@@ -230,14 +231,42 @@ metadata:
     owner: 1000jours
     team: 1000jours
   namespace: les1000jours
-  name: strapi-cache-0123456
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 2Gi
-  storageClassName: azurefile-retain
+      storage: 5Gi
+  selector:
+    matchLabels:
+      usage: prod-strapi-cache
+  storageClassName: ''
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    usage: prod-strapi-cache
+    application: 1000jours
+    owner: 1000jours
+    team: 1000jours
+  name: prod-strapi-cache
+  annotations:
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: prod
+    app.gitlab.com/env.name: prod
+  namespace: les1000jours
+spec:
+  accessModes:
+    - ReadWriteMany
+  azureFile:
+    secretName: azure-1000jours-volume
+    secretNamespace: les1000jours
+    shareName: strapi-cache
+  capacity:
+    storage: 5Gi
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: ''
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
@@ -279,6 +308,7 @@ spec:
         app.gitlab.com/env: prod
         app.gitlab.com/env.name: prod
       name: azure-pg-user
+      namespace: les1000jours
       labels:
         application: 1000jours
         owner: 1000jours
@@ -407,11 +437,11 @@ metadata:
     app.gitlab.com/env: prod
     app.gitlab.com/env.name: prod
   name: azure-les1000jours-volume
+  namespace: les1000jours
   labels:
     application: 1000jours
     owner: 1000jours
     team: 1000jours
-  namespace: les1000jours
 spec:
   encryptedData:
     azurestorageaccountkey: >-
@@ -427,6 +457,7 @@ spec:
         app.gitlab.com/env: prod
         app.gitlab.com/env.name: prod
       name: azure-les1000jours-volume
+      namespace: les1000jours
       labels:
         application: 1000jours
         owner: 1000jours
@@ -437,6 +468,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: strapi-configmap
+  namespace: les1000jours
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
@@ -447,7 +479,6 @@ metadata:
     application: 1000jours
     owner: 1000jours
     team: 1000jours
-  namespace: les1000jours
 data:
   STRAPI_LOG_LEVEL: info
   NODE_ENV: production

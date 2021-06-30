@@ -104,17 +104,16 @@ spec:
               value: 1024m
           volumeMounts:
             - mountPath: /var/cache/nginx
-              name: cache
+              name: strapi-cache
             - mountPath: /etc/nginx/nginx.conf
               subPath: nginx.conf
               name: config
       volumes:
-        - persistentVolumeClaim:
-            claimName: strapi-cache-0123456
-          name: cache
+        - name: strapi-cache
+          emptyDir: {}
         - name: config
           configMap:
-            name: nginx-config
+            name: strapi-cache
 ---
 apiVersion: v1
 kind: Service
@@ -178,7 +177,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nginx-config
+  name: strapi-cache
   labels:
     application: master-dev42-1000jours
     owner: 1000jours
@@ -240,28 +239,6 @@ data:
         }
       }
     }
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  annotations:
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: master-dev42
-    app.gitlab.com/env.name: master-dev42
-  labels:
-    application: master-dev42-1000jours
-    owner: 1000jours
-    team: 1000jours
-    cert: wildcard
-  namespace: 1000jours-85-master-dev42
-  name: strapi-cache-0123456
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 2Gi
-  storageClassName: azurefile-retain
 ---
 apiVersion: batch/v1
 kind: Job
