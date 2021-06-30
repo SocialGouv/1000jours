@@ -141,3 +141,11 @@ export const incrementEpdsSurveyCounterAndGetNewValue =
 
     return newCounter;
   };
+
+export const getResultLabelAndStyleLight = (): EpdsResultData => {
+  return {
+    color: Colors.secondaryGreenDark,
+    icon: EpdsConstants.ResultIconValueEnum.bien,
+    resultLabels: Labels.epdsSurveyLight,
+  };
+};

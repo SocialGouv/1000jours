@@ -100,7 +100,7 @@ export default {
         {
           boldIndexes: [],
           description:
-            "La dépression post-partum touche 1 femme sur 5 en France (ainsi que les hommes).",
+            "Chaque année, en France, La dépression post partum concerne 100 000 femmes et 75 000 hommes.",
           title: "Constat",
         },
         {
@@ -112,19 +112,19 @@ export default {
         {
           boldIndexes: [],
           description:
-            "Cochez la réponse qui vous semble le mieux décrire la façon dont vous vous êtes senti(e) durant la semaine passée.",
+            "Essayez de répondre à ces questions simples sur la façon dont vous vous êtes senti(e) durant la semaine passée.",
           title: "Comment",
         },
         {
           boldIndexes: [],
           description:
-            "Parce que nous souhaitons que vous puissiez échanger avec votre professionnel de confiance, le score n’est ni indiqué, ni accessible. II est important de le passer en présence d’un professionnel de santé, qui est le seul à pouvoir poser un diagnostic.",
+            "Il existe des questionnaires de dépistage d’utilisations simple. N’hésitez pas à en parler à votre sage-femme ou votre médecin, ils pourront faire le point avec vous.  Si vous souhaitez utiliser le questionnaire (EPDS), il est important qu’il se fasse en présence d’un professionnel de santé, qui est le seul à pouvoir poser un diagnostic.",
           title: "Informations",
         },
         {
           boldIndexes: [],
           description:
-            "Bénéficier de soutien limite les facteurs de stress, tout à fait normal, durant les premiers mois de bébé. Des ressources et solutions existent pour vous accompagner.",
+            "Bénéficier de soutien limite les facteurs de stress durant les premiers mois de bébé, douter, se sentir un peu seule, se sentir débordée est tout à fait commun. Oser en parler, c’est déjà prendre soin de soi et de son enfant. Des ressources et solutions existent pour vous accompagner.",
           title: "Recommandations",
         },
       ],
@@ -132,10 +132,10 @@ export default {
         "Ce questionnaire n'est pas un diagnostic et ne remplace pas un professionnel de la santé.",
       steps: {
         elements: [
-          "Passer le test",
-          "Accéder aux résultats",
+          "Se questionner",
+          "Accéder aux ressources",
           "Trouver une aide adaptée",
-          "Repasser le test",
+          "Se questionner de nouveau",
         ],
         title: "Étapes",
       },
@@ -147,7 +147,7 @@ export default {
         "Il semble que vous n'ayez pas terminé le précédent questionnaire. Voulez-vous le continuer ou le recommencer ?",
       startOverButton: "Recommencer",
     },
-    restartSurvey: "Repasser le test",
+    restartSurvey: "Se questionner de nouveau",
     resultats: {
       call: "Appeler",
       entreDixEtDouze: {
@@ -219,7 +219,17 @@ export default {
           "Oser en parler, c'est déjà prendre soin de soi et de son enfant !",
         professionalsList: [
           {
-            paragraphs: epdsInformation.professionnelsAccompagnerPasBien,
+            paragraphs: [
+              epdsInformation.entretienAupresProfessionnelSante,
+              epdsInformation.pmiVeritableAllieParents,
+              {
+                title: "Les autres professionnels qui peuvent vous aider",
+              },
+              {
+                title:
+                  "Votre entourage peut se mobiliser pour vous aider : sagefemme, psychologue, infirmière puéricultrice",
+              },
+            ],
             sectionIcon: IcomoonIcons.proSante,
             sectionTitle:
               "Les professionnels qui peuvent vous accompagner pour faire le point",
@@ -238,10 +248,86 @@ export default {
         ],
         stateOfMind: "Je ne vais pas bien",
       },
-      retakeTestInvitation: `Vous serez invité à repasser le test dans ${NUMBER_OF_DAYS_NOTIF_REMINDER} jours`,
+      retakeTestInvitation: `Nous vous invitons à vous questionner de nouveau dans les ${NUMBER_OF_DAYS_NOTIF_REMINDER} jours.`,
     },
     title: "Et si c'était une dépression post-partum ?",
     titleResults: "Résultat",
+  },
+  epdsSurveyLight: {
+    changementsImportants:
+      "Les changements importants liés à l’arrivée d’un bébé sont des facteurs de stress dont certains signes évocateurs sont normaux durant cette période. Parlez de vos difficultés des premiers mois, est essentiel pour que le professionnel de santé qui vous suit puisse à tout moment vous accompagner. Des aides et un accompagnement peuvent être mis en place pour vous aider durant cette période qui nécessite du soutien. En parler avec un professionnel de santé et votre entourage, c’est se soigner. Parce que vous n’êtes pas seul(e) et qu’en parler a permis à de nombreux de parents d’aller mieux.",
+    oserEnParler:
+      "Oser en parler, c'est déjà prendre soin de soi et de son enfant !",
+    professionalsList: [
+      {
+        paragraphs: [
+          {
+            description:
+              "N’hésitez pas à parler à vos proches, amis et famille, de vos sentiments et de vos craintes.",
+            title: "Votre entourage peut se mobiliser pour vous aider :",
+          },
+          epdsInformation.entretienAupresProfessionnelSante,
+          {
+            description:
+              "Centre d’informations, d’accompagnement, et d’orientation pour vous et votre enfant, A l’écoute des parents, les nombreux professionnels de santé pourront vous proposer une prise en charge complète.",
+            title: "La PMI est un véritable allié pour les (futurs) parents :",
+          },
+          epdsInformation.reseauPerinatalSante,
+          {
+            description:
+              "C’est un traitement à part entière de la dépression, efficace qui consiste à aider le couple, la mère ou le père à reprendre confiance en lui ou en eux, de s’adapter à l’arrivée de bébé et à son rythme de vie, de renforcer leurs compétences de parents tout facilitant la mise en œuvre d’un nouvel équilibre familial.  Un psychologue, un psychothérapeute ou un psychiatre sont les professionnels vers lesquels vous serez orienté. Ses premiers effets (un soulagement lié à une écoute adaptée) peuvent se faire sentir immédiatement, les changements durables interviennent au bout de quelques semaines. Après la guérison d’un épisode dépressif, la psychothérapie sert aussi à prévenir la réapparition des symptômes",
+            pdfUrl: "https://solidarites-sante.gouv.fr/IMG/pdf/guide-8.pdf",
+            title: "La psychothérapie",
+          },
+          {
+            description:
+              "L’utilisation d’antidépresseurs peut être discutée selon les cas. Le professionnel de santé vous conseillera sur les options disponibles si vous allaitez encore. L’objectif du traitement par médicaments antidépresseurs est la réduction significative des symptômes dépressifs et de leurs conséquences dans la vie quotidienne. Les médicaments antidépresseurs améliorent les symptômes de la dépression à l’issue d’environ 3 à 4 semaines de traitement continu. Ils aident généralement à restaurer le fonctionnement normal du sommeil, de l’appétit, à retrouver l’initiative, une perception positive de la vie… Ce fonctionnement normal persiste après l’arrêt du traitement.",
+            title: "Les aides médicamenteuses",
+          },
+          {
+            description:
+              "Une aide à domicile permet aux parents de reprendre confiance en eux. Le soutien sur les aspects matériels ne sont donc pas à négliger, comme un soutien pour les tâches ménagères (recours à une aide-ménagère) et les soins au bébé (recours à une technicienne de l’intervention sociale et familiale – TISF), consulter le site de la CAF pour identifier les associations de services d’aide et d’accompagnement à domicile",
+            pdfUrl:
+              "https://www.perinatalite-occitanie.fr/sites/rpo/files/pdf/TROUBLES%20EMOTIONNELS%20ET%20PSYCHIQUES%20DES%20MERES%20EN%20P.pdf",
+            title: "Les visites à domicile",
+          },
+          {
+            description:
+              "Le parent peut y être hospitalisé à temps complet ou juste pour la journée. Dans ces unités, une équipe pluridisciplinaire effectue un travail pour permettre au parent de reprendre confiance en lui, afin de soutenir le lien avec son enfant. Cette hospitalisation vise à développer du lien d’attachement avec le bébé, un besoin qui lui est essentiel.",
+            title: "Les unités parents enfants",
+          },
+        ],
+        sectionIcon: IcomoonIcons.proSante,
+        sectionTitle: "Les professionnels de santé",
+      },
+      epdsInformation.sectionRessourcesNumeriquesPasBien,
+      {
+        paragraphs: [
+          {
+            description:
+              "Devenir parents procure beaucoup de joie mais aussi des difficultés. N’hésitez pas à demander de l’aide à vos proches. Ils pourront vous accompagner vers des ressources dont vous avez besoin.",
+            title: "L'aide de votre entourage :",
+          },
+          epdsInformation.servicesAidesAccompagnementDomicile,
+          epdsInformation.laep,
+          epdsInformation.associationsLocalesNationalesSoutienParentalite,
+        ],
+        sectionIcon: IcomoonIcons.entourage,
+        sectionTitle: "Les ressources des premiers mois",
+      },
+      {
+        paragraphs: [
+          {
+            description:
+              "Si vous souhaitez disposer d’informations complémentaires sur ce sujet, contactez notre partenaire Maman Blues, une association de bénévoles qui met au service des parents, son expertise accumulée depuis plusieurs années sur la dépression post partum. Les conseils de l’association ne remplaceront jamais le conseil d’un professionnel de santé. Pour être accompagné, il est donc indispensable de prendre rendez-vous avec lui dans les meilleurs délais.",
+            title: "Contacter",
+          },
+        ],
+        sectionIcon: IcomoonIcons.telephone,
+        sectionTitle: "Contacter",
+      },
+    ],
+    titleLight: "Et si c'était une dépression post-partum ? Les ressources",
   },
   errorMsg: "Une erreur est survenue, merci de réessayer plus tard",
   errorNetworkMsg:
