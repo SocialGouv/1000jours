@@ -14,7 +14,7 @@ interface Props {
 
 const ErrorMessage: React.FC<Props> = ({ error }) => {
   const [errorMessage, setErrorMessage] = useState(Labels.errorMsg);
-  const [fetchIsComplete, setFetchIsComplete] = useState(false);
+  const [fetchIsComplete, setFetchIsComplete] = useState(true);
 
   const createAlertMessage = () => {
     const message = error.graphQLErrors
@@ -24,27 +24,30 @@ const ErrorMessage: React.FC<Props> = ({ error }) => {
     Alert.alert(Labels.warning, message, [{ text: "OK" }]);
   };
 
-  useEffect(() => {
-    reportError(error);
-    if (error.graphQLErrors.length > 0) createAlertMessage();
-  }, []);
-
   // Vérifie si l'api graphql est opérationnelle
-  fetch(`${process.env.API_URL}/.well-known/apollo/server-health`)
-    .then(async (data) => data.json())
-    .then((jsonData: ApolloHealthResponse) => {
-      if (jsonData.status !== "pass") {
-        reportError(jsonData);
+  const checkApolloApi = () => {
+    setFetchIsComplete(false);
+    fetch(`${process.env.API_URL}/.well-known/apollo/server-health`)
+      .then(async (data) => data.json())
+      .then((jsonData: ApolloHealthResponse) => {
+        if (jsonData.status !== "pass") {
+          reportError(jsonData);
+          setErrorMessage(Labels.errorNetworkMsg);
+        }
+      })
+      .catch((e) => {
+        reportError(e);
         setErrorMessage(Labels.errorNetworkMsg);
-      }
-    })
-    .catch((e) => {
-      reportError(e);
-      setErrorMessage(Labels.errorNetworkMsg);
-    })
-    .finally(() => {
-      setFetchIsComplete(true);
-    });
+      })
+      .finally(() => {
+        setFetchIsComplete(true);
+      });
+  };
+
+  useEffect(() => {
+    if (error.graphQLErrors.length > 0) createAlertMessage();
+    else checkApolloApi();
+  }, []);
 
   return fetchIsComplete ? (
     <View style={styles.mainContainer}>
