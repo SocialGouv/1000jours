@@ -112,13 +112,6 @@ export default async () => {
 
   manifests.push(configMap);
 
-  const pvcName = `strapi-cache-${process.env.CI_COMMIT_SHORT_SHA}`;
-  const [pvc, pv] = azureProjectVolume(CACHE_VOLUME_NAME, { storage: "5Gi" });
-  ok(pvc.metadata?.name);
-  const cacheVolume = new Volume({
-    persistentVolumeClaim: { claimName: pvc.metadata.name },
-    name: CACHE_VOLUME_NAME,
-  });
   const emptyDir = new Volume({ name: CACHE_VOLUME_NAME, emptyDir: {} });
 
   const deploy = getDeployment(manifests);
@@ -126,7 +119,7 @@ export default async () => {
   ok(deploy.spec.template);
   ok(deploy.spec.template.spec);
   deploy.spec.template.spec.volumes = [
-    strapiParams.useEmptyDirAsVolume ? emptyDir : cacheVolume,
+    emptyDir,
     {
       name: "config",
       configMap: {
@@ -136,7 +129,5 @@ export default async () => {
   ];
 
   const hpa = createAutoscale(deploy, { minReplicas: 5, maxReplicas: 15 });
-  return manifests.concat(
-    strapiParams.useEmptyDirAsVolume ? [] : [hpa, pvc, pv]
-  );
+  return manifests.concat(strapiParams.useEmptyDirAsVolume ? [] : [hpa]);
 };
