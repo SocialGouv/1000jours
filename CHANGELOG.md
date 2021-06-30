@@ -1,3 +1,11 @@
+## [1.54.1](https://github.com/SocialGouv/1000jours/compare/v1.54.0...v1.54.1) (2021-06-30)
+
+
+### Bug Fixes
+
+* **k8s:** add hpa in preprod and prod env ([#447](https://github.com/SocialGouv/1000jours/issues/447)) ([a5c5ce9](https://github.com/SocialGouv/1000jours/commit/a5c5ce9e48b971285663b8ed16d7359bb0a5543b))
+* **k8s:** change nginx cache folder ([#449](https://github.com/SocialGouv/1000jours/issues/449)) ([57281c8](https://github.com/SocialGouv/1000jours/commit/57281c84998b40fe73bb899ad3b2d20bc8a2ab85))
+
 # [1.54.0](https://github.com/SocialGouv/1000jours/compare/v1.53.2...v1.54.0) (2021-06-30)
 
 
