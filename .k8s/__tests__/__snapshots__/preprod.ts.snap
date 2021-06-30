@@ -382,10 +382,10 @@ spec:
             initialDelaySeconds: 30
           resources:
             requests:
-              cpu: 50m
+              cpu: '1'
               memory: 256Mi
             limits:
-              cpu: 500m
+              cpu: '1'
               memory: 1Gi
           startupProbe:
             httpGet:
