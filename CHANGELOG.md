@@ -1,3 +1,10 @@
+## [1.54.2](https://github.com/SocialGouv/1000jours/compare/v1.54.1...v1.54.2) (2021-06-30)
+
+
+### Bug Fixes
+
+* **k8s:** remove pvc on strapi-cache ([#450](https://github.com/SocialGouv/1000jours/issues/450)) ([91416d7](https://github.com/SocialGouv/1000jours/commit/91416d7519b45269bb6e41d5875a918a966c0c72))
+
 ## [1.54.1](https://github.com/SocialGouv/1000jours/compare/v1.54.0...v1.54.1) (2021-06-30)
 
 
