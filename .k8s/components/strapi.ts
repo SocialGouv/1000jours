@@ -25,11 +25,11 @@ const prob = new Probe({
 
 const resources = new ResourceRequirements({
   requests: {
-    cpu: "50m",
+    cpu: "1",
     memory: "256Mi",
   },
   limits: {
-    cpu: "500m",
+    cpu: "1",
     memory: "1Gi",
   },
 });
