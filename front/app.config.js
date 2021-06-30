@@ -11,7 +11,7 @@ export default {
         },
       },
       package: "com.fabrique.millejours",
-      versionCode: 12,
+      versionCode: 13,
     },
     assetBundlePatterns: ["**/*"],
     hooks: {
@@ -28,7 +28,7 @@ export default {
     },
     icon: "./assets/images/icon.png",
     ios: {
-      buildNumber: "1.0.12",
+      buildNumber: "1.0.13",
       bundleIdentifier: "com.fabrique.millejours",
       supportsTablet: true,
     },
@@ -45,7 +45,7 @@ export default {
       fallbackToCacheTimeout: 0,
     },
     userInterfaceStyle: "light",
-    version: "1.0.12",
+    version: "1.0.13",
     web: {
       favicon: "./assets/images/favicon.png",
     },
