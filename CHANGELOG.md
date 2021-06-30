@@ -1,3 +1,10 @@
+# [1.54.0](https://github.com/SocialGouv/1000jours/compare/v1.53.2...v1.54.0) (2021-06-30)
+
+
+### Features
+
+* **cache:** Ajoute un proxy cache pour l'API et les images ([#433](https://github.com/SocialGouv/1000jours/issues/433)) ([a1323dd](https://github.com/SocialGouv/1000jours/commit/a1323ddb5d7060172a0767a9bd737aad3cab8849))
+
 ## [1.53.2](https://github.com/SocialGouv/1000jours/compare/v1.53.1...v1.53.2) (2021-06-30)
 
 
