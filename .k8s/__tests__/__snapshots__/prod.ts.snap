@@ -157,6 +157,15 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nginx-config
+  labels:
+    application: 1000jours
+    owner: 1000jours
+    team: 1000jours
+  annotations:
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: prod
+    app.gitlab.com/env.name: prod
+  namespace: les1000jours
 data:
   nginx.conf: |-
 
@@ -223,15 +232,23 @@ data:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  annotations:
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: prod
+    app.gitlab.com/env.name: prod
+  labels:
+    application: 1000jours
+    owner: 1000jours
+    team: 1000jours
+  namespace: les1000jours
   name: strapi-cache-0123456
-  annotations: {}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 2Gi
-  volumeMode: Filesystem
+  storageClassName: azurefile
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
