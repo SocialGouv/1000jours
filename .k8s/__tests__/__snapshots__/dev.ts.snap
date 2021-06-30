@@ -205,6 +205,10 @@ data:
       proxy_buffering on;
       proxy_cache_path /cache levels=1:2 keys_zone=small:1m inactive=1h use_temp_path=off;
 
+      map $request_uri $nocache {
+        \\"~*nocache\\" 1;
+      }
+
       server {
         listen 80;
         server_name localhost;
@@ -222,6 +226,13 @@ data:
         }
 
         location @api_backend {
+          error_page 418 = @no_cache;
+          recursive_error_pages on;
+
+          if ($nocache) {
+            return 418;
+          }
+
           proxy_ignore_headers Cache-Control;
           proxy_cache small;
           proxy_cache_methods GET POST;
