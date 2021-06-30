@@ -226,6 +226,7 @@ data:
         location @files_backend {
           proxy_cache small;
           proxy_cache_methods GET;
+          proxy_cache_key \\"$request_uri\\";
           proxy_pass http://strapi:80;
           proxy_cache_valid any 1h;
           proxy_cache_use_stale updating;
