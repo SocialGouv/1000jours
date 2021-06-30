@@ -1,6 +1,5 @@
 import env from "@kosko/env";
 import { create } from "@socialgouv/kosko-charts/components/app";
-import { createAutoscale } from "@socialgouv/kosko-charts/components/autoscale";
 import { azureProjectVolume } from "@socialgouv/kosko-charts/components/azure-storage/azureProjectVolume";
 import { addEnvs } from "@socialgouv/kosko-charts/utils/addEnvs";
 import { getIngressHost } from "@socialgouv/kosko-charts/utils/getIngressHost";
@@ -97,11 +96,7 @@ export default async () => {
     },
   });
 
-  const hpa = createAutoscale(deployment);
-
   return manifests.concat(
-    params.useEmptyDirAsVolume
-      ? [hpa]
-      : [hpa, persistentVolumeClaim, persistentVolume]
+    params.useEmptyDirAsVolume ? [] : [persistentVolumeClaim, persistentVolume]
   );
 };

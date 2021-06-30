@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { ok } from "assert";
+import { createAutoscale } from "@socialgouv/kosko-charts/components/autoscale";
 import env from "@kosko/env";
 import { create } from "@socialgouv/kosko-charts/components/app";
 import { azureProjectVolume } from "@socialgouv/kosko-charts/components/azure-storage/azureProjectVolume";
@@ -134,5 +135,8 @@ export default async () => {
     },
   ];
 
-  return manifests.concat(strapiParams.useEmptyDirAsVolume ? [] : [pvc, pv]);
+  const hpa = createAutoscale(deploy);
+  return manifests.concat(
+    strapiParams.useEmptyDirAsVolume ? [hpa] : [hpa, pvc, pv]
+  );
 };

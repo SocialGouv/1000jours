@@ -252,6 +252,32 @@ data:
       }
     }
 ---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: strapi-cache
+  namespace: 1000jours-85-preprod-dev42
+spec:
+  maxReplicas: 10
+  metrics:
+    - resource:
+        name: cpu
+        target:
+          averageUtilization: 100
+          type: Utilization
+      type: Resource
+    - resource:
+        name: memory
+        target:
+          averageUtilization: 100
+          type: Utilization
+      type: Resource
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: strapi-cache
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -554,32 +580,6 @@ spec:
   selector:
     app: strapi
   type: ClusterIP
----
-apiVersion: autoscaling/v2beta2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: strapi
-  namespace: 1000jours-85-preprod-dev42
-spec:
-  maxReplicas: 10
-  metrics:
-    - resource:
-        name: cpu
-        target:
-          averageUtilization: 100
-          type: Utilization
-      type: Resource
-    - resource:
-        name: memory
-        target:
-          averageUtilization: 100
-          type: Utilization
-      type: Resource
-  minReplicas: 1
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: strapi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
