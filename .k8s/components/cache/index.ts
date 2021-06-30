@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { ok } from "assert";
+import { createAutoscale } from "@socialgouv/kosko-charts/components/autoscale";
 import env from "@kosko/env";
 import { create } from "@socialgouv/kosko-charts/components/app";
 import { azureProjectVolume } from "@socialgouv/kosko-charts/components/azure-storage/azureProjectVolume";
@@ -64,7 +65,7 @@ const asyncManifests = create("strapi-cache", {
         },
         // cpu=1000, memory=3Gi offers 17req/s
         limits: {
-          cpu: "1000m",
+          cpu: "200m",
           memory: "1Gi",
         },
       },
@@ -134,5 +135,8 @@ export default async () => {
     },
   ];
 
-  return manifests.concat(strapiParams.useEmptyDirAsVolume ? [] : [pvc, pv]);
+  const hpa = createAutoscale(deploy, { minReplicas: 5, maxReplicas: 15 });
+  return manifests.concat(
+    strapiParams.useEmptyDirAsVolume ? [] : [hpa, pvc, pv]
+  );
 };

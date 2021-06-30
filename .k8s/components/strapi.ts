@@ -11,6 +11,7 @@ import {
   ResourceRequirements,
   Volume,
 } from "kubernetes-models/v1";
+import { createAutoscale } from "@socialgouv/kosko-charts/components/autoscale";
 
 const component = "strapi";
 const params = env.component(component);
@@ -96,7 +97,10 @@ export default async () => {
     },
   });
 
+  const hpa = createAutoscale(deployment, { minReplicas: 5, maxReplicas: 15 });
   return manifests.concat(
-    params.useEmptyDirAsVolume ? [] : [persistentVolumeClaim, persistentVolume]
+    params.useEmptyDirAsVolume
+      ? []
+      : [hpa, persistentVolumeClaim, persistentVolume]
   );
 };
