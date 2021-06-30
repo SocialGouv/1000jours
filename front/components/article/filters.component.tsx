@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 
 import { Colors, Labels, Margins, Paddings, Sizes } from "../../constants";
+import { PLATFORM_IS_ANDROID } from "../../constants/platform.constants";
 import type { Article, ArticleFilter } from "../../types";
 import Button from "../base/button.component";
 import Chip from "../base/chip.component";
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
   filterButton: {
     alignSelf: "flex-start",
     backgroundColor: Colors.cardWhite,
-    borderColor: Colors.cardGrey,
+    borderColor: PLATFORM_IS_ANDROID ? Colors.primaryBlue : Colors.cardGrey,
     borderWidth: 1,
     marginBottom: Margins.evenMoreSmallest,
     marginLeft: Margins.evenMoreSmallest,
