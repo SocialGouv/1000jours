@@ -195,6 +195,10 @@ data:
       proxy_buffering on;
       proxy_cache_path /cache levels=1:2 keys_zone=small:1m inactive=1h use_temp_path=off;
 
+      map $request_body $epds {
+        ~*\\"createReponsesEpd\\" \\"epds\\";
+      }
+
       server {
         listen 80;
         server_name localhost;
@@ -212,15 +216,17 @@ data:
         }
 
         location @api_backend {
-          proxy_cache small;
-          proxy_cache_methods POST;
-          proxy_pass http://strapi:80;
-          proxy_cache_key \\"$request_uri|$request_body\\";
-          proxy_cache_valid any 1h;
-          proxy_buffers 8 32k;
-          proxy_buffer_size 64k;
-          proxy_cache_use_stale updating;
-          add_header X-Cached $upstream_cache_status;
+          if (!$epds) {
+            proxy_cache small;
+            proxy_cache_methods POST;
+            proxy_pass http://strapi:80;
+            proxy_cache_key \\"$request_uri|$request_body\\";
+            proxy_cache_valid any 1h;
+            proxy_buffers 8 32k;
+            proxy_buffer_size 64k;
+            proxy_cache_use_stale updating;
+            add_header X-Cached $upstream_cache_status;
+          }
         }
 
         location @files_backend {
