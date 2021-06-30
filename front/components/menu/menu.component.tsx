@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   menuItemIcon: {
+    backgroundColor: "transparent",
     paddingLeft: Paddings.default,
     paddingRight: Paddings.smallest,
   },

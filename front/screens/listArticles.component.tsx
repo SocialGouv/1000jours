@@ -126,7 +126,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.scrollView}>
       <View style={styles.topContainer}>
         <View style={[styles.flexStart]}>
           <BackButton
@@ -301,8 +301,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 0,
   },
+  scrollView: {
+    backgroundColor: Colors.white,
+  },
   threeFirstMonthsBanner: {
     backgroundColor: Colors.primaryYellowLight,
+    marginBottom: Paddings.light,
     padding: Paddings.default,
   },
   title: {
