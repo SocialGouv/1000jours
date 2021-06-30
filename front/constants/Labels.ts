@@ -100,7 +100,7 @@ export default {
         {
           boldIndexes: [],
           description:
-            "La dépression post-partum touche 1 femme sur 5 en France (ainsi que les hommes).",
+            "Chaque année, en France, La dépression post partum concerne 100 000 femmes et 75 000 hommes.",
           title: "Constat",
         },
         {
@@ -112,19 +112,19 @@ export default {
         {
           boldIndexes: [],
           description:
-            "Cochez la réponse qui vous semble le mieux décrire la façon dont vous vous êtes senti(e) durant la semaine passée.",
+            "Essayez de répondre à ces questions simples sur la façon dont vous vous êtes senti(e) durant la semaine passée.",
           title: "Comment",
         },
         {
           boldIndexes: [],
           description:
-            "Parce que nous souhaitons que vous puissiez échanger avec votre professionnel de confiance, le score n’est ni indiqué, ni accessible. II est important de le passer en présence d’un professionnel de santé, qui est le seul à pouvoir poser un diagnostic.",
+            "Il existe des questionnaires de dépistage d’utilisations simple. N’hésitez pas à en parler à votre sage-femme ou votre médecin, ils pourront faire le point avec vous.  Si vous souhaitez utiliser le questionnaire (EPDS), il est important qu’il se fasse en présence d’un professionnel de santé, qui est le seul à pouvoir poser un diagnostic.",
           title: "Informations",
         },
         {
           boldIndexes: [],
           description:
-            "Bénéficier de soutien limite les facteurs de stress, tout à fait normal, durant les premiers mois de bébé. Des ressources et solutions existent pour vous accompagner.",
+            "Bénéficier de soutien limite les facteurs de stress durant les premiers mois de bébé, douter, se sentir un peu seule, se sentir débordée est tout à fait commun. Oser en parler, c’est déjà prendre soin de soi et de son enfant. Des ressources et solutions existent pour vous accompagner.",
           title: "Recommandations",
         },
       ],
@@ -132,10 +132,10 @@ export default {
         "Ce questionnaire n'est pas un diagnostic et ne remplace pas un professionnel de la santé.",
       steps: {
         elements: [
-          "Passer le test",
-          "Accéder aux résultats",
+          "Se questionner",
+          "Accéder aux ressources",
           "Trouver une aide adaptée",
-          "Repasser le test",
+          "Se questionner de nouveau",
         ],
         title: "Étapes",
       },
