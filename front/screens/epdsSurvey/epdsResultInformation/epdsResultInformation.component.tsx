@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     marginVertical: Margins.smaller,
   },
   icon: {
+    backgroundColor: "transparent",
     marginHorizontal: Margins.smaller,
   },
   sectionDescription: {
