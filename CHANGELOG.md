@@ -1,3 +1,10 @@
+## [1.53.1](https://github.com/SocialGouv/1000jours/compare/v1.53.0...v1.53.1) (2021-06-30)
+
+
+### Bug Fixes
+
+* **epds:** corrections bugs d'affichage ([#444](https://github.com/SocialGouv/1000jours/issues/444)) ([39cc6e3](https://github.com/SocialGouv/1000jours/commit/39cc6e3b366690e9ef66c1da31683f25d140ddb6))
+
 # [1.53.0](https://github.com/SocialGouv/1000jours/compare/v1.52.4...v1.53.0) (2021-06-30)
 
 
