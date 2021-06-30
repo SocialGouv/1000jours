@@ -174,8 +174,8 @@ data:
       proxy_buffering on;
       proxy_cache_path /cache levels=1:2 keys_zone=small:1m inactive=1h use_temp_path=off;
 
-      map $request_body $epds {
-        ~*\\"createReponsesEpd\\" \\"epds\\";
+      map $request_uri nocache {
+        \\"~*nocache\\" 1;
       }
 
       server {
@@ -195,6 +195,13 @@ data:
         }
 
         location @api_backend {
+          error_page 418 = @no_cache;
+          recursive_error_pages on;
+
+          if ($nocache) {
+            return 418;
+          }
+
           proxy_ignore_headers Cache-Control;
           proxy_cache small;
           proxy_cache_methods GET POST;
@@ -205,6 +212,10 @@ data:
           proxy_buffer_size 64k;
           proxy_cache_use_stale updating;
           add_header X-Cached $upstream_cache_status;
+        }
+
+        location @no_cache {
+          proxy_pass http://strapi:80;
         }
       }
     }
