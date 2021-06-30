@@ -107,6 +107,8 @@ export default async () => {
     ingress.metadata.annotations = {
       ...ingress.metadata.annotations,
       "nginx.ingress.kubernetes.io/proxy-body-size": "1g",
+      "nginx.ingress.kubernetes.io/limit-rps": "20",
+      "nginx.ingress.kubernetes.io/limit-rpm": "300"
     };
   }
 
