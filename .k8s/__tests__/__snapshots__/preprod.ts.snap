@@ -152,6 +152,8 @@ metadata:
     app.gitlab.com/env: preprod-dev42
     app.gitlab.com/env.name: preprod-dev42
     nginx.ingress.kubernetes.io/proxy-body-size: 1g
+    nginx.ingress.kubernetes.io/limit-rps: '20'
+    nginx.ingress.kubernetes.io/limit-rpm: '300'
   labels:
     app: strapi-cache
     application: v1-2-3-1000jours
