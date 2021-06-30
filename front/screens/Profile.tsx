@@ -93,7 +93,12 @@ const Profile: FC<Props> = ({ navigation }) => {
   const [datePickerIsReady, setDatePickerIsReady] = useState(false);
 
   useEffect(() => {
-    const initChildBirthdayWithStorageValue = async () => {
+    const initDataWithStorageValue = async () => {
+      const userSituationsStored = (await StorageUtils.getObjectValue(
+        StorageKeysConstants.userSituationsKey
+      )) as UserSituation[] | null;
+      if (userSituationsStored) setUserSituations(userSituationsStored);
+
       const childBirthdayStr =
         (await StorageUtils.getStringValue(
           StorageKeysConstants.userChildBirthdayKey
@@ -101,7 +106,7 @@ const Profile: FC<Props> = ({ navigation }) => {
       setChildBirthday(childBirthdayStr);
       setDatePickerIsReady(true);
     };
-    void initChildBirthdayWithStorageValue();
+    void initDataWithStorageValue();
   }, []);
 
   useEffect(() => {
