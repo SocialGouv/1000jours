@@ -1,3 +1,17 @@
+# [1.53.0](https://github.com/SocialGouv/1000jours/compare/v1.52.4...v1.53.0) (2021-06-30)
+
+
+### Bug Fixes
+
+* **epds:** modifications du texte de l'onboarding et des résultats ([#442](https://github.com/SocialGouv/1000jours/issues/442)) ([99fd110](https://github.com/SocialGouv/1000jours/commit/99fd1109b9a6f304ce0f1f30288e6d83ed7b5145))
+* 🐛 Corrige des ajustements graphique ([#439](https://github.com/SocialGouv/1000jours/issues/439)) ([06709b1](https://github.com/SocialGouv/1000jours/commit/06709b1943b7e90cbe31d44d45ec1e0d1b21d409))
+
+
+### Features
+
+* 🎸 Ajoute le numéro de version de l'app dans le menu ([#441](https://github.com/SocialGouv/1000jours/issues/441)) ([8a2894d](https://github.com/SocialGouv/1000jours/commit/8a2894d44a077deda292cf3ea3e5f5047c0d901c))
+* 🎸 Corrige le profil (checkbox non sauvegardé) ([#440](https://github.com/SocialGouv/1000jours/issues/440)) ([1578b6f](https://github.com/SocialGouv/1000jours/commit/1578b6fe094f47adc84657c6db09f1a0c651e8e8)), closes [#419](https://github.com/SocialGouv/1000jours/issues/419)
+
 ## [1.52.4](https://github.com/SocialGouv/1000jours/compare/v1.52.3...v1.52.4) (2021-06-30)
 
 
