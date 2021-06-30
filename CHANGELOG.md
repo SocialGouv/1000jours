@@ -1,3 +1,10 @@
+## [1.52.4](https://github.com/SocialGouv/1000jours/compare/v1.52.3...v1.52.4) (2021-06-30)
+
+
+### Bug Fixes
+
+* **articles:** Corrige les urls des images dans le corps des textes ([#436](https://github.com/SocialGouv/1000jours/issues/436)) ([dc6af16](https://github.com/SocialGouv/1000jours/commit/dc6af16920f79fbf75da10f957b1f8fabf59ef34))
+
 ## [1.52.3](https://github.com/SocialGouv/1000jours/compare/v1.52.2...v1.52.3) (2021-06-29)
 
 
