@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { useMutation } from "@apollo/client/react/hooks";
 import * as React from "react";
 import { useEffect } from "react";
@@ -26,8 +27,15 @@ interface Props {
   startSurveyOver: () => void;
 }
 
+const clientNoCache = new ApolloClient({
+  cache: new InMemoryCache(),
+  headers: { "content-type": "application/json" },
+  uri: `${process.env.API_URL}/graphql?nocache`,
+});
+
 const EpdsLightResult: React.FC<Props> = ({ result, startSurveyOver }) => {
   const [addReponseQuery] = useMutation(DatabaseQueries.EPDS_ADD_RESPONSE, {
+    client: clientNoCache,
     onError: (err) => {
       console.log(err);
     },
