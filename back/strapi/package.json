@@ -46,9 +46,7 @@
   "author": {
     "name": "Fabrique des ministères sociaux"
   },
-  "strapi": {
-    "uuid": "fe5989bb-85d0-4485-b0ad-3b195fdafb39"
-  },
+  "strapi": {},
   "engines": {
     "node": ">=10.16.0 <=14.x.x",
     "npm": "^7.10.0"
