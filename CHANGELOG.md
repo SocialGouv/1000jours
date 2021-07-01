@@ -1,3 +1,11 @@
+## [1.55.1](https://github.com/SocialGouv/1000jours/compare/v1.55.0...v1.55.1) (2021-07-01)
+
+
+### Bug Fixes
+
+* **carto:** loader caché si CP invalide ([#462](https://github.com/SocialGouv/1000jours/issues/462)) ([7f45f9b](https://github.com/SocialGouv/1000jours/commit/7f45f9b65367d2fb668c8efaef93351d975c4b4c))
+* **strapi:** Désactive le tracking de données ([#463](https://github.com/SocialGouv/1000jours/issues/463)) ([43eb9e7](https://github.com/SocialGouv/1000jours/commit/43eb9e702aa653b93d6c548cb856094e802f8ce1))
+
 # [1.55.0](https://github.com/SocialGouv/1000jours/compare/v1.54.3...v1.55.0) (2021-06-30)
 
 
