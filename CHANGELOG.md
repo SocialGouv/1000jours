@@ -1,3 +1,10 @@
+# [1.56.0](https://github.com/SocialGouv/1000jours/compare/v1.55.2...v1.56.0) (2021-07-01)
+
+
+### Features
+
+* **epds:** ajout tracker Matomo ([#465](https://github.com/SocialGouv/1000jours/issues/465)) ([fbd5ca6](https://github.com/SocialGouv/1000jours/commit/fbd5ca66ddf9e4d56263c133f7030df0be81c042))
+
 ## [1.55.2](https://github.com/SocialGouv/1000jours/compare/v1.55.1...v1.55.2) (2021-07-01)
 
 
