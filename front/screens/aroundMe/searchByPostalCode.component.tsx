@@ -55,6 +55,7 @@ const SearchByPostalCode: React.FC<Props> = ({
   const searchByPostalCodeAndGoToNewRegion = async () => {
     if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
       setPostalCodeInvalid(true);
+      setIsLoading(false);
       return;
     }
     const newRegion = await AroundMeUtils.searchRegionByPostalCode(
