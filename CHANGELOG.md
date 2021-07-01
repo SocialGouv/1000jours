@@ -1,3 +1,10 @@
+## [1.55.2](https://github.com/SocialGouv/1000jours/compare/v1.55.1...v1.55.2) (2021-07-01)
+
+
+### Bug Fixes
+
+* **epds:** ajout d'un client spécifique pour le noCache ([#464](https://github.com/SocialGouv/1000jours/issues/464)) ([979913d](https://github.com/SocialGouv/1000jours/commit/979913d59f86a4a7540dcdad7769fdfd55990bd9))
+
 ## [1.55.1](https://github.com/SocialGouv/1000jours/compare/v1.55.0...v1.55.1) (2021-07-01)
 
 
