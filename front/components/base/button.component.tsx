@@ -16,11 +16,12 @@ import {
 interface Props {
   title: string;
   rounded: boolean;
-  action: () => void;
+  action?: () => void;
   icon?: IconNode;
   disabled?: boolean;
   buttonStyle?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
+  onPress?: () => void;
 }
 
 const Button: React.FC<Props> = ({
@@ -31,6 +32,7 @@ const Button: React.FC<Props> = ({
   action,
   buttonStyle,
   titleStyle,
+  onPress,
 }) => {
   return (
     <RNEButton
@@ -47,6 +49,8 @@ const Button: React.FC<Props> = ({
         titleStyle,
       ]}
       disabledTitleStyle={rounded ? styles.roundedButtonTitle : null}
+      // Pour le volet de la carto, le onPress ne fonctionne pas sur Android, donc obligé d'ajouter onPressIn
+      onPressIn={onPress}
       onPress={action}
       type={rounded ? "solid" : "clear"}
     />
