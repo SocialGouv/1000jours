@@ -87,14 +87,39 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
     return iconsMap.get(contactType);
   };
 
+  const renderTouchableView = (
+    contactType: ContactType,
+    contactLabel: string | null
+  ) => {
+    return (
+      <TouchableOpacity
+        style={[styles.rowView, styles.marginRight]}
+        onPress={async () => getLinkingFunction(contactType, contactLabel)}
+      >
+        {renderContactLink(contactType, contactLabel)}
+      </TouchableOpacity>
+    );
+  };
+
+  const getLinkingFunction = async (
+    contactType: ContactType,
+    contactLabel: string | null
+  ) => {
+    if (contactType === ContactType.telephone)
+      return LinkingUtils.callContact(contactLabel);
+    else if (contactType === ContactType.courriel)
+      return LinkingUtils.sendEmail(contactLabel);
+    else return LinkingUtils.openWebsite(contactLabel);
+  };
+
   const renderContactLink = (
     contactType: ContactType,
-    label: string | null
+    contactLabel: string | null
   ) => {
     return (
       <>
         {getContactIcon(contactType)}
-        <CommonText style={styles.contact}>{label}</CommonText>
+        <CommonText style={styles.contact}>{contactLabel}</CommonText>
       </>
     );
   };
@@ -120,36 +145,14 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
         {(StringUtils.stringIsNotNullNorEmpty(details.telephone) ||
           StringUtils.stringIsNotNullNorEmpty(details.courriel)) && (
           <View style={styles.phoneAndMail}>
-            {StringUtils.stringIsNotNullNorEmpty(details.telephone) && (
-              <TouchableOpacity
-                style={[styles.rowView, styles.marginRight]}
-                onPress={async () =>
-                  LinkingUtils.callContact(details.telephone)
-                }
-              >
-                {renderContactLink(ContactType.telephone, details.telephone)}
-              </TouchableOpacity>
-            )}
-            {StringUtils.stringIsNotNullNorEmpty(details.courriel) && (
-              <TouchableOpacity
-                style={styles.rowView}
-                onPress={async () => LinkingUtils.sendEmail(details.courriel)}
-              >
-                {renderContactLink(ContactType.courriel, details.courriel)}
-              </TouchableOpacity>
-            )}
+            {StringUtils.stringIsNotNullNorEmpty(details.telephone) &&
+              renderTouchableView(ContactType.telephone, details.telephone)}
+            {StringUtils.stringIsNotNullNorEmpty(details.courriel) &&
+              renderTouchableView(ContactType.courriel, details.courriel)}
           </View>
         )}
-        {StringUtils.stringIsNotNullNorEmpty(details.site_internet) && (
-          <TouchableOpacity
-            style={styles.rowView}
-            onPress={async () =>
-              LinkingUtils.openWebsite(details.site_internet)
-            }
-          >
-            {renderContactLink(ContactType.siteInternet, details.site_internet)}
-          </TouchableOpacity>
-        )}
+        {StringUtils.stringIsNotNullNorEmpty(details.site_internet) &&
+          renderTouchableView(ContactType.siteInternet, details.site_internet)}
       </View>
       <View style={styles.goThereView}>
         <Button
