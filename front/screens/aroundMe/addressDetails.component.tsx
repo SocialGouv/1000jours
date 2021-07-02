@@ -25,7 +25,10 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
-import { SCREEN_WIDTH } from "../../constants/platform.constants";
+import {
+  PLATFORM_IS_IOS,
+  SCREEN_WIDTH,
+} from "../../constants/platform.constants";
 import type { CartographiePoisFromDB } from "../../type";
 import { LinkingUtils, StringUtils } from "../../utils";
 
@@ -91,13 +94,22 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
     contactType: ContactType,
     contactLabel: string | null
   ) => {
-    return (
+    /* Pour le volet déroulant du bas (dans la carto), on utilise la lib reanimated-bottom-sheet
+       Le souci est que sur Android, le TouchableOpacity de react-native ne répond pas, on est donc obligés d'utiliser celui de react-native-gesture-handler */
+    return PLATFORM_IS_IOS ? (
       <TouchableOpacity
         style={[styles.rowView, styles.marginRight]}
         onPress={async () => getLinkingFunction(contactType, contactLabel)}
       >
         {renderContactLink(contactType, contactLabel)}
       </TouchableOpacity>
+    ) : (
+      <TouchableOpacityAndroid
+        style={[styles.rowView, styles.marginRight]}
+        onPress={async () => getLinkingFunction(contactType, contactLabel)}
+      >
+        {renderContactLink(contactType, contactLabel)}
+      </TouchableOpacityAndroid>
     );
   };
 
