@@ -11,6 +11,7 @@ export default {
         },
       },
       package: "com.fabrique.millejours",
+      permissions: [],
       versionCode: 14,
     },
     assetBundlePatterns: ["**/*"],
