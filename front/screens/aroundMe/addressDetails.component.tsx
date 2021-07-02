@@ -1,5 +1,6 @@
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
+import { TouchableOpacity as TouchableOpacityAndroid } from "react-native-gesture-handler";
 
 import CategorieProSanteIcon from "../../assets/images/carto/categorie_pro_sante.svg";
 import DetailsAddressIcon from "../../assets/images/carto/details_adresse.svg";
@@ -24,12 +25,21 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
-import { SCREEN_WIDTH } from "../../constants/platform.constants";
+import {
+  PLATFORM_IS_IOS,
+  SCREEN_WIDTH,
+} from "../../constants/platform.constants";
 import type { CartographiePoisFromDB } from "../../type";
 import { LinkingUtils, StringUtils } from "../../utils";
 
 interface AddressDetailsProps {
   details: CartographiePoisFromDB;
+}
+
+enum ContactType {
+  telephone = "telephone",
+  courriel = "courriel",
+  siteInternet = "siteInternet",
 }
 
 const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
@@ -72,6 +82,60 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
 
   details.categorie = AroundMeConstants.PoiCategorieEnum[details.categorie];
 
+  const getContactIcon = (contactType: ContactType) => {
+    const iconsMap = new Map<ContactType, React.ReactNode>();
+    iconsMap.set(ContactType.telephone, <DetailsPhoneIcon />);
+    iconsMap.set(ContactType.courriel, <DetailsMailIcon />);
+    iconsMap.set(ContactType.siteInternet, <DetailsWebIcon />);
+    return iconsMap.get(contactType);
+  };
+
+  const renderTouchableView = (
+    contactType: ContactType,
+    contactLabel: string | null
+  ) => {
+    /* Pour le volet déroulant du bas (dans la carto), on utilise la lib reanimated-bottom-sheet
+       Le souci est que sur Android, le TouchableOpacity de react-native ne répond pas, on est donc obligés d'utiliser celui de react-native-gesture-handler */
+    return PLATFORM_IS_IOS ? (
+      <TouchableOpacity
+        style={[styles.rowView, styles.marginRight]}
+        onPress={async () => getLinkingFunction(contactType, contactLabel)}
+      >
+        {renderContactLink(contactType, contactLabel)}
+      </TouchableOpacity>
+    ) : (
+      <TouchableOpacityAndroid
+        style={[styles.rowView, styles.marginRight]}
+        onPress={async () => getLinkingFunction(contactType, contactLabel)}
+      >
+        {renderContactLink(contactType, contactLabel)}
+      </TouchableOpacityAndroid>
+    );
+  };
+
+  const getLinkingFunction = async (
+    contactType: ContactType,
+    contactLabel: string | null
+  ) => {
+    if (contactType === ContactType.telephone)
+      return LinkingUtils.callContact(contactLabel);
+    else if (contactType === ContactType.courriel)
+      return LinkingUtils.sendEmail(contactLabel);
+    else return LinkingUtils.openWebsite(contactLabel);
+  };
+
+  const renderContactLink = (
+    contactType: ContactType,
+    contactLabel: string | null
+  ) => {
+    return (
+      <>
+        {getContactIcon(contactType)}
+        <CommonText style={styles.contact}>{contactLabel}</CommonText>
+      </>
+    );
+  };
+
   const iconType = getIcon(details.categorie, details.type);
   return (
     <View style={styles.rowContainer}>
@@ -93,45 +157,14 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
         {(StringUtils.stringIsNotNullNorEmpty(details.telephone) ||
           StringUtils.stringIsNotNullNorEmpty(details.courriel)) && (
           <View style={styles.phoneAndMail}>
-            {StringUtils.stringIsNotNullNorEmpty(details.telephone) && (
-              <TouchableOpacity
-                style={[styles.rowView, styles.marginRight]}
-                onPress={async () =>
-                  LinkingUtils.callContact(details.telephone)
-                }
-              >
-                <DetailsPhoneIcon />
-                <CommonText style={styles.contact}>
-                  {details.telephone}
-                </CommonText>
-              </TouchableOpacity>
-            )}
-            {StringUtils.stringIsNotNullNorEmpty(details.courriel) && (
-              <TouchableOpacity
-                style={styles.rowView}
-                onPress={async () => LinkingUtils.sendEmail(details.courriel)}
-              >
-                <DetailsMailIcon />
-                <CommonText style={styles.contact}>
-                  {details.courriel}
-                </CommonText>
-              </TouchableOpacity>
-            )}
+            {StringUtils.stringIsNotNullNorEmpty(details.telephone) &&
+              renderTouchableView(ContactType.telephone, details.telephone)}
+            {StringUtils.stringIsNotNullNorEmpty(details.courriel) &&
+              renderTouchableView(ContactType.courriel, details.courriel)}
           </View>
         )}
-        {StringUtils.stringIsNotNullNorEmpty(details.site_internet) && (
-          <TouchableOpacity
-            style={styles.rowView}
-            onPress={async () =>
-              LinkingUtils.openWebsite(details.site_internet)
-            }
-          >
-            <DetailsWebIcon />
-            <CommonText style={styles.contact}>
-              {details.site_internet}
-            </CommonText>
-          </TouchableOpacity>
-        )}
+        {StringUtils.stringIsNotNullNorEmpty(details.site_internet) &&
+          renderTouchableView(ContactType.siteInternet, details.site_internet)}
       </View>
       <View style={styles.goThereView}>
         <Button
@@ -139,7 +172,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
           titleStyle={styles.fontButton}
           rounded={true}
           disabled={false}
-          action={async () => {
+          onPressIn={async () => {
             await LinkingUtils.openNavigationApp(
               details.position_latitude,
               details.position_longitude
