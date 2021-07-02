@@ -1,3 +1,10 @@
+# [1.57.0](https://github.com/SocialGouv/1000jours/compare/v1.56.1...v1.57.0) (2021-07-02)
+
+
+### Features
+
+* **carto:** affichage cartouche et volet ([#470](https://github.com/SocialGouv/1000jours/issues/470)) ([fe2964c](https://github.com/SocialGouv/1000jours/commit/fe2964c07e4c49e77502591b1ca2da9e8964798c))
+
 ## [1.56.1](https://github.com/SocialGouv/1000jours/compare/v1.56.0...v1.56.1) (2021-07-02)
 
 
