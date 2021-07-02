@@ -15,7 +15,14 @@ import TypeMaterniteIcon from "../../assets/images/carto/type_maternite.svg";
 import TypePlanningFamilialIcon from "../../assets/images/carto/type_planning_familial.svg";
 import TypePmiCafCpamIcon from "../../assets/images/carto/type_pmi_caf_cpam.svg";
 import TypeSaadIcon from "../../assets/images/carto/type_saad.svg";
-import { Button, CommonText, SecondaryText, View } from "../../components";
+import {
+  Button,
+  CommonText,
+  Icomoon,
+  IcomoonIcons,
+  SecondaryText,
+  View,
+} from "../../components";
 import {
   AroundMeConstants,
   Colors,
@@ -34,6 +41,8 @@ import { LinkingUtils, StringUtils } from "../../utils";
 
 interface AddressDetailsProps {
   details: CartographiePoisFromDB;
+  isClickedMarker?: boolean;
+  hideDetails?: () => void;
 }
 
 enum ContactType {
@@ -42,7 +51,11 @@ enum ContactType {
   siteInternet = "siteInternet",
 }
 
-const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
+const AddressDetails: React.FC<AddressDetailsProps> = ({
+  details,
+  isClickedMarker,
+  hideDetails,
+}) => {
   const getIcon = (
     categoriePoi: AroundMeConstants.PoiCategorieEnum,
     typePoi: AroundMeConstants.PoiTypeEnum
@@ -180,6 +193,20 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
           }}
         />
       </View>
+      {isClickedMarker && (
+        <TouchableOpacity
+          style={styles.closeModalView}
+          onPress={() => {
+            hideDetails?.();
+          }}
+        >
+          <Icomoon
+            name={IcomoonIcons.fermer}
+            size={Sizes.mmd}
+            color={Colors.primaryBlue}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -189,6 +216,12 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginHorizontal: Margins.smaller,
     marginVertical: Margins.smaller,
+  },
+  closeModalView: {
+    marginRight: Margins.smaller,
+    marginTop: Margins.smaller,
+    position: "absolute",
+    right: 0,
   },
   columnView: {
     flexDirection: "column",
