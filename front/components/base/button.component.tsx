@@ -21,7 +21,7 @@ interface Props {
   disabled?: boolean;
   buttonStyle?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
-  onPress?: () => void;
+  onPressIn?: () => void;
 }
 
 const Button: React.FC<Props> = ({
@@ -32,7 +32,7 @@ const Button: React.FC<Props> = ({
   action,
   buttonStyle,
   titleStyle,
-  onPress,
+  onPressIn,
 }) => {
   return (
     <RNEButton
@@ -50,7 +50,7 @@ const Button: React.FC<Props> = ({
       ]}
       disabledTitleStyle={rounded ? styles.roundedButtonTitle : null}
       // Pour le volet de la carto, le onPress ne fonctionne pas sur Android, donc obligé d'ajouter onPressIn
-      onPressIn={onPress}
+      onPressIn={onPressIn}
       onPress={action}
       type={rounded ? "solid" : "clear"}
     />

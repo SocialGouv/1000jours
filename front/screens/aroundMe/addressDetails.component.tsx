@@ -172,7 +172,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
           titleStyle={styles.fontButton}
           rounded={true}
           disabled={false}
-          onPress={async () => {
+          onPressIn={async () => {
             await LinkingUtils.openNavigationApp(
               details.position_latitude,
               details.position_longitude
