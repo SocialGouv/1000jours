@@ -1,3 +1,10 @@
+## [1.56.1](https://github.com/SocialGouv/1000jours/compare/v1.56.0...v1.56.1) (2021-07-02)
+
+
+### Bug Fixes
+
+* **carto:** correction des interactions dans la liste pour Android ([#468](https://github.com/SocialGouv/1000jours/issues/468)) ([a801ea3](https://github.com/SocialGouv/1000jours/commit/a801ea3f4594ee7c294db028249e9a25c7519988))
+
 # [1.56.0](https://github.com/SocialGouv/1000jours/compare/v1.55.2...v1.56.0) (2021-07-01)
 
 
