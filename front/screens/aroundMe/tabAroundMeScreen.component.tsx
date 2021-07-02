@@ -1,7 +1,7 @@
 import { useMatomo } from "matomo-tracker-react-native";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
@@ -25,7 +25,10 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../constants";
-import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
+import {
+  PLATFORM_IS_IOS,
+  SCREEN_HEIGHT,
+} from "../../constants/platform.constants";
 import type { CartographiePoisFromDB } from "../../type";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
 import AddressDetails from "./addressDetails.component";
@@ -123,7 +126,6 @@ const TabAroundMeScreen: React.FC = () => {
     if (moveToRegionBecauseOfMarkerClick) {
       setMoveToRegionBecauseOfMarkerClick(false);
     } else {
-      setShowAddressDetails(false);
       setShowAddressesList(true);
     }
     setPostalCodeInvalid(false);
@@ -142,7 +144,6 @@ const TabAroundMeScreen: React.FC = () => {
   const onMarkerClick = (markerIndex: number) => {
     setAddressDetails(poisArrayOnMap[markerIndex]);
     setShowAddressDetails(true);
-    setShowAddressesList(false);
     setMoveToRegionBecauseOfMarkerClick(true);
   };
 
@@ -258,7 +259,13 @@ const TabAroundMeScreen: React.FC = () => {
       </View>
       {showAddressDetails && addressDetails && (
         <View style={styles.addressDetails}>
-          <AddressDetails details={addressDetails} />
+          <AddressDetails
+            details={addressDetails}
+            isClickedMarker={true}
+            hideDetails={() => {
+              setShowAddressDetails(false);
+            }}
+          />
         </View>
       )}
       {showAddressesList &&
@@ -287,8 +294,8 @@ const styles = StyleSheet.create({
   addressDetails: {
     bottom: 0,
     left: 0,
+    marginBottom: SCREEN_HEIGHT / 9,
     marginHorizontal: Margins.smaller,
-    marginVertical: Margins.smaller,
     position: "absolute",
     right: 0,
   },
