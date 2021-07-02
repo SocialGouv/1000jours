@@ -1,5 +1,6 @@
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
+import { TouchableOpacity as TouchableOpacityAndroid } from "react-native-gesture-handler";
 
 import CategorieProSanteIcon from "../../assets/images/carto/categorie_pro_sante.svg";
 import DetailsAddressIcon from "../../assets/images/carto/details_adresse.svg";
@@ -30,6 +31,12 @@ import { LinkingUtils, StringUtils } from "../../utils";
 
 interface AddressDetailsProps {
   details: CartographiePoisFromDB;
+}
+
+enum ContactType {
+  telephone = "telephone",
+  courriel = "courriel",
+  siteInternet = "siteInternet",
 }
 
 const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
@@ -72,6 +79,26 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
 
   details.categorie = AroundMeConstants.PoiCategorieEnum[details.categorie];
 
+  const getContactIcon = (contactType: ContactType) => {
+    const iconsMap = new Map<ContactType, React.ReactNode>();
+    iconsMap.set(ContactType.telephone, <DetailsPhoneIcon />);
+    iconsMap.set(ContactType.courriel, <DetailsMailIcon />);
+    iconsMap.set(ContactType.siteInternet, <DetailsWebIcon />);
+    return iconsMap.get(contactType);
+  };
+
+  const renderContactLink = (
+    contactType: ContactType,
+    label: string | null
+  ) => {
+    return (
+      <>
+        {getContactIcon(contactType)}
+        <CommonText style={styles.contact}>{label}</CommonText>
+      </>
+    );
+  };
+
   const iconType = getIcon(details.categorie, details.type);
   return (
     <View style={styles.rowContainer}>
@@ -100,10 +127,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
                   LinkingUtils.callContact(details.telephone)
                 }
               >
-                <DetailsPhoneIcon />
-                <CommonText style={styles.contact}>
-                  {details.telephone}
-                </CommonText>
+                {renderContactLink(ContactType.telephone, details.telephone)}
               </TouchableOpacity>
             )}
             {StringUtils.stringIsNotNullNorEmpty(details.courriel) && (
@@ -111,10 +135,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
                 style={styles.rowView}
                 onPress={async () => LinkingUtils.sendEmail(details.courriel)}
               >
-                <DetailsMailIcon />
-                <CommonText style={styles.contact}>
-                  {details.courriel}
-                </CommonText>
+                {renderContactLink(ContactType.courriel, details.courriel)}
               </TouchableOpacity>
             )}
           </View>
@@ -126,10 +147,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ details }) => {
               LinkingUtils.openWebsite(details.site_internet)
             }
           >
-            <DetailsWebIcon />
-            <CommonText style={styles.contact}>
-              {details.site_internet}
-            </CommonText>
+            {renderContactLink(ContactType.siteInternet, details.site_internet)}
           </TouchableOpacity>
         )}
       </View>
