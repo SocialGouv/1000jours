@@ -1,3 +1,10 @@
+## [1.57.1](https://github.com/SocialGouv/1000jours/compare/v1.57.0...v1.57.1) (2021-07-04)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la mise à jour du profil ([#472](https://github.com/SocialGouv/1000jours/issues/472)) ([c6ffcce](https://github.com/SocialGouv/1000jours/commit/c6ffcce17232b53a7d76e13572bfc9e9fa09175a)), closes [#419](https://github.com/SocialGouv/1000jours/issues/419)
+
 # [1.57.0](https://github.com/SocialGouv/1000jours/compare/v1.56.1...v1.57.0) (2021-07-02)
 
 
