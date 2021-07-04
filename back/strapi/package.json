@@ -41,7 +41,7 @@
     "strapi-plugin-users-permissions": "^3.6.5",
     "strapi-utils": "^3.6.5",
     "stream-chain": "^2.2.4",
-    "stream-json": "^1.7.1"
+    "stream-json": "^1.7.2"
   },
   "author": {
     "name": "Fabrique des ministères sociaux"
