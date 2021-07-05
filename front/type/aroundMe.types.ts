@@ -6,7 +6,7 @@ export interface CartographiePoisFromDB {
   id: number;
   categorie: AroundMeConstants.PoiCategorieEnum;
   type: AroundMeConstants.PoiTypeEnum;
-  nom: string | null;
+  nom: string;
   telephone: string | null;
   courriel: string | null;
   site_internet: string | null;

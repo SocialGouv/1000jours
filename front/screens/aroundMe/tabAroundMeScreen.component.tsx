@@ -168,6 +168,7 @@ const TabAroundMeScreen: React.FC = () => {
 
     setAddressDetails(poisArray[markerIndex]);
     setPoisArray(poisArray);
+    setPoisArrayAddInfo(poisArrayAddInfo);
     setShowAddressDetails(true);
     setMoveToRegionBecauseOfMarkerClick(true);
     setPreviousSelectedPoiIndex(markerIndex);
@@ -226,16 +227,18 @@ const TabAroundMeScreen: React.FC = () => {
           {poisArray.map((poi, poiIndex) => (
             <View key={poiIndex}>
               <Marker
-                // title={poi.nom}
+                title={poi.nom}
                 coordinate={{
                   latitude: Number(poi.position_latitude),
                   longitude: Number(poi.position_longitude),
                 }}
                 key={poiIndex}
-                // key={`${poiIndex}${Date.now()}`}
-                // key={`${poi.id}-${poi.isSelected ? "active" : "inactive"}`}
                 pinColor={
-                  poisArrayAddInfo[poiIndex].isSelected ? "red" : "green"
+                  PLATFORM_IS_IOS
+                    ? poisArrayAddInfo[poiIndex].isSelected
+                      ? "red"
+                      : "green"
+                    : "red"
                 }
                 onPress={() => {
                   onMarkerClick(poiIndex);
