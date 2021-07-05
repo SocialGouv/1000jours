@@ -29,7 +29,7 @@ import {
   PLATFORM_IS_IOS,
   SCREEN_HEIGHT,
 } from "../../constants/platform.constants";
-import type { CartographiePoisFromDB } from "../../type";
+import type { CartographiePoisFromDB, DisplayedPois } from "../../type";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
 import AddressDetails from "./addressDetails.component";
 import AroundMeFilter from "./aroundMeFilter.component";
@@ -54,7 +54,8 @@ const TabAroundMeScreen: React.FC = () => {
   // Variable utilisée pour trigger le useEffect lors du relancement de la Recherche
   const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] =
     useState(false);
-  const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
+  const [poisArray, setPoisArray] = useState<DisplayedPois[]>([]);
+  const [previousSelectedPoiIndex, setPreviousSelectedPoiIndex] = useState(-1);
   const [showAddressDetails, setShowAddressDetails] = useState(false);
   const [addressDetails, setAddressDetails] =
     useState<CartographiePoisFromDB>();
@@ -86,7 +87,12 @@ const TabAroundMeScreen: React.FC = () => {
     if (pois.length === 0) {
       showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
     }
-    setPoisArray(pois);
+    const newArray = pois.map((poiFromDB): DisplayedPois => {
+      const displayedPoi: DisplayedPois = poiFromDB;
+      displayedPoi.isSelected = false;
+      return displayedPoi;
+    });
+    setPoisArray(newArray);
     setShowAddressesList(true);
     setShowAddressDetails(false);
     setIsLoading(false);
@@ -147,9 +153,15 @@ const TabAroundMeScreen: React.FC = () => {
         { duration: 500 }
       );
     }
+    if (previousSelectedPoiIndex !== -1)
+      poisArray[previousSelectedPoiIndex].isSelected = false;
+    poisArray[markerIndex].isSelected = true;
+
     setAddressDetails(poisArray[markerIndex]);
+    setPoisArray(poisArray);
     setShowAddressDetails(true);
     setMoveToRegionBecauseOfMarkerClick(true);
+    setPreviousSelectedPoiIndex(markerIndex);
   };
 
   return (
@@ -209,7 +221,8 @@ const TabAroundMeScreen: React.FC = () => {
                   latitude: Number(poi.position_latitude),
                   longitude: Number(poi.position_longitude),
                 }}
-                pinColor="red"
+                key={poiIndex}
+                pinColor={poi.isSelected ? "red" : "green"}
                 onPress={() => {
                   onMarkerClick(poiIndex);
                 }}
