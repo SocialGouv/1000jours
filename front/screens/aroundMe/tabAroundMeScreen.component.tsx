@@ -263,7 +263,14 @@ const TabAroundMeScreen: React.FC = () => {
         />
       </View>
       {showAddressDetails && addressDetails && (
-        <View style={styles.addressDetails}>
+        <View
+          style={[
+            styles.addressDetails,
+            poisArray.length > 1
+              ? styles.addressDetailsBigMarginBottom
+              : styles.addressDetailsSmallMarginBottom,
+          ]}
+        >
           <AddressDetails
             details={addressDetails}
             isClickedMarker={true}
@@ -299,10 +306,15 @@ const styles = StyleSheet.create({
   addressDetails: {
     bottom: 0,
     left: 0,
-    marginBottom: SCREEN_HEIGHT / 9,
     marginHorizontal: Margins.smaller,
     position: "absolute",
     right: 0,
+  },
+  addressDetailsBigMarginBottom: {
+    marginBottom: SCREEN_HEIGHT / 9,
+  },
+  addressDetailsSmallMarginBottom: {
+    marginBottom: Margins.smaller,
   },
   addressesListLabel: {
     color: Colors.primaryBlue,
