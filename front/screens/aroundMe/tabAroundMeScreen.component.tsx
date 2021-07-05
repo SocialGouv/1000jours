@@ -2,7 +2,7 @@ import { useMatomo } from "matomo-tracker-react-native";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import type { Region } from "react-native-maps";
+import type { LatLng, Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import {
@@ -137,6 +137,16 @@ const TabAroundMeScreen: React.FC = () => {
   };
 
   const onMarkerClick = (markerIndex: number) => {
+    if (PLATFORM_IS_IOS) {
+      const markerCoordinates: LatLng = {
+        latitude: poisArray[markerIndex].position_latitude,
+        longitude: poisArray[markerIndex].position_longitude,
+      };
+      mapRef.current?.animateCamera(
+        { center: markerCoordinates },
+        { duration: 500 }
+      );
+    }
     setAddressDetails(poisArray[markerIndex]);
     setShowAddressDetails(true);
     setMoveToRegionBecauseOfMarkerClick(true);
@@ -253,7 +263,14 @@ const TabAroundMeScreen: React.FC = () => {
         />
       </View>
       {showAddressDetails && addressDetails && (
-        <View style={styles.addressDetails}>
+        <View
+          style={[
+            styles.addressDetails,
+            poisArray.length > 1
+              ? styles.addressDetailsBigMarginBottom
+              : styles.addressDetailsSmallMarginBottom,
+          ]}
+        >
           <AddressDetails
             details={addressDetails}
             isClickedMarker={true}
@@ -289,10 +306,15 @@ const styles = StyleSheet.create({
   addressDetails: {
     bottom: 0,
     left: 0,
-    marginBottom: SCREEN_HEIGHT / 9,
     marginHorizontal: Margins.smaller,
     position: "absolute",
     right: 0,
+  },
+  addressDetailsBigMarginBottom: {
+    marginBottom: SCREEN_HEIGHT / 9,
+  },
+  addressDetailsSmallMarginBottom: {
+    marginBottom: Margins.smaller,
   },
   addressesListLabel: {
     color: Colors.primaryBlue,
