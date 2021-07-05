@@ -74,14 +74,16 @@ const sitesEnLigneBienEtMoinsBien = {
 };
 
 const sitesEnLignePasBien = {
-  title: "Les sites en ligne d’accompagnement à la parentalité et de santé",
+  title: "Les sites d'information",
   urls: [...sitesEnLigneBienEtMoinsBien.urls, "maman-blues.fr"],
 };
 
 export const epdsInformation = {
   associationsLocalesNationalesSoutienParentalite: {
     description:
-      "Il existe de nombreuses structures associatives qui ont pour but de venir en aide aux parents et nouveaux parents. Nous avons recensé un certain nombre qui pourront vous être utile. Ces associations proposent souvent des espaces de dialogue pour échanger entre pairs  (consulter la cartographie)",
+      "Il existe de nombreuses structures associatives qui ont pour but de venir en aide aux parents et nouveaux parents. Nous avons recensé un certain nombre qui pourront vous être utile. Ces associations proposent souvent des espaces de dialogue pour échanger entre pairs",
+    // description:
+    //   "Il existe de nombreuses structures associatives qui ont pour but de venir en aide aux parents et nouveaux parents. Nous avons recensé un certain nombre qui pourront vous être utile. Ces associations proposent souvent des espaces de dialogue pour échanger entre pairs (consulter la cartographie)",
     title:
       "Les associations locales et nationales de soutien à la parentalité (café des parents, groupes de paroles, groupes naissances, etc.)",
   },
@@ -93,7 +95,9 @@ export const epdsInformation = {
   },
   laep: {
     description:
-      "Le Laep est un espace convivial qui accueille, de manière libre et sans inscription, de jeunes enfants âgés de moins de 6 ans accompagnés de leur(s) parent(s) ou d’un adulte référent. Cette structure, adaptée à l’accueil de jeunes enfants, constitue un espace de jeu libre pour les enfants et un lieu de parole pour les parents. Elle est ouverte sur des temps déterminés par des accueillants (professionnels et/ou bénévoles) formés à l’écoute et garants des règles de vie spécifiques à ce lieu. Il peut en exister plusieurs autour de vous, n’hésitez pas à consulter la cartographie",
+      "Le Laep est un espace convivial qui accueille, de manière libre et sans inscription, de jeunes enfants âgés de moins de 6 ans accompagnés de leur(s) parent(s) ou d’un adulte référent. Cette structure, adaptée à l’accueil de jeunes enfants, constitue un espace de jeu libre pour les enfants et un lieu de parole pour les parents. Elle est ouverte sur des temps déterminés par des accueillants (professionnels et/ou bénévoles) formés à l’écoute et garants des règles de vie spécifiques à ce lieu.",
+    // description:
+    //   "Le Laep est un espace convivial qui accueille, de manière libre et sans inscription, de jeunes enfants âgés de moins de 6 ans accompagnés de leur(s) parent(s) ou d’un adulte référent. Cette structure, adaptée à l’accueil de jeunes enfants, constitue un espace de jeu libre pour les enfants et un lieu de parole pour les parents. Elle est ouverte sur des temps déterminés par des accueillants (professionnels et/ou bénévoles) formés à l’écoute et garants des règles de vie spécifiques à ce lieu. Il peut en exister plusieurs autour de vous, n’hésitez pas à consulter la cartographie",
     title: "Les lieux d’accueil enfant et parents (LAEP)",
   },
   pmiVeritableAllieParents: {
@@ -129,7 +133,7 @@ export const epdsInformation = {
     },
     {
       description:
-        "Une aide à domicile permet aux parents de reprendre confiance en eux. Le soutien sur les aspects matériels ne sont donc pas à négliger, comme un soutien pour les tâches ménagères (recours à une aide-ménagère) et les soins au bébé (recours à une technicienne de l’intervention sociale et familiale – TISF), consulter le site la CAF et la cartographie pour identifier les associations de services d’aide et d’accompagnement à domicile",
+        "Une aide à domicile permet aux parents de reprendre confiance en eux. Le soutien sur les aspects matériels ne sont donc pas à négliger, comme un soutien pour les tâches ménagères (recours à une aide-ménagère) et les soins au bébé (recours à une technicienne de l’intervention sociale et familiale – TISF), consulter le site de la CAF pour identifier les associations de services d’aide et d’accompagnement à domicile",
       pdfUrl:
         "https://www.perinatalite-occitanie.fr/sites/rpo/files/pdf/TROUBLES%20EMOTIONNELS%20ET%20PSYCHIQUES%20DES%20MERES%20EN%20P.pdf",
       title: "Les visites à domicile",
@@ -157,13 +161,12 @@ export const epdsInformation = {
     paragraphs: [
       {
         contacts: epdsContacts,
-        title: "Les lignes téléphoniques d'aide aux parents",
+        title: "Les lignes téléphoniques",
       },
       sitesEnLignePasBien,
     ],
     sectionIcon: IcomoonIcons.telephone,
-    sectionTitle:
-      "Les ressources numériques ou à distance qui vous apporteront l’information nécessaire",
+    sectionTitle: "Les sites et les lignes d'information et d'orientation",
   },
   servicesAidesAccompagnementDomicile: {
     description:

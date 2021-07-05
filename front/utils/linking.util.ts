@@ -12,12 +12,14 @@ export const callContact = async (
 };
 
 export const sendEmail = async (
-  email: string | null | undefined
+  email: string | null | undefined,
+  subject?: string
 ): Promise<void> => {
   if (!email) return;
-  await Linking.openURL(`mailto:${email}`);
+  await Linking.openURL(
+    subject ? `mailto:${email}?subject=${subject}` : `mailto:${email}`
+  );
 };
-
 export const openWebsite = async (
   website: string | null | undefined
 ): Promise<void> => {

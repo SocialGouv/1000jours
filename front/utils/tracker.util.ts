@@ -14,4 +14,6 @@ export enum TrackingEvent {
   ARTICLE_LIST = "Liste d'articles",
   ARTICLE = "Article",
   CALENDAR = "Calendrier",
+  CARTO = "Cartographie",
+  EPDS = "EPDS",
 }

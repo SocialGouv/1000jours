@@ -3,6 +3,6 @@
 # https://docs.fastlane.tools/actions/deliver/
 
 submit_for_review true
-app_identifier "com.millejours.fabrique"
+app_identifier "com.fabrique.millejours"
 force true
 automatic_release true

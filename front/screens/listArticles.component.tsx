@@ -73,6 +73,8 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
         resume
         visuel {
           url
+          height
+          width
         }
         thematiques {
           nom
@@ -124,7 +126,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.scrollView}>
       <View style={styles.topContainer}>
         <View style={[styles.flexStart]}>
           <BackButton
@@ -192,7 +194,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
                   defaultSource={DefaultImage}
                   source={{
                     uri: getVisuelFormat(
-                      article.visuel?.url,
+                      article.visuel,
                       VisuelFormat.thumbnail
                     ),
                   }}
@@ -299,8 +301,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 0,
   },
+  scrollView: {
+    backgroundColor: Colors.white,
+  },
   threeFirstMonthsBanner: {
     backgroundColor: Colors.primaryYellowLight,
+    marginBottom: Paddings.light,
     padding: Paddings.default,
   },
   title: {

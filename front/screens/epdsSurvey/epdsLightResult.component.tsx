@@ -6,16 +6,12 @@ import * as React from "react";
 import { useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
-import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
-import IconeResultatMoyen from "../../assets/images/icone_resultats_moyen.svg";
-import IconeResultatPasBien from "../../assets/images/icone_resultats_pasbien.svg";
 import { Button, TitleH1 } from "../../components";
-import { CommonText, SecondaryText } from "../../components/StyledText";
+import { SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
   Colors,
   DatabaseQueries,
-  EpdsConstants,
   FontWeight,
   Labels,
   Margins,
@@ -23,12 +19,7 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../constants";
-import {
-  EpdsSurveyUtils,
-  LinkingUtils,
-  NotificationUtils,
-  StorageUtils,
-} from "../../utils";
+import { EpdsSurveyUtils, NotificationUtils, StorageUtils } from "../../utils";
 import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation.component";
 
 interface Props {
@@ -42,7 +33,7 @@ const clientNoCache = new ApolloClient({
   uri: `${process.env.API_URL}/graphql?nocache`,
 });
 
-const EpdsResult: React.FC<Props> = ({ result, startSurveyOver }) => {
+const EpdsLightResult: React.FC<Props> = ({ result, startSurveyOver }) => {
   const [addReponseQuery] = useMutation(DatabaseQueries.EPDS_ADD_RESPONSE, {
     client: clientNoCache,
     onError: (err) => {
@@ -51,7 +42,7 @@ const EpdsResult: React.FC<Props> = ({ result, startSurveyOver }) => {
   });
 
   const labelsResultats = Labels.epdsSurvey.resultats;
-  const resultData = EpdsSurveyUtils.getResultLabelAndStyle(result);
+  const resultData = EpdsSurveyUtils.getResultLabelAndStyleLight();
 
   useEffect(() => {
     const saveEpdsSurveyResults = async () => {
@@ -74,73 +65,20 @@ const EpdsResult: React.FC<Props> = ({ result, startSurveyOver }) => {
   // Delete saved storage keys for EPDS survey
   void EpdsSurveyUtils.removeEpdsStorageItems();
 
-  const getIcon = (icone: EpdsConstants.ResultIconValueEnum) => {
-    const iconsMap = new Map<
-      EpdsConstants.ResultIconValueEnum,
-      React.ReactNode
-    >();
-    iconsMap.set(EpdsConstants.ResultIconValueEnum.bien, <IconeResultatBien />);
-    iconsMap.set(
-      EpdsConstants.ResultIconValueEnum.moyen,
-      <IconeResultatMoyen />
-    );
-    iconsMap.set(
-      EpdsConstants.ResultIconValueEnum.pasBien,
-      <IconeResultatPasBien />
-    );
-    return iconsMap.get(icone);
-  };
-
-  const colorStyle = { color: resultData.color };
-
   return (
     <ScrollView>
-      <TitleH1
-        title={`${Labels.epdsSurvey.titleResults} : ${Labels.epdsSurvey.title}`}
-        animated={false}
-      />
-      <View style={styles.rowView}>
-        <View>{getIcon(resultData.icon)}</View>
-        <CommonText style={[styles.stateOfMind, colorStyle]}>
-          {resultData.resultLabels.stateOfMind}
-        </CommonText>
-      </View>
-      {resultData.resultLabels.contacterNotrePartenaire && (
-        <>
-          <SecondaryText style={[styles.text, styles.fontBold]}>
-            {resultData.resultLabels.oserEnParler}
-          </SecondaryText>
-          <SecondaryText style={[styles.text]}>
-            {resultData.resultLabels.contacterNotrePartenaire}
-          </SecondaryText>
-          <View style={styles.validateButton}>
-            <Button
-              title={Labels.buttons.contact}
-              titleStyle={styles.fontButton}
-              rounded={true}
-              disabled={false}
-              action={async () =>
-                LinkingUtils.sendEmail(
-                  Labels.epdsSurvey.mailContact,
-                  Labels.epdsSurvey.mailSubject
-                )
-              }
-            />
-          </View>
-        </>
-      )}
-      {/* <SecondaryText style={[styles.text, styles.fontBold]}>
-        {labelsResultats.introduction}
-        {result} {resultData.resultLabels.intervalle}.
-      </SecondaryText> */}
+      <TitleH1 title={Labels.epdsSurveyLight.titleLight} animated={false} />
+      <SecondaryText style={[styles.text, styles.fontBold]}>
+        {Labels.epdsSurveyLight.oserEnParler}
+      </SecondaryText>
       <SecondaryText style={styles.text}>
-        {resultData.resultLabels.explication}
+        {Labels.epdsSurveyLight.changementsImportants}
       </SecondaryText>
       <SecondaryText style={[styles.text, styles.fontBold]}>
         {labelsResultats.retakeTestInvitation}
       </SecondaryText>
       <EpdsResultInformation
-        leftBorderColor={resultData.color}
+        leftBorderColor={Colors.white}
         informationList={resultData.resultLabels.professionalsList}
       />
       <View style={styles.validateButton}>
@@ -199,4 +137,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EpdsResult;
+export default EpdsLightResult;

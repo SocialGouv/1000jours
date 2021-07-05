@@ -1,3 +1,4 @@
+import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 
@@ -7,6 +8,7 @@ import { View } from "../../components/Themed";
 import { FontWeight, Paddings, Sizes } from "../../constants";
 import Colors from "../../constants/Colors";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
+import { TrackerUtils } from "../../utils";
 
 interface Props {
   questionAndAnswers: EpdsQuestionAndAnswers;
@@ -17,6 +19,7 @@ const EpdsQuestion: React.FC<Props> = ({
   questionAndAnswers,
   updatePressedAnswer,
 }) => {
+  const { trackScreenView } = useMatomo();
   return (
     <ScrollView
       style={styles.swipeView}
@@ -34,6 +37,9 @@ const EpdsQuestion: React.FC<Props> = ({
             checked={answer.isChecked}
             onPress={() => {
               updatePressedAnswer(answer);
+              trackScreenView(
+                `${TrackerUtils.TrackingEvent.EPDS} - question n°${questionAndAnswers.questionNumber} - case cochée`
+              );
             }}
           />
         ))}
@@ -52,13 +58,13 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlueDark,
     fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
-    paddingBottom: Paddings.default,
+    paddingBottom: Paddings.smaller,
   },
   swipeView: {
     width,
   },
   swipeViewMargin: {
-    margin: "10%",
+    marginHorizontal: "10%",
   },
 });
 

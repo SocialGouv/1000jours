@@ -17,8 +17,9 @@ import {
 } from "../../constants";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, StorageUtils } from "../../utils";
+import EpdsLightResult from "./epdsLightResult.component";
 import EpdsLoadPreviousSurvey from "./epdsLoadPreviousSurvey.component";
-import EpdsResult from "./epdsResult.component";
+// import EpdsResult from "./epdsResult.component";
 import EpdsSurveyFooter from "./epdsSurveyFooter.component";
 import EpdsSurveyQuestionsList from "./epdsSurveyQuestionsList.component";
 
@@ -116,7 +117,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
               {Labels.epdsSurvey.instruction}
             </CommonText>
             <View style={styles.surveyContainer}>
-              <View style={styles.questionList}>
+              <View>
                 <EpdsSurveyQuestionsList
                   epdsSurvey={questionsAndAnswers}
                   swiperRef={swiperRef}
@@ -142,12 +143,18 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
           />
         )
       ) : (
-        <EpdsResult
+        <EpdsLightResult
           result={score}
           startSurveyOver={async () => {
             await restartSurvey();
           }}
         />
+        // <EpdsResult
+        //   result={score}
+        //   startSurveyOver={async () => {
+        //     await restartSurvey();
+        //   }}
+        // />
       )}
     </View>
   );
@@ -169,10 +176,8 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    margin: Margins.default,
-  },
-  questionList: {
-    marginBottom: Margins.step,
+    marginHorizontal: Margins.default,
+    marginTop: Margins.smaller,
   },
   surveyContainer: {
     flex: 1,

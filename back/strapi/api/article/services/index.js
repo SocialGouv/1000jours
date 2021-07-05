@@ -19,7 +19,7 @@ const completeUrls = (article) => {
   return recurseWalk(article, (value, key, obj) => {
     if (typeof value !== "string") return;
 
-    obj[key] = value.replace(/\/uploads/g, `${serverUrl}/uploads`);
+    obj[key] = value.replace(/(^|")\/uploads/g, `$1${serverUrl}/uploads`);
   });
 };
 

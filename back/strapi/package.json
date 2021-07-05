@@ -41,14 +41,12 @@
     "strapi-plugin-users-permissions": "^3.6.5",
     "strapi-utils": "^3.6.5",
     "stream-chain": "^2.2.4",
-    "stream-json": "^1.7.1"
+    "stream-json": "^1.7.2"
   },
   "author": {
     "name": "Fabrique des ministères sociaux"
   },
-  "strapi": {
-    "uuid": "fe5989bb-85d0-4485-b0ad-3b195fdafb39"
-  },
+  "strapi": {},
   "engines": {
     "node": ">=10.16.0 <=14.x.x",
     "npm": "^7.10.0"
@@ -57,10 +55,10 @@
   "devDependencies": {
     "@socialgouv/eslint-config-recommended": "^1.70.0",
     "babel-eslint": "^10.1.0",
-    "dotenv": "^9.0.2",
+    "dotenv": "^10.0.0",
     "eslint": "^7.24.0",
     "eslint-plugin-jest": "^24.3.6",
-    "jest": "^26.6.3",
+    "jest": "^27.0.6",
     "node-fetch": "^2.6.1",
     "prettier": "^2.2.1"
   }

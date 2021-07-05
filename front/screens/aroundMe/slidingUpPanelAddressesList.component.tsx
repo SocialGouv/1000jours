@@ -89,7 +89,7 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({ poisArray }) => {
   return (
     <BottomSheet
       ref={sheetRef}
-      snapPoints={[height / 8, height / 2.5, height - 170]}
+      snapPoints={[height / 9.5, height / 2.5, height - 170]}
       borderRadius={10}
       renderContent={renderContent}
     />
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     borderRadius: Sizes.xs,
     height: Sizes.xxxxxxs,
     marginBottom: Margins.smaller,
-    marginTop: Margins.larger,
+    marginTop: Margins.default,
     width: Sizes.xxxl,
   },
 });

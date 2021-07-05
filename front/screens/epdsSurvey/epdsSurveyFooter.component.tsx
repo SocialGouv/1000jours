@@ -1,3 +1,4 @@
+import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import type SwiperFlatListRefProps from "react-native-swiper-flatlist";
@@ -6,6 +7,7 @@ import Button from "../../components/base/button.component";
 import Icomoon, { IcomoonIcons } from "../../components/base/icomoon.component";
 import { View } from "../../components/Themed";
 import { Colors, Labels } from "../../constants";
+import { TrackerUtils } from "../../utils";
 
 interface Props {
   swiperCurrentIndex: number;
@@ -22,6 +24,7 @@ const EpdsSurveyFooter: React.FC<Props> = ({
   questionIsAnswered,
   setShowResult,
 }) => {
+  const { trackScreenView } = useMatomo();
   return (
     <View>
       <View style={styles.buttonsContainer}>
@@ -55,6 +58,9 @@ const EpdsSurveyFooter: React.FC<Props> = ({
                 disabled={false}
                 action={() => {
                   setShowResult(true);
+                  trackScreenView(
+                    `${TrackerUtils.TrackingEvent.EPDS} - questionnaire terminé`
+                  );
                 }}
               />
             </View>
@@ -75,6 +81,11 @@ const EpdsSurveyFooter: React.FC<Props> = ({
                   swiperRef.current?.scrollToIndex({
                     index: swiperCurrentIndex + 1,
                   });
+                  trackScreenView(
+                    `${TrackerUtils.TrackingEvent.EPDS} - question n°${
+                      swiperCurrentIndex + 1
+                    } répondue`
+                  );
                 }}
               />
             )

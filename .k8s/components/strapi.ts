@@ -11,7 +11,7 @@ import {
   ResourceRequirements,
   Volume,
 } from "kubernetes-models/v1";
-import { Ingress } from "kubernetes-models/api/networking/v1";
+import { createAutoscale } from "@socialgouv/kosko-charts/components/autoscale";
 
 const component = "strapi";
 const params = env.component(component);
@@ -20,16 +20,16 @@ const prob = new Probe({
     path: "/_health",
     port: "http",
   },
-  initialDelaySeconds: 30
+  initialDelaySeconds: 30,
 });
 
 const resources = new ResourceRequirements({
   requests: {
-    cpu: "50m",
+    cpu: "1",
     memory: "256Mi",
   },
   limits: {
-    cpu: "500m",
+    cpu: "1",
     memory: "1Gi",
   },
 });
@@ -54,9 +54,9 @@ export default async () => {
   const manifests = await create(component, {
     env,
     config: {
+      ingress: false,
       withPostgres: true,
       containerPort: 1337,
-      subDomainPrefix: "backoffice-",
       image: getHarborImagePath({ name: "les1000jours-strapi" }),
     },
     deployment: {
@@ -72,15 +72,16 @@ export default async () => {
   });
   const deployment = getDeployment(manifests);
 
-  // add nginx annotation for nginx upload limit
-  const ingress = manifests.find((m) => m.kind === "Ingress") as Ingress;
-  if (ingress && ingress.metadata?.annotations) {
-    ingress.metadata.annotations = {
-      ...ingress.metadata.annotations,
-      "nginx.ingress.kubernetes.io/proxy-body-size": "1g",
-    };
-  }
-  const deploymentUrl = "https://" + getIngressHost(manifests);
+  const deploymentUrl =
+    "https://" +
+    getIngressHost(
+      await create(component, {
+        env,
+        config: {
+          subDomainPrefix: "backoffice-",
+        },
+      })
+    );
 
   addEnvs({
     deployment,
@@ -96,7 +97,10 @@ export default async () => {
     },
   });
 
+  const hpa = createAutoscale(deployment, { minReplicas: 5, maxReplicas: 15 });
   return manifests.concat(
-    params.useEmptyDirAsVolume ? [] : [persistentVolumeClaim, persistentVolume]
+    params.useEmptyDirAsVolume
+      ? []
+      : [hpa, persistentVolumeClaim, persistentVolume]
   );
 };

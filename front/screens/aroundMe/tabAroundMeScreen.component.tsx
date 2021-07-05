@@ -1,7 +1,8 @@
+import { useMatomo } from "matomo-tracker-react-native";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import type { Region } from "react-native-maps";
+import type { LatLng, Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import {
@@ -24,15 +25,20 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../constants";
-import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
+import {
+  PLATFORM_IS_IOS,
+  SCREEN_HEIGHT,
+} from "../../constants/platform.constants";
 import type { CartographiePoisFromDB } from "../../type";
-import { KeyboardUtils, StorageUtils } from "../../utils";
+import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
 import AddressDetails from "./addressDetails.component";
 import AroundMeFilter from "./aroundMeFilter.component";
 import SearchByPostalCode from "./searchByPostalCode.component";
 import SlidingUpPanelAddressesList from "./slidingUpPanelAddressesList.component";
 
 const TabAroundMeScreen: React.FC = () => {
+  const { trackScreenView } = useMatomo();
+  trackScreenView(TrackerUtils.TrackingEvent.CARTO);
   const mapRef = useRef<MapView>();
   const [postalCodeInput, setPostalCodeInput] = useState("");
   const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
@@ -82,6 +88,7 @@ const TabAroundMeScreen: React.FC = () => {
     }
     setPoisArray(pois);
     setShowAddressesList(true);
+    setShowAddressDetails(false);
     setIsLoading(false);
   };
 
@@ -114,7 +121,6 @@ const TabAroundMeScreen: React.FC = () => {
     if (moveToRegionBecauseOfMarkerClick) {
       setMoveToRegionBecauseOfMarkerClick(false);
     } else {
-      setShowAddressDetails(false);
       setShowAddressesList(true);
     }
     setPostalCodeInvalid(false);
@@ -131,9 +137,18 @@ const TabAroundMeScreen: React.FC = () => {
   };
 
   const onMarkerClick = (markerIndex: number) => {
+    if (PLATFORM_IS_IOS) {
+      const markerCoordinates: LatLng = {
+        latitude: poisArray[markerIndex].position_latitude,
+        longitude: poisArray[markerIndex].position_longitude,
+      };
+      mapRef.current?.animateCamera(
+        { center: markerCoordinates },
+        { duration: 500 }
+      );
+    }
     setAddressDetails(poisArray[markerIndex]);
     setShowAddressDetails(true);
-    setShowAddressesList(false);
     setMoveToRegionBecauseOfMarkerClick(true);
   };
 
@@ -248,8 +263,21 @@ const TabAroundMeScreen: React.FC = () => {
         />
       </View>
       {showAddressDetails && addressDetails && (
-        <View style={styles.addressDetails}>
-          <AddressDetails details={addressDetails} />
+        <View
+          style={[
+            styles.addressDetails,
+            poisArray.length > 1
+              ? styles.addressDetailsBigMarginBottom
+              : styles.addressDetailsSmallMarginBottom,
+          ]}
+        >
+          <AddressDetails
+            details={addressDetails}
+            isClickedMarker={true}
+            hideDetails={() => {
+              setShowAddressDetails(false);
+            }}
+          />
         </View>
       )}
       {showAddressesList &&
@@ -279,9 +307,14 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     marginHorizontal: Margins.smaller,
-    marginVertical: Margins.smaller,
     position: "absolute",
     right: 0,
+  },
+  addressDetailsBigMarginBottom: {
+    marginBottom: SCREEN_HEIGHT / 9,
+  },
+  addressDetailsSmallMarginBottom: {
+    marginBottom: Margins.smaller,
   },
   addressesListLabel: {
     color: Colors.primaryBlue,

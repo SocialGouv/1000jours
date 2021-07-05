@@ -7,5 +7,11 @@ module.exports = {
       },
       multipart: true,
     },
+    poweredBy: {
+      enabled: false,
+    },
+    public: {
+      maxAge: 63000,
+    },
   },
 };

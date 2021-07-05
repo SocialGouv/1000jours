@@ -1,3 +1,147 @@
+## [1.57.2](https://github.com/SocialGouv/1000jours/compare/v1.57.1...v1.57.2) (2021-07-05)
+
+
+### Bug Fixes
+
+* **carto:** cacher le volet lorsqu'aucune adresse n'a été trouvée ([#476](https://github.com/SocialGouv/1000jours/issues/476)) ([3222394](https://github.com/SocialGouv/1000jours/commit/32223946bb49273282c29cd63f5e00245fe501b7))
+
+## [1.57.1](https://github.com/SocialGouv/1000jours/compare/v1.57.0...v1.57.1) (2021-07-04)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la mise à jour du profil ([#472](https://github.com/SocialGouv/1000jours/issues/472)) ([c6ffcce](https://github.com/SocialGouv/1000jours/commit/c6ffcce17232b53a7d76e13572bfc9e9fa09175a)), closes [#419](https://github.com/SocialGouv/1000jours/issues/419)
+
+# [1.57.0](https://github.com/SocialGouv/1000jours/compare/v1.56.1...v1.57.0) (2021-07-02)
+
+
+### Features
+
+* **carto:** affichage cartouche et volet ([#470](https://github.com/SocialGouv/1000jours/issues/470)) ([fe2964c](https://github.com/SocialGouv/1000jours/commit/fe2964c07e4c49e77502591b1ca2da9e8964798c))
+
+## [1.56.1](https://github.com/SocialGouv/1000jours/compare/v1.56.0...v1.56.1) (2021-07-02)
+
+
+### Bug Fixes
+
+* **carto:** correction des interactions dans la liste pour Android ([#468](https://github.com/SocialGouv/1000jours/issues/468)) ([a801ea3](https://github.com/SocialGouv/1000jours/commit/a801ea3f4594ee7c294db028249e9a25c7519988))
+
+# [1.56.0](https://github.com/SocialGouv/1000jours/compare/v1.55.2...v1.56.0) (2021-07-01)
+
+
+### Features
+
+* **epds:** ajout tracker Matomo ([#465](https://github.com/SocialGouv/1000jours/issues/465)) ([fbd5ca6](https://github.com/SocialGouv/1000jours/commit/fbd5ca66ddf9e4d56263c133f7030df0be81c042))
+
+## [1.55.2](https://github.com/SocialGouv/1000jours/compare/v1.55.1...v1.55.2) (2021-07-01)
+
+
+### Bug Fixes
+
+* **epds:** ajout d'un client spécifique pour le noCache ([#464](https://github.com/SocialGouv/1000jours/issues/464)) ([979913d](https://github.com/SocialGouv/1000jours/commit/979913d59f86a4a7540dcdad7769fdfd55990bd9))
+
+## [1.55.1](https://github.com/SocialGouv/1000jours/compare/v1.55.0...v1.55.1) (2021-07-01)
+
+
+### Bug Fixes
+
+* **carto:** loader caché si CP invalide ([#462](https://github.com/SocialGouv/1000jours/issues/462)) ([7f45f9b](https://github.com/SocialGouv/1000jours/commit/7f45f9b65367d2fb668c8efaef93351d975c4b4c))
+* **strapi:** Désactive le tracking de données ([#463](https://github.com/SocialGouv/1000jours/issues/463)) ([43eb9e7](https://github.com/SocialGouv/1000jours/commit/43eb9e702aa653b93d6c548cb856094e802f8ce1))
+
+# [1.55.0](https://github.com/SocialGouv/1000jours/compare/v1.54.3...v1.55.0) (2021-06-30)
+
+
+### Features
+
+* **api:** ingress rate-limit ([#451](https://github.com/SocialGouv/1000jours/issues/451)) ([1fb9765](https://github.com/SocialGouv/1000jours/commit/1fb976540f37f136110f42c2e93993d67a8842ae))
+
+## [1.54.3](https://github.com/SocialGouv/1000jours/compare/v1.54.2...v1.54.3) (2021-06-30)
+
+
+### Bug Fixes
+
+* **k8s:** allow strapi to go up to 1 CPU ([5c4ff71](https://github.com/SocialGouv/1000jours/commit/5c4ff7196995d7747045b6675e0654629fc7079d))
+
+## [1.54.2](https://github.com/SocialGouv/1000jours/compare/v1.54.1...v1.54.2) (2021-06-30)
+
+
+### Bug Fixes
+
+* **k8s:** remove pvc on strapi-cache ([#450](https://github.com/SocialGouv/1000jours/issues/450)) ([91416d7](https://github.com/SocialGouv/1000jours/commit/91416d7519b45269bb6e41d5875a918a966c0c72))
+
+## [1.54.1](https://github.com/SocialGouv/1000jours/compare/v1.54.0...v1.54.1) (2021-06-30)
+
+
+### Bug Fixes
+
+* **k8s:** add hpa in preprod and prod env ([#447](https://github.com/SocialGouv/1000jours/issues/447)) ([a5c5ce9](https://github.com/SocialGouv/1000jours/commit/a5c5ce9e48b971285663b8ed16d7359bb0a5543b))
+* **k8s:** change nginx cache folder ([#449](https://github.com/SocialGouv/1000jours/issues/449)) ([57281c8](https://github.com/SocialGouv/1000jours/commit/57281c84998b40fe73bb899ad3b2d20bc8a2ab85))
+
+# [1.54.0](https://github.com/SocialGouv/1000jours/compare/v1.53.2...v1.54.0) (2021-06-30)
+
+
+### Features
+
+* **cache:** Ajoute un proxy cache pour l'API et les images ([#433](https://github.com/SocialGouv/1000jours/issues/433)) ([a1323dd](https://github.com/SocialGouv/1000jours/commit/a1323ddb5d7060172a0767a9bd737aad3cab8849))
+
+## [1.53.2](https://github.com/SocialGouv/1000jours/compare/v1.53.1...v1.53.2) (2021-06-30)
+
+
+### Bug Fixes
+
+* 🐛 Corrige un crash lors d'un rapport d'erreur ([#445](https://github.com/SocialGouv/1000jours/issues/445)) ([cea1a21](https://github.com/SocialGouv/1000jours/commit/cea1a21c9502d3db6b1e79fca29f029db061a502))
+
+## [1.53.1](https://github.com/SocialGouv/1000jours/compare/v1.53.0...v1.53.1) (2021-06-30)
+
+
+### Bug Fixes
+
+* **epds:** corrections bugs d'affichage ([#444](https://github.com/SocialGouv/1000jours/issues/444)) ([39cc6e3](https://github.com/SocialGouv/1000jours/commit/39cc6e3b366690e9ef66c1da31683f25d140ddb6))
+
+# [1.53.0](https://github.com/SocialGouv/1000jours/compare/v1.52.4...v1.53.0) (2021-06-30)
+
+
+### Bug Fixes
+
+* **epds:** modifications du texte de l'onboarding et des résultats ([#442](https://github.com/SocialGouv/1000jours/issues/442)) ([99fd110](https://github.com/SocialGouv/1000jours/commit/99fd1109b9a6f304ce0f1f30288e6d83ed7b5145))
+* 🐛 Corrige des ajustements graphique ([#439](https://github.com/SocialGouv/1000jours/issues/439)) ([06709b1](https://github.com/SocialGouv/1000jours/commit/06709b1943b7e90cbe31d44d45ec1e0d1b21d409))
+
+
+### Features
+
+* 🎸 Ajoute le numéro de version de l'app dans le menu ([#441](https://github.com/SocialGouv/1000jours/issues/441)) ([8a2894d](https://github.com/SocialGouv/1000jours/commit/8a2894d44a077deda292cf3ea3e5f5047c0d901c))
+* 🎸 Corrige le profil (checkbox non sauvegardé) ([#440](https://github.com/SocialGouv/1000jours/issues/440)) ([1578b6f](https://github.com/SocialGouv/1000jours/commit/1578b6fe094f47adc84657c6db09f1a0c651e8e8)), closes [#419](https://github.com/SocialGouv/1000jours/issues/419)
+
+## [1.52.4](https://github.com/SocialGouv/1000jours/compare/v1.52.3...v1.52.4) (2021-06-30)
+
+
+### Bug Fixes
+
+* **articles:** Corrige les urls des images dans le corps des textes ([#436](https://github.com/SocialGouv/1000jours/issues/436)) ([dc6af16](https://github.com/SocialGouv/1000jours/commit/dc6af16920f79fbf75da10f957b1f8fabf59ef34))
+
+## [1.52.3](https://github.com/SocialGouv/1000jours/compare/v1.52.2...v1.52.3) (2021-06-29)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'optimisation des images des articles ([#434](https://github.com/SocialGouv/1000jours/issues/434)) ([b9b4af5](https://github.com/SocialGouv/1000jours/commit/b9b4af5300b64d2ebd453f3176af07e639217b57))
+* **articles:** Corrige les urls des formats d'image ([#431](https://github.com/SocialGouv/1000jours/issues/431)) ([6e8fada](https://github.com/SocialGouv/1000jours/commit/6e8fada95399731dc6c2d8a528bceb9060ec2e5b))
+* **epds:** modification des textes du questionnaire ([#432](https://github.com/SocialGouv/1000jours/issues/432)) ([665c1e0](https://github.com/SocialGouv/1000jours/commit/665c1e0b1a5789e99f5a2d521dbc6a3053464000))
+
+## [1.52.2](https://github.com/SocialGouv/1000jours/compare/v1.52.1...v1.52.2) (2021-06-29)
+
+
+### Bug Fixes
+
+* **epds:** score et intro commentés dans les résultats ([#428](https://github.com/SocialGouv/1000jours/issues/428)) ([02131bb](https://github.com/SocialGouv/1000jours/commit/02131bb6bd3ad4978413ffdc00917f9456277eb1))
+
+## [1.52.1](https://github.com/SocialGouv/1000jours/compare/v1.52.0...v1.52.1) (2021-06-29)
+
+
+### Bug Fixes
+
+* 🐛 Ajoute la permission de recevoir les notifications ([#424](https://github.com/SocialGouv/1000jours/issues/424)) ([3ae4157](https://github.com/SocialGouv/1000jours/commit/3ae415755066b7f3a84ccc2ac0aad1da7a7a0780))
+
 # [1.52.0](https://github.com/SocialGouv/1000jours/compare/v1.51.1...v1.52.0) (2021-06-29)
 
 

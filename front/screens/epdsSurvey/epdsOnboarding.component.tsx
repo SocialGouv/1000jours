@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlueDark,
     fontSize: Sizes.xs,
     fontWeight: "bold",
+    textAlign: "center",
   },
   validateButton: {
     alignItems: "center",

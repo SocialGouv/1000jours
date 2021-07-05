@@ -108,7 +108,11 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   };
 
   useEffect(() => {
-    void getUserSituations();
+    const unsubscribe = navigation.addListener("focus", () => {
+      void getUserSituations();
+    });
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
   }, []);
 
   const prepareNextStepNotification = (activeStep: Step | null) => {

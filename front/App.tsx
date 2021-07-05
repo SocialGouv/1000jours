@@ -17,6 +17,7 @@ import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import { StorageUtils, TrackerUtils } from "./utils";
 import { initMonitoring, reportError } from "./utils/logging.util";
+import { registerForPushNotificationsAsync } from "./utils/notification.util";
 
 Notifications.setNotificationHandler({
   // eslint-disable-next-line @typescript-eslint/require-await
@@ -62,6 +63,7 @@ const App: FC = () => {
       });
 
     // Notifications
+    void registerForPushNotificationsAsync();
     // Se déclenche lorsque l'on reçoit une notification et que l'app est ouverte
     notificationListener.current =
       Notifications.addNotificationReceivedListener((newNotification) => {
