@@ -1,3 +1,11 @@
+# [1.58.0](https://github.com/SocialGouv/1000jours/compare/v1.57.2...v1.58.0) (2021-07-05)
+
+
+### Features
+
+* **backoffice:** Ajoute un plugin d'export de contenu ([#477](https://github.com/SocialGouv/1000jours/issues/477)) ([b79df9d](https://github.com/SocialGouv/1000jours/commit/b79df9d6af8617f539c9a9869fd0f077d9962804))
+* **carto:** centrage de la carte sur le marqueur pour iOS ([#478](https://github.com/SocialGouv/1000jours/issues/478)) ([4b06162](https://github.com/SocialGouv/1000jours/commit/4b0616265f86a37660a13394283a56cc362d9d34))
+
 ## [1.57.2](https://github.com/SocialGouv/1000jours/compare/v1.57.1...v1.57.2) (2021-07-05)
 
 
