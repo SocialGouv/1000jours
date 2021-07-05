@@ -1,3 +1,10 @@
+## [1.57.2](https://github.com/SocialGouv/1000jours/compare/v1.57.1...v1.57.2) (2021-07-05)
+
+
+### Bug Fixes
+
+* **carto:** cacher le volet lorsqu'aucune adresse n'a été trouvée ([#476](https://github.com/SocialGouv/1000jours/issues/476)) ([3222394](https://github.com/SocialGouv/1000jours/commit/32223946bb49273282c29cd63f5e00245fe501b7))
+
 ## [1.57.1](https://github.com/SocialGouv/1000jours/compare/v1.57.0...v1.57.1) (2021-07-04)
 
 
