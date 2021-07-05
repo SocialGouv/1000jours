@@ -1,8 +1,8 @@
 import {
   CartoFilter,
   CartoFilterStorage,
+  CartographiePoisAddInfo,
   CartographiePoisFromDB,
-  DisplayedPois,
   FetchedFilterFromDb,
   PoiTypeFromDB,
   StepFromDB,
@@ -23,9 +23,9 @@ import {
 export {
   CartoFilter,
   CartoFilterStorage,
+  CartographiePoisAddInfo,
   CartographiePoisFromDB,
   DataFetchingType,
-  DisplayedPois,
   EpdsAnswer,
   EpdsGenders,
   EpdsGenderType,
