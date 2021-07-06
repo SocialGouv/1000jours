@@ -17,9 +17,6 @@ export interface CartographiePoisFromDB {
   position_longitude: number;
 }
 
-export interface CartographiePoisAddInfo {
-  isSelected: boolean;
-}
 export interface PoiTypeFromDB {
   nom: string;
   categorie: string;
