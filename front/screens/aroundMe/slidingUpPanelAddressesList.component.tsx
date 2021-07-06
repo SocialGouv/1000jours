@@ -2,8 +2,11 @@
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import type { NativeScrollEvent } from "react-native";
-import { Dimensions, StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { Dimensions, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  ScrollView,
+  TouchableOpacity as TouchableOpacityAndroid,
+} from "react-native-gesture-handler";
 import { Card } from "react-native-paper";
 import BottomSheet from "reanimated-bottom-sheet";
 
@@ -17,14 +20,19 @@ import {
   Margins,
   Sizes,
 } from "../../constants";
+import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import type { CartographiePoisFromDB } from "../../type";
 import AddressDetails from "./addressDetails.component";
 
 interface Props {
   poisArray: CartographiePoisFromDB[];
+  centerOnMarker: (markerIndex: number) => void;
 }
 
-const SlidingUpPanelAddressesList: React.FC<Props> = ({ poisArray }) => {
+const SlidingUpPanelAddressesList: React.FC<Props> = ({
+  poisArray,
+  centerOnMarker,
+}) => {
   const sheetRef = useRef<BottomSheet>(null);
   const [currentEndIndex, setCurrentEndIndex] = useState(
     AroundMeConstants.PAGINATION_NUMBER_ADDRESSES_LIST
@@ -54,6 +62,14 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({ poisArray }) => {
     );
   };
 
+  const renderCard = (poi: CartographiePoisFromDB) => {
+    return (
+      <Card style={styles.card}>
+        <AddressDetails details={poi} />
+      </Card>
+    );
+  };
+
   const renderContent = () => {
     return (
       <View style={styles.slidingUpPanelView}>
@@ -74,13 +90,29 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({ poisArray }) => {
             setCurrentEndIndex(newEndIndex);
           }}
         >
-          {poisToDisplay.map((poi, poiIndex) => (
-            <View key={poiIndex}>
-              <Card style={styles.card}>
-                <AddressDetails details={poi} />
-              </Card>
-            </View>
-          ))}
+          {poisToDisplay.map((poi, poiIndex) =>
+            PLATFORM_IS_IOS ? (
+              <TouchableOpacity
+                key={poiIndex}
+                onPress={() => {
+                  centerOnMarker(poiIndex);
+                  sheetRef.current?.snapTo(0);
+                }}
+              >
+                {renderCard(poi)}
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacityAndroid
+                key={poiIndex}
+                onPress={() => {
+                  centerOnMarker(poiIndex);
+                  sheetRef.current?.snapTo(0);
+                }}
+              >
+                {renderCard(poi)}
+              </TouchableOpacityAndroid>
+            )
+          )}
         </ScrollView>
       </View>
     );
