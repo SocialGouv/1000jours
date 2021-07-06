@@ -18,6 +18,22 @@
     },
     {
       "method": "GET",
+      "path": "/cartographie-pois/search-adresses",
+      "handler": "cartographie-poi.searchAdresses",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/cartographie-pois/count-adresses",
+      "handler": "cartographie-poi.countAdresses",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/cartographie-pois/:id",
       "handler": "cartographie-poi.findOne",
       "config": {

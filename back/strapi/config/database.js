@@ -2,7 +2,9 @@ module.exports = ({ env }) => ({
   connections: {
     default: {
       connector: "bookshelf",
-      options: {},
+      options: {
+        debug: false,
+      },
       settings: {
         client: "postgres",
         database: env("DATABASE_NAME", "strapi"),
