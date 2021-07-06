@@ -202,7 +202,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
         >
           <Icomoon
             name={IcomoonIcons.fermer}
-            size={Sizes.mmd}
+            size={Sizes.sm}
             color={Colors.primaryBlue}
           />
         </TouchableOpacity>

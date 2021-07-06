@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { useMatomo } from "matomo-tracker-react-native";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import type { LatLng, Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
@@ -55,6 +57,7 @@ const TabAroundMeScreen: React.FC = () => {
   const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] =
     useState(false);
   const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
+  const [selectedPoiIndex, setSelectedPoiIndex] = useState(-1);
   const [showAddressDetails, setShowAddressDetails] = useState(false);
   const [addressDetails, setAddressDetails] =
     useState<CartographiePoisFromDB>();
@@ -65,6 +68,9 @@ const TabAroundMeScreen: React.FC = () => {
   const [snackBarMessage, setSnackBarMessage] = useState("");
   const [showFilter, setShowFilter] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const googleMapsNotSelectedIcon = require("../../assets/images/carto/icon_google_map_not_selected.png");
+  const googleMapsSelectedIcon = require("../../assets/images/carto/icon_google_map_selected.png");
 
   useEffect(() => {
     const checkIfSavedRegion = async () => {
@@ -86,6 +92,7 @@ const TabAroundMeScreen: React.FC = () => {
     if (pois.length === 0) {
       showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
     }
+
     setPoisArray(pois);
     setShowAddressesList(true);
     setShowAddressDetails(false);
@@ -136,20 +143,23 @@ const TabAroundMeScreen: React.FC = () => {
     setShowSnackBar(false);
   };
 
-  const onMarkerClick = (markerIndex: number) => {
+  const onMarkerClick = (poiIndex: number) => {
     if (PLATFORM_IS_IOS) {
       const markerCoordinates: LatLng = {
-        latitude: poisArray[markerIndex].position_latitude,
-        longitude: poisArray[markerIndex].position_longitude,
+        latitude: poisArray[poiIndex].position_latitude,
+        longitude: poisArray[poiIndex].position_longitude,
       };
       mapRef.current?.animateCamera(
         { center: markerCoordinates },
         { duration: 500 }
       );
     }
-    setAddressDetails(poisArray[markerIndex]);
+
+    setAddressDetails(poisArray[poiIndex]);
+    setPoisArray(poisArray);
     setShowAddressDetails(true);
     setMoveToRegionBecauseOfMarkerClick(true);
+    setSelectedPoiIndex(poiIndex);
   };
 
   return (
@@ -205,15 +215,25 @@ const TabAroundMeScreen: React.FC = () => {
           {poisArray.map((poi, poiIndex) => (
             <View key={poiIndex}>
               <Marker
+                title={poi.nom}
                 coordinate={{
                   latitude: Number(poi.position_latitude),
                   longitude: Number(poi.position_longitude),
                 }}
-                pinColor="red"
+                key={poiIndex}
                 onPress={() => {
                   onMarkerClick(poiIndex);
                 }}
-              />
+              >
+                <Image
+                  source={
+                    poiIndex === selectedPoiIndex
+                      ? googleMapsSelectedIcon
+                      : googleMapsNotSelectedIcon
+                  }
+                  style={styles.googleMapMarker}
+                />
+              </Marker>
             </View>
           ))}
         </MapView>
@@ -340,6 +360,10 @@ const styles = StyleSheet.create({
   },
   fontButton: {
     fontSize: Sizes.xxs,
+  },
+  googleMapMarker: {
+    height: Margins.largest,
+    width: Margins.largest,
   },
   instruction: {
     color: Colors.commonText,
