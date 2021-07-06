@@ -306,6 +306,7 @@ const TabAroundMeScreen: React.FC = () => {
             details={addressDetails}
             isClickedMarker={true}
             hideDetails={() => {
+              setSelectedPoiIndex(-1);
               setShowAddressDetails(false);
             }}
           />
