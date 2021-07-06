@@ -64,7 +64,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
 
   const STEP_ARTICLES = gql`
     query GetStepArticles {
-      articles(where: { 
+      articles(sort: "ordre", where: {
         etapes: { id: ${route.params.step.id} }
       })
       {
