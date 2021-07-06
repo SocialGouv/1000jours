@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { range } from "lodash";
 import { useMatomo } from "matomo-tracker-react-native";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
