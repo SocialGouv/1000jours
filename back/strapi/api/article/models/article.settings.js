@@ -25,6 +25,9 @@ module.exports = {
       dominant: true,
       via: "articles",
     },
+    ordre: {
+      type: "integer",
+    },
     le_saviez_vous: {
       type: "text",
       default: "",
