@@ -1,3 +1,11 @@
+# [1.60.0](https://github.com/SocialGouv/1000jours/compare/v1.59.1...v1.60.0) (2021-07-07)
+
+
+### Features
+
+* 🎸 Ajoute "Nous écrire" dans le menu ([#496](https://github.com/SocialGouv/1000jours/issues/496)) ([5a8d7a9](https://github.com/SocialGouv/1000jours/commit/5a8d7a9550d340e5c7e7166c846fb3a61a737dc8)), closes [#345](https://github.com/SocialGouv/1000jours/issues/345)
+* 🎸 Ajoute le choix du profil dans Matomo ([#495](https://github.com/SocialGouv/1000jours/issues/495)) ([f80a613](https://github.com/SocialGouv/1000jours/commit/f80a61355faddd9ea9f90e985587d448508ed898)), closes [#484](https://github.com/SocialGouv/1000jours/issues/484)
+
 ## [1.59.1](https://github.com/SocialGouv/1000jours/compare/v1.59.0...v1.59.1) (2021-07-07)
 
 
