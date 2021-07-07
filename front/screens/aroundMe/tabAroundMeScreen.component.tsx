@@ -242,11 +242,6 @@ const TabAroundMeScreen: React.FC = () => {
                 }}
               >
                 <View style={styles.markerView}>
-                  {poiIndex === selectedPoiIndex && (
-                    <CommonText style={styles.markerTooltip}>
-                      {poi.nom}
-                    </CommonText>
-                  )}
                   <Image
                     source={
                       poiIndex === selectedPoiIndex
@@ -416,15 +411,11 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
-  markerTooltip: {
-    backgroundColor: Colors.white,
-    borderWidth: 1,
-    marginBottom: Margins.smallest,
-    padding: Paddings.smallest,
-  },
   markerView: {
     alignItems: "center",
     backgroundColor: "transparent",
+    height: Margins.evenMoreLargest,
+    justifyContent: "flex-end",
   },
   relaunchSearchButton: {
     backgroundColor: Colors.white,

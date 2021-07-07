@@ -10,7 +10,7 @@ export const Margins = {
   default: scaleNormalize(16),
   larger: scaleNormalize(24),
   largest: scaleNormalize(36),
-  evenMoreLargest: scaleNormalize(45),
+  evenMoreLargest: scaleNormalize(50),
   step: scaleNormalize(60),
   snackbarMargin: scaleNormalize(80),
   epdsResultLeftMargin: SCREEN_WIDTH / 8,
