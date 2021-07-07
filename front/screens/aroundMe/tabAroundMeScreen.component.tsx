@@ -69,6 +69,7 @@ const TabAroundMeScreen: React.FC = () => {
   const [snackBarMessage, setSnackBarMessage] = useState("");
   const [showFilter, setShowFilter] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [mapWasOnlyTouched, setMapWasOnlyTouched] = useState(false);
 
   const googleMapsNotSelectedIcon = require("../../assets/images/carto/icon_google_map_not_selected.png");
   const googleMapsSelectedIcon = require("../../assets/images/carto/icon_google_map_selected.png");
@@ -133,6 +134,8 @@ const TabAroundMeScreen: React.FC = () => {
     }
     setPostalCodeInvalid(false);
     setShowRelaunchResearchButton(true);
+
+    if (!mapWasOnlyTouched) setMapWasOnlyTouched(true);
   };
 
   const showSnackBarWithMessage = (message: string) => {
@@ -215,7 +218,16 @@ const TabAroundMeScreen: React.FC = () => {
           provider={PROVIDER_DEFAULT}
           style={styles.map}
           initialRegion={region}
+          onRegionChange={() => {
+            setMapWasOnlyTouched(false);
+          }}
           onRegionChangeComplete={onRegionChangeComplete}
+          onTouchEndCapture={() => {
+            if (mapWasOnlyTouched) {
+              setSelectedPoiIndex(-1);
+              setShowAddressDetails(false);
+            }
+          }}
         >
           {poisArray.map((poi, poiIndex) => (
             <View key={poiIndex}>
@@ -278,6 +290,7 @@ const TabAroundMeScreen: React.FC = () => {
                 setIsLoading(true);
                 setShowRelaunchResearchButton(false);
                 setShowAddressDetails(false);
+                setSelectedPoiIndex(-1);
                 setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
               }}
             />
