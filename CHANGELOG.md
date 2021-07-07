@@ -1,3 +1,17 @@
+# [1.59.0](https://github.com/SocialGouv/1000jours/compare/v1.58.0...v1.59.0) (2021-07-07)
+
+
+### Bug Fixes
+
+* **carto:** retours PO et design ([#492](https://github.com/SocialGouv/1000jours/issues/492)) ([ef54da6](https://github.com/SocialGouv/1000jours/commit/ef54da676a15aa97b35d38353031e69dd4a97a23))
+
+
+### Features
+
+* **articles:** Ajoute l'ordre aux articles pour les trier ([#485](https://github.com/SocialGouv/1000jours/issues/485)) ([9f86627](https://github.com/SocialGouv/1000jours/commit/9f866273d95ffa6c3007ca99d266e47c1c39cc52))
+* **carto:** déplacement carte sur POI via liste ([#489](https://github.com/SocialGouv/1000jours/issues/489)) ([e27ff38](https://github.com/SocialGouv/1000jours/commit/e27ff3880e93a6afd198328466692e392c3d13b1))
+* **carto:** différenciation marqueurs sélectionnés/désélectionnés ([#483](https://github.com/SocialGouv/1000jours/issues/483)) ([d46ab62](https://github.com/SocialGouv/1000jours/commit/d46ab622a4fe16836739e37d4dcdcc9df3fa7a8f))
+
 # [1.58.0](https://github.com/SocialGouv/1000jours/compare/v1.57.2...v1.58.0) (2021-07-05)
 
 
