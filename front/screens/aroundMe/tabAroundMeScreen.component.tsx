@@ -134,8 +134,7 @@ const TabAroundMeScreen: React.FC = () => {
     }
     setPostalCodeInvalid(false);
     setShowRelaunchResearchButton(true);
-
-    if (!mapWasOnlyTouched) setMapWasOnlyTouched(true);
+    setMapWasOnlyTouched(true);
   };
 
   const showSnackBarWithMessage = (message: string) => {
@@ -207,6 +206,7 @@ const TabAroundMeScreen: React.FC = () => {
           setRegion(newRegion);
           mapRef.current?.animateToRegion(newRegion);
           setMoveToRegionBecauseOfPCResearch(true);
+          setSelectedPoiIndex(-1);
         }}
         showSnackBarWithMessage={showSnackBarWithMessage}
         setIsLoading={setIsLoading}
@@ -253,7 +253,11 @@ const TabAroundMeScreen: React.FC = () => {
                         ? googleMapsSelectedIcon
                         : googleMapsNotSelectedIcon
                     }
-                    style={styles.googleMapMarker}
+                    style={
+                      poiIndex === selectedPoiIndex
+                        ? styles.googleMapMarkerSelected
+                        : styles.googleMapMarkerNotSelected
+                    }
                   />
                 </View>
               </Marker>
@@ -392,9 +396,13 @@ const styles = StyleSheet.create({
   fontButton: {
     fontSize: Sizes.xxs,
   },
-  googleMapMarker: {
+  googleMapMarkerNotSelected: {
     height: Margins.largest,
     width: Margins.largest,
+  },
+  googleMapMarkerSelected: {
+    height: Margins.evenMoreLargest,
+    width: Margins.evenMoreLargest,
   },
   instruction: {
     color: Colors.commonText,
