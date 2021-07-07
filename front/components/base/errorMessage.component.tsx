@@ -21,7 +21,7 @@ const ErrorMessage: React.FC<Props> = ({ error }) => {
       .map((graphqlError) => `${graphqlError.message}`)
       .join("\n");
 
-    // Sans le setTimeout l'Alert peut disparaitre si elle est appalée pendant une animation de navigation
+    // Sans le setTimeout l'Alert peut disparaitre si elle est appelée pendant une animation de navigation
     setTimeout(() => {
       Alert.alert(Labels.warning, message, [{ text: "OK" }]);
     }, 500);

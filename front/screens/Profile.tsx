@@ -160,18 +160,19 @@ const Profile: FC<Props> = ({ navigation }) => {
     const error = checkErrorOnProfile(userSituations, childBirthday);
     if (error) {
       Alert.alert(Labels.warning, error, [{ text: "OK" }]);
-    } else {
-      await StorageUtils.storeObjectValue(
-        StorageKeysConstants.userSituationsKey,
-        userSituations
-      );
-      await StorageUtils.storeStringValue(
-        StorageKeysConstants.userChildBirthdayKey,
-        childBirthday
-      );
-      void cancelScheduleNextStepNotification();
-      navigateToRoot();
+      return;
     }
+
+    await StorageUtils.storeObjectValue(
+      StorageKeysConstants.userSituationsKey,
+      userSituations
+    );
+    await StorageUtils.storeStringValue(
+      StorageKeysConstants.userChildBirthdayKey,
+      childBirthday
+    );
+    void cancelScheduleNextStepNotification();
+    navigateToRoot();
   };
 
   const scrollViewRef = React.useRef<ScrollView>(null);
