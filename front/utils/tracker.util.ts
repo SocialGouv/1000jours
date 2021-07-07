@@ -17,3 +17,10 @@ export enum TrackingEvent {
   CARTO = "Cartographie",
   EPDS = "EPDS",
 }
+
+export const TrackingActions = {
+  UPDATE_PROFILE: {
+    action: "Mise à jour du profil",
+    name: "Situation",
+  },
+};

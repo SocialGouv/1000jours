@@ -1,6 +1,6 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { format } from "date-fns";
-import { filter, find } from "lodash";
+import _, { filter, find } from "lodash";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
@@ -40,7 +40,7 @@ interface Props {
 }
 
 const Profile: FC<Props> = ({ navigation }) => {
-  const { trackScreenView } = useMatomo();
+  const { trackScreenView, trackEvent } = useMatomo();
   trackScreenView(TrackerUtils.TrackingEvent.PROFILE);
   const image = <ProfileImage />;
   const defaultUserContext: UserContext = {
@@ -171,6 +171,18 @@ const Profile: FC<Props> = ({ navigation }) => {
       StorageKeysConstants.userChildBirthdayKey,
       childBirthday
     );
+
+    // Envoie la situation choisie sur Matomo
+    const situationChecked = _.find(userSituations, { isChecked: true });
+    if (situationChecked) {
+      trackEvent(
+        TrackerUtils.TrackingEvent.PROFILE,
+        TrackerUtils.TrackingActions.UPDATE_PROFILE.action,
+        TrackerUtils.TrackingActions.UPDATE_PROFILE.name,
+        situationChecked.label
+      );
+    }
+
     void cancelScheduleNextStepNotification();
     navigateToRoot();
   };
