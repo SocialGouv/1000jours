@@ -9,6 +9,7 @@ import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import {
   Button,
+  CommonText,
   CustomSnackbar,
   Icomoon,
   IcomoonIcons,
@@ -145,14 +146,7 @@ const TabAroundMeScreen: React.FC = () => {
 
   const onMarkerClick = (poiIndex: number) => {
     if (PLATFORM_IS_IOS) {
-      const markerCoordinates: LatLng = {
-        latitude: poisArray[poiIndex].position_latitude,
-        longitude: poisArray[poiIndex].position_longitude,
-      };
-      mapRef.current?.animateCamera(
-        { center: markerCoordinates },
-        { duration: 500 }
-      );
+      moveMapToPoi(poiIndex);
     }
 
     setAddressDetails(poisArray[poiIndex]);
@@ -160,6 +154,17 @@ const TabAroundMeScreen: React.FC = () => {
     setShowAddressDetails(true);
     setMoveToRegionBecauseOfMarkerClick(true);
     setSelectedPoiIndex(poiIndex);
+  };
+
+  const moveMapToPoi = (poiIndex: number) => {
+    const markerCoordinates: LatLng = {
+      latitude: poisArray[poiIndex].position_latitude,
+      longitude: poisArray[poiIndex].position_longitude,
+    };
+    mapRef.current?.animateCamera(
+      { center: markerCoordinates },
+      { duration: 500 }
+    );
   };
 
   return (
@@ -215,7 +220,6 @@ const TabAroundMeScreen: React.FC = () => {
           {poisArray.map((poi, poiIndex) => (
             <View key={poiIndex}>
               <Marker
-                title={poi.nom}
                 coordinate={{
                   latitude: Number(poi.position_latitude),
                   longitude: Number(poi.position_longitude),
@@ -225,14 +229,21 @@ const TabAroundMeScreen: React.FC = () => {
                   onMarkerClick(poiIndex);
                 }}
               >
-                <Image
-                  source={
-                    poiIndex === selectedPoiIndex
-                      ? googleMapsSelectedIcon
-                      : googleMapsNotSelectedIcon
-                  }
-                  style={styles.googleMapMarker}
-                />
+                <View style={styles.markerView}>
+                  {poiIndex === selectedPoiIndex && (
+                    <CommonText style={styles.markerTooltip}>
+                      {poi.nom}
+                    </CommonText>
+                  )}
+                  <Image
+                    source={
+                      poiIndex === selectedPoiIndex
+                        ? googleMapsSelectedIcon
+                        : googleMapsNotSelectedIcon
+                    }
+                    style={styles.googleMapMarker}
+                  />
+                </View>
               </Marker>
             </View>
           ))}
@@ -302,7 +313,13 @@ const TabAroundMeScreen: React.FC = () => {
       )}
       {showAddressesList &&
         poisArray.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
-          <SlidingUpPanelAddressesList poisArray={poisArray} />
+          <SlidingUpPanelAddressesList
+            poisArray={poisArray}
+            centerOnMarker={(poiIndex: number) => {
+              setSelectedPoiIndex(poiIndex);
+              moveMapToPoi(poiIndex);
+            }}
+          />
         )}
       <AroundMeFilter
         visible={showFilter}
@@ -376,6 +393,16 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+  },
+  markerTooltip: {
+    backgroundColor: Colors.white,
+    borderWidth: 1,
+    marginBottom: Margins.smallest,
+    padding: Paddings.smallest,
+  },
+  markerView: {
+    alignItems: "center",
+    backgroundColor: "transparent",
   },
   relaunchSearchButton: {
     backgroundColor: Colors.white,
