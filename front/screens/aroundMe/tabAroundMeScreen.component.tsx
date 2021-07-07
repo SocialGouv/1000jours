@@ -69,6 +69,7 @@ const TabAroundMeScreen: React.FC = () => {
   const [snackBarMessage, setSnackBarMessage] = useState("");
   const [showFilter, setShowFilter] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [mapWasOnlyTouched, setMapWasOnlyTouched] = useState(false);
 
   const googleMapsNotSelectedIcon = require("../../assets/images/carto/icon_google_map_not_selected.png");
   const googleMapsSelectedIcon = require("../../assets/images/carto/icon_google_map_selected.png");
@@ -133,6 +134,7 @@ const TabAroundMeScreen: React.FC = () => {
     }
     setPostalCodeInvalid(false);
     setShowRelaunchResearchButton(true);
+    setMapWasOnlyTouched(true);
   };
 
   const showSnackBarWithMessage = (message: string) => {
@@ -204,6 +206,7 @@ const TabAroundMeScreen: React.FC = () => {
           setRegion(newRegion);
           mapRef.current?.animateToRegion(newRegion);
           setMoveToRegionBecauseOfPCResearch(true);
+          setSelectedPoiIndex(-1);
         }}
         showSnackBarWithMessage={showSnackBarWithMessage}
         setIsLoading={setIsLoading}
@@ -215,7 +218,16 @@ const TabAroundMeScreen: React.FC = () => {
           provider={PROVIDER_DEFAULT}
           style={styles.map}
           initialRegion={region}
+          onRegionChange={() => {
+            setMapWasOnlyTouched(false);
+          }}
           onRegionChangeComplete={onRegionChangeComplete}
+          onTouchEndCapture={() => {
+            if (mapWasOnlyTouched) {
+              setSelectedPoiIndex(-1);
+              setShowAddressDetails(false);
+            }
+          }}
         >
           {poisArray.map((poi, poiIndex) => (
             <View key={poiIndex}>
@@ -230,18 +242,17 @@ const TabAroundMeScreen: React.FC = () => {
                 }}
               >
                 <View style={styles.markerView}>
-                  {poiIndex === selectedPoiIndex && (
-                    <CommonText style={styles.markerTooltip}>
-                      {poi.nom}
-                    </CommonText>
-                  )}
                   <Image
                     source={
                       poiIndex === selectedPoiIndex
                         ? googleMapsSelectedIcon
                         : googleMapsNotSelectedIcon
                     }
-                    style={styles.googleMapMarker}
+                    style={
+                      poiIndex === selectedPoiIndex
+                        ? styles.googleMapMarkerSelected
+                        : styles.googleMapMarkerNotSelected
+                    }
                   />
                 </View>
               </Marker>
@@ -278,6 +289,7 @@ const TabAroundMeScreen: React.FC = () => {
                 setIsLoading(true);
                 setShowRelaunchResearchButton(false);
                 setShowAddressDetails(false);
+                setSelectedPoiIndex(-1);
                 setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
               }}
             />
@@ -306,6 +318,7 @@ const TabAroundMeScreen: React.FC = () => {
             details={addressDetails}
             isClickedMarker={true}
             hideDetails={() => {
+              setSelectedPoiIndex(-1);
               setShowAddressDetails(false);
             }}
           />
@@ -378,9 +391,13 @@ const styles = StyleSheet.create({
   fontButton: {
     fontSize: Sizes.xxs,
   },
-  googleMapMarker: {
+  googleMapMarkerNotSelected: {
     height: Margins.largest,
     width: Margins.largest,
+  },
+  googleMapMarkerSelected: {
+    height: Margins.evenMoreLargest,
+    width: Margins.evenMoreLargest,
   },
   instruction: {
     color: Colors.commonText,
@@ -394,15 +411,11 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
-  markerTooltip: {
-    backgroundColor: Colors.white,
-    borderWidth: 1,
-    marginBottom: Margins.smallest,
-    padding: Paddings.smallest,
-  },
   markerView: {
     alignItems: "center",
     backgroundColor: "transparent",
+    height: Margins.evenMoreLargest,
+    justifyContent: "flex-end",
   },
   relaunchSearchButton: {
     backgroundColor: Colors.white,
