@@ -1,7 +1,7 @@
 import type { NavigationContainerRef } from "@react-navigation/native";
 import Constants from "expo-constants";
 import * as React from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, Linking, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { ListItem } from "react-native-elements";
 import BottomSheet from "reanimated-bottom-sheet";
@@ -16,6 +16,7 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
+import { emailContact } from "../../constants/email.constants";
 import type { MenuItem } from "../../types";
 import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
 import { View } from "../Themed";
@@ -39,6 +40,13 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
         navigation?.navigate("profile");
       },
       title: Labels.menu.myProfil,
+    },
+    {
+      icon: IcomoonIcons.email,
+      onPress: () => {
+        void Linking.openURL(`mailto:${emailContact}`);
+      },
+      title: Labels.menu.contactUs,
     },
     {
       icon: IcomoonIcons.mentionsLegales,
@@ -108,7 +116,8 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
   const sheetRef = React.useRef<BottomSheet>(null);
 
   const height = Dimensions.get("window").height;
-  const snapPoints = [height / 2, height / 4, 0];
+  const snapPoint = height * 0.8;
+  const snapPoints = [snapPoint, snapPoint / 1.5, 0];
 
   return showMenu ? (
     <BottomSheet
