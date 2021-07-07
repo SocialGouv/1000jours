@@ -338,9 +338,9 @@ export default {
     articlesToRead: "article(s) à lire",
     filters: "Filtrer",
   },
-  version: "v.",
   menu: {
     conditionsOfUse: "Politiques de confidentialité",
+    contactUs: "Nous écrire",
     legalNotice: "Mentions légales",
     myProfil: "Mon profil",
     title: "Menu",
@@ -398,5 +398,6 @@ export default {
     },
     title: "Choisissez l'étape que vous souhaitez approfondir",
   },
+  version: "v.",
   warning: "Attention",
 };
