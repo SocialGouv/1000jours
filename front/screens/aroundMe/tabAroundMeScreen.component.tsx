@@ -9,7 +9,6 @@ import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import {
   Button,
-  CommonText,
   CustomSnackbar,
   Icomoon,
   IcomoonIcons,
@@ -416,6 +415,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     height: Margins.evenMoreLargest,
     justifyContent: "flex-end",
+    width: Margins.evenMoreLargest,
   },
   relaunchSearchButton: {
     backgroundColor: Colors.white,
