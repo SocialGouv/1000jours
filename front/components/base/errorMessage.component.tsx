@@ -21,7 +21,10 @@ const ErrorMessage: React.FC<Props> = ({ error }) => {
       .map((graphqlError) => `${graphqlError.message}`)
       .join("\n");
 
-    Alert.alert(Labels.warning, message, [{ text: "OK" }]);
+    // Sans le setTimeout l'Alert peut disparaitre si elle est appalée pendant une animation de navigation
+    setTimeout(() => {
+      Alert.alert(Labels.warning, message, [{ text: "OK" }]);
+    }, 500);
   };
 
   // Vérifie si l'api graphql est opérationnelle

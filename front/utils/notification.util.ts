@@ -76,7 +76,8 @@ export const scheduleEpdsNotification = async (): Promise<string> => {
 };
 
 export const scheduleNextStepNotification = async (
-  nextStep: Step
+  nextStep: Step,
+  triggerNow?: boolean
 ): Promise<void> => {
   const notifIdNextStep = await StorageUtils.getStringValue(
     StorageKeysConstants.notifIdNextStep
@@ -95,8 +96,15 @@ export const scheduleNextStepNotification = async (
         },
         title: Labels.timeline.notification.title,
       };
-      const trigger = addDays(new Date(childBirthday), nextStep.debut);
-      trigger.setHours(9);
+      let trigger = null;
+      if (triggerNow) {
+        trigger = {
+          seconds: 1,
+        };
+      } else {
+        trigger = addDays(new Date(childBirthday), nextStep.debut);
+        trigger.setHours(9);
+      }
       void sendNotificationReminder(content, trigger).then((notificationId) => {
         void StorageUtils.storeStringValue(
           StorageKeysConstants.notifIdNextStep,
@@ -111,6 +119,8 @@ export const cancelScheduleNextStepNotification = async (): Promise<void> => {
   const notificationId = await StorageUtils.getStringValue(
     StorageKeysConstants.notifIdNextStep
   );
-  if (notificationId && notificationId.length > 0)
+  if (notificationId && notificationId.length > 0) {
     void Notifications.cancelScheduledNotificationAsync(notificationId);
+    await StorageUtils.removeKey(StorageKeysConstants.notifIdNextStep);
+  }
 };

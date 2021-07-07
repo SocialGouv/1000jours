@@ -7,6 +7,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import type { LayoutChangeEvent } from "react-native";
 import {
+  Alert,
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
@@ -31,6 +32,8 @@ import {
 } from "../constants";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
 import { StorageUtils, TrackerUtils } from "../utils";
+import { cancelScheduleNextStepNotification } from "../utils/notification.util";
+import { checkErrorOnProfile } from "../utils/step.util";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, "profile">;
@@ -154,15 +157,21 @@ const Profile: FC<Props> = ({ navigation }) => {
   };
 
   const validateForm = async () => {
-    await StorageUtils.storeObjectValue(
-      StorageKeysConstants.userSituationsKey,
-      userSituations
-    );
-    await StorageUtils.storeStringValue(
-      StorageKeysConstants.userChildBirthdayKey,
-      childBirthday
-    );
-    navigateToRoot();
+    const error = checkErrorOnProfile(userSituations, childBirthday);
+    if (error) {
+      Alert.alert(Labels.warning, error, [{ text: "OK" }]);
+    } else {
+      await StorageUtils.storeObjectValue(
+        StorageKeysConstants.userSituationsKey,
+        userSituations
+      );
+      await StorageUtils.storeStringValue(
+        StorageKeysConstants.userChildBirthdayKey,
+        childBirthday
+      );
+      void cancelScheduleNextStepNotification();
+      navigateToRoot();
+    }
   };
 
   const scrollViewRef = React.useRef<ScrollView>(null);

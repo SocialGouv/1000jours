@@ -20,22 +20,14 @@ import {
 import { Paddings, Sizes, StorageKeysConstants } from "../constants";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
-import type {
-  Step,
-  TabHomeParamList,
-  UserInfos,
-  UserSituation,
-} from "../types";
+import type { Step, TabHomeParamList, UserSituation } from "../types";
 import { AroundMeUtils, StorageUtils, TrackerUtils } from "../utils";
-import { scheduleNextStepNotification } from "../utils/notification.util";
-
-export enum UserInfo {
-  projet = "projet",
-  conception = "conception",
-  grossesse = "grossesse",
-  enfant = "enfant",
-  enfants = "enfants",
-}
+import {
+  cancelScheduleNextStepNotification,
+  scheduleNextStepNotification,
+} from "../utils/notification.util";
+import { getCurrentStepId } from "../utils/step.util";
+import { stringIsNotNullNorEmpty } from "../utils/strings.util";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList, "listArticles">;
@@ -44,8 +36,8 @@ interface Props {
 const TabHomeScreen: FC<Props> = ({ navigation }) => {
   const { trackScreenView } = useMatomo();
   trackScreenView(TrackerUtils.TrackingEvent.HOME);
-  const ALL_STEPS_AND_CURRENT = gql`
-    query GetAllSteps($infos: Informations!) {
+  const ALL_STEPS = gql`
+    query GetAllSteps {
       etapes(sort: "id") {
         id
         nom
@@ -54,50 +46,56 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
         debut
         fin
       }
-      getCurrentEtape(infos: $infos) {
-        id
-        nom
-        ordre
-      }
     }
   `;
 
-  const defaultUserInfos: UserInfos = {
-    conception: false,
-    date: null,
-    enfant: false,
-    enfants: false,
-    grossesse: false,
-    projet: false,
-  };
+  const [previousCurrentStepId, setPreviousCurrentStepId] = useState<
+    string | null
+  >(null);
+  const [currentStepId, setCurrentStepId] = useState<number | null>(null);
+  const [loadSteps, { called, loading, error, data }] = useLazyQuery(ALL_STEPS);
 
   const getUserSituations = async () => {
+    const previousStepId = await StorageUtils.getStringValue(
+      StorageKeysConstants.currentStepId
+    );
+    if (previousStepId) setPreviousCurrentStepId(previousStepId);
+
     const userSituations = (await StorageUtils.getObjectValue(
       StorageKeysConstants.userSituationsKey
     )) as UserSituation[] | null;
+
     const date = await StorageUtils.getStringValue(
       StorageKeysConstants.userChildBirthdayKey
     );
-    const infos: UserInfos = defaultUserInfos;
-
-    userSituations?.map((userSituation) => {
-      const id = userSituation.id as keyof typeof UserInfo;
-      infos[id] = userSituation.isChecked;
-    });
-    if (date && date.length > 0) infos.date = date;
-
-    loadSteps({ variables: { infos: infos } });
+    const stepId = getCurrentStepId(userSituations, date);
+    if (stepId) {
+      void StorageUtils.storeStringValue(
+        StorageKeysConstants.currentStepId,
+        stepId.toString()
+      );
+      setCurrentStepId(stepId);
+    }
+    loadSteps();
   };
 
-  const [loadStepsAlreadyInError, setLoadStepsAlreadyInError] = useState(false);
-  const [loadSteps, { called, loading, error, data }] = useLazyQuery(
-    ALL_STEPS_AND_CURRENT,
-    {
-      variables: {
-        infos: defaultUserInfos,
-      },
+  const checkIfCurrentStepHasChanged = (currentStep: Step) => {
+    // Force le déclenchement de la notification suite au changement d'étape
+    if (
+      stringIsNotNullNorEmpty(previousCurrentStepId) &&
+      previousCurrentStepId !== currentStep.id.toString()
+    ) {
+      void cancelScheduleNextStepNotification().then(() => {
+        void scheduleNextStepNotification(currentStep, true);
+        setPreviousCurrentStepId(currentStep.id.toString());
+      });
     }
-  );
+    // Planifie la notification du prochain changement d'étape
+    else {
+      const nextStep = _.find(etapes, { ordre: currentStep.ordre + 1 });
+      if (nextStep) void scheduleNextStepNotification(nextStep);
+    }
+  };
 
   const scrollViewRef = React.useRef<ScrollView>(null);
   const scrollTo = (positionY: number) => {
@@ -115,33 +113,25 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     return unsubscribe;
   }, []);
 
-  const prepareNextStepNotification = (activeStep: Step | null) => {
-    if (activeStep) {
-      const nextStep = _.filter(etapes, { ordre: activeStep.ordre + 1 });
-      if (nextStep.length > 0) void scheduleNextStepNotification(nextStep[0]);
-    }
-  };
-
   if (!called || loading) return <Loader />;
-  if (error) {
-    // En cas d'erreur on essaye de charger les étapes avec 'defaultUserInfos'
-    if (!loadStepsAlreadyInError) {
-      setLoadStepsAlreadyInError(true);
-      loadSteps({ variables: { infos: defaultUserInfos } });
-    }
-    return <ErrorMessage error={error} />;
-  }
+  if (error) return <ErrorMessage error={error} />;
 
-  const result = data as { etapes: Step[]; getCurrentEtape: Step | null };
+  const result = data as { etapes: Step[] };
   const etapes = result.etapes.map((etape) => ({
     ...etape,
-    active: result.getCurrentEtape && result.getCurrentEtape.id === etape.id,
+    // '+' permet de convertir l'id (string) en number
+    active: currentStepId === +etape.id,
+    id: +etape.id,
   }));
+
   const numberOfStepsWithoutTheFirstAndLast = etapes.length - 1 - 2;
 
-  if (result.getCurrentEtape) {
-    prepareNextStepNotification(result.getCurrentEtape);
-    void AroundMeUtils.saveCurrentEtapeForCartoFilter(result.getCurrentEtape);
+  if (currentStepId) {
+    const currentStep = _.find(etapes, { id: currentStepId });
+    if (currentStep) {
+      checkIfCurrentStepHasChanged(currentStep);
+      void AroundMeUtils.saveCurrentEtapeForCartoFilter(currentStep);
+    }
   }
 
   return (
