@@ -1,3 +1,10 @@
+## [1.59.1](https://github.com/SocialGouv/1000jours/compare/v1.59.0...v1.59.1) (2021-07-07)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le calcul de l'étape courante ([#491](https://github.com/SocialGouv/1000jours/issues/491)) ([343f2a6](https://github.com/SocialGouv/1000jours/commit/343f2a65c1041d3d042aaf4d5aa7e88e120e37cf)), closes [#482](https://github.com/SocialGouv/1000jours/issues/482)
+
 # [1.59.0](https://github.com/SocialGouv/1000jours/compare/v1.58.0...v1.59.0) (2021-07-07)
 
 
