@@ -69,9 +69,13 @@ const TabAroundMeScreen: React.FC = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [mapWasOnlyTouched, setMapWasOnlyTouched] = useState(false);
+  const [currentUserLocation, setCurrentUserLocation] = useState<LatLng | null>(
+    null
+  );
 
   const googleMapsNotSelectedIcon = require("../../assets/images/carto/icon_google_map_not_selected.png");
   const googleMapsSelectedIcon = require("../../assets/images/carto/icon_google_map_selected.png");
+  const currentUserLocatioIcon = require("../../assets/images/carto/current_location.png");
 
   useEffect(() => {
     const checkIfSavedRegion = async () => {
@@ -213,6 +217,7 @@ const TabAroundMeScreen: React.FC = () => {
         showSnackBarWithMessage={showSnackBarWithMessage}
         setIsLoading={setIsLoading}
         updateUserLocation={(coordinates: LatLng) => {
+          setCurrentUserLocation(coordinates);
           moveMapToCoordinates(coordinates.latitude, coordinates.longitude);
           setMoveToRegionBecauseOfPCResearch(true);
         }}
@@ -264,6 +269,19 @@ const TabAroundMeScreen: React.FC = () => {
               </Marker>
             </View>
           ))}
+          {currentUserLocation && (
+            <Marker
+              coordinate={{
+                latitude: currentUserLocation.latitude,
+                longitude: currentUserLocation.longitude,
+              }}
+            >
+              <Image
+                source={currentUserLocatioIcon}
+                style={styles.currentLocationMarker}
+              />
+            </Marker>
+          )}
         </MapView>
         <View style={styles.filterView}>
           <Button
@@ -389,6 +407,10 @@ const styles = StyleSheet.create({
   },
   columnView: {
     flexDirection: "column",
+  },
+  currentLocationMarker: {
+    height: Margins.default,
+    width: Margins.default,
   },
   filterView: {
     backgroundColor: "transparent",
