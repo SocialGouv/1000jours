@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
+import type { StackNavigationProp } from "@react-navigation/stack";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
@@ -8,6 +9,7 @@ import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 
 import {
+  Button,
   CommonText,
   ErrorMessage,
   Events,
@@ -16,10 +18,14 @@ import {
 } from "../components";
 import { View } from "../components/Themed";
 import { Labels, Paddings, StorageKeysConstants } from "../constants";
-import type { Event } from "../types";
+import type { Event, RootStackParamList } from "../types";
 import { StorageUtils, TrackerUtils } from "../utils";
 
-const TabCalendarScreen: FC = () => {
+interface Props {
+  navigation: StackNavigationProp<RootStackParamList, "root">;
+}
+
+const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const { trackScreenView } = useMatomo();
   trackScreenView(TrackerUtils.TrackingEvent.CALENDAR);
   const [childBirthday, setChildBirthday] = React.useState("");
@@ -65,7 +71,16 @@ const TabCalendarScreen: FC = () => {
           <Events evenements={evenements} childBirthday={childBirthday} />
         ) : (
           <View style={styles.center}>
-            <CommonText>{Labels.calendar.noChildBirthday}</CommonText>
+            <CommonText style={styles.noChildBirthday}>
+              {Labels.calendar.noChildBirthday}
+            </CommonText>
+            <Button
+              title={Labels.profile.update}
+              rounded={true}
+              action={() => {
+                navigation.navigate("profile");
+              }}
+            />
           </View>
         )}
       </View>
@@ -86,6 +101,9 @@ const styles = StyleSheet.create({
   container: {
     height: "100%",
     padding: Paddings.default,
+  },
+  noChildBirthday: {
+    paddingVertical: Paddings.default,
   },
   switchViewMode: {
     alignItems: "flex-end",

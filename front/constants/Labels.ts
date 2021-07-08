@@ -380,6 +380,7 @@ export default {
     },
     subTitle: "- Votre profil -",
     title: "A quelle étape êtes-vous ?",
+    update: "Modifier ma situation",
   },
   tabs: {
     aroundMeTitle: "Autour de moi",
