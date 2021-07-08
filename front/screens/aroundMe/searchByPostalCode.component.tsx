@@ -48,18 +48,22 @@ const SearchByPostalCode: React.FC<Props> = ({
   const checkLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== Location.PermissionStatus.GRANTED) {
-      console.log("Permission to access location was denied");
+      showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
       return;
     }
 
     setIsLoading(true);
-    const currentLocation = await Location.getCurrentPositionAsync({});
-    console.log(JSON.stringify(currentLocation));
-    const currentLocationCoordinates: LatLng = {
-      latitude: currentLocation.coords.latitude,
-      longitude: currentLocation.coords.longitude,
-    };
-    updateUserLocation(currentLocationCoordinates);
+    try {
+      const currentLocation = await Location.getCurrentPositionAsync({});
+      const currentLocationCoordinates: LatLng = {
+        latitude: currentLocation.coords.latitude,
+        longitude: currentLocation.coords.longitude,
+      };
+      updateUserLocation(currentLocationCoordinates);
+    } catch {
+      showSnackBarWithMessage(Labels.errorMsg);
+    }
+
     setIsLoading(false);
   };
 
@@ -150,9 +154,9 @@ const styles = StyleSheet.create({
   geolicationIconView: {
     backgroundColor: "transparent",
     margin: Margins.smaller,
+    marginRight: Margins.default,
     position: "absolute",
     right: 0,
-    top: 0,
   },
   postalCodeInput: {
     backgroundColor: Colors.cardGrey,

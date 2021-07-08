@@ -19,6 +19,8 @@ export default {
     goThere: "M'y rendre",
     instruction: "Renseignez le code postal de votre recherche.",
     noAddressFound: "Aucune adresse n'a été trouvée dans cette zone",
+    pleaseAllowGeolocation:
+      "Veuillez autoriser la géolocalisation dans les paramètres de votre téléphone",
     poiType: {
       bibliothequePublique: "Bibliothèque publique",
       caf: "CAF",
@@ -338,7 +340,6 @@ export default {
     articlesToRead: "article(s) à lire",
     filters: "Filtrer",
   },
-  version: "v.",
   menu: {
     conditionsOfUse: "Politiques de confidentialité",
     legalNotice: "Mentions légales",
@@ -398,5 +399,6 @@ export default {
     },
     title: "Choisissez l'étape que vous souhaitez approfondir",
   },
+  version: "v.",
   warning: "Attention",
 };

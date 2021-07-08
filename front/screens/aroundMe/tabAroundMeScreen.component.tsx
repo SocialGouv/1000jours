@@ -209,6 +209,13 @@ const TabAroundMeScreen: React.FC = () => {
         }}
         showSnackBarWithMessage={showSnackBarWithMessage}
         setIsLoading={setIsLoading}
+        updateUserLocation={(coordinates: LatLng) => {
+          mapRef.current?.animateCamera(
+            { center: coordinates },
+            { duration: 500 }
+          );
+          setMoveToRegionBecauseOfPCResearch(true);
+        }}
       />
       <View style={styles.map}>
         <MapView
