@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-var-requires */
+import * as Location from "expo-location";
 import * as React from "react";
-import { StyleSheet, TextInput } from "react-native";
-import type { Region } from "react-native-maps";
+import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import type { LatLng, Region } from "react-native-maps";
 import { HelperText } from "react-native-paper";
 
 import { Button } from "../../components";
@@ -28,6 +31,7 @@ interface Props {
   setAndGoToNewRegion: (region: Region) => void;
   showSnackBarWithMessage: (message: string) => void;
   setIsLoading: (value: boolean) => void;
+  updateUserLocation: (coordinates: LatLng) => void;
 }
 
 const SearchByPostalCode: React.FC<Props> = ({
@@ -39,11 +43,32 @@ const SearchByPostalCode: React.FC<Props> = ({
   setAndGoToNewRegion,
   showSnackBarWithMessage,
   setIsLoading,
+  updateUserLocation,
 }) => {
+  const checkLocation = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== Location.PermissionStatus.GRANTED) {
+      showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const currentLocation = await Location.getCurrentPositionAsync({});
+      updateUserLocation(currentLocation.coords);
+    } catch {
+      showSnackBarWithMessage(Labels.errorMsg);
+    }
+
+    setIsLoading(false);
+  };
+
   const onPostalCodeChanged = (newPostalCode: string) => {
     setPostalCodeInput(newPostalCode);
     setPostalCodeInvalid(false);
   };
+
+  const geolocationIcon = require("../../assets/images/carto/geolocation.png");
 
   const onSearchByPostalCodeButtonClick = async () => {
     setIsLoading(true);
@@ -92,6 +117,18 @@ const SearchByPostalCode: React.FC<Props> = ({
           disabled={postalCodeInvalid}
           action={onSearchByPostalCodeButtonClick}
         />
+        <View style={styles.geolicationIconView}>
+          <TouchableOpacity
+            onPress={() => {
+              void checkLocation();
+            }}
+          >
+            <Image
+              source={geolocationIcon}
+              style={styles.geolicationIconStyle}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
       {postalCodeInvalid && (
         <HelperText type="error">
@@ -105,6 +142,17 @@ const SearchByPostalCode: React.FC<Props> = ({
 const styles = StyleSheet.create({
   fontButton: {
     fontSize: Sizes.xxs,
+  },
+  geolicationIconStyle: {
+    height: Margins.largest,
+    width: Margins.largest,
+  },
+  geolicationIconView: {
+    alignSelf: "center",
+    backgroundColor: "transparent",
+    marginHorizontal: Margins.default,
+    position: "absolute",
+    right: 0,
   },
   postalCodeInput: {
     backgroundColor: Colors.cardGrey,

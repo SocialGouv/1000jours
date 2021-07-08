@@ -9,7 +9,6 @@ import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import {
   Button,
-  CommonText,
   CustomSnackbar,
   Icomoon,
   IcomoonIcons,
@@ -70,9 +69,13 @@ const TabAroundMeScreen: React.FC = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [mapWasOnlyTouched, setMapWasOnlyTouched] = useState(false);
+  const [currentUserLocation, setCurrentUserLocation] = useState<LatLng | null>(
+    null
+  );
 
   const googleMapsNotSelectedIcon = require("../../assets/images/carto/icon_google_map_not_selected.png");
   const googleMapsSelectedIcon = require("../../assets/images/carto/icon_google_map_selected.png");
+  const currentUserLocatioIcon = require("../../assets/images/carto/current_location.png");
 
   useEffect(() => {
     const checkIfSavedRegion = async () => {
@@ -148,7 +151,10 @@ const TabAroundMeScreen: React.FC = () => {
 
   const onMarkerClick = (poiIndex: number) => {
     if (PLATFORM_IS_IOS) {
-      moveMapToPoi(poiIndex);
+      moveMapToCoordinates(
+        poisArray[poiIndex].position_latitude,
+        poisArray[poiIndex].position_longitude
+      );
     }
 
     setAddressDetails(poisArray[poiIndex]);
@@ -158,10 +164,10 @@ const TabAroundMeScreen: React.FC = () => {
     setSelectedPoiIndex(poiIndex);
   };
 
-  const moveMapToPoi = (poiIndex: number) => {
+  const moveMapToCoordinates = (latitude: number, longitude: number) => {
     const markerCoordinates: LatLng = {
-      latitude: poisArray[poiIndex].position_latitude,
-      longitude: poisArray[poiIndex].position_longitude,
+      latitude,
+      longitude,
     };
     mapRef.current?.animateCamera(
       { center: markerCoordinates },
@@ -210,6 +216,12 @@ const TabAroundMeScreen: React.FC = () => {
         }}
         showSnackBarWithMessage={showSnackBarWithMessage}
         setIsLoading={setIsLoading}
+        updateUserLocation={(coordinates: LatLng) => {
+          setSelectedPoiIndex(-1);
+          setCurrentUserLocation(coordinates);
+          moveMapToCoordinates(coordinates.latitude, coordinates.longitude);
+          setMoveToRegionBecauseOfPCResearch(true);
+        }}
       />
       <View style={styles.map}>
         <MapView
@@ -258,6 +270,19 @@ const TabAroundMeScreen: React.FC = () => {
               </Marker>
             </View>
           ))}
+          {currentUserLocation && (
+            <Marker
+              coordinate={{
+                latitude: currentUserLocation.latitude,
+                longitude: currentUserLocation.longitude,
+              }}
+            >
+              <Image
+                source={currentUserLocatioIcon}
+                style={styles.currentLocationMarker}
+              />
+            </Marker>
+          )}
         </MapView>
         <View style={styles.filterView}>
           <Button
@@ -330,7 +355,12 @@ const TabAroundMeScreen: React.FC = () => {
             poisArray={poisArray}
             centerOnMarker={(poiIndex: number) => {
               setSelectedPoiIndex(poiIndex);
-              moveMapToPoi(poiIndex);
+              moveMapToCoordinates(
+                poisArray[poiIndex].position_latitude,
+                poisArray[poiIndex].position_longitude
+              );
+              setAddressDetails(poisArray[poiIndex]);
+              setShowAddressDetails(true);
             }}
           />
         )}
@@ -381,6 +411,10 @@ const styles = StyleSheet.create({
   columnView: {
     flexDirection: "column",
   },
+  currentLocationMarker: {
+    height: Margins.default,
+    width: Margins.default,
+  },
   filterView: {
     backgroundColor: "transparent",
     left: 0,
@@ -416,6 +450,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     height: Margins.evenMoreLargest,
     justifyContent: "flex-end",
+    width: Margins.evenMoreLargest,
   },
   relaunchSearchButton: {
     backgroundColor: Colors.white,
