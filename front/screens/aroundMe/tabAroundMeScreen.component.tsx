@@ -358,6 +358,8 @@ const TabAroundMeScreen: React.FC = () => {
                 poisArray[poiIndex].position_latitude,
                 poisArray[poiIndex].position_longitude
               );
+              setAddressDetails(poisArray[poiIndex]);
+              setShowAddressDetails(true);
             }}
           />
         )}
