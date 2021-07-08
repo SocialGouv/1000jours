@@ -147,7 +147,10 @@ const TabAroundMeScreen: React.FC = () => {
 
   const onMarkerClick = (poiIndex: number) => {
     if (PLATFORM_IS_IOS) {
-      moveMapToPoi(poiIndex);
+      moveMapToCoordinates(
+        poisArray[poiIndex].position_latitude,
+        poisArray[poiIndex].position_longitude
+      );
     }
 
     setAddressDetails(poisArray[poiIndex]);
@@ -157,10 +160,10 @@ const TabAroundMeScreen: React.FC = () => {
     setSelectedPoiIndex(poiIndex);
   };
 
-  const moveMapToPoi = (poiIndex: number) => {
+  const moveMapToCoordinates = (latitude: number, longitude: number) => {
     const markerCoordinates: LatLng = {
-      latitude: poisArray[poiIndex].position_latitude,
-      longitude: poisArray[poiIndex].position_longitude,
+      latitude,
+      longitude,
     };
     mapRef.current?.animateCamera(
       { center: markerCoordinates },
@@ -210,10 +213,7 @@ const TabAroundMeScreen: React.FC = () => {
         showSnackBarWithMessage={showSnackBarWithMessage}
         setIsLoading={setIsLoading}
         updateUserLocation={(coordinates: LatLng) => {
-          mapRef.current?.animateCamera(
-            { center: coordinates },
-            { duration: 500 }
-          );
+          moveMapToCoordinates(coordinates.latitude, coordinates.longitude);
           setMoveToRegionBecauseOfPCResearch(true);
         }}
       />
@@ -336,7 +336,10 @@ const TabAroundMeScreen: React.FC = () => {
             poisArray={poisArray}
             centerOnMarker={(poiIndex: number) => {
               setSelectedPoiIndex(poiIndex);
-              moveMapToPoi(poiIndex);
+              moveMapToCoordinates(
+                poisArray[poiIndex].position_latitude,
+                poisArray[poiIndex].position_longitude
+              );
             }}
           />
         )}
