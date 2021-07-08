@@ -1,3 +1,11 @@
+# [1.61.0](https://github.com/SocialGouv/1000jours/compare/v1.60.1...v1.61.0) (2021-07-08)
+
+
+### Features
+
+* 🎸 Ajoute un bouton pour maj son profil (calendrier) ([#498](https://github.com/SocialGouv/1000jours/issues/498)) ([abb62f0](https://github.com/SocialGouv/1000jours/commit/abb62f0a017734c499ff8efdb01dee8a3e89cc72)), closes [#341](https://github.com/SocialGouv/1000jours/issues/341)
+* **carto:** ajout géolocalisation ([#499](https://github.com/SocialGouv/1000jours/issues/499)) ([1d873d1](https://github.com/SocialGouv/1000jours/commit/1d873d186dc6233017a0d39e1c2bf099f7de44f0))
+
 ## [1.60.1](https://github.com/SocialGouv/1000jours/compare/v1.60.0...v1.60.1) (2021-07-08)
 
 
