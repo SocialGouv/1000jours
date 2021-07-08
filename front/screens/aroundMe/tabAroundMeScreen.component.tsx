@@ -217,6 +217,7 @@ const TabAroundMeScreen: React.FC = () => {
         showSnackBarWithMessage={showSnackBarWithMessage}
         setIsLoading={setIsLoading}
         updateUserLocation={(coordinates: LatLng) => {
+          setSelectedPoiIndex(-1);
           setCurrentUserLocation(coordinates);
           moveMapToCoordinates(coordinates.latitude, coordinates.longitude);
           setMoveToRegionBecauseOfPCResearch(true);

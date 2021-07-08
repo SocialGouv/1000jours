@@ -189,7 +189,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
           disabled={false}
           onPressIn={async () => {
             trackScreenView(
-              `${TrackerUtils.TrackingEvent.CARTO} - Clique sur le bouton "M'y rendre"`
+              `${TrackerUtils.TrackingEvent.CARTO} - Clic sur le bouton "M'y rendre"`
             );
             await LinkingUtils.openNavigationApp(
               details.position_latitude,

@@ -55,11 +55,7 @@ const SearchByPostalCode: React.FC<Props> = ({
     setIsLoading(true);
     try {
       const currentLocation = await Location.getCurrentPositionAsync({});
-      const currentLocationCoordinates: LatLng = {
-        latitude: currentLocation.coords.latitude,
-        longitude: currentLocation.coords.longitude,
-      };
-      updateUserLocation(currentLocationCoordinates);
+      updateUserLocation(currentLocation.coords);
     } catch {
       showSnackBarWithMessage(Labels.errorMsg);
     }

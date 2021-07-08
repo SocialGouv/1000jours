@@ -35,7 +35,6 @@ export const openWebsite = async (
     completeWebsite = website;
   }
 
-  console.log(completeWebsite);
   await Linking.openURL(completeWebsite);
 };
 
