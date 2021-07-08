@@ -1,3 +1,10 @@
+## [1.60.1](https://github.com/SocialGouv/1000jours/compare/v1.60.0...v1.60.1) (2021-07-08)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le trackerEvent Matomo sur le profil ([#497](https://github.com/SocialGouv/1000jours/issues/497)) ([1fae339](https://github.com/SocialGouv/1000jours/commit/1fae339a8cff6b097c621d18e8ff384a24466e91)), closes [#484](https://github.com/SocialGouv/1000jours/issues/484)
+
 # [1.60.0](https://github.com/SocialGouv/1000jours/compare/v1.59.1...v1.60.0) (2021-07-07)
 
 
