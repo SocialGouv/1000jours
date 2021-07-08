@@ -152,9 +152,9 @@ const styles = StyleSheet.create({
     width: Margins.largest,
   },
   geolicationIconView: {
+    alignSelf: "center",
     backgroundColor: "transparent",
-    margin: Margins.smaller,
-    marginRight: Margins.default,
+    marginHorizontal: Margins.default,
     position: "absolute",
     right: 0,
   },
