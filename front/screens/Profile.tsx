@@ -175,12 +175,12 @@ const Profile: FC<Props> = ({ navigation }) => {
     // Envoie la situation choisie sur Matomo
     const situationChecked = _.find(userSituations, { isChecked: true });
     if (situationChecked) {
-      trackEvent(
-        TrackerUtils.TrackingEvent.PROFILE,
-        TrackerUtils.TrackingActions.UPDATE_PROFILE.action,
-        TrackerUtils.TrackingActions.UPDATE_PROFILE.name,
-        situationChecked.label
-      );
+      trackEvent({
+        action: TrackerUtils.TrackingActions.UPDATE_PROFILE.action,
+        category: TrackerUtils.TrackingEvent.PROFILE,
+        name: TrackerUtils.TrackingActions.UPDATE_PROFILE.name,
+        value: situationChecked.label,
+      });
     }
 
     void cancelScheduleNextStepNotification();
