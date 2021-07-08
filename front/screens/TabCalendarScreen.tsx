@@ -29,6 +29,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const { trackScreenView } = useMatomo();
   trackScreenView(TrackerUtils.TrackingEvent.CALENDAR);
   const [childBirthday, setChildBirthday] = React.useState("");
+  const [childBirthdayLoaded, setChildBirthdayLoaded] = React.useState(false);
 
   useEffect(() => {
     const loadChildBirthday = async () => {
@@ -37,6 +38,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
           StorageKeysConstants.userChildBirthdayKey
         )) ?? "";
       setChildBirthday(childBirthdayStr);
+      setChildBirthdayLoaded(true);
     };
     void loadChildBirthday();
   }, []);
@@ -54,7 +56,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   `;
   const { loading, error, data } = useQuery(ALL_STEPS);
 
-  if (loading) return <Loader />;
+  if (loading || !childBirthdayLoaded) return <Loader />;
   if (error) return <ErrorMessage error={error} />;
 
   const evenements = (data as { evenements: Event[] }).evenements;
