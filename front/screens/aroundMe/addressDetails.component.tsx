@@ -1,3 +1,4 @@
+import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { TouchableOpacity as TouchableOpacityAndroid } from "react-native-gesture-handler";
@@ -37,7 +38,7 @@ import {
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
 import type { CartographiePoisFromDB } from "../../type";
-import { LinkingUtils, StringUtils } from "../../utils";
+import { LinkingUtils, StringUtils, TrackerUtils } from "../../utils";
 
 interface AddressDetailsProps {
   details: CartographiePoisFromDB;
@@ -56,6 +57,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
   isClickedMarker,
   hideDetails,
 }) => {
+  const { trackScreenView } = useMatomo();
   const getIcon = (
     categoriePoi: AroundMeConstants.PoiCategorieEnum,
     typePoi: AroundMeConstants.PoiTypeEnum
@@ -186,6 +188,9 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
           rounded={true}
           disabled={false}
           onPressIn={async () => {
+            trackScreenView(
+              `${TrackerUtils.TrackingEvent.CARTO} - Clique sur le bouton "M'y rendre"`
+            );
             await LinkingUtils.openNavigationApp(
               details.position_latitude,
               details.position_longitude

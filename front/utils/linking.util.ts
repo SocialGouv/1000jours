@@ -25,15 +25,17 @@ export const openWebsite = async (
 ): Promise<void> => {
   if (!website) return;
   let completeWebsite = undefined;
-  if (!website.includes("https://")) {
+  if (!website.includes("https://") || !website.includes("http://")) {
     const websiteWithWww = website.includes("www") ? website : `www.${website}`;
-    completeWebsite = websiteWithWww.includes("https://")
-      ? websiteWithWww
-      : `https://${websiteWithWww}`;
+    completeWebsite =
+      websiteWithWww.includes("https://") || websiteWithWww.includes("http://")
+        ? websiteWithWww
+        : `https://${websiteWithWww}`;
   } else {
     completeWebsite = website;
   }
 
+  console.log(completeWebsite);
   await Linking.openURL(completeWebsite);
 };
 
