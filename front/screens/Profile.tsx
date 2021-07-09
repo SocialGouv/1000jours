@@ -167,13 +167,21 @@ const Profile: FC<Props> = ({ navigation }) => {
       StorageKeysConstants.userSituationsKey,
       userSituations
     );
-    await StorageUtils.storeStringValue(
-      StorageKeysConstants.userChildBirthdayKey,
-      childBirthday
-    );
+
+    const situationChecked = _.find(userSituations, { isChecked: true });
+    if (
+      situationChecked &&
+      userSituationsIdsWhereChildBirthdayIsNeeded.includes(situationChecked.id)
+    ) {
+      await StorageUtils.storeStringValue(
+        StorageKeysConstants.userChildBirthdayKey,
+        childBirthday
+      );
+    } else {
+      await StorageUtils.removeKey(StorageKeysConstants.userChildBirthdayKey);
+    }
 
     // Envoie la situation choisie sur Matomo
-    const situationChecked = _.find(userSituations, { isChecked: true });
     if (situationChecked) {
       trackEvent({
         action: TrackerUtils.TrackingActions.UPDATE_PROFILE.action,
