@@ -1,3 +1,10 @@
+## [1.61.1](https://github.com/SocialGouv/1000jours/compare/v1.61.0...v1.61.1) (2021-07-09)
+
+
+### Bug Fixes
+
+* 🐛 Supprime la date de naissance suivant le profil ([#500](https://github.com/SocialGouv/1000jours/issues/500)) ([6b49091](https://github.com/SocialGouv/1000jours/commit/6b49091269206647f745c52fabfb791bf97f2cde))
+
 # [1.61.0](https://github.com/SocialGouv/1000jours/compare/v1.60.1...v1.61.0) (2021-07-08)
 
 
