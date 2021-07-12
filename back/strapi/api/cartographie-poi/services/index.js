@@ -2,27 +2,10 @@
 
 const sortNumbers = (a, b) => a - b;
 
-const search = async ({ perimetre, types, thematiques, etapes }) => {
-  if (!perimetre || !perimetre.length) return [];
-
+const buildPoiQuery = ({ perimetre, types, thematiques, etapes }) => {
   const knex = strapi.connections.default;
 
   const poisQuery = knex("cartographie_pois")
-    .distinct(
-      "cartographie_pois.nom",
-      "cartographie_pois.telephone",
-      "cartographie_pois.courriel",
-      "cartographie_pois.site_internet",
-      "cartographie_types.nom as type_nom",
-      "cartographie_types.categorie as type_categorie",
-      knex.raw(`
-        adresse_elements->>'geocode_adresse' as adresse,
-        adresse_elements->>'geocode_code_postal' as code_postal,
-        adresse_elements->>'geocode_commune' as commune,
-        adresse_elements->>'geocode_position_longitude' as position_longitude,
-        adresse_elements->>'geocode_position_latitude' as position_latitude
-      `)
-    )
     .crossJoin(
       knex.raw("jsonb_array_elements(??) as adresse_elements", [
         "cartographie_adresses_json",
@@ -74,6 +57,32 @@ const search = async ({ perimetre, types, thematiques, etapes }) => {
     poisQuery.whereIn("etapes.nom", etapes);
   }
 
+  return poisQuery;
+};
+
+const search = async ({ perimetre, types, thematiques, etapes }) => {
+  if (!perimetre || !perimetre.length) return [];
+
+  const poisQuery = buildPoiQuery({ perimetre, types, thematiques, etapes });
+
+  const knex = strapi.connections.default;
+
+  poisQuery.distinct(
+    "cartographie_pois.nom",
+    "cartographie_pois.telephone",
+    "cartographie_pois.courriel",
+    "cartographie_pois.site_internet",
+    "cartographie_types.nom as type_nom",
+    "cartographie_types.categorie as type_categorie",
+    knex.raw(`
+    adresse_elements->>'geocode_adresse' as adresse,
+    adresse_elements->>'geocode_code_postal' as code_postal,
+    adresse_elements->>'geocode_commune' as commune,
+    adresse_elements->>'geocode_position_longitude' as position_longitude,
+    adresse_elements->>'geocode_position_latitude' as position_latitude
+  `)
+  );
+
   const pois = await poisQuery;
 
   return pois.map((poi) => {
@@ -107,6 +116,21 @@ const search = async ({ perimetre, types, thematiques, etapes }) => {
   });
 };
 
+const count = async ({ perimetre, types, thematiques, etapes }) => {
+  if (!perimetre || !perimetre.length) return [];
+
+  const poisQuery = buildPoiQuery({ perimetre, types, thematiques, etapes });
+
+  const knex = strapi.connections.default;
+
+  poisQuery.count(knex.raw("distinct (??)", ["cartographie_pois.id"]));
+
+  const count = await poisQuery;
+
+  return count;
+};
+
 module.exports = {
   search,
+  count,
 };
