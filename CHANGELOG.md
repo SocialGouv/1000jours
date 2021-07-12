@@ -1,3 +1,10 @@
+# [1.62.0](https://github.com/SocialGouv/1000jours/compare/v1.61.2...v1.62.0) (2021-07-12)
+
+
+### Features
+
+* **carto:** Ajoute une requête de comptage de POIs ([#506](https://github.com/SocialGouv/1000jours/issues/506)) ([8c1de64](https://github.com/SocialGouv/1000jours/commit/8c1de6456582c2a16017b7d918daa19244af26e9))
+
 ## [1.61.2](https://github.com/SocialGouv/1000jours/compare/v1.61.1...v1.61.2) (2021-07-12)
 
 
