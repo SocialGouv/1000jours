@@ -55,7 +55,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   const [currentStepId, setCurrentStepId] = useState<number | null>(null);
   const [loadSteps, { called, loading, error, data }] = useLazyQuery(ALL_STEPS);
 
-  const getUserSituations = async () => {
+  const init = async () => {
     const previousStepId = await StorageUtils.getStringValue(
       StorageKeysConstants.currentStepId
     );
@@ -107,7 +107,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      void getUserSituations();
+      void init();
     });
     // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;

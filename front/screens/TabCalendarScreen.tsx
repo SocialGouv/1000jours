@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { useMatomo } from "matomo-tracker-react-native";
@@ -29,21 +29,8 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const { trackScreenView } = useMatomo();
   trackScreenView(TrackerUtils.TrackingEvent.CALENDAR);
   const [childBirthday, setChildBirthday] = React.useState("");
-  const [childBirthdayLoaded, setChildBirthdayLoaded] = React.useState(false);
 
-  useEffect(() => {
-    const loadChildBirthday = async () => {
-      const childBirthdayStr =
-        (await StorageUtils.getStringValue(
-          StorageKeysConstants.userChildBirthdayKey
-        )) ?? "";
-      setChildBirthday(childBirthdayStr);
-      setChildBirthdayLoaded(true);
-    };
-    void loadChildBirthday();
-  }, []);
-
-  const ALL_STEPS = gql`
+  const ALL_EVENTS = gql`
     query GetEvents {
       evenements {
         id
@@ -54,9 +41,27 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
       }
     }
   `;
-  const { loading, error, data } = useQuery(ALL_STEPS);
+  const [loadEvents, { called, loading, error, data }] =
+    useLazyQuery(ALL_EVENTS);
 
-  if (loading || !childBirthdayLoaded) return <Loader />;
+  const init = async () => {
+    const childBirthdayStr =
+      (await StorageUtils.getStringValue(
+        StorageKeysConstants.userChildBirthdayKey
+      )) ?? "";
+    setChildBirthday(childBirthdayStr);
+    loadEvents();
+  };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      void init();
+    });
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, []);
+
+  if (!called || loading) return <Loader />;
   if (error) return <ErrorMessage error={error} />;
 
   const evenements = (data as { evenements: Event[] }).evenements;
