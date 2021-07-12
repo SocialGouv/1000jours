@@ -1,3 +1,10 @@
+## [1.61.2](https://github.com/SocialGouv/1000jours/compare/v1.61.1...v1.61.2) (2021-07-12)
+
+
+### Bug Fixes
+
+* **deps:** update all dependencies ([#501](https://github.com/SocialGouv/1000jours/issues/501)) ([51d9116](https://github.com/SocialGouv/1000jours/commit/51d9116652b1940b03a963288a45443777b0c79f))
+
 ## [1.61.1](https://github.com/SocialGouv/1000jours/compare/v1.61.0...v1.61.1) (2021-07-09)
 
 
