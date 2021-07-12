@@ -3,6 +3,7 @@ import {
   CartoFilterStorage,
   CartographiePoisFromDB,
   FetchedFilterFromDb,
+  PoisCountFromDB,
   PoiTypeFromDB,
   StepFromDB,
 } from "./aroundMe.types";
@@ -33,6 +34,7 @@ export {
   EpdsResultInformationType,
   EpdsResultSimpleInformation,
   FetchedFilterFromDb,
+  PoisCountFromDB,
   PoiTypeFromDB,
   QuestionnaireEpdsFromDB,
   StepFromDB,

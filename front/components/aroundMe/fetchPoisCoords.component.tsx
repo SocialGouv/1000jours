@@ -8,7 +8,11 @@ import {
   DatabaseQueries,
   StorageKeysConstants,
 } from "../../constants";
-import type { CartoFilterStorage, CartographiePoisFromDB } from "../../type";
+import type {
+  CartoFilterStorage,
+  CartographiePoisFromDB,
+  PoisCountFromDB,
+} from "../../type";
 import { AroundMeUtils, StorageUtils, StringUtils } from "../../utils";
 
 interface Props {
@@ -27,33 +31,36 @@ const FetchPoisCoords: React.FC<Props> = ({
   setFetchedPois,
   chooseFilterMessage,
 }) => {
-  const [isFirstResearch, setIsFirstResearch] = useState(false);
+  const [getPoisCountByGpsCoords] = useLazyQuery(
+    DatabaseQueries.AROUNDME_POIS_COUNT_BY_GPSCOORDS,
+    {
+      fetchPolicy: "no-cache",
+      onCompleted: async (data) => {
+        const { searchPoisCount } = data as {
+          searchPoisCount: PoisCountFromDB[];
+        };
+        await searchByGPSCoords(
+          searchPoisCount[0].count >
+            AroundMeConstants.MAX_NUMBER_POI_WITHOUT_FILTER,
+          false
+        );
+      },
+    }
+  );
   const [getPoisByGpsCoords] = useLazyQuery(
     DatabaseQueries.AROUNDME_POIS_BY_GPSCOORDS,
     {
       fetchPolicy: "no-cache",
-      onCompleted: async (data) => {
+      onCompleted: (data) => {
         const { searchPois } = data as {
           searchPois: CartographiePoisFromDB[];
         };
-        if (isFirstResearch) {
-          setIsFirstResearch(false);
-
-          if (
-            searchPois.length <= AroundMeConstants.MAX_NUMBER_POI_WITHOUT_FILTER
-          ) {
-            setFetchedPois(searchPois);
-          } else {
-            await searchByGPSCoords(true);
-          }
-        } else {
-          setFetchedPois(searchPois);
-        }
+        setFetchedPois(searchPois);
       },
     }
   );
 
-  const searchByGPSCoords = async (withFilter: boolean) => {
+  const searchByGPSCoords = async (withFilter: boolean, getCount: boolean) => {
     const topLeftPoint = AroundMeUtils.getLatLngPoint(
       region,
       AroundMeConstants.LatLngPointType.topLeft
@@ -91,14 +98,18 @@ const FetchPoisCoords: React.FC<Props> = ({
       long1: topLeftPoint.longitude,
       long2: bottomRightPoint.longitude,
     };
-    getPoisByGpsCoords({
-      variables,
-    });
+    if (getCount)
+      getPoisCountByGpsCoords({
+        variables,
+      });
+    else
+      getPoisByGpsCoords({
+        variables,
+      });
   };
 
   useEffect(() => {
-    setIsFirstResearch(true);
-    void searchByGPSCoords(false);
+    void searchByGPSCoords(false, true);
   }, [triggerSearchByGpsCoords]);
 
   return <>{children}</>;
