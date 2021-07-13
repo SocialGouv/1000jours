@@ -55,9 +55,7 @@ export const AROUNDME_POIS_COUNT_BY_GPSCOORDS = gql`
       perimetre: [$long1, $lat1, $long2, $lat2]
       types: $types
       etapes: $etapes
-    ) {
-      count
-    }
+    )
   }
 `;
 

@@ -37,10 +37,10 @@ const FetchPoisCoords: React.FC<Props> = ({
       fetchPolicy: "no-cache",
       onCompleted: async (data) => {
         const { searchPoisCount } = data as {
-          searchPoisCount: PoisCountFromDB[];
+          searchPoisCount: number;
         };
         await searchByGPSCoords(
-          searchPoisCount[0].count >
+          searchPoisCount >
             AroundMeConstants.MAX_NUMBER_POI_WITHOUT_FILTER,
           false
         );

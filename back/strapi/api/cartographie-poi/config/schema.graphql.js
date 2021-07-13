@@ -47,10 +47,6 @@ module.exports = {
       position_longitude: Float
       position_latitude: Float
     }
-
-    type CartographiePoiCount {
-     count: Int
-    }
   `,
   query: `
     searchPois (
@@ -65,7 +61,7 @@ module.exports = {
       types: [String!]
       thematiques: [String!]
       etapes: [String!]
-    ): [CartographiePoiCount]
+    ): Int
   `,
   resolver: {
     Query: {

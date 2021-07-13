@@ -127,7 +127,7 @@ const count = async ({ perimetre, types, thematiques, etapes }) => {
 
   const count = await poisQuery;
 
-  return count;
+  return count && count[0] && count[0].count;
 };
 
 module.exports = {
