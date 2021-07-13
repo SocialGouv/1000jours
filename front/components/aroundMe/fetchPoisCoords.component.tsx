@@ -1,6 +1,6 @@
 import { useLazyQuery } from "@apollo/client";
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { Region } from "react-native-maps";
 
 import {
@@ -8,7 +8,11 @@ import {
   DatabaseQueries,
   StorageKeysConstants,
 } from "../../constants";
-import type { CartoFilterStorage, CartographiePoisFromDB } from "../../type";
+import type {
+  CartoFilterStorage,
+  CartographiePoisFromDB,
+  PoisCountFromDB,
+} from "../../type";
 import { AroundMeUtils, StorageUtils, StringUtils } from "../../utils";
 
 interface Props {
@@ -27,6 +31,22 @@ const FetchPoisCoords: React.FC<Props> = ({
   setFetchedPois,
   chooseFilterMessage,
 }) => {
+  const [getPoisCountByGpsCoords] = useLazyQuery(
+    DatabaseQueries.AROUNDME_POIS_COUNT_BY_GPSCOORDS,
+    {
+      fetchPolicy: "no-cache",
+      onCompleted: async (data) => {
+        const { searchPoisCount } = data as {
+          searchPoisCount: PoisCountFromDB[];
+        };
+        await searchByGPSCoords(
+          searchPoisCount[0].count >
+            AroundMeConstants.MAX_NUMBER_POI_WITHOUT_FILTER,
+          false
+        );
+      },
+    }
+  );
   const [getPoisByGpsCoords] = useLazyQuery(
     DatabaseQueries.AROUNDME_POIS_BY_GPSCOORDS,
     {
@@ -39,21 +59,23 @@ const FetchPoisCoords: React.FC<Props> = ({
       },
     }
   );
-  useEffect(() => {
-    const searchByGPSCoords = async () => {
-      const topLeftPoint = AroundMeUtils.getLatLngPoint(
-        region,
-        AroundMeConstants.LatLngPointType.topLeft
-      );
-      const bottomRightPoint = AroundMeUtils.getLatLngPoint(
-        region,
-        AroundMeConstants.LatLngPointType.bottomRight
-      );
 
-      const savedFilters: CartoFilterStorage =
+  const searchByGPSCoords = async (withFilter: boolean, getCount: boolean) => {
+    const topLeftPoint = AroundMeUtils.getLatLngPoint(
+      region,
+      AroundMeConstants.LatLngPointType.topLeft
+    );
+    const bottomRightPoint = AroundMeUtils.getLatLngPoint(
+      region,
+      AroundMeConstants.LatLngPointType.bottomRight
+    );
+
+    let paramsVariables = null;
+
+    if (withFilter) {
+      const savedFilters: CartoFilterStorage | undefined =
         await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
       if (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         !savedFilters ||
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (savedFilters &&
@@ -63,19 +85,31 @@ const FetchPoisCoords: React.FC<Props> = ({
         chooseFilterMessage();
         return;
       }
-      const variables = {
+      paramsVariables = {
         etapes: savedFilters.etapes,
-        lat1: topLeftPoint.latitude,
-        lat2: bottomRightPoint.latitude,
-        long1: topLeftPoint.longitude,
-        long2: bottomRightPoint.longitude,
         types: savedFilters.types,
       };
+    }
+
+    const variables = {
+      ...paramsVariables,
+      lat1: topLeftPoint.latitude,
+      lat2: bottomRightPoint.latitude,
+      long1: topLeftPoint.longitude,
+      long2: bottomRightPoint.longitude,
+    };
+    if (getCount)
+      getPoisCountByGpsCoords({
+        variables,
+      });
+    else
       getPoisByGpsCoords({
         variables,
       });
-    };
-    void searchByGPSCoords();
+  };
+
+  useEffect(() => {
+    void searchByGPSCoords(false, true);
   }, [triggerSearchByGpsCoords]);
 
   return <>{children}</>;

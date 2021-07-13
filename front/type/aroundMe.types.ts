@@ -2,6 +2,9 @@
 
 import type { AroundMeConstants } from "../constants";
 
+export interface PoisCountFromDB {
+  count: number;
+}
 export interface CartographiePoisFromDB {
   id: number;
   categorie: AroundMeConstants.PoiCategorieEnum;

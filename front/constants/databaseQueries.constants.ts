@@ -42,6 +42,25 @@ export const AROUNDME_FILTER_DATA = gql`
   }
 `;
 
+export const AROUNDME_POIS_COUNT_BY_GPSCOORDS = gql`
+  query PoisCountByGPSCoords(
+    $long1: Float!
+    $lat1: Float!
+    $long2: Float!
+    $lat2: Float!
+    $types: [String!]
+    $etapes: [String!]
+  ) {
+    searchPoisCount(
+      perimetre: [$long1, $lat1, $long2, $lat2]
+      types: $types
+      etapes: $etapes
+    ) {
+      count
+    }
+  }
+`;
+
 export const AROUNDME_POIS_BY_GPSCOORDS = gql`
   query PoisByGPSCoords(
     $long1: Float!
