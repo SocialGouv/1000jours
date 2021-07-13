@@ -34,6 +34,7 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
   centerOnMarker,
 }) => {
   const sheetRef = useRef<BottomSheet>(null);
+  const [currentPanelSnapPoint, setCurrentPanelSnapPoint] = useState(2);
   const [currentEndIndex, setCurrentEndIndex] = useState(
     AroundMeConstants.PAGINATION_NUMBER_ADDRESSES_LIST
   );
@@ -50,16 +51,27 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
 
   const height = Dimensions.get("window").height;
 
-  const isCloseToBottom = ({
+  const handleScroll = ({
     layoutMeasurement,
     contentOffset,
     contentSize,
   }: NativeScrollEvent) => {
-    const paddingToBottom = 20;
-    return (
+    const thresholdBottom = 20;
+
+    if (contentOffset.y === 0) {
+      const nextSnapPoint = currentPanelSnapPoint - 1;
+      sheetRef.current?.snapTo(nextSnapPoint);
+      setCurrentPanelSnapPoint(nextSnapPoint === 0 ? 2 : nextSnapPoint);
+    } else if (
       layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom
-    );
+      contentSize.height - thresholdBottom
+    ) {
+      const newEndIndex = currentEndIndex + currentEndIndex;
+      setPoisToDisplay(
+        poisToDisplay.concat(poisArray.slice(currentEndIndex, newEndIndex))
+      );
+      setCurrentEndIndex(newEndIndex);
+    }
   };
 
   const renderCard = (poi: CartographiePoisFromDB) => {
@@ -80,14 +92,7 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
         </CommonText>
         <ScrollView
           onScroll={({ nativeEvent }) => {
-            if (!isCloseToBottom(nativeEvent)) return;
-            const newEndIndex = currentEndIndex + currentEndIndex;
-            setPoisToDisplay(
-              poisToDisplay.concat(
-                poisArray.slice(currentEndIndex, newEndIndex)
-              )
-            );
-            setCurrentEndIndex(newEndIndex);
+            handleScroll(nativeEvent);
           }}
         >
           {poisToDisplay.map((poi, poiIndex) =>
