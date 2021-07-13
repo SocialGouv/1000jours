@@ -40,6 +40,7 @@
     "strapi-plugin-sentry": "^3.6.5",
     "strapi-plugin-upload": "^3.6.5",
     "strapi-plugin-users-permissions": "^3.6.5",
+    "strapi-provider-email-smtp": "^1.0.2",
     "strapi-utils": "^3.6.5",
     "stream-chain": "^2.2.4",
     "stream-json": "^1.7.2"

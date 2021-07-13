@@ -9,6 +9,14 @@
       }
     },
     {
+      "method": "POST",
+      "path": "/reponses-epds/contact",
+      "handler": "reponses-epds.contact",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "GET",
       "path": "/reponses-epds/count",
       "handler": "reponses-epds.count",
