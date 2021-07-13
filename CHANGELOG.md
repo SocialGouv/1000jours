@@ -1,3 +1,10 @@
+# [1.64.0](https://github.com/SocialGouv/1000jours/compare/v1.63.0...v1.64.0) (2021-07-13)
+
+
+### Features
+
+* **carto:** diminution du volet lorsqu'on est en haut du scroll ([#510](https://github.com/SocialGouv/1000jours/issues/510)) ([98a8ed9](https://github.com/SocialGouv/1000jours/commit/98a8ed9540af4b19d1d4a3d4fe60b9bfd23fbb1b))
+
 # [1.63.0](https://github.com/SocialGouv/1000jours/compare/v1.62.1...v1.63.0) (2021-07-13)
 
 
