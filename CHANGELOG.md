@@ -1,3 +1,12 @@
+## [1.62.1](https://github.com/SocialGouv/1000jours/compare/v1.62.0...v1.62.1) (2021-07-13)
+
+
+### Bug Fixes
+
+* 🐛 Refresh la page Calendrier lorsqu'elle est affichée ([#503](https://github.com/SocialGouv/1000jours/issues/503)) ([a146d3f](https://github.com/SocialGouv/1000jours/commit/a146d3fa5dc9000e609355b285db28e939fa160a))
+* **k8s:** scale down min and max strapi replica ([d01c847](https://github.com/SocialGouv/1000jours/commit/d01c8477847db3041d7368c31f7a7bdc0b939f11))
+* **k8s:** scale down min and max strapi-cache replica ([e323b05](https://github.com/SocialGouv/1000jours/commit/e323b05fb522a15408e418c349a4ef17d0578545))
+
 # [1.62.0](https://github.com/SocialGouv/1000jours/compare/v1.61.2...v1.62.0) (2021-07-12)
 
 
