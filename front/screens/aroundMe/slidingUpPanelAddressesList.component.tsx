@@ -34,7 +34,9 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
   centerOnMarker,
 }) => {
   const sheetRef = useRef<BottomSheet>(null);
-  const [currentPanelSnapPoint, setCurrentPanelSnapPoint] = useState(2);
+  // 2 est le nombre d'éléments dans le tableau de snapPoints de la BottomSheet view (voir ligne 131)
+  const [currentPanelSnapPointIndex, setCurrentPanelSnapPointIndex] =
+    useState(2);
   const [currentEndIndex, setCurrentEndIndex] = useState(
     AroundMeConstants.PAGINATION_NUMBER_ADDRESSES_LIST
   );
@@ -59,9 +61,9 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
     const thresholdBottom = 20;
 
     if (contentOffset.y === 0) {
-      const nextSnapPoint = currentPanelSnapPoint - 1;
+      const nextSnapPoint = currentPanelSnapPointIndex - 1;
       sheetRef.current?.snapTo(nextSnapPoint);
-      setCurrentPanelSnapPoint(nextSnapPoint === 0 ? 2 : nextSnapPoint);
+      setCurrentPanelSnapPointIndex(nextSnapPoint === 0 ? 2 : nextSnapPoint);
     } else if (
       layoutMeasurement.height + contentOffset.y >=
       contentSize.height - thresholdBottom
