@@ -1,3 +1,15 @@
+# [1.63.0](https://github.com/SocialGouv/1000jours/compare/v1.62.1...v1.63.0) (2021-07-13)
+
+
+### Bug Fixes
+
+* **carto:** Corrige le type de retour de la requête de comptage de POIs ([#509](https://github.com/SocialGouv/1000jours/issues/509)) ([7982960](https://github.com/SocialGouv/1000jours/commit/7982960d17832b27e509d3ccb6608dc442ed5da6))
+
+
+### Features
+
+* **carto:** annulation du filtre si moins de 20 POI avec le filtre ([#507](https://github.com/SocialGouv/1000jours/issues/507)) ([8a1a54d](https://github.com/SocialGouv/1000jours/commit/8a1a54d4458fc83cacdb725797f1cac3cba52462))
+
 ## [1.62.1](https://github.com/SocialGouv/1000jours/compare/v1.62.0...v1.62.1) (2021-07-13)
 
 
