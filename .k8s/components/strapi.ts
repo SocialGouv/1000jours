@@ -97,7 +97,7 @@ export default async () => {
     },
   });
 
-  const hpa = createAutoscale(deployment, { minReplicas: 5, maxReplicas: 15 });
+  const hpa = createAutoscale(deployment, { minReplicas: 1, maxReplicas: 5 });
   return manifests.concat(
     params.useEmptyDirAsVolume
       ? []
