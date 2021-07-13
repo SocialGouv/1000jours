@@ -84,11 +84,11 @@ spec:
             timeoutSeconds: 3
           resources:
             limits:
-              cpu: 200m
+              cpu: '1'
               memory: 1Gi
             requests:
-              cpu: 100m
-              memory: 0.5Gi
+              cpu: 5m
+              memory: 256Mi
           startupProbe:
             failureThreshold: 12
             httpGet:
@@ -273,7 +273,7 @@ spec:
           averageUtilization: 100
           type: Utilization
       type: Resource
-  minReplicas: 1
+  minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
@@ -384,7 +384,7 @@ spec:
             initialDelaySeconds: 30
           resources:
             requests:
-              cpu: '1'
+              cpu: 5m
               memory: 256Mi
             limits:
               cpu: '1'
@@ -550,7 +550,7 @@ spec:
           averageUtilization: 100
           type: Utilization
       type: Resource
-  minReplicas: 1
+  minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment

@@ -25,7 +25,7 @@ const prob = new Probe({
 
 const resources = new ResourceRequirements({
   requests: {
-    cpu: "1",
+    cpu: "5m",
     memory: "256Mi",
   },
   limits: {
@@ -97,7 +97,7 @@ export default async () => {
     },
   });
 
-  const hpa = createAutoscale(deployment, { minReplicas: 1, maxReplicas: 5 });
+  const hpa = createAutoscale(deployment, { minReplicas: 2, maxReplicas: 5 });
   return manifests.concat(
     params.useEmptyDirAsVolume
       ? []
