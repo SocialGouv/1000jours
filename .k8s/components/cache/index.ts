@@ -130,6 +130,6 @@ export default async () => {
     },
   ];
 
-  const hpa = createAutoscale(deploy, { minReplicas: 5, maxReplicas: 15 });
+  const hpa = createAutoscale(deploy, { minReplicas: 1, maxReplicas: 5 });
   return manifests.concat(strapiParams.useEmptyDirAsVolume ? [] : [hpa]);
 };
