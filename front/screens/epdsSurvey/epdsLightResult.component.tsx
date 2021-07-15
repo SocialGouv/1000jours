@@ -19,11 +19,13 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../constants";
+import type { EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, NotificationUtils, StorageUtils } from "../../utils";
 import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation.component";
 
 interface Props {
   result: number;
+  epdsSurvey: EpdsQuestionAndAnswers[];
   startSurveyOver: () => void;
 }
 
@@ -33,7 +35,7 @@ const clientNoCache = new ApolloClient({
   uri: `${process.env.API_URL}/graphql?nocache`,
 });
 
-const EpdsLightResult: React.FC<Props> = ({ result, startSurveyOver }) => {
+const EpdsLightResult: React.FC<Props> = ({ result, epdsSurvey, startSurveyOver }) => {
   const [addReponseQuery] = useMutation(DatabaseQueries.EPDS_ADD_RESPONSE, {
     client: clientNoCache,
     onError: (err) => {
@@ -55,8 +57,20 @@ const EpdsLightResult: React.FC<Props> = ({ result, startSurveyOver }) => {
       const genderValue = await StorageUtils.getStringValue(
         StorageKeysConstants.epdsGenderKey
       );
+
+      const answersScores = epdsSurvey.answers.reduce((answersScores, answer, answerIndex) => {
+        answersScores[`reponse_${answerIndex}`] = answer.score;
+
+        return answersScores;
+      }, {});
+
       await addReponseQuery({
-        variables: { compteur: newCounter, genre: genderValue, score: result },
+        variables: {
+          compteur: newCounter,
+          genre: genderValue,
+          score: result,
+          ...answersScores,
+        },
       });
     };
 

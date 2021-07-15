@@ -13,17 +13,42 @@
   "attributes": {
     "genre": {
       "type": "enumeration",
-      "enum": [
-        "Masculin",
-        "Feminin",
-        "Nonbinaire",
-        "Inconnu"
-      ]
+      "enum": ["Masculin", "Feminin", "Nonbinaire", "Inconnu"]
     },
     "compteur": {
       "type": "integer"
     },
     "score": {
+      "type": "integer"
+    },
+    "reponse_1": {
+      "type": "integer"
+    },
+    "reponse_2": {
+      "type": "integer"
+    },
+    "reponse_3": {
+      "type": "integer"
+    },
+    "reponse_4": {
+      "type": "integer"
+    },
+    "reponse_5": {
+      "type": "integer"
+    },
+    "reponse_6": {
+      "type": "integer"
+    },
+    "reponse_7": {
+      "type": "integer"
+    },
+    "reponse_8": {
+      "type": "integer"
+    },
+    "reponse_9": {
+      "type": "integer"
+    },
+    "reponse_10": {
       "type": "integer"
     }
   }

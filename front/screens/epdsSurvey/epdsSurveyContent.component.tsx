@@ -145,12 +145,14 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
       ) : (
         <EpdsLightResult
           result={score}
+          epdsSurvey={questionsAndAnswers}
           startSurveyOver={async () => {
             await restartSurvey();
           }}
         />
         // <EpdsResult
         //   result={score}
+        //   epdsSurvey={questionsAndAnswers}
         //   startSurveyOver={async () => {
         //     await restartSurvey();
         //   }}
