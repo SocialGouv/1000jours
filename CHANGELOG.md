@@ -1,3 +1,15 @@
+# [1.65.0](https://github.com/SocialGouv/1000jours/compare/v1.64.0...v1.65.0) (2021-07-15)
+
+
+### Bug Fixes
+
+* Update deployment requests and limits. ([1c2c1e9](https://github.com/SocialGouv/1000jours/commit/1c2c1e9d1ef0cca4c23bef591d97dcfc634bc913))
+
+
+### Features
+
+* **epds:** Envoie un email si le parent souhaite être contacté suite au test, refs [#511](https://github.com/SocialGouv/1000jours/issues/511) ([#514](https://github.com/SocialGouv/1000jours/issues/514)) ([7339cd5](https://github.com/SocialGouv/1000jours/commit/7339cd5cae900f3233d9d01faa7bc5ecc8cf3300))
+
 # [1.64.0](https://github.com/SocialGouv/1000jours/compare/v1.63.0...v1.64.0) (2021-07-13)
 
 
