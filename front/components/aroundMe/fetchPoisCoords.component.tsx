@@ -8,11 +8,7 @@ import {
   DatabaseQueries,
   StorageKeysConstants,
 } from "../../constants";
-import type {
-  CartoFilterStorage,
-  CartographiePoisFromDB,
-  PoisCountFromDB,
-} from "../../type";
+import type { CartoFilterStorage, CartographiePoisFromDB } from "../../type";
 import { AroundMeUtils, StorageUtils, StringUtils } from "../../utils";
 
 interface Props {
@@ -40,8 +36,7 @@ const FetchPoisCoords: React.FC<Props> = ({
           searchPoisCount: number;
         };
         await searchByGPSCoords(
-          searchPoisCount >
-            AroundMeConstants.MAX_NUMBER_POI_WITHOUT_FILTER,
+          searchPoisCount > AroundMeConstants.MAX_NUMBER_POI_WITHOUT_FILTER,
           false
         );
       },

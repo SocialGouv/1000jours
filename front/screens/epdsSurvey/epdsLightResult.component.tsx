@@ -3,7 +3,7 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { useMutation } from "@apollo/client/react/hooks";
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
 import { Button, TitleH1 } from "../../components";
@@ -20,6 +20,7 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import { EpdsSurveyUtils, NotificationUtils, StorageUtils } from "../../utils";
+import BeContacted from "./beContacted.component";
 import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation.component";
 
 interface Props {
@@ -40,6 +41,7 @@ const EpdsLightResult: React.FC<Props> = ({ result, startSurveyOver }) => {
       console.log(err);
     },
   });
+  const [showBeContactedModal, setShowBeContactedModal] = useState(false);
 
   const labelsResultats = Labels.epdsSurvey.resultats;
   const resultData = EpdsSurveyUtils.getResultLabelAndStyleLight();
@@ -77,6 +79,17 @@ const EpdsLightResult: React.FC<Props> = ({ result, startSurveyOver }) => {
       <SecondaryText style={[styles.text, styles.fontBold]}>
         {labelsResultats.retakeTestInvitation}
       </SecondaryText>
+      <View style={styles.validateButton}>
+        <Button
+          title={Labels.epdsSurvey.beContacted.button}
+          titleStyle={styles.fontButton}
+          rounded={true}
+          disabled={false}
+          action={() => {
+            setShowBeContactedModal(true);
+          }}
+        />
+      </View>
       <EpdsResultInformation
         leftBorderColor={Colors.white}
         informationList={resultData.resultLabels.professionalsList}
@@ -92,6 +105,12 @@ const EpdsLightResult: React.FC<Props> = ({ result, startSurveyOver }) => {
           }}
         />
       </View>
+      <BeContacted
+        visible={showBeContactedModal}
+        hideModal={() => {
+          setShowBeContactedModal(false);
+        }}
+      />
     </ScrollView>
   );
 };

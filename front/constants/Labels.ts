@@ -76,6 +76,14 @@ export default {
   },
   dateFormatLabel: "Jour / Mois / Année",
   epdsSurvey: {
+    beContacted: {
+      button: "Être appelé·e",
+      title: "Et si c'était une dépression post-partum ? Être appelé·e",
+      yourEmail: "Votre email",
+      yourFirstname: "Votre prénom",
+      yourLastname: "Votre nom",
+      yourPhoneNumber: "Votre n° de tél.",
+    },
     description:
       "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.",
     genderEntry: {
