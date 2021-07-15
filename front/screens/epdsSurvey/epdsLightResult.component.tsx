@@ -12,6 +12,7 @@ import { View } from "../../components/Themed";
 import {
   Colors,
   DatabaseQueries,
+  EpdsConstants,
   FontWeight,
   Labels,
   Margins,
@@ -79,17 +80,19 @@ const EpdsLightResult: React.FC<Props> = ({ result, startSurveyOver }) => {
       <SecondaryText style={[styles.text, styles.fontBold]}>
         {labelsResultats.retakeTestInvitation}
       </SecondaryText>
-      <View style={styles.validateButton}>
-        <Button
-          title={Labels.epdsSurvey.beContacted.button}
-          titleStyle={styles.fontButton}
-          rounded={true}
-          disabled={false}
-          action={() => {
-            setShowBeContactedModal(true);
-          }}
-        />
-      </View>
+      {result >= EpdsConstants.RESULT_BECONTACTED_VALUE && (
+        <View style={styles.validateButton}>
+          <Button
+            title={Labels.epdsSurvey.beContacted.button}
+            titleStyle={styles.fontButton}
+            rounded={true}
+            disabled={false}
+            action={() => {
+              setShowBeContactedModal(true);
+            }}
+          />
+        </View>
+      )}
       <EpdsResultInformation
         leftBorderColor={Colors.white}
         informationList={resultData.resultLabels.professionalsList}
