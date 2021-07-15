@@ -12,7 +12,6 @@ import { View } from "../../components/Themed";
 import {
   Colors,
   DatabaseQueries,
-  EpdsConstants,
   FontWeight,
   Labels,
   Margins,
@@ -26,6 +25,7 @@ import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation
 
 interface Props {
   result: number;
+  showBeContactedButton: boolean;
   startSurveyOver: () => void;
 }
 
@@ -35,7 +35,11 @@ const clientNoCache = new ApolloClient({
   uri: `${process.env.API_URL}/graphql?nocache`,
 });
 
-const EpdsLightResult: React.FC<Props> = ({ result, startSurveyOver }) => {
+const EpdsLightResult: React.FC<Props> = ({
+  result,
+  showBeContactedButton,
+  startSurveyOver,
+}) => {
   const [addReponseQuery] = useMutation(DatabaseQueries.EPDS_ADD_RESPONSE, {
     client: clientNoCache,
     onError: (err) => {
@@ -80,7 +84,7 @@ const EpdsLightResult: React.FC<Props> = ({ result, startSurveyOver }) => {
       <SecondaryText style={[styles.text, styles.fontBold]}>
         {labelsResultats.retakeTestInvitation}
       </SecondaryText>
-      {result >= EpdsConstants.RESULT_BECONTACTED_VALUE && (
+      {showBeContactedButton && (
         <View style={styles.validateButton}>
           <Button
             title={Labels.epdsSurvey.beContacted.button}

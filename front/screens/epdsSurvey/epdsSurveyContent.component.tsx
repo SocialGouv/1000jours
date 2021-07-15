@@ -9,6 +9,7 @@ import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
   Colors,
+  EpdsConstants,
   FontWeight,
   Labels,
   Margins,
@@ -35,6 +36,8 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [surveyCanBeStarted, setSurveyCanBeStarted] = useState(false);
+  const [lastQuestionHas3PointAnswer, setLastQuestionHas3PointAnswer] =
+    useState(false);
 
   useEffect(() => {
     const getPreviousSurvey = async () => {
@@ -77,12 +80,14 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
     questionIsAnswered && swiperCurrentIndex === questionsAndAnswers.length - 1;
 
   const updatePressedAnswer = (selectedAnswer: EpdsAnswer) => {
-    const updatedSurvey = EpdsSurveyUtils.getUpdatedSurvey(
-      questionsAndAnswers,
-      swiperCurrentIndex,
-      selectedAnswer
-    );
+    const { updatedSurvey, lastQuestionHasThreePointAnswer } =
+      EpdsSurveyUtils.getUpdatedSurvey(
+        questionsAndAnswers,
+        swiperCurrentIndex,
+        selectedAnswer
+      );
     setQuestionsAndAnswers(updatedSurvey);
+    setLastQuestionHas3PointAnswer(lastQuestionHasThreePointAnswer);
     setScore(EpdsSurveyUtils.getUpdatedScore(updatedSurvey));
   };
 
@@ -145,6 +150,10 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
       ) : (
         <EpdsLightResult
           result={score}
+          showBeContactedButton={
+            score >= EpdsConstants.RESULT_BECONTACTED_VALUE ||
+            lastQuestionHas3PointAnswer
+          }
           startSurveyOver={async () => {
             await restartSurvey();
           }}

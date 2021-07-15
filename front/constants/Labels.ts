@@ -78,10 +78,9 @@ export default {
   epdsSurvey: {
     beContacted: {
       button: "Être appelé·e",
-      title: "Et si c'était une dépression post-partum ? Être appelé·e",
+      title: "Être appelé·e",
       yourEmail: "Votre email",
       yourFirstname: "Votre prénom",
-      yourLastname: "Votre nom",
       yourPhoneNumber: "Votre n° de tél.",
     },
     description:

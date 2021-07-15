@@ -32,14 +32,12 @@ interface Props {
 
 enum PersonalInformationType {
   firstName = "firstName",
-  lastName = "lastName",
   email = "email",
   phoneNumber = "phoneNumber",
 }
 
 const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -48,10 +46,6 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     labelMap.set(
       PersonalInformationType.firstName,
       Labels.epdsSurvey.beContacted.yourFirstname
-    );
-    labelMap.set(
-      PersonalInformationType.lastName,
-      Labels.epdsSurvey.beContacted.yourLastname
     );
     labelMap.set(
       PersonalInformationType.email,
@@ -71,9 +65,6 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     switch (informationType) {
       case PersonalInformationType.firstName:
         setFirstName(textInput);
-        break;
-      case PersonalInformationType.lastName:
-        setLastName(textInput);
         break;
       case PersonalInformationType.email:
         setEmail(textInput);
@@ -104,11 +95,12 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const onValidate = () => {
     console.log(`Email à envoyer :\\n
     - prénom : ${firstName}
-    - nom : ${lastName}
     - email : ${email}
     - téléphone : ${phoneNumber}`);
   };
 
+  // NB enfants et date de naissance du dernier
+  // mail ou numéro
   return (
     <>
       <Modal transparent={true} visible={visible} animationType="fade">
@@ -131,7 +123,6 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
               />
             </TouchableOpacity>
             {renderTextInputView(PersonalInformationType.firstName)}
-            {renderTextInputView(PersonalInformationType.lastName)}
             {renderTextInputView(PersonalInformationType.email)}
             {renderTextInputView(PersonalInformationType.phoneNumber)}
             <View style={styles.buttonsContainer}>
@@ -206,10 +197,9 @@ const styles = StyleSheet.create({
   rowView: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: Margins.smaller,
+    marginVertical: Margins.default,
   },
   textInput: {
-    backgroundColor: Colors.cardGrey,
     borderBottomColor: Colors.primaryBlue,
     borderBottomWidth: 1,
     paddingHorizontal: Paddings.smaller,

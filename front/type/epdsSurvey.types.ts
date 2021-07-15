@@ -62,6 +62,11 @@ export interface EpdsResultData {
   icon: EpdsConstants.ResultIconValueEnum;
 }
 
+export interface EpdsUpdatedSurvey {
+  updatedSurvey: EpdsQuestionAndAnswers[];
+  lastQuestionHasThreePointAnswer: boolean;
+}
+
 export interface EpdsResultSimpleInformation {
   title?: string;
   description?: string;
