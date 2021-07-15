@@ -78,6 +78,9 @@ export default {
   epdsSurvey: {
     beContacted: {
       button: "Être appelé·e",
+      mandatoryEmailOrPhone: "Veuillez remplir ce champ ou le n° de téléphone",
+      mandatoryPhoneOrEmail: "Veuillez remplir le tél. ou l'email",
+      numberOfChildren: "Nombre d'enfants",
       title: "Être appelé·e",
       yourEmail: "Votre email",
       yourFirstname: "Votre prénom",
@@ -347,6 +350,7 @@ export default {
     articlesToRead: "article(s) à lire",
     filters: "Filtrer",
   },
+  mandatoryField: "Ce champ est obligatoire",
   menu: {
     conditionsOfUse: "Politiques de confidentialité",
     contactUs: "Nous écrire",

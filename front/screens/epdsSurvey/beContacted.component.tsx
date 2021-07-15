@@ -1,5 +1,8 @@
+import { Picker } from "@react-native-community/picker";
+import { format } from "date-fns";
+import { range } from "lodash";
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Modal,
   StyleSheet,
@@ -7,10 +10,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { HelperText } from "react-native-paper";
 
 import {
   Button,
   CommonText,
+  Datepicker,
   Icomoon,
   IcomoonIcons,
   TitleH1,
@@ -18,12 +23,16 @@ import {
 import {
   Colors,
   FontWeight,
+  Formats,
   Labels,
   Margins,
   Paddings,
   Sizes,
+  StorageKeysConstants,
 } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
+import type { BeContactedData } from "../../type";
+import { StorageUtils, StringUtils } from "../../utils";
 
 interface Props {
   visible: boolean;
@@ -38,10 +47,28 @@ enum PersonalInformationType {
 
 const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const [firstName, setFirstName] = useState("");
+  const [firstNameIsEmpty, setFirstNameIsEmpty] = useState(false);
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [emailOrPhoneNumberIsEmpty, setEmailOrPhoneNumberIsEmpty] =
+    useState(false);
+  const [numberOfChildren, setNumberOfChildren] = useState(0);
+  const [childBirthDate, setChildBirthDate] = useState("");
 
-  const getLabel = (informationType: PersonalInformationType) => {
+  useEffect(() => {
+    const initDataWithStorageValue = async () => {
+      const childBirthdayStr =
+        (await StorageUtils.getStringValue(
+          StorageKeysConstants.userChildBirthdayKey
+        )) ?? "";
+      setChildBirthDate(childBirthdayStr);
+    };
+    void initDataWithStorageValue();
+  }, []);
+
+  const getLabelAndIsEmptyVariable = (
+    informationType: PersonalInformationType
+  ): BeContactedData => {
     const labelMap = new Map<PersonalInformationType, string>();
     labelMap.set(
       PersonalInformationType.firstName,
@@ -55,7 +82,32 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       PersonalInformationType.phoneNumber,
       Labels.epdsSurvey.beContacted.yourPhoneNumber
     );
-    return labelMap.get(informationType);
+    return {
+      isEmptyMessage: getIsEmptyMessage(informationType),
+      isEmptyVariable: getIsEmptyValue(informationType),
+      label: labelMap.get(informationType),
+    };
+  };
+
+  const getIsEmptyValue = (informationType: PersonalInformationType) => {
+    switch (informationType) {
+      case PersonalInformationType.firstName:
+        return firstNameIsEmpty;
+      case PersonalInformationType.email:
+      case PersonalInformationType.phoneNumber:
+        return emailOrPhoneNumberIsEmpty;
+    }
+  };
+
+  const getIsEmptyMessage = (informationType: PersonalInformationType) => {
+    switch (informationType) {
+      case PersonalInformationType.firstName:
+        return Labels.mandatoryField;
+      case PersonalInformationType.email:
+        return Labels.epdsSurvey.beContacted.mandatoryPhoneOrEmail;
+      case PersonalInformationType.phoneNumber:
+        return Labels.epdsSurvey.beContacted.mandatoryPhoneOrEmail;
+    }
   };
 
   const onChangeText = (
@@ -65,29 +117,37 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     switch (informationType) {
       case PersonalInformationType.firstName:
         setFirstName(textInput);
+        setFirstNameIsEmpty(false);
         break;
       case PersonalInformationType.email:
         setEmail(textInput);
+        setEmailOrPhoneNumberIsEmpty(false);
         break;
       case PersonalInformationType.phoneNumber:
         setPhoneNumber(textInput);
+        setEmailOrPhoneNumberIsEmpty(false);
         break;
     }
   };
 
   const renderTextInputView = (informationType: PersonalInformationType) => {
+    const { label, isEmptyVariable, isEmptyMessage } =
+      getLabelAndIsEmptyVariable(informationType);
     return (
       <View style={styles.rowView}>
-        <CommonText style={styles.textStyle}>
-          {getLabel(informationType)}
-        </CommonText>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={(text: string) => {
-            onChangeText(informationType, text);
-          }}
-          placeholder={getLabel(informationType)}
-        />
+        <CommonText style={styles.textStyle}>{label}</CommonText>
+        <View>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={(text: string) => {
+              onChangeText(informationType, text);
+            }}
+            placeholder={label}
+          />
+          {isEmptyVariable && (
+            <HelperText type="error">{isEmptyMessage}</HelperText>
+          )}
+        </View>
       </View>
     );
   };
@@ -96,11 +156,18 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     console.log(`Email à envoyer :\\n
     - prénom : ${firstName}
     - email : ${email}
-    - téléphone : ${phoneNumber}`);
+    - téléphone : ${phoneNumber}
+    - nb enfants : ${numberOfChildren}
+    - date : ${childBirthDate}`);
+    if (!StringUtils.stringIsNotNullNorEmpty(firstName))
+      setFirstNameIsEmpty(true);
+    if (
+      !StringUtils.stringIsNotNullNorEmpty(email) &&
+      !StringUtils.stringIsNotNullNorEmpty(phoneNumber)
+    )
+      setEmailOrPhoneNumberIsEmpty(true);
   };
 
-  // NB enfants et date de naissance du dernier
-  // mail ou numéro
   return (
     <>
       <Modal transparent={true} visible={visible} animationType="fade">
@@ -122,9 +189,45 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                 color={Colors.primaryBlue}
               />
             </TouchableOpacity>
-            {renderTextInputView(PersonalInformationType.firstName)}
-            {renderTextInputView(PersonalInformationType.email)}
-            {renderTextInputView(PersonalInformationType.phoneNumber)}
+            <View>
+              {renderTextInputView(PersonalInformationType.firstName)}
+              {renderTextInputView(PersonalInformationType.email)}
+              {renderTextInputView(PersonalInformationType.phoneNumber)}
+              <View style={styles.rowView}>
+                <CommonText style={styles.textStyle}>
+                  {Labels.epdsSurvey.beContacted.numberOfChildren}
+                </CommonText>
+                <Picker
+                  selectedValue={numberOfChildren}
+                  style={{ height: 30, width: 100 }}
+                  onValueChange={(itemValue) => {
+                    console.log(Number(itemValue));
+                    setNumberOfChildren(Number(itemValue));
+                  }}
+                >
+                  {range(11).map((value) => (
+                    <Picker.Item label={String(value)} value={value} />
+                  ))}
+                </Picker>
+              </View>
+              {numberOfChildren > 0 && (
+                <View style={styles.columnView}>
+                  <CommonText style={styles.textStyle}>
+                    {Labels.profile.childBirthday.lastChild}
+                  </CommonText>
+                  <Datepicker
+                    date={
+                      childBirthDate.length > 0
+                        ? new Date(childBirthDate)
+                        : undefined
+                    }
+                    onChange={(date) => {
+                      setChildBirthDate(format(date, Formats.dateISO));
+                    }}
+                  />
+                </View>
+              )}
+            </View>
             <View style={styles.buttonsContainer}>
               <View style={styles.buttonContainer}>
                 <Button
@@ -150,10 +253,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                   titleStyle={styles.buttonTitleStyle}
                   rounded={true}
                   disabled={false}
-                  action={() => {
-                    onValidate();
-                    hideModal();
-                  }}
+                  action={onValidate}
                 />
               </View>
             </View>
@@ -185,16 +285,21 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
   },
+  columnView: {
+    marginVertical: Margins.default,
+  },
   mainContainer: {
     backgroundColor: Colors.white,
     borderColor: Colors.primaryBlue,
     borderRadius: Sizes.xs,
     borderWidth: 1,
     flex: 1,
+    justifyContent: "space-between",
     margin: Margins.default,
     padding: Paddings.default,
   },
   rowView: {
+    alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
     marginVertical: Margins.default,
