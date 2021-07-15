@@ -27,7 +27,7 @@
       "dominant": true
     },
     "evenements": {
-      "via": "thematiques",
+      "via": "thematique",
       "collection": "evenement"
     }
   }
