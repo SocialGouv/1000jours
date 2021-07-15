@@ -49,7 +49,9 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const [firstName, setFirstName] = useState("");
   const [firstNameIsEmpty, setFirstNameIsEmpty] = useState(false);
   const [email, setEmail] = useState("");
+  const [emailIsValid, setEmailIsValid] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumberIsValid, setPhoneNumberIsValid] = useState(true);
   const [emailOrPhoneNumberIsEmpty, setEmailOrPhoneNumberIsEmpty] =
     useState(false);
   const [numberOfChildren, setNumberOfChildren] = useState(0);
@@ -104,7 +106,6 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       case PersonalInformationType.firstName:
         return Labels.mandatoryField;
       case PersonalInformationType.email:
-        return Labels.epdsSurvey.beContacted.mandatoryPhoneOrEmail;
       case PersonalInformationType.phoneNumber:
         return Labels.epdsSurvey.beContacted.mandatoryPhoneOrEmail;
     }
@@ -122,10 +123,18 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       case PersonalInformationType.email:
         setEmail(textInput);
         setEmailOrPhoneNumberIsEmpty(false);
+        if (textInput.trimEnd().length > 0) {
+          setEmailIsValid(StringUtils.validateEmail(textInput.trimEnd()));
+        } else setEmailIsValid(true);
         break;
       case PersonalInformationType.phoneNumber:
         setPhoneNumber(textInput);
         setEmailOrPhoneNumberIsEmpty(false);
+        if (textInput.trimEnd().length > 0) {
+          setPhoneNumberIsValid(
+            StringUtils.validateFrenchPhoneNumber(textInput.trimEnd())
+          );
+        } else setPhoneNumberIsValid(true);
         break;
     }
   };
@@ -138,6 +147,11 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
         <CommonText style={styles.textStyle}>{label}</CommonText>
         <View>
           <TextInput
+            keyboardType={
+              informationType === PersonalInformationType.phoneNumber
+                ? "phone-pad"
+                : "default"
+            }
             style={styles.textInput}
             onChangeText={(text: string) => {
               onChangeText(informationType, text);
@@ -147,25 +161,42 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
           {isEmptyVariable && (
             <HelperText type="error">{isEmptyMessage}</HelperText>
           )}
+          {informationType === PersonalInformationType.email &&
+            !emailIsValid && (
+              <HelperText type="error">
+                {Labels.epdsSurvey.beContacted.invalidEmail}
+              </HelperText>
+            )}
+          {informationType === PersonalInformationType.phoneNumber &&
+            !phoneNumberIsValid && (
+              <HelperText type="error">
+                {Labels.epdsSurvey.beContacted.invalidPhoneNumber}
+              </HelperText>
+            )}
         </View>
       </View>
     );
   };
 
   const onValidate = () => {
-    console.log(`Email à envoyer :\\n
+    if (
+      !StringUtils.stringIsNotNullNorEmpty(firstName) &&
+      !StringUtils.stringIsNotNullNorEmpty(email) &&
+      !StringUtils.stringIsNotNullNorEmpty(phoneNumber)
+    ) {
+      setFirstNameIsEmpty(!StringUtils.stringIsNotNullNorEmpty(firstName));
+      setEmailOrPhoneNumberIsEmpty(
+        !StringUtils.stringIsNotNullNorEmpty(email) &&
+          !StringUtils.stringIsNotNullNorEmpty(phoneNumber)
+      );
+    } else {
+      console.log(`Email à envoyer :\\n
     - prénom : ${firstName}
     - email : ${email}
     - téléphone : ${phoneNumber}
     - nb enfants : ${numberOfChildren}
     - date : ${childBirthDate}`);
-    if (!StringUtils.stringIsNotNullNorEmpty(firstName))
-      setFirstNameIsEmpty(true);
-    if (
-      !StringUtils.stringIsNotNullNorEmpty(email) &&
-      !StringUtils.stringIsNotNullNorEmpty(phoneNumber)
-    )
-      setEmailOrPhoneNumberIsEmpty(true);
+    }
   };
 
   return (
@@ -192,6 +223,9 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
             <View>
               {renderTextInputView(PersonalInformationType.firstName)}
               {renderTextInputView(PersonalInformationType.email)}
+              <CommonText style={[styles.textStyle, styles.orTextView]}>
+                {Labels.epdsSurvey.beContacted.or}
+              </CommonText>
               {renderTextInputView(PersonalInformationType.phoneNumber)}
               <View style={styles.rowView}>
                 <CommonText style={styles.textStyle}>
@@ -205,7 +239,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                     setNumberOfChildren(Number(itemValue));
                   }}
                 >
-                  {range(11).map((value) => (
+                  {range(4).map((value) => (
                     <Picker.Item label={String(value)} value={value} />
                   ))}
                 </Picker>
@@ -276,8 +310,10 @@ const styles = StyleSheet.create({
     fontSize: Sizes.sm,
   },
   buttonsContainer: {
+    bottom: 0,
     flexDirection: "row",
-    marginTop: Margins.default,
+    marginVertical: Margins.default,
+    position: "absolute",
   },
   closeModalView: {
     margin: Margins.default,
@@ -294,9 +330,11 @@ const styles = StyleSheet.create({
     borderRadius: Sizes.xs,
     borderWidth: 1,
     flex: 1,
-    justifyContent: "space-between",
     margin: Margins.default,
     padding: Paddings.default,
+  },
+  orTextView: {
+    marginLeft: Margins.default,
   },
   rowView: {
     alignItems: "center",

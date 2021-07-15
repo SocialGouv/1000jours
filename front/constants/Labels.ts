@@ -78,9 +78,11 @@ export default {
   epdsSurvey: {
     beContacted: {
       button: "Être appelé·e",
-      mandatoryEmailOrPhone: "Veuillez remplir ce champ ou le n° de téléphone",
-      mandatoryPhoneOrEmail: "Veuillez remplir le tél. ou l'email",
+      invalidEmail: "L'email n'est pas valide",
+      invalidPhoneNumber: "Le tél. n'est pas valide",
+      mandatoryPhoneOrEmail: "Veuillez remplir l'email ou le tél.'",
       numberOfChildren: "Nombre d'enfants",
+      or: "ou",
       title: "Être appelé·e",
       yourEmail: "Votre email",
       yourFirstname: "Votre prénom",
