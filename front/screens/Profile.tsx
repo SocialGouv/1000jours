@@ -40,7 +40,7 @@ interface Props {
 }
 
 const Profile: FC<Props> = ({ navigation }) => {
-  const { trackScreenView, trackEvent } = useMatomo();
+  const { trackScreenView } = useMatomo();
   trackScreenView(TrackerUtils.TrackingEvent.PROFILE);
   const image = <ProfileImage />;
   const defaultUserContext: UserContext = {
@@ -183,12 +183,9 @@ const Profile: FC<Props> = ({ navigation }) => {
 
     // Envoie la situation choisie sur Matomo
     if (situationChecked) {
-      trackEvent({
-        action: TrackerUtils.TrackingActions.UPDATE_PROFILE.action,
-        category: TrackerUtils.TrackingEvent.PROFILE,
-        name: TrackerUtils.TrackingActions.UPDATE_PROFILE.name,
-        value: situationChecked.label,
-      });
+      trackScreenView(
+        `${TrackerUtils.TrackingEvent.PROFILE} - ${situationChecked.label}`
+      );
     }
 
     void cancelScheduleNextStepNotification();
