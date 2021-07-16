@@ -1,4 +1,5 @@
 import env from "@kosko/env";
+import { loadFile } from "@kosko/yaml";
 import { create } from "@socialgouv/kosko-charts/components/app";
 import { azureProjectVolume } from "@socialgouv/kosko-charts/components/azure-storage/azureProjectVolume";
 import { addEnvs } from "@socialgouv/kosko-charts/utils/addEnvs";
@@ -98,9 +99,14 @@ export default async () => {
   });
 
   const hpa = createAutoscale(deployment, { minReplicas: 2, maxReplicas: 5 });
-  return manifests.concat(
-    params.useEmptyDirAsVolume
-      ? []
-      : [hpa, persistentVolumeClaim, persistentVolume]
-  );
+  const azureVolume = loadFile(
+    `environments/${env.env}/azure-volume.sealed-secret.yaml`
+  )().catch(() => []);
+  return manifests
+    .concat(azureVolume as any)
+    .concat(
+      params.useEmptyDirAsVolume
+        ? []
+        : [hpa, persistentVolumeClaim, persistentVolume]
+    );
 };

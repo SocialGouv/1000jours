@@ -413,6 +413,8 @@ spec:
           envFrom:
             - secretRef:
                 name: azure-pg-user-0123456
+            - secretRef:
+                name: strapi
             - configMapRef:
                 name: strapi-configmap
           env:
@@ -453,6 +455,54 @@ spec:
             requests:
               cpu: 5m
               memory: 16Mi
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: master-dev42
+    app.gitlab.com/env.name: master-dev42
+  name: strapi
+  labels:
+    application: master-dev42-1000jours
+    owner: 1000jours
+    team: 1000jours
+    cert: wildcard
+  namespace: 1000jours-85-master-dev42
+spec:
+  encryptedData:
+    MAIL_HOST: >-
+      AgCkzyxbx8EQDUu7polzze1ho7/KnHntrEhQsnoFiHYDSg/mAZXtBTy6DchQTbouj4Rw9dTVGfi3jwgV+EFlMxZeUhlGUDmPKmtB2Ws8cSEIwlfaTtHiI7woHcbLEbuEV5qorDs6dbaAA+YTJN0gIq3ISq5iw4tifornQaJjMLXLD3pBIUzq48sg0IwyAsl7xtwPmvlZyXxVlxRTOyRvK2Tn8jeqbJbSCgRT+CHvRfaQqDpeU5oy92bLG5+b+hEyi4TM04U0uJJXwTlBAi6DCmvQXuU9POzCIOSnQfVcMCAUb51XoxUxAPWDxph7w27gn4KAFS4Lr2U2Y8AcdtH/cZ/UYhvhaC3ZNufs0tSulZ163TreOVCbqprwijpDsTz1XTph5BQogqC/KdnVsG4VhnGeze8ey8j1cTf9I7J+eVOy1o2TGNyoMrd9fUIVFd80GwunaRkEQ0/QJZyrueVeZvcDKlfy1hoGNcldrS9zntOnsfBswmm0EY1OGCibOuFardjlkaPqQ7Ic5KE3uw+1z3Y0zpcFVkXXMyuFR8JpHySR81j4I6dw9dfkMQxSPld6HhYAdr6hrYUXl2oPXjN0NMgfpjEO2hWcKlkV+oc76q+M/isiBV4JGhIIPQO2ATh7P5igkYiyke+oGProYcQgNMpvvHQ1GAIfpiYMWR8biBzurfGzqnx1j9iyz13GppCkAKlpg0/I3Qu/t5oU8kEccwsfkw==
+    MAIL_PORT: >-
+      AgBU6Ow+md++iDP8btzEOAjsdiaD8JjBRal+nnpOACzyAZzWKaU91ExBfBY3hLhnNlYpnJyarFp54IVljdY4UqMStkkYGtVR7SWb4p1TuefF4g4xRsjS61ZHy5zqNritrJsGAPCghdgIQ/L6vAOuqe+L1m+HiH1hGGA6yNyqMlsALPszQQdUjE139HeTBSnSFaCLgc2V26vFCnqExJQa7HrE+X2Qv6hRxuuRcJ88wmqHbCwu/Wj7zrCr9pU4giI2KekDvSq5nwWv3vRaiK4uxng18XKAdtLkZtnlNT2oZx56GchuGuJE7BDZl5H6I92UaCPsluUJMwuv3kOv0lQuJpp+j0nzNwHnTvch4LsWYdgAMAoK/50oDWacAuHl6TKAjy7ikGZ+ii2JEyDn5NR8R93LHvS+W7neBfvYbD9yQvGGahLJAHm/z1iuvDKxmORfJdrb2FLdc8K/JRPH7QATqsrG+N42bMVmXXO+Bg1fo//NWy7MKRJAKKnO8W3LDYr8DtcrXtALtkE0f8nKueRON6JhutpHuUQ+Q+b1tj82qLYb0/08V7sVW87iZWm22UMdFROqqTg3mhqGhSLa/3+5g7njFfYLvmdIknoQlG+F0VsQ3C1w1kI+5ulS2sY+J0zVJ40w2vvvcZ16bl5IEuhmbSvVaDsao7ax3gd6giLJsH2pS7yiqAxnyjGiCbV+K7Th5x3YAUs=
+    MAIL_USER: >-
+      AgAtGpPaoA+NMQl7zFBmQWay9UGE4LOz7/+2ImqOqdn2JrN9ivqlRamPmriJdpJvtCd2oUfV8jaSkceYgAAkLI4UoWhHDr7shZzSsa29NXOsPvLHVcVh2PgCVPiQRP1LIkNv9N28Xliawbrejo1C6UTsH48kyU9j36DeIxSI/tOpoQ84wcbCueWGKeJ8c04RPRSglkF7jxj6Z3qTF59vet2xRrC5li4+kFlq6+Xj6OLp1R6XZoUJHb53KT7zWh5RJuk7MCUZwz7z7+CbbWrQMy6+27gvZlsCH8Sh0s4EH7LKRXnktNEnXjD5DHaOzYfUCjJNx5iqWyKu/+GHT5tr02sIvi9E3EkjVcXrsWToFtixgRoh/xW3LZAvOFXD1vzRZG0Fy4+I6+1cZBfq+IT4IQp+Q4+bA6EcCTcFMdvpqrIzIUK1eE4nW03HrsTQuPi1NFCNddya2blVIFDV+e8eZEUVPsLF+AXjwdHdbcM/B8yDB5/sVT6pyVyR/r4DBjAsOvtgwPCMA3oS5O/7u1WJhH4WD0C4UFNQkxYL/tLw7PpCrsFCaVPgjUy8v9Wd+dryGPPj3QuUEX3vLR6fW184VCNQuh/f7T7a3ecZ/gqJ++l4WO7L9FkfEtZq9lL/8815SnI1w2BMrbyU9QB1ir18itrzXIRrOQhkKvcVN22o23uGst/x0XqCJVbv2VMJAV+IUuMxrRniCFEyG2sPtZB8p888QUG5ftv/YbmHcfjjRu0TZA==
+    MAIL_PASSWORD: >-
+      AgAZUR9tqWFIbYlV5063069v6VSR6yEJJcObI7SO0KyQZcq5w31Jk+LiyiSZmo1gaDN0q4Z9zXmMWDokauIMDBtqXD1j4nH8gICxbHnl0iJ00jjSxVgH/fu4zIrBtaZuwPo01H3VOKD6cmz6p391zdooqrALb+HsZHaO2nMhyHx71bA+lAF+TRPn/QxBibnyOX1EPDGWd2Hd8GV7Zw6eHfbT9uN1oGQpSCh8mbq/GbWYxz8W1eJxQkPP0d4CU17M2ZjsZeqQctxIh5woLiSiGvkmY1FwL545y6VJ2+k9LKbDflf/B4UFCqfQ1oxOdXsnYC/imP7Ie1UQBcA2zKKEljPFOvRrT0MTFIIxliyFpNM3R5FJQBza/PhK3Q/wyylSg1VbRm/J/RypMjuBFVBxcXgXc7l1NSpSNi6B3Lao3CPKP/VqiK9E8PuLxHYLwRnqiBLivhXetGAmtfQrrtlb4kRjuQZtQGnQpDl02SwhTslg0sxSLphWJrLQI2vpBG0AT/JiYw6HKAQNMl5Sr/Nn6a4n4ZzuSbMsKDiX6n6ZzC+L7ot7a6mmBVZ7P0hu08jvmUyiz7eOmDR552qVVkI5tmV8Tklio3Sqs6ToHj7XBataDCKsPyMUAyEgDO0zev9vc5tyyDw8xgv4GcABJoTotYYvjDEAzOjuLBkf4J2JOeriCzV11mGZEmcIU1RRvllnaPq+G52qHbS/sTJBIaLUF0QBYl8YxSQx7OgAXjPVZgThkA==
+    MAIL_SEND_FROM: >-
+      AgB83vkzEHe8ZnUwHl0VxQFnQPtQf0CWAAbutCb6+ce0vxWEj9w6q+4Fsv8Oiv3Q9jLR5OZaqQ4YS7J5/oTJlfyi5BuFqd8xhGWHSxb+LXdtyl/NtnGFwvTFm5dfNv19HDMJdZQM5LN2ebJr8kHaTSXfyesLkIdT/6mSIsXlfZeEw3UqBr1vnp82sPIqnpNZVPl0+WoC7awZDuJs2ozuj8O/G2UMOX1zXMIT9Kn7fhg8z2PY6uRljnNXuHQElA83oRwU6cGbLxzHufXOpJuGVvC/1Ow7P+k8oh0286TpDuNIh8efCLapRcQnez2C2mvbETLX5DjMX1cRY8Un/mxISWkFCGXRTAVj15Fr+J+vCEk+rB7AQKwVLEHbSn8DvydXpxU1K2Iqi3IrDu/zzclQFKMxn6cpiwdMLA78YfH750cxkfVZja5iFHK4Mdnf8TnMRwSAAb6AtjIRLO8Q7X/yEcz9vDh+nJDUfpbLE6EkJPw1XtZDcmJkMwCaB8DAFlFt8fzcwXBuOZX2zRCeK3K/qnv4eyuS//KkklEAxoGMcp9o9FrFlpW5vB2evM+F8QSEJ8/Of+O+y2hMiq6eQRhuaLt0UqwCqdjvQbScgBMK/EwNmEC8NKW7axLqtcuoTHnIR5lHHQ7lGXVcVNcZyu4Zehg6ZQI34u+ddbGFPsC1YtFsWwJlCOb9BGIrNtOF04y2YI9bUCJ8basr9k9/HC+8uOXpdQhcPHyDomPQVRZM8kGt5tc7BZPBmw2gMjo2Tg==
+    MAIL_SEND_TO: >-
+      AgB6HGBo/JKAQkz6AbWtK/oTGlAlIsZCAE79SF26749lckFq4k/9BDiJfEkLJdpc7nDIIQIDGfzJWAu5JahjIDRNJassryU7ZsfIpleTcxFe7Irh8QmjYMqmzOlMq42aTwwsTwI8LKKBfs/4F65aFe+yRdrydc0odH4RAzUs83MYreepkIdx/qJfIhNYj1zqAEHpzLTDVw4J12yg+UYOlF45jMo8rQnttW08IEpbY2OVkoFHSpU3HUMpY0MIBTBqTT7BAyQZlshITJxdf23kYyYY1dL4kmMxqSz+6Qhzgk6mOSyDiAOW9q78mXpIrZgsS1XCX9KM4Zr0OM/Q716osH/cn0fxSaXCFcTiIz3vp2VlcZput7dNM7wQ7GV9EZBFuJwfafim4z6U/OuTs+R0gD34ZmfheA6VgnI3pB8WzSNP5mmWE41dnEGuiqLx5hN9r5Rj7BwY4zf8Wl+9wKdLLJq0dCgWTNwY5Bu0LrBAHCbxTejpqsdkIO+GN8uhs4ra+VJkAs8P9hysLu8AC7DhGsWyVqtTFQye2XLyos5uzkmGuwRbqBot0PqxI9l7fYBYjD4Xc/ExeOXdDp88Hw1MJuVYSLaXYNCD/k5UuAoFJ3vmIzj8hIwscWquBb7kVfjNn7MygNIvFbX/nRlP41V4munM4jqlbFRQGvaa6OsWfpd8S11aIA3sQGLuFfiO3C+1WpaNhBhmuCknAbaVrjyOymFVaFmJoLsLGQEkxI8=
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.gitlab.com/app: socialgouv-1000jours
+        app.gitlab.com/env: master-dev42
+        app.gitlab.com/env.name: master-dev42
+      name: strapi
+      labels:
+        application: master-dev42-1000jours
+        owner: 1000jours
+        team: 1000jours
+        cert: wildcard
+    type: Opaque
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -499,5 +549,24 @@ spec:
   selector:
     app: strapi
   type: ClusterIP
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+  name: azure-les1000jours-volume
+spec:
+  encryptedData:
+    azurestorageaccountkey: >-
+      AgASgwrqJJTwfTReL3VNlrenQa04pi/Ul80Bi/gzw5qWi6FbcDjMp+UjzNvGx+EL3VkuNspitCh5L1+Hz+zF49mBjE7joNtIUI5d6rnVkS/DSsei6wthpfU747hEpwSd1ZNNYobmMcmCDtcwX1RrgMcukQqRM/pSCTzLTs8mCvB1AYZ8FaOwOTmnG9R+OzoTIop7HNbgJEyCOdxWY+4UQNHGb3tVLfgE8wpZECYQ1c21kx63vAQyEdHlg6eKaMHqPNHufPhDy6E6cYsUNN/vW5oeeZs6AYeAPiXPMTvIH4OdVUMhPzffP1MdrLbwBOvOb1QQmtomH/nhbttO+2mtEQ4Qp4Aqvh7rtD0sUaS4UONd9gm6FrTpg2WZct5xya5s9VPg1bG3iQnQCZEsfzGIoIbrLo02DadPLQvY/5V/PbmzyK9jrMB0P2M25OvY7noS9c4IJ6p4XlPSGmfkMzYNQcM6KkTJT/794EeQVuu8E/gypTByaSSPgBXjqZJk3MckGATQvQ5YQ1cjPysyTNxAnYDq/ouPIIYiQF6Lg7kSj+N4NZZg5HyMBcOUrDqynG8cBkyHZVuwkS0agxXCk/fxTjG2Vi/gZhNAYbaAi1UPI59hT8xs0uqzuwn4a97tFnvhAD0Y6Sngjv0OLXniLp1D0lpSWwZL0HQCAo/qHea5ifkA1tOavluB5Xmk7BKVioJsNsTfK7kHcf+oeWWq4X9MA0S4Ap0D4a3aQJGu6cB/WR3U80aLYvnYHpUE+iwLRUp6+p0YfTeXXQKYBdqH/UGSzIy4Xzk03yXfbwJ5deWQCoPTYJYAhC+JT7Eq
+    azurestorageaccountname: >-
+      AgANbUFD/dvNvvdc7tbxYvarpvhi3VQ/qr9V+XO92ZL6hWhQ9dJnMJjMH4tP+8EJCbAoeAPD9gFvrRZZIJlWQip1ONRkDlcHFqEqoa1R/YmbfY9Hx9bAG2vhV4He6dwyRJGXEDD45uh5asL2g/zEh9e7eSJzzDbQbENloOnH/g8y/RUf7d851U8eP2G1fwXbBMLTGCCmuPWhk471rW0E0Dhr340pL6K2iVEfhxUTrhfcgnuotG/wgrkkTyX17DJdTs5xHS63chvf52akk35PRhAFHQXPBK9mcopeLlackGpECcoCMbtO0E63/8MXjj+keoHO6yaWoFtV5nI6E15lSpBRCC9L79/SvdjbYXb2zIOPIlket6Tdeu0wIRY3pza1thaP2cx3XqEMa25M5oRUpSdYt7jiC/63DPTrkpTnuyaIshvcIZ4KUl8YRdGTZOtWSJU6lSMWjhFXNS1Hpf1NZdb3L2uJeOYUesqFTRl0aod65O91Sn2Utfwh2Pvg9ENjQ/yI/3II5Gca1TEINty2KHqMXa3cB5/ZK9yuspLlAnv2cS9Xlm2R4S+EOO43hDPrkzmFDaWwcW+6dmbrJKNlNGKpKJmZ/4ACqh1f2wH6gTlTYodD+M+w946+K02KgWTAVmTmVvySo/okj5o4PDjp2QRU0GDOMgbVr87Yb71VoM5HGesyR9mPPbo+TXsFZVDRjUNLA4QcJle8NP8+fIu/qMw=
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+      name: azure-les1000jours-volume
+    type: Opaque
 "
 `;
