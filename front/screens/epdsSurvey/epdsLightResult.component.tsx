@@ -20,12 +20,14 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../constants";
+import type { EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, NotificationUtils, StorageUtils } from "../../utils";
 import BeContacted from "./beContacted.component";
 import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation.component";
 
 interface Props {
   result: number;
+  epdsSurvey: EpdsQuestionAndAnswers[];
   showBeContactedButton: boolean;
   startSurveyOver: () => void;
 }
@@ -38,6 +40,7 @@ const clientNoCache = new ApolloClient({
 
 const EpdsLightResult: React.FC<Props> = ({
   result,
+  epdsSurvey,
   showBeContactedButton,
   startSurveyOver,
 }) => {
@@ -64,8 +67,25 @@ const EpdsLightResult: React.FC<Props> = ({
       const genderValue = await StorageUtils.getStringValue(
         StorageKeysConstants.epdsGenderKey
       );
+
+      const answersScores = EpdsSurveyUtils.getEachQuestionScore(epdsSurvey);
+
       await addReponseQuery({
-        variables: { compteur: newCounter, genre: genderValue, score: result },
+        variables: {
+          compteur: newCounter,
+          genre: genderValue,
+          reponse1: answersScores[0],
+          reponse10: answersScores[9],
+          reponse2: answersScores[1],
+          reponse3: answersScores[2],
+          reponse4: answersScores[3],
+          reponse5: answersScores[4],
+          reponse6: answersScores[5],
+          reponse7: answersScores[6],
+          reponse8: answersScores[7],
+          reponse9: answersScores[8],
+          score: result,
+        },
       });
     };
 

@@ -150,6 +150,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
       ) : (
         <EpdsLightResult
           result={score}
+          epdsSurvey={questionsAndAnswers}
           showBeContactedButton={
             score >= EpdsConstants.RESULT_BECONTACTED_VALUE ||
             lastQuestionHas3PointAnswer
@@ -160,6 +161,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
         />
         // <EpdsResult
         //   result={score}
+        //   epdsSurvey={questionsAndAnswers}
         //   startSurveyOver={async () => {
         //     await restartSurvey();
         //   }}
