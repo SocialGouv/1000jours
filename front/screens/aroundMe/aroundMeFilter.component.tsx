@@ -37,11 +37,10 @@ import { StorageUtils, StringUtils } from "../../utils";
 
 interface Props {
   visible: boolean;
-  showModal: () => void;
   hideModal: (filterWasSaved: boolean) => void;
 }
 
-const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
+const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
   const [filterDataFromDb, setFilterDataFromDb] = useState<unknown>();
 
   const [fetchedFiltersFromDB, setFetchedFiltersFromDB] =
@@ -61,18 +60,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, showModal, hideModal }) => {
         etapes: StepFromDB[];
       };
       extractFilterData(cartographieTypes, etapes);
-
-      const savedFilters: CartoFilterStorage =
-        await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
-      if (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        !savedFilters ||
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        (savedFilters &&
-          StringUtils.stringArrayIsNullOrEmpty(savedFilters.types) &&
-          StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes))
-      )
-        showModal();
     };
     void extractFilterDataAndCheckSavedFilters();
   }, [filterDataFromDb]);

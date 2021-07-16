@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as Location from "expo-location";
 import * as React from "react";
+import { useEffect } from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import type { LatLng, Region } from "react-native-maps";
 import { HelperText } from "react-native-paper";
@@ -31,7 +32,8 @@ interface Props {
   setAndGoToNewRegion: (region: Region) => void;
   showSnackBarWithMessage: (message: string) => void;
   setIsLoading: (value: boolean) => void;
-  updateUserLocation: (coordinates: LatLng) => void;
+  updateUserLocation: (coordinates: LatLng | undefined) => void;
+  setSearchIsReady: (value: boolean) => void;
 }
 
 const SearchByPostalCode: React.FC<Props> = ({
@@ -44,7 +46,13 @@ const SearchByPostalCode: React.FC<Props> = ({
   showSnackBarWithMessage,
   setIsLoading,
   updateUserLocation,
+  setSearchIsReady,
 }) => {
+  useEffect(() => {
+    setSearchIsReady(false);
+    void checkLocation();
+  }, []);
+
   const checkLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== Location.PermissionStatus.GRANTED) {
@@ -57,10 +65,11 @@ const SearchByPostalCode: React.FC<Props> = ({
       const currentLocation = await Location.getCurrentPositionAsync({});
       updateUserLocation(currentLocation.coords);
     } catch {
-      showSnackBarWithMessage(Labels.errorMsg);
+      updateUserLocation(undefined);
     }
 
     setIsLoading(false);
+    setSearchIsReady(true);
   };
 
   const onPostalCodeChanged = (newPostalCode: string) => {
