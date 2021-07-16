@@ -6,10 +6,11 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
-import { Button, TitleH1 } from "../../components";
+import { Button, CustomSnackbar, TitleH1 } from "../../components";
 import { SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
+  AroundMeConstants,
   Colors,
   DatabaseQueries,
   FontWeight,
@@ -47,6 +48,7 @@ const EpdsLightResult: React.FC<Props> = ({
     },
   });
   const [showBeContactedModal, setShowBeContactedModal] = useState(false);
+  const [showSnackBar, setShowSnackBar] = useState(false);
 
   const labelsResultats = Labels.epdsSurvey.resultats;
   const resultData = EpdsSurveyUtils.getResultLabelAndStyleLight();
@@ -73,52 +75,66 @@ const EpdsLightResult: React.FC<Props> = ({
   void EpdsSurveyUtils.removeEpdsStorageItems();
 
   return (
-    <ScrollView>
-      <TitleH1 title={Labels.epdsSurveyLight.titleLight} animated={false} />
-      <SecondaryText style={[styles.text, styles.fontBold]}>
-        {Labels.epdsSurveyLight.oserEnParler}
-      </SecondaryText>
-      <SecondaryText style={styles.text}>
-        {Labels.epdsSurveyLight.changementsImportants}
-      </SecondaryText>
-      <SecondaryText style={[styles.text, styles.fontBold]}>
-        {labelsResultats.retakeTestInvitation}
-      </SecondaryText>
-      {showBeContactedButton && (
+    <>
+      <ScrollView>
+        <TitleH1 title={Labels.epdsSurveyLight.titleLight} animated={false} />
+        <SecondaryText style={[styles.text, styles.fontBold]}>
+          {Labels.epdsSurveyLight.oserEnParler}
+        </SecondaryText>
+        <SecondaryText style={styles.text}>
+          {Labels.epdsSurveyLight.changementsImportants}
+        </SecondaryText>
+        <SecondaryText style={[styles.text, styles.fontBold]}>
+          {labelsResultats.retakeTestInvitation}
+        </SecondaryText>
+        {showBeContactedButton && (
+          <View style={styles.validateButton}>
+            <Button
+              title={Labels.epdsSurvey.beContacted.button}
+              titleStyle={styles.fontButton}
+              rounded={true}
+              disabled={false}
+              action={() => {
+                setShowBeContactedModal(true);
+              }}
+            />
+          </View>
+        )}
+        <EpdsResultInformation
+          leftBorderColor={Colors.white}
+          informationList={resultData.resultLabels.professionalsList}
+        />
         <View style={styles.validateButton}>
           <Button
-            title={Labels.epdsSurvey.beContacted.button}
+            title={Labels.epdsSurvey.restartSurvey}
             titleStyle={styles.fontButton}
             rounded={true}
             disabled={false}
             action={() => {
-              setShowBeContactedModal(true);
+              startSurveyOver();
             }}
           />
         </View>
-      )}
-      <EpdsResultInformation
-        leftBorderColor={Colors.white}
-        informationList={resultData.resultLabels.professionalsList}
-      />
-      <View style={styles.validateButton}>
-        <Button
-          title={Labels.epdsSurvey.restartSurvey}
-          titleStyle={styles.fontButton}
-          rounded={true}
-          disabled={false}
-          action={() => {
-            startSurveyOver();
+        <BeContacted
+          visible={showBeContactedModal}
+          hideModal={(showSB: boolean) => {
+            setShowBeContactedModal(false);
+            setShowSnackBar(showSB);
           }}
         />
-      </View>
-      <BeContacted
-        visible={showBeContactedModal}
-        hideModal={() => {
-          setShowBeContactedModal(false);
+      </ScrollView>
+      <CustomSnackbar
+        duration={AroundMeConstants.SNACKBAR_DURATION}
+        visible={showSnackBar}
+        isOnTop={false}
+        backgroundColor={Colors.aroundMeSnackbar.background}
+        onDismiss={() => {
+          setShowSnackBar(false);
         }}
+        textColor={Colors.aroundMeSnackbar.text}
+        text={Labels.epdsSurvey.beContacted.beContactedSent}
       />
-    </ScrollView>
+    </>
   );
 };
 

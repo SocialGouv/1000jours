@@ -77,6 +77,7 @@ export default {
   dateFormatLabel: "Jour / Mois / Année",
   epdsSurvey: {
     beContacted: {
+      beContactedSent: "Votre demande de contact a bien été envoyée",
       button: "Être appelé·e",
       invalidEmail: "L'email n'est pas valide",
       invalidPhoneNumber: "Le tél. n'est pas valide",

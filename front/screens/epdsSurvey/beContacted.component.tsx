@@ -38,7 +38,7 @@ import { StorageUtils, StringUtils } from "../../utils";
 
 interface Props {
   visible: boolean;
-  hideModal: () => void;
+  hideModal: (showSnackBar: boolean) => void;
 }
 
 enum PersonalInformationType {
@@ -215,7 +215,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       setNumberOfChildren(1);
       setChildBirthDate("");
       setChildBirthDateIsEmpty(false);
-      hideModal();
+      hideModal(true);
     }
   };
 
@@ -231,7 +231,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
             <TouchableOpacity
               style={styles.closeModalView}
               onPress={() => {
-                hideModal();
+                hideModal(false);
               }}
             >
               <Icomoon
@@ -302,7 +302,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                     />
                   }
                   action={() => {
-                    hideModal();
+                    hideModal(false);
                   }}
                 />
               </View>
