@@ -1,6 +1,6 @@
 import { useLazyQuery } from "@apollo/client";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import type { Region } from "react-native-maps";
 
 import {
@@ -8,11 +8,7 @@ import {
   DatabaseQueries,
   StorageKeysConstants,
 } from "../../constants";
-import type {
-  CartoFilterStorage,
-  CartographiePoisFromDB,
-  PoisCountFromDB,
-} from "../../type";
+import type { CartoFilterStorage, CartographiePoisFromDB } from "../../type";
 import { AroundMeUtils, StorageUtils, StringUtils } from "../../utils";
 
 interface Props {
@@ -22,6 +18,7 @@ interface Props {
   region: Region;
   setFetchedPois: (pois: CartographiePoisFromDB[]) => void;
   chooseFilterMessage: () => void;
+  searchIsReady: boolean;
 }
 
 const FetchPoisCoords: React.FC<Props> = ({
@@ -30,23 +27,8 @@ const FetchPoisCoords: React.FC<Props> = ({
   region,
   setFetchedPois,
   chooseFilterMessage,
+  searchIsReady,
 }) => {
-  const [getPoisCountByGpsCoords] = useLazyQuery(
-    DatabaseQueries.AROUNDME_POIS_COUNT_BY_GPSCOORDS,
-    {
-      fetchPolicy: "no-cache",
-      onCompleted: async (data) => {
-        const { searchPoisCount } = data as {
-          searchPoisCount: number;
-        };
-        await searchByGPSCoords(
-          searchPoisCount >
-            AroundMeConstants.MAX_NUMBER_POI_WITHOUT_FILTER,
-          false
-        );
-      },
-    }
-  );
   const [getPoisByGpsCoords] = useLazyQuery(
     DatabaseQueries.AROUNDME_POIS_BY_GPSCOORDS,
     {
@@ -60,7 +42,7 @@ const FetchPoisCoords: React.FC<Props> = ({
     }
   );
 
-  const searchByGPSCoords = async (withFilter: boolean, getCount: boolean) => {
+  const searchByGPSCoords = async () => {
     const topLeftPoint = AroundMeUtils.getLatLngPoint(
       region,
       AroundMeConstants.LatLngPointType.topLeft
@@ -70,46 +52,48 @@ const FetchPoisCoords: React.FC<Props> = ({
       AroundMeConstants.LatLngPointType.bottomRight
     );
 
-    let paramsVariables = null;
+    const isFirstLaunch: boolean | null = await StorageUtils.getObjectValue(
+      StorageKeysConstants.cartoIsFirstLaunch
+    );
+    if (isFirstLaunch === null)
+      await StorageUtils.storeObjectValue(
+        StorageKeysConstants.cartoIsFirstLaunch,
+        true
+      );
 
-    if (withFilter) {
-      const savedFilters: CartoFilterStorage | undefined =
-        await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
-      if (
-        !savedFilters ||
+    const cartoIsFirstLaunch = isFirstLaunch === null;
+
+    const savedFilters: CartoFilterStorage | undefined =
+      await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
+    if (
+      !cartoIsFirstLaunch &&
+      (!savedFilters ||
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (savedFilters &&
           StringUtils.stringArrayIsNullOrEmpty(savedFilters.types) &&
-          StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes))
-      ) {
-        chooseFilterMessage();
-        return;
-      }
-      paramsVariables = {
-        etapes: savedFilters.etapes,
-        types: savedFilters.types,
-      };
+          StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes)))
+    ) {
+      chooseFilterMessage();
+      return;
     }
 
     const variables = {
-      ...paramsVariables,
+      etapes: savedFilters?.etapes ? savedFilters.etapes : [],
       lat1: topLeftPoint.latitude,
       lat2: bottomRightPoint.latitude,
       long1: topLeftPoint.longitude,
       long2: bottomRightPoint.longitude,
+      types: savedFilters?.types ? savedFilters.types : [],
     };
-    if (getCount)
-      getPoisCountByGpsCoords({
-        variables,
-      });
-    else
-      getPoisByGpsCoords({
-        variables,
-      });
+    getPoisByGpsCoords({
+      variables,
+    });
   };
 
   useEffect(() => {
-    void searchByGPSCoords(false, true);
+    if (!searchIsReady) return;
+
+    void searchByGPSCoords();
   }, [triggerSearchByGpsCoords]);
 
   return <>{children}</>;

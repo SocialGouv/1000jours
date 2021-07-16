@@ -8,6 +8,7 @@ import type {
   EpdsAnswer,
   EpdsQuestionAndAnswers,
   EpdsResultData,
+  EpdsUpdatedSurvey,
   QuestionnaireEpdsFromDB,
 } from "../type";
 import { getObjectValue, multiRemove, storeObjectValue } from "./storage.util";
@@ -60,12 +61,16 @@ export const getUpdatedSurvey = (
   questionsAndAnswers: EpdsQuestionAndAnswers[],
   selectedQuestionIndex: number,
   selectedAnswer: EpdsAnswer
-): EpdsQuestionAndAnswers[] =>
-  questionsAndAnswers.map((question, questionIndex) => {
+): EpdsUpdatedSurvey => {
+  let lastQuestionHasThreePointAnswer = false;
+  const updatedSurvey = questionsAndAnswers.map((question, questionIndex) => {
     const questionIsCurrent = questionIndex === selectedQuestionIndex;
     const answers = questionIsCurrent
       ? question.answers.map((answer) => {
           if (answer.id === selectedAnswer.id) {
+            lastQuestionHasThreePointAnswer =
+              questionIndex === questionsAndAnswers.length - 1 &&
+              answer.points === 3;
             question.isAnswered = !selectedAnswer.isChecked;
             return { ...answer, isChecked: !selectedAnswer.isChecked };
           } else {
@@ -76,6 +81,9 @@ export const getUpdatedSurvey = (
 
     return { ...question, answers };
   });
+
+  return { lastQuestionHasThreePointAnswer, updatedSurvey };
+};
 
 export const getUpdatedScore = (
   questionsAndAnswers: EpdsQuestionAndAnswers[]

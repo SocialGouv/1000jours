@@ -72,6 +72,7 @@ const TabAroundMeScreen: React.FC = () => {
   const [currentUserLocation, setCurrentUserLocation] = useState<LatLng | null>(
     null
   );
+  const [searchIsReady, setSearchIsReady] = useState(false);
 
   const googleMapsNotSelectedIcon = require("../../assets/images/carto/icon_google_map_not_selected.png");
   const googleMapsSelectedIcon = require("../../assets/images/carto/icon_google_map_selected.png");
@@ -93,15 +94,31 @@ const TabAroundMeScreen: React.FC = () => {
     mapRef.current = ref;
   };
 
-  const handleFetchedPois = (pois: CartographiePoisFromDB[]) => {
-    if (pois.length === 0) {
-      showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
+  const handleFetchedPois = async (pois: CartographiePoisFromDB[]) => {
+    const isFirstLaunch = await StorageUtils.getObjectValue(
+      StorageKeysConstants.cartoIsFirstLaunch
+    );
+
+    if (
+      isFirstLaunch &&
+      pois.length >= AroundMeConstants.MAX_NUMBER_POI_WITHOUT_FILTER
+    ) {
+      setShowFilter(true);
+    } else {
+      if (pois.length === 0) {
+        showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
+      }
+
+      setPoisArray(pois);
+      setShowAddressesList(true);
+      setShowAddressDetails(false);
     }
 
-    setPoisArray(pois);
-    setShowAddressesList(true);
-    setShowAddressDetails(false);
     setIsLoading(false);
+    void StorageUtils.storeObjectValue(
+      StorageKeysConstants.cartoIsFirstLaunch,
+      false
+    );
   };
 
   const onRegionChangeComplete = (newRegion: Region) => {
@@ -191,6 +208,7 @@ const TabAroundMeScreen: React.FC = () => {
           );
           showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
         }}
+        searchIsReady={searchIsReady}
       />
       <View style={styles.topContainer}>
         <TitleH1
@@ -216,12 +234,26 @@ const TabAroundMeScreen: React.FC = () => {
         }}
         showSnackBarWithMessage={showSnackBarWithMessage}
         setIsLoading={setIsLoading}
-        updateUserLocation={(coordinates: LatLng) => {
-          setSelectedPoiIndex(-1);
-          setCurrentUserLocation(coordinates);
-          moveMapToCoordinates(coordinates.latitude, coordinates.longitude);
+        updateUserLocation={async (coordinates: LatLng | undefined) => {
+          if (coordinates) {
+            setSelectedPoiIndex(-1);
+            setCurrentUserLocation(coordinates);
+            moveMapToCoordinates(coordinates.latitude, coordinates.longitude);
+          } else {
+            const savedRegion: Region | undefined =
+              await StorageUtils.getObjectValue(
+                StorageKeysConstants.cartoSavedRegion
+              );
+            moveMapToCoordinates(
+              savedRegion?.latitude ??
+                AroundMeConstants.COORDINATE_PARIS.latitude,
+              savedRegion?.longitude ??
+                AroundMeConstants.COORDINATE_PARIS.longitude
+            );
+          }
           setMoveToRegionBecauseOfPCResearch(true);
         }}
+        setSearchIsReady={setSearchIsReady}
       />
       <View style={styles.map}>
         <MapView
@@ -366,9 +398,6 @@ const TabAroundMeScreen: React.FC = () => {
         )}
       <AroundMeFilter
         visible={showFilter}
-        showModal={() => {
-          setShowFilter(true);
-        }}
         hideModal={(filterWasSaved: boolean) => {
           setShowFilter(false);
           if (filterWasSaved) {

@@ -8,6 +8,7 @@ export const epdsQuestionIndexKey = "@epdsQuestionIndexKey";
 export const epdsSurveyCounterKey = "@epdsSurveyCounterKey";
 export const cartoFilterKey = "@cartoFilterKey";
 export const cartoSavedRegion = "@cartoSavedRegion";
+export const cartoIsFirstLaunch = "@cartoIsFirstLaunch";
 export const notifIdNextStep = "@notifIdNextStep";
 export const notifIdsEvents = "@notifIdsEvents";
 
@@ -20,6 +21,8 @@ export const allStorageKeys = [
   epdsQuestionAndAnswersKey,
   epdsQuestionIndexKey,
   cartoFilterKey,
+  cartoSavedRegion,
+  cartoIsFirstLaunch,
   notifIdNextStep,
   notifIdsEvents,
 ];
