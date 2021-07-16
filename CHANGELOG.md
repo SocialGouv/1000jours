@@ -1,3 +1,10 @@
+## [1.67.1](https://github.com/SocialGouv/1000jours/compare/v1.67.0...v1.67.1) (2021-07-16)
+
+
+### Bug Fixes
+
+* **epds:** Corrige l'envoie des scores au backend, refs [#512](https://github.com/SocialGouv/1000jours/issues/512) ([#528](https://github.com/SocialGouv/1000jours/issues/528)) ([2a33965](https://github.com/SocialGouv/1000jours/commit/2a339659ad3280fab11bf41ab12d13cb975c8ae8))
+
 # [1.67.0](https://github.com/SocialGouv/1000jours/compare/v1.66.0...v1.67.0) (2021-07-16)
 
 
