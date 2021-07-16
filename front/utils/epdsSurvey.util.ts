@@ -149,3 +149,16 @@ export const getResultLabelAndStyleLight = (): EpdsResultData => {
     resultLabels: Labels.epdsSurveyLight,
   };
 };
+
+export const getEachQuestionScore = (
+  questionsAndAnswers: EpdsQuestionAndAnswers[]
+): number[] => {
+  const scores: number[] = [];
+  questionsAndAnswers.forEach((question) => {
+    const questionPoint = question.answers.find(
+      (answer) => answer.isChecked
+    )?.points;
+    if (questionPoint) scores.push(questionPoint);
+  });
+  return scores;
+};

@@ -35,7 +35,11 @@ const clientNoCache = new ApolloClient({
   uri: `${process.env.API_URL}/graphql?nocache`,
 });
 
-const EpdsLightResult: React.FC<Props> = ({ result, epdsSurvey, startSurveyOver }) => {
+const EpdsLightResult: React.FC<Props> = ({
+  result,
+  epdsSurvey,
+  startSurveyOver,
+}) => {
   const [addReponseQuery] = useMutation(DatabaseQueries.EPDS_ADD_RESPONSE, {
     client: clientNoCache,
     onError: (err) => {
@@ -58,18 +62,23 @@ const EpdsLightResult: React.FC<Props> = ({ result, epdsSurvey, startSurveyOver 
         StorageKeysConstants.epdsGenderKey
       );
 
-      const answersScores = epdsSurvey.answers.reduce((answersScores, answer, answerIndex) => {
-        answersScores[`reponse_${answerIndex}`] = answer.score;
-
-        return answersScores;
-      }, {});
+      const answersScores = EpdsSurveyUtils.getEachQuestionScore(epdsSurvey);
 
       await addReponseQuery({
         variables: {
           compteur: newCounter,
           genre: genderValue,
+          reponse1: answersScores[0],
+          reponse10: answersScores[9],
+          reponse2: answersScores[1],
+          reponse3: answersScores[2],
+          reponse4: answersScores[3],
+          reponse5: answersScores[4],
+          reponse6: answersScores[5],
+          reponse7: answersScores[6],
+          reponse8: answersScores[7],
+          reponse9: answersScores[8],
           score: result,
-          ...answersScores,
         },
       });
     };

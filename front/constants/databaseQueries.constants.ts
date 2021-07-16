@@ -18,9 +18,39 @@ export const QUESTIONNAIRE_EPDS = gql`
 `;
 
 export const EPDS_ADD_RESPONSE = gql`
-  mutation ($genre: ENUM_REPONSESEPDS_GENRE!, $compteur: Int!, $score: Int!) {
+  mutation (
+    $genre: ENUM_REPONSESEPDS_GENRE!
+    $compteur: Int!
+    $score: Int!
+    $reponse1: Int!
+    $reponse2: Int!
+    $reponse3: Int!
+    $reponse4: Int!
+    $reponse5: Int!
+    $reponse6: Int!
+    $reponse7: Int!
+    $reponse8: Int!
+    $reponse9: Int!
+    $reponse10: Int!
+  ) {
     createReponsesEpd(
-      input: { data: { genre: $genre, compteur: $compteur, score: $score } }
+      input: {
+        data: {
+          genre: $genre
+          compteur: $compteur
+          score: $score
+          reponse_1: $reponse1
+          reponse_2: $reponse2
+          reponse_3: $reponse3
+          reponse_4: $reponse4
+          reponse_5: $reponse5
+          reponse_6: $reponse6
+          reponse_7: $reponse7
+          reponse_8: $reponse8
+          reponse_9: $reponse9
+          reponse_10: $reponse10
+        }
+      }
     ) {
       reponsesEpd {
         created_at
