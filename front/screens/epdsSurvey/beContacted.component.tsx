@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { HelperText } from "react-native-paper";
 
 import {
@@ -239,7 +240,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                 color={Colors.primaryBlue}
               />
             </TouchableOpacity>
-            <View>
+            <ScrollView>
               {renderTextInputView(PersonalInformationType.firstName)}
               {renderTextInputView(PersonalInformationType.email)}
               {renderTextInputView(PersonalInformationType.phoneNumber)}
@@ -289,7 +290,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                   )}
                 </View>
               )}
-            </View>
+            </ScrollView>
             <View style={styles.buttonsContainer}>
               <View style={styles.buttonContainer}>
                 <Button
