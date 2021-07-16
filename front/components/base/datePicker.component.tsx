@@ -157,7 +157,6 @@ const styles = StyleSheet.create({
   },
   centeredView: {
     alignItems: MAJOR_VERSION_IOS < 14 ? "stretch" : "center",
-    flex: 1,
     justifyContent: "center",
     marginTop: Margins.default,
   },

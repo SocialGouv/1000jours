@@ -9,6 +9,7 @@ import {
 } from "./aroundMe.types";
 import { DataFetchingType } from "./dataFetching.types";
 import {
+  BeContactedData,
   EpdsAnswer,
   EpdsGenders,
   EpdsGenderType,
@@ -17,10 +18,12 @@ import {
   EpdsResultData,
   EpdsResultInformationType,
   EpdsResultSimpleInformation,
+  EpdsUpdatedSurvey,
   QuestionnaireEpdsFromDB,
 } from "./epdsSurvey.types";
 
 export {
+  BeContactedData,
   CartoFilter,
   CartoFilterStorage,
   CartographiePoisFromDB,
@@ -33,6 +36,7 @@ export {
   EpdsResultData,
   EpdsResultInformationType,
   EpdsResultSimpleInformation,
+  EpdsUpdatedSurvey,
   FetchedFilterFromDb,
   PoisCountFromDB,
   PoiTypeFromDB,

@@ -1,10 +1,8 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import type { SwiperFlatListRefProps } from "react-native-swiper-flatlist/src/components/SwiperFlatList/SwiperFlatListProps";
 
 import { View } from "../../components/Themed";
-import { Margins, Sizes } from "../../constants";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import EpdsQuestion from "./epdsQuestion.component";
 import EpdsSurveyQuestionsPagination from "./epdsSurveyQuestionsPagination.component";

@@ -76,6 +76,17 @@ export default {
   },
   dateFormatLabel: "Jour / Mois / Année",
   epdsSurvey: {
+    beContacted: {
+      beContactedSent: "Votre demande de contact a bien été envoyée",
+      button: "Être appelé(e)",
+      invalidEmail: "L'email n'est pas valide",
+      invalidPhoneNumber: "Le tél. n'est pas valide",
+      numberOfChildren: "Nombre d'enfants",
+      title: "Être appelé(e)",
+      yourEmail: "Votre email",
+      yourFirstname: "Votre prénom",
+      yourPhoneNumber: "Votre n° de tél.",
+    },
     description:
       "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.",
     genderEntry: {
@@ -340,6 +351,7 @@ export default {
     articlesToRead: "article(s) à lire",
     filters: "Filtrer",
   },
+  mandatoryField: "Ce champ est obligatoire",
   menu: {
     conditionsOfUse: "Politiques de confidentialité",
     contactUs: "Nous écrire",
