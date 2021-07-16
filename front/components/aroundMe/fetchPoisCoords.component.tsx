@@ -60,6 +60,7 @@ const FetchPoisCoords: React.FC<Props> = ({
         StorageKeysConstants.cartoIsFirstLaunch,
         true
       );
+
     const cartoIsFirstLaunch = isFirstLaunch === null;
 
     const savedFilters: CartoFilterStorage | undefined =
@@ -91,6 +92,7 @@ const FetchPoisCoords: React.FC<Props> = ({
 
   useEffect(() => {
     if (!searchIsReady) return;
+
     void searchByGPSCoords();
   }, [triggerSearchByGpsCoords]);
 

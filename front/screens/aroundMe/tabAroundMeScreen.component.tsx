@@ -98,6 +98,7 @@ const TabAroundMeScreen: React.FC = () => {
     const isFirstLaunch = await StorageUtils.getObjectValue(
       StorageKeysConstants.cartoIsFirstLaunch
     );
+
     if (
       isFirstLaunch &&
       pois.length >= AroundMeConstants.MAX_NUMBER_POI_WITHOUT_FILTER
@@ -112,6 +113,7 @@ const TabAroundMeScreen: React.FC = () => {
       setShowAddressesList(true);
       setShowAddressDetails(false);
     }
+
     setIsLoading(false);
     void StorageUtils.storeObjectValue(
       StorageKeysConstants.cartoIsFirstLaunch,
@@ -238,16 +240,15 @@ const TabAroundMeScreen: React.FC = () => {
             setCurrentUserLocation(coordinates);
             moveMapToCoordinates(coordinates.latitude, coordinates.longitude);
           } else {
-            const savedRegion: Region | undefined = await StorageUtils.getObjectValue(
+            const savedRegion: Region | undefined =
+              await StorageUtils.getObjectValue(
                 StorageKeysConstants.cartoSavedRegion
               );
             moveMapToCoordinates(
-              savedRegion?.latitude
-                ? savedRegion.latitude
-                : AroundMeConstants.COORDINATE_PARIS.latitude,
-              savedRegion?.longitude
-                ? savedRegion.longitude
-                : AroundMeConstants.COORDINATE_PARIS.longitude
+              savedRegion?.latitude ??
+                AroundMeConstants.COORDINATE_PARIS.latitude,
+              savedRegion?.longitude ??
+                AroundMeConstants.COORDINATE_PARIS.longitude
             );
           }
           setMoveToRegionBecauseOfPCResearch(true);
