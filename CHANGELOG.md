@@ -1,3 +1,17 @@
+# [1.66.0](https://github.com/SocialGouv/1000jours/compare/v1.65.0...v1.66.0) (2021-07-16)
+
+
+### Bug Fixes
+
+* **carto:** activation geoloc + affichage filtre si plus de 20 POI ([#527](https://github.com/SocialGouv/1000jours/issues/527)) ([5a14340](https://github.com/SocialGouv/1000jours/commit/5a14340a45f932458e5cebd66067e04bc79006d6))
+* **epds:** Ajoute les variables d'environnement du mailing pour prod et preprod ([#521](https://github.com/SocialGouv/1000jours/issues/521)) ([abd6b34](https://github.com/SocialGouv/1000jours/commit/abd6b3418af921a4bdd36ee4b936033c112ee0fd))
+
+
+### Features
+
+* **calendrier:** Restreint les événements à une seule thématique ([#516](https://github.com/SocialGouv/1000jours/issues/516)) ([eacdc14](https://github.com/SocialGouv/1000jours/commit/eacdc14d58e01c7fbf06f2828b468b83ed3a0c23))
+* **epds:** ajout du bouton Être contacté après l'EPDS ([#526](https://github.com/SocialGouv/1000jours/issues/526)) ([b9e49f2](https://github.com/SocialGouv/1000jours/commit/b9e49f2bd8df32c9c79edf032af38f3996ff43f6))
+
 # [1.65.0](https://github.com/SocialGouv/1000jours/compare/v1.64.0...v1.65.0) (2021-07-15)
 
 
