@@ -28,28 +28,38 @@ const ErrorMessage: React.FC<Props> = ({ error }) => {
   };
 
   // Vérifie si l'api graphql est opérationnelle
-  const checkApolloApi = () => {
+  const checkApolloApi = async (apolloError: ApolloError) => {
     setFetchIsComplete(false);
-    fetch(`${process.env.API_URL}/.well-known/apollo/server-health`)
-      .then(async (data) => data.json())
-      .then((jsonData: ApolloHealthResponse) => {
-        if (jsonData.status !== "pass") {
-          reportError(jsonData);
-          setErrorMessage(Labels.errorNetworkMsg);
-        }
-      })
-      .catch((e) => {
-        reportError(e);
-        setErrorMessage(Labels.errorNetworkMsg);
-      })
-      .finally(() => {
-        setFetchIsComplete(true);
-      });
+
+    try {
+      const response = await fetch(
+        `${process.env.API_URL}/.well-known/apollo/server-health`
+      );
+      reportError(`${Labels.errorMsg} : ${apolloError.message}`);
+
+      let responseJson = null;
+
+      try {
+        responseJson = (await response.json()) as ApolloHealthResponse;
+      } catch (e: unknown) {
+        const responseText: string = await response.text();
+        reportError(responseText);
+      }
+      if (responseJson?.status === "pass") {
+        setErrorMessage(Labels.errorMsg);
+      } else {
+        throw new Error();
+      }
+    } catch (e: unknown) {
+      setErrorMessage(Labels.errorNetworkMsg);
+    } finally {
+      setFetchIsComplete(true);
+    }
   };
 
   useEffect(() => {
     if (error.graphQLErrors.length > 0) createAlertMessage();
-    else checkApolloApi();
+    else void checkApolloApi(error);
   }, []);
 
   return fetchIsComplete ? (

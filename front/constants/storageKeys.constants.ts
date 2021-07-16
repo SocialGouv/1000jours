@@ -11,6 +11,7 @@ export const cartoSavedRegion = "@cartoSavedRegion";
 export const cartoIsFirstLaunch = "@cartoIsFirstLaunch";
 export const notifIdNextStep = "@notifIdNextStep";
 export const notifIdsEvents = "@notifIdsEvents";
+export const eventsCalcFromBirthday = "@eventsCalcFromBirthday";
 
 export const allStorageKeys = [
   isFirstLaunchKey,
@@ -25,6 +26,7 @@ export const allStorageKeys = [
   cartoIsFirstLaunch,
   notifIdNextStep,
   notifIdsEvents,
+  eventsCalcFromBirthday,
 ];
 
 export const epdsSurveyKeys = [epdsQuestionAndAnswersKey, epdsQuestionIndexKey];

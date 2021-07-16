@@ -11,6 +11,6 @@ export const initMonitoring = (): void => {
 };
 
 // Throwing an error will trigger Sentry
-export const reportError = (errorMessage: any): void => {
+export const reportError = (errorMessage: string | undefined): void => {
   throw new Error(errorMessage);
 };

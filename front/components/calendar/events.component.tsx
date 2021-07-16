@@ -31,8 +31,7 @@ const dotIconSize = Sizes.xxxs;
 const Events: FC<Props> = ({ evenements, childBirthday }) => {
   let closestEventHasBeenFound = false;
 
-  const today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
+  const today = new Date().setUTCHours(0, 0, 0, 0);
 
   const isClosestEvent = (date: Date) => {
     if (!closestEventHasBeenFound && !isBefore(date, today)) {
@@ -45,10 +44,9 @@ const Events: FC<Props> = ({ evenements, childBirthday }) => {
   const formattedEvents = _.chain(evenements)
     .map((event) => ({
       ...event,
-      date: format(
-        addDays(new Date(childBirthday), event.debut),
-        Formats.dateISO
-      ),
+      date:
+        event.date ??
+        format(addDays(new Date(childBirthday), event.debut), Formats.dateISO),
     }))
     .sort((item1, item2) =>
       new Date(item1.date) > new Date(item2.date) ? 0 : -1
