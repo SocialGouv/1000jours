@@ -373,7 +373,7 @@ spec:
             - secretRef:
                 name: azure-pg-user
             - secretRef:
-                name: azure-les1000jours-volume
+                name: strapi
             - configMapRef:
                 name: strapi-configmap
           env:
@@ -424,7 +424,7 @@ metadata:
     app.gitlab.com/app: socialgouv-1000jours
     app.gitlab.com/env: prod
     app.gitlab.com/env.name: prod
-  name: azure-les1000jours-volume
+  name: strapi
   namespace: les1000jours
   labels:
     application: 1000jours
@@ -432,10 +432,6 @@ metadata:
     team: 1000jours
 spec:
   encryptedData:
-    azurestorageaccountkey: >-
-      AgB/Hb0mdnKqiNIho6AaV4mbvdurMoyHgTbSw8BNrWrdz5GEjHWRNU09O/8NVMZ4GJNzC/ZLyOQLMlaA1YEfYYxkWsq6loe+Kd4AzSDGG1eKNvvOdlt0G1Me8Ou0jEe9SM0lkcmBFA8O9BXuJVoHsS8LI8f+gMGlU1qAOnvo67TEqXTktp2u9Afej6Y280OFBUVOHBg1SbEib0Jxs0nvxfEdxpJK66VSP9wrPWm20rhT0VeVwVLqcjUSeMv3l/755IagNFq9M1I1YJ9QyT5gbGe4zZKCVQGnfRAu+pUJnIQQI6hOxjzEqbMDgGUoqg9ivsrqu4fsffG6vfJk6SJ/QK3yWvQfWhuj/rTQmRIcdBaSguyVCCrrcwzPs8Ahu06Nof3GCy/eOgPibzFgNKg74s3wrmoNLynjcJmR//HTHOtv8tORKyxAelHO0PauZN0meqjtLqLLrZbv8pmfBbo5hzXsS7D/+C+1rE/5Nqmln6sLki2eUrs1pSDAoibwv9Ho+RqGkz/TCsT5ZmpD41C0bJQQtsdwB5sym4XwI3w9RxNnKJ2shSqDGH5NIA1GCiH1R2ek+zsHgAe7RdRWgW7e7nYoq0jzN/WM1LPXAaqgFoYXw71zlUHRMxrXaiN2S+/1WC3pMpwbOL8dIIbaPG0C0bnK0zWe8RIIJwqCo/qyrX6RflQ2q2j6zYnEeQ5SpyNPJXgtd4iKQzr+n3TO8XG945MkyxLDtJQfPSuVoc7iXMVndbeZIrBeSNV+cAd7fmtSIM3ENnXGDZJyKp19tcn1coud4Pf2E6BTbuEAqgJiYvjHVj4nGGNOqf7l
-    azurestorageaccountname: >-
-      AgB0GacvV3c3G5PL92GsgzVLjS5MrU5zHM2P6SjtMq1ax8tjAKM8WOhh951J+xbLlr1DHLv2Fp+ExYuoWD9KjaA4Irq/b+n8uluVML7iUYWyfcZ4D+Q7NV9YMh+Cw2zBEY/+wtPBv3xIJl77ckq27DaAnUoBDQslajGJX6+jpN5MhVR61fxA74+WZFKzHZ+oM0yW7AuFMpgqG5vI0ggiJOqoMDWCmNdsd5GxTJARK8x4YlhgqsduUKKzWK9VkPFclUX6W8YyY2ndjfod6TE3REOhSlCO6kBPDx5wLaF+l0//C0fGnf6euKU4jAza9gtglHx70Fhui3+oQqCco9jYv1AEo90qvRbLKcNSfGhEEs2E7PSqNWj2g4jt/VsYXFC/NtELstwqjqSHCTl0BLBg8rlNQg3QX96aDvMWmGx02aR11JWxlln6uBbLNm66t/XL7KPWEtWZgAARq8sRqG19G8fK3OFqFahZA2LKAr2DEpu9L68a6OQM6cFL+9d0TTo+6PHJD2jCh+0bWvKihp7DzWT5FggHWzei5eRQjpbUI0rQVAsH2BxPbV6T51IBKTPpaJM6/dTMsCu4kFXcRxdxvzovJWPS7Yxe+1lHKfDFzJX+2oExHCDxjSPbj1n+VOsaoATJNTeluRFKLeNNTYiNjwxBj1oyPqybnbV6X5MdMxE6Zc12w9oLxhXM1GsKqzZI3rZmBUW8DW94jSj0R/tuLOBo
     MAIL_HOST: >-
       AgB2aB5FU4nXFUwy0G2z8PxWCZzd8DNB1gcLH1APvhQaJw9fPf5UbLZGvxGWd3iN8drY26Xo+7fC3EfUAwb6Hp+oZkQEEIuossETlNS2ExzYSuEEQcMOvovlkEADdjzNqJVAX18fphgcYI/ic6afOl6yY9DevvWquZfPNFX74mf3uhrhHuv3ANlzXx+QfunHuqXOsGYbAODny3ehQ7GnY9wBbx5rcur/3APQBxkGjd75I0z4n1mg1MJ4BI4Z+LRGshKc+n6PoalEo8HblU2RXdCh1L2YqQSUYdkk5E4CPGgivq3DnN1KmO4acj/rpphl7DW7i4yb1M2kx9e16a5b00ATICKPNw3qUmZoGuRiSlVm5XMhgitcEIV767T6uVuJN6kbbYzmRKZrQQfj0t96Yvmzv6b/Ppm4BDlCnXJ/4K0HctmE2meSVTgwpgmUjAQa1+LbXhJqSFcn5GVwMbx9Vaq+ASIZ+ZqnD/o2PvdQJrjz02MpsafyjeCnMgHy2Ku4lkZ1pG1AiBQdTZTgDX3BUMLIKQ6lqOGNwm7T+VQomXksDZY19AXnM3BSk4TKHXj/kA5GeAsHzTOajPMSii4lXXmdd++x3vRGQLfnzCO2NMH2hzFrFYInkZkn+8xeY7LIuBbFzYXLOfEbJNa0zw6t+t9QTcWghpYh19Kf2usG67nxbTuuUc5DTi9/x1hwe473Zk3I6RUFCduoC0xWyGYdwpgKtQ==
     MAIL_PORT: >-
@@ -456,7 +452,7 @@ spec:
         app.gitlab.com/app: socialgouv-1000jours
         app.gitlab.com/env: prod
         app.gitlab.com/env.name: prod
-      name: azure-les1000jours-volume
+      name: strapi
       namespace: les1000jours
       labels:
         application: 1000jours
