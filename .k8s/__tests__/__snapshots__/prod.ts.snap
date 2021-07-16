@@ -150,8 +150,8 @@ spec:
                 name: strapi-cache
                 port:
                   name: http
-                  number: 80
             path: /
+            pathType: Prefix
   tls:
     - hosts:
         - backoffice-1000jours.fabrique.social.gouv.fr

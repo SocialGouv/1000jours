@@ -172,8 +172,8 @@ spec:
                 name: strapi-cache
                 port:
                   name: http
-                  number: 80
             path: /
+            pathType: Prefix
   tls:
     - hosts:
         - backoffice-master-dev42-1000jours.dev42.fabrique.social.gouv.fr
