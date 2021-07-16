@@ -257,7 +257,11 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                   }}
                 >
                   {range(1, 3).map((value) => (
-                    <Picker.Item label={String(value)} value={value} />
+                    <Picker.Item
+                      key={value}
+                      label={String(value)}
+                      value={value}
+                    />
                   ))}
                 </Picker>
               </View>
