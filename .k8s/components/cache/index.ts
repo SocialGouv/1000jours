@@ -9,13 +9,13 @@ import { getDeployment } from "@socialgouv/kosko-charts/utils/getDeployment";
 import { IIoK8sApiCoreV1HTTPGetAction, Volume } from "kubernetes-models/v1";
 import { ConfigMap } from "kubernetes-models/v1/ConfigMap";
 import { Ingress } from "kubernetes-models/api/networking/v1";
-import gitlab from "@socialgouv/kosko-charts/environments/gitlab";
+import ci from "@socialgouv/kosko-charts/environments";
 
 const httpGet: IIoK8sApiCoreV1HTTPGetAction = {
   path: "/_health",
   port: "http",
 };
-const envParams = gitlab(process.env);
+const envParams = ci(process.env);
 const strapiParams = env.component("strapi");
 
 // renovate: datasource=docker depName=nginx versioning=1.19.6
@@ -90,9 +90,9 @@ export default async () => {
   const configMap = new ConfigMap({
     metadata: {
       name: "strapi-cache",
-      labels: envParams.labels,
-      annotations: envParams.annotations,
-      namespace: envParams.namespace.name,
+      labels: envParams.metadata.labels,
+      annotations: envParams.metadata.annotations,
+      namespace: envParams.metadata.namespace.name,
     },
     data: {
       "nginx.conf": fs
@@ -108,7 +108,7 @@ export default async () => {
       ...ingress.metadata.annotations,
       "nginx.ingress.kubernetes.io/proxy-body-size": "1g",
       "nginx.ingress.kubernetes.io/limit-rps": "20",
-      "nginx.ingress.kubernetes.io/limit-rpm": "300"
+      "nginx.ingress.kubernetes.io/limit-rpm": "300",
     };
   }
 
