@@ -12,10 +12,10 @@ export const stringArrayIsNullOrEmpty = (
 
 export const validateEmail = (inputText: string): boolean => {
   const mailformat = /^[\w-.]+@([\w-]+\.)+[\w-]+$/;
-  return !!mailformat.exec(inputText);
+  return mailformat.test(inputText);
 };
 
 export const validateFrenchPhoneNumber = (inputText: string): boolean => {
   const frenchPhoneFormat = /^((\+)33|0|0033)[1-9](\d{2}){4}$/g;
-  return !!frenchPhoneFormat.exec(inputText);
+  return frenchPhoneFormat.test(inputText);
 };

@@ -32,7 +32,7 @@ export const EPDS_ADD_RESPONSE = gql`
 export const EPDS_CONTACT_INFORMATION = gql`
   mutation (
     $email: String!
-    $telephone: String!
+    $telephone: String
     $prenom: String!
     $nombreEnfants: Int!
     $naissanceDernierEnfant: String!

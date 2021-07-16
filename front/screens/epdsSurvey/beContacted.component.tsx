@@ -192,12 +192,11 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       );
     } else {
       const date = new Date(childBirthDate);
-      const dateAsString = format(date, Formats.dateFR)
-        .replace("/", "-")
-        .replace("/", "-");
+      const dateAsString = format(date, Formats.dateFR).replace(/\//g, "-");
+
       await sendContactInformation({
         variables: {
-          email: email,
+          email,
           naissanceDernierEnfant: dateAsString,
           nombreEnfants: numberOfChildren,
           prenom: firstName,
