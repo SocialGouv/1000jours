@@ -1,3 +1,10 @@
+# [1.67.0](https://github.com/SocialGouv/1000jours/compare/v1.66.0...v1.67.0) (2021-07-16)
+
+
+### Features
+
+* **epds:** Envoie les scores de toutes les réponses au backend ([#522](https://github.com/SocialGouv/1000jours/issues/522)) ([bfef984](https://github.com/SocialGouv/1000jours/commit/bfef984ee81f5eebbfbba41e9c7c62007ecc36fa))
+
 # [1.66.0](https://github.com/SocialGouv/1000jours/compare/v1.65.0...v1.66.0) (2021-07-16)
 
 
