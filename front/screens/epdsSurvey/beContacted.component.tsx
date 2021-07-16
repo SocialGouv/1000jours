@@ -1,3 +1,4 @@
+import { useMutation } from "@apollo/client/react/hooks";
 import { Picker } from "@react-native-community/picker";
 import { format } from "date-fns";
 import { range } from "lodash";
@@ -22,6 +23,7 @@ import {
 } from "../../components";
 import {
   Colors,
+  DatabaseQueries,
   FontWeight,
   Formats,
   Labels,
@@ -54,8 +56,17 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const [phoneNumberIsValid, setPhoneNumberIsValid] = useState(true);
   const [emailOrPhoneNumberIsEmpty, setEmailOrPhoneNumberIsEmpty] =
     useState(false);
-  const [numberOfChildren, setNumberOfChildren] = useState(0);
+  const [numberOfChildren, setNumberOfChildren] = useState(1);
   const [childBirthDate, setChildBirthDate] = useState("");
+
+  const [sendContactInformation] = useMutation(
+    DatabaseQueries.EPDS_CONTACT_INFORMATION,
+    {
+      onError: (err) => {
+        console.log(err);
+      },
+    }
+  );
 
   useEffect(() => {
     const initDataWithStorageValue = async () => {
@@ -178,7 +189,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     );
   };
 
-  const onValidate = () => {
+  const onValidate = async () => {
     if (
       !StringUtils.stringIsNotNullNorEmpty(firstName) &&
       !StringUtils.stringIsNotNullNorEmpty(email) &&
@@ -196,6 +207,15 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     - téléphone : ${phoneNumber}
     - nb enfants : ${numberOfChildren}
     - date : ${childBirthDate}`);
+      await sendContactInformation({
+        variables: {
+          email: email,
+          naissanceDernierEnfant: childBirthDate,
+          nombreEnfants: numberOfChildren,
+          prenom: firstName,
+          telephone: phoneNumber,
+        },
+      });
     }
   };
 
@@ -239,7 +259,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                     setNumberOfChildren(Number(itemValue));
                   }}
                 >
-                  {range(4).map((value) => (
+                  {range(1, 3).map((value) => (
                     <Picker.Item label={String(value)} value={value} />
                   ))}
                 </Picker>
@@ -256,6 +276,11 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                         : undefined
                     }
                     onChange={(date) => {
+                      console.log(
+                        format(date, Formats.dateFR)
+                          .replace("/", "-")
+                          .replace("/", "-")
+                      );
                       setChildBirthDate(format(date, Formats.dateISO));
                     }}
                   />

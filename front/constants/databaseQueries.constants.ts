@@ -29,6 +29,24 @@ export const EPDS_ADD_RESPONSE = gql`
   }
 `;
 
+export const EPDS_CONTACT_INFORMATION = gql`
+  mutation (
+    $email: String!
+    $telephone: String!
+    $prenom: String!
+    $nombreEnfants: Int!
+    $naissanceDernierEnfant: String!
+  ) {
+    epdsContact(
+      email: $email
+      telephone: $telephone
+      prenom: $prenom
+      nombre_enfants: $nombreEnfants
+      naissance_dernier_enfant: $naissanceDernierEnfant
+    )
+  }
+`;
+
 export const AROUNDME_FILTER_DATA = gql`
   query {
     etapes(sort: "id") {
