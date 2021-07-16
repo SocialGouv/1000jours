@@ -72,6 +72,7 @@ const TabAroundMeScreen: React.FC = () => {
   const [currentUserLocation, setCurrentUserLocation] = useState<LatLng | null>(
     null
   );
+  const [searchIsReady, setSearchIsReady] = useState(false);
 
   const googleMapsNotSelectedIcon = require("../../assets/images/carto/icon_google_map_not_selected.png");
   const googleMapsSelectedIcon = require("../../assets/images/carto/icon_google_map_selected.png");
@@ -93,15 +94,30 @@ const TabAroundMeScreen: React.FC = () => {
     mapRef.current = ref;
   };
 
-  const handleFetchedPois = (pois: CartographiePoisFromDB[]) => {
-    if (pois.length === 0) {
-      showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
-    }
+  const handleFetchedPois = async (pois: CartographiePoisFromDB[]) => {
+    const isFirstLaunch = await StorageUtils.getObjectValue(
+      StorageKeysConstants.cartoIsFirstLaunch
+    );
+    console.log(isFirstLaunch);
+    if (
+      isFirstLaunch &&
+      pois.length >= AroundMeConstants.MAX_NUMBER_POI_WITHOUT_FILTER
+    ) {
+      setShowFilter(true);
+    } else {
+      if (pois.length === 0) {
+        showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
+      }
 
-    setPoisArray(pois);
-    setShowAddressesList(true);
-    setShowAddressDetails(false);
+      setPoisArray(pois);
+      setShowAddressesList(true);
+      setShowAddressDetails(false);
+    }
     setIsLoading(false);
+    void StorageUtils.storeObjectValue(
+      StorageKeysConstants.cartoIsFirstLaunch,
+      false
+    );
   };
 
   const onRegionChangeComplete = (newRegion: Region) => {
@@ -191,6 +207,7 @@ const TabAroundMeScreen: React.FC = () => {
           );
           showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
         }}
+        searchIsReady={searchIsReady}
       />
       <View style={styles.topContainer}>
         <TitleH1
@@ -222,6 +239,7 @@ const TabAroundMeScreen: React.FC = () => {
           moveMapToCoordinates(coordinates.latitude, coordinates.longitude);
           setMoveToRegionBecauseOfPCResearch(true);
         }}
+        setSearchIsReady={setSearchIsReady}
       />
       <View style={styles.map}>
         <MapView
@@ -366,9 +384,6 @@ const TabAroundMeScreen: React.FC = () => {
         )}
       <AroundMeFilter
         visible={showFilter}
-        showModal={() => {
-          setShowFilter(true);
-        }}
         hideModal={(filterWasSaved: boolean) => {
           setShowFilter(false);
           if (filterWasSaved) {
