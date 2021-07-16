@@ -52,12 +52,12 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const [firstNameIsEmpty, setFirstNameIsEmpty] = useState(false);
   const [email, setEmail] = useState("");
   const [emailIsValid, setEmailIsValid] = useState(true);
+  const [emailIsEmpty, setEmailIsEmpty] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneNumberIsValid, setPhoneNumberIsValid] = useState(true);
-  const [emailOrPhoneNumberIsEmpty, setEmailOrPhoneNumberIsEmpty] =
-    useState(false);
   const [numberOfChildren, setNumberOfChildren] = useState(1);
   const [childBirthDate, setChildBirthDate] = useState("");
+  const [childBirthDateIsEmpty, setChildBirthDateIsEmpty] = useState(false);
 
   const [sendContactInformation] = useMutation(
     DatabaseQueries.EPDS_CONTACT_INFORMATION,
@@ -96,7 +96,6 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       Labels.epdsSurvey.beContacted.yourPhoneNumber
     );
     return {
-      isEmptyMessage: getIsEmptyMessage(informationType),
       isEmptyVariable: getIsEmptyValue(informationType),
       label: labelMap.get(informationType),
     };
@@ -107,18 +106,8 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       case PersonalInformationType.firstName:
         return firstNameIsEmpty;
       case PersonalInformationType.email:
+        return emailIsEmpty;
       case PersonalInformationType.phoneNumber:
-        return emailOrPhoneNumberIsEmpty;
-    }
-  };
-
-  const getIsEmptyMessage = (informationType: PersonalInformationType) => {
-    switch (informationType) {
-      case PersonalInformationType.firstName:
-        return Labels.mandatoryField;
-      case PersonalInformationType.email:
-      case PersonalInformationType.phoneNumber:
-        return Labels.epdsSurvey.beContacted.mandatoryPhoneOrEmail;
     }
   };
 
@@ -133,14 +122,13 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
         break;
       case PersonalInformationType.email:
         setEmail(textInput);
-        setEmailOrPhoneNumberIsEmpty(false);
+        setEmailIsEmpty(false);
         if (textInput.trimEnd().length > 0) {
           setEmailIsValid(StringUtils.validateEmail(textInput.trimEnd()));
         } else setEmailIsValid(true);
         break;
       case PersonalInformationType.phoneNumber:
         setPhoneNumber(textInput);
-        setEmailOrPhoneNumberIsEmpty(false);
         if (textInput.trimEnd().length > 0) {
           setPhoneNumberIsValid(
             StringUtils.validateFrenchPhoneNumber(textInput.trimEnd())
@@ -151,7 +139,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   };
 
   const renderTextInputView = (informationType: PersonalInformationType) => {
-    const { label, isEmptyVariable, isEmptyMessage } =
+    const { label, isEmptyVariable } =
       getLabelAndIsEmptyVariable(informationType);
     return (
       <View style={styles.rowView}>
@@ -170,7 +158,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
             placeholder={label}
           />
           {isEmptyVariable && (
-            <HelperText type="error">{isEmptyMessage}</HelperText>
+            <HelperText type="error">{Labels.mandatoryField}</HelperText>
           )}
           {informationType === PersonalInformationType.email &&
             !emailIsValid && (
@@ -193,29 +181,41 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     if (
       !StringUtils.stringIsNotNullNorEmpty(firstName) &&
       !StringUtils.stringIsNotNullNorEmpty(email) &&
-      !StringUtils.stringIsNotNullNorEmpty(phoneNumber)
+      !StringUtils.stringIsNotNullNorEmpty(childBirthDate) &&
+      emailIsValid &&
+      phoneNumberIsValid
     ) {
       setFirstNameIsEmpty(!StringUtils.stringIsNotNullNorEmpty(firstName));
-      setEmailOrPhoneNumberIsEmpty(
-        !StringUtils.stringIsNotNullNorEmpty(email) &&
-          !StringUtils.stringIsNotNullNorEmpty(phoneNumber)
+      setEmailIsEmpty(!StringUtils.stringIsNotNullNorEmpty(email));
+      setChildBirthDateIsEmpty(
+        !StringUtils.stringIsNotNullNorEmpty(childBirthDate)
       );
     } else {
-      console.log(`Email à envoyer :\\n
-    - prénom : ${firstName}
-    - email : ${email}
-    - téléphone : ${phoneNumber}
-    - nb enfants : ${numberOfChildren}
-    - date : ${childBirthDate}`);
+      const date = new Date(childBirthDate);
+      const dateAsString = format(date, Formats.dateFR)
+        .replace("/", "-")
+        .replace("/", "-");
       await sendContactInformation({
         variables: {
           email: email,
-          naissanceDernierEnfant: childBirthDate,
+          naissanceDernierEnfant: dateAsString,
           nombreEnfants: numberOfChildren,
           prenom: firstName,
           telephone: phoneNumber,
         },
       });
+
+      setFirstName("");
+      setFirstNameIsEmpty(false);
+      setEmail("");
+      setEmailIsValid(true);
+      setEmailIsEmpty(false);
+      setPhoneNumber("");
+      setPhoneNumberIsValid(true);
+      setNumberOfChildren(1);
+      setChildBirthDate("");
+      setChildBirthDateIsEmpty(false);
+      hideModal();
     }
   };
 
@@ -243,9 +243,6 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
             <View>
               {renderTextInputView(PersonalInformationType.firstName)}
               {renderTextInputView(PersonalInformationType.email)}
-              <CommonText style={[styles.textStyle, styles.orTextView]}>
-                {Labels.epdsSurvey.beContacted.or}
-              </CommonText>
               {renderTextInputView(PersonalInformationType.phoneNumber)}
               <View style={styles.rowView}>
                 <CommonText style={styles.textStyle}>
@@ -276,14 +273,17 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                         : undefined
                     }
                     onChange={(date) => {
-                      console.log(
-                        format(date, Formats.dateFR)
-                          .replace("/", "-")
-                          .replace("/", "-")
+                      setChildBirthDate(
+                        format(date, format(date, Formats.dateISO))
                       );
-                      setChildBirthDate(format(date, Formats.dateISO));
+                      setChildBirthDateIsEmpty(false);
                     }}
                   />
+                  {childBirthDateIsEmpty && (
+                    <HelperText style={styles.center} type="error">
+                      {Labels.mandatoryField}
+                    </HelperText>
+                  )}
                 </View>
               )}
             </View>
@@ -340,6 +340,9 @@ const styles = StyleSheet.create({
     marginVertical: Margins.default,
     position: "absolute",
   },
+  center: {
+    alignSelf: "center",
+  },
   closeModalView: {
     margin: Margins.default,
     position: "absolute",
@@ -357,9 +360,6 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: Margins.default,
     padding: Paddings.default,
-  },
-  orTextView: {
-    marginLeft: Margins.default,
   },
   rowView: {
     alignItems: "center",
