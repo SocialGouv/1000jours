@@ -1,3 +1,11 @@
+## [1.67.2](https://github.com/SocialGouv/1000jours/compare/v1.67.1...v1.67.2) (2021-07-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @socialgouv/kosko-charts to v8 ([#459](https://github.com/SocialGouv/1000jours/issues/459)) ([7040f0e](https://github.com/SocialGouv/1000jours/commit/7040f0ef373b97370aa25b74db215a0f49e62815))
+* **epds:** Corrige les variables d'environnement du mailing ([#529](https://github.com/SocialGouv/1000jours/issues/529)) ([760e495](https://github.com/SocialGouv/1000jours/commit/760e49586a436b5579099374ed252d1ad0b2302e))
+
 ## [1.67.1](https://github.com/SocialGouv/1000jours/compare/v1.67.0...v1.67.1) (2021-07-16)
 
 
