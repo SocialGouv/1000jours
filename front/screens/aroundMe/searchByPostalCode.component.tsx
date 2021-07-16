@@ -32,7 +32,7 @@ interface Props {
   setAndGoToNewRegion: (region: Region) => void;
   showSnackBarWithMessage: (message: string) => void;
   setIsLoading: (value: boolean) => void;
-  updateUserLocation: (coordinates: LatLng) => void;
+  updateUserLocation: (coordinates: LatLng | undefined) => void;
   setSearchIsReady: (value: boolean) => void;
 }
 
@@ -65,7 +65,7 @@ const SearchByPostalCode: React.FC<Props> = ({
       const currentLocation = await Location.getCurrentPositionAsync({});
       updateUserLocation(currentLocation.coords);
     } catch {
-      showSnackBarWithMessage(Labels.errorMsg);
+      updateUserLocation(undefined);
     }
 
     setIsLoading(false);

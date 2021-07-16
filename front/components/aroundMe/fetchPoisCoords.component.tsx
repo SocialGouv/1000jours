@@ -62,8 +62,6 @@ const FetchPoisCoords: React.FC<Props> = ({
       );
     const cartoIsFirstLaunch = isFirstLaunch === null;
 
-    console.log("fetchPoisCoords");
-    console.log(cartoIsFirstLaunch);
     const savedFilters: CartoFilterStorage | undefined =
       await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
     if (
