@@ -72,6 +72,11 @@ export default {
     listOfEvents: "Liste des événements",
     noChildBirthday: "Aucune date de naissance",
     noEventMessage: "Aucun événement",
+    notification: {
+      redirectTitle: "Consulter",
+      title: "Événement",
+      titleReminder: "Événement à venir",
+    },
     today: "Aujourd'hui",
   },
   dateFormatLabel: "Jour / Mois / Année",

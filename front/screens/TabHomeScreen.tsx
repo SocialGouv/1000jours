@@ -106,6 +106,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   };
 
   useEffect(() => {
+    // Permet de forcer le refresh de la page lorsque l'on arrive dessus
     const unsubscribe = navigation.addListener("focus", () => {
       void init();
     });

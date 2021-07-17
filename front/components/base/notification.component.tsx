@@ -43,10 +43,14 @@ const Notification: React.FC<Props> = ({
   const [modalVisible, setModalVisible] = useState(true);
 
   const action = () => {
-    if (notification.request.content.data.redirectTo) {
-      navigation?.navigate(
-        notification.request.content.data.redirectTo as string
-      );
+    const redirectTo = notification.request.content.data.redirectTo as string;
+
+    if (redirectTo) {
+      const redirectFromRoot = notification.request.content.data
+        .redirectFromRoot as boolean;
+      if (redirectFromRoot)
+        navigation?.navigate("root", { screen: redirectTo });
+      else navigation?.navigate(redirectTo);
     }
     setModalVisible(false);
   };
@@ -127,7 +131,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.backdrop,
     flex: 1,
     justifyContent: "center",
-    marginTop: 22,
   },
   closeButton: {
     position: "absolute",
