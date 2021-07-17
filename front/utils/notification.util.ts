@@ -109,12 +109,13 @@ export const scheduleNextStepNotification = async (
         trigger = addDays(new Date(childBirthday), nextStep.debut);
         trigger.setHours(8);
       }
-      void sendNotificationReminder(content, trigger).then((notificationId) => {
+      const notificationId = await sendNotificationReminder(content, trigger);
+      if (notificationId) {
         void StorageUtils.storeStringValue(
           StorageKeysConstants.notifIdNextStep,
           notificationId
         );
-      });
+      }
     }
   }
 };
@@ -161,17 +162,12 @@ const buildEventNotificationContent = (
 
 const scheduleEventNotification = async (event: Event) => {
   if (event.date) {
-    let content = buildEventNotificationContent(event, false);
-
     // Planifie la notification pour le jour J
-    let trigger = null;
-    trigger = new Date(event.date);
+    let trigger = new Date(event.date);
     trigger.setHours(8);
-    await sendNotificationReminder(content, trigger).then(
-      async (notificationId) => {
-        await updateStoreNotifEventIds(notificationId);
-      }
-    );
+    let content = buildEventNotificationContent(event, false);
+    let notificationId = await sendNotificationReminder(content, trigger);
+    if (notificationId) await updateStoreNotifEventIds(notificationId);
 
     // Planifie la notification pour un rappel avant le jour J
     trigger = subDays(
@@ -179,19 +175,16 @@ const scheduleEventNotification = async (event: Event) => {
       NUMBER_OF_DAYS_NOTIF_EVENT_REMINDER
     );
     content = buildEventNotificationContent(event, true);
-    await sendNotificationReminder(content, trigger).then(
-      async (notificationId) => {
-        await updateStoreNotifEventIds(notificationId);
-      }
-    );
+    notificationId = await sendNotificationReminder(content, trigger);
+    if (notificationId) await updateStoreNotifEventIds(notificationId);
   }
 };
 
 export const scheduleEventsNotification = (events: Event[]): void => {
   const now = new Date();
-  events.map(async (event) => {
+  events.forEach((event) => {
     if (event.date && isAfter(new Date(event.date), now)) {
-      await scheduleEventNotification(event);
+      void scheduleEventNotification(event);
     }
   });
 };
@@ -201,7 +194,7 @@ export const cancelScheduleEventsNotification = async (): Promise<void> => {
     StorageKeysConstants.notifIdsEvents
   )) as string[] | null;
   if (notificationIds && notificationIds.length > 0) {
-    notificationIds.map((notificationId) => {
+    notificationIds.forEach((notificationId) => {
       void Notifications.cancelScheduledNotificationAsync(notificationId);
     });
   }
