@@ -22,16 +22,16 @@ export const EPDS_ADD_RESPONSE = gql`
     $genre: ENUM_REPONSESEPDS_GENRE!
     $compteur: Int!
     $score: Int!
-    $reponse1: Int!
-    $reponse2: Int!
-    $reponse3: Int!
-    $reponse4: Int!
-    $reponse5: Int!
-    $reponse6: Int!
-    $reponse7: Int!
-    $reponse8: Int!
-    $reponse9: Int!
-    $reponse10: Int!
+    $reponseNum1: Int!
+    $reponseNum2: Int!
+    $reponseNum3: Int!
+    $reponseNum4: Int!
+    $reponseNum5: Int!
+    $reponseNum6: Int!
+    $reponseNum7: Int!
+    $reponseNum8: Int!
+    $reponseNum9: Int!
+    $reponseNum10: Int!
   ) {
     createReponsesEpd(
       input: {
@@ -39,20 +39,21 @@ export const EPDS_ADD_RESPONSE = gql`
           genre: $genre
           compteur: $compteur
           score: $score
-          reponse_1: $reponse1
-          reponse_2: $reponse2
-          reponse_3: $reponse3
-          reponse_4: $reponse4
-          reponse_5: $reponse5
-          reponse_6: $reponse6
-          reponse_7: $reponse7
-          reponse_8: $reponse8
-          reponse_9: $reponse9
-          reponse_10: $reponse10
+          reponse_1: $reponseNum1
+          reponse_2: $reponseNum2
+          reponse_3: $reponseNum3
+          reponse_4: $reponseNum4
+          reponse_5: $reponseNum5
+          reponse_6: $reponseNum6
+          reponse_7: $reponseNum7
+          reponse_8: $reponseNum8
+          reponse_9: $reponseNum9
+          reponse_10: $reponseNum10
         }
       }
     ) {
       reponsesEpd {
+        id
         created_at
       }
     }

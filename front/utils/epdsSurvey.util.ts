@@ -166,7 +166,7 @@ export const getEachQuestionScore = (
     const questionPoint = question.answers.find(
       (answer) => answer.isChecked
     )?.points;
-    if (questionPoint) scores.push(questionPoint);
+    if (questionPoint !== undefined) scores.push(questionPoint);
   });
   return scores;
 };
