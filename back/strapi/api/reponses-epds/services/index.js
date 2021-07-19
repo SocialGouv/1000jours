@@ -24,9 +24,10 @@ const emailTemplate = (info) => ({
       <li>à l'adresse suivante : <a href="mailto:<%= email %>"><%= email %></a>${
         info.telephone
           ? ` ;</li>
-    <li>au numéro suivant : <a href="tel:<%= telephone %>"><%= telephone %></a>`
+      <li>au numéro suivant : <a href="tel:<%= telephone %>"><%= telephone %></a>`
           : ""
       }.</li>
+    </ul>
     </p>
 
     L'équipe 1000 premiers jours.`,
