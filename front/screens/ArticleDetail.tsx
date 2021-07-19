@@ -82,7 +82,7 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
     }
   `;
   const { loading, error, data } = useQuery(ARTICLE_DETAIL, {
-    fetchPolicy: "no-cache",
+    fetchPolicy: "cache-and-network",
   });
 
   const setInShortArray = (article: Article) => {

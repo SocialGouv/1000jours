@@ -33,7 +33,8 @@ const ErrorMessage: React.FC<Props> = ({ error }) => {
 
     try {
       const response = await fetch(
-        `${process.env.API_URL}/.well-known/apollo/server-health`
+        `${process.env.API_URL}/.well-known/apollo/server-health`,
+        { cache: "no-cache" }
       );
       reportError(`${Labels.errorMsg} : ${apolloError.message}`);
 
