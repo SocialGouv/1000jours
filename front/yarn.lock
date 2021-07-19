@@ -1287,6 +1287,25 @@
     xcode "^3.0.1"
     xml2js "^0.4.23"
 
+"@expo/config-plugins@3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-3.0.5.tgz#9390403d7bf49bf35219c0922bf7bf6d81390988"
+  integrity sha512-hHKr6i201QG16ms93XiXwcI1IhDYhITCRt7hWNO1UPxt2Cm7yDOG2YoGkauP0V/nAN3TEocDYbCrltGFBdoCTg==
+  dependencies:
+    "@expo/config-types" "^42.0.0"
+    "@expo/json-file" "8.2.31"
+    "@expo/plist" "0.0.13"
+    debug "^4.3.1"
+    find-up "~5.0.0"
+    fs-extra "9.0.0"
+    getenv "^1.0.0"
+    glob "7.1.6"
+    resolve-from "^5.0.0"
+    semver "^7.3.5"
+    slash "^3.0.0"
+    xcode "^3.0.1"
+    xml2js "^0.4.23"
+
 "@expo/config-types@^40.0.0-beta.2":
   version "40.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/@expo/config-types/-/config-types-40.0.0-beta.2.tgz#4fea4ef5654d02218b02b0b3772529a9ce5b0471"
@@ -1296,6 +1315,11 @@
   version "41.0.0"
   resolved "https://registry.yarnpkg.com/@expo/config-types/-/config-types-41.0.0.tgz#ffe1444c6c26e0e3a8f7149b4afe486e357536d1"
   integrity sha512-Ax0pHuY5OQaSrzplOkT9DdpdmNzaVDnq9VySb4Ujq7UJ4U4jriLy8u93W98zunOXpcu0iiKubPsqD6lCiq0pig==
+
+"@expo/config-types@^42.0.0":
+  version "42.0.0"
+  resolved "https://registry.yarnpkg.com/@expo/config-types/-/config-types-42.0.0.tgz#3e3e125ec092c0c34dbfaf19be5480402de3d677"
+  integrity sha512-Rj02OMZke2MrGa/1Y/EScmR7VuWbDEHPJyvfFyyLbadUt+Yv6isCdeFzDt71I7gJlPR9T4fzixeYLrtXXOTq0w==
 
 "@expo/config@5.0.3":
   version "5.0.3"
@@ -1309,6 +1333,26 @@
     "@expo/config-plugins" "3.0.3"
     "@expo/config-types" "^41.0.0"
     "@expo/json-file" "8.2.30"
+    fs-extra "9.0.0"
+    getenv "^1.0.0"
+    glob "7.1.6"
+    require-from-string "^2.0.2"
+    resolve-from "^5.0.0"
+    semver "7.3.2"
+    slugify "^1.3.4"
+
+"@expo/config@5.0.5":
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/@expo/config/-/config-5.0.5.tgz#6e55d1c6b0bf7982b204395cb4ac2e18093a429b"
+  integrity sha512-r3/Y6mFhOmGqEfhhkUncP6/Qg8Aexg1G66TzDzd97iNezCY2LP9c2hwyN7SwhBv5l1YBNc2zeT556xXe0v4Qgw==
+  dependencies:
+    "@babel/core" "7.9.0"
+    "@babel/plugin-proposal-class-properties" "~7.12.13"
+    "@babel/preset-env" "~7.12.13"
+    "@babel/preset-typescript" "~7.12.13"
+    "@expo/config-plugins" "3.0.5"
+    "@expo/config-types" "^42.0.0"
+    "@expo/json-file" "8.2.31"
     fs-extra "9.0.0"
     getenv "^1.0.0"
     glob "7.1.6"
@@ -1434,7 +1478,7 @@
     semver "7.3.2"
     tempy "0.3.0"
 
-"@expo/json-file@8.2.30", "@expo/json-file@^8.2.30":
+"@expo/json-file@8.2.30":
   version "8.2.30"
   resolved "https://registry.yarnpkg.com/@expo/json-file/-/json-file-8.2.30.tgz#bd855b6416b5c3af7e55b43f6761c1e7d2b755b0"
   integrity sha512-vrgGyPEXBoFI5NY70IegusCSoSVIFV3T3ry4tjJg1MFQKTUlR7E0r+8g8XR6qC705rc2PawaZQjqXMAVtV6s2A==
@@ -1444,12 +1488,31 @@
     json5 "^1.0.1"
     write-file-atomic "^2.3.0"
 
-"@expo/metro-config@0.1.78", "@expo/metro-config@^0.1.16", "@expo/metro-config@^0.1.63", "@expo/metro-config@^0.1.78":
+"@expo/json-file@8.2.31", "@expo/json-file@^8.2.30":
+  version "8.2.31"
+  resolved "https://registry.yarnpkg.com/@expo/json-file/-/json-file-8.2.31.tgz#70ac99cb9c9029a51a5b879212f7f4ec21804589"
+  integrity sha512-GvbL1tQnM3kGOM9hG+lwGbPJ/1tX+Sb8ZkqRrJlRpWGRa4DwnpLvIZHlWMb1ug/ye1QC7+RK/KwRZ7xcAXergA==
+  dependencies:
+    "@babel/code-frame" "~7.10.4"
+    json5 "^1.0.1"
+    write-file-atomic "^2.3.0"
+
+"@expo/metro-config@0.1.78":
   version "0.1.78"
   resolved "https://registry.yarnpkg.com/@expo/metro-config/-/metro-config-0.1.78.tgz#f310b66dca6369799f844b88cdff06b9e467e7a1"
   integrity sha512-DupLWdi1YaZoqMlF/jGca8COeaIMfs4LWHwAfgLKhMfZN7VXXg97njvmx/wg5S70n8vRu2XQmbNryKuD97jEFA==
   dependencies:
     "@expo/config" "5.0.3"
+    chalk "^4.1.0"
+    getenv "^1.0.0"
+    metro-react-native-babel-transformer "^0.59.0"
+
+"@expo/metro-config@^0.1.16", "@expo/metro-config@^0.1.63", "@expo/metro-config@^0.1.80":
+  version "0.1.80"
+  resolved "https://registry.yarnpkg.com/@expo/metro-config/-/metro-config-0.1.80.tgz#289ee83b815aeb2a772d2bf0d8bb0c0dd4b7082b"
+  integrity sha512-A2jFV4XWNaT/LR7oKkLMFbCNTpI7JWCbns1mmhjA3zKf8k03Kj2mLEoJMI17JtLtz0WuH9hvqr5OuaK7jlmegQ==
+  dependencies:
+    "@expo/config" "5.0.5"
     chalk "^4.1.0"
     getenv "^1.0.0"
     metro-react-native-babel-transformer "^0.59.0"
@@ -10336,10 +10399,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-matomo-tracker-react-native@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/matomo-tracker-react-native/-/matomo-tracker-react-native-0.2.3.tgz#ce800bf5e31fc1099460f5c212cc54fb192edc32"
-  integrity sha512-VV1izaajMDAiEGMVdmyjvr2anqB98FycZBKhWYRLLt4T8wxL+O+bbHweHPmC41Bma/u5bHzXJPe5MSve107UfA==
+matomo-tracker-react-native@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/matomo-tracker-react-native/-/matomo-tracker-react-native-0.2.4.tgz#7548c86c2fb02235f70ab5393ceaeeb45dbe6c3a"
+  integrity sha512-n0siIN3r0UyMz8pKyFmWIqTl4WEE+SMXhxENlW3y27nd/2+hiIm90Q5eBl2Z5sOCDCYSik8xXo4YxKQIt5XDLA==
 
 md5-file@^3.2.3:
   version "3.2.3"
