@@ -84,20 +84,6 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     }
   `;
 
-  const { loading, error, data } = useQuery(STEP_ARTICLES, {
-    fetchPolicy: "no-cache",
-  });
-
-  useEffect(() => {
-    if (!loading && data) {
-      const articles = (data as { articles: Article[] }).articles;
-      setFilteredArticles(articles);
-    }
-  }, [loading, data]);
-
-  if (loading) return <Loader />;
-  if (error) return <ErrorMessage error={error} />;
-
   const navigateToSurvey = () => {
     navigation.navigate("epdsSurvey");
   };
@@ -124,6 +110,20 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     });
     setFilteredArticles(result);
   };
+
+  const { loading, error, data } = useQuery(STEP_ARTICLES, {
+    fetchPolicy: "cache-and-network",
+  });
+
+  useEffect(() => {
+    if (!loading && data) {
+      const articles = (data as { articles: Article[] }).articles;
+      setFilteredArticles(articles);
+    }
+  }, [loading, data]);
+
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage error={error} />;
 
   return (
     <ScrollView style={styles.scrollView}>
@@ -172,7 +172,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
             <Animatable.View
               key={index}
               animation="fadeInUp"
-              duration={1500}
+              duration={1000}
               delay={0}
             >
               <ListItem

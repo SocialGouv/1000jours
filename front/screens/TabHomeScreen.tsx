@@ -53,7 +53,10 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     string | null
   >(null);
   const [currentStepId, setCurrentStepId] = useState<number | null>(null);
-  const [loadSteps, { called, loading, error, data }] = useLazyQuery(ALL_STEPS);
+  const [loadSteps, { called, loading, error, data }] = useLazyQuery(
+    ALL_STEPS,
+    { fetchPolicy: "cache-and-network" }
+  );
 
   const init = async () => {
     const previousStepId = await StorageUtils.getStringValue(
