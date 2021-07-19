@@ -1,3 +1,16 @@
+# [1.68.0](https://github.com/SocialGouv/1000jours/compare/v1.67.2...v1.68.0) (2021-07-19)
+
+
+### Bug Fixes
+
+* **epds:** Corrige le code HTML du mail de suivi ([#534](https://github.com/SocialGouv/1000jours/issues/534)) ([a086a54](https://github.com/SocialGouv/1000jours/commit/a086a545d4e3dc86c2d96a51401d0dcdfa2ea179))
+* 🐛 Ajoute le cache au niveau de la request apollo ([#535](https://github.com/SocialGouv/1000jours/issues/535)) ([e46049e](https://github.com/SocialGouv/1000jours/commit/e46049e55736eebd8f7057b4718feda375c8375d))
+
+
+### Features
+
+* 🎸 Ajoute les notifications des événements ([#532](https://github.com/SocialGouv/1000jours/issues/532)) ([3e9a338](https://github.com/SocialGouv/1000jours/commit/3e9a338a695f62fa8dcea7e1518fea80ac7a5368)), closes [#33](https://github.com/SocialGouv/1000jours/issues/33)
+
 ## [1.67.2](https://github.com/SocialGouv/1000jours/compare/v1.67.1...v1.67.2) (2021-07-16)
 
 
