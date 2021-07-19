@@ -47,7 +47,9 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
       }
     }
   `;
-  const [loadEvents, { loading, error, data }] = useLazyQuery(ALL_EVENTS);
+  const [loadEvents, { loading, error, data }] = useLazyQuery(ALL_EVENTS, {
+    fetchPolicy: "cache-and-network",
+  });
 
   const init = async () => {
     const childBirthdayStr =
@@ -60,8 +62,11 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
         StorageKeysConstants.eventsCalcFromBirthday
       )) ?? "";
     setEventsCalcFromBirthday(eventsCalcFromBirthdayStr);
-    setLoadingEvents(true);
-    loadEvents();
+
+    if (childBirthdayStr.length > 0) {
+      setLoadingEvents(true);
+      loadEvents();
+    }
   };
 
   const formattedEvents = (eventsToFormat: Event[]): Event[] => {
@@ -86,12 +91,17 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   useEffect(() => {
     if (!loading && data) {
       const evenements = (data as { evenements: Event[] }).evenements;
+
       void StorageUtils.storeStringValue(
         StorageKeysConstants.eventsCalcFromBirthday,
         childBirthday
-      ).then(() => {
-        setEvents(formattedEvents(evenements));
-      });
+      )
+        .then(() => {
+          setEvents(formattedEvents(evenements));
+        })
+        .catch(() => {
+          setLoadingEvents(false);
+        });
     }
   }, [loading, data]);
 
