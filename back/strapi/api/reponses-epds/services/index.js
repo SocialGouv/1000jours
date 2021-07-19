@@ -1,16 +1,16 @@
 "use strict";
 
 const emailTemplate = (info) => ({
-  subject: "Demande de contact EPDS <%= prenom %>",
+  subject: "Demande de contact EPDS <%- prenom %>",
   text: `Bonjour,
 
     Une demande de contact suite à un test EPDS a été effectuée.
 
-    Vous pouvez recontacter <%= prenom %> (<%= nombre_enfants %> enfant(s), dernier enfant le <%= naissance_dernier_enfant %>) :
-    - à l'adresse suivante : <%= email %>${
+    Vous pouvez recontacter <%- prenom %> (<%- nombre_enfants %> enfant(s), dernier enfant le <%- naissance_dernier_enfant %>) :
+    - à l'adresse suivante : <%- email %>${
       info.telephone
         ? ` ;
-    - au numéro suivant : <%= telephone %>`
+    - au numéro suivant : <%- telephone %>`
         : ``
     }.
 
@@ -19,12 +19,12 @@ const emailTemplate = (info) => ({
 
     <p>Une demande de contact suite à un test EPDS a été effectuée.</p>
 
-    <p>Vous pouvez recontacter <%= prenom %> (<%= nombre_enfants %> enfant(s), dernier enfant né le <%= naissance_dernier_enfant %>) :
+    <p>Vous pouvez recontacter <%- prenom %> (<%- nombre_enfants %> enfant(s), dernier enfant né le <%- naissance_dernier_enfant %>) :
     <ul>
-      <li>à l'adresse suivante : <a href="mailto:<%= email %>"><%= email %></a>${
+      <li>à l'adresse suivante : <a href="mailto:<%- email %>"><%- email %></a>${
         info.telephone
           ? ` ;</li>
-      <li>au numéro suivant : <a href="tel:<%= telephone %>"><%= telephone %></a>`
+      <li>au numéro suivant : <a href="tel:<%- telephone %>"><%- telephone %></a>`
           : ""
       }.</li>
     </ul>
