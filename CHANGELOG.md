@@ -1,3 +1,16 @@
+# [1.69.0](https://github.com/SocialGouv/1000jours/compare/v1.68.1...v1.69.0) (2021-07-19)
+
+
+### Bug Fixes
+
+* **epds:** Empêche les injections HTML l'email de contact ([#538](https://github.com/SocialGouv/1000jours/issues/538)) ([a3e2aad](https://github.com/SocialGouv/1000jours/commit/a3e2aadc36eeb0e75584d86e434c97bf64000bd6))
+* 🐛 Corrige l'envoie des scores du test epds ([#536](https://github.com/SocialGouv/1000jours/issues/536)) ([e4b2e87](https://github.com/SocialGouv/1000jours/commit/e4b2e87da75c995c87996981549306b84b708f0a))
+
+
+### Features
+
+* 🎸 Change la gestion du cache au niveau des requêtes ([#537](https://github.com/SocialGouv/1000jours/issues/537)) ([dd17bd3](https://github.com/SocialGouv/1000jours/commit/dd17bd3b72c37628da4787a605fd5ae4cb8e4568))
+
 ## [1.68.1](https://github.com/SocialGouv/1000jours/compare/v1.68.0...v1.68.1) (2021-07-19)
 
 
