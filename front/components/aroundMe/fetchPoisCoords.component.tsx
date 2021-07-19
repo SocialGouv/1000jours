@@ -17,6 +17,7 @@ interface Props {
   postalCode: string;
   region: Region;
   setFetchedPois: (pois: CartographiePoisFromDB[]) => void;
+  setIsLoading: (value: boolean) => void;
   chooseFilterMessage: () => void;
   searchIsReady: boolean;
 }
@@ -26,6 +27,7 @@ const FetchPoisCoords: React.FC<Props> = ({
   triggerSearchByGpsCoords,
   region,
   setFetchedPois,
+  setIsLoading,
   chooseFilterMessage,
   searchIsReady,
 }) => {
@@ -91,8 +93,10 @@ const FetchPoisCoords: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    if (!searchIsReady) return;
-
+    if (!searchIsReady) {
+      setIsLoading(false);
+      return;
+    }
     void searchByGPSCoords();
   }, [triggerSearchByGpsCoords]);
 

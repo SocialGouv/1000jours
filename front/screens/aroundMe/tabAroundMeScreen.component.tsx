@@ -199,6 +199,7 @@ const TabAroundMeScreen: React.FC = () => {
         postalCode={postalCodeInput}
         region={region}
         setFetchedPois={handleFetchedPois}
+        setIsLoading={setIsLoading}
         chooseFilterMessage={() => {
           setTimeout(
             () => {
