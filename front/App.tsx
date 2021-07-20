@@ -55,25 +55,30 @@ const App: FC = () => {
   const notificationListener = useRef<Subscription>();
   const responseListener = useRef<Subscription>();
 
+  const updateAppActiveCounter = async () => {
+    const appActiveCounterStr = await StorageUtils.getStringValue(
+      StorageKeysConstants.appActiveCounter
+    );
+    const appActiveCounter = appActiveCounterStr
+      ? Number(appActiveCounterStr)
+      : 0;
+    const newAppActiveCounter = appActiveCounter + 1;
+    void StorageUtils.storeStringValue(
+      StorageKeysConstants.appActiveCounter,
+      newAppActiveCounter.toString()
+    );
+    trackScreenView(
+      `${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${newAppActiveCounter}`
+    );
+  };
+
   const appState = useRef(AppState.currentState);
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
     if (
       /inactive|background/.exec(appState.current) &&
       nextAppState === "active"
     ) {
-      void StorageUtils.getStringValue(
-        StorageKeysConstants.appActiveCounter
-      ).then((value) => {
-        const appActiveCounter = value ? Number(value) : 0;
-        const newAppActiveCounter = appActiveCounter + 1;
-        void StorageUtils.storeStringValue(
-          StorageKeysConstants.appActiveCounter,
-          newAppActiveCounter.toString()
-        );
-        trackScreenView(
-          `${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${newAppActiveCounter}`
-        );
-      });
+      void updateAppActiveCounter();
     }
   };
 
