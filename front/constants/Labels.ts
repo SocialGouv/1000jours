@@ -364,6 +364,9 @@ export default {
     myProfil: "Mon profil",
     title: "Menu",
   },
+  notification: {
+    openTheApp: "Ouverture de l'app",
+  },
   onboarding: {
     slidesText: [
       {

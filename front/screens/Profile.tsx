@@ -282,7 +282,12 @@ const Profile: FC<Props> = ({ navigation }) => {
                     color={Colors.primaryBlue}
                   />
                 }
-                action={navigateToRoot}
+                action={() => {
+                  trackScreenView(
+                    `${TrackerUtils.TrackingEvent.PROFILE} - ${Labels.buttons.pass}`
+                  );
+                  navigateToRoot();
+                }}
               />
             </View>
             <View style={[styles.buttonContainer]}>

@@ -1,3 +1,4 @@
+export const appActiveCounter = "@appActiveCounter";
 export const isFirstLaunchKey = "@isFirstLaunch";
 export const currentStepId = "@currentStepId";
 export const userSituationsKey = "@userSituations";
@@ -14,6 +15,7 @@ export const notifIdsEvents = "@notifIdsEvents";
 export const eventsCalcFromBirthday = "@eventsCalcFromBirthday";
 
 export const allStorageKeys = [
+  appActiveCounter,
   isFirstLaunchKey,
   currentStepId,
   userSituationsKey,
