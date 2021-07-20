@@ -11,7 +11,7 @@ export default {
         },
       },
       package: "com.fabrique.millejours",
-      permissions: [],
+      permissions: ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"],
       versionCode: 16,
     },
     assetBundlePatterns: ["**/*"],
