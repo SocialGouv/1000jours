@@ -7,16 +7,18 @@ import { MatomoProvider, useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
+import type { AppStateStatus } from "react-native";
+import { AppState } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import IcomoonFont from "./assets/icomoon/icomoon.ttf";
 import { initLocales } from "./config/calendar-config";
-import { StorageKeysConstants } from "./constants";
+import { Labels, StorageKeysConstants } from "./constants";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import { StorageUtils, TrackerUtils } from "./utils";
-import { initMonitoring, reportError } from "./utils/logging.util";
+import { initMonitoring } from "./utils/logging.util";
 import { registerForPushNotificationsAsync } from "./utils/notification.util";
 
 Notifications.setNotificationHandler({
@@ -41,6 +43,7 @@ initMonitoring();
 const customFonts = { IcoMoon: IcomoonFont };
 
 const App: FC = () => {
+  const { trackScreenView } = useMatomo();
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
@@ -52,6 +55,28 @@ const App: FC = () => {
   const notificationListener = useRef<Subscription>();
   const responseListener = useRef<Subscription>();
 
+  const appState = useRef(AppState.currentState);
+  const handleAppStateChange = (nextAppState: AppStateStatus) => {
+    if (
+      /inactive|background/.exec(appState.current) &&
+      nextAppState === "active"
+    ) {
+      void StorageUtils.getStringValue(
+        StorageKeysConstants.appActiveCounter
+      ).then((value) => {
+        const appActiveCounter = value ? Number(value) : 0;
+        const newAppActiveCounter = appActiveCounter + 1;
+        void StorageUtils.storeStringValue(
+          StorageKeysConstants.appActiveCounter,
+          newAppActiveCounter.toString()
+        );
+        trackScreenView(
+          `${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${newAppActiveCounter}`
+        );
+      });
+    }
+  };
+
   useEffect(() => {
     trackAppStart();
     Font.loadAsync(customFonts)
@@ -59,8 +84,11 @@ const App: FC = () => {
         setFontsLoaded(true);
       })
       .catch((error) => {
-        reportError(error);
+        console.log(error);
       });
+
+    // Permet de détecter lorsque l'app change d'état ('active' | 'background' | 'inactive' | 'unknown' | 'extension')
+    AppState.addEventListener("change", handleAppStateChange);
 
     // Notifications
     void registerForPushNotificationsAsync();
@@ -72,10 +100,17 @@ const App: FC = () => {
     // Se déclenche lorsque l'on clique sur la notification native
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
+        const notificationType =
+          response.notification.request.content.data.type ?? "";
+        trackScreenView(
+          `${TrackerUtils.TrackingEvent.NOTIFICATION} (${notificationType}) - ${Labels.notification.openTheApp}`
+        );
         setNotification(response.notification);
       });
 
     return () => {
+      AppState.removeEventListener("change", handleAppStateChange);
+
       if (notificationListener.current)
         Notifications.removeNotificationSubscription(
           notificationListener.current

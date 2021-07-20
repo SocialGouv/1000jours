@@ -1,5 +1,6 @@
 import type { NavigationContainerRef } from "@react-navigation/native";
 import type { Notification as ExpoNotificaiton } from "expo-notifications";
+import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { Modal, StyleSheet, TouchableOpacity } from "react-native";
@@ -7,6 +8,7 @@ import { Modal, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors, FontWeight, Paddings, Sizes } from "../../constants";
 import type { NotificationStyle } from "../../types";
 import { NotificationType } from "../../utils/notification.util";
+import { TrackingEvent } from "../../utils/tracker.util";
 import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 import Button from "./button.component";
@@ -37,12 +39,17 @@ const Notification: React.FC<Props> = ({
   notification,
   onDismiss,
 }) => {
+  const { trackScreenView } = useMatomo();
   const notificationType = notification.request.content.data
     .type as NotificationType;
 
   const [modalVisible, setModalVisible] = useState(true);
 
   const action = () => {
+    const buttonTitle = notification.request.content.data.redirectTitle ?? "";
+    trackScreenView(
+      `${TrackingEvent.NOTIFICATION} (${notificationType}) - ${buttonTitle}`
+    );
     const redirectTo = notification.request.content.data.redirectTo as string;
 
     if (redirectTo) {

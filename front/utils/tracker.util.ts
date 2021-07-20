@@ -8,6 +8,7 @@ export const matomoInstance = new MatomoTracker({
 });
 
 export enum TrackingEvent {
+  APP_ACTIVE = "Ouverture de l'app",
   ONBOARDING = "Onboarding",
   PROFILE = "Profil",
   HOME = "Accueil",
@@ -16,11 +17,5 @@ export enum TrackingEvent {
   CALENDAR = "Calendrier",
   CARTO = "Cartographie",
   EPDS = "EPDS",
+  NOTIFICATION = "Notification",
 }
-
-export const TrackingActions = {
-  UPDATE_PROFILE: {
-    action: "Mise à jour du profil",
-    name: "Situation",
-  },
-};
