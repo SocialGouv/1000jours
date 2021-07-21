@@ -57,6 +57,7 @@ const SearchByPostalCode: React.FC<Props> = ({
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== Location.PermissionStatus.GRANTED) {
       showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
+      setIsLoading(false);
       return;
     }
 
