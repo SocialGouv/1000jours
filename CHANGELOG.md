@@ -1,3 +1,18 @@
+# [1.70.0](https://github.com/SocialGouv/1000jours/compare/v1.69.0...v1.70.0) (2021-07-21)
+
+
+### Bug Fixes
+
+* 🐛 Ajoute la permission d'utiliser le GPS (Android) ([#541](https://github.com/SocialGouv/1000jours/issues/541)) ([acf9a96](https://github.com/SocialGouv/1000jours/commit/acf9a96ad4321a8a7962dd5393ceb2c16fde11c9))
+* 🐛 Corrige le loader sur la carto (access GPS : refused) ([#540](https://github.com/SocialGouv/1000jours/issues/540)) ([e7b5fb3](https://github.com/SocialGouv/1000jours/commit/e7b5fb3585ee75c9b471aa313cf4908e62dc721c))
+* 🐛 Corrige le loader sur la carto (access GPS : refused) ([#544](https://github.com/SocialGouv/1000jours/issues/544)) ([3c55e0c](https://github.com/SocialGouv/1000jours/commit/3c55e0ce345575e64fde126fe239abcc9d3e685b)), closes [#540](https://github.com/SocialGouv/1000jours/issues/540)
+
+
+### Features
+
+* 🎸 Ajoute des stats dans Matomo ([#542](https://github.com/SocialGouv/1000jours/issues/542)) ([4f77e8c](https://github.com/SocialGouv/1000jours/commit/4f77e8c1bd385de7d974102c76a847e6153534ff)), closes [#517](https://github.com/SocialGouv/1000jours/issues/517) [#518](https://github.com/SocialGouv/1000jours/issues/518) [#523](https://github.com/SocialGouv/1000jours/issues/523)
+* 🎸 Ajoutes les stats des filtres dans Matomo ([#545](https://github.com/SocialGouv/1000jours/issues/545)) ([01db241](https://github.com/SocialGouv/1000jours/commit/01db24136144950209efbddaff712bce5f3e9dc7)), closes [#519](https://github.com/SocialGouv/1000jours/issues/519)
+
 # [1.69.0](https://github.com/SocialGouv/1000jours/compare/v1.68.1...v1.69.0) (2021-07-19)
 
 
