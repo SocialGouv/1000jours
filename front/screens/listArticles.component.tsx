@@ -99,8 +99,17 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     return isMatching;
   };
 
+  const sendFiltersTracker = (filters: ArticleFilter[]) => {
+    filters.forEach((filter) => {
+      trackScreenView(
+        `${TrackerUtils.TrackingEvent.FILTER_ARTICLES} - ${filter.thematique.nom}`
+      );
+    });
+  };
+
   const applyFilters = (filters: ArticleFilter[]) => {
     const activeFilters = _.filter(filters, { active: true });
+    sendFiltersTracker(activeFilters);
     const result = filteredArticles.map((article) => {
       if (activeFilters.length > 0)
         article.hide = !matchWithFilters(article, activeFilters);
