@@ -18,4 +18,6 @@ export enum TrackingEvent {
   CARTO = "Cartographie",
   EPDS = "EPDS",
   NOTIFICATION = "Notification",
+  FILTER_CARTO = "Filtre (Carto)",
+  FILTER_ARTICLES = "Filtre (Articles)",
 }

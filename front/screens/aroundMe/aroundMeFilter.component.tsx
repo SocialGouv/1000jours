@@ -1,3 +1,4 @@
+import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
@@ -33,7 +34,7 @@ import type {
   PoiTypeFromDB,
   StepFromDB,
 } from "../../type";
-import { StorageUtils, StringUtils } from "../../utils";
+import { StorageUtils, StringUtils, TrackerUtils } from "../../utils";
 
 interface Props {
   visible: boolean;
@@ -41,6 +42,7 @@ interface Props {
 }
 
 const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
+  const { trackScreenView } = useMatomo();
   const [filterDataFromDb, setFilterDataFromDb] = useState<unknown>();
 
   const [fetchedFiltersFromDB, setFetchedFiltersFromDB] =
@@ -54,14 +56,14 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
 
   useEffect(() => {
     if (!filterDataFromDb) return;
-    const extractFilterDataAndCheckSavedFilters = async () => {
+    const extractFilterDataAndCheckSavedFilters = () => {
       const { cartographieTypes, etapes } = filterDataFromDb as {
         cartographieTypes: PoiTypeFromDB[];
         etapes: StepFromDB[];
       };
       extractFilterData(cartographieTypes, etapes);
     };
-    void extractFilterDataAndCheckSavedFilters();
+    extractFilterDataAndCheckSavedFilters();
   }, [filterDataFromDb]);
 
   useEffect(() => {
@@ -245,6 +247,16 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     ));
   };
 
+  const sendFiltersTracker = (filters: string[]) => {
+    if (!StringUtils.stringArrayIsNullOrEmpty(filters)) {
+      filters.forEach((filter) => {
+        trackScreenView(
+          `${TrackerUtils.TrackingEvent.FILTER_CARTO} - ${filter}`
+        );
+      });
+    }
+  };
+
   return (
     <>
       <FetchFilterData setFilterData={setFilterDataFromDb} />
@@ -307,6 +319,8 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                         StorageKeysConstants.cartoFilterKey,
                         cartoFilterStorage
                       );
+                      sendFiltersTracker(cartoFilterStorage.etapes);
+                      sendFiltersTracker(cartoFilterStorage.types);
                       setCartoFilterStorage({ etapes: [], types: [] });
                       hideModal(true);
                     }}
