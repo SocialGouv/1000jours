@@ -1,3 +1,11 @@
+## [1.70.1](https://github.com/SocialGouv/1000jours/compare/v1.70.0...v1.70.1) (2021-07-22)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'envoie de la stat "Ouverture de l'app" ([#548](https://github.com/SocialGouv/1000jours/issues/548)) ([b99b7cb](https://github.com/SocialGouv/1000jours/commit/b99b7cb372f170252e92a0ed08ff10f7012577d3)), closes [#518](https://github.com/SocialGouv/1000jours/issues/518)
+* 🐛 Corrige le loader sur la carto (access GPS : refused) ([#547](https://github.com/SocialGouv/1000jours/issues/547)) ([38fa92a](https://github.com/SocialGouv/1000jours/commit/38fa92a1fe4308d5a93beb79d03089a5a16d2226)), closes [#544](https://github.com/SocialGouv/1000jours/issues/544)
+
 # [1.70.0](https://github.com/SocialGouv/1000jours/compare/v1.69.0...v1.70.0) (2021-07-21)
 
 
