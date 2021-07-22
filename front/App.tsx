@@ -72,12 +72,8 @@ const App: FC = () => {
     );
   };
 
-  const appState = useRef(AppState.currentState);
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
-    if (
-      /inactive|background/.exec(appState.current) &&
-      nextAppState === "active"
-    ) {
+    if (nextAppState === "active") {
       void updateAppActiveCounter();
     }
   };
