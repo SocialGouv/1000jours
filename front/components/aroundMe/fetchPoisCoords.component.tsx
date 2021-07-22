@@ -19,6 +19,8 @@ interface Props {
   setFetchedPois: (pois: CartographiePoisFromDB[]) => void;
   chooseFilterMessage: () => void;
   searchIsReady: boolean;
+  setIsLoading: (value: boolean) => void;
+  locationPermissionIsGranted: boolean;
 }
 
 const FetchPoisCoords: React.FC<Props> = ({
@@ -28,6 +30,8 @@ const FetchPoisCoords: React.FC<Props> = ({
   setFetchedPois,
   chooseFilterMessage,
   searchIsReady,
+  setIsLoading,
+  locationPermissionIsGranted,
 }) => {
   const [getPoisByGpsCoords] = useLazyQuery(
     DatabaseQueries.AROUNDME_POIS_BY_GPSCOORDS,
@@ -92,6 +96,7 @@ const FetchPoisCoords: React.FC<Props> = ({
 
   useEffect(() => {
     if (!searchIsReady) {
+      if (!locationPermissionIsGranted) setIsLoading(false);
       return;
     }
     void searchByGPSCoords();

@@ -73,6 +73,8 @@ const TabAroundMeScreen: React.FC = () => {
     null
   );
   const [searchIsReady, setSearchIsReady] = useState(false);
+  const [locationPermissionIsGranted, setLocationPermissionIsGranted] =
+    useState(false);
 
   const googleMapsNotSelectedIcon = require("../../assets/images/carto/icon_google_map_not_selected.png");
   const googleMapsSelectedIcon = require("../../assets/images/carto/icon_google_map_selected.png");
@@ -209,6 +211,8 @@ const TabAroundMeScreen: React.FC = () => {
           showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
         }}
         searchIsReady={searchIsReady}
+        setIsLoading={setIsLoading}
+        locationPermissionIsGranted={locationPermissionIsGranted}
       />
       <View style={styles.topContainer}>
         <TitleH1
@@ -254,6 +258,7 @@ const TabAroundMeScreen: React.FC = () => {
           setMoveToRegionBecauseOfPCResearch(true);
         }}
         setSearchIsReady={setSearchIsReady}
+        setLocationPermissionIsGranted={setLocationPermissionIsGranted}
       />
       <View style={styles.map}>
         <MapView
