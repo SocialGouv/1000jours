@@ -34,6 +34,7 @@ interface Props {
   setIsLoading: (value: boolean) => void;
   updateUserLocation: (coordinates: LatLng | undefined) => void;
   setSearchIsReady: (value: boolean) => void;
+  setLocationPermissionIsGranted: (value: boolean) => void;
 }
 
 const SearchByPostalCode: React.FC<Props> = ({
@@ -47,6 +48,7 @@ const SearchByPostalCode: React.FC<Props> = ({
   setIsLoading,
   updateUserLocation,
   setSearchIsReady,
+  setLocationPermissionIsGranted,
 }) => {
   useEffect(() => {
     setSearchIsReady(false);
@@ -61,6 +63,7 @@ const SearchByPostalCode: React.FC<Props> = ({
       return;
     }
 
+    setLocationPermissionIsGranted(true);
     setIsLoading(true);
     try {
       const currentLocation = await Location.getCurrentPositionAsync({});
