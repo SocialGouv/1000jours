@@ -1,3 +1,11 @@
+## [1.71.1](https://github.com/SocialGouv/1000jours/compare/v1.71.0...v1.71.1) (2021-07-23)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le formulaire "Etre contacté" (EPDS) ([#552](https://github.com/SocialGouv/1000jours/issues/552)) ([f285dfe](https://github.com/SocialGouv/1000jours/commit/f285dfe7232a564e8886643280b47d50af81ceb0))
+* 🐛 Corrige le nombre d'envoie des stats pour Matomo ([#551](https://github.com/SocialGouv/1000jours/issues/551)) ([b102d48](https://github.com/SocialGouv/1000jours/commit/b102d48a3194221645afeb11dce5c9e03acd920e))
+
 # [1.71.0](https://github.com/SocialGouv/1000jours/compare/v1.70.1...v1.71.0) (2021-07-23)
 
 
