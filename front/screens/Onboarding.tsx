@@ -3,7 +3,7 @@ import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 
@@ -48,7 +48,6 @@ interface SlideView {
 
 const Onboarding: FC<Props> = ({ navigation }) => {
   const { trackScreenView } = useMatomo();
-  trackScreenView(TrackerUtils.TrackingEvent.ONBOARDING);
   const slideViews: SlideView[] = [
     {
       description: Labels.onboarding.slidesText[0].description,
@@ -69,6 +68,10 @@ const Onboarding: FC<Props> = ({ navigation }) => {
 
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const swiperRef = useRef<SwiperFlatList>(null);
+
+  useEffect(() => {
+    trackScreenView(TrackerUtils.TrackingEvent.ONBOARDING);
+  }, []);
 
   const navigateToProfile = () => {
     void StorageUtils.storeObjectValue(

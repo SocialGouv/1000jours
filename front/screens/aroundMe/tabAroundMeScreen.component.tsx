@@ -40,7 +40,6 @@ import SlidingUpPanelAddressesList from "./slidingUpPanelAddressesList.component
 
 const TabAroundMeScreen: React.FC = () => {
   const { trackScreenView } = useMatomo();
-  trackScreenView(TrackerUtils.TrackingEvent.CARTO);
   const mapRef = useRef<MapView>();
   const [postalCodeInput, setPostalCodeInput] = useState("");
   const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
@@ -81,6 +80,7 @@ const TabAroundMeScreen: React.FC = () => {
   const currentUserLocatioIcon = require("../../assets/images/carto/current_location.png");
 
   useEffect(() => {
+    trackScreenView(TrackerUtils.TrackingEvent.CARTO);
     const checkIfSavedRegion = async () => {
       const savedRegion: Region | undefined = await StorageUtils.getObjectValue(
         StorageKeysConstants.cartoSavedRegion

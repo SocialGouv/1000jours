@@ -29,12 +29,15 @@ interface Props {
 
 const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const { trackScreenView } = useMatomo();
-  trackScreenView(TrackerUtils.TrackingEvent.CALENDAR);
   const [childBirthday, setChildBirthday] = React.useState("");
   const [eventsCalcFromBirthday, setEventsCalcFromBirthday] =
     React.useState("");
   const [events, setEvents] = React.useState<Event[]>([]);
   const [loadingEvents, setLoadingEvents] = React.useState(false);
+
+  useEffect(() => {
+    trackScreenView(TrackerUtils.TrackingEvent.CALENDAR);
+  }, []);
 
   const ALL_EVENTS = gql`
     query GetEvents {

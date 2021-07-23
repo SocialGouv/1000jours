@@ -19,11 +19,11 @@ import EpdsSurveyContent from "./epdsSurveyContent.component";
 
 const EpdsSurveyScreen: FC = () => {
   const { trackScreenView } = useMatomo();
-  trackScreenView(TrackerUtils.TrackingEvent.EPDS);
   const [onboardingIsDone, setOnboardingIsDone] = useState(false);
   const [genderIsEntered, setGenderIsEntered] = useState(false);
 
   useEffect(() => {
+    trackScreenView(TrackerUtils.TrackingEvent.EPDS);
     const getGenderFromStorage = async () => {
       const genderValue = await StorageUtils.getStringValue(
         StorageKeysConstants.epdsGenderKey

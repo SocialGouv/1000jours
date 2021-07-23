@@ -35,7 +35,7 @@ interface Props {
 
 const TabHomeScreen: FC<Props> = ({ navigation }) => {
   const { trackScreenView } = useMatomo();
-  trackScreenView(TrackerUtils.TrackingEvent.HOME);
+
   const ALL_STEPS = gql`
     query GetAllSteps {
       etapes(sort: "id") {
@@ -109,6 +109,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   };
 
   useEffect(() => {
+    trackScreenView(TrackerUtils.TrackingEvent.HOME);
     // Permet de forcer le refresh de la page lorsque l'on arrive dessus
     const unsubscribe = navigation.addListener("focus", () => {
       void init();

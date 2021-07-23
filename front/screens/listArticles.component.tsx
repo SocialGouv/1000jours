@@ -51,14 +51,16 @@ const ETAPE_ENFANT_3_PREMIERS_MOIS = 6;
 
 const ListArticles: FC<Props> = ({ navigation, route }) => {
   const { trackScreenView } = useMatomo();
-  trackScreenView(
-    `${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`
-  );
-
   const screenTitle = route.params.step.nom;
   const description = route.params.step.description;
   const stepIsFirstThreeMonths =
     route.params.step.id == ETAPE_ENFANT_3_PREMIERS_MOIS;
+
+  useEffect(() => {
+    trackScreenView(
+      `${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`
+    );
+  }, []);
 
   const [filteredArticles, setFilteredArticles] = React.useState<Article[]>([]);
 
