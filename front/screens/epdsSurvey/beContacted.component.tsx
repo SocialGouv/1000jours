@@ -139,12 +139,18 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     }
   };
 
-  const renderTextInputView = (informationType: PersonalInformationType) => {
+  const renderTextInputView = (
+    informationType: PersonalInformationType,
+    isMandatory: boolean
+  ) => {
     const { label, isEmptyVariable } =
       getLabelAndIsEmptyVariable(informationType);
     return (
       <View style={styles.rowView}>
-        <CommonText style={styles.textStyle}>{label}</CommonText>
+        <CommonText style={styles.textStyle}>
+          {isMandatory ? `${label} *` : label}
+        </CommonText>
+
         <View>
           <TextInput
             keyboardType={
@@ -158,7 +164,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
             }}
             placeholder={label}
           />
-          {isEmptyVariable && (
+          {isMandatory && isEmptyVariable && (
             <HelperText type="error">{Labels.mandatoryField}</HelperText>
           )}
           {informationType === PersonalInformationType.email &&
@@ -178,22 +184,24 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     );
   };
 
-  const onValidate = async () => {
-    if (
-      !StringUtils.stringIsNotNullNorEmpty(firstName) &&
-      !StringUtils.stringIsNotNullNorEmpty(email) &&
-      !StringUtils.stringIsNotNullNorEmpty(childBirthDate) &&
-      emailIsValid &&
-      phoneNumberIsValid
-    ) {
-      setFirstNameIsEmpty(!StringUtils.stringIsNotNullNorEmpty(firstName));
+  const isValidForm = () => {
+    let isValid = true;
+    if (!StringUtils.stringIsNotNullNorEmpty(email)) {
       setEmailIsEmpty(!StringUtils.stringIsNotNullNorEmpty(email));
-      setChildBirthDateIsEmpty(
-        !StringUtils.stringIsNotNullNorEmpty(childBirthDate)
-      );
-    } else {
-      const date = new Date(childBirthDate);
-      const dateAsString = format(date, Formats.dateFR).replace(/\//g, "-");
+      isValid = false;
+    }
+    if (!emailIsValid || !phoneNumberIsValid) isValid = false;
+
+    return isValid;
+  };
+
+  const onValidate = async () => {
+    if (isValidForm()) {
+      let dateAsString = null;
+      if (StringUtils.stringIsNotNullNorEmpty(childBirthDate)) {
+        const date = new Date(childBirthDate);
+        dateAsString = format(date, Formats.dateFR).replace(/\//g, "-");
+      }
 
       await sendContactInformation({
         variables: {
@@ -241,9 +249,9 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
               />
             </TouchableOpacity>
             <ScrollView>
-              {renderTextInputView(PersonalInformationType.firstName)}
-              {renderTextInputView(PersonalInformationType.email)}
-              {renderTextInputView(PersonalInformationType.phoneNumber)}
+              {renderTextInputView(PersonalInformationType.firstName, false)}
+              {renderTextInputView(PersonalInformationType.email, true)}
+              {renderTextInputView(PersonalInformationType.phoneNumber, false)}
               <View style={styles.rowView}>
                 <CommonText style={styles.textStyle}>
                   {Labels.epdsSurvey.beContacted.numberOfChildren}
@@ -364,6 +372,9 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: Margins.default,
     padding: Paddings.default,
+  },
+  mandatory: {
+    color: "red",
   },
   rowView: {
     alignItems: "center",
