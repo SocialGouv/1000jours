@@ -1,3 +1,15 @@
+# [1.71.0](https://github.com/SocialGouv/1000jours/compare/v1.70.1...v1.71.0) (2021-07-23)
+
+
+### Bug Fixes
+
+* **epds:** Rend tous les champs du formulaire de contact optionnels sauf l'email ([#550](https://github.com/SocialGouv/1000jours/issues/550)) ([0d3b5a8](https://github.com/SocialGouv/1000jours/commit/0d3b5a85e26c6ed709cb95a0fd2a3646064fc1c4))
+
+
+### Features
+
+* 🎸 Change le numéro de version : 1.0.19 ([#549](https://github.com/SocialGouv/1000jours/issues/549)) ([20c2a41](https://github.com/SocialGouv/1000jours/commit/20c2a417b2f156e5de55e903fd70f8baa07795df))
+
 ## [1.70.1](https://github.com/SocialGouv/1000jours/compare/v1.70.0...v1.70.1) (2021-07-22)
 
 
