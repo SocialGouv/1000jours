@@ -41,7 +41,6 @@ interface Props {
 
 const Profile: FC<Props> = ({ navigation }) => {
   const { trackScreenView } = useMatomo();
-  trackScreenView(TrackerUtils.TrackingEvent.PROFILE);
   const image = <ProfileImage />;
   const defaultUserContext: UserContext = {
     childBirthday: null,
@@ -96,6 +95,7 @@ const Profile: FC<Props> = ({ navigation }) => {
   const [datePickerIsReady, setDatePickerIsReady] = useState(false);
 
   useEffect(() => {
+    trackScreenView(TrackerUtils.TrackingEvent.PROFILE);
     const initDataWithStorageValue = async () => {
       const userSituationsStored = (await StorageUtils.getObjectValue(
         StorageKeysConstants.userSituationsKey
