@@ -83,11 +83,11 @@ export default {
   epdsSurvey: {
     beContacted: {
       beContactedSent: "Votre demande de contact a bien été envoyée",
-      button: "Être appelé(e)",
+      button: "Être contacté(e)",
       invalidEmail: "L'email n'est pas valide",
       invalidPhoneNumber: "Le tél. n'est pas valide",
       numberOfChildren: "Nombre d'enfants",
-      title: "Être appelé(e)",
+      title: "Être contacté(e)",
       yourEmail: "Votre email",
       yourFirstname: "Votre prénom",
       yourPhoneNumber: "Votre n° de tél.",
