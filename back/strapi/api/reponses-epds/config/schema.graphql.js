@@ -16,9 +16,9 @@ module.exports = {
     epdsContact (
       email: String!
       telephone: String
-      prenom: String!
-      nombre_enfants: Int!
-      naissance_dernier_enfant: String!
+      prenom: String
+      nombre_enfants: Int
+      naissance_dernier_enfant: String
     ): Boolean
   `,
   resolver: {
