@@ -11,7 +11,7 @@ jobs:
     env:
       API_URL: ${{ secrets.API_URL_PROD }}
       CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
-      MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
+      MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID_PROD }}
       MATOMO_ENABLED: ${{ secrets.MATOMO_ENABLED }}
       MATOMO_URL: ${{ secrets.MATOMO_URL }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
@@ -40,7 +40,7 @@ jobs:
     env:
       API_URL: ${{ secrets.API_URL_PROD }}
       CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
-      MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID }}
+      MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID_PROD }}
       MATOMO_ENABLED: ${{ secrets.MATOMO_ENABLED }}
       MATOMO_URL: ${{ secrets.MATOMO_URL }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
