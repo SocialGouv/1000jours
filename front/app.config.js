@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 export default {
   expo: {
     android: {
@@ -12,7 +13,7 @@ export default {
       },
       package: "com.fabrique.millejours",
       permissions: ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"],
-      versionCode: 20,
+      versionCode: 21,
     },
     assetBundlePatterns: ["**/*"],
     hooks: {
@@ -29,8 +30,12 @@ export default {
     },
     icon: "./assets/images/icon.png",
     ios: {
-      buildNumber: "1.0.20",
+      buildNumber: "1.0.21",
       bundleIdentifier: "com.fabrique.millejours",
+      infoPlist: {
+        NSLocationWhenInUseUsageDescription:
+          "Permet de vous positionner précisément sur la carte et de lancer une recherche des POI autour de vous.",
+      },
       supportsTablet: true,
     },
     name: "1000 jours",
@@ -46,7 +51,7 @@ export default {
       fallbackToCacheTimeout: 0,
     },
     userInterfaceStyle: "light",
-    version: "1.0.20",
+    version: "1.0.21",
     web: {
       favicon: "./assets/images/favicon.png",
     },
