@@ -1,3 +1,15 @@
+# [1.72.0](https://github.com/SocialGouv/1000jours/compare/v1.71.1...v1.72.0) (2021-07-26)
+
+
+### Bug Fixes
+
+* 🐛 Ajoute une description pour le GPS (App refused on iOS) ([#556](https://github.com/SocialGouv/1000jours/issues/556)) ([1c0fb9f](https://github.com/SocialGouv/1000jours/commit/1c0fb9fe4c981b330a8f2306056640b6993a1ef7))
+
+
+### Features
+
+* 🎸 Ajoute Matomo pour la PREPROD (APP_ID : 46) ([#557](https://github.com/SocialGouv/1000jours/issues/557)) ([7703fea](https://github.com/SocialGouv/1000jours/commit/7703feac62c70ac46b672aa7108107cc0581ad68))
+
 ## [1.71.1](https://github.com/SocialGouv/1000jours/compare/v1.71.0...v1.71.1) (2021-07-23)
 
 
