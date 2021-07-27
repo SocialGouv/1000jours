@@ -12,22 +12,22 @@ Puis, créer le fichier `.env`:
 cp .env.example .env
 ```
 
-Pour lancer l'application, utilisez :
+Pour lancer l'application, utiliser :
 ```bash
 yarn start
 ```
 
-Pour lancer la version web, utilisez :
+Pour lancer la version web, utiliser :
 ```bash
 yarn start:web
 ```
 
-Pour lancer l'émulateur Android, utilisez :
+Pour lancer l'émulateur Android, utiliser :
 ```bash
 yarn android
 ```
 
-Pour lancer l'émulateur iOS, utilisez :
+Pour lancer l'émulateur iOS, utiliser :
 ```bash
 yarn ios
 ```
@@ -35,7 +35,7 @@ yarn ios
 ## 🌓 Font d'icônes (Icomoon)
 
 Pour générer la font d'icônes nous utilisons Icomoon, pour ce faire rendez-vous sur le site :
-- https://icomoon.io/app/#/select  
+- https://icomoon.io/app/#/select
 - Importer les icônes au format svg (./assets/icomoon/svg/)
 - Sélectionner les icônes précédement importées
 - Cliquer sur "Generate Font" en bas de la page puis "Download"
@@ -50,19 +50,19 @@ Pour générer la font d'icônes nous utilisons Icomoon, pour ce faire rendez-vo
 
 #### En dev (channel staging)
 
-Pour publier l'application (changements dans le bundle JS), utilisez :
+Pour publier l'application (changements dans le bundle JS), utiliser :
 ```bash
 yarn publish-dev
 ```
 
-Pour builder et publier l'application (changements dans le code natif), utilisez :
+Pour builder et publier l'application (changements dans le code natif), utiliser :
 ```bash
 yarn build-dev
 ```
 
 #### En prod (channel prod)
 
-Pour publier l'application (changements dans le bundle JS), utilisez :
+Pour publier l'application (changements dans le bundle JS), utiliser :
 ```bash
 yarn publish-prod
 ```
