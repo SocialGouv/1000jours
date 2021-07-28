@@ -32,11 +32,14 @@ const ErrorMessage: React.FC<Props> = ({ error }) => {
     setFetchIsComplete(false);
 
     try {
+      reportError(
+        `${Labels.errorMsg} : ${apolloError.message} (Stacktrace : ${apolloError.stack})`
+      );
+
       const response = await fetch(
         `${process.env.API_URL}/.well-known/apollo/server-health`,
         { cache: "no-cache" }
       );
-      reportError(`${Labels.errorMsg} : ${apolloError.message}`);
 
       let responseJson = null;
 

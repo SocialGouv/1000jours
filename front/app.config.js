@@ -22,7 +22,8 @@ export default {
           config: {
             authToken: process.env.SENTRY_TOKEN,
             organization: "incubateur",
-            project: "1000-premiers-jours",
+            project: "nos-1000-jours",
+            url: "https://sentry.fabrique.social.gouv.fr",
           },
           file: "sentry-expo/upload-sourcemaps",
         },
