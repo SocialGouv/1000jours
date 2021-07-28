@@ -62,7 +62,9 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     );
   }, []);
 
+  const [articles, setArticles] = React.useState<Article[]>([]);
   const [filteredArticles, setFilteredArticles] = React.useState<Article[]>([]);
+  const [showArticles, setShowArticles] = React.useState(false);
 
   const STEP_ARTICLES = gql`
     query GetStepArticles {
@@ -112,14 +114,17 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
   const applyFilters = (filters: ArticleFilter[]) => {
     const activeFilters = _.filter(filters, { active: true });
     sendFiltersTracker(activeFilters);
-    const result = filteredArticles.map((article) => {
+    const result = articles.map((article) => {
+      let hide = false;
       if (activeFilters.length > 0)
-        article.hide = !matchWithFilters(article, activeFilters);
-      else article.hide = false;
+        hide = !matchWithFilters(article, activeFilters);
 
-      return article;
+      return {
+        ...article,
+        hide: hide,
+      };
     });
-    setFilteredArticles(result);
+    setArticles(result);
   };
 
   const { loading, error, data } = useQuery(STEP_ARTICLES, {
@@ -128,12 +133,19 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
 
   useEffect(() => {
     if (!loading && data) {
-      const articles = (data as { articles: Article[] }).articles;
-      setFilteredArticles(articles);
+      const articlesToShow = _.filter(articles, (article) => !article.hide);
+      setFilteredArticles(articlesToShow);
+      setShowArticles(true);
+    }
+  }, [articles]);
+
+  useEffect(() => {
+    if (!loading && data) {
+      const results = (data as { articles: Article[] }).articles;
+      setArticles(results);
     }
   }, [loading, data]);
 
-  if (loading) return <Loader />;
   if (error) return <ErrorMessage error={error} />;
 
   return (
@@ -171,15 +183,14 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
         </View>
       )}
 
-      <Filters articles={filteredArticles} applyFilters={applyFilters} />
+      <Filters articles={articles} applyFilters={applyFilters} />
 
-      <View style={styles.listContainer}>
-        <SecondaryText style={styles.headerListInfo}>
-          {_.filter(filteredArticles, (article) => !article.hide).length}{" "}
-          {Labels.listArticles.articlesToRead}
-        </SecondaryText>
-        {_.filter(filteredArticles, (article) => !article.hide).map(
-          (article, index) => (
+      {showArticles ? (
+        <View style={styles.listContainer}>
+          <SecondaryText style={styles.headerListInfo}>
+            {filteredArticles.length} {Labels.listArticles.articlesToRead}
+          </SecondaryText>
+          {filteredArticles.map((article, index) => (
             <Animatable.View
               key={index}
               animation="fadeInUp"
@@ -232,9 +243,11 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
                 </ListItem.Content>
               </ListItem>
             </Animatable.View>
-          )
-        )}
-      </View>
+          ))}
+        </View>
+      ) : (
+        <Loader />
+      )}
     </ScrollView>
   );
 };

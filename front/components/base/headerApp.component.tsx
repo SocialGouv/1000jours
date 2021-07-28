@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   appLogo: {
     alignItems: "center",
     display: "flex",
+    paddingBottom: Paddings.light,
   },
   logoMinistere: {
     aspectRatio: 1,

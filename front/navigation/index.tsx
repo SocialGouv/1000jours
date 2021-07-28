@@ -120,7 +120,7 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => (
           </TouchableOpacity>
         ),
         headerShown: true,
-        headerTitle: () => <AppLogo height={Sizes.xxxl} />,
+        headerTitle: () => <AppLogo height={Sizes.xxxl} width={Sizes.xxxl} />,
         headerTitleContainerStyle: {
           alignItems: "center",
         },
@@ -140,7 +140,9 @@ const styles = StyleSheet.create({
   },
   headerRight: {
     alignItems: "center",
-    paddingRight: Paddings.default,
+    height: "100%",
+    justifyContent: "center",
+    paddingHorizontal: Paddings.default,
   },
   headerRightButtonText: {
     color: Colors.primaryBlue,

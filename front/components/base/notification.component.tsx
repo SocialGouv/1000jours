@@ -140,9 +140,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   closeButton: {
+    padding: Paddings.default,
     position: "absolute",
-    right: Paddings.default,
-    top: Paddings.default,
+    right: 0,
+    top: 0,
   },
   modalView: {
     alignItems: "center",

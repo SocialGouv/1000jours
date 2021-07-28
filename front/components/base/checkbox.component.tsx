@@ -9,6 +9,7 @@ import {
   FontNames,
   FontWeight,
   getFontFamilyName,
+  Margins,
   Paddings,
   Sizes,
 } from "../../constants";
@@ -43,7 +44,10 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     backgroundColor: "transparent",
     borderWidth: 0,
-    paddingVertical: Paddings.smallest,
+    marginHorizontal: Margins.light,
+    marginVertical: 0,
+    padding: Paddings.light,
+    width: "100%",
   },
   label: {
     color: Colors.primaryBlueDark,
