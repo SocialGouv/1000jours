@@ -1,3 +1,10 @@
+# [1.73.0](https://github.com/SocialGouv/1000jours/compare/v1.72.1...v1.73.0) (2021-07-28)
+
+
+### Features
+
+* 🎸 Change le numéro de version : 1.0.22 ([#564](https://github.com/SocialGouv/1000jours/issues/564)) ([dcb3488](https://github.com/SocialGouv/1000jours/commit/dcb3488d6b5b0800db9732426d065683b75a8e9c))
+
 ## [1.72.1](https://github.com/SocialGouv/1000jours/compare/v1.72.0...v1.72.1) (2021-07-28)
 
 
