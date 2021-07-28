@@ -1,4 +1,5 @@
 import * as Sentry from "sentry-expo";
+import { Native } from "sentry-expo";
 
 export const initMonitoring = (): void => {
   const enabled = process.env.SENTRY_ENABLED !== "false";
@@ -12,5 +13,5 @@ export const initMonitoring = (): void => {
 
 // Throwing an error will trigger Sentry
 export const reportError = (errorMessage: string | undefined): void => {
-  throw new Error(errorMessage);
+  Native.captureException(errorMessage);
 };
