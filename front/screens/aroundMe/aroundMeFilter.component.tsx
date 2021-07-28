@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
     marginTop: Margins.default,
   },
   closeModalView: {
-    margin: Margins.default,
+    padding: Paddings.default,
     position: "absolute",
     right: 0,
     top: 0,

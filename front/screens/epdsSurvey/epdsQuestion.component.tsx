@@ -25,24 +25,26 @@ const EpdsQuestion: React.FC<Props> = ({
       style={styles.swipeView}
       contentContainerStyle={styles.justifyContentCenter}
     >
-      <View style={styles.swipeViewMargin}>
+      <View style={[styles.swipeViewMargin, styles.paddingRight]}>
         <CommonText style={styles.question}>
           {questionAndAnswers.questionNumber}. {questionAndAnswers.question}
         </CommonText>
-        {questionAndAnswers.answers.map((answer, answerIndex) => (
-          <Checkbox
-            key={answerIndex}
-            labelSize={Sizes.xs}
-            title={answer.label}
-            checked={answer.isChecked}
-            onPress={() => {
-              updatePressedAnswer(answer);
-              trackScreenView(
-                `${TrackerUtils.TrackingEvent.EPDS} - question n°${questionAndAnswers.questionNumber} - case cochée`
-              );
-            }}
-          />
-        ))}
+        <View style={styles.paddingRight}>
+          {questionAndAnswers.answers.map((answer, answerIndex) => (
+            <Checkbox
+              key={answerIndex}
+              labelSize={Sizes.xs}
+              title={answer.label}
+              checked={answer.isChecked}
+              onPress={() => {
+                updatePressedAnswer(answer);
+                trackScreenView(
+                  `${TrackerUtils.TrackingEvent.EPDS} - question n°${questionAndAnswers.questionNumber} - case cochée`
+                );
+              }}
+            />
+          ))}
+        </View>
       </View>
     </ScrollView>
   );
@@ -53,6 +55,9 @@ const styles = StyleSheet.create({
   justifyContentCenter: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  paddingRight: {
+    paddingRight: Paddings.light,
   },
   question: {
     color: Colors.primaryBlueDark,
