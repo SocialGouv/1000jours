@@ -1,3 +1,11 @@
+## [1.72.1](https://github.com/SocialGouv/1000jours/compare/v1.72.0...v1.72.1) (2021-07-28)
+
+
+### Bug Fixes
+
+* 🐛 Améliore l'UX/UI (buttons, checkbox) ([#563](https://github.com/SocialGouv/1000jours/issues/563)) ([afd4f5e](https://github.com/SocialGouv/1000jours/commit/afd4f5e90e44d2c02027823b55dd1f25ed5a2b05)), closes [#560](https://github.com/SocialGouv/1000jours/issues/560)
+* 🐛 Corrige le report des erreurs sur Sentry ([#562](https://github.com/SocialGouv/1000jours/issues/562)) ([31bb5b8](https://github.com/SocialGouv/1000jours/commit/31bb5b8521a6ff9abfc8014e96aa4fff771a44e9))
+
 # [1.72.0](https://github.com/SocialGouv/1000jours/compare/v1.71.1...v1.72.0) (2021-07-26)
 
 
