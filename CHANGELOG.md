@@ -1,3 +1,10 @@
+## [1.73.1](https://github.com/SocialGouv/1000jours/compare/v1.73.0...v1.73.1) (2021-07-29)
+
+
+### Bug Fixes
+
+* 🐛 Corrige les problèmes d'affichage sur tablette ([#566](https://github.com/SocialGouv/1000jours/issues/566)) ([ec37497](https://github.com/SocialGouv/1000jours/commit/ec37497e59e6b6277624e921857a1fb03d5e12cb))
+
 # [1.73.0](https://github.com/SocialGouv/1000jours/compare/v1.72.1...v1.73.0) (2021-07-28)
 
 
