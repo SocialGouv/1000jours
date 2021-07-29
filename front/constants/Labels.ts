@@ -444,7 +444,8 @@ export default {
   },
   timeline: {
     description:
-      "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. À chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
+      "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. A chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
+    library: "Parenthèque",
     notification: {
       body: "Vous entrez dans une nouvelle étape du parcours 1000 jours : ",
       redirectTitle: "Modifier ma situation",
