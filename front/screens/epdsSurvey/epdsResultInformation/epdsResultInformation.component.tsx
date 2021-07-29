@@ -41,7 +41,9 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
   const renderParagraphs = (paragraphs: EpdsResultInformationType[]) => {
     return paragraphs.map(
       (paragraph: EpdsResultInformationType, index: number) => (
-        <View key={index}>{renderParagraph(paragraph)}</View>
+        <View key={index} style={styles.accordionItem}>
+          {renderParagraph(paragraph)}
+        </View>
       )
     );
   };
@@ -112,6 +114,10 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
 const styles = StyleSheet.create({
   accordion: {
     backgroundColor: Colors.cardWhite,
+  },
+  accordionItem: {
+    paddingLeft: Paddings.light,
+    paddingRight: Paddings.smaller,
   },
   card: {
     borderColor: Colors.cardGrey,

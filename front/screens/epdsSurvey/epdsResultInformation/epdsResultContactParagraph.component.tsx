@@ -30,7 +30,7 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
 
   const titleStyle = [styles.contactName, { fontSize: Sizes.sm }];
   return (
-    <View style={[styles.itemBorder, styles.marginLeft]}>
+    <View style={styles.itemBorder}>
       {paragraphTitle && paragraphTitle.length > 0 && (
         <SecondaryText style={titleStyle}>{paragraphTitle}</SecondaryText>
       )}
@@ -97,9 +97,6 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.disabled,
     borderBottomWidth: 1,
     paddingRight: Paddings.smaller,
-  },
-  marginLeft: {
-    marginLeft: -Margins.epdsResultLeftMargin,
   },
   paddingVertical: {
     paddingVertical: Paddings.default,

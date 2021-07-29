@@ -1,5 +1,4 @@
 import { scaleNormalize } from "../utils/scaleNormalize.util";
-import { SCREEN_WIDTH } from "./platform.constants";
 
 /* eslint-disable sort-keys-fix/sort-keys-fix */
 export const Margins = {
@@ -13,7 +12,6 @@ export const Margins = {
   evenMoreLargest: scaleNormalize(50),
   step: scaleNormalize(60),
   snackbarMargin: scaleNormalize(80),
-  epdsResultLeftMargin: SCREEN_WIDTH / 8,
 };
 
 export const Paddings = {

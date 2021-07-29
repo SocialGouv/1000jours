@@ -196,6 +196,7 @@ const styles = StyleSheet.create({
   },
   validateButton: {
     alignItems: "center",
+    paddingTop: Paddings.light,
   },
 });
 
