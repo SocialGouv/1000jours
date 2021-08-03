@@ -42,14 +42,14 @@ initMonitoring();
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const customFonts = { IcoMoon: IcomoonFont };
 
-const App: FC = () => {
-  const { trackScreenView } = useMatomo();
+const MainAppContainer: FC = () => {
+  const { trackAppStart, trackScreenView } = useMatomo();
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
   // Load Custom Fonts (Icomoon)
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const { trackAppStart } = useMatomo();
+
   const [notification, setNotification] =
     useState<Notifications.Notification | null>(null);
   const notificationListener = useRef<Subscription>();
@@ -80,6 +80,7 @@ const App: FC = () => {
 
   useEffect(() => {
     trackAppStart();
+
     Font.loadAsync(customFonts)
       .then(() => {
         setFontsLoaded(true);
@@ -129,20 +130,26 @@ const App: FC = () => {
     return null;
   } else {
     return (
-      <MatomoProvider instance={TrackerUtils.matomoInstance}>
-        <ApolloProvider client={client}>
-          <SafeAreaProvider>
-            <Navigation
-              colorScheme={colorScheme}
-              notification={notification}
-              setNotification={setNotification}
-            />
-            <StatusBar />
-          </SafeAreaProvider>
-        </ApolloProvider>
-      </MatomoProvider>
+      <ApolloProvider client={client}>
+        <SafeAreaProvider>
+          <Navigation
+            colorScheme={colorScheme}
+            notification={notification}
+            setNotification={setNotification}
+          />
+          <StatusBar />
+        </SafeAreaProvider>
+      </ApolloProvider>
     );
   }
+};
+
+const App: FC = () => {
+  return (
+    <MatomoProvider instance={TrackerUtils.matomoInstance}>
+      <MainAppContainer />
+    </MatomoProvider>
+  );
 };
 
 export default App;
