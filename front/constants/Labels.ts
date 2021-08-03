@@ -118,7 +118,7 @@ export default {
         {
           boldIndexes: [],
           description:
-            "Chaque année, en France, La dépression post partum concerne 100 000 femmes et 75 000 hommes.",
+            "Chaque année, en France, la dépression post partum concerne 100 000 femmes et 75 000 hommes.",
           title: "Constat",
         },
         {
@@ -273,7 +273,7 @@ export default {
   },
   epdsSurveyLight: {
     changementsImportants:
-      "Les changements importants liés à l’arrivée d’un bébé sont des facteurs de stress dont certains signes évocateurs sont normaux durant cette période. Parlez de vos difficultés des premiers mois, est essentiel pour que le professionnel de santé qui vous suit puisse à tout moment vous accompagner. Des aides et un accompagnement peuvent être mis en place pour vous aider durant cette période qui nécessite du soutien. En parler avec un professionnel de santé et votre entourage, c’est se soigner. Parce que vous n’êtes pas seul(e) et qu’en parler a permis à de nombreux de parents d’aller mieux.",
+      "Les changements importants liés à l’arrivée d’un bébé sont des facteurs de stress dont certains signes évocateurs sont normaux durant cette période. Parlez de vos difficultés des premiers mois, est essentiel pour que le professionnel de santé qui vous suit puisse à tout moment vous accompagner. Des aides et un accompagnement peuvent être mis en place pour vous aider durant cette période qui nécessite du soutien. En parler avec un professionnel de santé et votre entourage, c’est se soigner. Parce que vous n’êtes pas seul(e) et qu’en parler a permis à de nombreux parents d’aller mieux.",
     oserEnParler:
       "Oser en parler, c'est déjà prendre soin de soi et de son enfant !",
     professionalsList: [
@@ -287,7 +287,7 @@ export default {
           epdsInformation.entretienAupresProfessionnelSante,
           {
             description:
-              "Centre d’informations, d’accompagnement, et d’orientation pour vous et votre enfant, A l’écoute des parents, les nombreux professionnels de santé pourront vous proposer une prise en charge complète.",
+              "Centre d’informations, d’accompagnement, et d’orientation pour vous et votre enfant, à l’écoute des parents, les nombreux professionnels de santé pourront vous proposer une prise en charge complète.",
             title: "La PMI est un véritable allié pour les (futurs) parents :",
           },
           epdsInformation.reseauPerinatalSante,
@@ -401,7 +401,7 @@ export default {
       severalChildren: "J'ai plusieurs enfants",
     },
     subTitle: "- Votre profil -",
-    title: "A quelle étape êtes-vous ?",
+    title: "À quelle étape êtes-vous ?",
     update: "Modifier ma situation",
   },
   tabs: {
@@ -413,7 +413,7 @@ export default {
   },
   timeline: {
     description:
-      "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. A chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
+      "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. À chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
     notification: {
       body: "Vous entrez dans une nouvelle étape du parcours 1000 jours : ",
       redirectTitle: "Modifier ma situation",
