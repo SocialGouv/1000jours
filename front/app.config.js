@@ -13,7 +13,7 @@ export default {
       },
       package: "com.fabrique.millejours",
       permissions: ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"],
-      versionCode: 23,
+      versionCode: 24,
     },
     assetBundlePatterns: ["**/*"],
     hooks: {
@@ -31,7 +31,7 @@ export default {
     },
     icon: "./assets/images/icon.png",
     ios: {
-      buildNumber: "1.0.23",
+      buildNumber: "1.0.24",
       bundleIdentifier: "com.fabrique.millejours",
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
@@ -52,7 +52,7 @@ export default {
       fallbackToCacheTimeout: 0,
     },
     userInterfaceStyle: "light",
-    version: "1.0.23",
+    version: "1.0.24",
     web: {
       favicon: "./assets/images/favicon.png",
     },
