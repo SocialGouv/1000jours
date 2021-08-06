@@ -1,8 +1,8 @@
-name: Publish on ExpoGo (PreProd)
+name: Publish on ExpoGo (Develop)
 on:
   push:
     branches:
-      - 'master'
+      - 'develop'
     paths:
       - 'front/**'
   workflow_dispatch:
@@ -11,10 +11,10 @@ on:
 
 jobs:
   Publish:
-    name: Publish PreProd
+    name: Publish Develop
     runs-on: ubuntu-latest
     env:
-      API_URL: https://backoffice-preprod-les1000jours.dev.fabrique.social.gouv.fr
+      API_URL: https://backoffice-develop-les1000jours.dev.fabrique.social.gouv.fr
       CLEAR_STORAGE: false
       MATOMO_APPLICATION_ID: 46
       MATOMO_ENABLED: true
@@ -37,5 +37,5 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn publish-preprod
+          yarn publish-develop
           

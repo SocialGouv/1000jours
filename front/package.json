@@ -10,6 +10,7 @@
     "test": "jest --watchAll",
     "lint": "eslint .",
     "lint-fix": "eslint --fix .",
+    "publish-develop": "expo publish --release-channel develop",
     "publish-preprod": "expo publish --release-channel preprod",
     "build-prod:android": "expo build:android --release-channel prod",
     "build-prod:ios": "expo build:ios --release-channel prod",

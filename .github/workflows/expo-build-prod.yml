@@ -9,13 +9,13 @@ jobs:
     name: Build and publish Android for Prod
     runs-on: ubuntu-latest
     env:
-      API_URL: ${{ secrets.API_URL_PROD }}
-      CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
-      MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID_PROD }}
-      MATOMO_ENABLED: ${{ secrets.MATOMO_ENABLED }}
-      MATOMO_URL: ${{ secrets.MATOMO_URL }}
-      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-      SENTRY_ENABLED: ${{ secrets.SENTRY_ENABLED }}
+      API_URL: https://backoffice-les1000jours.fabrique.social.gouv.fr/
+      CLEAR_STORAGE: false
+      MATOMO_APPLICATION_ID: 43
+      MATOMO_ENABLED: true
+      MATOMO_URL: https://matomo.fabrique.social.gouv.fr/
+      SENTRY_DSN: https://5dbac413000f4a43a073841acebc82f5@sentry.fabrique.social.gouv.fr/55
+      SENTRY_ENABLED: true
       SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
       GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
     steps:
@@ -38,13 +38,13 @@ jobs:
     name: Build and publish iOS for Prod
     runs-on: ubuntu-latest
     env:
-      API_URL: ${{ secrets.API_URL_PROD }}
-      CLEAR_STORAGE: ${{ secrets.CLEAR_STORAGE }}
-      MATOMO_APPLICATION_ID: ${{ secrets.MATOMO_APPLICATION_ID_PROD }}
-      MATOMO_ENABLED: ${{ secrets.MATOMO_ENABLED }}
-      MATOMO_URL: ${{ secrets.MATOMO_URL }}
-      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-      SENTRY_ENABLED: ${{ secrets.SENTRY_ENABLED }}
+      API_URL: https://backoffice-les1000jours.fabrique.social.gouv.fr/
+      CLEAR_STORAGE: false
+      MATOMO_APPLICATION_ID: 43
+      MATOMO_ENABLED: true
+      MATOMO_URL: https://matomo.fabrique.social.gouv.fr/
+      SENTRY_DSN: https://5dbac413000f4a43a073841acebc82f5@sentry.fabrique.social.gouv.fr/55
+      SENTRY_ENABLED: true
       SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
       GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
     steps:
