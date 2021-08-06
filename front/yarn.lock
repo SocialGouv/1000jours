@@ -2266,12 +2266,13 @@
     "@babel/runtime" "^7.7.2"
     regenerator-runtime "^0.13.3"
 
-"@native-html/css-processor@1.9.0":
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/@native-html/css-processor/-/css-processor-1.9.0.tgz#7f5ef35734bcfb0f2951a091fe191aab75eb7313"
-  integrity sha512-5qDgAPUYuEMhV4z1sfQhAq95iFkt0dBn62JDzypoANd8MRmtfjCX7UC8HLGQJ6DZVwy7tUzxKFeunohLxGwuDA==
+"@native-html/css-processor@1.10.2":
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/@native-html/css-processor/-/css-processor-1.10.2.tgz#b3a214742dc6fa6ada9aab03f841d09b9acd7b05"
+  integrity sha512-cpcWZ8OcK70UE4TwrIxbaJeSX6hboO7LhAqbalWXp8pkUfEocR72AY+gi1BqQUzAH3sIU0ZUjPmec6brAg2WRQ==
   dependencies:
     css-to-react-native "^3.0.0"
+    csstype "^3.0.8"
 
 "@native-html/iframe-plugin@^1.1.2":
   version "1.1.2"
@@ -2291,12 +2292,12 @@
     "@types/prop-types" "^15.7.3"
     prop-types "^15.7.2"
 
-"@native-html/transient-render-engine@^8.4.1":
-  version "8.4.1"
-  resolved "https://registry.yarnpkg.com/@native-html/transient-render-engine/-/transient-render-engine-8.4.1.tgz#a2e3f8278edd6ddcc2c20d58554edff45eea68d4"
-  integrity sha512-YSHxkBJ8cICpswrkNtGYXqWMHhSX8feXnDfNw5Eviz/OLRNi/0wTwDgiHedRTzjG/Gah+QGd1nPHrT8XoCXJ2A==
+"@native-html/transient-render-engine@^9.2.2":
+  version "9.2.2"
+  resolved "https://registry.yarnpkg.com/@native-html/transient-render-engine/-/transient-render-engine-9.2.2.tgz#00691518926ea47709185c3a25a786472c99a1f0"
+  integrity sha512-DhJqrOYhyNmTL9ze/bGG4mbHzoJoMCPnkH/TsQT1p+ZHI5LXL8PBisKF0tiSz3B88GbgTKOO8tp1YMj0fjUNKQ==
   dependencies:
-    "@native-html/css-processor" "1.9.0"
+    "@native-html/css-processor" "1.10.2"
     "@types/ramda" "^0.27.40"
     csstype "^3.0.8"
     domelementtype "^2.2.0"
