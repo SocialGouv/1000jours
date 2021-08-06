@@ -1,3 +1,12 @@
+## [1.73.2](https://github.com/SocialGouv/1000jours/compare/v1.73.1...v1.73.2) (2021-08-06)
+
+
+### Bug Fixes
+
+* snaps ([#586](https://github.com/SocialGouv/1000jours/issues/586)) ([8328987](https://github.com/SocialGouv/1000jours/commit/832898707d1dad7137f800ee31b0655ccb449f5f))
+* **labels:** correction erreurs texte ([#583](https://github.com/SocialGouv/1000jours/issues/583)) ([2a7be97](https://github.com/SocialGouv/1000jours/commit/2a7be97ca6502cf2d87def54fc64a432a3411b8f))
+* 🐛 Corrige l'initialisation de Matomo ([#582](https://github.com/SocialGouv/1000jours/issues/582)) ([ec9d389](https://github.com/SocialGouv/1000jours/commit/ec9d389d30c62e3db1dc90d6e91dc7e4d6e01d5c)), closes [#518](https://github.com/SocialGouv/1000jours/issues/518)
+
 ## [1.73.1](https://github.com/SocialGouv/1000jours/compare/v1.73.0...v1.73.1) (2021-07-29)
 
 
