@@ -49,6 +49,7 @@ Restore preprod db:
   variables:
     KOSKO_APPEND_YAML_FROM: ""
     KOSKO_GENERATE_ARGS: "--env dev jobs/restore"
+    AUTO_DEVOPS_ENABLE_KAPP: ""
   rules:
     - if: "$CI_COMMIT_BRANCH == 'copy-preprod'"
       when: always
