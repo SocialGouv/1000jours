@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`kosko generate --dev jobs/restore 1`] = `
+"---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: copy-db-0123456
+  namespace: 1000jours-85-master-dev42
+spec:
+  backoffLimit: 0
+  template:
+    metadata: {}
+    spec:
+      containers:
+        - command:
+            - sh
+            - '-c'
+            - >+
+
+              [ ! -z $FROM_DATABASE ] || (echo \\"No FROM_DATABASE\\"; exit 1)
+
+              [ ! -z $TO_DATABASE ] || (echo \\"No TO_DATABASE\\"; exit 1)
+
+
+              OUTFILE=\\"/tmp/out.dmp\\"
+
+
+              echo \\"dumping to \${OUTFILE}\\"
+
+              pg_dump --verbose --clean --if-exists -U postgres --format=custom
+              -f \${OUTFILE} --dbname \${FROM_DATABASE}
+
+
+              echo \\"restoring from \${OUTFILE}\\"
+
+              pg_restore --verbose --clean --no-acl --no-owner --dbname
+              \${TO_DATABASE} \${OUTFILE}
+
+          env:
+            - name: FROM_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: azure-pg-user-preprod
+                  key: DATABASE_URL
+            - name: TO_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: azure-pg-user-0123456
+                  key: DATABASE_URL
+          envFrom: []
+          image: postgres:11
+          imagePullPolicy: IfNotPresent
+          name: copy-db
+          resources:
+            limits:
+              cpu: 300m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 64Mi
+          volumeMounts: []
+      restartPolicy: OnFailure
+      volumes: []
+  ttlSecondsAfterFinished: 86400
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+  name: azure-pg-user-preprod
+  namespace: 1000jours-85-master-dev42
+spec:
+  encryptedData:
+    DATABASE_URL: >-
+      AgB/7Vefz8jI6S17cFSf5NpRfrZ+XyZ8l1gJ9XybCPV+PNl4TnwvE6vaPSuiCUkjHad3PRd90gMM8s66qwPgBvqetCUHHALKuXzqSzj+Yio7SfW5viT/0gjnotwSyZR7AXXVSk69WyQVU+Vp2y9U/h01b+srvd6KOIENXDYkZ/olq3AIpH0FYmdEsAKybZ3VB7598zbUFZiYf13dvIEWgiNzP/YK+XFsg/zxxH6Euacif6Y+p/n6WpJgVStGdPKGTIefCfgoi14CQLDdY9C6uovjhbzsBR9I3eP7lNNZA4GguMtuzuhR98Ts+S/FmUrf7QEsY7pnn4/tQV4foxus4z4xs3id63OzRQOq4544ffMG9Ep3A1OtBh2IRtk0IAxVi4+Ts/trhZXYWwIxOubTSogmqzBrQy3wIcC/kiBikUJQoI6+KwwowTWzZnt082b3FDPXuzwla232P9YCwNefvYfLszMBz4PkSQauObGFVZjNMCJAEwXwNwzIDW42C9SuM0ngfaUQkhPI4ubrL9m4g2onk4BAMznDgStJQG0dNvXMaNSnyZjse86f56OQtP88lBOg2ioYTV1b+gfhKih22+3K8TjD2WRuMnr9SqsbWNTUlWiMDytTZx0IIUov/Q6i1F38M+010LqDFlEzPTyX6bqrFdJUokcFzbLEVS9GMxL68pzNK/7vhnZVaQQZyzkYLo9mM8XeiuCldCe8oyk4WANcucGm5OYfFaIVv2SkcWUPfoF3AEC6X/T1Q77PrRcNi4lzzqFhebvXP5gL9BXDPYkNzOcI6itytMjHFxV2AtxNpMWnwy0AmOdh3Rik800fjeVGUWOx1APmZ8vP7JD8lnM1bBG0DE7ySed9GCiqRX7O0eBr8jh0ZFkZ/bMo78zhs5pmbFIoPaC8bEDjV/cB2TiB4yJsYq02mUm/0A2E3u4OWf1rOfA=
+    DB_URI: >-
+      AgA1zaGzoFNXoUA6q5BYS9tYZ1rH9hUo8xpHM+SPPaSwBCSvf5TgDonMmBeMX3uAtd72ecVlYLuyP7Md4Pv4OiEF2wnr1YtwMCE4uihPYHSF7p2Ig/PqXkEpc8mtDpqR0SfknXDr7Gz0kPh5IzCyDDkQnj68pwM+M8fxsVAH0dhl8DGbw0RF2nJOPoGa+RQsbEv8uHeQDKp0J5eNk2wAo1Z522ajc/ASSCOCuRk9uhj2s+kMjR4liFvpUWI2Ebb/p9NrRdljy7s2ewXf7Qkk2J04oWoGLCrX0N3YJND4xSsrTqeXGQzN/kqgsdj/ofhnBphufP9azG9OlsRHlTgcZSPkSMsXWQzDLf5dafPi97M513r2AUvb+Vq7D/xWEQ6sQxx6fp0KmYXl2JP6thuoQj9NibyZDGGnnwrV64OzTITH0Qhr3xxRcrEULWw6AkUNzUxZlj3sD0j+a1DSuBQtrUSZ5ol2GLpn1lKhJ3QPt+vozOcrkzv23bvpNYWqWkCFBlneS4QXw27sG0B3g11pdvYHqMuNYu/iNjMxmoJ0XUIrtRruIX8XdXn2JIhV80eOYgNhO0sXbNRKD+iK3EEBnAjOXHNMPRpPxKHrgbu6G7zeu1DzhLzE4E1EBrAzX6DZLFziBE5S5fF+Wp0+azBLklVY7/S+0N22WbDElgWYMBg9CDh7FXU6kGkDxit22pV97Im/GZeTr8QUzeGPHc+hbK10Y7msxqFGORgPApMz157luKDpWVa6+ocYsGvzMgg0ezeZ1tenhqpWgA40eSiF8BXBhZePaGkmCd5eQfBcihy/Yb+E5mLpC97vG790L+GWVPANdZ42d3EAgO3BV7CdlE/qJjR9NGLRiV6r0rA2hg4GZTuLwlOlcgDLS6MExjpj7X8Qsyjt8pwtiHDk1nuWBrZ0g+OWdKti69MEspJgDUEVC9hSHO0=
+    HASURA_GRAPHQL_DATABASE_URL: >-
+      AgC1XkyNRFru4V3yDZ2lGcE9bBe88yDt8LQuThQXVQ037zjmapp8EzJHHR+Z1JIBItTJkB+xOT/VX6cidA7qMA4rvhGEDXXFNT0a8nQEC6TgeiJy1aUByE1m5qMXjJDZMSdKALmvmrk4jmP54XKQdGuzsjRIRbSegF0rFZixgRhZJXj1TPJ3MMeOsK4zwbChyh/0K+7119jW3euY32UoN99otTDCazSDJyN7fEGhSGDIfRKv4sApXNHov6+EDDScPQ3WPUr7mm8MyBN5hc9h9tzU1tGbuL/1UgfcT6jFLxKHMa1NChr0TZmndg/AGyrGJIvtkMoHzVwGY3fp+v7EOPdpWfn1Ld9i4XBvICjlHThu1sl8Kf5S/r4+whNTW2FFIP9C2wz8zsbOzr2KoLuUSHWapHFNGD+GjTfYqu/2SCoCgUCKKXk8lkwvBbkY5INRCOPFLZqlPMT/+XtQ9h4/RyBLzCXlPEVxe+oLxRYP+JfxfVHhswYs426toFvTdltKOMuaIUPpDH9slsJfBZ2dyK2m7E3MIG73ZeUe1dUn3qpsIt7Qsz7sOT2wQu7zmWfhIlVsbSZ8K2I0aYC5LMsoaY7KlA81lflqSBniDIi00u4JfkNMvBzDdMMnrpW/JECFFhOj2kGdaICaRwlgHr701Pe4yXjQzI/h+aNx9SLK/+E6kAvyzedthClLcE6Scg9+p2lOfdJ6Kjr0KRj9yqJCWT3YUxa30tJSc0b4JVwz7UIWogU4swo/AQu5QNXSw28rrk5iHmncx0S8l/GsvINU4zNbHyv1gb6DVUuU0bnQ5V3JrAxo5fqzOBt4Bdxj1/sz5+XdQjfQyrp62XnWQ9vA6cvq3hQWUJnqbqlMHagNzsoQ7SwvRbfB5P6TWjMDrmF9gEGnIwA6eErhE8gaobafIeOF3SrUq7zgwVghy3yCb4VwqIyua9k=
+    PGDATABASE: >-
+      AgC/KX3io8Y12Ailsz0vHZXVVra9wD9uR7TaqVKeM3ZNvZHLoUO0Z3vY6uOVbG2EhNiXUtko1YGdOA2JC6FSt5dWqHPzhOk48eEoCsv9zWohVtWTeRIcjKswNTkPqSFAOO+XCWytXzFb+MukIdbsLlREOElBcOIDhgztYXJiGWumTiAvs0XLiRsvslLu215dmBztYECwbsl/Xg4lRILl34D5tJxmJkrsOiq+z9Wt2gq76q2XQxi/OL29vc1FFjgU3atKv/WxofAyVLr6Mgew/aLaf37kn6q9ufHouepDK157uqbu8og82fvrgoxcx45VflPOH1bMsSafn811lw88osv0k6EaQix2MSxuin6K4aWAWN1+R8fv/YGcnoVJ/K3n4qIKV06QvqMOm4+wKG3i7cOH3BBVl/G8Zp3hwf3gF4iE5VWUABdrkcWCNFDFKyNjy2yfWYDEibagPR4Ub6sflFdyBvbfQltriNK5tsZDKBrzLaiOw66FitOZ0bkkBM2rafaP9bHKhG9T2iJkSWWtukgLQBNR3D6EC/qEGzayAe948iiTBpWefSz930yHIMV1VwOoV9mm8t/wdiT1lQRLCC2JL7S86PCEozUzQLya515SH/v56hCEOz7jRSzFkTZ8XpJ5VMzHnUBm9qOtbiwUUKqUndxmUgl3Bjqjk+r0u/UehEedNKyZFJGacw1t+dicn3bIjELdgleZ/g==
+    PGHOST: >-
+      AgAo3Ds8G3tS2kIULHLf40TO9iF0Rxd/JeNmmgWRtexy6naW+Onc/gPCtihg7boXmXumpMFJQRzPRyTMLVlEPjfQPyXAiiaMx+bteXPT2i0zwd7vi76At06W3++iiLxyoDpLcen7Ntp+kdFlzTR+Lnb0ePYmLF+OaFDcANWmNTugR1L8fuSdsAE1RU68QQI179tYoyzK2bqm/ddATBq2RXWdwamI+7kTfoFinsK1u1wzJypC6cL8w28VwEYbFCqS26gxFrY6trNgtdRHsjVUxHD9OD92KIor5XSPmivqRn0LHWnBSLnzyEE2KqpZ+ujtM03kv4f6IUknpXw4NIS+YuoLTtxh/9le4Q46nkK/ivDFiBgOyzMvp9Ajo4is6g0QfGYVqL3R+rQjhZybodnZKSSEpRii8FO+iyRhk9n7OlRuR2tzJrN3bAvPQ81wlUtTT9YRaHiKakvcPZAhfhUURtXEp1JKS2KPBfTj3p8qURxIYGytkNrXr+umEMgcpQsa6BBxKcuwNSRh+1YRQ9ZjIERHsuhX01SBfdm4aqmxidLk+0K1X0N7B5SVgn6jAoEI/84ZG/J4KmVYL75T90rGlKFWl/OD9NZnMd55BMZy1B1fseEa+E1n10cNnin/mDE3dalSpPZrgegBmYy89xNv2lRmeUPN3UJHDNtamP5r6YZC2X1BILR87B912eAZl8iYbww1CNZH6EqPLzT8QuTsJmjpZNGVDVUqlUCRMIz4BgWSGZOPHAaeBdUFfunQs+g=
+    PGPASSWORD: >-
+      AgBe9fYZAG9t41AoYId/uoU2cbiAG45my/NGSo0gybNbRSE/fQ69f9uZ5GGpogcPuuan4zwDcKpE93RXo4sO+3cwydBQDS2/9HM9ySUOosKemMV2keNYRMFp0U98t8JH4Fu1pYcsZY4LxPbiwq9ZEXUTjOzEAA+Zmg7L/3jfHP3aKDwhfeV4bkt/fKgSIPhouYWb2iEPyrNfezHAxsQgHfQAn2g4vEjkR5bmdMeHMFZeYs4wIs4FgusCXV+EB4VZTanO+Rmc8pFJrlQWgdh7c1MBqaLOsJ1eL6ZUJKgTk89xTI1m4wgGi25Qb2GiJq0EyvJkJXo/7f/fb/IpBiSwXhvCaR7k8/rzhFWhGS4zL7VyZmIiF4ZI1ce7GS7JDmfEHl+rjvCK4Wtn0j4O7FO4SVtLQqTJWqPAXp0TNjNnHjLlHLe7+KTBKAawLGpnnIQTvmuuWmlHpk2khJaTGp8O3UQegisHRthPrbhF45dN58AiaDNOjjfWK9JYUCtZ9sSpQk0wummvHTpvqKuL4BQmkVYlUPNPPoCLxFZPBr3KQUPbEzy8I9q2NjLK3bMOTukfNVtB9BhdlFWlLsW4m+O/avrf4q6T2pdtEuxAcsdVNktzirTAyDShw6WL7pW2KgDChBod/J7AXrCrlZTiQ+RhiNXxxa4aL7XB5ayVhaYoj91EkDTP1r0U3YrMaMZF50k1903dj+QknFKaCKr+0u4eCWsFkDPRf1UyzhgX7JRTAVIh7x/bIM/v0xw=
+    PGRST_DB_URI: >-
+      AgA2gkF45oo05lqhKYYbvoo7qvbhAKXK1D87OtkJJgVLHWA/GQZM/wA9VT612FJ5FUI4xFuvtLBep4UjGB2sYmbg8TPpQk+jhYiTtu3QnWNddseXvG8B06Hs+Z8ITsxM/PVjSUtSwKcqxj0oefo/EFSYBriK9EplNI05/8odC6YGJqPoh9YjopodLJ8omPLNkg9dB0CkNEbc1IJCmTbiTblNdc7Ol6+Edunt9BRMA6REleBdIZLucX3scZfIyg4i6xwDic1jBnz/v+KlgShQ65a26Q7RwV49BOK7Mb51v8ix4jaqCOvArwEEewtCP3m8Guwb/MdsUrm+8ETslzyPXb8PL3A6wn46X7YC9d3iyIaVV9gkVME6ngyGLV92nLXbh3TIx8oR5fdsb1Yxvl9lF83EtYUJeepYoUv8M8412AVUqbUgKHeKPAZWNu5h7lbdpK+jHYMbwDUCfwQDR3sLCf4q6A8LwF031GAoYGbqMqvDClTUjsQ7QJqG7E5d7ZaC8acxnG0/h2zMFmaMhn0JYsFAcI/QWIbpzBG7Pw+0pr4y8yTEQe6hn/OZ9kfP/Vq8VD5nkBEJeDysaSsoZH9W6DnA5gSXi8aiKYQdqsMB3prkaEm1sBOp7v9D1XBL+AgVXdhrREAjoJVq+sbto090DRGdaiKydr6apx3VBnCEb3Y/4N92KgmbRQtMwBg92a1gp4PhlMgVtYUOZLpMKb8h4+ftIF1fgLfGGsGJb11yqApLNZAI+uzUpbbM9+f++dth2FKBDhHe7ntKySWjyIppzODhme6Fm57Vz+xSiOuOCv6cMD7UCBp53Bp7vhlkimAydv/66QHYfwPn8t3qLkRa+qgHNJBuovH+mcKdOUV7Ftmpiq8uRDxb55AeUuUpGOqjqvKXL5dZP1gmWTU2ZVSTRQrYW5nDTKA9sJuaCKuFWRyPzLLnS38=
+    PGSSLMODE: >-
+      AgDHJAuR6qQp0Up2Gd2gIi3ZbKn7c9yEg1DP0op2IwuhdXZ0f44QxnkpQ5XPE2C6rpmy/iWDGRZhdA/Iw9UGZIR9lBnz2hfQs8AuiMLgILZuS4nsc6BdNmJItiJ4wj73tltTHaXInW7CsVkCLKE8MzpgEd+D1FmbVpOXxAjDgyiwNWdOlCe2A82c33Rk0UXYDzwZGF9OhKOxqRz4fDcpVKtauOlN5flX6cE1t/AFiUaivcmOQ+l8oXMOptoS7WZEL0vH7mHY922dSavBvwUMludtfBbKI5Ci2+z1MTa+fdX6HltZOJhRWIdbx8U9EJ3m6F+ldszOWugN+U8jPS68vLLVOXzggg5C2Cyh5tGsJRhIoen4cRIAbLsmJGaIsJgPsNBaXi7KtLpnFGam6t+Mzwzcbs/Zsnv0/mUJNeS42fSIi7uiBLpP/qCWo+hiJxdmVmJncGLF+Bw9cBeaAZ4zdtXsGNlyPPi9PNCLkJMqH+1MYPavB+BxGuwAjJwSA4Xuonz0wOXj940JZmBuWLmJYXmuI6Ultn+BU7tcOmVAgvTswvpBHoG4Y+Y91n31enVi6gIv7KTZQte1Wh7UwvM2E3AZRkMN54Xp4VBMzT7nOFSact23YrCcaWqgD8L3UKXlkcv1PM7aQ5jx7Ndfx4kWx4XKHdxtIRA5ClJJgZv2Dop2crXJURH9Uze6HftOBAunH4j78lE4ZNca
+    PGUSER: >-
+      AgBe3pAHxYMPS50TjiaX43R0dyusxhlt34/9kgky20nS8pwhNCOZ+yz4kw3jrCtv03nPn8iew9K0jwHoipB6yluuHogVwbOKdP0YMUgJYFvskNPnIH2gNuFUeR/nDH3WEOZOIVJb2BIwqRWqjb4UlZ93r5etanjRmxBxjm+Y2qjiRY6jZh+/ovEtipXQ9WE3SxT1ktz/CNuqO7F88MfTXFImWbkPtKwnchoeMqtcU5rjYCU/cCYKaZbQNAEFAxSKxTBx1yV8pDj8orlpFiJtfTEGtynPJoF3NCGiVUW9UhIEoIVyXUbxchUbNzAp3LKspobg8vQqg06B8sjpKlqtHNPG7QnkyQhoDmXHW2lsN9Xr+SFk+vFGCdA7pRtjMvFzSP73wHsbj/oLNxEttA5EKb75eoYqgm4RXtpHdJHx6wu5ld/qYZXYnrKdSIZzYrAlmE29fdikDfgDdFwTtuX+jHD/faOuEsEhKJktZoTxAwECd6b9eFktsaJplMjwnZ/Z3sZbHnd73RZggfqalQZRGV0UdDs0REmdyljicciqz/sKrPE2lb8DqGzrIISY4DuBaZiHs4rvaaQjTVt6NTvDTsNx8u8oCrynBYwstN7KipzjL5WMBKUwN9XJvueZtbJ3z3jOanmUb5M5u2/V6NEw/FWCSe5u/Z8dL/XsugYNz19MtXgndvtjHP+nHwUDWDhCkE2eSFi/wjglEFJhziEsFpz1OSADKAjDhlWgan7ChS8FooooQwY7TB2nQdHviAuC6IoLEb/uUJ0=
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+      name: azure-pg-user-preprod
+    type: Opaque
+"
+`;

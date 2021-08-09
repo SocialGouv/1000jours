@@ -19,7 +19,7 @@ Lint:
 Build:
   rules:
     - when: never
-    
+
 Register Kaniko image:
   rules:
     - when: never
@@ -42,3 +42,14 @@ Register strapi:
   variables:
     CONTEXT: back/strapi
     IMAGE_NAME: les1000jours-strapi
+
+Restore preprod db:
+  extends: .autodevops_review
+  stage: .post
+  variables:
+    KOSKO_APPEND_YAML_FROM: ""
+    KOSKO_GENERATE_ARGS: "--env dev jobs/restore"
+  rules:
+    - if: "$CI_COMMIT_REF == 'copy-preprod'"
+      when: always
+    - when: never
