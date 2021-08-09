@@ -16,7 +16,7 @@ spec:
         - command:
             - sh
             - '-c'
-            - >+
+            - >
 
               [ ! -z $FROM_DATABASE ] || (echo \\"No FROM_DATABASE\\"; exit 1)
 
@@ -37,6 +37,8 @@ spec:
               pg_restore --verbose --clean --no-acl --no-owner --dbname
               \${TO_DATABASE} \${OUTFILE}
 
+
+              exit 0
           env:
             - name: FROM_DATABASE
               valueFrom:

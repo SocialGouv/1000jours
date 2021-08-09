@@ -32,6 +32,7 @@ pg_dump --verbose --clean --if-exists -U postgres --format=custom -f \${OUTFILE}
 echo "restoring from \${OUTFILE}"
 pg_restore --verbose --clean --no-acl --no-owner --dbname \${TO_DATABASE} \${OUTFILE}
 
+exit 0
 `;
 
 // from = db source
