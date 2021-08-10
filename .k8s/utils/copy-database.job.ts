@@ -46,32 +46,6 @@ export const copyDatabaseJob = ({
 
   const manifests = [];
 
-  const jobSpec = {
-    containers: [
-      {
-        command: ["sh", "-c", copyScript],
-        env,
-        envFrom,
-        image: `postgres:${POSTGRES_DOCKER_VERSION}`,
-        imagePullPolicy: "IfNotPresent",
-        name: "copy-db",
-        resources: {
-          limits: {
-            cpu: "300m",
-            memory: "512Mi",
-          },
-          requests: {
-            cpu: "100m",
-            memory: "64Mi",
-          },
-        },
-        volumeMounts: [],
-      },
-    ],
-    restartPolicy: "OnFailure",
-    volumes: [],
-  };
-
   const job = new Job({
     metadata: {
       name: `copy-db-${ciEnv.shortSha}`,
@@ -81,7 +55,31 @@ export const copyDatabaseJob = ({
       backoffLimit: 0,
       template: {
         metadata: {},
-        spec: jobSpec,
+        spec: {
+          containers: [
+            {
+              command: ["sh", "-c", copyScript],
+              env,
+              envFrom,
+              image: `postgres:${POSTGRES_DOCKER_VERSION}`,
+              imagePullPolicy: "IfNotPresent",
+              name: "copy-db",
+              resources: {
+                limits: {
+                  cpu: "300m",
+                  memory: "512Mi",
+                },
+                requests: {
+                  cpu: "100m",
+                  memory: "64Mi",
+                },
+              },
+              volumeMounts: [],
+            },
+          ],
+          restartPolicy: "OnFailure",
+          volumes: [],
+        },
       },
       ttlSecondsAfterFinished: 86400,
     },
