@@ -1,7 +1,7 @@
 /**
  * Copy a full database from another database with pg_dump/pg_restore
  *
- * needs : $FROM_DATABASE and $TO_DATABASE
+ * needs : $FROM_DATABASE and $TO_DATABASE as PG connection strings
  *
  * */
 
@@ -24,19 +24,19 @@ const copyScript = `
 [ ! -z $FROM_DATABASE ] || (echo "No FROM_DATABASE"; exit 1)
 [ ! -z $TO_DATABASE ] || (echo "No TO_DATABASE"; exit 1)
 
-OUTFILE="/tmp/out.dmp"
+OUTFILE="/tmp/out.sql"
 
-echo "dumping to \${OUTFILE}"
-pg_dump --verbose --clean --if-exists -U postgres --format=custom -f \${OUTFILE} --dbname \${FROM_DATABASE}
+echo "dumping to \${OUTFILE} from \${FROM_DATABASE##*@}"
+pg_dump --clean --verbose --no-owner --no-acl -U postgres -f \${OUTFILE} --dbname \${FROM_DATABASE}
 
-echo "restoring from \${OUTFILE}"
-pg_restore --verbose --clean --no-acl --no-owner --dbname \${TO_DATABASE} \${OUTFILE}
+echo "restoring from \${OUTFILE} to \${TO_DATABASE##*@}"
+cat \${OUTFILE} | psql \${TO_DATABASE}
+
+echo "Finished"
 
 exit 0
 `;
 
-// from = db source
-// to = db destination
 export const copyDatabaseJob = ({
   namespace,
   env = [],
