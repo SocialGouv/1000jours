@@ -46,6 +46,7 @@ Register strapi:
 Restore preprod db:
   extends: .autodevops_review
   stage: .post
+  allow_failure: True
   variables:
     KOSKO_APPEND_YAML_FROM: ""
     KOSKO_GENERATE_ARGS: "--env dev jobs/restore"
