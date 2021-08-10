@@ -51,6 +51,7 @@ Restore preprod db:
     KOSKO_GENERATE_ARGS: "--env dev jobs/restore"
     AUTO_DEVOPS_ENABLE_KAPP: ""
   rules:
-    - if: "$CI_COMMIT_BRANCH == 'copy-preprod'"
+    - if: "$CI_COMMIT_BRANCH == 'develop'"
       when: always
+    - when: manual
     - when: never
