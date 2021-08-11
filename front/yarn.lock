@@ -1287,13 +1287,13 @@
     xcode "^3.0.1"
     xml2js "^0.4.23"
 
-"@expo/config-plugins@3.0.6":
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-3.0.6.tgz#1ba148de2c971cc08c989281f18274d45bf0e5bc"
-  integrity sha512-hJfxEWfsWuqt4WG3X2F74+tL1JrXZomRBgShKLTMw1vvLe4md70rjTLbmaHkcGb+TfY3RtFZSK8p9oqFXCi8KA==
+"@expo/config-plugins@3.0.7":
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-3.0.7.tgz#50870e26d34b11740a5841076c921729381d4319"
+  integrity sha512-7YOoFtxB6XqDil+OlGXi7iredKHxXVFCAOIVfFyEDzO3oo0gBmWGmUnHgrPDvpMj0q+adCCh5BL8OcvGfc9ITQ==
   dependencies:
     "@expo/config-types" "^42.0.0"
-    "@expo/json-file" "8.2.32"
+    "@expo/json-file" "8.2.33"
     "@expo/plist" "0.0.13"
     debug "^4.3.1"
     find-up "~5.0.0"
@@ -1341,15 +1341,15 @@
     semver "7.3.2"
     slugify "^1.3.4"
 
-"@expo/config@5.0.6":
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/@expo/config/-/config-5.0.6.tgz#beb278df78b69b9bf44049259c72560bcbed943e"
-  integrity sha512-KnSEmlRYT4AsxOGa2OPEefeCEJSo4oMZI/2q3/vriiSYlI2J12/YZz2QaZtGUfKD6jm+5hCerYRQcAMhzj5/BA==
+"@expo/config@5.0.7":
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/@expo/config/-/config-5.0.7.tgz#a419fd7a3ba897b1e10a8f8df8acf775f246aa69"
+  integrity sha512-7Wzao9uALHmRSf59FMsHk1vxW4m4alDCJmfo+enXnl5o6UYiCDYfjNXctMwnW+fBM3opta4FbmmPGIftfXOesw==
   dependencies:
     "@babel/code-frame" "~7.10.4"
-    "@expo/config-plugins" "3.0.6"
+    "@expo/config-plugins" "3.0.7"
     "@expo/config-types" "^42.0.0"
-    "@expo/json-file" "8.2.32"
+    "@expo/json-file" "8.2.33"
     getenv "^1.0.0"
     glob "7.1.6"
     require-from-string "^2.0.2"
@@ -1485,10 +1485,10 @@
     json5 "^1.0.1"
     write-file-atomic "^2.3.0"
 
-"@expo/json-file@8.2.32", "@expo/json-file@^8.2.30":
-  version "8.2.32"
-  resolved "https://registry.yarnpkg.com/@expo/json-file/-/json-file-8.2.32.tgz#612e83433559637a3b853b170ae6d86cccb98064"
-  integrity sha512-VnpoEnjMptBQr/zgkfGHd7L8iJBme9g2AVpUIecI+aoW6qmeIRbBViPmyNABgH4UUQn3ObQCxe+q1dAdJo8KGg==
+"@expo/json-file@8.2.33", "@expo/json-file@^8.2.30":
+  version "8.2.33"
+  resolved "https://registry.yarnpkg.com/@expo/json-file/-/json-file-8.2.33.tgz#78f56f33a2cfb807b23c81e00237a33159aa1f32"
+  integrity sha512-CDnhjdirUs6OdN5hOSTJ2y3i9EiJMk7Z5iDljC5xyCHCrUex7oyI8vbRsZEojAahxZccgL/PrO+CjakiFFWurg==
   dependencies:
     "@babel/code-frame" "~7.10.4"
     json5 "^1.0.1"
@@ -1504,12 +1504,12 @@
     getenv "^1.0.0"
     metro-react-native-babel-transformer "^0.59.0"
 
-"@expo/metro-config@^0.1.16", "@expo/metro-config@^0.1.59", "@expo/metro-config@^0.1.63", "@expo/metro-config@^0.1.81":
-  version "0.1.81"
-  resolved "https://registry.yarnpkg.com/@expo/metro-config/-/metro-config-0.1.81.tgz#17570012394572a5af11e427c03de59652cd2403"
-  integrity sha512-Ta95ohtPChXnuZsCEqMMl4yWqt5hThEY1VULLMe19kT4dPa/rEQ72rtRzpDFH7adNQBRrahTz7kx9rWj6YO+MA==
+"@expo/metro-config@^0.1.16", "@expo/metro-config@^0.1.59", "@expo/metro-config@^0.1.63", "@expo/metro-config@^0.1.82":
+  version "0.1.82"
+  resolved "https://registry.yarnpkg.com/@expo/metro-config/-/metro-config-0.1.82.tgz#63ae90cb2e99596762c461f00d53d32a84af8c8c"
+  integrity sha512-rgx0ykWFvu+7jXDSe/cJB0fpIKqJX4X2k+azBIS9KmVLl5/ceKuCr6Abjy70HZTAXX/SQ7fS0C+FhzIX2Upgrg==
   dependencies:
-    "@expo/config" "5.0.6"
+    "@expo/config" "5.0.7"
     chalk "^4.1.0"
     getenv "^1.0.0"
     metro-react-native-babel-transformer "^0.59.0"
@@ -3054,10 +3054,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/lodash@^4.14.171":
-  version "4.14.171"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.171.tgz#f01b3a5fe3499e34b622c362a46a609fdb23573b"
-  integrity sha512-7eQ2xYLLI/LsicL2nejW9Wyko3lcpN6O/z0ZLHrEQsg280zIdCv1t/0m6UtBjUHokCGBQ3gYTbHzDkZ1xOBwwg==
+"@types/lodash@^4.14.172":
+  version "4.14.172"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.172.tgz#aad774c28e7bfd7a67de25408e03ee5a8c3d028a"
+  integrity sha512-/BHF5HAx3em7/KkzVKm3LrsD6HZAXuXO1AJZQ3cRRBZj4oHZDviWPYu0aEplAqDFNHZPW6d3G7KN+ONcCCC7pw==
 
 "@types/minimatch@*":
   version "3.0.4"
@@ -3133,10 +3133,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@~17.0.15":
-  version "17.0.15"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.15.tgz#c7533dc38025677e312606502df7656a6ea626d0"
-  integrity sha512-uTKHDK9STXFHLaKv6IMnwp52fm0hwU+N89w/p9grdUqcFA6WuqDyPhaWopbNyE1k/VhgzmHl8pu1L4wITtmlLw==
+"@types/react@*", "@types/react@~17.0.17":
+  version "17.0.17"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.17.tgz#1772d3d5425128e0635a716f49ef57c2955df055"
+  integrity sha512-nrfi7I13cAmrd0wje8czYpf5SFbryczCtPzFc6ijqvdjKcyA3tCvGxwchOUlxb2ucBPuJ9Y3oUqKrRqZvrz0lw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
