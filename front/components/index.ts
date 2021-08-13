@@ -17,6 +17,7 @@ import ErrorMessage from "./base/errorMessage.component";
 import HeaderApp from "./base/headerApp.component";
 import Icomoon, { IcomoonIcons } from "./base/icomoon.component";
 import Loader from "./base/loader.component";
+import Tags from "./base/tags.component";
 import TitleH1 from "./base/titleH1.component";
 import TitleH2 from "./base/titleH2.component";
 import Agenda from "./calendar/agenda.component";
@@ -51,6 +52,7 @@ export {
   SecondaryText,
   StepIcon,
   SubTitle,
+  Tags,
   Text,
   TextHtml,
   Thematics,

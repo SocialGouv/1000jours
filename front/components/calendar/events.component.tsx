@@ -19,8 +19,9 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
-import type { Event } from "../../types";
+import type { Event, Tag } from "../../types";
 import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
+import Tags from "../base/tags.component";
 import { CommonText, SecondaryText } from "../StyledText";
 
 interface Props {
@@ -61,6 +62,25 @@ const Events: FC<Props> = ({ evenements, childBirthday }) => {
   const getDateTagTitle = (date: Date) => {
     if (isEqual(new Date(date), today)) return Labels.calendar.today;
     else return format(new Date(date), Formats.dateEvent, { locale: fr });
+  };
+
+  const getEventTags = (event: Event) => {
+    const tags: Tag[] = [];
+    if (event.thematique?.nom)
+      tags.push({
+        bgColor: Colors.primaryBlueLight,
+        color: Colors.primaryBlue,
+        name: event.thematique.nom,
+      });
+
+    event.etapes?.forEach((etape) => {
+      tags.push({
+        bgColor: Colors.primaryYellowLight,
+        color: Colors.primaryYellow,
+        name: etape.nom,
+      });
+    });
+    return tags;
   };
 
   const scrollViewRef = React.useRef<ScrollView>(null);
@@ -120,6 +140,7 @@ const Events: FC<Props> = ({ evenements, childBirthday }) => {
                 </View>
                 <View style={styles.eventContentContainer}>
                   <CommonText style={styles.eventTitle}>{event.nom}</CommonText>
+                  <Tags tags={getEventTags(event)}></Tags>
                   <SecondaryText style={styles.eventDescription}>
                     {event.description}
                   </SecondaryText>

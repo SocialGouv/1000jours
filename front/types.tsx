@@ -85,6 +85,8 @@ export type Event = {
   description: string;
   debut: number;
   fin: number;
+  thematique?: Thematique;
+  etapes?: Step[];
 };
 export type AgendaItems<TEvent> = Record<string, TEvent[]>;
 
@@ -155,4 +157,10 @@ export type ApolloHealthResponse = {
 export type NotificationStyle = {
   icon: string;
   color: string;
+};
+
+export type Tag = {
+  name: string;
+  color: string;
+  bgColor: string;
 };
