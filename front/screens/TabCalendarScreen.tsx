@@ -47,6 +47,14 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
         description
         debut
         fin
+        thematique {
+          id
+          nom
+        }
+        etapes {
+          id
+          nom
+        }
       }
     }
   `;
