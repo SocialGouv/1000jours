@@ -14,7 +14,7 @@ jobs:
     name: Publish Develop
     runs-on: ubuntu-latest
     env:
-      API_URL: https://backoffice-develop-dev-les1000jours.dev.fabrique.social.gouv.fr/
+      API_URL: https://backoffice-develop-dev-les1000jours.dev.fabrique.social.gouv.fr
       CLEAR_STORAGE: false
       MATOMO_APPLICATION_ID: 46
       MATOMO_ENABLED: true
