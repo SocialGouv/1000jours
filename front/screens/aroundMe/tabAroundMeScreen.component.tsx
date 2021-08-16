@@ -3,6 +3,7 @@
 import { useMatomo } from "matomo-tracker-react-native";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
+import type { ImageSourcePropType } from "react-native";
 import { Image, StyleSheet } from "react-native";
 import type { LatLng, Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
@@ -78,6 +79,11 @@ const TabAroundMeScreen: React.FC = () => {
   const googleMapsNotSelectedIcon = require("../../assets/images/carto/icon_google_map_not_selected.png");
   const googleMapsSelectedIcon = require("../../assets/images/carto/icon_google_map_selected.png");
   const currentUserLocatioIcon = require("../../assets/images/carto/current_location.png");
+
+  const proNotSelectedIcon = require("../../assets/images/carto/icon_pro_not_selected.png");
+  const proSelectedIcon = require("../../assets/images/carto/icon_pro_selected.png");
+  const structureNotSelectedIcon = require("../../assets/images/carto/icon_structure_not_selected.png");
+  const structureSelectedIcon = require("../../assets/images/carto/icon_structure_selected.png");
 
   useEffect(() => {
     trackScreenView(TrackerUtils.TrackingEvent.CARTO);
@@ -194,6 +200,21 @@ const TabAroundMeScreen: React.FC = () => {
     );
   };
 
+  const getPinIcon = (
+    poiCategory: AroundMeConstants.PoiCategorieEnum,
+    isSelected: boolean
+  ): ImageSourcePropType => {
+    const isStructure =
+      poiCategory === AroundMeConstants.PoiCategorieEnum.structure;
+    if (isSelected) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return isStructure ? structureSelectedIcon : proSelectedIcon;
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return isStructure ? structureNotSelectedIcon : proNotSelectedIcon;
+    }
+  };
+
   return (
     <View style={styles.mainContainer}>
       <FetchPoisCoords
@@ -292,11 +313,10 @@ const TabAroundMeScreen: React.FC = () => {
               >
                 <View style={styles.markerView}>
                   <Image
-                    source={
+                    source={getPinIcon(
+                      poi.categorie,
                       poiIndex === selectedPoiIndex
-                        ? googleMapsSelectedIcon
-                        : googleMapsNotSelectedIcon
-                    }
+                    )}
                     style={
                       poiIndex === selectedPoiIndex
                         ? styles.googleMapMarkerSelected
