@@ -25,3 +25,8 @@ Pour tester l'application, utilisez Expo Go :
 
 - Téléchargez l'appli Expo Go [ici](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=fr&gl=US)
 - Scannez le QR Code à [cette adresse](https://expo.io/@1000.jours/1000jours?release-channel=preprod) 
+
+
+### Schéma
+
+![Schéma](readme-schema.png?raw=true)
