@@ -481,11 +481,11 @@ const styles = StyleSheet.create({
   },
   googleMapMarkerNotSelected: {
     height: Margins.largest,
-    width: Margins.largest,
+    resizeMode: "contain",
   },
   googleMapMarkerSelected: {
     height: Margins.evenMoreLargest,
-    width: Margins.evenMoreLargest,
+    resizeMode: "contain",
   },
   instruction: {
     color: Colors.commonText,
