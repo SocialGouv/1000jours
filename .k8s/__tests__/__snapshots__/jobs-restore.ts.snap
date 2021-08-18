@@ -50,7 +50,7 @@ spec:
             - name: TO_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: azure-pg-user-0123456
+                  name: azure-pg-user-master-dev42
                   key: DATABASE_URL
           envFrom: []
           image: postgres:11

@@ -6,6 +6,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   annotations:
+    socialgouv/creator: autodevops
+    janitor/ttl: 15d
     field.cattle.io/creatorId: gitlab
     field.cattle.io/projectId: c-bd7z2:p-7ms8p
     git/branch: master
@@ -267,17 +269,17 @@ spec:
             - create-db-user
           env:
             - name: NEW_DB_NAME
-              value: autodevops_0123456
+              value: autodevops_master-dev42
             - name: NEW_USER
-              value: user_0123456
+              value: user_master-dev42
             - name: NEW_PASSWORD
-              value: password_0123456
+              value: password_master-dev42
             - name: NEW_DB_EXTENSIONS
               value: hstore pgcrypto citext uuid-ossp
           envFrom:
             - secretRef:
                 name: azure-pg-admin-user
-          image: ghcr.io/socialgouv/docker/azure-db:6.32.2
+          image: ghcr.io/socialgouv/docker/azure-db:6.39.1
           imagePullPolicy: IfNotPresent
           name: create-db-user
           resources:
@@ -316,18 +318,18 @@ apiVersion: v1
 kind: Secret
 stringData:
   DATABASE_URL: >-
-    postgresql://user_0123456%401000joursdevserver.postgres.database.azure.com:password_0123456@1000joursdevserver.postgres.database.azure.com/autodevops_0123456?sslmode=require
+    postgresql://user_master-dev42%401000joursdevserver.postgres.database.azure.com:password_master-dev42@1000joursdevserver.postgres.database.azure.com/autodevops_master-dev42?sslmode=require
   DB_URI: >-
-    postgresql://user_0123456%401000joursdevserver.postgres.database.azure.com:password_0123456@1000joursdevserver.postgres.database.azure.com/autodevops_0123456?sslmode=require
+    postgresql://user_master-dev42%401000joursdevserver.postgres.database.azure.com:password_master-dev42@1000joursdevserver.postgres.database.azure.com/autodevops_master-dev42?sslmode=require
   HASURA_GRAPHQL_DATABASE_URL: >-
-    postgresql://user_0123456%401000joursdevserver.postgres.database.azure.com:password_0123456@1000joursdevserver.postgres.database.azure.com/autodevops_0123456?sslmode=require
-  PGDATABASE: autodevops_0123456
+    postgresql://user_master-dev42%401000joursdevserver.postgres.database.azure.com:password_master-dev42@1000joursdevserver.postgres.database.azure.com/autodevops_master-dev42?sslmode=require
+  PGDATABASE: autodevops_master-dev42
   PGHOST: 1000joursdevserver.postgres.database.azure.com
-  PGPASSWORD: password_0123456
+  PGPASSWORD: password_master-dev42
   PGRST_DB_URI: >-
-    postgresql://user_0123456%401000joursdevserver.postgres.database.azure.com:password_0123456@1000joursdevserver.postgres.database.azure.com/autodevops_0123456?sslmode=require
+    postgresql://user_master-dev42%401000joursdevserver.postgres.database.azure.com:password_master-dev42@1000joursdevserver.postgres.database.azure.com/autodevops_master-dev42?sslmode=require
   PGSSLMODE: require
-  PGUSER: user_0123456@1000joursdevserver.postgres.database.azure.com
+  PGUSER: user_master-dev42@1000joursdevserver.postgres.database.azure.com
 metadata:
   annotations:
     app.gitlab.com/app: socialgouv-1000jours
@@ -338,7 +340,7 @@ metadata:
     owner: 1000jours
     team: 1000jours
     cert: wildcard
-  name: azure-pg-user-0123456
+  name: azure-pg-user-master-dev42
   namespace: 1000jours-85-master-dev42
 ---
 apiVersion: apps/v1
@@ -412,7 +414,7 @@ spec:
               name: uploads
           envFrom:
             - secretRef:
-                name: azure-pg-user-0123456
+                name: azure-pg-user-master-dev42
             - configMapRef:
                 name: strapi-configmap
           env:
@@ -442,8 +444,8 @@ spec:
               value: '24'
           envFrom:
             - secretRef:
-                name: azure-pg-user-0123456
-          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.32.2
+                name: azure-pg-user-master-dev42
+          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.39.1
           imagePullPolicy: Always
           name: wait-for-postgres
           resources:
