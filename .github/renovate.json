@@ -3,5 +3,5 @@
   "extends": [
     "local>SocialGouv/renovate-config:light"
   ],
-  "baseBranches": "develop"
+  "baseBranches": ["develop"]
 }
