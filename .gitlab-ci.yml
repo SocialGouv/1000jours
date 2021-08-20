@@ -51,6 +51,11 @@ Restore preprod db:
     KOSKO_APPEND_YAML_FROM: ""
     KOSKO_GENERATE_ARGS: "--env dev jobs/restore"
     AUTO_DEVOPS_ENABLE_KAPP: ""
+  environment:
+    auto_stop_in: 15 day
+    name: ${CI_COMMIT_REF_NAME}${AUTO_DEVOPS_DEV_ENVIRONMENT_NAME}
+    on_stop: Stop review
+    url: https://${CI_ENVIRONMENT_SLUG}-${CI_PROJECT_NAME}.${KUBE_INGRESS_BASE_DOMAIN}
   rules:
     - if: "$CI_COMMIT_BRANCH == 'develop'"
       when: always
