@@ -3,6 +3,7 @@ import { NUMBER_OF_DAYS_NOTIF_REMINDER } from "./epdsConstants.constants";
 import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
+  appName: "1000 premiers jours",
   aroundMe: {
     addressesListLabelEnd:
       "points d'intérêts qui correspondent à vos critères :",
@@ -69,6 +70,7 @@ export default {
   calendar: {
     description:
       "Grâce à la date de naissance que vous avez saisie, accédez à votre calendrier personnalisé et suivez chaque étape du parcours 1000 jours.",
+    lastSyncDate: "Dernière synchro :",
     listOfEvents: "Liste des événements",
     noChildBirthday: "Aucune date de naissance",
     noEventMessage: "Aucun événement",
@@ -77,6 +79,7 @@ export default {
       title: "Événement",
       titleReminder: "Événement à venir",
     },
+    synchronise: "Synchroniser",
     today: "Aujourd'hui",
   },
   dateFormatLabel: "Jour / Mois / Année",

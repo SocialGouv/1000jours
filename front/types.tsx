@@ -82,7 +82,7 @@ export type Event = {
   id: number;
   date?: string;
   nom: string;
-  description: string;
+  description?: string;
   debut: number;
   fin: number;
   thematique?: Thematique;

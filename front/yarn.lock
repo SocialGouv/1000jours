@@ -2548,18 +2548,18 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/picker/-/picker-1.8.1.tgz#94f14f0aad98fa7592967b941be97deec95c3805"
   integrity sha512-Sj9DzX1CSnmYiuEQ5fQhExoo4XjSKoZkqLPAAybycq6RHtCuWppf+eJXRMCOJki25BlKSSt+qVqg0fIe//ujNQ==
 
-"@react-navigation/bottom-tabs@5.11.13":
-  version "5.11.13"
-  resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-5.11.13.tgz#121809ec00f75a4a2ce05e627f410c5c33fe7ca3"
-  integrity sha512-Z8VAt76S7K8zqjwqfGJ7kC/E8LMDs8hEYgQYv5+JOG+zh9bCx1IAHV5RSDExVMcMDSFVFDerEK68wb49w4hFPQ==
+"@react-navigation/bottom-tabs@5.11.14":
+  version "5.11.14"
+  resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-5.11.14.tgz#0f8a0f6762e6a534e6a6a91b6cdd60f8595961d2"
+  integrity sha512-5/X08s4qLhqZSCFS9uBNXvc0pX6JqGFcsODSTsiO3e3/4Ia43kLjaSV7IXf4OvPOF/uHGXd/uJTtqHeEuBU9lQ==
   dependencies:
     color "^3.1.3"
     react-native-iphone-x-helper "^1.3.0"
 
-"@react-navigation/core@^5.15.5":
-  version "5.15.5"
-  resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-5.15.5.tgz#9b5a534ed101df8a18a89356f3fa1d8e5f6e3826"
-  integrity sha512-xrUQ0xVQTMuuMiILRhhRpBzoI4TaFh4dJ4INCy6uwK9dwHjLwtsx+++ZefV/K4tbMQmGFxq4zSnLtTRtfMZKrA==
+"@react-navigation/core@^5.16.1":
+  version "5.16.1"
+  resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-5.16.1.tgz#e0d308bd9bbd930114ce55c4151806b6d7907f69"
+  integrity sha512-3AToC7vPNeSNcHFLd1h71L6u34hfXoRAS1CxF9Fc4uC8uOrVqcNvphpeFbE0O9Bw6Zpl0BnMFl7E5gaL3KGzNA==
   dependencies:
     "@react-navigation/routers" "^5.7.4"
     escape-string-regexp "^4.0.0"
@@ -2567,12 +2567,12 @@
     query-string "^6.13.6"
     react-is "^16.13.0"
 
-"@react-navigation/native@~5.9.6":
-  version "5.9.6"
-  resolved "https://registry.yarnpkg.com/@react-navigation/native/-/native-5.9.6.tgz#3ad9bcdeb62008f0ae9bdfbb8c0df183fe57cc24"
-  integrity sha512-m2F2AWBr0qbi4a5MBk2puGNWyVQnfmVHcpuIzQ37juptX6QCCuXjmOxvtdyqRzh2gKGnUlIeNaQKcACYj4zG/w==
+"@react-navigation/native@~5.9.7":
+  version "5.9.8"
+  resolved "https://registry.yarnpkg.com/@react-navigation/native/-/native-5.9.8.tgz#ac76ee6390ea7ce807486ca5c38d903e23433a97"
+  integrity sha512-DNbcDHXQPSFDLn51kkVVJjT3V7jJy2GztNYZe/2bEg29mi5QEcHHcpifjMCtyFKntAOWzKlG88UicIQ17UEghg==
   dependencies:
-    "@react-navigation/core" "^5.15.5"
+    "@react-navigation/core" "^5.16.1"
     escape-string-regexp "^4.0.0"
     nanoid "^3.1.15"
 
@@ -2583,10 +2583,10 @@
   dependencies:
     nanoid "^3.1.15"
 
-"@react-navigation/stack@~5.14.7":
-  version "5.14.7"
-  resolved "https://registry.yarnpkg.com/@react-navigation/stack/-/stack-5.14.7.tgz#8ac38d10fb2546613012b88cc065952f1e4506dc"
-  integrity sha512-Ew+MYaJGvJUpZ3XYIilSCRruldr3JXNOWYM8bqE21EeJ5d3mfynpTPihck5ol0AN8uFEAeskQzoixGWh5eMYuA==
+"@react-navigation/stack@~5.14.8":
+  version "5.14.9"
+  resolved "https://registry.yarnpkg.com/@react-navigation/stack/-/stack-5.14.9.tgz#49c7b9316e6fb456e9766c901e0d607862f0ea7d"
+  integrity sha512-DuvrT9P+Tz8ezZLQYxORZqOGqO+vEufaxlW1hSLw1knLD4jNxkz8TJDXtfKwaz//9gb43UhTNccNM02vm7iPqQ==
   dependencies:
     color "^3.1.3"
     react-native-iphone-x-helper "^1.3.0"
@@ -3126,17 +3126,33 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
-"@types/react-native@*", "@types/react-native@~0.64.12":
+"@types/react-native@*":
   version "0.64.12"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.12.tgz#1c6a3226c26d7a5949cdf8878e6cfe95fe0951d6"
   integrity sha512-sw6WGSaL219zqrgdb4kQUtFB9iGXC/LmecLZ+UUWEgwYvD0YH81FqWYmONa2HuTkOFAsxu2bK4DspkWRUHIABQ==
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@~17.0.17":
+"@types/react-native@~0.64.13":
+  version "0.64.13"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.13.tgz#9e57b85631380b75979a09f5a97e1884299e8d5a"
+  integrity sha512-QSOBN6m3TKBPFAcDhuFItDQtw1Fo1/FKDTHGeyeTwBXd3bu0V9s+oHEhntHN7PUK5dAOYFWsnO0wynWwS/KRxQ==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*":
   version "17.0.17"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.17.tgz#1772d3d5425128e0635a716f49ef57c2955df055"
   integrity sha512-nrfi7I13cAmrd0wje8czYpf5SFbryczCtPzFc6ijqvdjKcyA3tCvGxwchOUlxb2ucBPuJ9Y3oUqKrRqZvrz0lw==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@~17.0.18":
+  version "17.0.19"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.19.tgz#8f2a85e8180a43b57966b237d26a29481dacc991"
+  integrity sha512-sX1HisdB1/ZESixMTGnMxH9TDe8Sk709734fEQZzCV/4lSu9kJCPbo2PbTRoZM+53Pp0P10hYVyReUueGwUi4A==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -6876,6 +6892,14 @@ expo-asset@~8.3.1, expo-asset@~8.3.3:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
+expo-calendar@~9.1.2:
+  version "9.1.2"
+  resolved "https://registry.yarnpkg.com/expo-calendar/-/expo-calendar-9.1.2.tgz#21ce6a4c79bc669a344d513e7f11daafdd470385"
+  integrity sha512-OtX6M7dte0J03evR1YDtHqqer12a/34PESVw6D0HE/8ujbLe8Q/SLy/TdX4FH2+O4uKO2aG2Vvl2SNKVT/KVnA==
+  dependencies:
+    "@expo/config-plugins" "^1.0.18"
+    unimodules-permissions-interface "~6.1.0"
+
 expo-cli@^4.7.3:
   version "4.7.3"
   resolved "https://registry.yarnpkg.com/expo-cli/-/expo-cli-4.7.3.tgz#244a82ec2a6829f9676819a312a24471ba7bbbc3"
@@ -6994,6 +7018,13 @@ expo-linking@~2.2.3:
     invariant "^2.2.4"
     qs "^6.5.0"
     url-parse "^1.4.4"
+
+expo-localization@~10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/expo-localization/-/expo-localization-10.1.0.tgz#4371fa6c092c4e86edfabff504313710d99b28ef"
+  integrity sha512-covyQ1YJneUBvjkNp0p8Lp7ej5Plz1OpJiwA2P6O3hZ4yVVqNDOOAb2WADLARPtxNJrDdntSozgI+JSz/yQxmQ==
+  dependencies:
+    rtl-detect "^1.0.2"
 
 expo-location@~12.0.4:
   version "12.0.4"
@@ -13798,6 +13829,11 @@ rsvp@^4.8.4:
   version "4.8.5"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.5.tgz#c8f155311d167f68f21e168df71ec5b083113734"
   integrity sha512-nfMOlASu9OnRJo1mbEk2cz0D56a1MBNrJ7orjRZQG10XDyuvwksKbuXNp6qa+kbn839HwjwhBzhFmdsaEAfauA==
+
+rtl-detect@^1.0.2:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/rtl-detect/-/rtl-detect-1.0.4.tgz#40ae0ea7302a150b96bc75af7d749607392ecac6"
+  integrity sha512-EBR4I2VDSSYr7PkBmFy04uhycIpDKp+21p/jARYXlCSjQksTBQcJ0HFUPOO79EPPH5JS6VAhiIQbycf0O3JAxQ==
 
 run-async@^2.2.0:
   version "2.4.1"
