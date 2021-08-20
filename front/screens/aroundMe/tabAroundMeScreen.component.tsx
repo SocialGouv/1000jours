@@ -116,7 +116,6 @@ const TabAroundMeScreen: React.FC = () => {
       setShowAddressDetails(false);
     }
 
-    setIsLoading(false);
     void StorageUtils.storeObjectValue(
       StorageKeysConstants.cartoIsFirstLaunch,
       false
@@ -290,6 +289,10 @@ const TabAroundMeScreen: React.FC = () => {
                 selectedPoiIndex={selectedPoiIndex}
                 onMarkerClick={(index: number) => {
                   onMarkerClick(index);
+                }}
+                poiTotal={poisArray.length - 1}
+                stopLoading={() => {
+                  setIsLoading(false);
                 }}
               />
             </View>

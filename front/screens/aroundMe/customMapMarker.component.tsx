@@ -15,6 +15,8 @@ interface Props {
   poiCategorie: AroundMeConstants.PoiCategorieEnum;
   selectedPoiIndex: number;
   onMarkerClick: (markerIndex: number) => void;
+  poiTotal: number;
+  stopLoading: () => void;
 }
 
 const CustomMapMarker: React.FC<Props> = ({
@@ -23,6 +25,8 @@ const CustomMapMarker: React.FC<Props> = ({
   poiCategorie,
   selectedPoiIndex,
   onMarkerClick,
+  poiTotal,
+  stopLoading,
 }) => {
   const [trackView, setTrackView] = useState(true);
 
@@ -66,6 +70,7 @@ const CustomMapMarker: React.FC<Props> = ({
           onLoadEnd={() => {
             const tempTrackView = poiIndex === selectedPoiIndex;
             setTrackView(tempTrackView);
+            if (poiIndex === poiTotal) stopLoading();
           }}
         />
     </Marker>
