@@ -28,7 +28,7 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../constants";
-import { PLATFORM_IS_IOS } from "../constants/platform.constants";
+import { ICLOUD, PLATFORM_IS_IOS } from "../constants/platform.constants";
 import type { Event, RootStackParamList } from "../types";
 import { NotificationUtils, StorageUtils, TrackerUtils } from "../utils";
 import { stringIsNotNullNorEmpty } from "../utils/strings.util";
@@ -45,6 +45,8 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const [events, setEvents] = React.useState<Event[]>([]);
   const [loadingEvents, setLoadingEvents] = React.useState(false);
   const [lastSyncDate, setLastSyncDate] = React.useState("");
+  const hourWhenEventStart = 8; // Commence à 8h
+  const hourWhenEventEnd = 18; // Se Termine à 18h
 
   useEffect(() => {
     trackScreenView(TrackerUtils.TrackingEvent.CALENDAR);
@@ -55,7 +57,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     const unsubscribe = navigation.addListener("focus", () => {
       void init();
     });
-    // Return the function to unsubscribe from the event so it gets removed on unmount
+    // Retourne "unsubscribe" pour que l'événement soit supprimé lors du "démontage" (fix memory leak)
     return unsubscribe;
   }, []);
 
@@ -76,7 +78,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const createCalendar = async () => {
     const sources = await Calendar.getSourcesAsync();
     const mainSource =
-      sources.find((source) => source.name === "iCloud") ?? sources[0];
+      sources.find((source) => source.name === ICLOUD) ?? sources[0];
     const defaultCalendarSource = PLATFORM_IS_IOS
       ? mainSource
       : {
@@ -120,9 +122,9 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     events.forEach((event) => {
       if (event.date) {
         void Calendar.createEventAsync(newCalendarId, {
-          endDate: buildDateTimeWithTimeZone(event.date, 18),
+          endDate: buildDateTimeWithTimeZone(event.date, hourWhenEventEnd),
           notes: event.description ?? "",
-          startDate: buildDateTimeWithTimeZone(event.date, 8),
+          startDate: buildDateTimeWithTimeZone(event.date, hourWhenEventStart),
           timeZone: Localization.timezone,
           title: event.nom,
         });

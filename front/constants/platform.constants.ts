@@ -16,3 +16,4 @@ export const SCREEN_SCALE =
 export const PLATFORM_IS_IOS = Platform.OS === "ios";
 export const PLATFORM_IS_ANDROID = Platform.OS === "android";
 export const MAJOR_VERSION_IOS = parseInt(Platform.Version.toString(), 10);
+export const ICLOUD = "iCloud";
