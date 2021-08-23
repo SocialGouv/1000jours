@@ -70,6 +70,113 @@ const contact = async ({
   }
 };
 
+/* PARTAGE DES RESULTATS */
+const emailPartageTemplate = (info) => ({
+  subject: "Résultats au questionnaire EPDS de <%- prenom %>",
+  text: `Bonjour,
+
+    La patiente <%- nom %> <%- prenom %> vient de compléter un test EPDS et souhaite partager le résultat avec vous.
+    Vous pouvez la contacter grâce aux informations suivantes : 
+    
+    Adresse mail : <%- email %>
+    Téléphone : <%- telephone %>
+
+    Score total du questionnaire EPDS  :  <%- score %> / 30
+
+    Détails des réponses :
+    Question / Réponse / Score
+    ${buildTextResponse(info.detailScore, 0)}
+    ${buildTextResponse(info.detailScore, 1)}
+    ${buildTextResponse(info.detailScore, 2)}
+    ${buildTextResponse(info.detailScore, 3)}
+    ${buildTextResponse(info.detailScore, 4)}
+    ${buildTextResponse(info.detailScore, 5)}
+    ${buildTextResponse(info.detailScore, 6)}
+    ${buildTextResponse(info.detailScore, 7)}
+    ${buildTextResponse(info.detailScore, 8)}
+    ${buildTextResponse(info.detailScore, 9)}
+    `,
+  html: `<p>Bonjour,</p>
+
+  <p>La patiente <%- nom %> <%- prenom %> vient de compléter un test EPDS et souhaite partager le résultat avec vous.
+  Vous pouvez la contacter grâce aux informations suivantes : </p>
+
+  <p>Adresse mail : <%- email %><br />
+  Téléphone : <%- telephone %></p>
+
+  <p>Score total du questionnaire EPDS  :  <%- score %> / 30</p>
+
+  <p>Détails des réponses :
+    <table>
+      <tr>
+        <th>Question</th>
+        <th>Réponse</th> 
+        <th>Score</th>
+      </tr>
+      ${buildHtmlDetailScore(info.detailScore)}
+    </table>
+  </p>
+  `,
+});
+
+const buildTextResponse = (detailScore, index) => {
+  return `${index + 1} / ${detailScore[index]} / ${detailScore[index]}`;
+}
+
+const buildHtmlDetailScore = (detailScore) => {
+  return detailScore.map((value, index) => {
+    return `
+    <tr>
+      <td>${index + 1}</td>
+      <td>${value}</td>
+      <td>${value}</td>
+    </tr>
+    `;
+  })
+}
+
+const partage = async ({
+  email,
+  emailPro,
+  telephone,
+  prenom = "ND",
+  nom = "ND",
+  score = "ND",
+  detailScore = "ND"
+}) => {
+  if (!emailPro)
+    throw new Error("Le service mail n'est pas configuré");
+
+  if (!email) throw new Error("Au moins une adresse email est nécessaire");
+
+  const info = {
+    email,
+    emailPro,
+    telephone,
+    prenom,
+    nom,
+    score,
+    detailScore
+  };
+
+  try {
+    const res = await strapi.plugins.email.services.email.sendTemplatedEmail(
+      {
+        from: process.env["MAIL_SEND_FROM"],
+        to: emailPro,
+      },
+      emailPartageTemplate(info),
+      info
+    );
+
+    return res && !!res.response.match(/Ok/);
+  } catch (e) {
+    console.error(e);
+    throw new Error("Erreur de connexion au serveur mail");
+  }
+};
+
 module.exports = {
   contact,
+  partage
 };
