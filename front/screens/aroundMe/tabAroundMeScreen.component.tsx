@@ -36,6 +36,7 @@ import type { CartographiePoisFromDB } from "../../type";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
 import AddressDetails from "./addressDetails.component";
 import AroundMeFilter from "./aroundMeFilter.component";
+import CustomMapMarker from "./customMapMarker.component";
 import SearchByPostalCode from "./searchByPostalCode.component";
 import SlidingUpPanelAddressesList from "./slidingUpPanelAddressesList.component";
 
@@ -76,14 +77,7 @@ const TabAroundMeScreen: React.FC = () => {
   const [locationPermissionIsGranted, setLocationPermissionIsGranted] =
     useState(false);
 
-  const googleMapsNotSelectedIcon = require("../../assets/images/carto/icon_google_map_not_selected.png");
-  const googleMapsSelectedIcon = require("../../assets/images/carto/icon_google_map_selected.png");
   const currentUserLocatioIcon = require("../../assets/images/carto/current_location.png");
-
-  const proNotSelectedIcon = require("../../assets/images/carto/icon_pro_not_selected.png");
-  const proSelectedIcon = require("../../assets/images/carto/icon_pro_selected.png");
-  const structureNotSelectedIcon = require("../../assets/images/carto/icon_structure_not_selected.png");
-  const structureSelectedIcon = require("../../assets/images/carto/icon_structure_selected.png");
 
   useEffect(() => {
     trackScreenView(TrackerUtils.TrackingEvent.CARTO);
@@ -122,7 +116,6 @@ const TabAroundMeScreen: React.FC = () => {
       setShowAddressDetails(false);
     }
 
-    setIsLoading(false);
     void StorageUtils.storeObjectValue(
       StorageKeysConstants.cartoIsFirstLaunch,
       false
@@ -198,21 +191,6 @@ const TabAroundMeScreen: React.FC = () => {
       { center: markerCoordinates },
       { duration: 500 }
     );
-  };
-
-  const getPinIcon = (
-    poiCategory: AroundMeConstants.PoiCategorieEnum,
-    isSelected: boolean
-  ): ImageSourcePropType => {
-    const isStructure =
-      poiCategory === AroundMeConstants.PoiCategorieEnum.structure;
-    if (isSelected) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return isStructure ? structureSelectedIcon : proSelectedIcon;
-    } else {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return isStructure ? structureNotSelectedIcon : proNotSelectedIcon;
-    }
   };
 
   return (
@@ -301,30 +279,22 @@ const TabAroundMeScreen: React.FC = () => {
         >
           {poisArray.map((poi, poiIndex) => (
             <View key={poiIndex}>
-              <Marker
-                coordinate={{
+              <CustomMapMarker
+                coordinates={{
                   latitude: Number(poi.position_latitude),
                   longitude: Number(poi.position_longitude),
                 }}
-                key={poiIndex}
-                onPress={() => {
-                  onMarkerClick(poiIndex);
+                poiIndex={poiIndex}
+                poiCategorie={poi.categorie}
+                selectedPoiIndex={selectedPoiIndex}
+                onMarkerClick={(index: number) => {
+                  onMarkerClick(index);
                 }}
-              >
-                <View style={styles.markerView}>
-                  <Image
-                    source={getPinIcon(
-                      poi.categorie,
-                      poiIndex === selectedPoiIndex
-                    )}
-                    style={
-                      poiIndex === selectedPoiIndex
-                        ? styles.googleMapMarkerSelected
-                        : styles.googleMapMarkerNotSelected
-                    }
-                  />
-                </View>
-              </Marker>
+                poiTotal={poisArray.length - 1}
+                stopLoading={() => {
+                  setIsLoading(false);
+                }}
+              />
             </View>
           ))}
           {currentUserLocation && (

@@ -20,6 +20,7 @@ import { emailContact } from "../../constants/email.constants";
 import type { MenuItem } from "../../types";
 import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
 import { View } from "../Themed";
+import Accessibility from "./accessibility.component";
 import ConditionsOfUse from "./conditionsOfUse.component";
 import LegalNotice from "./legalNotice.component";
 
@@ -32,6 +33,7 @@ interface Props {
 const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
   const [showLegalNotice, setShowLegalNotice] = React.useState(false);
   const [showConditionsOfUse, setShowConditionsOfUse] = React.useState(false);
+  const [showAccessibility, setShowAccessibility] = React.useState(false);
 
   const menuItems: MenuItem[] = [
     {
@@ -61,6 +63,13 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
         setShowConditionsOfUse(true);
       },
       title: Labels.menu.conditionsOfUse,
+    },
+    {
+      icon: IcomoonIcons.mentionsLegales,
+      onPress: () => {
+        setShowAccessibility(true);
+      },
+      title: Labels.menu.accessibility,
     },
   ];
 
@@ -135,6 +144,8 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
     <LegalNotice setIsVisible={setShowLegalNotice} />
   ) : showConditionsOfUse ? (
     <ConditionsOfUse setIsVisible={setShowConditionsOfUse} />
+  ) : showAccessibility ? (
+    <Accessibility setIsVisible={setShowAccessibility} />
   ) : null;
 };
 

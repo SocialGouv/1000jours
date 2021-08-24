@@ -13,13 +13,25 @@
   "attributes": {
     "genre": {
       "type": "enumeration",
-      "enum": ["Masculin", "Feminin", "Nonbinaire", "Inconnu"]
+      "enum": [
+        "Masculin",
+        "Feminin",
+        "Nonbinaire",
+        "Inconnu"
+      ]
     },
     "compteur": {
       "type": "integer"
     },
     "score": {
       "type": "integer"
+    },
+    "source": {
+      "type": "enumeration",
+      "enum": [
+        "SiteWebPro",
+        "ApplicationMobile"
+      ]
     },
     "reponse_1": {
       "type": "integer"

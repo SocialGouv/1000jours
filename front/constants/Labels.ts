@@ -361,6 +361,7 @@ export default {
   },
   mandatoryField: "Ce champ est obligatoire",
   menu: {
+    accessibility: "Accessibilité",
     conditionsOfUse: "Politiques de confidentialité",
     contactUs: "Nous écrire",
     legalNotice: "Mentions légales",
