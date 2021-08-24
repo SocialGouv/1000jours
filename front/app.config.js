@@ -12,7 +12,12 @@ export default {
         },
       },
       package: "com.fabrique.millejours",
-      permissions: ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"],
+      permissions: [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "READ_CALENDAR",
+        "WRITE_CALENDAR",
+      ],
       versionCode: 24,
     },
     assetBundlePatterns: ["**/*"],
@@ -36,6 +41,8 @@ export default {
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
           "Permet de vous positionner précisément sur la carte et de lancer une recherche des POI autour de vous.",
+        NSRemindersUsageDescription:
+          "Permet de synchroniser les événements avec le calendrier de votre téléphone",
       },
       supportsTablet: true,
     },

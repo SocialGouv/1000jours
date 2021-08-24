@@ -2,6 +2,8 @@ import { useLazyQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { addDays, format } from "date-fns";
+import * as Calendar from "expo-calendar";
+import * as Localization from "expo-localization";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
@@ -18,7 +20,15 @@ import {
   TitleH1,
 } from "../components";
 import { View } from "../components/Themed";
-import { Formats, Labels, Paddings, StorageKeysConstants } from "../constants";
+import {
+  Colors,
+  Formats,
+  Labels,
+  Paddings,
+  Sizes,
+  StorageKeysConstants,
+} from "../constants";
+import { ICLOUD, PLATFORM_IS_IOS } from "../constants/platform.constants";
 import type { Event, RootStackParamList } from "../types";
 import { NotificationUtils, StorageUtils, TrackerUtils } from "../utils";
 import { stringIsNotNullNorEmpty } from "../utils/strings.util";
@@ -34,10 +44,100 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     React.useState("");
   const [events, setEvents] = React.useState<Event[]>([]);
   const [loadingEvents, setLoadingEvents] = React.useState(false);
+  const [lastSyncDate, setLastSyncDate] = React.useState("");
+  const hourWhenEventStart = 8; // Commence à 8h
+  const hourWhenEventEnd = 18; // Se Termine à 18h
 
   useEffect(() => {
     trackScreenView(TrackerUtils.TrackingEvent.CALENDAR);
+    void requestCalendarPermission();
+    void getLastSyncDate();
+
+    // Permet de forcer le refresh de la page lorsque l'on arrive dessus
+    const unsubscribe = navigation.addListener("focus", () => {
+      void init();
+    });
+    // Retourne "unsubscribe" pour que l'événement soit supprimé lors du "démontage" (fix memory leak)
+    return unsubscribe;
   }, []);
+
+  const getLastSyncDate = async () => {
+    const calendarSyncDate = await StorageUtils.getStringValue(
+      StorageKeysConstants.osCalendarSyncDate
+    );
+    if (calendarSyncDate) setLastSyncDate(calendarSyncDate);
+  };
+
+  const requestCalendarPermission = async () => {
+    const { status } = await Calendar.requestCalendarPermissionsAsync();
+    if (status === "granted") {
+      await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT);
+    }
+  };
+
+  const createCalendar = async () => {
+    const sources = await Calendar.getSourcesAsync();
+    const mainSource =
+      sources.find((source) => source.name === ICLOUD) ?? sources[0];
+    const defaultCalendarSource = PLATFORM_IS_IOS
+      ? mainSource
+      : {
+          isLocalAccount: true,
+          name: Labels.appName,
+          type: Calendar.SourceType.LOCAL,
+        };
+
+    const newCalendarID = await Calendar.createCalendarAsync({
+      accessLevel: Calendar.CalendarAccessLevel.OWNER,
+      color: Colors.primaryBlue,
+      entityType: Calendar.EntityTypes.EVENT,
+      name: Labels.appName,
+      ownerAccount: Labels.appName,
+      source: defaultCalendarSource,
+      sourceId: defaultCalendarSource.id,
+      title: Labels.appName,
+    });
+    await StorageUtils.storeStringValue(
+      StorageKeysConstants.osCalendarId,
+      newCalendarID
+    );
+    return newCalendarID;
+  };
+
+  const buildDateTimeWithTimeZone = (date: string, hour: number) => {
+    const hourOffset = new Date().getTimezoneOffset() / 60;
+    const newHour = hour + hourOffset;
+    const strNewHour =
+      newHour.toString().length < 2 ? `0${newHour}` : `${newHour}`;
+    return `${date}T${strNewHour}:00:00.000Z`;
+  };
+
+  const syncEventsWithOsCalendar = async () => {
+    const calendarId = await StorageUtils.getStringValue(
+      StorageKeysConstants.osCalendarId
+    );
+    if (calendarId) void Calendar.deleteCalendarAsync(calendarId);
+    const newCalendarId = await createCalendar();
+
+    events.forEach((event) => {
+      if (event.date) {
+        void Calendar.createEventAsync(newCalendarId, {
+          endDate: buildDateTimeWithTimeZone(event.date, hourWhenEventEnd),
+          notes: event.description ?? "",
+          startDate: buildDateTimeWithTimeZone(event.date, hourWhenEventStart),
+          timeZone: Localization.timezone,
+          title: event.nom,
+        });
+      }
+    });
+
+    const date = new Date().toISOString();
+    void StorageUtils.storeStringValue(
+      StorageKeysConstants.osCalendarSyncDate,
+      date
+    );
+    setLastSyncDate(date);
+  };
 
   const ALL_EVENTS = gql`
     query GetEvents {
@@ -91,15 +191,6 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   };
 
   useEffect(() => {
-    // Permet de forcer le refresh de la page lorsque l'on arrive dessus
-    const unsubscribe = navigation.addListener("focus", () => {
-      void init();
-    });
-    // Return the function to unsubscribe from the event so it gets removed on unmount
-    return unsubscribe;
-  }, []);
-
-  useEffect(() => {
     if (!loading && data) {
       const evenements = (data as { evenements: Event[] }).evenements;
 
@@ -133,7 +224,9 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
 
   useEffect(() => {
     setLoadingEvents(false);
-    if (events.length > 0) void scheduleEventsNotification();
+    if (events.length > 0) {
+      void scheduleEventsNotification();
+    }
   }, [events]);
 
   return (
@@ -149,6 +242,21 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
         <ErrorMessage error={error} />
       ) : (
         <View style={styles.calendarContainer}>
+          <View>
+            <Button
+              title={Labels.calendar.synchronise}
+              rounded={true}
+              action={syncEventsWithOsCalendar}
+            />
+            <CommonText style={styles.lastSyncDate}>
+              {lastSyncDate
+                ? `${Labels.calendar.lastSyncDate} ${format(
+                    new Date(lastSyncDate),
+                    Formats.dateTimeFR
+                  )}`
+                : ""}
+            </CommonText>
+          </View>
           {childBirthday.length > 0 ? (
             <Events evenements={events} childBirthday={childBirthday} />
           ) : (
@@ -184,6 +292,11 @@ const styles = StyleSheet.create({
   container: {
     height: "100%",
     padding: Paddings.default,
+  },
+  lastSyncDate: {
+    alignSelf: "center",
+    fontSize: Sizes.xs,
+    paddingVertical: Paddings.light,
   },
   noChildBirthday: {
     paddingVertical: Paddings.default,
