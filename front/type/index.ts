@@ -1,11 +1,8 @@
 import {
   CartoFilter,
   CartoFilterStorage,
-  CartographiePoisFromDB,
   FetchedFilterFromDb,
   PoisCountFromDB,
-  PoiTypeFromDB,
-  StepFromDB,
 } from "./aroundMe.types";
 import { DataFetchingType } from "./dataFetching.types";
 import {
@@ -26,7 +23,6 @@ export {
   BeContactedData,
   CartoFilter,
   CartoFilterStorage,
-  CartographiePoisFromDB,
   DataFetchingType,
   EpdsAnswer,
   EpdsGenders,
@@ -39,7 +35,5 @@ export {
   EpdsUpdatedSurvey,
   FetchedFilterFromDb,
   PoisCountFromDB,
-  PoiTypeFromDB,
   QuestionnaireEpdsFromDB,
-  StepFromDB,
 };
