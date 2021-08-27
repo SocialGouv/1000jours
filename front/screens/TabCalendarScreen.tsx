@@ -22,6 +22,7 @@ import {
 import { View } from "../components/Themed";
 import {
   Colors,
+  FetchPoliciesConstants,
   Formats,
   Labels,
   Paddings,
@@ -159,7 +160,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     }
   `;
   const [loadEvents, { loading, error, data }] = useLazyQuery(ALL_EVENTS, {
-    fetchPolicy: "cache-and-network",
+    fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
   });
 
   const init = async () => {

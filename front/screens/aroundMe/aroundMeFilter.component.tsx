@@ -1,3 +1,4 @@
+import type { PoiType, Step } from "@socialgouv/nos1000jours-lib";
 import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -31,8 +32,6 @@ import type {
   CartoFilter,
   CartoFilterStorage,
   FetchedFilterFromDb,
-  PoiTypeFromDB,
-  StepFromDB,
 } from "../../type";
 import { StorageUtils, StringUtils, TrackerUtils } from "../../utils";
 
@@ -58,8 +57,8 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     if (!filterDataFromDb) return;
     const extractFilterDataAndCheckSavedFilters = () => {
       const { cartographieTypes, etapes } = filterDataFromDb as {
-        cartographieTypes: PoiTypeFromDB[];
-        etapes: StepFromDB[];
+        cartographieTypes: PoiType[];
+        etapes: Step[];
       };
       extractFilterData(cartographieTypes, etapes);
     };
@@ -157,8 +156,8 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
   };
 
   const extractFilterData = (
-    poiTypesToFilter: PoiTypeFromDB[],
-    stepToFilter: StepFromDB[]
+    poiTypesToFilter: PoiType[],
+    stepToFilter: Step[]
   ) => {
     setFetchedFiltersFromDB({
       etapes: stepToFilter.map((step) =>
@@ -181,21 +180,22 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
   };
 
   const filterToPoiCategorie = (
-    poiTypesToFilter: PoiTypeFromDB[],
+    poiTypesToFilter: PoiType[],
     categorie: AroundMeConstants.PoiCategorieEnum
-  ): PoiTypeFromDB[] => {
+  ): PoiType[] => {
     return poiTypesToFilter.filter(
       (poiType) => poiType.categorie === categorie
     );
   };
 
   const convertToCartoFilter = (
-    filter: PoiTypeFromDB | StepFromDB,
+    filter: PoiType | Step,
     filterType: AroundMeConstants.CartoFilterEnum
   ): CartoFilter => {
     return {
       active: false,
       filterType: filterType,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       name: filter.nom,
     };
   };

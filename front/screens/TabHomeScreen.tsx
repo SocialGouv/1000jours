@@ -17,7 +17,12 @@ import {
   TitleH1,
   View,
 } from "../components";
-import { Paddings, Sizes, StorageKeysConstants } from "../constants";
+import {
+  FetchPoliciesConstants,
+  Paddings,
+  Sizes,
+  StorageKeysConstants,
+} from "../constants";
 import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
 import type { Step, TabHomeParamList, UserSituation } from "../types";
@@ -55,7 +60,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   const [currentStepId, setCurrentStepId] = useState<number | null>(null);
   const [loadSteps, { called, loading, error, data }] = useLazyQuery(
     ALL_STEPS,
-    { fetchPolicy: "cache-and-network" }
+    { fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK }
   );
 
   const init = async () => {

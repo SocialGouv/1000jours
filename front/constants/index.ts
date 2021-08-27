@@ -2,6 +2,7 @@ import * as AroundMeConstants from "./aroundMe.constants";
 import Colors from "./Colors";
 import * as DatabaseQueries from "./databaseQueries.constants";
 import * as EpdsConstants from "./epdsConstants.constants";
+import * as FetchPoliciesConstants from "./fetchPolicies.constants";
 import { FontNames, getFontFamilyName, getFontFromWeight } from "./Fonts";
 import Formats from "./formats";
 import Labels from "./Labels";
@@ -18,6 +19,7 @@ export {
   Colors,
   DatabaseQueries,
   EpdsConstants,
+  FetchPoliciesConstants,
   FontNames,
   FontWeight,
   Formats,

@@ -18,7 +18,7 @@ import Thematics from "../components/article/thematics.component";
 import Title from "../components/article/title.component";
 import BackButton from "../components/base/backButton.component";
 import { View } from "../components/Themed";
-import { Paddings } from "../constants";
+import { FetchPoliciesConstants, Paddings } from "../constants";
 import type {
   Article,
   ArticleInShortItem,
@@ -82,7 +82,7 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
     }
   `;
   const { loading, error, data } = useQuery(ARTICLE_DETAIL, {
-    fetchPolicy: "cache-and-network",
+    fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
   });
 
   const setInShortArray = (article: Article) => {

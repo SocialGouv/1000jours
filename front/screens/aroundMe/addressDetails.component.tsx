@@ -1,3 +1,4 @@
+import type { Poi } from "@socialgouv/nos1000jours-lib";
 import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
@@ -37,11 +38,10 @@ import {
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
-import type { CartographiePoisFromDB } from "../../type";
 import { LinkingUtils, StringUtils, TrackerUtils } from "../../utils";
 
 interface AddressDetailsProps {
-  details: CartographiePoisFromDB;
+  details: Poi;
   isClickedMarker?: boolean;
   hideDetails?: () => void;
 }
@@ -107,7 +107,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
 
   const renderTouchableView = (
     contactType: ContactType,
-    contactLabel: string | null
+    contactLabel?: string
   ) => {
     /* Pour le volet déroulant du bas (dans la carto), on utilise la lib reanimated-bottom-sheet
        Le souci est que sur Android, le TouchableOpacity de react-native ne répond pas, on est donc obligés d'utiliser celui de react-native-gesture-handler */
@@ -130,7 +130,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
 
   const getLinkingFunction = async (
     contactType: ContactType,
-    contactLabel: string | null
+    contactLabel?: string
   ) => {
     if (contactType === ContactType.telephone)
       return LinkingUtils.callContact(contactLabel);
@@ -141,7 +141,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
 
   const renderContactLink = (
     contactType: ContactType,
-    contactLabel: string | null
+    contactLabel?: string
   ) => {
     return (
       <>

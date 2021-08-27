@@ -1,8 +1,9 @@
-import { useLazyQuery } from "@apollo/client";
+import { gql, useLazyQuery } from "@apollo/client";
+import { AROUNDME_FILTER_DATA } from "@socialgouv/nos1000jours-lib";
 import * as React from "react";
 import { useEffect } from "react";
 
-import { DatabaseQueries } from "../../constants";
+import { FetchPoliciesConstants } from "../../constants";
 
 interface Props {
   children?: React.ReactNode;
@@ -10,8 +11,8 @@ interface Props {
 }
 
 const FetchFilterData: React.FC<Props> = ({ children, setFilterData }) => {
-  const [getFilterData] = useLazyQuery(DatabaseQueries.AROUNDME_FILTER_DATA, {
-    fetchPolicy: "no-cache",
+  const [getFilterData] = useLazyQuery(gql(AROUNDME_FILTER_DATA), {
+    fetchPolicy: FetchPoliciesConstants.NO_CACHE,
     onCompleted: (data) => {
       setFilterData(data);
     },
