@@ -1,4 +1,5 @@
 import { useLazyQuery } from "@apollo/client";
+import type { Poi } from "@socialgouv/nos1000jours-lib";
 import * as React from "react";
 import { useEffect } from "react";
 import type { Region } from "react-native-maps";
@@ -8,7 +9,7 @@ import {
   DatabaseQueries,
   StorageKeysConstants,
 } from "../../constants";
-import type { CartoFilterStorage, CartographiePoisFromDB } from "../../type";
+import type { CartoFilterStorage } from "../../type";
 import { AroundMeUtils, StorageUtils, StringUtils } from "../../utils";
 
 interface Props {
@@ -16,7 +17,7 @@ interface Props {
   triggerSearchByGpsCoords: boolean;
   postalCode: string;
   region: Region;
-  setFetchedPois: (pois: CartographiePoisFromDB[]) => void;
+  setFetchedPois: (pois: Poi[]) => void;
   chooseFilterMessage: () => void;
   searchIsReady: boolean;
   setIsLoading: (value: boolean) => void;
@@ -39,7 +40,7 @@ const FetchPoisCoords: React.FC<Props> = ({
       fetchPolicy: "no-cache",
       onCompleted: (data) => {
         const { searchPois } = data as {
-          searchPois: CartographiePoisFromDB[];
+          searchPois: Poi[];
         };
         setFetchedPois(searchPois);
       },

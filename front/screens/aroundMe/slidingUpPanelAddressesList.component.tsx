@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import type { Poi } from "@socialgouv/nos1000jours-lib";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import type { NativeScrollEvent } from "react-native";
@@ -21,11 +22,10 @@ import {
   Sizes,
 } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
-import type { CartographiePoisFromDB } from "../../type";
 import AddressDetails from "./addressDetails.component";
 
 interface Props {
-  poisArray: CartographiePoisFromDB[];
+  poisArray: Poi[];
   centerOnMarker: (markerIndex: number) => void;
 }
 
@@ -40,7 +40,7 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
   const [currentEndIndex, setCurrentEndIndex] = useState(
     AroundMeConstants.PAGINATION_NUMBER_ADDRESSES_LIST
   );
-  const [poisToDisplay, setPoisToDisplay] = useState<CartographiePoisFromDB[]>(
+  const [poisToDisplay, setPoisToDisplay] = useState<Poi[]>(
     poisArray.slice(0, currentEndIndex)
   );
 
@@ -76,7 +76,7 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
     }
   };
 
-  const renderCard = (poi: CartographiePoisFromDB) => {
+  const renderCard = (poi: Poi) => {
     return (
       <Card style={styles.card}>
         <AddressDetails details={poi} />

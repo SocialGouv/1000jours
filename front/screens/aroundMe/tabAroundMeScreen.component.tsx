@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
+import type { Poi } from "@socialgouv/nos1000jours-lib";
 import { useMatomo } from "matomo-tracker-react-native";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
-import type { ImageSourcePropType } from "react-native";
 import { Image, StyleSheet } from "react-native";
 import type { LatLng, Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
@@ -32,7 +32,6 @@ import {
   PLATFORM_IS_IOS,
   SCREEN_HEIGHT,
 } from "../../constants/platform.constants";
-import type { CartographiePoisFromDB } from "../../type";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
 import AddressDetails from "./addressDetails.component";
 import AroundMeFilter from "./aroundMeFilter.component";
@@ -57,11 +56,10 @@ const TabAroundMeScreen: React.FC = () => {
   // Variable utilisée pour trigger le useEffect lors du relancement de la Recherche
   const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] =
     useState(false);
-  const [poisArray, setPoisArray] = useState<CartographiePoisFromDB[]>([]);
+  const [poisArray, setPoisArray] = useState<Poi[]>([]);
   const [selectedPoiIndex, setSelectedPoiIndex] = useState(-1);
   const [showAddressDetails, setShowAddressDetails] = useState(false);
-  const [addressDetails, setAddressDetails] =
-    useState<CartographiePoisFromDB>();
+  const [addressDetails, setAddressDetails] = useState<Poi>();
   const [showRelaunchResearchButton, setShowRelaunchResearchButton] =
     useState(true);
   const [showAddressesList, setShowAddressesList] = useState(false);
@@ -96,7 +94,7 @@ const TabAroundMeScreen: React.FC = () => {
     mapRef.current = ref;
   };
 
-  const handleFetchedPois = async (pois: CartographiePoisFromDB[]) => {
+  const handleFetchedPois = async (pois: Poi[]) => {
     const isFirstLaunch = await StorageUtils.getObjectValue(
       StorageKeysConstants.cartoIsFirstLaunch
     );
