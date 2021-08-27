@@ -2,7 +2,6 @@ import {
   CartoFilter,
   CartoFilterStorage,
   FetchedFilterFromDb,
-  PoisCountFromDB,
 } from "./aroundMe.types";
 import { DataFetchingType } from "./dataFetching.types";
 import {
@@ -34,6 +33,5 @@ export {
   EpdsResultSimpleInformation,
   EpdsUpdatedSurvey,
   FetchedFilterFromDb,
-  PoisCountFromDB,
   QuestionnaireEpdsFromDB,
 };

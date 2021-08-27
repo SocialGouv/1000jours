@@ -1,14 +1,11 @@
-import { useLazyQuery } from "@apollo/client";
+import { gql, useLazyQuery } from "@apollo/client";
 import type { Poi } from "@socialgouv/nos1000jours-lib";
+import { GET_POIS_BY_GPSCOORDS } from "@socialgouv/nos1000jours-lib";
 import * as React from "react";
 import { useEffect } from "react";
 import type { Region } from "react-native-maps";
 
-import {
-  AroundMeConstants,
-  DatabaseQueries,
-  StorageKeysConstants,
-} from "../../constants";
+import { AroundMeConstants, StorageKeysConstants } from "../../constants";
 import type { CartoFilterStorage } from "../../type";
 import { AroundMeUtils, StorageUtils, StringUtils } from "../../utils";
 
@@ -34,18 +31,15 @@ const FetchPoisCoords: React.FC<Props> = ({
   setIsLoading,
   locationPermissionIsGranted,
 }) => {
-  const [getPoisByGpsCoords] = useLazyQuery(
-    DatabaseQueries.AROUNDME_POIS_BY_GPSCOORDS,
-    {
-      fetchPolicy: "no-cache",
-      onCompleted: (data) => {
-        const { searchPois } = data as {
-          searchPois: Poi[];
-        };
-        setFetchedPois(searchPois);
-      },
-    }
-  );
+  const [getPoisByGpsCoords] = useLazyQuery(gql(GET_POIS_BY_GPSCOORDS), {
+    fetchPolicy: "no-cache",
+    onCompleted: (data) => {
+      const { searchPois } = data as {
+        searchPois: Poi[];
+      };
+      setFetchedPois(searchPois);
+    },
+  });
 
   const searchByGPSCoords = async () => {
     const topLeftPoint = AroundMeUtils.getLatLngPoint(

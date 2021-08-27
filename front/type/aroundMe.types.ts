@@ -2,10 +2,6 @@
 
 import type { AroundMeConstants } from "../constants";
 
-export interface PoisCountFromDB {
-  count: number;
-}
-
 export interface CartoFilter {
   name: string;
   active: boolean;
