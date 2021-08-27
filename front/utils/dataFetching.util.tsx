@@ -4,11 +4,12 @@ import * as React from "react";
 
 import ErrorMessage from "../components/base/errorMessage.component";
 import Loader from "../components/base/loader.component";
+import { FetchPoliciesConstants } from "../constants";
 import type { DataFetchingType } from "../type";
 
 export const fetchData = (query: DocumentNode): DataFetchingType => {
   const { loading, error, data } = useQuery(query, {
-    fetchPolicy: "no-cache",
+    fetchPolicy: FetchPoliciesConstants.NO_CACHE,
   });
 
   if (loading)
@@ -27,7 +28,7 @@ export const fetchData = (query: DocumentNode): DataFetchingType => {
 
 export const fetchDataLazy = (query: DocumentNode): DataFetchingType => {
   const [getDataLazy, { loading, data }] = useLazyQuery(query, {
-    fetchPolicy: "no-cache",
+    fetchPolicy: FetchPoliciesConstants.NO_CACHE,
   });
 
   if (loading)

@@ -5,7 +5,11 @@ import * as React from "react";
 import { useEffect } from "react";
 import type { Region } from "react-native-maps";
 
-import { AroundMeConstants, StorageKeysConstants } from "../../constants";
+import {
+  AroundMeConstants,
+  FetchPoliciesConstants,
+  StorageKeysConstants,
+} from "../../constants";
 import type { CartoFilterStorage } from "../../type";
 import { AroundMeUtils, StorageUtils, StringUtils } from "../../utils";
 
@@ -32,7 +36,7 @@ const FetchPoisCoords: React.FC<Props> = ({
   locationPermissionIsGranted,
 }) => {
   const [getPoisByGpsCoords] = useLazyQuery(gql(GET_POIS_BY_GPSCOORDS), {
-    fetchPolicy: "no-cache",
+    fetchPolicy: FetchPoliciesConstants.NO_CACHE,
     onCompleted: (data) => {
       const { searchPois } = data as {
         searchPois: Poi[];

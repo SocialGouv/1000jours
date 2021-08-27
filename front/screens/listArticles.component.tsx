@@ -25,6 +25,7 @@ import {
 } from "../components";
 import {
   Colors,
+  FetchPoliciesConstants,
   FontWeight,
   Labels,
   Margins,
@@ -128,7 +129,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
   };
 
   const { loading, error, data } = useQuery(STEP_ARTICLES, {
-    fetchPolicy: "cache-and-network",
+    fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
   });
 
   useEffect(() => {
