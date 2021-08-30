@@ -15,8 +15,6 @@ interface Props {
   poiCategorie: AroundMeConstants.PoiCategorieEnum;
   selectedPoiIndex: number;
   onMarkerClick: (markerIndex: number) => void;
-  poiTotal: number;
-  stopLoading: () => void;
 }
 
 const CustomMapMarker: React.FC<Props> = ({
@@ -25,8 +23,6 @@ const CustomMapMarker: React.FC<Props> = ({
   poiCategorie,
   selectedPoiIndex,
   onMarkerClick,
-  poiTotal,
-  stopLoading,
 }) => {
   const proNotSelectedIcon: ImageSourcePropType = require("../../assets/images/carto/icon_pro_not_selected.png");
   const proSelectedIcon: ImageSourcePropType = require("../../assets/images/carto/icon_pro_selected.png");
@@ -77,9 +73,6 @@ const CustomMapMarker: React.FC<Props> = ({
             ? styles.googleMapMarkerSelected
             : styles.googleMapMarkerNotSelected
         }
-        onLoad={() => {
-          if (poiIndex === poiTotal) stopLoading();
-        }}
       />
     </Marker>
   );
