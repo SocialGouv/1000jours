@@ -55,13 +55,13 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@socialgouv/eslint-config-recommended": "^1.70.0",
+    "@socialgouv/eslint-config-recommended": "^1.85.4",
     "babel-eslint": "^10.1.0",
     "dotenv": "^10.0.0",
-    "eslint": "^7.24.0",
+    "eslint": "^7.32.0",
     "eslint-plugin-jest": "^24.4.0",
-    "jest": "^27.0.6",
+    "jest": "^27.1.0",
     "node-fetch": "^2.6.1",
-    "prettier": "^2.2.1"
+    "prettier": "^2.3.2"
   }
 }
