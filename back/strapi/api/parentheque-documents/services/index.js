@@ -8,7 +8,7 @@ const format = (entity) => {
     entity.visuel.url = "";
   }
 
-  return ModelsService.format(entity, "article");
+  return ModelsService.format(entity, "parentheque-document");
 };
 
 module.exports = { format };

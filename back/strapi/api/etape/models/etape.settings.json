@@ -47,6 +47,10 @@
     "cartographie_types": {
       "collection": "cartographie-types",
       "via": "etapes"
+    },
+    "parentheque_documents": {
+      "via": "etapes",
+      "collection": "parentheque-documents"
     }
   }
 }
