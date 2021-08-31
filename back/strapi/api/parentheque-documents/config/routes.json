@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/parentheque-documents",
+      "handler": "parentheque-documents.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/parentheque-documents/count",
+      "handler": "parentheque-documents.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/parentheque-documents/:id",
+      "handler": "parentheque-documents.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/parentheque-documents",
+      "handler": "parentheque-documents.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/parentheque-documents/:id",
+      "handler": "parentheque-documents.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/parentheque-documents/:id",
+      "handler": "parentheque-documents.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
