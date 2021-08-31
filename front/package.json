@@ -80,18 +80,18 @@
     "sentry-expo": "^3.1.4"
   },
   "devDependencies": {
-    "@babel/core": "~7.13.16",
-    "@socialgouv/eslint-config-typescript": "^1.75.0",
+    "@babel/core": "~7.15.0",
+    "@socialgouv/eslint-config-typescript": "^1.85.4",
     "@types/lodash": "^4.14.172",
     "@types/react": "~17.0.19",
     "@types/react-native": "~0.64.13",
-    "@types/react-native-calendars": "^1.505.4",
+    "@types/react-native-calendars": "^1.1264.2",
     "@types/react-native-indicators": "^0.16.1",
-    "eslint": "^7.29.0",
+    "eslint": "^7.32.0",
     "jest-expo": "~40.0.2",
     "prettier": "^2.3.2",
     "react-native-svg-transformer": "^0.14.3",
-    "typescript": "~4.2.4"
+    "typescript": "~4.4.2"
   },
   "private": true
 }
