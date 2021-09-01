@@ -1,11 +1,5 @@
-const contact = async () => {
-  console.log("contact controller");
-};
-
-const partage = async () => {
-  console.log("partage controller");
-};
-
+const contact = async () => { };
+const partage = async () => { };
 
 module.exports = {
   contact,

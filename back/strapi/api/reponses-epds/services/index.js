@@ -83,16 +83,7 @@ const emailPartageTemplate = (info) => ({
 
     Détails des réponses :
     Question / Réponse / Score
-    ${buildTextResponse(info.detail_score, info.detail_reponses, 0)}
-    ${buildTextResponse(info.detail_score, info.detail_reponses, 1)}
-    ${buildTextResponse(info.detail_score, info.detail_reponses, 2)}
-    ${buildTextResponse(info.detail_score, info.detail_reponses, 3)}
-    ${buildTextResponse(info.detail_score, info.detail_reponses, 4)}
-    ${buildTextResponse(info.detail_score, info.detail_reponses, 5)}
-    ${buildTextResponse(info.detail_score, info.detail_reponses, 6)}
-    ${buildTextResponse(info.detail_score, info.detail_reponses, 7)}
-    ${buildTextResponse(info.detail_score, info.detail_reponses, 8)}
-    ${buildTextResponse(info.detail_score, info.detail_reponses, 9)}
+    ${[...new Array(10)].map((_, i) => buildTextResponse(info.detail_score, info.detail_reponses, i)).join('\n    ')}
     `,
   html: `
   <p>Bonjour,</p>
@@ -112,34 +103,24 @@ const emailPartageTemplate = (info) => ({
         <th>Réponse</th> 
         <th>Score</th>
       </tr>
-      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 0)}
-      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 1)}
-      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 2)}
-      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 3)}
-      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 4)}
-      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 5)}
-      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 6)}
-      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 7)}
-      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 8)}
-      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 9)}
+      ${[...new Array(10)].map((_, i) => buildHtmlDetailScore(info.detail_score, info.detail_reponses, i)).join('\n    ')}
     </table>
   </p>
   `,
 });
 
-const buildTextResponse = (detailScore, detailReponse, index) => {
-  return `${index + 1} / ${detailReponse[index]} / ${detailScore[index]}`;
-}
+const buildTextResponse = (detailScore, detailReponse, index) =>
+  `${index + 1} / ${detailReponse[index]} / ${detailScore[index]}`;
 
-const buildHtmlDetailScore = (detailScore, detailReponse, index) => {
-  return `
-    <tr>
-      <td>${index + 1}</td>
-      <td>${detailReponse[index]}</td>
-      <td>${detailScore[index]}</td>
-    </tr>
-    `;
-}
+
+const buildHtmlDetailScore = (detailScore, detailReponse, index) =>
+  `
+  <tr>
+    <td>${index + 1}</td>
+    <td>${detailReponse[index]}</td>
+    <td>${detailScore[index]}</td>
+  </tr>
+  `;
 
 const partage = async ({
   email,
@@ -164,8 +145,6 @@ const partage = async ({
     detail_reponses
   };
 
-
-  console.log("email_pro : " + email_pro)
   try {
     const res = await strapi.plugins.email.services.email.sendTemplatedEmail(
       {

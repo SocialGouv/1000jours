@@ -48,7 +48,7 @@ module.exports = {
         resolverOf: "application::reponses-epds.reponses-epds.contact",
       },
       epdsPartage: {
-        description: "",
+        description: "Envoie des réponses au questionnaire EPDS par email",
         resolver: partageEpds,
         resolverOf: "application::reponses-epds.reponses-epds.partage",
       }
