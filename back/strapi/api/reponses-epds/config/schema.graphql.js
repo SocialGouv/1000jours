@@ -31,12 +31,13 @@ module.exports = {
     
     epdsPartage (
       email: String!
-      emailPro: String!
+      email_pro: String!
       telephone: String
       prenom: String
       nom: String
       score: String
-      detailScore: [String]
+      detail_score: [String]
+      detail_reponses: [String]
     ): Boolean
   `,
   resolver: {

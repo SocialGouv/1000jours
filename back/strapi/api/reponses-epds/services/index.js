@@ -7,11 +7,10 @@ const emailTemplate = (info) => ({
     Une demande de contact suite à un test EPDS a été effectuée.
 
     Vous pouvez recontacter <%- prenom %> (<%- nombre_enfants %> enfant(s), dernier enfant le <%- naissance_dernier_enfant %>) :
-    - à l'adresse suivante : <%- email %>${
-      info.telephone
-        ? ` ;
+    - à l'adresse suivante : <%- email %>${info.telephone
+      ? ` ;
     - au numéro suivant : <%- telephone %>`
-        : ``
+      : ``
     }.
 
     L'équipe 1000 premiers jours.`,
@@ -21,12 +20,11 @@ const emailTemplate = (info) => ({
 
     <p>Vous pouvez recontacter <%- prenom %> (<%- nombre_enfants %> enfant(s), dernier enfant né le <%- naissance_dernier_enfant %>) :
     <ul>
-      <li>à l'adresse suivante : <a href="mailto:<%- email %>"><%- email %></a>${
-        info.telephone
-          ? ` ;</li>
+      <li>à l'adresse suivante : <a href="mailto:<%- email %>"><%- email %></a>${info.telephone
+      ? ` ;</li>
       <li>au numéro suivant : <a href="tel:<%- telephone %>"><%- telephone %></a>`
-          : ""
-      }.</li>
+      : ""
+    }.</li>
     </ul>
     </p>
 
@@ -75,7 +73,7 @@ const emailPartageTemplate = (info) => ({
   subject: "Résultats au questionnaire EPDS de <%- prenom %>",
   text: `Bonjour,
 
-    La patiente <%- nom %> <%- prenom %> vient de compléter un test EPDS et souhaite partager le résultat avec vous.
+    La patiente <%- prenom %> <%- nom %> vient de compléter un test EPDS et souhaite partager le résultat avec vous.
     Vous pouvez la contacter grâce aux informations suivantes : 
     
     Adresse mail : <%- email %>
@@ -85,20 +83,21 @@ const emailPartageTemplate = (info) => ({
 
     Détails des réponses :
     Question / Réponse / Score
-    ${buildTextResponse(info.detailScore, 0)}
-    ${buildTextResponse(info.detailScore, 1)}
-    ${buildTextResponse(info.detailScore, 2)}
-    ${buildTextResponse(info.detailScore, 3)}
-    ${buildTextResponse(info.detailScore, 4)}
-    ${buildTextResponse(info.detailScore, 5)}
-    ${buildTextResponse(info.detailScore, 6)}
-    ${buildTextResponse(info.detailScore, 7)}
-    ${buildTextResponse(info.detailScore, 8)}
-    ${buildTextResponse(info.detailScore, 9)}
+    ${buildTextResponse(info.detail_score, info.detail_reponses, 0)}
+    ${buildTextResponse(info.detail_score, info.detail_reponses, 1)}
+    ${buildTextResponse(info.detail_score, info.detail_reponses, 2)}
+    ${buildTextResponse(info.detail_score, info.detail_reponses, 3)}
+    ${buildTextResponse(info.detail_score, info.detail_reponses, 4)}
+    ${buildTextResponse(info.detail_score, info.detail_reponses, 5)}
+    ${buildTextResponse(info.detail_score, info.detail_reponses, 6)}
+    ${buildTextResponse(info.detail_score, info.detail_reponses, 7)}
+    ${buildTextResponse(info.detail_score, info.detail_reponses, 8)}
+    ${buildTextResponse(info.detail_score, info.detail_reponses, 9)}
     `,
-  html: `<p>Bonjour,</p>
+  html: `
+  <p>Bonjour,</p>
 
-  <p>La patiente <%- nom %> <%- prenom %> vient de compléter un test EPDS et souhaite partager le résultat avec vous.
+  <p>La patiente <b><%- prenom %> <%- nom %></b> vient de compléter un test EPDS et souhaite partager le résultat avec vous.
   Vous pouvez la contacter grâce aux informations suivantes : </p>
 
   <p>Adresse mail : <%- email %><br />
@@ -107,63 +106,72 @@ const emailPartageTemplate = (info) => ({
   <p>Score total du questionnaire EPDS  :  <%- score %> / 30</p>
 
   <p>Détails des réponses :
-    <table>
+    <table border="1" cellspacing="0" cellpadding="5">
       <tr>
         <th>Question</th>
         <th>Réponse</th> 
         <th>Score</th>
       </tr>
-      ${buildHtmlDetailScore(info.detailScore)}
+      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 0)}
+      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 1)}
+      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 2)}
+      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 3)}
+      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 4)}
+      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 5)}
+      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 6)}
+      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 7)}
+      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 8)}
+      ${buildHtmlDetailScore(info.detail_score, info.detail_reponses, 9)}
     </table>
   </p>
   `,
 });
 
-const buildTextResponse = (detailScore, index) => {
-  return `${index + 1} / ${detailScore[index]} / ${detailScore[index]}`;
+const buildTextResponse = (detailScore, detailReponse, index) => {
+  return `${index + 1} / ${detailReponse[index]} / ${detailScore[index]}`;
 }
 
-const buildHtmlDetailScore = (detailScore) => {
-  return detailScore.map((value, index) => {
-    return `
+const buildHtmlDetailScore = (detailScore, detailReponse, index) => {
+  return `
     <tr>
       <td>${index + 1}</td>
-      <td>${value}</td>
-      <td>${value}</td>
+      <td>${detailReponse[index]}</td>
+      <td>${detailScore[index]}</td>
     </tr>
     `;
-  })
 }
 
 const partage = async ({
   email,
-  emailPro,
+  email_pro,
   telephone,
   prenom = "ND",
   nom = "ND",
   score = "ND",
-  detailScore = "ND"
+  detail_score = "ND",
+  detail_reponses = "ND"
 }) => {
-  if (!emailPro)
-    throw new Error("Le service mail n'est pas configuré");
-
   if (!email) throw new Error("Au moins une adresse email est nécessaire");
 
   const info = {
     email,
-    emailPro,
+    email_pro,
     telephone,
     prenom,
     nom,
     score,
-    detailScore
+    detail_score,
+    detail_reponses
   };
 
+
+  console.log("email_pro : " + email_pro)
   try {
     const res = await strapi.plugins.email.services.email.sendTemplatedEmail(
       {
         from: process.env["MAIL_SEND_FROM"],
-        to: emailPro,
+        to: email,
+        cc: email_pro
       },
       emailPartageTemplate(info),
       info
