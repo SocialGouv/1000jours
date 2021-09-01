@@ -29,8 +29,8 @@ import type {
 import { TrackerUtils } from "../utils";
 
 interface Props {
-  route: RouteProp<{ params: { id: number; step: Step } }, "params">;
-  navigation: StackNavigationProp<TabHomeParamList, "article">;
+  route: RouteProp<{ params: { id: number; step?: Step } }, "params">;
+  navigation: StackNavigationProp<TabHomeParamList>;
 }
 
 const paddingMainContent = Paddings.default;
@@ -39,8 +39,8 @@ const paddingArticleContent = Paddings.light;
 const ArticleDetail: FC<Props> = ({ route, navigation }) => {
   const { trackScreenView } = useMatomo();
   const articleId = route.params.id;
-  const screenTitle = route.params.step.nom;
-  const description = route.params.step.description;
+  const screenTitle = route.params.step?.nom;
+  const description = route.params.step?.description;
   let inShortArray: ArticleInShortItem[] = [];
   let linksArray: ArticleLink[] = [];
 

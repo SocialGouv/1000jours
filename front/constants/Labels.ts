@@ -353,6 +353,11 @@ export default {
   errorMsg: "Une erreur est survenue, merci de réessayer plus tard",
   errorNetworkMsg:
     "Vous êtes très nombreux à vous connecter en ce moment mais nous faisons tout notre possible pour que vous puissiez vous connecter rapidement. Nous vous invitons à vous reconnecter dans quelques minutes.",
+  event: {
+    matchingArticles: "Articles correspondants à l’événement",
+    seeOnTheMap: "Voir sur la carte",
+    title: "Événement",
+  },
   invalidDate: "La date saisie n'est pas valide.",
   invalidLink: "Ce lien n'est pas valide.",
   listArticles: {

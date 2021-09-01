@@ -50,7 +50,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     { title: string; filters: CartoFilter[] }[]
   >([]);
   const [cartoFilterStorage, setCartoFilterStorage] =
-    useState<CartoFilterStorage>({ etapes: [], types: [] });
+    useState<CartoFilterStorage>({ etapes: [], thematiques: [], types: [] });
   const [showModalContent, setShowModalContent] = useState(false);
 
   useEffect(() => {
@@ -268,7 +268,11 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
               <TouchableOpacity
                 style={styles.closeModalView}
                 onPress={() => {
-                  setCartoFilterStorage({ etapes: [], types: [] });
+                  setCartoFilterStorage({
+                    etapes: [],
+                    thematiques: [],
+                    types: [],
+                  });
                   hideModal(false);
                 }}
               >
@@ -303,7 +307,11 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                       />
                     }
                     action={() => {
-                      setCartoFilterStorage({ etapes: [], types: [] });
+                      setCartoFilterStorage({
+                        etapes: [],
+                        thematiques: [],
+                        types: [],
+                      });
                       hideModal(false);
                     }}
                   />
@@ -321,7 +329,12 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                       );
                       sendFiltersTracker(cartoFilterStorage.etapes);
                       sendFiltersTracker(cartoFilterStorage.types);
-                      setCartoFilterStorage({ etapes: [], types: [] });
+                      sendFiltersTracker(cartoFilterStorage.thematiques);
+                      setCartoFilterStorage({
+                        etapes: [],
+                        thematiques: [],
+                        types: [],
+                      });
                       hideModal(true);
                     }}
                   />

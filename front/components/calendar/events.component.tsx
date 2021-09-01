@@ -6,10 +6,8 @@ import _ from "lodash";
 import type { FC } from "react";
 import * as React from "react";
 import type { LayoutChangeEvent } from "react-native";
-import { ImageBackground, ScrollView, StyleSheet, View } from "react-native";
-import { ListItem } from "react-native-elements";
+import { ScrollView, StyleSheet, View } from "react-native";
 
-import BgImage from "../../assets/images/bg-icon-event-type.png";
 import {
   Colors,
   FontWeight,
@@ -19,17 +17,18 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
-import type { Event, Tag } from "../../types";
+import type { Event } from "../../types";
 import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
-import Tags from "../base/tags.component";
-import { CommonText, SecondaryText } from "../StyledText";
+import { CommonText } from "../StyledText";
+import EventCard from "./eventCard.component";
 
 interface Props {
   evenements: Event[];
   childBirthday: string;
+  showEventDetails: boolean;
 }
 const dotIconSize = Sizes.xxxs;
-const Events: FC<Props> = ({ evenements, childBirthday }) => {
+const Events: FC<Props> = ({ evenements, childBirthday, showEventDetails }) => {
   let closestEventHasBeenFound = false;
 
   const today = new Date().setUTCHours(0, 0, 0, 0);
@@ -64,25 +63,6 @@ const Events: FC<Props> = ({ evenements, childBirthday }) => {
     else return format(new Date(date), Formats.dateEvent, { locale: fr });
   };
 
-  const getEventTags = (event: Event) => {
-    const tags: Tag[] = [];
-    if (event.thematique?.nom)
-      tags.push({
-        bgColor: Colors.primaryBlueLight,
-        color: Colors.primaryBlue,
-        name: event.thematique.nom,
-      });
-
-    event.etapes?.forEach((etape) => {
-      tags.push({
-        bgColor: Colors.primaryYellowLight,
-        color: Colors.primaryYellow,
-        name: etape.nom,
-      });
-    });
-    return tags;
-  };
-
   const scrollViewRef = React.useRef<ScrollView>(null);
   const scrollTo = (positionY: number) => {
     scrollViewRef.current?.scrollTo({
@@ -94,9 +74,9 @@ const Events: FC<Props> = ({ evenements, childBirthday }) => {
   return (
     <ScrollView style={styles.mainContainer} ref={scrollViewRef}>
       <View style={styles.timeline}></View>
-      {_.keys(formattedEvents).map((date, indexDate) => (
+      {_.keys(formattedEvents).map((date, index) => (
         <View
-          key={indexDate}
+          key={index}
           onLayout={(layoutEvent: LayoutChangeEvent) => {
             const event = formattedEvents[date][0];
             if (event.isClosestEvent) {
@@ -118,35 +98,10 @@ const Events: FC<Props> = ({ evenements, childBirthday }) => {
               {getDateTagTitle(new Date(date))}
             </CommonText>
           </View>
-          {formattedEvents[date].map((event, indexEvent) => (
-            <ListItem
-              key={indexEvent}
-              pad={0}
-              containerStyle={styles.listItemContainer}
-            >
-              <View style={styles.eventContainer}>
-                <View style={styles.eventIconContainer}>
-                  <ImageBackground
-                    source={BgImage}
-                    imageStyle={styles.eventTypeIcon}
-                    style={styles.eventTypeBackground}
-                  >
-                    <Icomoon
-                      name={IcomoonIcons.calendrier}
-                      size={Sizes.xxxl}
-                      color={Colors.primaryBlue}
-                    />
-                  </ImageBackground>
-                </View>
-                <View style={styles.eventContentContainer}>
-                  <CommonText style={styles.eventTitle}>{event.nom}</CommonText>
-                  <Tags tags={getEventTags(event)}></Tags>
-                  <SecondaryText style={styles.eventDescription}>
-                    {event.description}
-                  </SecondaryText>
-                </View>
-              </View>
-            </ListItem>
+          {formattedEvents[date].map((event, indexEvents) => (
+            <View key={indexEvents}>
+              <EventCard event={event} showEventDetails={showEventDetails} />
+            </View>
           ))}
         </View>
       ))}

@@ -21,12 +21,14 @@ export type BottomTabParamList = {
 export type TabHomeParamList = {
   tabHomeScreen: undefined;
   listArticles: { step: Step };
-  article: { id: number; step: Step };
+  article: { id: number; step?: Step };
   epdsSurvey: undefined;
 };
 
 export type TabCalendarParamList = {
   tabCalendarScreen: undefined;
+  eventDetails: { eventId: string };
+  article: { id: number; step?: Step };
 };
 
 export type TabEpdsParamList = {
