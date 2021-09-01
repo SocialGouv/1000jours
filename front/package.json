@@ -33,7 +33,7 @@
     "@react-native-community/datetimepicker": "3.2.0",
     "@react-native-community/masked-view": "<=0.1.10",
     "@react-native-community/picker": "^1.8.1",
-    "@react-navigation/bottom-tabs": "5.11.15",
+    "@react-navigation/bottom-tabs": "6.0.5",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/stack": "^6.0.7",
     "babel-plugin-inline-dotenv": "^1.6.0",
