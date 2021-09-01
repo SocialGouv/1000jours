@@ -1,4 +1,3 @@
-import type { NavigationContainerRef } from "@react-navigation/native";
 import type { Notification as ExpoNotificaiton } from "expo-notifications";
 import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
@@ -8,6 +7,7 @@ import { Modal, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors, FontWeight, Paddings, Sizes } from "../../constants";
 import type { NotificationStyle } from "../../types";
 import { NotificationType } from "../../utils/notification.util";
+import * as RootNavigation from "../../utils/rootNavigation.util";
 import { TrackingEvent } from "../../utils/tracker.util";
 import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";
@@ -15,7 +15,6 @@ import Button from "./button.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 
 interface Props {
-  navigation: NavigationContainerRef | null;
   notification: ExpoNotificaiton;
   onDismiss: () => void;
 }
@@ -34,11 +33,7 @@ notifStyles.set(NotificationType.nextStep, {
   icon: IcomoonIcons.informations,
 });
 
-const Notification: React.FC<Props> = ({
-  navigation,
-  notification,
-  onDismiss,
-}) => {
+const Notification: React.FC<Props> = ({ notification, onDismiss }) => {
   const { trackScreenView } = useMatomo();
   const notificationType = notification.request.content.data
     .type as NotificationType;
@@ -56,8 +51,8 @@ const Notification: React.FC<Props> = ({
       const redirectFromRoot = notification.request.content.data
         .redirectFromRoot as boolean;
       if (redirectFromRoot)
-        navigation?.navigate("root", { screen: redirectTo });
-      else navigation?.navigate(redirectTo);
+        RootNavigation.navigate("root", { screen: redirectTo });
+      else RootNavigation.navigate(redirectTo, null);
     }
     setModalVisible(false);
   };

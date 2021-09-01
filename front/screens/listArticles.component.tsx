@@ -9,9 +9,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
-import { Image, ListItem } from "react-native-elements";
 
-import DefaultImage from "../assets/images/default.png";
 import {
   BackButton,
   Button,
@@ -23,6 +21,7 @@ import {
   TitleH1,
   View,
 } from "../components";
+import ArticleCard from "../components/article/articleCard.component";
 import {
   Colors,
   FetchPoliciesConstants,
@@ -40,10 +39,9 @@ import type {
   Thematique,
 } from "../types";
 import { TrackerUtils } from "../utils";
-import { getVisuelFormat, VisuelFormat } from "../utils/visuel.util";
 
 interface Props {
-  navigation: StackNavigationProp<TabHomeParamList, "listArticles">;
+  navigation: StackNavigationProp<TabHomeParamList>;
   route: RouteProp<{ params: { step: Step } }, "params">;
 }
 /* Je pense que je modifierai ça plus tard, je trouve pas ça très propre de stocker un ID du back dans le front comme ça,
@@ -198,51 +196,11 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
               duration={1000}
               delay={0}
             >
-              <ListItem
-                bottomDivider
-                onPress={() => {
-                  navigation.navigate("article", {
-                    id: article.id,
-                    step: route.params.step,
-                  });
-                }}
-                pad={0}
-                containerStyle={[
-                  styles.listItemContainer,
-                  styles.borderLeftRadius,
-                ]}
-                style={[styles.listItem, styles.borderLeftRadius]}
-              >
-                <Image
-                  defaultSource={DefaultImage}
-                  source={{
-                    uri: getVisuelFormat(
-                      article.visuel,
-                      VisuelFormat.thumbnail
-                    ),
-                  }}
-                  containerStyle={[
-                    styles.articleImage,
-                    styles.borderLeftRadius,
-                  ]}
-                />
-                <ListItem.Content style={styles.articleContent}>
-                  <ListItem.Title style={styles.articleTitleContainer}>
-                    <CommonText style={styles.articleTitle}>
-                      {article.titre}
-                    </CommonText>
-                  </ListItem.Title>
-                  <ListItem.Subtitle style={styles.articleDescription}>
-                    <SecondaryText
-                      style={styles.articleDescriptionFont}
-                      numberOfLines={3}
-                      allowFontScaling={true}
-                    >
-                      {article.resume}
-                    </SecondaryText>
-                  </ListItem.Subtitle>
-                </ListItem.Content>
-              </ListItem>
+              <ArticleCard
+                article={article}
+                step={route.params.step}
+                index={index}
+              />
             </Animatable.View>
           ))}
         </View>
@@ -254,32 +212,6 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-  articleContent: {
-    justifyContent: "center",
-    padding: Paddings.default,
-  },
-  articleDescription: {
-    color: Colors.commonText,
-  },
-  articleDescriptionFont: {
-    color: Colors.commonText,
-    fontSize: Sizes.sm,
-    fontWeight: FontWeight.medium,
-    lineHeight: Sizes.lg,
-  },
-  articleImage: {
-    height: "100%",
-    resizeMode: "contain",
-    width: Sizes.thumbnail,
-  },
-  articleTitle: {
-    color: Colors.primaryBlueDark,
-    fontSize: Sizes.md,
-    fontWeight: FontWeight.bold,
-  },
-  articleTitleContainer: {
-    paddingBottom: Paddings.light,
-  },
   bannerButton: {
     alignSelf: "flex-end",
     marginHorizontal: Margins.default,
@@ -317,14 +249,6 @@ const styles = StyleSheet.create({
   listContainer: {
     paddingHorizontal: Paddings.default,
     paddingVertical: Paddings.smallest,
-  },
-  listItem: {
-    marginVertical: Margins.smallest,
-  },
-  listItemContainer: {
-    borderColor: Colors.borderGrey,
-    borderWidth: 1,
-    padding: 0,
   },
   scrollView: {
     backgroundColor: Colors.white,

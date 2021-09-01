@@ -30,12 +30,13 @@ import {
   StorageKeysConstants,
 } from "../constants";
 import { ICLOUD, PLATFORM_IS_IOS } from "../constants/platform.constants";
-import type { Event, RootStackParamList } from "../types";
+import type { Event, TabCalendarParamList } from "../types";
 import { NotificationUtils, StorageUtils, TrackerUtils } from "../utils";
+import * as RootNavigation from "../utils/rootNavigation.util";
 import { stringIsNotNullNorEmpty } from "../utils/strings.util";
 
 interface Props {
-  navigation: StackNavigationProp<RootStackParamList, "root">;
+  navigation: StackNavigationProp<TabCalendarParamList, "eventDetails">;
 }
 
 const TabCalendarScreen: FC<Props> = ({ navigation }) => {
@@ -243,23 +244,29 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
         <ErrorMessage error={error} />
       ) : (
         <View style={styles.calendarContainer}>
-          <View>
-            <Button
-              title={Labels.calendar.synchronise}
-              rounded={true}
-              action={syncEventsWithOsCalendar}
-            />
-            <CommonText style={styles.lastSyncDate}>
-              {lastSyncDate
-                ? `${Labels.calendar.lastSyncDate} ${format(
-                    new Date(lastSyncDate),
-                    Formats.dateTimeFR
-                  )}`
-                : ""}
-            </CommonText>
-          </View>
           {childBirthday.length > 0 ? (
-            <Events evenements={events} childBirthday={childBirthday} />
+            <>
+              <View>
+                <Button
+                  title={Labels.calendar.synchronise}
+                  rounded={true}
+                  action={syncEventsWithOsCalendar}
+                />
+                <CommonText style={styles.lastSyncDate}>
+                  {lastSyncDate
+                    ? `${Labels.calendar.lastSyncDate} ${format(
+                        new Date(lastSyncDate),
+                        Formats.dateTimeFR
+                      )}`
+                    : ""}
+                </CommonText>
+              </View>
+              <Events
+                evenements={events}
+                childBirthday={childBirthday}
+                showEventDetails={false}
+              />
+            </>
           ) : (
             <View style={styles.center}>
               <CommonText style={styles.noChildBirthday}>
@@ -269,7 +276,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
                 title={Labels.profile.update}
                 rounded={true}
                 action={() => {
-                  navigation.navigate("profile");
+                  RootNavigation.navigate("profile", null);
                 }}
               />
             </View>

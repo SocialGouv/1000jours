@@ -13,7 +13,7 @@ interface Props {
 
 const Tags: FC<Props> = ({ tags }) => {
   return (
-    <View style={[styles.flexStart]}>
+    <View style={[styles.flexStart, styles.mainContainer]}>
       {tags.map((tag, index) => {
         return (
           <View
@@ -35,6 +35,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     flexDirection: "row",
     flexWrap: "wrap",
+  },
+  mainContainer: {
+    backgroundColor: "transparent",
   },
   tag: {
     fontSize: Sizes.sm,
