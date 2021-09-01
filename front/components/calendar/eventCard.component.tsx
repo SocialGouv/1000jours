@@ -1,4 +1,4 @@
-import { gql, useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import _ from "lodash";
 import type { FC } from "react";
 import { useEffect } from "react";
@@ -16,6 +16,7 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../constants";
+import { GET_EVENT_ARTICLES } from "../../constants/databaseQueries.constants";
 import type { CartoFilterStorage } from "../../type";
 import type { Article, Event, Tag } from "../../types";
 import { StorageUtils } from "../../utils";
@@ -96,31 +97,8 @@ const EventCard: FC<Props> = ({ event, showEventDetails }) => {
     return condition;
   };
 
-  const ARTICLES = gql`
-    query GetArticles($etapeIds: [ID], $thematiqueId: ID) {
-      articles(
-        sort: "ordre"
-        where: { ${buildWhereCondition()} }
-        limit: ${MAX_ARTICLES}
-      ) {
-        id
-        titre
-        resume
-        visuel {
-          url
-          height
-          width
-        }
-        thematiques {
-          nom
-          id
-        }
-      }
-    }
-  `;
-
   const [loadArticles, { loading, error, data, called }] = useLazyQuery(
-    ARTICLES,
+    GET_EVENT_ARTICLES(buildWhereCondition(), MAX_ARTICLES),
     {
       variables: {
         etapeIds: _.map(event.etapes, "id"),

@@ -1,3 +1,4 @@
+import type { DocumentNode } from "@apollo/client/core";
 import { gql } from "@apollo/client/core";
 
 export const QUESTIONNAIRE_EPDS = gql`
@@ -77,3 +78,54 @@ export const EPDS_CONTACT_INFORMATION = gql`
     )
   }
 `;
+
+export const GET_EVENT_ARTICLES = (
+  whereCondition: string,
+  limit: number
+): DocumentNode => {
+  return gql`
+  query GetArticles($etapeIds: [ID], $thematiqueId: ID) {
+    articles(
+      sort: "ordre"
+      where: { ${whereCondition} }
+      limit: ${limit}
+    ) {
+      id
+      titre
+      resume
+      visuel {
+        url
+        height
+        width
+      }
+      thematiques {
+        nom
+        id
+      }
+    }
+  }
+`;
+};
+
+export const GET_EVENT_DETAILS = (eventId: string): DocumentNode => {
+  return gql`
+    query GetEventDetails {
+      evenement(id: ${eventId})
+      {
+        id
+        nom
+        description
+        debut
+        fin
+        thematique {
+          id
+          nom
+        }
+        etapes {
+          id
+          nom
+        }
+      }
+    }
+  `;
+};

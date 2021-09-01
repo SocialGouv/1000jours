@@ -1,5 +1,4 @@
 import { useLazyQuery } from "@apollo/client";
-import { gql } from "@apollo/client/core";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { addDays, format } from "date-fns";
@@ -18,11 +17,13 @@ import {
   View,
 } from "../../components";
 import {
+  FetchPoliciesConstants,
   Formats,
   Labels,
   Paddings,
   StorageKeysConstants,
 } from "../../constants";
+import { GET_EVENT_DETAILS } from "../../constants/databaseQueries.constants";
 import type { Event, TabCalendarParamList } from "../../types";
 import { StorageUtils, TrackerUtils } from "../../utils";
 
@@ -38,29 +39,12 @@ const EventDetails: FC<Props> = ({ navigation, route }) => {
   const [events, setEvents] = React.useState<Event[]>([]);
   const [loadingEvent, setLoadingEvent] = React.useState(false);
 
-  const EVENT_DETAILS = gql`
-    query GetEventDetails {
-      evenement(id: ${route.params.eventId})
-      {
-        id
-        nom
-        description
-        debut
-        fin
-        thematique {
-          id
-          nom
-        }
-        etapes {
-          id
-          nom
-        }
-      }
+  const [loadEvent, { loading, error, data }] = useLazyQuery(
+    GET_EVENT_DETAILS(route.params.eventId),
+    {
+      fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
     }
-  `;
-  const [loadEvent, { loading, error, data }] = useLazyQuery(EVENT_DETAILS, {
-    fetchPolicy: "cache-and-network",
-  });
+  );
 
   const init = async () => {
     const childBirthdayStr =
