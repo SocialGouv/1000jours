@@ -130,7 +130,78 @@ const count = async ({ perimetre, types, thematiques, etapes }) => {
   return count && count[0] && count[0].count;
 };
 
+const emailSuggestionsTemplate = (info) => ({
+  subject: "Nouvelles suggestions pour la cartographie",
+  text: `Bonjour,
+
+    De nouvelles suggestions pour la cartographie ont été envoyées.
+
+    - Nouveaux POI suggérés : <%- nouveauxPois %>
+    - Suggestions d'améliorations : <%- suggestionsAmeliorations %>
+
+    Informations personnelles :
+    - Nombre d'enfant(s) : <%- nombre_enfants %>
+    - Code postal : <%- code_postal %>
+
+    L'équipe 1000 premiers jours.`,
+  html: `<p>Bonjour,</p>
+
+    <p>De nouvelles suggestions pour la cartographie ont été envoyées.</p>
+
+    <p>
+      <ul>
+        <li>Nouveaux POI suggérés : <%- nouveauxPois %></li>
+        <li>Suggestions d'améliorations : <%- suggestionsAmeliorations %></li>
+      </ul>
+    </p>
+
+    <p>Informations personnelles :
+      <ul>
+        <li>Nombre d'enfant(s) : <%- nombre_enfants %></li>
+        <li>Code postal : <%- code_postal %></li>
+      </ul>
+    </p>
+
+    L'équipe 1000 premiers jours.`,
+});
+
+const suggestions = async ({
+  nouveauxPois,
+  suggestionsAmeliorations,
+  nombre_enfants = "ND",
+  code_postal = "ND",
+}) => {
+  if (!process.env["MAIL_SEND_TO"])
+    throw new Error("Le service mail n'est pas configuré");
+
+  if (!email) throw new Error("Au moins une adresse email est nécessaire");
+
+  const info = {
+    nouveauxPois,
+    suggestionsAmeliorations,
+    nombre_enfants,
+    code_postal,
+  };
+
+  try {
+    const res = await strapi.plugins.email.services.email.sendTemplatedEmail(
+      {
+        from: process.env["MAIL_SEND_FROM"],
+        to: process.env["MAIL_SEND_TO"],
+      },
+      emailSuggestionsTemplate(info),
+      info
+    );
+
+    return res && !!res.response.match(/Ok/);
+  } catch (e) {
+    console.error(e);
+    throw new Error("Erreur de connexion au serveur mail");
+  }
+};
+
 module.exports = {
   search,
   count,
+  suggestions,
 };

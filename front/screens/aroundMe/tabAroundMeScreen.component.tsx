@@ -8,6 +8,7 @@ import { Image, StyleSheet } from "react-native";
 import type { LatLng, Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
+import BulbIcon from "../../assets/images/carto/bulb.svg";
 import {
   Button,
   CustomSnackbar,
@@ -38,6 +39,7 @@ import AroundMeFilter from "./aroundMeFilter.component";
 import CustomMapMarker from "./customMapMarker.component";
 import SearchByPostalCode from "./searchByPostalCode.component";
 import SlidingUpPanelAddressesList from "./slidingUpPanelAddressesList.component";
+import SubmitNewFilter from "./submitNewFilter.component";
 
 const TabAroundMeScreen: React.FC = () => {
   const { trackScreenView } = useMatomo();
@@ -66,6 +68,8 @@ const TabAroundMeScreen: React.FC = () => {
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
   const [showFilter, setShowFilter] = useState(false);
+  const [showSubmitNewFilterModal, setShowSubmitNewFilterModal] =
+    useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [mapWasOnlyTouched, setMapWasOnlyTouched] = useState(false);
   const [currentUserLocation, setCurrentUserLocation] = useState<LatLng | null>(
@@ -323,6 +327,15 @@ const TabAroundMeScreen: React.FC = () => {
               setShowFilter(true);
             }}
           />
+          <Button
+            buttonStyle={styles.submitNewFilterButton}
+            title=""
+            rounded={true}
+            icon={<BulbIcon />}
+            action={() => {
+              setShowSubmitNewFilterModal(true);
+            }}
+          />
         </View>
         {showRelaunchResearchButton && (
           <View style={styles.relaunchSearchView}>
@@ -396,6 +409,12 @@ const TabAroundMeScreen: React.FC = () => {
           }
         }}
       />
+      <SubmitNewFilter
+        visible={showSubmitNewFilterModal}
+        hideModal={() => {
+          setShowSubmitNewFilterModal(false);
+        }}
+      />
       {isLoading && <Loader />}
     </View>
   );
@@ -436,6 +455,7 @@ const styles = StyleSheet.create({
   },
   filterView: {
     backgroundColor: "transparent",
+    flexDirection: "row",
     left: 0,
     margin: Margins.smaller,
     position: "absolute",
@@ -487,6 +507,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 0,
+  },
+  submitNewFilterButton: {
+    backgroundColor: Colors.white,
+    borderColor: Colors.primaryBlue,
+    borderWidth: 1,
   },
   title: {
     color: Colors.primaryBlueDark,

@@ -32,6 +32,14 @@ const getPoisCountResolver = async (_1, _2, { context }) => {
   }
 };
 
+const cartographieSuggestionsResolver = async (_1, _2, { context }) => {
+  try {
+    return PoiService.suggestions(context.request.body);
+  } catch (e) {
+    context.badRequest(e.message);
+  }
+};
+
 module.exports = {
   definition: `
     type CartographiePoiAdresse {
@@ -63,6 +71,14 @@ module.exports = {
       etapes: [String!]
     ): Int
   `,
+  mutation: `
+    cartographieSuggestions (
+      nouveauxPois: String
+      suggestionsAmeliorations: String
+      nombre_enfants: Int!
+      code_postal: String!
+    ): Boolean
+  `,
   resolver: {
     Query: {
       searchPois: {
@@ -75,6 +91,13 @@ module.exports = {
         resolver: getPoisCountResolver,
         resolverOf: "application::cartographie-poi.cartographie-poi.count",
       },
+    },
+    Mutation: {
+      cartographieSuggestions: {
+        description: "Envoie de suggestions pour la cartographie",
+        resolver: cartographieSuggestionsResolver,
+        resolverOf: "application::cartographie-poi.cartographie-poi.suggestions",
+      }
     },
   },
 };

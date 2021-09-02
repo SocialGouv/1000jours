@@ -43,6 +43,28 @@ export default {
     postalCodeNotFound: "Le code postal que vous recherchez n'a pas été trouvé",
     relaunchSearch: "Relancer la recherche",
     searchButton: "Rechercher",
+    submitNewFilter: {
+      aboutYou: {
+        numberOfChildren: "Nombre d'enfants",
+        postalCode: "Votre code postal",
+        postalCodePlaceholder: "Écrivez ici le code postal",
+        title: "Parlez-nous de vous :",
+      },
+      instructions: [
+        {
+          instruction:
+            "Quel(s) type(s) de lieu(x) aimeriez-vous voir sur la carte ? (mairie, Pôle Emploi, pédiatre, etc.)",
+          placeholder: "Écrivez  ici le(s) lieu(x)",
+        },
+        {
+          instruction:
+            "Vous pouvez nous transmettre des suggestions d'amélioration pour la carte:",
+          placeholder: "Écrivez ici vos idées d'amélioration",
+        },
+      ],
+      title: "Proposer un lieu",
+      title: "Proposer un lieu",
+    },
     title: "Autour de moi",
   },
   article: {
