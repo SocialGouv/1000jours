@@ -1,20 +1,27 @@
 name: Publish on ExpoGo (Develop)
 on:
   push:
+    # branches: [develop, alpha, beta, next]
     branches:
-      - 'develop'
+      - '**'
+    tags-ignore:
+      - v*
     paths:
       - 'front/**'
+      - '.github/workflows/expo-publish-develop.yml'
   workflow_dispatch:
     name:
       description: 'Manual workflow'
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   Publish:
     name: Publish Develop
     runs-on: ubuntu-latest
     env:
-      API_URL: https://backoffice-develop-dev-les1000jours.dev.fabrique.social.gouv.fr
       CLEAR_STORAGE: false
       MATOMO_APPLICATION_ID: 46
       MATOMO_ENABLED: true
@@ -33,9 +40,14 @@ jobs:
           expo-version: 4.x
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+      - uses: socialgouv/actions/k8s-namespace@k8s-namespace
+        id: namespace
+        with:
+          environment: "dev"
       - name: Yarn
         run: |
           cd front
           yarn install
           yarn publish-develop
-          
+        env:
+          API_URL: https://backoffice-${{ steps.namespace.outputs.value }}.dev.fabrique.social.gouv.fr

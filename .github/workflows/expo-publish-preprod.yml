@@ -1,13 +1,22 @@
 name: Publish on ExpoGo (PreProd)
+# on:
+#   push:
+#     branches:
+#       - 'master'
+#     paths:
+#       - 'front/**'
+#       - '.github/workflows/expo-publish-preprod.yml'
 on:
   push:
-    branches:
-      - 'master'
-    paths:
-      - 'front/**'
+    tags:
+      - v*
   workflow_dispatch:
     name:
       description: 'Manual workflow'
+
+concurrency:
+  group: expo-preproduction
+  cancel-in-progress: true
 
 jobs:
   Publish:

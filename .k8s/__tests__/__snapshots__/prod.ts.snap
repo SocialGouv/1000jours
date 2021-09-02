@@ -8,9 +8,11 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: prod
-    app.gitlab.com/env.name: prod
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/tags/v1.2.3
+    app.github.com/repo: socialgouv/1000jours
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
   labels:
     app: strapi-cache
     application: 1000jours
@@ -18,7 +20,7 @@ metadata:
     owner: 1000jours
     team: 1000jours
   name: strapi-cache
-  namespace: les1000jours
+  namespace: 1000jours
 spec:
   replicas: 1
   selector:
@@ -29,9 +31,11 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
-        app.gitlab.com/app: socialgouv-1000jours
-        app.gitlab.com/env: prod
-        app.gitlab.com/env.name: prod
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/tags/v1.2.3
+        app.github.com/repo: socialgouv/1000jours
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
       labels:
         app: strapi-cache
         application: 1000jours
@@ -108,10 +112,12 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: prod
-    app.gitlab.com/env.name: prod
-  namespace: les1000jours
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/tags/v1.2.3
+    app.github.com/repo: socialgouv/1000jours
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: 1000jours
 spec:
   ports:
     - name: http
@@ -130,9 +136,11 @@ metadata:
     kubernetes.io/tls-acme: 'true'
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: prod
-    app.gitlab.com/env.name: prod
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/tags/v1.2.3
+    app.github.com/repo: socialgouv/1000jours
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
     nginx.ingress.kubernetes.io/proxy-body-size: 1g
     nginx.ingress.kubernetes.io/limit-rps: '20'
     nginx.ingress.kubernetes.io/limit-rpm: '300'
@@ -143,7 +151,7 @@ metadata:
     owner: 1000jours
     team: 1000jours
   name: strapi-cache
-  namespace: les1000jours
+  namespace: 1000jours
 spec:
   rules:
     - host: backoffice-1000jours.fabrique.social.gouv.fr
@@ -171,10 +179,12 @@ metadata:
     owner: 1000jours
     team: 1000jours
   annotations:
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: prod
-    app.gitlab.com/env.name: prod
-  namespace: les1000jours
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/tags/v1.2.3
+    app.github.com/repo: socialgouv/1000jours
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: 1000jours
 data:
   nginx.conf: |-
 
@@ -242,7 +252,7 @@ apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: strapi-cache
-  namespace: les1000jours
+  namespace: 1000jours
 spec:
   maxReplicas: 5
   metrics:
@@ -268,11 +278,13 @@ apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
   annotations:
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: prod
-    app.gitlab.com/env.name: prod
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/tags/v1.2.3
+    app.github.com/repo: socialgouv/1000jours
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
   name: azure-pg-user
-  namespace: les1000jours
+  namespace: 1000jours
   labels:
     application: 1000jours
     component: 1000jours
@@ -301,9 +313,11 @@ spec:
   template:
     metadata:
       annotations:
-        app.gitlab.com/app: socialgouv-1000jours
-        app.gitlab.com/env: prod
-        app.gitlab.com/env.name: prod
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/tags/v1.2.3
+        app.github.com/repo: socialgouv/1000jours
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
       name: azure-pg-user
       namespace: les1000jours
       labels:
@@ -319,9 +333,11 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: prod
-    app.gitlab.com/env.name: prod
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/tags/v1.2.3
+    app.github.com/repo: socialgouv/1000jours
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
   labels:
     app: strapi
     application: 1000jours
@@ -329,7 +345,7 @@ metadata:
     owner: 1000jours
     team: 1000jours
   name: strapi
-  namespace: les1000jours
+  namespace: 1000jours
 spec:
   replicas: 1
   selector:
@@ -340,9 +356,11 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
-        app.gitlab.com/app: socialgouv-1000jours
-        app.gitlab.com/env: prod
-        app.gitlab.com/env.name: prod
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/tags/v1.2.3
+        app.github.com/repo: socialgouv/1000jours
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
       labels:
         app: strapi
         application: 1000jours
@@ -351,7 +369,8 @@ spec:
         team: 1000jours
     spec:
       containers:
-        - image: harbor.fabrique.social.gouv.fr/1000jours/les1000jours-strapi:1.2.3
+        - image: >-
+            ghcr.io/socialgouv/nos1000jours/strapi:sha-0123456789abcdefghijklmnopqrstuvwxyz0123
           livenessProbe:
             httpGet:
               path: /_health
@@ -433,11 +452,13 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: prod
-    app.gitlab.com/env.name: prod
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/tags/v1.2.3
+    app.github.com/repo: socialgouv/1000jours
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
   name: strapi
-  namespace: les1000jours
+  namespace: 1000jours
   labels:
     application: 1000jours
     component: 1000jours
@@ -462,9 +483,11 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
-        app.gitlab.com/app: socialgouv-1000jours
-        app.gitlab.com/env: prod
-        app.gitlab.com/env.name: prod
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/tags/v1.2.3
+        app.github.com/repo: socialgouv/1000jours
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
       name: strapi
       namespace: les1000jours
       labels:
@@ -478,13 +501,15 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: strapi-configmap
-  namespace: les1000jours
+  namespace: 1000jours
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: prod
-    app.gitlab.com/env.name: prod
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/tags/v1.2.3
+    app.github.com/repo: socialgouv/1000jours
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
   labels:
     application: 1000jours
     component: 1000jours
@@ -508,10 +533,12 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: prod
-    app.gitlab.com/env.name: prod
-  namespace: les1000jours
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/tags/v1.2.3
+    app.github.com/repo: socialgouv/1000jours
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: 1000jours
 spec:
   ports:
     - name: http
@@ -525,7 +552,7 @@ apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
   annotations: {}
-  name: azure-les1000jours-volume
+  name: azure-1000jours-volume
   namespace: les1000jours
 spec:
   encryptedData:
@@ -536,7 +563,7 @@ spec:
   template:
     metadata:
       annotations: {}
-      name: azure-les1000jours-volume
+      name: azure-1000jours-volume
       namespace: les1000jours
     type: Opaque
 ---
@@ -544,7 +571,7 @@ apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: strapi
-  namespace: les1000jours
+  namespace: 1000jours
 spec:
   maxReplicas: 5
   metrics:
@@ -571,15 +598,17 @@ kind: PersistentVolumeClaim
 metadata:
   name: uploads
   annotations:
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: prod
-    app.gitlab.com/env.name: prod
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/tags/v1.2.3
+    app.github.com/repo: socialgouv/1000jours
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
   labels:
     application: 1000jours
     component: 1000jours
     owner: 1000jours
     team: 1000jours
-  namespace: les1000jours
+  namespace: 1000jours
 spec:
   accessModes:
     - ReadWriteMany
@@ -588,30 +617,32 @@ spec:
       storage: 5Gi
   selector:
     matchLabels:
-      usage: prod-uploads
+      usage: 1000jours-uploads
   storageClassName: ''
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   labels:
-    usage: prod-uploads
+    usage: 1000jours-uploads
     application: 1000jours
     component: 1000jours
     owner: 1000jours
     team: 1000jours
-  name: prod-uploads
+  name: 1000jours-uploads
   annotations:
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: prod
-    app.gitlab.com/env.name: prod
-  namespace: les1000jours
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/tags/v1.2.3
+    app.github.com/repo: socialgouv/1000jours
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: 1000jours
 spec:
   accessModes:
     - ReadWriteMany
   azureFile:
     secretName: azure-1000jours-volume
-    secretNamespace: les1000jours
+    secretNamespace: 1000jours
     shareName: uploads
   capacity:
     storage: 5Gi
