@@ -83,7 +83,7 @@ const emailPartageTemplate = (info) => ({
 
     Détails des réponses :
     Question / Réponse / Score
-    ${[...new Array(10)].map((_, i) => buildTextResponse(info.detail_score, info.detail_reponses, i)).join('\n    ')}
+    ${[...new Array(10)].map((_, i) => buildTextResponse(info, i)).join('\n    ')}
     `,
   html: `
   <p>Bonjour,</p>
@@ -103,22 +103,22 @@ const emailPartageTemplate = (info) => ({
         <th>Réponse</th> 
         <th>Score</th>
       </tr>
-      ${[...new Array(10)].map((_, i) => buildHtmlDetailScore(info.detail_score, info.detail_reponses, i)).join('\n    ')}
+      ${[...new Array(10)].map((_, i) => buildHtmlDetailScore(info, i)).join('\n    ')}
     </table>
   </p>
   `,
 });
 
-const buildTextResponse = (detailScore, detailReponse, index) =>
-  `${index + 1} / ${detailReponse[index]} / ${detailScore[index]}`;
+const buildTextResponse = (info, index) =>
+  `${info.detail_questions[index]} / ${info.detail_reponses[index]} / ${info.detail_score[index]}`;
 
 
-const buildHtmlDetailScore = (detailScore, detailReponse, index) =>
+const buildHtmlDetailScore = (info, index) =>
   `
   <tr>
-    <td>${index + 1}</td>
-    <td>${detailReponse[index]}</td>
-    <td>${detailScore[index]}</td>
+    <td>${info.detail_questions[index]}</td>
+    <td>${info.detail_reponses[index]}</td>
+    <td>${info.detail_score[index]}</td>
   </tr>
   `;
 
@@ -129,6 +129,7 @@ const partage = async ({
   prenom = "ND",
   nom = "ND",
   score = "ND",
+  detail_questions = "ND",
   detail_score = "ND",
   detail_reponses = "ND"
 }) => {
@@ -141,6 +142,7 @@ const partage = async ({
     prenom,
     nom,
     score,
+    detail_questions,
     detail_score,
     detail_reponses
   };

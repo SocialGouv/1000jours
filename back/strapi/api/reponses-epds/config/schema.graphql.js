@@ -36,6 +36,7 @@ module.exports = {
       prenom: String
       nom: String
       score: String
+      detail_questions: [String]
       detail_score: [String]
       detail_reponses: [String]
     ): Boolean
