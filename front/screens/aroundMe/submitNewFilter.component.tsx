@@ -17,6 +17,7 @@ import {
   TitleH1,
 } from "../../components";
 import CustomNumberOfChildrenPicker from "../../components/base/customNumberOfChildrenPicker.component";
+import CustomPostalCodeTextInput from "../../components/base/customPostalCodeTextInput.component";
 import {
   Colors,
   FontNames,
@@ -37,22 +38,31 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
   useEffect(() => {
     if (!visible) return;
   }, [visible]);
-
+  const [newPois, setNewPois] = useState("");
+  const [newSuggestions, setNewSuggestions] = useState("");
   const [numberOfChildrens, setNumberOfChildrens] = useState(1);
+  const [postalCode, setPostalCode] = useState("");
   const instructionsAndPlaceholders =
     Labels.aroundMe.submitNewFilter.instructions;
+
+  const getChangeFunctionAndValue = (index: number) => {
+    if (index === 0) return { value: newPois, function: setNewPois };
+    else return { value: newSuggestions, function: setNewSuggestions };
+  };
 
   const renderSection = (section: {
     instruction: string;
     placeholder: string;
-  }) => {
+  }, index: number) => {
+
+    const functionAndValue = getChangeFunctionAndValue(index);
     return (
       <View>
         <CommonText style={styles.partsTitle}>{section.instruction}</CommonText>
         <TextInput
           style={styles.textInput}
-          // onChangeText={onPostalCodeChanged}
-          // value={section.placeholder}
+          onChangeText={functionAndValue.function}
+          value={functionAndValue.value}
           placeholder={section.placeholder}
           placeholderTextColor={Colors.primaryBlue}
           numberOfLines={4}
@@ -89,7 +99,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
                 index: number
               ) => (
                 <View key={index}>
-                  {renderSection(instructionAndPlaceholder)}
+                  {renderSection(instructionAndPlaceholder, index)}
                 </View>
               )
             )}
@@ -99,19 +109,12 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
                 setNumberOfChildrens(number);
               }}
             />
-            <View style={styles.rowView}>
-              {/* <TextInput
-                style={[
-                  styles.postalCodeInput,
-                  PLATFORM_IS_IOS && styles.widthForIos,
-                ]}
-                onChangeText={onPostalCodeChanged}
-                value={postalCodeInput}
-                placeholder={Labels.aroundMe.postalCodeInputPlaceholder}
-                keyboardType="number-pad"
-                maxLength={AroundMeConstants.POSTAL_CODE_MAX_LENGTH}
-              /> */}
-            </View>
+            <CustomPostalCodeTextInput
+              updatePostalCode={(postalCode) => {
+                console.log(postalCode);
+                setPostalCode(postalCode);
+              }}
+            />
           </ScrollView>
           <View style={styles.buttonsContainer}>
             <View style={styles.buttonContainer}>
@@ -190,9 +193,6 @@ const styles = StyleSheet.create({
     borderColor: Colors.primaryBlue,
     borderWidth: 1,
     paddingHorizontal: Paddings.smaller,
-  },
-  rowView: {
-    flexDirection: "row",
   },
   textInput: {
     borderColor: Colors.primaryBlue,
