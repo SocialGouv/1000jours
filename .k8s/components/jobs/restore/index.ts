@@ -6,15 +6,24 @@
  * */
 
 import env from "@kosko/env";
-import path from "path";
-import { getDefaultPgParams } from "@socialgouv/kosko-charts/components/azure-pg";
 import { EnvVar } from "kubernetes-models/v1";
-const { loadFile } = require("@kosko/yaml");
 import ci from "@socialgouv/kosko-charts/environments";
-
+import { getDevDatabaseParameters } from "@socialgouv/kosko-charts/components/azure-pg/params";
+import { getPgServerHostname } from "@socialgouv/kosko-charts/utils/getPgServerHostname";
 import { copyDatabaseJob } from "../../../utils/copy-database.job";
-import { SealedSecret } from "@kubernetes-models/sealed-secrets/bitnami.com/v1alpha1/SealedSecret";
+import { createSecret } from "@socialgouv/kosko-charts/components/pg-secret";
+import { getDefaultPgParams } from "@socialgouv/kosko-charts/components/azure-pg";
 
+const getAzUserPgParams = (branch: string) => {
+  const ciEnv = ci(process.env);
+  const suffix = branch;
+  const projectName = ciEnv.projectName;
+  return {
+    ...getDevDatabaseParameters({ suffix }),
+    host: getPgServerHostname(projectName, "dev"),
+    name: `azure-pg-user-${suffix}`,
+  };
+};
 export default async () => {
   // extract appropriate secrets for the copy script
   const manifests = [];
@@ -25,53 +34,38 @@ export default async () => {
   }
 
   const envParams = ci(process.env);
-
+  const developDb = getAzUserPgParams("develop");
   const currentDb = getDefaultPgParams();
 
   const namespace = envParams.metadata.namespace.name;
 
-  manifests.push(
-    copyDatabaseJob({
-      namespace,
-      env: [
-        // the source database connection string
-        new EnvVar({
-          name: "FROM_DATABASE",
-          valueFrom: {
-            secretKeyRef: {
-              name: "azure-pg-user-preprod",
-              key: "DATABASE_URL",
-            },
+  const job = copyDatabaseJob({
+    namespace,
+    env: [
+      // the source database connection string
+      new EnvVar({
+        name: "FROM_DATABASE",
+        valueFrom: {
+          secretKeyRef: {
+            name: developDb.name,
+            key: "DATABASE_URL",
           },
-        }),
-        // the destination database connection string
-        new EnvVar({
-          name: "TO_DATABASE",
-          valueFrom: {
-            secretKeyRef: {
-              name: currentDb.name, // holds the env secret name
-              key: "DATABASE_URL",
-            },
+        },
+      }),
+      // the destination database connection string
+      new EnvVar({
+        name: "TO_DATABASE",
+        valueFrom: {
+          secretKeyRef: {
+            name: currentDb.name, // holds the env secret name
+            key: "DATABASE_URL",
           },
-        }),
-      ],
-    })
-  );
+        },
+      }),
+    ],
+  });
 
-  // embed preprodSecret in correct namespace
-  const preprodSecret = loadFile(
-    path.join(__dirname, "azure-pg-user-preprod.sealed-secret.yaml"),
-    {
-      transform(preprodSecret: SealedSecret) {
-        if (preprodSecret && preprodSecret.metadata) {
-          preprodSecret.metadata.namespace = namespace;
-        }
-        return preprodSecret;
-      },
-    }
-  );
+  const developSecret = createSecret(developDb);
 
-  manifests.push(preprodSecret);
-
-  return manifests;
+  return [job, developSecret];
 };
