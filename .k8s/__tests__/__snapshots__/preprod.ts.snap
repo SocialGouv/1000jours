@@ -18,6 +18,7 @@ metadata:
   labels:
     azure-pg-admin-user: 1000jours
     application: v1-2-3-1000jours
+    component: v1-2-3-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -35,6 +36,7 @@ metadata:
   labels:
     app: strapi-cache
     application: v1-2-3-1000jours
+    component: v1-2-3-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -56,6 +58,7 @@ spec:
       labels:
         app: strapi-cache
         application: v1-2-3-1000jours
+        component: v1-2-3-1000jours
         owner: 1000jours
         team: 1000jours
         cert: wildcard
@@ -122,6 +125,7 @@ metadata:
   labels:
     app: strapi-cache
     application: v1-2-3-1000jours
+    component: v1-2-3-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -158,6 +162,7 @@ metadata:
   labels:
     app: strapi-cache
     application: v1-2-3-1000jours
+    component: v1-2-3-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -186,6 +191,7 @@ metadata:
   name: strapi-cache
   labels:
     application: v1-2-3-1000jours
+    component: v1-2-3-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -295,6 +301,7 @@ metadata:
   namespace: 1000jours-85-preprod-dev42
   labels:
     application: v1-2-3-1000jours
+    component: v1-2-3-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -328,6 +335,7 @@ spec:
       name: azure-pg-user
       labels:
         application: v1-2-3-1000jours
+        component: v1-2-3-1000jours
         owner: 1000jours
         team: 1000jours
         cert: wildcard
@@ -345,6 +353,7 @@ metadata:
   labels:
     app: strapi
     application: v1-2-3-1000jours
+    component: v1-2-3-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -366,6 +375,7 @@ spec:
       labels:
         app: strapi
         application: v1-2-3-1000jours
+        component: v1-2-3-1000jours
         owner: 1000jours
         team: 1000jours
         cert: wildcard
@@ -437,7 +447,7 @@ spec:
           envFrom:
             - secretRef:
                 name: azure-pg-user
-          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.39.1
+          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.45.0
           imagePullPolicy: Always
           name: wait-for-postgres
           resources:
@@ -461,6 +471,7 @@ metadata:
   name: strapi
   labels:
     application: v1-2-3-1000jours
+    component: v1-2-3-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -491,6 +502,7 @@ spec:
       name: strapi
       labels:
         application: v1-2-3-1000jours
+        component: v1-2-3-1000jours
         owner: 1000jours
         team: 1000jours
         cert: wildcard
@@ -508,6 +520,7 @@ metadata:
     app.gitlab.com/env.name: preprod-dev42
   labels:
     application: v1-2-3-1000jours
+    component: v1-2-3-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -522,6 +535,7 @@ metadata:
   labels:
     app: strapi
     application: v1-2-3-1000jours
+    component: v1-2-3-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -597,6 +611,7 @@ metadata:
     app.gitlab.com/env.name: preprod-dev42
   labels:
     application: v1-2-3-1000jours
+    component: v1-2-3-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -618,6 +633,7 @@ metadata:
   labels:
     usage: preprod-dev42-uploads
     application: v1-2-3-1000jours
+    component: v1-2-3-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard

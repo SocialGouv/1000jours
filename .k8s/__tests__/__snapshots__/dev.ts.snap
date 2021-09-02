@@ -19,6 +19,7 @@ metadata:
   labels:
     azure-pg-admin-user: 1000jours
     application: master-dev42-1000jours
+    component: master-dev42-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -36,6 +37,7 @@ metadata:
   labels:
     app: strapi-cache
     application: master-dev42-1000jours
+    component: master-dev42-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -57,6 +59,7 @@ spec:
       labels:
         app: strapi-cache
         application: master-dev42-1000jours
+        component: master-dev42-1000jours
         owner: 1000jours
         team: 1000jours
         cert: wildcard
@@ -123,6 +126,7 @@ metadata:
   labels:
     app: strapi-cache
     application: master-dev42-1000jours
+    component: master-dev42-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -159,6 +163,7 @@ metadata:
   labels:
     app: strapi-cache
     application: master-dev42-1000jours
+    component: master-dev42-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -187,6 +192,7 @@ metadata:
   name: strapi-cache
   labels:
     application: master-dev42-1000jours
+    component: master-dev42-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -269,17 +275,17 @@ spec:
             - create-db-user
           env:
             - name: NEW_DB_NAME
-              value: autodevops_master-dev42
+              value: autodevops_master
             - name: NEW_USER
-              value: user_master-dev42
+              value: user_master
             - name: NEW_PASSWORD
-              value: password_master-dev42
+              value: password_master
             - name: NEW_DB_EXTENSIONS
               value: hstore pgcrypto citext uuid-ossp
           envFrom:
             - secretRef:
                 name: azure-pg-admin-user
-          image: ghcr.io/socialgouv/docker/azure-db:6.39.1
+          image: ghcr.io/socialgouv/docker/azure-db:6.45.0
           imagePullPolicy: IfNotPresent
           name: create-db-user
           resources:
@@ -290,57 +296,51 @@ spec:
               cpu: 100m
               memory: 64Mi
       restartPolicy: Never
-    metadata:
-      annotations:
-        app.gitlab.com/app: socialgouv-1000jours
-        app.gitlab.com/env: master-dev42
-        app.gitlab.com/env.name: master-dev42
-      labels:
-        application: master-dev42-1000jours
-        owner: 1000jours
-        team: 1000jours
-        cert: wildcard
   ttlSecondsAfterFinished: 86400
 metadata:
   annotations:
+    kapp.k14s.io/update-strategy: skip
     app.gitlab.com/app: socialgouv-1000jours
     app.gitlab.com/env: master-dev42
     app.gitlab.com/env.name: master-dev42
   labels:
     application: master-dev42-1000jours
+    component: master-dev42-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
-  name: create-db-job-0123456
+  name: create-db-job-master
   namespace: 1000jours-85-master-dev42
 ---
 apiVersion: v1
 kind: Secret
 stringData:
   DATABASE_URL: >-
-    postgresql://user_master-dev42%401000joursdevserver.postgres.database.azure.com:password_master-dev42@1000joursdevserver.postgres.database.azure.com/autodevops_master-dev42?sslmode=require
+    postgresql://user_master%401000joursdevserver.postgres.database.azure.com:password_master@1000joursdevserver.postgres.database.azure.com/autodevops_master?sslmode=require
   DB_URI: >-
-    postgresql://user_master-dev42%401000joursdevserver.postgres.database.azure.com:password_master-dev42@1000joursdevserver.postgres.database.azure.com/autodevops_master-dev42?sslmode=require
+    postgresql://user_master%401000joursdevserver.postgres.database.azure.com:password_master@1000joursdevserver.postgres.database.azure.com/autodevops_master?sslmode=require
   HASURA_GRAPHQL_DATABASE_URL: >-
-    postgresql://user_master-dev42%401000joursdevserver.postgres.database.azure.com:password_master-dev42@1000joursdevserver.postgres.database.azure.com/autodevops_master-dev42?sslmode=require
-  PGDATABASE: autodevops_master-dev42
+    postgresql://user_master%401000joursdevserver.postgres.database.azure.com:password_master@1000joursdevserver.postgres.database.azure.com/autodevops_master?sslmode=require
+  PGDATABASE: autodevops_master
   PGHOST: 1000joursdevserver.postgres.database.azure.com
-  PGPASSWORD: password_master-dev42
+  PGPASSWORD: password_master
   PGRST_DB_URI: >-
-    postgresql://user_master-dev42%401000joursdevserver.postgres.database.azure.com:password_master-dev42@1000joursdevserver.postgres.database.azure.com/autodevops_master-dev42?sslmode=require
+    postgresql://user_master%401000joursdevserver.postgres.database.azure.com:password_master@1000joursdevserver.postgres.database.azure.com/autodevops_master?sslmode=require
   PGSSLMODE: require
-  PGUSER: user_master-dev42@1000joursdevserver.postgres.database.azure.com
+  PGUSER: user_master@1000joursdevserver.postgres.database.azure.com
 metadata:
   annotations:
+    kapp.k14s.io/update-strategy: skip
     app.gitlab.com/app: socialgouv-1000jours
     app.gitlab.com/env: master-dev42
     app.gitlab.com/env.name: master-dev42
   labels:
     application: master-dev42-1000jours
+    component: master-dev42-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
-  name: azure-pg-user-master-dev42
+  name: azure-pg-user-master
   namespace: 1000jours-85-master-dev42
 ---
 apiVersion: apps/v1
@@ -355,6 +355,7 @@ metadata:
   labels:
     app: strapi
     application: master-dev42-1000jours
+    component: master-dev42-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -376,6 +377,7 @@ spec:
       labels:
         app: strapi
         application: master-dev42-1000jours
+        component: master-dev42-1000jours
         owner: 1000jours
         team: 1000jours
         cert: wildcard
@@ -414,7 +416,7 @@ spec:
               name: uploads
           envFrom:
             - secretRef:
-                name: azure-pg-user-master-dev42
+                name: azure-pg-user-master
             - secretRef:
                 name: strapi
             - configMapRef:
@@ -446,8 +448,8 @@ spec:
               value: '24'
           envFrom:
             - secretRef:
-                name: azure-pg-user-master-dev42
-          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.39.1
+                name: azure-pg-user-master
+          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.45.0
           imagePullPolicy: Always
           name: wait-for-postgres
           resources:
@@ -471,6 +473,7 @@ metadata:
   name: strapi
   labels:
     application: master-dev42-1000jours
+    component: master-dev42-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -501,6 +504,7 @@ spec:
       name: strapi
       labels:
         application: master-dev42-1000jours
+        component: master-dev42-1000jours
         owner: 1000jours
         team: 1000jours
         cert: wildcard
@@ -518,6 +522,7 @@ metadata:
     app.gitlab.com/env.name: master-dev42
   labels:
     application: master-dev42-1000jours
+    component: master-dev42-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
@@ -532,6 +537,7 @@ metadata:
   labels:
     app: strapi
     application: master-dev42-1000jours
+    component: master-dev42-1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard

@@ -49,6 +49,10 @@ export const copyDatabaseJob = ({
   const job = new Job({
     metadata: {
       name: `copy-db-${ciEnv.shortSha}`,
+      annotations: {
+        ...ciEnv.metadata.annotations,
+        "kapp.k14s.io/update-strategy": "skip",
+      },
       namespace,
     },
     spec: {
