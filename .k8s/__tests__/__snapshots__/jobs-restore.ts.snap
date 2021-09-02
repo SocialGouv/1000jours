@@ -89,5 +89,18 @@ stringData:
     postgresql://user_develop%401000joursdevserver.postgres.database.azure.com:password_develop@1000joursdevserver.postgres.database.azure.com/autodevops_develop?sslmode=require
   PGSSLMODE: require
   PGUSER: user_develop@1000joursdevserver.postgres.database.azure.com
+metadata:
+  annotations:
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: master-dev42
+    app.gitlab.com/env.name: master-dev42
+  labels:
+    application: master-dev42-1000jours
+    component: master-dev42-1000jours
+    owner: 1000jours
+    team: 1000jours
+    cert: wildcard
+  name: azure-pg-user-develop
+  namespace: 1000jours-85-master-dev42
 "
 `;

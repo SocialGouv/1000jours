@@ -13,6 +13,7 @@ import { getPgServerHostname } from "@socialgouv/kosko-charts/utils/getPgServerH
 import { copyDatabaseJob } from "../../../utils/copy-database.job";
 import { createSecret } from "@socialgouv/kosko-charts/components/pg-secret";
 import { getDefaultPgParams } from "@socialgouv/kosko-charts/components/azure-pg";
+import { updateMetadata } from "@socialgouv/kosko-charts/utils/updateMetadata";
 
 const getAzUserPgParams = (branch: string) => {
   const ciEnv = ci(process.env);
@@ -66,6 +67,12 @@ export default async () => {
   });
 
   const developSecret = createSecret(developDb);
+  updateMetadata(developSecret, {
+    annotations: envParams.metadata.annotations,
+    labels: envParams.metadata.labels,
+    name: developDb.name,
+    namespace: envParams.metadata.namespace,
+  });
 
   return [job, developSecret];
 };
