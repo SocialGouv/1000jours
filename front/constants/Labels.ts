@@ -63,6 +63,7 @@ export default {
         },
       ],
       title: "Proposer un lieu",
+      title: "Proposer un lieu",
     },
     title: "Autour de moi",
   },

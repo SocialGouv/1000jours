@@ -123,7 +123,10 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
     <Modal transparent={true} visible={visible} animationType="fade">
       <View style={styles.behindOfModal}>
         <View style={styles.mainContainer}>
-          <TitleH1 title={Labels.aroundMe.filter.title} animated={false} />
+          <TitleH1
+            title={Labels.aroundMe.submitNewFilter.title}
+            animated={false}
+          />
           <TouchableOpacity
             style={styles.closeModalView}
             onPress={() => {
