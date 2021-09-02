@@ -101,7 +101,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
   ) => {
     const functionAndValue = getChangeFunctionAndValue(index);
     return (
-      <View>
+      <View style={styles.sectionView}>
         <CommonText style={styles.partsTitle}>{section.instruction}</CommonText>
         <TextInput
           style={styles.textInput}
@@ -210,6 +210,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: Margins.default,
   },
+  sectionView: {
+    marginVertical: Margins.default,
+  },
   closeModalView: {
     padding: Paddings.default,
     position: "absolute",
@@ -229,6 +232,7 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlueDark,
     fontSize: Sizes.sm,
     fontWeight: "bold",
+    marginVertical: Margins.smaller,
   },
   postalCodeInput: {
     backgroundColor: Colors.cardGrey,
