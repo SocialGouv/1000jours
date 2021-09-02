@@ -43,6 +43,7 @@ Register strapi:
     CONTEXT: back/strapi
     IMAGE_NAME: les1000jours-strapi
 
+# restore develop database on review branches
 Restore develop db:
   extends: .autodevops_review
   stage: .post
