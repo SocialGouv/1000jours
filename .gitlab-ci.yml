@@ -50,6 +50,7 @@ Restore develop db:
   variables:
     KOSKO_APPEND_YAML_FROM: ""
     KOSKO_GENERATE_ARGS: "--env dev jobs/restore"
+    KAPP_DEPLOY_ARGS: "-a ${CI_PROJECT_NAME}-restore-develop-db"
   environment:
     auto_stop_in: 15 day
     name: ${CI_COMMIT_REF_NAME}${AUTO_DEVOPS_DEV_ENVIRONMENT_NAME}
