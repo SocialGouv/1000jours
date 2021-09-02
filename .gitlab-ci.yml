@@ -43,7 +43,7 @@ Register strapi:
     CONTEXT: back/strapi
     IMAGE_NAME: les1000jours-strapi
 
-Restore preprod db:
+Restore develop db:
   extends: .autodevops_review
   stage: .post
   allow_failure: True
@@ -57,12 +57,11 @@ Restore preprod db:
     on_stop: Stop review
     url: https://${CI_ENVIRONMENT_SLUG}-${CI_PROJECT_NAME}.${KUBE_INGRESS_BASE_DOMAIN}
   rules:
-    - if: "$CI_COMMIT_BRANCH == 'develop'"
-      when: always
+    - if: "$CI_COMMIT_BRANCH !== 'develop'"
+      when: never
     - if: "$CI_COMMIT_TAG"
       when: never
-    - when: manual
-    - when: never
+    - when: always
 
 Review:
   extends: .autodevops_review
@@ -73,7 +72,7 @@ Review:
     - if: "$CI_COMMIT_BRANCH == 'develop'"
       when: never
     - when: on_success
-    
+
 # longer env lifetime for develop branch
 Review develop:
   extends: .autodevops_review
