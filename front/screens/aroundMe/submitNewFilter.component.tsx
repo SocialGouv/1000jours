@@ -1,3 +1,4 @@
+import { useMutation } from "@apollo/client/react/hooks";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
@@ -20,6 +21,7 @@ import CustomNumberOfChildrenPicker from "../../components/base/customNumberOfCh
 import CustomPostalCodeTextInput from "../../components/base/customPostalCodeTextInput.component";
 import {
   Colors,
+  DatabaseQueries,
   FontNames,
   FontWeight,
   getFontFamilyName,
@@ -38,30 +40,75 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
   useEffect(() => {
     if (!visible) return;
   }, [visible]);
+
+  const [sendCartoSuggestions] = useMutation(
+    DatabaseQueries.CARTO_SEND_SUGGESTIONS,
+    {
+      onError: (err) => {
+        console.log(err);
+      },
+    }
+  );
+
   const [newPois, setNewPois] = useState("");
+  const [newPoisIsEmpty, setNewPoisIsEmpty] = useState(true);
   const [newSuggestions, setNewSuggestions] = useState("");
-  const [numberOfChildrens, setNumberOfChildrens] = useState(1);
+  const [newSuggestionsIsEmpty, setNewSuggestionsIsEmpty] = useState(true);
+  const [numberOfChildren, setNumberOfChildren] = useState(1);
   const [postalCode, setPostalCode] = useState("");
   const instructionsAndPlaceholders =
     Labels.aroundMe.submitNewFilter.instructions;
 
   const getChangeFunctionAndValue = (index: number) => {
-    if (index === 0) return { value: newPois, function: setNewPois };
-    else return { value: newSuggestions, function: setNewSuggestions };
+    if (index === 0)
+      return {
+        function: setNewPois,
+        setIsEmpty: setNewPoisIsEmpty,
+        value: newPois,
+      };
+    else
+      return {
+        function: setNewSuggestions,
+        setIsEmpty: setNewSuggestionsIsEmpty,
+        value: newSuggestions,
+      };
   };
 
-  const renderSection = (section: {
-    instruction: string;
-    placeholder: string;
-  }, index: number) => {
+  const onValidate = async () => {
+    if (!newPoisIsEmpty && !newSuggestionsIsEmpty) {
+      hideModal();
+      await sendCartoSuggestions({
+        variables: {
+          codePostal: postalCode,
+          nombreEnfants: numberOfChildren,
+          nouveauxPois: newPois,
+          suggestionsAmeliorations: newSuggestions,
+        },
+      });
+      setNewPois("");
+      setNewPoisIsEmpty(true);
+      setNewSuggestions("");
+      setNewPoisIsEmpty(true);
+    }
+  };
 
+  const renderSection = (
+    section: {
+      instruction: string;
+      placeholder: string;
+    },
+    index: number
+  ) => {
     const functionAndValue = getChangeFunctionAndValue(index);
     return (
       <View>
         <CommonText style={styles.partsTitle}>{section.instruction}</CommonText>
         <TextInput
           style={styles.textInput}
-          onChangeText={functionAndValue.function}
+          onChangeText={(text) => {
+            functionAndValue.function(text);
+            functionAndValue.setIsEmpty(text.trimEnd().length === 0);
+          }}
           value={functionAndValue.value}
           placeholder={section.placeholder}
           placeholderTextColor={Colors.primaryBlue}
@@ -104,17 +151,9 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
               )
             )}
             <CustomNumberOfChildrenPicker
-              updateNumberOfChildren={(number) => {
-                console.log(number);
-                setNumberOfChildrens(number);
-              }}
+              updateNumberOfChildren={setNumberOfChildren}
             />
-            <CustomPostalCodeTextInput
-              updatePostalCode={(postalCode) => {
-                console.log(postalCode);
-                setPostalCode(postalCode);
-              }}
-            />
+            <CustomPostalCodeTextInput updatePostalCode={setPostalCode} />
           </ScrollView>
           <View style={styles.buttonsContainer}>
             <View style={styles.buttonContainer}>
@@ -142,7 +181,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
                 rounded={true}
                 disabled={false}
                 action={() => {
-                  hideModal();
+                  void onValidate();
                 }}
               />
             </View>

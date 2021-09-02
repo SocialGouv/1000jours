@@ -129,3 +129,19 @@ export const GET_EVENT_DETAILS = (eventId: string): DocumentNode => {
     }
   `;
 };
+
+export const CARTO_SEND_SUGGESTIONS = gql`
+  mutation (
+    $nouveauxPois: String
+    $suggestionsAmeliorations: String
+    $nombreEnfants: Int!
+    $codePostal: String!
+  ) {
+    cartographieSuggestions(
+      nouveauxPois: $nouveauxPois
+      suggestionsAmeliorations: $suggestionsAmeliorations
+      nombre_enfants: $nombreEnfants
+      code_postal: $codePostal
+    )
+  }
+`;
