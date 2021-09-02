@@ -14,6 +14,7 @@ metadata:
   labels:
     app: strapi-cache
     application: 1000jours
+    component: 1000jours
     owner: 1000jours
     team: 1000jours
   name: strapi-cache
@@ -34,6 +35,7 @@ spec:
       labels:
         app: strapi-cache
         application: 1000jours
+        component: 1000jours
         owner: 1000jours
         team: 1000jours
     spec:
@@ -99,6 +101,7 @@ metadata:
   labels:
     app: strapi-cache
     application: 1000jours
+    component: 1000jours
     owner: 1000jours
     team: 1000jours
   name: strapi-cache
@@ -123,7 +126,7 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
-    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/tls-acme: 'true'
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
@@ -136,6 +139,7 @@ metadata:
   labels:
     app: strapi-cache
     application: 1000jours
+    component: 1000jours
     owner: 1000jours
     team: 1000jours
   name: strapi-cache
@@ -163,6 +167,7 @@ metadata:
   name: strapi-cache
   labels:
     application: 1000jours
+    component: 1000jours
     owner: 1000jours
     team: 1000jours
   annotations:
@@ -270,6 +275,7 @@ metadata:
   namespace: les1000jours
   labels:
     application: 1000jours
+    component: 1000jours
     owner: 1000jours
     team: 1000jours
 spec:
@@ -302,6 +308,7 @@ spec:
       namespace: les1000jours
       labels:
         application: 1000jours
+        component: 1000jours
         owner: 1000jours
         team: 1000jours
     type: Opaque
@@ -318,6 +325,7 @@ metadata:
   labels:
     app: strapi
     application: 1000jours
+    component: 1000jours
     owner: 1000jours
     team: 1000jours
   name: strapi
@@ -338,6 +346,7 @@ spec:
       labels:
         app: strapi
         application: 1000jours
+        component: 1000jours
         owner: 1000jours
         team: 1000jours
     spec:
@@ -407,7 +416,7 @@ spec:
           envFrom:
             - secretRef:
                 name: azure-pg-user
-          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.39.1
+          image: ghcr.io/socialgouv/docker/wait-for-postgres:6.45.0
           imagePullPolicy: Always
           name: wait-for-postgres
           resources:
@@ -431,6 +440,7 @@ metadata:
   namespace: les1000jours
   labels:
     application: 1000jours
+    component: 1000jours
     owner: 1000jours
     team: 1000jours
 spec:
@@ -459,6 +469,7 @@ spec:
       namespace: les1000jours
       labels:
         application: 1000jours
+        component: 1000jours
         owner: 1000jours
         team: 1000jours
     type: Opaque
@@ -476,6 +487,7 @@ metadata:
     app.gitlab.com/env.name: prod
   labels:
     application: 1000jours
+    component: 1000jours
     owner: 1000jours
     team: 1000jours
 data:
@@ -489,6 +501,7 @@ metadata:
   labels:
     app: strapi
     application: 1000jours
+    component: 1000jours
     owner: 1000jours
     team: 1000jours
   name: strapi
@@ -563,6 +576,7 @@ metadata:
     app.gitlab.com/env.name: prod
   labels:
     application: 1000jours
+    component: 1000jours
     owner: 1000jours
     team: 1000jours
   namespace: les1000jours
@@ -583,6 +597,7 @@ metadata:
   labels:
     usage: prod-uploads
     application: 1000jours
+    component: 1000jours
     owner: 1000jours
     team: 1000jours
   name: prod-uploads
