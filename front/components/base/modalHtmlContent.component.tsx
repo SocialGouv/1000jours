@@ -1,13 +1,14 @@
-import table, { IGNORED_TAGS } from "@native-html/table-plugin";
+import TableRenderer, { tableModel } from "@native-html/table-plugin";
 import type { Asset } from "expo-asset";
 import * as React from "react";
 import { useEffect } from "react";
 import { Modal as RNModal, SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import HTML from "react-native-render-html";
-import { WebView } from "react-native-webview";
+import WebView from "react-native-webview";
 
 import { FontWeight, Paddings } from "../../constants";
+import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { AssestUtils } from "../../utils";
 import { View } from "../Themed";
 import Button from "./button.component";
@@ -40,13 +41,20 @@ const ModalHtmlContent: React.FC<Props> = ({
     const htmlProps = {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       WebView,
-      ignoredTags: IGNORED_TAGS,
+      customHTMLElementModels: {
+        table: tableModel,
+      },
       renderers: {
-        table,
+        table: TableRenderer,
       },
     };
     return (
-      <HTML source={data} tagsStyles={{ b: styles.bold }} {...htmlProps} />
+      <HTML
+        source={data}
+        contentWidth={SCREEN_WIDTH}
+        tagsStyles={{ b: styles.bold }}
+        {...htmlProps}
+      />
     );
   };
 

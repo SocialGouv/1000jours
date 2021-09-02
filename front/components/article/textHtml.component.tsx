@@ -1,9 +1,9 @@
-import iframe from "@native-html/iframe-plugin";
+import IframeRenderer, { iframeModel } from "@native-html/iframe-plugin";
 import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import HTML from "react-native-render-html";
-import { WebView } from "react-native-webview";
+import WebView from "react-native-webview";
 
 import {
   Colors,
@@ -28,15 +28,22 @@ const TextHtml: FC<Props> = ({ html, offsetTotal }) => {
   const [isReady, setIsReady] = React.useState(false);
 
   const renderers = {
-    iframe,
+    iframe: IframeRenderer,
+  };
+
+  const customHTMLElementModels = {
+    iframe: iframeModel,
   };
 
   const fixVideoContent = (content: string) => {
     const width = offsetTotal ? SCREEN_WIDTH - offsetTotal * 2 : SCREEN_WIDTH;
     // La balise <oembed> n'est pas supportée par la lib react-native-render-html
     // On la remplace par une iframe qui elle sera rendu dans une WebView
-    content = content.replace("<oembed url=", `<iframe width="${width}" src=`);
-    content = content.replace("</oembed>", "</iframe>");
+    content = content.replace(
+      '<figure class="media"><oembed url=',
+      `<iframe width="${width}" src=`
+    );
+    content = content.replace("</oembed></figure>", "</iframe>");
     // Permet de corriger les liens des vidéos youtube
     content = content.replace("youtube.com/watch?v=", "youtube.com/embed/");
     setHtmlContent(content);
@@ -50,15 +57,16 @@ const TextHtml: FC<Props> = ({ html, offsetTotal }) => {
   return isReady ? (
     <HTML
       WebView={WebView}
+      contentWidth={SCREEN_WIDTH}
       renderers={renderers}
-      containerStyle={styles.containerStyle}
-      baseFontStyle={styles.baseFontStyle}
+      customHTMLElementModels={customHTMLElementModels}
+      baseStyle={styles.baseStyle}
       source={{ html: htmlContent }}
       tagsStyles={{ b: styles.bold, strong: styles.bold }}
       ignoredStyles={["color"]}
       renderersProps={{
         iframe: {
-          scalesPageToFit: false,
+          scalesPageToFit: true,
           webViewProps: {},
         },
       }}
@@ -67,18 +75,16 @@ const TextHtml: FC<Props> = ({ html, offsetTotal }) => {
 };
 
 const styles = StyleSheet.create({
-  baseFontStyle: {
+  baseStyle: {
     color: Colors.commonText,
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
     fontSize: Sizes.sm,
     lineHeight: Sizes.lg,
+    margin: 0,
+    padding: 0,
   },
   bold: {
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.bold),
-  },
-  containerStyle: {
-    margin: 0,
-    padding: 0,
   },
 });
 
