@@ -51,6 +51,8 @@ export default async () => {
     name,
   });
 
+  const tag = process.env.GITHUB_SHA;
+
   // generate basic strapi manifests
   const manifests = await create(component, {
     env,
@@ -58,7 +60,7 @@ export default async () => {
       ingress: false,
       withPostgres: true,
       containerPort: 1337,
-      image: getHarborImagePath({ name: "les1000jours-strapi" }),
+      image: `ghcr.io/socialgouv/nos1000jours/strapi:sha-${tag}`,
     },
     deployment: {
       container: {
