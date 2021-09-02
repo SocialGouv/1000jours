@@ -88,9 +88,10 @@ const BottomTabNavigator: FC = () => {
   return (
     <BottomTab.Navigator
       initialRouteName="tabHome"
-      tabBarOptions={{
-        activeTintColor: Colors.primaryBlueDark,
-        inactiveTintColor: Colors.primaryBlueDark,
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: Colors.primaryBlueDark,
+        tabBarInactiveTintColor: Colors.primaryBlueDark,
       }}
     >
       {tabItems.map((tabItem, index) => (
