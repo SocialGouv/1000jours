@@ -6,6 +6,11 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: copy-db-0123456
+  annotations:
+    app.gitlab.com/app: socialgouv-1000jours
+    app.gitlab.com/env: master-dev42
+    app.gitlab.com/env.name: master-dev42
+    kapp.k14s.io/update-strategy: skip
   namespace: 1000jours-85-master-dev42
 spec:
   backoffLimit: 0
