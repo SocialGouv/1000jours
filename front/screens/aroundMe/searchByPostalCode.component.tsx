@@ -66,7 +66,9 @@ const SearchByPostalCode: React.FC<Props> = ({
     setLocationPermissionIsGranted(true);
     setIsLoading(true);
     try {
-      const currentLocation = await Location.getCurrentPositionAsync({});
+      const currentLocation = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Lowest,
+      });
       updateUserLocation(currentLocation.coords);
     } catch {
       updateUserLocation(undefined);

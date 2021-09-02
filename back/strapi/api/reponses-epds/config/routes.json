@@ -17,6 +17,14 @@
       }
     },
     {
+      "method": "POST",
+      "path": "/reponses-epds/partage",
+      "handler": "reponses-epds.partage",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "GET",
       "path": "/reponses-epds/count",
       "handler": "reponses-epds.count",

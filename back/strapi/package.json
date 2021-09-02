@@ -15,7 +15,7 @@
     "seed:import": "node scripts/import && node scripts/seed"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^27.1.0",
+    "@ckeditor/ckeditor5-build-classic": "^29.2.0",
     "@ckeditor/ckeditor5-react": "^3.0.2",
     "axios": "^0.21.1",
     "csv-string": "^4.0.1",
@@ -51,17 +51,17 @@
   "strapi": {},
   "engines": {
     "node": ">=10.16.0 <=14.x.x",
-    "npm": "^7.10.0"
+    "npm": "^7.21.1"
   },
   "license": "MIT",
   "devDependencies": {
-    "@socialgouv/eslint-config-recommended": "^1.70.0",
+    "@socialgouv/eslint-config-recommended": "^1.85.4",
     "babel-eslint": "^10.1.0",
     "dotenv": "^10.0.0",
-    "eslint": "^7.24.0",
+    "eslint": "^7.32.0",
     "eslint-plugin-jest": "^24.4.0",
-    "jest": "^27.0.6",
+    "jest": "^27.1.0",
     "node-fetch": "^2.6.1",
-    "prettier": "^2.2.1"
+    "prettier": "^2.3.2"
   }
 }

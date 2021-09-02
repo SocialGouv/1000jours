@@ -36,7 +36,7 @@ import { cancelScheduleNextStepNotification } from "../utils/notification.util";
 import { checkErrorOnProfile } from "../utils/step.util";
 
 interface Props {
-  navigation: StackNavigationProp<RootStackParamList, "profile">;
+  navigation: StackNavigationProp<RootStackParamList>;
 }
 
 const Profile: FC<Props> = ({ navigation }) => {

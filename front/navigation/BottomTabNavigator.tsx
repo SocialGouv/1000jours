@@ -9,6 +9,7 @@ import Labels from "../constants/Labels";
 import {
   ArticleDetail,
   EpdsSurveyScreen,
+  EventDetails,
   ListArticles,
   TabAroundMeScreen,
   TabCalendarScreen,
@@ -87,9 +88,10 @@ const BottomTabNavigator: FC = () => {
   return (
     <BottomTab.Navigator
       initialRouteName="tabHome"
-      tabBarOptions={{
-        activeTintColor: Colors.primaryBlueDark,
-        inactiveTintColor: Colors.primaryBlueDark,
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: Colors.primaryBlueDark,
+        tabBarInactiveTintColor: Colors.primaryBlueDark,
       }}
     >
       {tabItems.map((tabItem, index) => (
@@ -133,6 +135,8 @@ const TabCalendarNavigator: FC = () => (
       component={TabCalendarScreen}
       options={{}}
     />
+    <TabCalendarStack.Screen name="eventDetails" component={EventDetails} />
+    <TabCalendarStack.Screen name="article" component={ArticleDetail} />
   </TabCalendarStack.Navigator>
 );
 

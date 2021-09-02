@@ -1,4 +1,3 @@
-import type { NavigationContainerRef } from "@react-navigation/native";
 import {
   DarkTheme,
   DefaultTheme,
@@ -30,6 +29,7 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import Onboarding from "../screens/Onboarding";
 import Profile from "../screens/Profile";
 import type { RootStackParamList } from "../types";
+import { navigationRef } from "../utils/rootNavigation.util";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 
@@ -48,8 +48,6 @@ const Navigation: FC<NavigationProps> = ({
 }) => {
   const [showMenu, setShowMenu] = React.useState(false);
 
-  const navigationRef = React.useRef<NavigationContainerRef>(null);
-
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -66,7 +64,7 @@ const Navigation: FC<NavigationProps> = ({
       <Menu
         showMenu={showMenu}
         setShowMenu={setShowMenu}
-        navigation={navigationRef.current}
+        navigation={navigationRef}
       />
       {notification ? (
         <Notification
@@ -74,7 +72,6 @@ const Navigation: FC<NavigationProps> = ({
           onDismiss={() => {
             setNotification(null);
           }}
-          navigation={navigationRef.current}
         />
       ) : null}
     </NavigationContainer>
@@ -121,9 +118,7 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => (
         ),
         headerShown: true,
         headerTitle: () => <AppLogo height={Sizes.xxxl} width={Sizes.xxxl} />,
-        headerTitleContainerStyle: {
-          alignItems: "center",
-        },
+        headerTitleAlign: "center",
       }}
     />
     <Stack.Screen
