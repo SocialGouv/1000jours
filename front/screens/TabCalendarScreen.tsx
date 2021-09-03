@@ -77,12 +77,14 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     }
   };
 
-  const createCalendar = async () => {
+  const calendarSourceIOS = async () => {
     const sources = await Calendar.getSourcesAsync();
-    const mainSource =
-      sources.find((source) => source.name === ICLOUD) ?? sources[0];
+    return sources.find((source) => source.name === ICLOUD) ?? sources[0];
+  };
+
+  const createCalendar = async () => {
     const defaultCalendarSource = PLATFORM_IS_IOS
-      ? mainSource
+      ? await calendarSourceIOS()
       : {
           isLocalAccount: true,
           name: Labels.appName,
