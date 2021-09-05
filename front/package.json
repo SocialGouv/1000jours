@@ -52,7 +52,7 @@
     "expo-notifications": "^0.12.3",
     "expo-splash-screen": "~0.11.4",
     "expo-status-bar": "~1.0.4",
-    "expo-updates": "~0.8.4",
+    "expo-updates": "~0.8.5",
     "expo-web-browser": "~9.2.0",
     "graphql": "^15.5.2",
     "lodash": "^4.17.21",
@@ -80,10 +80,10 @@
     "sentry-expo": "^4.0.1"
   },
   "devDependencies": {
-    "@babel/core": "~7.15.0",
+    "@babel/core": "~7.15.5",
     "@socialgouv/eslint-config-typescript": "^1.85.4",
     "@types/lodash": "^4.14.172",
-    "@types/react": "~17.0.19",
+    "@types/react": "~17.0.20",
     "@types/react-native": "~0.64.13",
     "@types/react-native-calendars": "^1.1264.2",
     "@types/react-native-indicators": "^0.16.1",
