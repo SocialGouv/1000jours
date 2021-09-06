@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_ressources_epds_ressources_configs",
+  "info": {
+    "name": "ressources_config",
+    "icon": "chess-board"
+  },
+  "options": {},
+  "attributes": {
+    "score_min": {
+      "type": "integer"
+    },
+    "score_max": {
+      "type": "integer"
+    },
+    "texte_1": {
+      "type": "richtext"
+    },
+    "ressources": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ressources-epds.ressources"
+    },
+    "texte_2": {
+      "type": "richtext"
+    }
+  }
+}
