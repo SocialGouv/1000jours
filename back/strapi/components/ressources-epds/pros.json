@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_ressources_epds_pros",
+  "info": {
+    "name": "pros",
+    "icon": "user-injured"
+  },
+  "options": {},
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    }
+  }
+}

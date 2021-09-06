@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_ressources_epds_tels",
+  "info": {
+    "name": "tels",
+    "icon": "phone"
+  },
+  "options": {},
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "horaires": {
+      "type": "string"
+    },
+    "numero": {
+      "type": "string"
+    }
+  }
+}

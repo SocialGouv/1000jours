@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_ressources_epds_sites_webs",
+  "info": {
+    "name": "sites_web",
+    "icon": "globe"
+  },
+  "options": {},
+  "attributes": {
+    "titre": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}
