@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "evenements",
+  "collectionName": "parentheque_documents",
   "info": {
-    "name": "Événement",
+    "name": "Parentheque Documents",
     "description": ""
   },
   "options": {
@@ -12,27 +12,26 @@
   },
   "attributes": {
     "nom": {
-      "type": "string",
-      "required": true,
-      "unique": true
+      "type": "string"
     },
     "description": {
       "type": "text"
     },
-    "debut": {
-      "type": "integer"
-    },
-    "fin": {
-      "type": "integer"
+    "fichier": {
+      "allowedTypes": ["images", "files", "videos"],
+      "model": "file",
+      "plugin": "upload",
+      "required": true,
+      "via": "related"
     },
     "etapes": {
       "collection": "etape",
-      "via": "evenements",
+      "via": "parentheque_documents",
       "dominant": true
     },
     "thematique": {
       "model": "thematique",
-      "via": "evenements"
+      "via": "parentheque_documents"
     }
   }
 }

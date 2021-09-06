@@ -29,6 +29,10 @@
     "evenements": {
       "via": "thematique",
       "collection": "evenement"
+    },
+    "parentheque_documents": {
+      "via": "thematique",
+      "collection": "parentheque-documents"
     }
   }
 }
