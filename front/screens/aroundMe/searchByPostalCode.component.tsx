@@ -66,10 +66,21 @@ const SearchByPostalCode: React.FC<Props> = ({
     setLocationPermissionIsGranted(true);
     setIsLoading(true);
     try {
-      const currentLocation = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Lowest,
-      });
-      updateUserLocation(currentLocation.coords);
+      let currentLocation = null;
+      let locationSuccess = false;
+      // Il y a un temps de latence entre le moment où on autorise la géolocalisation
+      // et le moment où le getCurrentPositionAsync() retourne une localication
+      // donc tant qu'il ne retourne rien, on le rappelle
+      while (!locationSuccess) {
+        try {
+          currentLocation = await Location.getCurrentPositionAsync({
+            accuracy: Location.Accuracy.Lowest,
+          });
+          locationSuccess = true;
+          // eslint-disable-next-line no-empty
+        } catch (ex: unknown) {}
+      }
+      if (currentLocation) updateUserLocation(currentLocation.coords);
     } catch {
       updateUserLocation(undefined);
     }
