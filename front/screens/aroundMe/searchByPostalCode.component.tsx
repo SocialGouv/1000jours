@@ -66,8 +66,9 @@ const SearchByPostalCode: React.FC<Props> = ({
     setLocationPermissionIsGranted(true);
     setIsLoading(true);
     try {
-      let currentLocation = null;
+      let currentLocation = undefined;
       let locationSuccess = false;
+      let getPositionAttempts = 0;
       // Il y a un temps de latence entre le moment où on autorise la géolocalisation
       // et le moment où le getCurrentPositionAsync() retourne une localication
       // donc tant qu'il ne retourne rien, on le rappelle
@@ -78,9 +79,21 @@ const SearchByPostalCode: React.FC<Props> = ({
           });
           locationSuccess = true;
           // eslint-disable-next-line no-empty
-        } catch (ex: unknown) {}
+        } catch (ex: unknown) {
+          getPositionAttempts = getPositionAttempts + 1;
+          if (
+            // Si l'exception remonte une erreur comme quoi le service n'est pas encore activé
+            // Ou si le nombre de tentatives a été dépassé, on arrête les rappels
+            !JSON.stringify(ex).includes(
+              Labels.aroundMe.locationProviderUnavailable
+            ) ||
+            getPositionAttempts > AroundMeConstants.GET_POSITION_MAX_ATTEMPTS
+          ) {
+            locationSuccess = true;
+          }
+        }
       }
-      if (currentLocation) updateUserLocation(currentLocation.coords);
+      updateUserLocation(currentLocation ? currentLocation.coords : undefined);
     } catch {
       updateUserLocation(undefined);
     }

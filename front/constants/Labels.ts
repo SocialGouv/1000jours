@@ -19,6 +19,8 @@ export default {
     },
     goThere: "M'y rendre",
     instruction: "Renseignez le code postal de votre recherche.",
+    locationProviderUnavailable:
+      "Location provider is unavailable. Make sure that location services are enabled.",
     noAddressFound: "Aucune adresse n'a été trouvée dans cette zone",
     pleaseAllowGeolocation:
       "Veuillez autoriser la géolocalisation dans les paramètres de votre téléphone",

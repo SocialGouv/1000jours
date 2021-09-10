@@ -53,3 +53,5 @@ export enum CartoFilterEnum {
 }
 
 export const MAPVIEW_MIN_ZOOM_LEVEL = 10;
+
+export const GET_POSITION_MAX_ATTEMPTS = 60;
