@@ -82,7 +82,7 @@ const SearchByPostalCode: React.FC<Props> = ({
         } catch (ex: unknown) {
           getPositionAttempts = getPositionAttempts + 1;
           if (
-            // Si l'exception remonte une erreur comme quoi le service n'est pas encore activé
+            // Si l'exception remontée n'est pas une erreur de service non-disponible
             // Ou si le nombre de tentatives a été dépassé, on arrête les rappels
             !JSON.stringify(ex).includes(
               Labels.aroundMe.locationProviderUnavailable
