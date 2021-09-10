@@ -242,11 +242,13 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                 hideModal(false);
               }}
             >
-              <Icomoon
-                name={IcomoonIcons.fermer}
-                size={Sizes.xs}
-                color={Colors.primaryBlue}
-              />
+              <View style={styles.closeModalButton}>
+                <Icomoon
+                  name={IcomoonIcons.fermer}
+                  size={Sizes.xs}
+                  color={Colors.primaryBlue}
+                />
+              </View>
             </TouchableOpacity>
             <ScrollView>
               {renderTextInputView(PersonalInformationType.firstName, false)}
@@ -355,8 +357,14 @@ const styles = StyleSheet.create({
   center: {
     alignSelf: "center",
   },
+  closeModalButton: {
+    padding: Paddings.default,
+    position: "absolute",
+    right: 0,
+    top: 0,
+  },
   closeModalView: {
-    margin: Margins.default,
+    padding: Paddings.larger,
     position: "absolute",
     right: 0,
     top: 0,
