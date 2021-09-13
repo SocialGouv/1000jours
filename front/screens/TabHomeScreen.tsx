@@ -36,7 +36,7 @@ import { getCurrentStepId } from "../utils/step.util";
 import { stringIsNotNullNorEmpty } from "../utils/strings.util";
 
 interface Props {
-  navigation: StackNavigationProp<TabHomeParamList, "listArticles">;
+  navigation: StackNavigationProp<TabHomeParamList>;
 }
 
 const TabHomeScreen: FC<Props> = ({ navigation }) => {
@@ -148,10 +148,10 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   const stepParentheque: Step = {
     active: null,
     debut: null,
-    description: null,
+    description: Labels.timeline.library.description,
     fin: null,
     id: "0",
-    nom: Labels.timeline.library,
+    nom: Labels.timeline.library.nom,
     ordre: 0,
   };
 
@@ -184,7 +184,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
             name={step.nom}
             key={index}
             onPress={() => {
-              navigation.navigate("listArticles", { step });
+              navigation.navigate("listParentsDocuments", { step });
             }}
           />
         ))}
