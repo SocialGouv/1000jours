@@ -174,8 +174,6 @@ const suggestions = async ({
   if (!process.env["MAIL_SEND_TO"])
     throw new Error("Le service mail n'est pas configuré");
 
-  if (!email) throw new Error("Au moins une adresse email est nécessaire");
-
   const info = {
     nouveauxPois,
     suggestionsAmeliorations,

@@ -2,9 +2,16 @@
 
 const PoiService = require("../services");
 
-const params = ["perimetre", "types", "thematiques", "etapes"];
+const searchParams = ["perimetre", "types", "thematiques", "etapes"];
 
-const buildParams = (context) =>
+const suggestionsParams = [
+  "nouveauxPois",
+  "suggestionsAmeliorations",
+  "nombre_enfants",
+  "code_postal",
+];
+
+const buildParams = (context, params = searchParams) =>
   params.reduce((result, param) => {
     const value = context.request.query[param];
 
@@ -29,4 +36,12 @@ const count = async (context) => {
   }
 };
 
-module.exports = { search, count };
+const suggestions = async (context) => {
+  try {
+    return PoiService.suggestions(buildParams(context, suggestionsParams));
+  } catch (e) {
+    context.badRequest(e.message);
+  }
+};
+
+module.exports = { search, count, suggestions };
