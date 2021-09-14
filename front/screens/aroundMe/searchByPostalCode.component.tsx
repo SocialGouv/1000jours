@@ -85,7 +85,7 @@ const SearchByPostalCode: React.FC<Props> = ({
             // Si l'exception remontée n'est pas une erreur de service non-disponible
             // Ou si le nombre de tentatives a été dépassé, on arrête les rappels
             !JSON.stringify(ex).includes(
-              Labels.aroundMe.locationProviderUnavailable
+              AroundMeConstants.ERROR_LOCATION_PROVIDER_UNAVAILABLE_MESSAGE
             ) ||
             getPositionAttempts > AroundMeConstants.GET_POSITION_MAX_ATTEMPTS
           ) {
