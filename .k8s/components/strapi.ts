@@ -5,7 +5,7 @@ import { azureProjectVolume } from "@socialgouv/kosko-charts/components/azure-st
 import { addEnvs } from "@socialgouv/kosko-charts/utils/addEnvs";
 import { getIngressHost } from "@socialgouv/kosko-charts/utils/getIngressHost";
 import { getDeployment } from "@socialgouv/kosko-charts/utils/getDeployment";
-import { getHarborImagePath } from "@socialgouv/kosko-charts/utils/getHarborImagePath";
+
 import {
   VolumeMount,
   Probe,
