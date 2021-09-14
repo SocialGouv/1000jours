@@ -117,6 +117,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   };
 
   const syncEventsWithOsCalendar = async () => {
+    trackScreenView(TrackerUtils.TrackingEvent.CALENDAR_SYNC);
     const calendarId = await StorageUtils.getStringValue(
       StorageKeysConstants.osCalendarId
     );

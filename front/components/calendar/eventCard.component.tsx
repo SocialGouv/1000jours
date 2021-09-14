@@ -1,5 +1,6 @@
 import { useLazyQuery } from "@apollo/client";
 import _ from "lodash";
+import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import { useEffect } from "react";
 import * as React from "react";
@@ -19,7 +20,7 @@ import {
 import { GET_EVENT_ARTICLES } from "../../constants/databaseQueries.constants";
 import type { CartoFilterStorage } from "../../type";
 import type { Article, Event, Tag } from "../../types";
-import { StorageUtils } from "../../utils";
+import { StorageUtils, TrackerUtils } from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { getThematiqueIcon } from "../../utils/thematique.util";
 import ArticleCard from "../article/articleCard.component";
@@ -36,6 +37,7 @@ interface Props {
 const dotIconSize = Sizes.xxxs;
 
 const EventCard: FC<Props> = ({ event, showEventDetails }) => {
+  const { trackScreenView } = useMatomo();
   const [articles, setArticles] = React.useState<Article[]>([]);
   const MAX_ARTICLES = 10;
 
@@ -79,6 +81,7 @@ const EventCard: FC<Props> = ({ event, showEventDetails }) => {
   };
 
   const seeOnTheMap = () => {
+    trackScreenView(TrackerUtils.TrackingEvent.EVENT_SEE_THE_MAP);
     updateCartoFilterStorage();
     RootNavigation.navigate("tabAroundMe", null);
   };
