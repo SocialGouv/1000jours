@@ -136,8 +136,8 @@ const emailSuggestionsTemplate = (info) => ({
 
     De nouvelles suggestions pour la cartographie ont été envoyées.
 
-    - Nouveaux POI suggérés : <%- nouveauxPois %>
-    - Suggestions d'améliorations : <%- suggestionsAmeliorations %>
+    - Nouveaux POI suggérés : <%- nouveaux_pois %>
+    - Suggestions d'améliorations : <%- suggestions_ameliorations %>
 
     Informations personnelles :
     - Nombre d'enfant(s) : <%- nombre_enfants %>
@@ -150,8 +150,8 @@ const emailSuggestionsTemplate = (info) => ({
 
     <p>
       <ul>
-        <li>Nouveaux POI suggérés : <%- nouveauxPois %></li>
-        <li>Suggestions d'améliorations : <%- suggestionsAmeliorations %></li>
+        <li>Nouveaux POI suggérés : <%- nouveaux_pois %></li>
+        <li>Suggestions d'améliorations : <%- suggestions_ameliorations %></li>
       </ul>
     </p>
 
@@ -166,8 +166,8 @@ const emailSuggestionsTemplate = (info) => ({
 });
 
 const suggestions = async ({
-  nouveauxPois,
-  suggestionsAmeliorations,
+  nouveaux_pois,
+  suggestions_ameliorations,
   nombre_enfants = "ND",
   code_postal = "ND",
 }) => {
@@ -175,8 +175,8 @@ const suggestions = async ({
     throw new Error("Le service mail n'est pas configuré");
 
   const info = {
-    nouveauxPois,
-    suggestionsAmeliorations,
+    nouveaux_pois,
+    suggestions_ameliorations,
     nombre_enfants,
     code_postal,
   };

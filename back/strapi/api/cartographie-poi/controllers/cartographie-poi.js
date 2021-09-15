@@ -5,8 +5,8 @@ const PoiService = require("../services");
 const searchParams = ["perimetre", "types", "thematiques", "etapes"];
 
 const suggestionsParams = [
-  "nouveauxPois",
-  "suggestionsAmeliorations",
+  "nouveaux_pois",
+  "suggestions_ameliorations",
   "nombre_enfants",
   "code_postal",
 ];

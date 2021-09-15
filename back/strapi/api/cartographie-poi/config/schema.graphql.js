@@ -73,8 +73,8 @@ module.exports = {
   `,
   mutation: `
     cartographieSuggestions (
-      nouveauxPois: String
-      suggestionsAmeliorations: String
+      nouveaux_pois: String
+      suggestions_ameliorations: String
       nombre_enfants: Int!
       code_postal: String!
     ): Boolean
