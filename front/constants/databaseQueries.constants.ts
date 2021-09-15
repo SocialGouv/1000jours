@@ -138,8 +138,8 @@ export const CARTO_SEND_SUGGESTIONS = gql`
     $codePostal: String!
   ) {
     cartographieSuggestions(
-      nouveauxPois: $nouveauxPois
-      suggestionsAmeliorations: $suggestionsAmeliorations
+      nouveaux_pois: $nouveauxPois
+      suggestions_ameliorations: $suggestionsAmeliorations
       nombre_enfants: $nombreEnfants
       code_postal: $codePostal
     )

@@ -47,6 +47,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/cartographie-pois/suggestions",
+      "handler": "cartographie-poi.suggestions",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }
