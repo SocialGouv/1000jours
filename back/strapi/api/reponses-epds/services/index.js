@@ -152,6 +152,7 @@ const partage = async ({
       {
         from: process.env["MAIL_SEND_FROM"],
         to: email_pro,
+        cc: email
       },
       emailPartageTemplate(info),
       info
