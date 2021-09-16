@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
   },
   fontButton: {
-    fontSize: Sizes.xs,
+    fontSize: Sizes.md,
     textTransform: "uppercase",
   },
   itemBorder: {
