@@ -120,7 +120,7 @@ const EpdsLightResult: React.FC<Props> = ({
       <ScrollView>
         <TitleH1 title={Labels.epdsSurveyLight.titleLight} animated={false} />
         <View style={styles.rowView}>
-          <View>{getIcon(EpdsSurveyUtils.getResultIconLight(result))}</View>
+          {getIcon(EpdsSurveyUtils.getResultIconLight(result))}
         </View>
         <SecondaryText style={[styles.text, styles.fontBold]}>
           {Labels.epdsSurveyLight.oserEnParler}
