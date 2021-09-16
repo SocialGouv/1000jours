@@ -19,6 +19,7 @@ export enum TrackingEvent {
   EVENT = "Événement",
   EVENT_SEE_THE_MAP = "Événement - Voir la carte",
   CARTO = "Cartographie",
+  CARTO_CLICK_POI = "Cartographie - Clic sur un POI",
   EPDS = "EPDS",
   EPDS_BE_CONTACTED = "EPDS - Être contacté",
   NOTIFICATION = "Notification",

@@ -171,6 +171,7 @@ const TabAroundMeScreen: React.FC = () => {
   };
 
   const onMarkerClick = (poiIndex: number) => {
+    trackScreenView(TrackerUtils.TrackingEvent.CARTO_CLICK_POI);
     if (PLATFORM_IS_IOS) {
       moveMapToCoordinates(
         poisArray[poiIndex].position_latitude,
