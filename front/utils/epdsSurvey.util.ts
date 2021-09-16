@@ -158,6 +158,18 @@ export const getResultLabelAndStyleLight = (): EpdsResultData => {
   };
 };
 
+export const getResultIconLight = (
+  result: number
+): EpdsConstants.ResultIconValueEnum => {
+  if (result <= EpdsConstants.RESULT_WELL_VALUE) {
+    return EpdsConstants.ResultIconValueEnum.bien;
+  } else if (result <= EpdsConstants.RESULT_NOTSOWELL_VALUE) {
+    return EpdsConstants.ResultIconValueEnum.moyen;
+  } else {
+    return EpdsConstants.ResultIconValueEnum.pasBien;
+  }
+};
+
 export const getEachQuestionScore = (
   questionsAndAnswers: EpdsQuestionAndAnswers[]
 ): number[] => {
