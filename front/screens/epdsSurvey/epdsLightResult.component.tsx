@@ -6,6 +6,9 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
+import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
+import IconeResultatMoyen from "../../assets/images/icone_resultats_moyen.svg";
+import IconeResultatPasBien from "../../assets/images/icone_resultats_pasbien.svg";
 import { Button, CustomSnackbar, TitleH1 } from "../../components";
 import { SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
@@ -13,6 +16,7 @@ import {
   AroundMeConstants,
   Colors,
   DatabaseQueries,
+  EpdsConstants,
   FontWeight,
   Labels,
   Margins,
@@ -94,10 +98,30 @@ const EpdsLightResult: React.FC<Props> = ({
   // Delete saved storage keys for EPDS survey
   void EpdsSurveyUtils.removeEpdsStorageItems();
 
+  const getIcon = (icone: EpdsConstants.ResultIconValueEnum) => {
+    const iconsMap = new Map<
+      EpdsConstants.ResultIconValueEnum,
+      React.ReactNode
+    >();
+    iconsMap.set(EpdsConstants.ResultIconValueEnum.bien, <IconeResultatBien />);
+    iconsMap.set(
+      EpdsConstants.ResultIconValueEnum.moyen,
+      <IconeResultatMoyen />
+    );
+    iconsMap.set(
+      EpdsConstants.ResultIconValueEnum.pasBien,
+      <IconeResultatPasBien />
+    );
+    return iconsMap.get(icone);
+  };
+
   return (
     <>
       <ScrollView>
         <TitleH1 title={Labels.epdsSurveyLight.titleLight} animated={false} />
+        <View style={styles.rowView}>
+          <View>{getIcon(EpdsSurveyUtils.getResultIconLight(result))}</View>
+        </View>
         <SecondaryText style={[styles.text, styles.fontBold]}>
           {Labels.epdsSurveyLight.oserEnParler}
         </SecondaryText>
@@ -179,6 +203,7 @@ const styles = StyleSheet.create({
     padding: Paddings.default,
   },
   rowView: {
+    alignSelf: "center",
     flexDirection: "row",
   },
   stateOfMind: {
