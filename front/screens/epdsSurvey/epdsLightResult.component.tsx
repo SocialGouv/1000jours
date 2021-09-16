@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { useMutation } from "@apollo/client/react/hooks";
+import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
@@ -25,7 +26,12 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import type { EpdsQuestionAndAnswers } from "../../type";
-import { EpdsSurveyUtils, NotificationUtils, StorageUtils } from "../../utils";
+import {
+  EpdsSurveyUtils,
+  NotificationUtils,
+  StorageUtils,
+  TrackerUtils,
+} from "../../utils";
 import BeContacted from "./beContacted.component";
 import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation.component";
 
@@ -54,6 +60,7 @@ const EpdsLightResult: React.FC<Props> = ({
       console.log(err);
     },
   });
+  const { trackScreenView } = useMatomo();
   const [showBeContactedModal, setShowBeContactedModal] = useState(false);
   const [showSnackBar, setShowSnackBar] = useState(false);
 
@@ -139,6 +146,7 @@ const EpdsLightResult: React.FC<Props> = ({
               rounded={true}
               disabled={false}
               action={() => {
+                trackScreenView(TrackerUtils.TrackingEvent.EPDS_BE_CONTACTED);
                 setShowBeContactedModal(true);
               }}
             />

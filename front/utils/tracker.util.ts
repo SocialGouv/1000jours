@@ -20,6 +20,7 @@ export enum TrackingEvent {
   EVENT_SEE_THE_MAP = "Événement - Voir la carte",
   CARTO = "Cartographie",
   EPDS = "EPDS",
+  EPDS_BE_CONTACTED = "EPDS - Être contacté",
   NOTIFICATION = "Notification",
   FILTER_CARTO = "Filtre (Carto)",
   FILTER_ARTICLES = "Filtre (Articles)",
