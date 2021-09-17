@@ -9,7 +9,7 @@ jobs:
     name: Build and publish Android for Prod
     runs-on: ubuntu-latest
     env:
-      API_URL: https://backoffice-les1000jours.fabrique.social.gouv.fr/
+      API_URL: https://backoffice-les1000jours.fabrique.social.gouv.fr
       CLEAR_STORAGE: false
       MATOMO_APPLICATION_ID: 43
       MATOMO_ENABLED: true
