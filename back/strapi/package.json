@@ -43,7 +43,7 @@
     "strapi-provider-email-smtp": "^1.0.2",
     "strapi-utils": "^3.6.8",
     "stream-chain": "^2.2.4",
-    "stream-json": "^1.7.2"
+    "stream-json": "^1.7.3"
   },
   "author": {
     "name": "Fabrique des ministères sociaux"
@@ -59,8 +59,8 @@
     "babel-eslint": "^10.1.0",
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-jest": "^24.4.0",
-    "jest": "^27.1.1",
+    "eslint-plugin-jest": "^24.4.2",
+    "jest": "^27.2.0",
     "node-fetch": "^3.0.0",
     "prettier": "^2.3.2"
   }
