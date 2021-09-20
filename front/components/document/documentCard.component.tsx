@@ -1,7 +1,6 @@
-import * as FileSystem from "expo-file-system";
 import type { FC } from "react";
 import * as React from "react";
-import { PermissionsAndroid, Platform, StyleSheet } from "react-native";
+import { Linking, StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
 
 import {
@@ -21,37 +20,13 @@ interface Props {
   document: Document;
 }
 
-function checkPermission(url: string) {
-  if (Platform.OS === "ios") {
-    downloadFile(url);
-  } else {
-    try {
-      void PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
-      ).then((granted) => {
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log("Storage Permission Granted.");
-          downloadFile(url);
-        } else {
-          console.warn("Storage Permission Not Granted");
-        }
-      });
-    } catch (err: unknown) {
-      console.log("error", err);
-    }
-  }
-}
-
-function downloadFile(url: string) {
-  // Downloading the file
-  const fileLocation = `${FileSystem.documentDirectory}test.png`;
-  FileSystem.downloadAsync(url, fileLocation)
-    .then(({ uri }) => {
-      console.log("OK : " + uri);
-      //FileSystem.readDirectoryAsync(fileLocation);
+function openFile(url: string) {
+  Linking.openURL(url)
+    .then((res) => {
+      console.log(res);
     })
-    .catch((error) => {
-      console.error(error);
+    .catch((err) => {
+      console.log(err);
     });
 }
 
@@ -64,7 +39,6 @@ const DocumentCard: FC<Props> = ({ document }) => {
       style={[styles.listItem, styles.borderLeftRadius]}
     >
       <StepIconLibrary name={IcomoonIcons.stepParentheque} />
-
       <ListItem.Content style={styles.articleContent}>
         <ListItem.Title style={styles.articleTitleContainer}>
           <CommonText style={styles.articleTitle}>{document.nom}</CommonText>
@@ -79,14 +53,13 @@ const DocumentCard: FC<Props> = ({ document }) => {
           </SecondaryText>
         </ListItem.Subtitle>
       </ListItem.Content>
-
       <Button
         title={Labels.timeline.library.download}
         titleStyle={styles.fontButton}
         rounded={true}
         disabled={false}
         action={() => {
-          checkPermission(document.fichier.url);
+          openFile(document.fichier.url);
         }}
       />
     </ListItem>

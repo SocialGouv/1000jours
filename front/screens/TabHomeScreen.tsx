@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
   timelineLibraryBlock: {
     borderBottomWidth: 0,
     borderColor: Colors.primaryBlue,
-    borderStyle: "dashed",
+    borderStyle: "solid",
     borderTopWidth: 1,
   },
   timelineStepContainer: {
