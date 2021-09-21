@@ -12,7 +12,7 @@ import {
   Sizes,
 } from "../../constants";
 import type { Document } from "../../types";
-import { Button, IcomoonIcons } from "..";
+import { Button, IcomoonIcons, View } from "..";
 import { CommonText, SecondaryText } from "../StyledText";
 import StepIconLibrary from "../timeline/stepIconLibrary.component";
 
@@ -38,64 +38,70 @@ const DocumentCard: FC<Props> = ({ document }) => {
       containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
       style={[styles.listItem, styles.borderLeftRadius]}
     >
-      <StepIconLibrary name={IcomoonIcons.stepParentheque} />
-      <ListItem.Content style={styles.articleContent}>
-        <ListItem.Title style={styles.articleTitleContainer}>
-          <CommonText style={styles.articleTitle}>{document.nom}</CommonText>
+      <View style={styles.documentImage}>
+        <StepIconLibrary name={IcomoonIcons.stepParentheque} />
+      </View>
+      <ListItem.Content style={styles.documentContent}>
+        <ListItem.Title style={styles.documentTitleContainer}>
+          <CommonText style={styles.documentTitle}>{document.nom}</CommonText>
         </ListItem.Title>
-        <ListItem.Subtitle style={styles.articleDescription}>
+        <ListItem.Subtitle style={styles.documentDescription}>
           <SecondaryText
-            style={styles.articleDescriptionFont}
+            style={styles.documentDescriptionFont}
             numberOfLines={3}
             allowFontScaling={true}
           >
             {document.description}
           </SecondaryText>
         </ListItem.Subtitle>
+        <View style={styles.contentButton}>
+          <Button
+            title={Labels.timeline.library.download}
+            titleStyle={styles.fontButton}
+            rounded={true}
+            disabled={false}
+            action={() => {
+              openFile(document.fichier.url);
+            }}
+          />
+        </View>
       </ListItem.Content>
-      <Button
-        title={Labels.timeline.library.download}
-        titleStyle={styles.fontButton}
-        rounded={true}
-        disabled={false}
-        action={() => {
-          openFile(document.fichier.url);
-        }}
-      />
     </ListItem>
   );
 };
 
 const styles = StyleSheet.create({
-  articleContent: {
+  borderLeftRadius: {
+    borderBottomLeftRadius: Sizes.xxxxxs,
+    borderTopLeftRadius: Sizes.xxxxxs,
+  },
+  contentButton: {
+    alignSelf: "flex-end",
+    marginTop: Margins.smaller,
+  },
+  documentContent: {
     justifyContent: "center",
     padding: Paddings.default,
   },
-  articleDescription: {
+  documentDescription: {
     color: Colors.commonText,
   },
-  articleDescriptionFont: {
+  documentDescriptionFont: {
     color: Colors.commonText,
     fontSize: Sizes.sm,
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.lg,
   },
-  articleImage: {
-    height: "100%",
-    resizeMode: "contain",
-    width: Sizes.thumbnail,
+  documentImage: {
+    marginStart: Margins.smaller,
   },
-  articleTitle: {
+  documentTitle: {
     color: Colors.primaryBlueDark,
     fontSize: Sizes.md,
     fontWeight: FontWeight.bold,
   },
-  articleTitleContainer: {
+  documentTitleContainer: {
     paddingBottom: Paddings.light,
-  },
-  borderLeftRadius: {
-    borderBottomLeftRadius: Sizes.xxxxxs,
-    borderTopLeftRadius: Sizes.xxxxxs,
   },
   fontButton: {
     fontSize: Sizes.xxs,
