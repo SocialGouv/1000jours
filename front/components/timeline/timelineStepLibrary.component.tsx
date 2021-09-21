@@ -29,13 +29,11 @@ const TimelineStepLibrary: FC<TimelineStepLibraryProps> = ({
     <StepIconLibrary name={IcomoonIcons.stepParentheque} />,
   ];
 
-  const getStepStyles = () => {
-    return [
-      styles.step,
-      { marginTop: initialOffset - verticalOffset / 2 },
-      styles.stepRight,
-    ];
-  };
+  const getStepStyles = () => [
+    styles.step,
+    { marginTop: initialOffset - verticalOffset / 2 },
+    styles.stepRight,
+  ];
 
   const getStepNumStyles = () => [styles.stepNum, styles.stepNumRight];
 

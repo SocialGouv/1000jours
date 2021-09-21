@@ -12,6 +12,7 @@ import {
   Sizes,
 } from "../../constants";
 import type { Document } from "../../types";
+import { reportError } from "../../utils/logging.util";
 import { Button, IcomoonIcons, View } from "..";
 import { CommonText, SecondaryText } from "../StyledText";
 import StepIconLibrary from "../timeline/stepIconLibrary.component";
@@ -21,50 +22,48 @@ interface Props {
 }
 
 function openFile(url: string) {
-  Linking.openURL(url).catch((err) => {
-    console.warn(err);
+  Linking.openURL(url).catch((err: unknown) => {
+    reportError(err);
   });
 }
 
-const DocumentCard: FC<Props> = ({ document }) => {
-  return (
-    <ListItem
-      bottomDivider
-      pad={0}
-      containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
-      style={[styles.listItem, styles.borderLeftRadius]}
-    >
-      <View style={styles.documentImage}>
-        <StepIconLibrary name={IcomoonIcons.stepParentheque} />
+const DocumentCard: FC<Props> = ({ document }) => (
+  <ListItem
+    bottomDivider
+    pad={0}
+    containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
+    style={[styles.listItem, styles.borderLeftRadius]}
+  >
+    <View style={styles.documentImage}>
+      <StepIconLibrary name={IcomoonIcons.stepParentheque} />
+    </View>
+    <ListItem.Content style={styles.documentContent}>
+      <ListItem.Title style={styles.documentTitleContainer}>
+        <CommonText style={styles.documentTitle}>{document.nom}</CommonText>
+      </ListItem.Title>
+      <ListItem.Subtitle style={styles.documentDescription}>
+        <SecondaryText
+          style={styles.documentDescriptionFont}
+          numberOfLines={3}
+          allowFontScaling={true}
+        >
+          {document.description}
+        </SecondaryText>
+      </ListItem.Subtitle>
+      <View style={styles.contentButton}>
+        <Button
+          title={Labels.timeline.library.download}
+          titleStyle={styles.fontButton}
+          rounded={true}
+          disabled={false}
+          action={() => {
+            openFile(document.fichier.url);
+          }}
+        />
       </View>
-      <ListItem.Content style={styles.documentContent}>
-        <ListItem.Title style={styles.documentTitleContainer}>
-          <CommonText style={styles.documentTitle}>{document.nom}</CommonText>
-        </ListItem.Title>
-        <ListItem.Subtitle style={styles.documentDescription}>
-          <SecondaryText
-            style={styles.documentDescriptionFont}
-            numberOfLines={3}
-            allowFontScaling={true}
-          >
-            {document.description}
-          </SecondaryText>
-        </ListItem.Subtitle>
-        <View style={styles.contentButton}>
-          <Button
-            title={Labels.timeline.library.download}
-            titleStyle={styles.fontButton}
-            rounded={true}
-            disabled={false}
-            action={() => {
-              openFile(document.fichier.url);
-            }}
-          />
-        </View>
-      </ListItem.Content>
-    </ListItem>
-  );
-};
+    </ListItem.Content>
+  </ListItem>
+);
 
 const styles = StyleSheet.create({
   borderLeftRadius: {
