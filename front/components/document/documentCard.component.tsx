@@ -21,13 +21,9 @@ interface Props {
 }
 
 function openFile(url: string) {
-  Linking.openURL(url)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  Linking.openURL(url).catch((err) => {
+    console.warn(err);
+  });
 }
 
 const DocumentCard: FC<Props> = ({ document }) => {

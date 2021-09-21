@@ -17,6 +17,9 @@ interface TimelineStepLibraryProps {
   onPress: () => void;
 }
 
+const initialOffset = Paddings.light;
+const verticalOffset = Paddings.stepOffset;
+
 const TimelineStepLibrary: FC<TimelineStepLibraryProps> = ({
   order,
   name,
@@ -27,8 +30,6 @@ const TimelineStepLibrary: FC<TimelineStepLibraryProps> = ({
   ];
 
   const getStepStyles = () => {
-    const initialOffset = Paddings.light;
-    const verticalOffset = Paddings.stepOffset;
     return [
       styles.step,
       { marginTop: initialOffset - verticalOffset / 2 },
@@ -36,9 +37,7 @@ const TimelineStepLibrary: FC<TimelineStepLibraryProps> = ({
     ];
   };
 
-  const getStepNumStyles = () => {
-    return [styles.stepNum, styles.stepNumRight];
-  };
+  const getStepNumStyles = () => [styles.stepNum, styles.stepNumRight];
 
   return (
     <View style={getStepStyles()}>

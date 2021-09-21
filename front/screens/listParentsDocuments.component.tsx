@@ -37,9 +37,7 @@ const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
   });
 
   useEffect(() => {
-    if (!loading && data) {
-      setShowDocuments(true);
-    }
+    if (!loading && data) setShowDocuments(true);
   }, [documents]);
 
   useEffect(() => {
