@@ -161,11 +161,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
 
           <View>
             <TextInput
-              keyboardType={
-                informationType === PersonalInformationType.phoneNumber
-                  ? "phone-pad"
-                  : "default"
-              }
+              keyboardType={isPhoneNumber ? "phone-pad" : "default"}
               style={styles.textInput}
               onChangeText={(text: string) => {
                 onChangeText(informationType, text);
