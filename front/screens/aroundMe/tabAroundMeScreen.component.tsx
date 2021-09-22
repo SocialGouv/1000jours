@@ -30,6 +30,7 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import {
+  PLATFORM_IS_ANDROID,
   PLATFORM_IS_IOS,
   SCREEN_HEIGHT,
 } from "../../constants/platform.constants";
@@ -405,7 +406,7 @@ const TabAroundMeScreen: React.FC = () => {
         hideModal={(filterWasSaved: boolean) => {
           setShowFilter(false);
           if (filterWasSaved) {
-            setIsLoading(true);
+            if (PLATFORM_IS_ANDROID) setIsLoading(true);
             setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
           }
         }}
