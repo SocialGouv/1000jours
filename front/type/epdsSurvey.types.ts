@@ -69,6 +69,7 @@ export interface EpdsUpdatedSurvey {
 
 export interface BeContactedData {
   label: string | undefined;
+  subLabel: string | undefined;
   isEmptyVariable: boolean | undefined;
 }
 

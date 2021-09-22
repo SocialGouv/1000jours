@@ -20,6 +20,7 @@ import {
   Datepicker,
   Icomoon,
   IcomoonIcons,
+  SecondaryText,
   TitleH1,
 } from "../../components";
 import {
@@ -96,9 +97,13 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       PersonalInformationType.phoneNumber,
       Labels.epdsSurvey.beContacted.yourPhoneNumber
     );
+    const isEmail = informationType === PersonalInformationType.email;
     return {
       isEmptyVariable: getIsEmptyValue(informationType),
       label: labelMap.get(informationType),
+      subLabel: isEmail
+        ? Labels.epdsSurvey.beContacted.mailsCanBeReceivedInSpams
+        : undefined,
     };
   };
 
@@ -143,43 +148,54 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     informationType: PersonalInformationType,
     isMandatory: boolean
   ) => {
-    const { label, isEmptyVariable } =
+    const isPhoneNumber =
+      informationType === PersonalInformationType.phoneNumber;
+    const { label, isEmptyVariable, subLabel } =
       getLabelAndIsEmptyVariable(informationType);
     return (
-      <View style={styles.rowView}>
-        <CommonText style={styles.textStyle}>
-          {isMandatory ? `${label} *` : label}
-        </CommonText>
+      <View>
+        <View style={styles.rowView}>
+          <CommonText style={styles.textStyle}>
+            {isMandatory ? `${label} *` : label}
+          </CommonText>
 
-        <View>
-          <TextInput
-            keyboardType={
-              informationType === PersonalInformationType.phoneNumber
-                ? "phone-pad"
-                : "default"
-            }
-            style={styles.textInput}
-            onChangeText={(text: string) => {
-              onChangeText(informationType, text);
-            }}
-            placeholder={label}
-          />
-          {isMandatory && isEmptyVariable && (
-            <HelperText type="error">{Labels.mandatoryField}</HelperText>
-          )}
-          {informationType === PersonalInformationType.email &&
-            !emailIsValid && (
-              <HelperText type="error">
-                {Labels.epdsSurvey.beContacted.invalidEmail}
-              </HelperText>
+          <View>
+            <TextInput
+              keyboardType={
+                informationType === PersonalInformationType.phoneNumber
+                  ? "phone-pad"
+                  : "default"
+              }
+              style={styles.textInput}
+              onChangeText={(text: string) => {
+                onChangeText(informationType, text);
+              }}
+              placeholder={
+                isPhoneNumber
+                  ? Labels.epdsSurvey.beContacted.yourPhoneNumberPlaceholder
+                  : label
+              }
+            />
+            {isMandatory && isEmptyVariable && (
+              <HelperText type="error">{Labels.mandatoryField}</HelperText>
             )}
-          {informationType === PersonalInformationType.phoneNumber &&
-            !phoneNumberIsValid && (
-              <HelperText type="error">
-                {Labels.epdsSurvey.beContacted.invalidPhoneNumber}
-              </HelperText>
-            )}
+            {informationType === PersonalInformationType.email &&
+              !emailIsValid && (
+                <HelperText type="error">
+                  {Labels.epdsSurvey.beContacted.invalidEmail}
+                </HelperText>
+              )}
+            {informationType === PersonalInformationType.phoneNumber &&
+              !phoneNumberIsValid && (
+                <HelperText type="error">
+                  {Labels.epdsSurvey.beContacted.invalidPhoneNumber}
+                </HelperText>
+              )}
+          </View>
         </View>
+        <SecondaryText style={styles.secondaryTextStyle}>
+          {subLabel}
+        </SecondaryText>
       </View>
     );
   };
@@ -389,6 +405,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginVertical: Margins.default,
+  },
+  secondaryTextStyle: {
+    color: Colors.primaryBlue,
+    marginRight: Margins.default,
   },
   textInput: {
     borderBottomColor: Colors.primaryBlue,
