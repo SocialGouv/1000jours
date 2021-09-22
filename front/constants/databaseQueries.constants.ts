@@ -145,3 +145,16 @@ export const CARTO_SEND_SUGGESTIONS = gql`
     )
   }
 `;
+
+export const PARENTS_DOCUMENTS = gql`
+  query GetParenthequeDocuments {
+    parenthequeDocuments {
+      id
+      nom
+      description
+      fichier {
+        url
+      }
+    }
+  }
+`;

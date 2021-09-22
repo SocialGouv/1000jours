@@ -11,6 +11,7 @@ import {
   EpdsSurveyScreen,
   EventDetails,
   ListArticles,
+  ListParentsDocuments,
   TabAroundMeScreen,
   TabCalendarScreen,
   TabHomeScreen,
@@ -122,6 +123,10 @@ const TabHomeNavigator: FC = () => (
       options={{}}
     />
     <TabHomeStack.Screen name="listArticles" component={ListArticles} />
+    <TabHomeStack.Screen
+      name="listParentsDocuments"
+      component={ListParentsDocuments}
+    />
     <TabHomeStack.Screen name="article" component={ArticleDetail} />
     <TabHomeStack.Screen name="epdsSurvey" component={EpdsSurveyScreen} />
   </TabHomeStack.Navigator>
