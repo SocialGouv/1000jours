@@ -2,7 +2,7 @@ import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import { FontWeight, Margins, Sizes } from "../../constants";
+import { FontWeight, Margins, Paddings, Sizes } from "../../constants";
 import type { Tag } from "../../types";
 import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";
@@ -40,14 +40,15 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   tag: {
-    fontSize: Sizes.sm,
+    fontSize: Sizes.xs,
     fontWeight: FontWeight.bold,
   },
   tagContainer: {
     borderRadius: Sizes.xxxxxs,
     marginBottom: Margins.smallest,
     marginRight: Margins.smaller,
-    padding: Margins.smaller,
+    paddingHorizontal: Paddings.smaller,
+    paddingVertical: Paddings.smallest,
   },
 });
 

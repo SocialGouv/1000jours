@@ -252,6 +252,8 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
               <View>
                 <Button
                   title={Labels.calendar.synchronise}
+                  titleStyle={styles.buttonTitle}
+                  buttonStyle={{ alignSelf: "center" }}
                   rounded={true}
                   action={syncEventsWithOsCalendar}
                 />
@@ -291,6 +293,10 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  buttonTitle: {
+    fontSize: Sizes.md,
+    textTransform: "uppercase",
+  },
   calendarContainer: {
     flex: 1,
     marginTop: Paddings.default,

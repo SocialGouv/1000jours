@@ -28,8 +28,11 @@ interface Props {
   showEventDetails: boolean;
 }
 const dotIconSize = Sizes.xxxs;
-const Events: FC<Props> = ({ evenements, childBirthday, showEventDetails }) => {
+const Events: FC<Props> = ({ evenements, childBirthday }) => {
   let closestEventHasBeenFound = false;
+  const [eventIdPressed, setEventIdPressed] = React.useState<string | null>(
+    null
+  );
 
   const today = new Date().setUTCHours(0, 0, 0, 0);
 
@@ -63,12 +66,29 @@ const Events: FC<Props> = ({ evenements, childBirthday, showEventDetails }) => {
     else return format(new Date(date), Formats.dateEvent, { locale: fr });
   };
 
+  const eventCardPressed = (eventId: string) => {
+    setEventIdPressed(eventId);
+  };
+
   const scrollViewRef = React.useRef<ScrollView>(null);
-  const scrollTo = (positionY: number) => {
-    scrollViewRef.current?.scrollTo({
-      animated: true,
-      y: positionY,
-    });
+  const scrollToEvent = (event: Event, layoutEvent: LayoutChangeEvent) => {
+    let posY: number | null = null;
+    if (eventIdPressed) {
+      if (eventIdPressed === event.id.toString()) {
+        posY = layoutEvent.nativeEvent.layout.y;
+      }
+    } else {
+      if (event.isClosestEvent) {
+        posY = layoutEvent.nativeEvent.layout.y;
+      }
+    }
+
+    if (posY) {
+      scrollViewRef.current?.scrollTo({
+        animated: true,
+        y: posY,
+      });
+    }
   };
 
   return (
@@ -79,10 +99,7 @@ const Events: FC<Props> = ({ evenements, childBirthday, showEventDetails }) => {
           key={index}
           onLayout={(layoutEvent: LayoutChangeEvent) => {
             const event = formattedEvents[date][0];
-            if (event.isClosestEvent) {
-              const { layout } = layoutEvent.nativeEvent;
-              scrollTo(layout.y);
-            }
+            scrollToEvent(event, layoutEvent);
           }}
         >
           <View style={styles.dateTagContainer}>
@@ -100,7 +117,11 @@ const Events: FC<Props> = ({ evenements, childBirthday, showEventDetails }) => {
           </View>
           {formattedEvents[date].map((event, indexEvents) => (
             <View key={indexEvents}>
-              <EventCard event={event} showEventDetails={showEventDetails} />
+              <EventCard
+                event={event}
+                onPressed={eventCardPressed}
+                isExpanded={eventIdPressed === event.id.toString()}
+              />
             </View>
           ))}
         </View>
@@ -118,6 +139,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     paddingHorizontal: Paddings.default,
     paddingVertical: Paddings.smaller,
+    textTransform: "capitalize",
   },
   dateTagContainer: {
     flexDirection: "row",

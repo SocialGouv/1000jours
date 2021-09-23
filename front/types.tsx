@@ -90,6 +90,7 @@ export type Event = {
   fin: number;
   thematique?: Thematique;
   etapes?: Step[];
+  isClosestEvent?: boolean;
 };
 export type AgendaItems<TEvent> = Record<string, TEvent[]>;
 
