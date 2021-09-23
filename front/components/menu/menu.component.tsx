@@ -17,7 +17,8 @@ import {
   Sizes,
 } from "../../constants";
 import { emailContact } from "../../constants/email.constants";
-import type { MenuItem } from "../../types";
+import { reviewTypeForm } from "../../constants/links.constants";
+import type { MenuItem, RootStackParamList } from "../../types";
 import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
 import { View } from "../Themed";
 import Accessibility from "./accessibility.component";
@@ -27,7 +28,7 @@ import LegalNotice from "./legalNotice.component";
 interface Props {
   showMenu: boolean;
   setShowMenu: (showMenu: boolean) => void;
-  navigation: NavigationContainerRef | null;
+  navigation: NavigationContainerRef<RootStackParamList> | null;
 }
 
 const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
@@ -36,6 +37,13 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
   const [showAccessibility, setShowAccessibility] = React.useState(false);
 
   const menuItems: MenuItem[] = [
+    {
+      icon: IcomoonIcons.modifier,
+      onPress: () => {
+        void Linking.openURL(reviewTypeForm);
+      },
+      title: Labels.menu.addReview,
+    },
     {
       icon: IcomoonIcons.profil,
       onPress: () => {
