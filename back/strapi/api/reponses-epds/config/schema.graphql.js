@@ -30,8 +30,9 @@ module.exports = {
     ): Boolean
     
     epdsPartage (
-      email: String!
+      email: String
       email_pro: String!
+      email_pro_secondaire: String
       telephone: String
       prenom: String
       nom: String

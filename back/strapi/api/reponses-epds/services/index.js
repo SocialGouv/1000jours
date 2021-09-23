@@ -123,9 +123,10 @@ const buildHtmlDetailScore = (info, index) =>
   `;
 
 const partage = async ({
-  email,
+  email = "ND",
   email_pro,
-  telephone,
+  email_pro_secondaire = "ND",
+  telephone = "ND",
   prenom = "ND",
   nom = "ND",
   score = "ND",
@@ -138,6 +139,7 @@ const partage = async ({
   const info = {
     email,
     email_pro,
+    email_pro_secondaire,
     telephone,
     prenom,
     nom,
@@ -152,7 +154,7 @@ const partage = async ({
       {
         from: process.env["MAIL_SEND_FROM"],
         to: email_pro,
-        cc: email
+        cc: [email, email_pro_secondaire]
       },
       emailPartageTemplate(info),
       info
