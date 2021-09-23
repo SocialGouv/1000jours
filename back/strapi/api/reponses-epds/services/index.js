@@ -124,9 +124,8 @@ const buildHtmlDetailScore = (info, index) =>
 
 const partage = async ({
   email = "ND",
-  email_pro = "ND", // A supprimer lorsque le site web n'utilisarera plus "email_pro"
-  email_pro1, // A mettre en required lorsqu'on utilise plus "email_pro"
-  email_pro2 = "ND",
+  email_pro,
+  email_pro_secondaire = "ND",
   telephone = "ND",
   prenom = "ND",
   nom = "ND",
@@ -135,14 +134,12 @@ const partage = async ({
   detail_score = "ND",
   detail_reponses = "ND"
 }) => {
-  // MAJ la condition lorsqu'on utilise plus "email_pro"
-  if (!email_pro && !email_pro1) throw new Error("Au moins une adresse email est nécessaire");
+  if (!email_pro) throw new Error("Au moins une adresse email est nécessaire");
 
   const info = {
     email,
     email_pro,
-    email_pro1,
-    email_pro2,
+    email_pro_secondaire,
     telephone,
     prenom,
     nom,
@@ -156,8 +153,8 @@ const partage = async ({
     const res = await strapi.plugins.email.services.email.sendTemplatedEmail(
       {
         from: process.env["MAIL_SEND_FROM"],
-        to: [email_pro, email_pro1],
-        cc: [email, email_pro2]
+        to: email_pro,
+        cc: [email, email_pro_secondaire]
       },
       emailPartageTemplate(info),
       info

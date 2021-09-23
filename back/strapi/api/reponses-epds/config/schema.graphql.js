@@ -31,9 +31,8 @@ module.exports = {
     
     epdsPartage (
       email: String
-      email_pro: String
-      email_pro1: String
-      email_pro2: String
+      email_pro: String!
+      email_pro_secondaire: String
       telephone: String
       prenom: String
       nom: String
