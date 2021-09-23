@@ -63,7 +63,6 @@ export default {
         },
       ],
       title: "Proposer un lieu",
-      title: "Proposer un lieu",
     },
     title: "Autour de moi",
   },
@@ -392,6 +391,7 @@ export default {
   mandatoryField: "Ce champ est obligatoire",
   menu: {
     accessibility: "Accessibilité",
+    addReview: "Laisser un avis",
     conditionsOfUse: "Politiques de confidentialité",
     contactUs: "Nous écrire",
     legalNotice: "Mentions légales",
