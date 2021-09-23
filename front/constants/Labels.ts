@@ -111,11 +111,14 @@ export default {
       button: "Être contacté(e)",
       invalidEmail: "L'email n'est pas valide",
       invalidPhoneNumber: "Le tél. n'est pas valide",
+      mailsCanBeReceivedInSpams:
+        "Les retours peuvent se glisser dans vos spams ou mails indésirables, merci de les vérifier.",
       numberOfChildren: "Nombre d'enfants",
       title: "Être contacté(e)",
       yourEmail: "Votre email",
       yourFirstname: "Votre prénom",
-      yourPhoneNumber: "Votre n° de tél.",
+      yourPhoneNumber: "Votre n° de tél. \nportable",
+      yourPhoneNumberPlaceholder: "Votre n° de tél. portable",
     },
     description:
       "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.",
