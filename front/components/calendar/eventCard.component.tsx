@@ -23,6 +23,7 @@ import type { Article, Event, Tag } from "../../types";
 import { StorageUtils, TrackerUtils } from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { getThematiqueIcon } from "../../utils/thematique.util";
+import { Loader } from "..";
 import ArticleCard from "../article/articleCard.component";
 import Button from "../base/button.component";
 import ErrorMessage from "../base/errorMessage.component";
@@ -32,11 +33,12 @@ import { CommonText, SecondaryText } from "../StyledText";
 
 interface Props {
   event: Event;
-  showEventDetails: boolean;
+  isExpanded: boolean;
+  onPressed: (eventId: string) => void;
 }
 const dotIconSize = Sizes.xxxs;
 
-const EventCard: FC<Props> = ({ event, showEventDetails }) => {
+const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
   const { trackScreenView } = useMatomo();
   const [articles, setArticles] = React.useState<Article[]>([]);
   const MAX_ARTICLES = 10;
@@ -58,14 +60,6 @@ const EventCard: FC<Props> = ({ event, showEventDetails }) => {
       });
     });
     return tags;
-  };
-
-  const navigateToEventDetails = () => {
-    if (!showEventDetails) {
-      RootNavigation.navigate("eventDetails", {
-        eventId: event.id.toString(),
-      });
-    }
   };
 
   const updateCartoFilterStorage = () => {
@@ -100,7 +94,7 @@ const EventCard: FC<Props> = ({ event, showEventDetails }) => {
     return condition;
   };
 
-  const [loadArticles, { loading, error, data, called }] = useLazyQuery(
+  const [loadArticles, { loading, error, data }] = useLazyQuery(
     GET_EVENT_ARTICLES(buildWhereCondition(), MAX_ARTICLES),
     {
       variables: {
@@ -111,10 +105,8 @@ const EventCard: FC<Props> = ({ event, showEventDetails }) => {
   );
 
   useEffect(() => {
-    if (showEventDetails && !called) {
-      loadArticles();
-    }
-  }, []);
+    if (isExpanded) loadArticles();
+  }, [isExpanded]);
 
   useEffect(() => {
     if (!loading && data) {
@@ -131,7 +123,9 @@ const EventCard: FC<Props> = ({ event, showEventDetails }) => {
         key={event.id}
         pad={0}
         containerStyle={styles.listItemContainer}
-        onPress={showEventDetails ? undefined : navigateToEventDetails}
+        onPress={() => {
+          onPressed(event.id.toString());
+        }}
       >
         <View style={styles.eventContainer}>
           <View style={styles.eventIconContainer}>
@@ -157,28 +151,35 @@ const EventCard: FC<Props> = ({ event, showEventDetails }) => {
         </View>
       </ListItem>
 
-      {showEventDetails && (
+      {isExpanded && (
         <View style={styles.eventDetailsContainer}>
           <View style={styles.linkCarto}>
             <Button
               rounded={true}
               title={Labels.event.seeOnTheMap}
-              titleStyle={{ textTransform: "uppercase" }}
-              onPressIn={seeOnTheMap}
+              titleStyle={{
+                textTransform: "uppercase",
+              }}
+              buttonStyle={{ alignSelf: "center" }}
+              action={seeOnTheMap}
             />
           </View>
 
-          {articles.length > 0 && (
-            <View style={styles.listArticles}>
-              <CommonText style={styles.listArticlesTitle}>
-                {Labels.event.matchingArticles} :
-              </CommonText>
-              {articles.map((article, index) => (
-                <View key={index}>
-                  <ArticleCard article={article} />
-                </View>
-              ))}
-            </View>
+          {loading ? (
+            <Loader />
+          ) : (
+            articles.length > 0 && (
+              <View style={styles.listArticles}>
+                <CommonText style={styles.listArticlesTitle}>
+                  {Labels.event.matchingArticles} :
+                </CommonText>
+                {articles.map((article, index) => (
+                  <View key={index}>
+                    <ArticleCard article={article} />
+                  </View>
+                ))}
+              </View>
+            )
           )}
         </View>
       )}

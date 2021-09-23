@@ -196,11 +196,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
               duration={1000}
               delay={0}
             >
-              <ArticleCard
-                article={article}
-                step={route.params.step}
-                index={index}
-              />
+              <ArticleCard article={article} step={route.params.step} />
             </Animatable.View>
           ))}
         </View>
