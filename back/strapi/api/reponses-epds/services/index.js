@@ -123,9 +123,10 @@ const buildHtmlDetailScore = (info, index) =>
   `;
 
 const partage = async ({
-  email,
-  email_pro,
-  telephone,
+  email = "ND",
+  email_pro1,
+  email_pro2 = "ND",
+  telephone = "ND",
   prenom = "ND",
   nom = "ND",
   score = "ND",
@@ -133,11 +134,12 @@ const partage = async ({
   detail_score = "ND",
   detail_reponses = "ND"
 }) => {
-  if (!email_pro) throw new Error("Au moins une adresse email est nécessaire");
+  if (!email_pro1) throw new Error("Au moins une adresse email est nécessaire");
 
   const info = {
     email,
-    email_pro,
+    email_pro1,
+    email_pro2,
     telephone,
     prenom,
     nom,
@@ -151,8 +153,8 @@ const partage = async ({
     const res = await strapi.plugins.email.services.email.sendTemplatedEmail(
       {
         from: process.env["MAIL_SEND_FROM"],
-        to: email_pro,
-        cc: email
+        to: email_pro1,
+        cc: [email, email_pro2]
       },
       emailPartageTemplate(info),
       info
