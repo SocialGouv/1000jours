@@ -77,18 +77,18 @@ apiVersion: v1
 kind: Secret
 stringData:
   DATABASE_URL: >-
-    postgresql://user_develop%401000joursdevserver.postgres.database.azure.com:password_develop@1000joursdevserver.postgres.database.azure.com/autodevops_develop?sslmode=require
+    postgresql://user_develop%40les1000joursdevserver.postgres.database.azure.com:password_develop@les1000joursdevserver.postgres.database.azure.com/autodevops_develop?sslmode=require
   DB_URI: >-
-    postgresql://user_develop%401000joursdevserver.postgres.database.azure.com:password_develop@1000joursdevserver.postgres.database.azure.com/autodevops_develop?sslmode=require
+    postgresql://user_develop%40les1000joursdevserver.postgres.database.azure.com:password_develop@les1000joursdevserver.postgres.database.azure.com/autodevops_develop?sslmode=require
   HASURA_GRAPHQL_DATABASE_URL: >-
-    postgresql://user_develop%401000joursdevserver.postgres.database.azure.com:password_develop@1000joursdevserver.postgres.database.azure.com/autodevops_develop?sslmode=require
+    postgresql://user_develop%40les1000joursdevserver.postgres.database.azure.com:password_develop@les1000joursdevserver.postgres.database.azure.com/autodevops_develop?sslmode=require
   PGDATABASE: autodevops_develop
-  PGHOST: 1000joursdevserver.postgres.database.azure.com
+  PGHOST: les1000joursdevserver.postgres.database.azure.com
   PGPASSWORD: password_develop
   PGRST_DB_URI: >-
-    postgresql://user_develop%401000joursdevserver.postgres.database.azure.com:password_develop@1000joursdevserver.postgres.database.azure.com/autodevops_develop?sslmode=require
+    postgresql://user_develop%40les1000joursdevserver.postgres.database.azure.com:password_develop@les1000joursdevserver.postgres.database.azure.com/autodevops_develop?sslmode=require
   PGSSLMODE: require
-  PGUSER: user_develop@1000joursdevserver.postgres.database.azure.com
+  PGUSER: user_develop@les1000joursdevserver.postgres.database.azure.com
 metadata:
   annotations:
     app.gitlab.com/app: socialgouv-1000jours

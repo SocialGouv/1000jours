@@ -16,12 +16,10 @@ import { getDefaultPgParams } from "@socialgouv/kosko-charts/components/azure-pg
 import { updateMetadata } from "@socialgouv/kosko-charts/utils/updateMetadata";
 
 const getAzUserPgParams = (branch: string) => {
-  const ciEnv = ci(process.env);
   const suffix = branch;
-  const projectName = ciEnv.projectName;
   return {
     ...getDevDatabaseParameters({ suffix }),
-    host: getPgServerHostname(projectName, "dev"),
+    host: getPgServerHostname("les1000jours", "dev"),
     name: `azure-pg-user-${suffix}`,
   };
 };

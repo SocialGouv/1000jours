@@ -5,7 +5,7 @@ import { azureProjectVolume } from "@socialgouv/kosko-charts/components/azure-st
 import { addEnvs } from "@socialgouv/kosko-charts/utils/addEnvs";
 import { getIngressHost } from "@socialgouv/kosko-charts/utils/getIngressHost";
 import { getDeployment } from "@socialgouv/kosko-charts/utils/getDeployment";
-import { getHarborImagePath } from "@socialgouv/kosko-charts/utils/getHarborImagePath";
+
 import {
   VolumeMount,
   Probe,
@@ -51,6 +51,8 @@ export default async () => {
     name,
   });
 
+  const tag = process.env.GITHUB_SHA;
+
   // generate basic strapi manifests
   const manifests = await create(component, {
     env,
@@ -58,7 +60,7 @@ export default async () => {
       ingress: false,
       withPostgres: true,
       containerPort: 1337,
-      image: getHarborImagePath({ name: "les1000jours-strapi" }),
+      image: `ghcr.io/socialgouv/nos1000jours/strapi:sha-${tag}`,
     },
     deployment: {
       container: {
