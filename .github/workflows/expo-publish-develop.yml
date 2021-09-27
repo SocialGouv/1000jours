@@ -57,7 +57,7 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn publish --release-channel $BRANCH_NAME
+          expo publish --release-channel $BRANCH_NAME
         env:
           BRANCH_NAME: ${{ env.BRANCH_NAME }}
           API_URL: https://backoffice-${{ steps.namespace.outputs.value }}.dev.fabrique.social.gouv.fr
