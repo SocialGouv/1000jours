@@ -33,6 +33,21 @@
     "thematique": {
       "model": "thematique",
       "via": "evenements"
+    },
+    "articles": {
+      "collection": "article",
+      "via": "evenements",
+      "dominant": true
+    },
+    "documents": {
+      "collection": "parentheque-documents",
+      "via": "evenements",
+      "dominant": true
+    },
+    "types_poi": {
+      "collection": "cartographie-types",
+      "via": "evenements",
+      "dominant": true
     }
   }
 }

@@ -32,8 +32,8 @@
       "via": "etapes"
     },
     "evenements": {
-      "collection": "evenement",
-      "via": "etapes"
+      "via": "etapes",
+      "collection": "evenement"
     },
     "ordre": {
       "type": "integer"

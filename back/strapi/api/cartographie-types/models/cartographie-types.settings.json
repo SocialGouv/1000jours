@@ -20,10 +20,7 @@
     },
     "categorie": {
       "type": "enumeration",
-      "enum": [
-        "structure",
-        "professionnel"
-      ],
+      "enum": ["structure", "professionnel"],
       "required": true
     },
     "description": {
@@ -36,6 +33,10 @@
     },
     "thematiques": {
       "collection": "thematique"
+    },
+    "evenements": {
+      "via": "types_poi",
+      "collection": "evenement"
     }
   }
 }
