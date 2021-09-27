@@ -31,23 +31,33 @@ jobs:
       SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
       GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
     steps:
+
       - uses: actions/checkout@v2
+
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
+
       - uses: expo/expo-github-action@v5
         with:
           expo-version: 4.x
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+
       - uses: socialgouv/actions/k8s-namespace@k8s-namespace
         id: namespace
         with:
           environment: "dev"
+
+      - name: Get branch name
+        run: |
+          echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
       - name: Yarn
         run: |
           cd front
           yarn install
-          yarn publish-develop
+          expo publish --release-channel $BRANCH_NAME
         env:
+          BRANCH_NAME: ${{ env.BRANCH_NAME }}
           API_URL: https://backoffice-${{ steps.namespace.outputs.value }}.dev.fabrique.social.gouv.fr
