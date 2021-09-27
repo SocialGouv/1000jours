@@ -28,15 +28,17 @@ const Links: FC<Props> = ({ linksArray }) => {
       <SubTitle title={Labels.article.learnMoreAboutIt} />
       <View style={styles.linksContainer}>
         {filter(linksArray, "label").map((item, index) => (
-          <SecondaryText
-            key={index}
-            style={[styles.link]}
-            onPress={() => {
-              goToUrl(item.url);
-            }}
-          >
-            {item.label}
-          </SecondaryText>
+          <View key={index} style={[styles.linkContainer]}>
+            <SecondaryText style={[styles.dot]}>{"\u2B24"}</SecondaryText>
+            <SecondaryText
+              style={[styles.link]}
+              onPress={() => {
+                goToUrl(item.url);
+              }}
+            >
+              {item.label}
+            </SecondaryText>
+          </View>
         ))}
       </View>
     </View>
@@ -44,18 +46,25 @@ const Links: FC<Props> = ({ linksArray }) => {
 };
 
 const styles = StyleSheet.create({
+  dot: {
+    color: Colors.primaryBlue,
+    fontSize: Sizes.xxxxxs,
+    lineHeight: Sizes.lg,
+    textAlignVertical: "bottom",
+  },
   link: {
     color: Colors.commonText,
     flexDirection: "column",
     fontSize: Sizes.sm,
+    lineHeight: Sizes.lg,
     paddingHorizontal: Paddings.light,
-    paddingVertical: Paddings.smaller,
     textDecorationLine: "underline",
   },
-  linksContainer: {
+  linkContainer: {
     flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
+    paddingVertical: Paddings.smaller,
+  },
+  linksContainer: {
     paddingVertical: Paddings.light,
   },
 });
