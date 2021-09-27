@@ -40,6 +40,27 @@ const emailPartageTemplate = (info) => ({
   `,
 });
 
+const emailPartagePatientTemplate = (info, resourcesUrl) => ({
+  subject: "Résultats au questionnaire EPDS de <%- prenom %>",
+  text: `Bonjour,
+
+    Vous venez de passer le test EPDS. Vous trouverez ci-après votre score au test ainsi qu'une liste de structures et professionnels que vous pouvez contacter.
+
+    Score total du questionnaire EPDS  :  <%- score %> / 30
+
+    Des ressources sont à votre disposition sur le site : ${resourcesUrl}
+    `,
+  html: `
+  <p>Bonjour,</p>
+
+  <p>Vous venez de passer le test EPDS. Vous trouverez ci-après votre score au test ainsi qu'une liste de structures et professionnels que vous pouvez contacter.</p>
+
+  <p>Score total du questionnaire EPDS  :  <%- score %> / 30</p>
+
+  <p>Des ressources sont à votre disposition sur le site : <a href="${resourcesUrl}" target="_blank">${resourcesUrl}</a></p>
+  `,
+});
+
 const buildTextResponse = (info, index) =>
   `${info.detail_questions[index]} / ${info.detail_reponses[index]} / ${info.detail_score[index]}`;
 
@@ -80,17 +101,28 @@ const partage = async ({
   };
 
   try {
-    const res = await strapi.plugins.email.services.email.sendTemplatedEmail(
+    const resPro = await strapi.plugins.email.services.email.sendTemplatedEmail(
       {
         from: process.env["MAIL_SEND_FROM"],
         to: email_pro,
-        cc: [email, email_pro_secondaire]
+        cc: [email_pro_secondaire]
       },
       emailPartageTemplate(info),
       info
     );
 
-    return res && !!res.response.match(/Ok/);
+    if (email) {
+      const resPatient = await strapi.plugins.email.services.email.sendTemplatedEmail(
+        {
+          from: process.env["MAIL_SEND_FROM"],
+          to: email
+        },
+        emailPartagePatientTemplate(info, process.env["RESOURCES_URL"]),
+        info
+      );
+    }
+
+    return resPro && !!resPro.response.match(/Ok/);
   } catch (e) {
     console.error(e);
     throw new Error("Erreur de connexion au serveur mail");
