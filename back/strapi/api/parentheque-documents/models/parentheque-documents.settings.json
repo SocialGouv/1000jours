@@ -18,7 +18,11 @@
       "type": "text"
     },
     "fichier": {
-      "allowedTypes": ["images", "files", "videos"],
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
       "model": "file",
       "plugin": "upload",
       "required": true,
@@ -32,6 +36,10 @@
     "thematique": {
       "model": "thematique",
       "via": "parentheque_documents"
+    },
+    "evenements": {
+      "via": "documents",
+      "collection": "evenement"
     }
   }
 }

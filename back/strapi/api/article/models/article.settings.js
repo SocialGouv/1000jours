@@ -104,6 +104,10 @@ module.exports = {
       type: "boolean",
       default: false,
     },
+    evenements: {
+      via: "articles",
+      collection: "evenement",
+    },
   },
   collectionName: "articles",
   info: {
