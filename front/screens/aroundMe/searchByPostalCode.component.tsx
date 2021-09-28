@@ -32,7 +32,7 @@ interface Props {
   setAndGoToNewRegion: (region: Region) => void;
   showSnackBarWithMessage: (message: string) => void;
   setIsLoading: (value: boolean) => void;
-  updateUserLocation: (coordinates: LatLng | undefined) => void;
+  updateUserLocation: (region: Region | undefined) => void;
   setSearchIsReady: (value: boolean) => void;
   setLocationPermissionIsGranted: (value: boolean) => void;
 }
@@ -93,7 +93,19 @@ const SearchByPostalCode: React.FC<Props> = ({
           }
         }
       }
-      updateUserLocation(currentLocation ? currentLocation.coords : undefined);
+      if (currentLocation) {
+        const newDelta = await AroundMeUtils.adaptZoomAccordingToRegion(
+          currentLocation.coords.latitude,
+          currentLocation.coords.longitude
+        );
+
+        updateUserLocation({
+          latitude: currentLocation.coords.latitude,
+          latitudeDelta: newDelta,
+          longitude: currentLocation.coords.longitude,
+          longitudeDelta: newDelta,
+        });
+      } else updateUserLocation(undefined);
     } catch {
       updateUserLocation(undefined);
     }
@@ -127,6 +139,12 @@ const SearchByPostalCode: React.FC<Props> = ({
     );
 
     if (newRegion) {
+      const newDelta = await AroundMeUtils.adaptZoomAccordingToRegion(
+        newRegion.latitude,
+        newRegion.longitude
+      );
+      newRegion.latitudeDelta = newDelta;
+      newRegion.longitudeDelta = newDelta;
       setAndGoToNewRegion(newRegion);
     } else {
       showSnackBarWithMessage(Labels.aroundMe.postalCodeNotFound);

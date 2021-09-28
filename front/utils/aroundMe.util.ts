@@ -35,9 +35,9 @@ export const searchRegionByPostalCode = async (
     const coordinates: string[] = json.features[0].geometry.coordinates;
     newRegion = {
       latitude: Number(coordinates[1]),
-      latitudeDelta: AroundMeConstants.DEFAULT_LATITUDE_DELTA,
+      latitudeDelta: AroundMeConstants.DEFAULT_DELTA,
       longitude: Number(coordinates[0]),
-      longitudeDelta: AroundMeConstants.DEFAULT_LONGITUDE_DELTA,
+      longitudeDelta: AroundMeConstants.DEFAULT_DELTA,
     };
   }
 
@@ -68,4 +68,26 @@ export const getLatLngPoint = (
         longitude: region.longitude + halfLongitude,
       };
   }
+};
+
+export const adaptZoomAccordingToRegion = async (
+  lat: number,
+  long: number
+): Promise<number> => {
+  const response = await fetch(
+    AroundMeConstants.getApiGouvUrlForPopulation(lat, long) as RequestInfo
+  );
+  const json = await response.json();
+  if (json[0].population) {
+    const population = json[0].population;
+    if (population > AroundMeConstants.POPULATION_STEP_PARIS)
+      return AroundMeConstants.DELTA_HIGH;
+    else if (population > AroundMeConstants.POPULATION_STEP_MARSEILLE)
+      return AroundMeConstants.DELTA_MIDDLE;
+    else if (population > AroundMeConstants.POPULATION_STEP_NANTES)
+      return AroundMeConstants.DELTA_LOW;
+    else return AroundMeConstants.DEFAULT_DELTA;
+  }
+
+  return AroundMeConstants.DEFAULT_DELTA;
 };
