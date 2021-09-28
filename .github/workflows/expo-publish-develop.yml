@@ -44,7 +44,7 @@ jobs:
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
 
-      - uses: socialgouv/actions/k8s-namespace@k8s-namespace
+      - uses: socialgouv/actions/k8s-namespace@v1
         id: namespace
         with:
           environment: "dev"
