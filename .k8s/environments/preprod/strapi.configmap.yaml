@@ -1,1 +1,8 @@
-../dev/strapi.configmap.yaml
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: strapi-configmap
+data:
+  STRAPI_LOG_LEVEL: "debug"
+  NODE_ENV: "production"
+  RESOURCES_URL: "https://nos1000jours-web-pro-preprod.dev.fabrique.social.gouv.fr/annexes/ressources-parents"
