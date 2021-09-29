@@ -33,7 +33,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
   const swiperRef = useRef<SwiperFlatList>(null);
   const [questionsAndAnswers, setQuestionsAndAnswers] =
     useState<EpdsQuestionAndAnswers[]>(epdsSurvey);
-  const [showResult, setShowResult] = useState(true);
+  const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [surveyCanBeStarted, setSurveyCanBeStarted] = useState(false);
   const [lastQuestionHas3PointAnswer, setLastQuestionHas3PointAnswer] =
@@ -151,7 +151,10 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
         <EpdsLightResult
           result={score}
           epdsSurvey={questionsAndAnswers}
-          showBeContactedButton={true}
+          showBeContactedButton={
+            score >= EpdsConstants.RESULT_BECONTACTED_VALUE ||
+            lastQuestionHas3PointAnswer
+          }
           startSurveyOver={async () => {
             await restartSurvey();
           }}
