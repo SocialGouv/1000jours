@@ -80,13 +80,12 @@ export const adaptZoomAccordingToRegion = async (
   const json = await response.json();
   if (json[0].population) {
     const population = json[0].population;
-    if (population > AroundMeConstants.POPULATION_STEP_PARIS)
+    if (population > AroundMeConstants.POPULATION_STEP_TWO_MILLION)
       return AroundMeConstants.DELTA_HIGH;
-    else if (population > AroundMeConstants.POPULATION_STEP_MARSEILLE)
+    if (population > AroundMeConstants.POPULATION_STEP_EIGHT_HUNDRED_THOUSAND)
       return AroundMeConstants.DELTA_MIDDLE;
-    else if (population > AroundMeConstants.POPULATION_STEP_NANTES)
+    if (population > AroundMeConstants.POPULATION_STEP_THREE_HUNDRED_THOUSAND)
       return AroundMeConstants.DELTA_LOW;
-    else return AroundMeConstants.DEFAULT_DELTA;
   }
 
   return AroundMeConstants.DEFAULT_DELTA;
