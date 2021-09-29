@@ -4,14 +4,20 @@ export const COORDINATE_PARIS = {
   longitude: 2.342685107141733,
 };
 
-export const DEFAULT_LATITUDE_DELTA = 0.2;
-export const DEFAULT_LONGITUDE_DELTA = 0.2;
+export const POPULATION_STEP_TWO_MILLION = 2000000;
+export const POPULATION_STEP_EIGHT_HUNDRED_THOUSAND = 800000;
+export const POPULATION_STEP_THREE_HUNDRED_THOUSAND = 300000;
+
+export const DEFAULT_DELTA = 0.1;
+export const DELTA_HIGH = 0.01;
+export const DELTA_MIDDLE = 0.02;
+export const DELTA_LOW = 0.03;
 
 export const INITIAL_REGION = {
   latitude: COORDINATE_PARIS.latitude,
-  latitudeDelta: DEFAULT_LATITUDE_DELTA,
+  latitudeDelta: DEFAULT_DELTA,
   longitude: COORDINATE_PARIS.longitude,
-  longitudeDelta: DEFAULT_LONGITUDE_DELTA,
+  longitudeDelta: DEFAULT_DELTA,
 };
 
 export const POSTAL_CODE_MAX_LENGTH = 5;
@@ -20,6 +26,12 @@ export const MAX_NUMBER_POI_WITHOUT_FILTER = 20;
 
 export const getApiUrlWithParam = (postalCode: string): string =>
   `https://api-adresse.data.gouv.fr/search/?q=${postalCode}&type=municipality&limit=1`;
+
+export const getApiGouvUrlForPopulation = (
+  lat: number,
+  long: number
+): string => `https://geo.api.gouv.fr/communes?lat=${lat}&lon=${long}&fields=&format=json&geometry=centre
+`;
 
 export enum LatLngPointType {
   topLeft = "topLeft",
@@ -52,7 +64,7 @@ export enum CartoFilterEnum {
   etape = "etape",
 }
 
-export const MAPVIEW_MIN_ZOOM_LEVEL = 10;
+export const MAPVIEW_MIN_ZOOM_LEVEL = 13;
 
 export const ERROR_LOCATION_PROVIDER_UNAVAILABLE_MESSAGE =
   "Location provider is unavailable. Make sure that location services are enabled.";

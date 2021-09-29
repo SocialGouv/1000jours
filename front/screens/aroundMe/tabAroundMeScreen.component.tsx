@@ -242,11 +242,15 @@ const TabAroundMeScreen: React.FC = () => {
         }}
         showSnackBarWithMessage={showSnackBarWithMessage}
         setIsLoading={setIsLoading}
-        updateUserLocation={async (coordinates: LatLng | undefined) => {
-          if (coordinates) {
+        updateUserLocation={async (newRegion: Region | undefined) => {
+          if (newRegion) {
             setSelectedPoiIndex(-1);
-            setCurrentUserLocation(coordinates);
-            moveMapToCoordinates(coordinates.latitude, coordinates.longitude);
+            setCurrentUserLocation({
+              latitude: newRegion.latitude,
+              longitude: newRegion.longitude,
+            });
+            setRegion(newRegion);
+            mapRef.current?.animateToRegion(newRegion);
           } else {
             const savedRegion: Region | undefined =
               await StorageUtils.getObjectValue(

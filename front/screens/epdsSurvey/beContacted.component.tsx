@@ -274,7 +274,6 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                   selectedValue={numberOfChildren}
                   style={{ height: 30, width: 100 }}
                   onValueChange={(itemValue) => {
-                    console.log(Number(itemValue));
                     setNumberOfChildren(Number(itemValue));
                   }}
                 >
