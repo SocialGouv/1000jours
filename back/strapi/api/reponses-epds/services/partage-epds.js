@@ -1,11 +1,14 @@
 "use strict";
 
 const path = require('path');
-var fs = require('fs');
-var html_to_pdf = require('html-pdf-node');
+const fs = require('fs');
+const html_to_pdf = require('html-pdf-node');
+const slugify = require('slugify')
 
 const relativeDirPath = path.relative('.', `public`);
-const filename = (nom) => `resultats-epds-${nom}.pdf`;
+
+const r = (Math.random() + 1).toString(36).substring(7);
+const filename = (nom) => slugify(`resultats epds ${nom} ${r}`, `-`) + ".pdf";
 
 const emailPartageTemplate = (info) => ({
   subject: "Résultats au questionnaire EPDS de <%- prenom %>",
@@ -121,7 +124,7 @@ const partage = async ({
             {
               filename: filename(nom),
               contentType: 'application/pdf',
-              content: fs.createReadStream(relativeDirPath + '/' + filename(nom))
+              content: fs.createReadStream(path.join(relativeDirPath, filename(nom)))
             }
           ]
         },
@@ -157,7 +160,7 @@ const partage = async ({
 }
 
 function createPdf(info) {
-  let options = {
+  const options = {
     format: 'A4',
     path: relativeDirPath + '/' + filename(info.nom),
     margin: {
@@ -168,7 +171,7 @@ function createPdf(info) {
     }
   };
 
-  let file = {
+  const file = {
     content: emailPartageHtml(info)
   };
 
