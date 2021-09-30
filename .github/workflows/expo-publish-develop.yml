@@ -14,8 +14,8 @@ on:
       description: 'Manual workflow'
 
 concurrency:
-  group: ${{ github.ref }}
   cancel-in-progress: true
+  group: expo-dev-${{ github.ref }}
 
 jobs:
   Publish:
