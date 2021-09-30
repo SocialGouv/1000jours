@@ -4,7 +4,8 @@ const path = require('path');
 var fs = require('fs');
 var html_to_pdf = require('html-pdf-node');
 
-const relativeDirPath = path.relative('.', `public`)
+const relativeDirPath = path.relative('.', `public`);
+const filename = (nom) => `resultats-epds-${nom}.pdf`;
 
 const emailPartageTemplate = (info) => ({
   subject: "Résultats au questionnaire EPDS de <%- prenom %>",
@@ -109,20 +110,18 @@ const partage = async ({
     detail_reponses
   };
 
-  try {
-    const filename = `resultats-epds-${nom}.pdf`
-
-    createPdf(info).then(async () => {
-      const resPro = await strapi.plugins.email.services.email.sendTemplatedEmail(
+  const emailResponse = await new Promise((resolve) => {
+    createPdf(info).then(() => {
+      const resPro = strapi.plugins.email.services.email.sendTemplatedEmail(
         {
           from: process.env["MAIL_SEND_FROM"],
           to: email_pro,
           cc: [email_pro_secondaire],
           attachments: [
             {
-              filename: filename,
+              filename: filename(nom),
               contentType: 'application/pdf',
-              content: fs.createReadStream(relativeDirPath + '/' + filename)
+              content: fs.createReadStream(relativeDirPath + '/' + filename(nom))
             }
           ]
         },
@@ -131,7 +130,7 @@ const partage = async ({
       );
 
       if (email) {
-        const resPatient = await strapi.plugins.email.services.email.sendTemplatedEmail(
+        const resPatient = strapi.plugins.email.services.email.sendTemplatedEmail(
           {
             from: process.env["MAIL_SEND_FROM"],
             to: email
@@ -141,20 +140,26 @@ const partage = async ({
         );
       }
 
-      return resPro && !!resPro.response.match(/Ok/);
-    })
+      resolve(resPro)
+
+      fs.rm(relativeDirPath + '/' + filename(nom), { recursive: false }, (err) => {
+        if (err) console.error(err);
+      });
+    });
+  })
+
+  try {
+    return (emailResponse && !!emailResponse.response.match(/Ok/))
   } catch (e) {
     console.error(e);
     throw new Error("Erreur de connexion au serveur mail");
   }
-};
+}
 
 function createPdf(info) {
-  const filename = `resultats-epds-${info.nom}.pdf`
-
   let options = {
     format: 'A4',
-    path: relativeDirPath + '/' + filename,
+    path: relativeDirPath + '/' + filename(info.nom),
     margin: {
       top: 25,
       left: 25,
