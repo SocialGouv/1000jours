@@ -141,7 +141,7 @@ const EpdsLightResult: React.FC<Props> = ({
         <SecondaryText style={styles.text}>
           {Labels.epdsSurveyLight.changementsImportants}
         </SecondaryText>
-        {result >= EpdsConstants.RESULT_BECONTACTED_VALUE && (
+        {result >= EpdsConstants.RESULT_BAD_VALUE && (
           <SecondaryText style={[styles.text, styles.fontBold]}>
             {labelsResultats.retakeTestInvitation}
           </SecondaryText>
