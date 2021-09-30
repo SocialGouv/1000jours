@@ -1,5 +1,11 @@
 "use strict";
 
+const path = require('path');
+var fs = require('fs');
+var html_to_pdf = require('html-pdf-node');
+
+const relativeDirPath = path.relative('.', `public`)
+
 const emailPartageTemplate = (info) => ({
   subject: "Résultats au questionnaire EPDS de <%- prenom %>",
   text: `Bonjour,
@@ -16,16 +22,19 @@ const emailPartageTemplate = (info) => ({
     Question / Réponse / Score
     ${[...new Array(10)].map((_, i) => buildTextResponse(info, i)).join('\n    ')}
     `,
-  html: `
-  <p>Bonjour,</p>
+  html: emailPartageHtml(info),
+});
 
-  <p>La patiente <b><%- prenom %> <%- nom %></b> vient de compléter un test EPDS et souhaite partager le résultat avec vous.
+const emailPartageHtml = (info) => (
+  `<p>Bonjour,</p>
+
+  <p>La patiente <b>${info.prenom} ${info.nom}</b> vient de compléter un test EPDS et souhaite partager le résultat avec vous.
   Vous pouvez la contacter grâce aux informations suivantes : </p>
 
-  <p>Adresse mail : <%- email %><br />
-  Téléphone : <%- telephone %></p>
+  <p>Adresse mail : ${info.email}<br />
+  Téléphone : ${info.telephone}</p>
 
-  <p>Score total du questionnaire EPDS  :  <%- score %> / 30</p>
+  <p>Score total du questionnaire EPDS  :  ${info.score} / 30</p>
 
   <p>Détails des réponses :
     <table border="1" cellspacing="0" cellpadding="5">
@@ -37,8 +46,8 @@ const emailPartageTemplate = (info) => ({
       ${[...new Array(10)].map((_, i) => buildHtmlDetailScore(info, i)).join('\n    ')}
     </table>
   </p>
-  `,
-});
+  `
+)
 
 const emailPartagePatientTemplate = (info, resourcesUrl) => ({
   subject: "Résultats au questionnaire EPDS de <%- prenom %>",
@@ -101,33 +110,65 @@ const partage = async ({
   };
 
   try {
-    const resPro = await strapi.plugins.email.services.email.sendTemplatedEmail(
-      {
-        from: process.env["MAIL_SEND_FROM"],
-        to: email_pro,
-        cc: [email_pro_secondaire]
-      },
-      emailPartageTemplate(info),
-      info
-    );
+    const filename = `resultats-epds-${nom}.pdf`
 
-    if (email) {
-      const resPatient = await strapi.plugins.email.services.email.sendTemplatedEmail(
+    createPdf(info).then(async () => {
+      const resPro = await strapi.plugins.email.services.email.sendTemplatedEmail(
         {
           from: process.env["MAIL_SEND_FROM"],
-          to: email
+          to: email_pro,
+          cc: [email_pro_secondaire],
+          attachments: [
+            {
+              filename: filename,
+              contentType: 'application/pdf',
+              content: fs.createReadStream(relativeDirPath + '/' + filename)
+            }
+          ]
         },
-        emailPartagePatientTemplate(info, process.env["RESOURCES_URL"]),
+        emailPartageTemplate(info),
         info
       );
-    }
 
-    return resPro && !!resPro.response.match(/Ok/);
+      if (email) {
+        const resPatient = await strapi.plugins.email.services.email.sendTemplatedEmail(
+          {
+            from: process.env["MAIL_SEND_FROM"],
+            to: email
+          },
+          emailPartagePatientTemplate(info, process.env["RESOURCES_URL"]),
+          info
+        );
+      }
+
+      return resPro && !!resPro.response.match(/Ok/);
+    })
   } catch (e) {
     console.error(e);
     throw new Error("Erreur de connexion au serveur mail");
   }
 };
+
+function createPdf(info) {
+  const filename = `resultats-epds-${info.nom}.pdf`
+
+  let options = {
+    format: 'A4',
+    path: relativeDirPath + '/' + filename,
+    margin: {
+      top: 25,
+      left: 25,
+      bottom: 25,
+      right: 25
+    }
+  };
+
+  let file = {
+    content: emailPartageHtml(info)
+  };
+
+  return html_to_pdf.generatePdf(file, options)
+}
 
 module.exports = {
   partage
