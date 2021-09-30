@@ -141,9 +141,11 @@ const EpdsLightResult: React.FC<Props> = ({
         <SecondaryText style={styles.text}>
           {Labels.epdsSurveyLight.changementsImportants}
         </SecondaryText>
-        <SecondaryText style={[styles.text, styles.fontBold]}>
-          {labelsResultats.retakeTestInvitation}
-        </SecondaryText>
+        {result >= EpdsConstants.RESULT_BECONTACTED_VALUE && (
+          <SecondaryText style={[styles.text, styles.fontBold]}>
+            {labelsResultats.retakeTestInvitation}
+          </SecondaryText>
+        )}
         {showBeContactedButton && (
           <View style={styles.validateButton}>
             <Button
