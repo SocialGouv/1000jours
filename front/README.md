@@ -75,3 +75,5 @@ Pour builder ou publier l'application automatiquement :
 - Cliquer sur le menu `Run workflow`
 - Sélectionner la branche `master`
 - Cliquer sur le bouton `Run workflow`
+
+plop
