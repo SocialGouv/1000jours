@@ -11,7 +11,7 @@ import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
 import IconeResultatMoyen from "../../assets/images/icone_resultats_moyen.svg";
 import IconeResultatPasBien from "../../assets/images/icone_resultats_pasbien.svg";
 import { Button, CustomSnackbar, TitleH1 } from "../../components";
-import { SecondaryText } from "../../components/StyledText";
+import { CommonText, SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
@@ -122,12 +122,18 @@ const EpdsLightResult: React.FC<Props> = ({
     return iconsMap.get(icone);
   };
 
+  const iconAndStateOfMind = EpdsSurveyUtils.getResultLabelAndStyle(result);
+  const colorStyle = { color: iconAndStateOfMind.color };
+
   return (
     <>
       <ScrollView>
         <TitleH1 title={Labels.epdsSurveyLight.titleLight} animated={false} />
         <View style={styles.rowView}>
-          {getIcon(EpdsSurveyUtils.getResultIconLight(result))}
+          {getIcon(iconAndStateOfMind.icon)}
+          <CommonText style={[styles.stateOfMind, colorStyle]}>
+            {iconAndStateOfMind.resultLabels.stateOfMind}
+          </CommonText>
         </View>
         <SecondaryText style={[styles.text, styles.fontBold]}>
           {Labels.epdsSurveyLight.oserEnParler}
