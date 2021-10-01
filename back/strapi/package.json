@@ -25,6 +25,7 @@
     "html-pdf-node": "^1.0.7",
     "json2csv": "^5.0.6",
     "knex": "^0.95",
+    "lodash": "^4.17.21",
     "pg": "latest",
     "pg-query-stream": "^4.2.1",
     "slugify": "^1.6.0",
