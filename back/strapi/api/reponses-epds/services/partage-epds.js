@@ -113,8 +113,8 @@ const partage = async ({
     detail_reponses
   };
 
-  const emailResponse = await new Promise((resolve) => {
-    createPdf(info).then(() => {
+  const emailResponse = await new Promise(async (resolve) => {
+    await createPdf(info).then(() => {
       const resPro = strapi.plugins.email.services.email.sendTemplatedEmail(
         {
           from: process.env["MAIL_SEND_FROM"],
