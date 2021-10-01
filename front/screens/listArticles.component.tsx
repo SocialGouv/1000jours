@@ -75,6 +75,8 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
         titre
         resume
         visuel {
+          id
+          hash
           url
           height
           width
