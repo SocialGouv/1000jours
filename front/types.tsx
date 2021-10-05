@@ -99,6 +99,8 @@ export type Thematique = {
   nom: string;
 };
 export type Visuel = {
+  id: string;
+  hash: string;
   url: string;
   height: number;
   width: number;
