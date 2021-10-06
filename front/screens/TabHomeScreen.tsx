@@ -178,34 +178,37 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
       ordre: 0,
     };
 
-    return counterDocument > 0 ? (
-      <View
-        style={[
-          styles.timelineStepContainer,
-          styles.timelineStepLibraryContainer,
-        ]}
-      >
-        <View style={[styles.timelineContainer]}>
-          <View
-            style={[
-              styles.timelineBlock,
-              styles.timelineLibraryBlock,
-              styles.timelineBlockLeft,
-            ]}
-          />
+    if (counterDocument > 0)
+      return (
+        <View
+          style={[
+            styles.timelineStepContainer,
+            styles.timelineStepLibraryContainer,
+          ]}
+        >
+          <View style={[styles.timelineContainer]}>
+            <View
+              style={[
+                styles.timelineBlock,
+                styles.timelineLibraryBlock,
+                styles.timelineBlockLeft,
+              ]}
+            />
+          </View>
+          {[stepParentheque].map((step, index) => (
+            <TimelineStepLibrary
+              order={step.ordre}
+              name={step.nom}
+              key={index}
+              onPress={() => {
+                navigation.navigate("listParentsDocuments", { step });
+              }}
+            />
+          ))}
         </View>
-        {[stepParentheque].map((step, index) => (
-          <TimelineStepLibrary
-            order={step.ordre}
-            name={step.nom}
-            key={index}
-            onPress={() => {
-              navigation.navigate("listParentsDocuments", { step });
-            }}
-          />
-        ))}
-      </View>
-    ) : (
+      );
+
+    return (
       <View
         style={[
           styles.timelineStepContainer,
