@@ -58,7 +58,6 @@ export enum IcomoonIcons {
   mentionsLegales = "mentions-legales",
   politiquesConfidentialite = "politiques-confidentialite",
   glossaire = "glossaire",
-  stepParentheque = "step-parentheque",
   stepProjetParent = "step-projet-parent",
   stepConception = "step-conception",
   stepDebutDeGrossesse = "step-debut-de-grossesse",

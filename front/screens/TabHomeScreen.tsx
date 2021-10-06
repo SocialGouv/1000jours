@@ -17,7 +17,6 @@ import {
   TitleH1,
   View,
 } from "../components";
-import TimelineStepLibrary from "../components/timeline/timelineStepLibrary.component";
 import {
   FetchPoliciesConstants,
   Paddings,
@@ -36,7 +35,7 @@ import { getCurrentStepId } from "../utils/step.util";
 import { stringIsNotNullNorEmpty } from "../utils/strings.util";
 
 interface Props {
-  navigation: StackNavigationProp<TabHomeParamList>;
+  navigation: StackNavigationProp<TabHomeParamList, "listArticles">;
 }
 
 const TabHomeScreen: FC<Props> = ({ navigation }) => {
@@ -145,16 +144,6 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     }
   }
 
-  const stepParentheque: Step = {
-    active: null,
-    debut: null,
-    description: Labels.timeline.library.description,
-    fin: null,
-    id: "0",
-    nom: Labels.timeline.library.nom,
-    ordre: 0,
-  };
-
   return (
     <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>
       <TitleH1
@@ -162,34 +151,6 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
         description={Labels.timeline.description}
         animated={false}
       />
-
-      <View
-        style={[
-          styles.timelineStepContainer,
-          styles.timelineStepLibraryContainer,
-        ]}
-      >
-        <View style={[styles.timelineContainer]}>
-          <View
-            style={[
-              styles.timelineBlock,
-              styles.timelineLibraryBlock,
-              styles.timelineBlockLeft,
-            ]}
-          />
-        </View>
-        {[stepParentheque].map((step, index) => (
-          <TimelineStepLibrary
-            order={step.ordre}
-            name={step.nom}
-            key={index}
-            onPress={() => {
-              navigation.navigate("listParentsDocuments", { step });
-            }}
-          />
-        ))}
-      </View>
-
       <View style={[styles.timelineStepContainer]}>
         <View style={[styles.timelineContainer]}>
           <View
@@ -274,19 +235,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
   },
-  timelineLibraryBlock: {
-    borderBottomWidth: 0,
-    borderColor: Colors.primaryBlue,
-    borderStyle: "solid",
-    borderTopWidth: 1,
-  },
   timelineStepContainer: {
     marginBottom: Sizes.step,
     marginLeft: "5%",
     marginRight: "5%",
-  },
-  timelineStepLibraryContainer: {
-    marginBottom: 0,
     marginTop: Sizes.step,
   },
 });

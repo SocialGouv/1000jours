@@ -5,7 +5,6 @@ import ArticleDetail from "./ArticleDetail";
 import EpdsSurveyScreen from "./epdsSurvey/epdsSurveyScreen.component";
 import EventDetails from "./event/eventDetails.component";
 import ListArticles from "./listArticles.component";
-import ListParentsDocuments from "./listParentsDocuments.component";
 import TabCalendarScreen from "./TabCalendarScreen";
 import TabFavoritesScreen from "./TabFavoritesScreen";
 import TabHomeScreen from "./TabHomeScreen";
@@ -17,7 +16,6 @@ export {
   EventDetails,
   LegalNotice,
   ListArticles,
-  ListParentsDocuments,
   TabAroundMeScreen,
   TabCalendarScreen,
   TabFavoritesScreen,
