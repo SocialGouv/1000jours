@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlue,
     fontSize: Sizes.xxxxxs,
     lineHeight: Sizes.lg,
-    textAlignVertical: "bottom",
+    textAlignVertical: "top",
   },
   link: {
     color: Colors.commonText,
