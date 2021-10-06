@@ -102,5 +102,5 @@ jobs:
       with:
         environment: "prod"
         token: ${{ secrets.GITHUB_TOKEN }}
-        kubeconfig: ${{ secrets.KUBECONFIG }}
+        kubeconfig: ${{ secrets.SOCIALGOUV_KUBE_CONFIG_PROD }}
         rancherId: ${{ secrets.RANCHER_PROJECT_ID }}
