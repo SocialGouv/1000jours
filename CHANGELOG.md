@@ -1,3 +1,10 @@
+## [1.74.2](https://github.com/SocialGouv/1000jours/compare/v1.74.1...v1.74.2) (2021-10-06)
+
+
+### Bug Fixes
+
+* Override production deployment namespace ([470c52d](https://github.com/SocialGouv/1000jours/commit/470c52d3dbe892f8b07dc0e25e629e5810e88988))
+
 ## [1.74.1](https://github.com/SocialGouv/1000jours/compare/v1.74.0...v1.74.1) (2021-10-06)
 
 
