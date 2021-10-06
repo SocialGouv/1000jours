@@ -1,3 +1,10 @@
+## [1.74.3](https://github.com/SocialGouv/1000jours/compare/v1.74.2...v1.74.3) (2021-10-06)
+
+
+### Bug Fixes
+
+* Production deployment job needs ([8e32dba](https://github.com/SocialGouv/1000jours/commit/8e32dbabb60c2b992986f994327f76a6b3612861))
+
 ## [1.74.2](https://github.com/SocialGouv/1000jours/compare/v1.74.1...v1.74.2) (2021-10-06)
 
 
