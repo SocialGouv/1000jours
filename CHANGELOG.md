@@ -1,3 +1,10 @@
+## [1.74.5-alpha.2](https://github.com/SocialGouv/1000jours/compare/v1.74.5-alpha.1...v1.74.5-alpha.2) (2021-10-06)
+
+
+### Bug Fixes
+
+* Upgrade kosko-charts. ([2e0089a](https://github.com/SocialGouv/1000jours/commit/2e0089ad6118f162a16f08432ce67937cb350757))
+
 ## [1.74.5-alpha.1](https://github.com/SocialGouv/1000jours/compare/v1.74.4...v1.74.5-alpha.1) (2021-10-06)
 
 
