@@ -1,3 +1,10 @@
+## [1.74.1](https://github.com/SocialGouv/1000jours/compare/v1.74.0...v1.74.1) (2021-10-06)
+
+
+### Bug Fixes
+
+* Use KUBECONFIG in production workflow ([b9358e2](https://github.com/SocialGouv/1000jours/commit/b9358e2350ddf769d12bf8d89aa294096b97141e))
+
 # [1.74.0](https://github.com/SocialGouv/1000jours/compare/v1.73.1...v1.74.0) (2021-10-06)
 
 
