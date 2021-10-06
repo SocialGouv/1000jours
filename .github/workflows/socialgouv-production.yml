@@ -49,7 +49,7 @@ jobs:
   ## DEPLOY PREPRODUCTION APPLICATION
   ##############################################################################
   deploy-preprod:
-    name: Deploy application
+    name: Deploy preproduction
     runs-on: ubuntu-latest
     needs: [register, manifests]
     environment:
@@ -65,23 +65,10 @@ jobs:
         kubeconfig: ${{ secrets.SOCIALGOUV_KUBE_CONFIG_DEV }}
 
   ##############################################################################
-  ## GENERATE PRODUCTION MANIFESTS
-  ##############################################################################
-  # manifests-prod:
-  #   name: Production manifests
-  #   runs-on: ubuntu-latest
-  #   steps:
-
-  #   - name: Use autodevops manifests generation
-  #     uses: SocialGouv/actions/k8s-manifests@v1
-  #     with:
-  #       environment: "prod"
-
-  ##############################################################################
   ## DEPLOY PRODUCTION APPLICATION
   ##############################################################################
   deploy-prod:
-    name: Deploy application
+    name: Deploy production
     runs-on: ubuntu-latest
     needs: [deploy-preprod]
     environment:
