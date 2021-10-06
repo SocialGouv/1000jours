@@ -1,3 +1,10 @@
+## [1.74.4](https://github.com/SocialGouv/1000jours/compare/v1.74.3...v1.74.4) (2021-10-06)
+
+
+### Bug Fixes
+
+* Use SOCIALGOUV_KUBE_CONFIG_PROD to create PV/PVC ([51da81a](https://github.com/SocialGouv/1000jours/commit/51da81a340b948b0963f929859277c43bd2bfd2e))
+
 ## [1.74.3](https://github.com/SocialGouv/1000jours/compare/v1.74.2...v1.74.3) (2021-10-06)
 
 
