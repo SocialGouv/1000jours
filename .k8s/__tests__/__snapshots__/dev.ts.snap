@@ -6,7 +6,7 @@ kind: Namespace
 metadata:
   annotations:
     socialgouv/creator: autodevops
-    janitor/ttl: 15d
+    janitor/ttl: 7d
     field.cattle.io/creatorId: gitlab
     field.cattle.io/projectId: c-bd7z2:p-7ms8p
     git/branch: refs/heads/mybranch
@@ -23,7 +23,7 @@ metadata:
     owner: 1000jours
     team: 1000jours
     cert: wildcard
-  name: 1000jours-mybranch
+  name: env-1000jours-mybranch-3s2aqr
 "
 `;
 
@@ -34,7 +34,7 @@ kind: Namespace
 metadata:
   annotations:
     socialgouv/creator: autodevops
-    janitor/ttl: 15d
+    janitor/ttl: 7d
     field.cattle.io/creatorId: gitlab
     field.cattle.io/projectId: c-bd7z2:p-7ms8p
     git/branch: refs/heads/mybranch
@@ -51,7 +51,7 @@ metadata:
     owner: 1000jours
     team: 1000jours
     cert: wildcard
-  name: 1000jours-mybranch
+  name: env-1000jours-mybranch-3s2aqr
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -72,7 +72,7 @@ metadata:
     team: 1000jours
     cert: wildcard
   name: strapi-cache
-  namespace: 1000jours-mybranch
+  namespace: env-1000jours-mybranch-3s2aqr
 spec:
   replicas: 1
   selector:
@@ -171,7 +171,7 @@ metadata:
     app.github.com/repo: socialgouv/1000jours
     app.github.com/run: '1234'
     app.github.com/sha: '0123456'
-  namespace: 1000jours-mybranch
+  namespace: env-1000jours-mybranch-3s2aqr
 spec:
   ports:
     - name: http
@@ -204,10 +204,10 @@ metadata:
     team: 1000jours
     cert: wildcard
   name: strapi-cache
-  namespace: 1000jours-mybranch
+  namespace: env-1000jours-mybranch-3s2aqr
 spec:
   rules:
-    - host: backoffice-1000jours-mybranch.dev2.fabrique.social.gouv.fr
+    - host: backoffice-env-1000jours-mybranch-3s2aqr.dev2.fabrique.social.gouv.fr
       http:
         paths:
           - backend:
@@ -219,7 +219,7 @@ spec:
             pathType: Prefix
   tls:
     - hosts:
-        - backoffice-1000jours-mybranch.dev2.fabrique.social.gouv.fr
+        - backoffice-env-1000jours-mybranch-3s2aqr.dev2.fabrique.social.gouv.fr
       secretName: wildcard-crt
 ---
 apiVersion: v1
@@ -238,7 +238,7 @@ metadata:
     app.github.com/repo: socialgouv/1000jours
     app.github.com/run: '1234'
     app.github.com/sha: '0123456'
-  namespace: 1000jours-mybranch
+  namespace: env-1000jours-mybranch-3s2aqr
 data:
   nginx.conf: |-
 
@@ -350,7 +350,7 @@ metadata:
     team: 1000jours
     cert: wildcard
   name: create-db-job-mybranch
-  namespace: 1000jours-mybranch
+  namespace: env-1000jours-mybranch-3s2aqr
 ---
 apiVersion: v1
 kind: Secret
@@ -383,7 +383,7 @@ metadata:
     team: 1000jours
     cert: wildcard
   name: azure-pg-user-mybranch
-  namespace: 1000jours-mybranch
+  namespace: env-1000jours-mybranch-3s2aqr
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -404,7 +404,7 @@ metadata:
     team: 1000jours
     cert: wildcard
   name: strapi
-  namespace: 1000jours-mybranch
+  namespace: env-1000jours-mybranch-3s2aqr
 spec:
   replicas: 1
   selector:
@@ -470,7 +470,7 @@ spec:
           env:
             - name: BACKOFFICE_URL
               value: >-
-                https://backoffice-1000jours-mybranch.dev2.fabrique.social.gouv.fr
+                https://backoffice-env-1000jours-mybranch-3s2aqr.dev2.fabrique.social.gouv.fr
             - name: DATABASE_CLIENT
               value: postgres
             - name: DATABASE_NAME
@@ -525,7 +525,7 @@ metadata:
     owner: 1000jours
     team: 1000jours
     cert: wildcard
-  namespace: 1000jours-mybranch
+  namespace: env-1000jours-mybranch-3s2aqr
 spec:
   encryptedData:
     MAIL_HOST: >-
@@ -578,10 +578,12 @@ metadata:
     owner: 1000jours
     team: 1000jours
     cert: wildcard
-  namespace: 1000jours-mybranch
+  namespace: env-1000jours-mybranch-3s2aqr
 data:
   STRAPI_LOG_LEVEL: debug
   NODE_ENV: production
+  RESOURCES_URL: >-
+    https://nos1000jours-web-pro-develop.dev.fabrique.social.gouv.fr/annexes/ressources-parents
 ---
 apiVersion: v1
 kind: Service
@@ -602,7 +604,7 @@ metadata:
     app.github.com/repo: socialgouv/1000jours
     app.github.com/run: '1234'
     app.github.com/sha: '0123456'
-  namespace: 1000jours-mybranch
+  namespace: env-1000jours-mybranch-3s2aqr
 spec:
   ports:
     - name: http

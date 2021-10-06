@@ -554,6 +554,8 @@ metadata:
 data:
   STRAPI_LOG_LEVEL: debug
   NODE_ENV: production
+  RESOURCES_URL: >-
+    https://nos1000jours-web-pro-preprod.dev.fabrique.social.gouv.fr/annexes/ressources-parents
 ---
 apiVersion: v1
 kind: Service
