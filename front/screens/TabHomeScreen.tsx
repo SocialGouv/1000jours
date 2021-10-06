@@ -66,12 +66,16 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   );
 
   const [counterDocument, setCounterDocument] = useState(0);
-  const [loadParentheque, { loading: l, error: e, data: d }] = useLazyQuery(
-    PARENTS_DOCUMENTS,
+  const [
+    loadParentheque,
     {
-      fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
-    }
-  );
+      loading: loadingParentheque,
+      error: errorParentheque,
+      data: dataParentheque,
+    },
+  ] = useLazyQuery(PARENTS_DOCUMENTS, {
+    fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
+  });
 
   const init = async () => {
     const previousStepId = await StorageUtils.getStringValue(
@@ -135,12 +139,12 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    if (!l && d) {
-      const results = (d as { parenthequeDocuments: Document[] })
+    if (!loadingParentheque && dataParentheque) {
+      const results = (dataParentheque as { parenthequeDocuments: Document[] })
         .parenthequeDocuments;
       setCounterDocument(results.length);
     }
-  }, [l, d, e]);
+  }, [loadingParentheque, dataParentheque, errorParentheque]);
 
   if (!called || loading) return <Loader />;
   if (error) return <ErrorMessage error={error} />;
@@ -174,44 +178,41 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
       ordre: 0,
     };
 
-    if (counterDocument > 0)
-      return (
-        <View
-          style={[
-            styles.timelineStepContainer,
-            styles.timelineStepLibraryContainer,
-          ]}
-        >
-          <View style={[styles.timelineContainer]}>
-            <View
-              style={[
-                styles.timelineBlock,
-                styles.timelineLibraryBlock,
-                styles.timelineBlockLeft,
-              ]}
-            />
-          </View>
-          {[stepParentheque].map((step, index) => (
-            <TimelineStepLibrary
-              order={step.ordre}
-              name={step.nom}
-              key={index}
-              onPress={() => {
-                navigation.navigate("listParentsDocuments", { step });
-              }}
-            />
-          ))}
+    return counterDocument > 0 ? (
+      <View
+        style={[
+          styles.timelineStepContainer,
+          styles.timelineStepLibraryContainer,
+        ]}
+      >
+        <View style={[styles.timelineContainer]}>
+          <View
+            style={[
+              styles.timelineBlock,
+              styles.timelineLibraryBlock,
+              styles.timelineBlockLeft,
+            ]}
+          />
         </View>
-      );
-    else
-      return (
-        <View
-          style={[
-            styles.timelineStepContainer,
-            styles.timelineStepLibraryContainer,
-          ]}
-        />
-      );
+        {[stepParentheque].map((step, index) => (
+          <TimelineStepLibrary
+            order={step.ordre}
+            name={step.nom}
+            key={index}
+            onPress={() => {
+              navigation.navigate("listParentsDocuments", { step });
+            }}
+          />
+        ))}
+      </View>
+    ) : (
+      <View
+        style={[
+          styles.timelineStepContainer,
+          styles.timelineStepLibraryContainer,
+        ]}
+      />
+    );
   };
 
   return (
