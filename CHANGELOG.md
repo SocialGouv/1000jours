@@ -1,3 +1,10 @@
+## [1.74.4-alpha.1](https://github.com/SocialGouv/1000jours/compare/v1.74.3...v1.74.4-alpha.1) (2021-10-06)
+
+
+### Bug Fixes
+
+* Prod CI setup ([13484a2](https://github.com/SocialGouv/1000jours/commit/13484a22535b685420b500f2938049c612af7ed4))
+
 ## [1.74.3](https://github.com/SocialGouv/1000jours/compare/v1.74.2...v1.74.3) (2021-10-06)
 
 
