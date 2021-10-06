@@ -25,6 +25,7 @@ import {
   StorageKeysConstants,
 } from "../constants";
 import Colors from "../constants/Colors";
+import { PARENTS_DOCUMENTS } from "../constants/databaseQueries.constants";
 import Labels from "../constants/Labels";
 import type { Step, TabHomeParamList, UserSituation } from "../types";
 import { AroundMeUtils, StorageUtils, TrackerUtils } from "../utils";
@@ -64,6 +65,14 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     { fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK }
   );
 
+  const [counterDocument, setCounterDocument] = useState(0);
+  const [loadParentheque, { loading: l, error: e, data: d }] = useLazyQuery(
+    PARENTS_DOCUMENTS,
+    {
+      fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
+    }
+  );
+
   const init = async () => {
     const previousStepId = await StorageUtils.getStringValue(
       StorageKeysConstants.currentStepId
@@ -86,6 +95,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
       setCurrentStepId(stepId);
     }
     loadSteps();
+    loadParentheque();
   };
 
   const checkIfCurrentStepHasChanged = (currentStep: Step) => {
@@ -124,6 +134,14 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     return unsubscribe;
   }, []);
 
+  useEffect(() => {
+    if (!l && d) {
+      const results = (d as { parenthequeDocuments: Document[] })
+        .parenthequeDocuments;
+      setCounterDocument(results.length);
+    }
+  }, [l, d, e]);
+
   if (!called || loading) return <Loader />;
   if (error) return <ErrorMessage error={error} />;
 
@@ -145,14 +163,55 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     }
   }
 
-  const stepParentheque: Step = {
-    active: null,
-    debut: null,
-    description: Labels.timeline.library.description,
-    fin: null,
-    id: "0",
-    nom: Labels.timeline.library.nom,
-    ordre: 0,
+  const ViewItemParentheque = () => {
+    const stepParentheque: Step = {
+      active: null,
+      debut: null,
+      description: Labels.timeline.library.description,
+      fin: null,
+      id: "0",
+      nom: Labels.timeline.library.nom,
+      ordre: 0,
+    };
+
+    if (counterDocument > 0)
+      return (
+        <View
+          style={[
+            styles.timelineStepContainer,
+            styles.timelineStepLibraryContainer,
+          ]}
+        >
+          <View style={[styles.timelineContainer]}>
+            <View
+              style={[
+                styles.timelineBlock,
+                styles.timelineLibraryBlock,
+                styles.timelineBlockLeft,
+              ]}
+            />
+          </View>
+          {[stepParentheque].map((step, index) => (
+            <TimelineStepLibrary
+              order={step.ordre}
+              name={step.nom}
+              key={index}
+              onPress={() => {
+                navigation.navigate("listParentsDocuments", { step });
+              }}
+            />
+          ))}
+        </View>
+      );
+    else
+      return (
+        <View
+          style={[
+            styles.timelineStepContainer,
+            styles.timelineStepLibraryContainer,
+          ]}
+        />
+      );
   };
 
   return (
@@ -163,32 +222,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
         animated={false}
       />
 
-      <View
-        style={[
-          styles.timelineStepContainer,
-          styles.timelineStepLibraryContainer,
-        ]}
-      >
-        <View style={[styles.timelineContainer]}>
-          <View
-            style={[
-              styles.timelineBlock,
-              styles.timelineLibraryBlock,
-              styles.timelineBlockLeft,
-            ]}
-          />
-        </View>
-        {[stepParentheque].map((step, index) => (
-          <TimelineStepLibrary
-            order={step.ordre}
-            name={step.nom}
-            key={index}
-            onPress={() => {
-              navigation.navigate("listParentsDocuments", { step });
-            }}
-          />
-        ))}
-      </View>
+      <ViewItemParentheque />
 
       <View style={[styles.timelineStepContainer]}>
         <View style={[styles.timelineContainer]}>
