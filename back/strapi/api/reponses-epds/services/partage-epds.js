@@ -70,20 +70,31 @@ const emailPartagePatientTemplate = (info) => ({
   subject: _.template("Résultats au questionnaire EPDS de <%- prenom %>")(info),
   text: _.template(`Bonjour,
 
-    Vous venez de passer le test EPDS. Vous trouverez ci-après votre score au test ainsi qu'une liste de structures et professionnels que vous pouvez contacter.
+    Suite à votre passage de l'EPDS avec un professionnel, nous nous permettons de vous envoyer le score du questionnaire.
 
     Score total du questionnaire EPDS  :  <%- score %> / 30
 
-    Des ressources sont à votre disposition sur le site : ${RESOURCES_URL}
+    Nous en profitons pour vous adresser le lien à une liste de structures et de professionnels sensibilisés à l'accompagnement périnatal. 
+    ${RESOURCES_URL}
+
+    Vous pourrez ainsi trouver l'aide adaptée à vos besoins.
+
+    Bien cordialement,
+    L'application 1000 premiers jours
     `)(info),
   html: _.template(`
   <p>Bonjour,</p>
 
-  <p>Vous venez de passer le test EPDS. Vous trouverez ci-après votre score au test ainsi qu'une liste de structures et professionnels que vous pouvez contacter.</p>
+  <p>Suite à votre passage de l'EPDS avec un professionnel, nous nous permettons de vous envoyer le score du questionnaire.</p>
 
   <p>Score total du questionnaire EPDS  :  <%- score %> / 30</p>
 
-  <p>Des ressources sont à votre disposition sur le site : <a href="${RESOURCES_URL}" target="_blank">${RESOURCES_URL}</a></p>
+  <p>Nous en profitons pour vous adresser le lien à une liste de structures et de professionnels sensibilisés à l'accompagnement périnatal.<br/><a href="${RESOURCES_URL}" target="_blank">${RESOURCES_URL}</a></p>
+
+  <p>Vous pourrez ainsi trouver l'aide adaptée à vos besoins.</p>
+
+  <p>Bien cordialement,<br/>
+  L'application 1000 premiers jours</p>
   `)(info),
 });
 
