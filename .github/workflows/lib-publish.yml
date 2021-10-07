@@ -3,7 +3,7 @@ name: Publish library
 on:
   push:
     branches:
-      - 'develop'
+      - 'master'
     paths:
       - 'lib/**'
       - '.github/workflows/lib-publish.yml'
@@ -25,7 +25,9 @@ jobs:
             run: yarn --frozen-lockfile --link-duplicates --perfer-offline
 
           - name: Yarn build
-            run: yarn build
+            run: |
+              cd lib
+              yarn build
 
   release:
     needs:
