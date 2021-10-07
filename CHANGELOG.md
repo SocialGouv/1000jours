@@ -1,3 +1,10 @@
+# [1.75.0](https://github.com/SocialGouv/1000jours/compare/v1.74.5...v1.75.0) (2021-10-07)
+
+
+### Features
+
+* intégration de la  lib métier ([#761](https://github.com/SocialGouv/1000jours/issues/761)) ([582fb64](https://github.com/SocialGouv/1000jours/commit/582fb64a44315775e7acfd4dd29bec4de356b253))
+
 ## [1.74.5](https://github.com/SocialGouv/1000jours/compare/v1.74.4...v1.74.5) (2021-10-06)
 
 
