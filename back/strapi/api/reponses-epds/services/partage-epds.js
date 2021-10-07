@@ -12,6 +12,7 @@ const relativeDirPath = path.relative('.', `public`);
 const r = (Math.random() + 1).toString(36).substring(7);
 const filename = (nom) => slugify(`resultats epds ${nom} ${r}`, `-`) + ".pdf";
 
+/*** PRO ***/
 const buildTextResponse = (info, index) =>
   `${info.detail_questions[index]} / ${info.detail_reponses[index]} / ${info.detail_score[index]}`;
 
@@ -45,7 +46,7 @@ const emailPartageHtml = (info) =>
       ${[...new Array(10)].map((_, i) => buildHtmlDetailScore(info, i)).join('\n    ')}
     </table>
   </p>
-  `)(info)
+  `)(info);
 
 const emailPartageProTemplate = (info) => ({
   subject: _.template("Résultats au questionnaire EPDS de <%- prenom %>")(info),
@@ -66,13 +67,45 @@ const emailPartageProTemplate = (info) => ({
   html: emailPartageHtml(info),
 });
 
+/*** PATIENT ***/
+const buildTextAppBloc = () =>
+  `
+  Gardez votre compagnon numérique 1000J dans votre poche pour vous aider au quotidien :
+  - Android : https://play.google.com/store/apps/details?id=com.fabrique.millejours
+  - iOS : https://apps.apple.com/us/app/1000-premiers-jours/id1573729958
+  `;
+
+const buildHtmlAppBloc = () =>
+  `
+  <p>Gardez votre compagnon numérique 1000J dans votre poche pour vous aider au quotidien :
+    <a href="https://play.google.com/store/apps/details?id=com.fabrique.millejours" target="noopener noreferrer">
+      <img width={200} src="/img/dnl_apple.svg" alt="Lien pour télécharger l'application sur le Play Store"/>
+    </a>
+    <a href="https://apps.apple.com/us/app/1000-premiers-jours/id1573729958" target="noopener noreferrer">
+      <img width={200} src="/img/dnl_apple.svg" alt="Lien pour télécharger l'application sur l'Apple store"/>
+    </a>
+  </p>
+  `;
+
+const showAppBloc = (info) => info.score < 13 && info.detail_score[9] < 3;
+
+const scoreOpinion = (info) => {
+  if (info.score < 9 && info.detail_score[9] < 3) {
+    return "Votre score est rassurant.";
+  } else if (info.score >= 9 && info.score < 13 && info.detail_score[9] < 3) {
+    return "Votre score présente un risque, nous vous recommandons de garder le contact avec votre professionnel.";
+  } else if (info.score >= 13 || info.detail_score[9] == 3) {
+    return "Votre score présente un risque, il est important de garder le contact avec votre professionnel.";
+  }
+}
+
 const emailPartagePatientTemplate = (info) => ({
   subject: _.template("Résultats au questionnaire EPDS de <%- prenom %>")(info),
   text: _.template(`Bonjour,
 
     Suite à votre passage de l'EPDS avec un professionnel, nous nous permettons de vous envoyer le score du questionnaire.
 
-    Score total du questionnaire EPDS  :  <%- score %> / 30
+    Score total du questionnaire EPDS  :  <%- score %> / 30 - ${scoreOpinion(info)}
 
     Nous en profitons pour vous adresser le lien à une liste de structures et de professionnels sensibilisés à l'accompagnement périnatal. 
     ${RESOURCES_URL}
@@ -81,13 +114,15 @@ const emailPartagePatientTemplate = (info) => ({
 
     Bien cordialement,
     L'application 1000 premiers jours
+
+    ${showAppBloc(info) ? buildTextAppBloc() : ""}
     `)(info),
   html: _.template(`
   <p>Bonjour,</p>
 
   <p>Suite à votre passage de l'EPDS avec un professionnel, nous nous permettons de vous envoyer le score du questionnaire.</p>
 
-  <p>Score total du questionnaire EPDS  :  <%- score %> / 30</p>
+  <p>Score total du questionnaire EPDS  :  <%- score %> / 30 - ${scoreOpinion(info)}</p>
 
   <p>Nous en profitons pour vous adresser le lien à une liste de structures et de professionnels sensibilisés à l'accompagnement périnatal.<br/><a href="${RESOURCES_URL}" target="_blank">${RESOURCES_URL}</a></p>
 
@@ -95,6 +130,8 @@ const emailPartagePatientTemplate = (info) => ({
 
   <p>Bien cordialement,<br/>
   L'application 1000 premiers jours</p>
+
+  ${showAppBloc(info) ? buildHtmlAppBloc() : ""}
   `)(info),
 });
 
@@ -194,5 +231,7 @@ const partage = async ({
 }
 
 module.exports = {
-  partage
+  partage,
+  showAppBloc,
+  scoreOpinion
 };
