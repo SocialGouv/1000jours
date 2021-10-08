@@ -1,5 +1,5 @@
 {
-  "eslint.workingDirectories": ["front", "back", "lib"],
+  "eslint.workingDirectories": ["front", "back"],
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
