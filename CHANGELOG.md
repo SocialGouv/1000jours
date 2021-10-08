@@ -1,3 +1,10 @@
+## [1.75.1](https://github.com/SocialGouv/1000jours/compare/v1.75.0...v1.75.1) (2021-10-08)
+
+
+### Reverts
+
+* Revert "feat: intégration de la  lib métier (#761)" (#766) ([32a23a1](https://github.com/SocialGouv/1000jours/commit/32a23a18e6c40519f1e69295648343d31a9c2c25)), closes [#761](https://github.com/SocialGouv/1000jours/issues/761) [#766](https://github.com/SocialGouv/1000jours/issues/766)
+
 # [1.75.0](https://github.com/SocialGouv/1000jours/compare/v1.74.5...v1.75.0) (2021-10-07)
 
 
