@@ -1,3 +1,10 @@
+# [1.76.0](https://github.com/SocialGouv/1000jours/compare/v1.75.1...v1.76.0) (2021-10-08)
+
+
+### Features
+
+* parenthèque ([#677](https://github.com/SocialGouv/1000jours/issues/677)) ([bf1f367](https://github.com/SocialGouv/1000jours/commit/bf1f367515dce2b240b78490a362dd982429df69))
+
 ## [1.75.1](https://github.com/SocialGouv/1000jours/compare/v1.75.0...v1.75.1) (2021-10-08)
 
 
