@@ -1,3 +1,10 @@
+# [1.77.0](https://github.com/SocialGouv/1000jours/compare/v1.76.0...v1.77.0) (2021-10-08)
+
+
+### Features
+
+* **parentheque:** affichage s'il existe des documents ([#754](https://github.com/SocialGouv/1000jours/issues/754)) ([2984861](https://github.com/SocialGouv/1000jours/commit/2984861ba554a8e44d12ce8c4161135fe8b4d953)), closes [#750](https://github.com/SocialGouv/1000jours/issues/750) [#753](https://github.com/SocialGouv/1000jours/issues/753)
+
 # [1.76.0](https://github.com/SocialGouv/1000jours/compare/v1.75.1...v1.76.0) (2021-10-08)
 
 
