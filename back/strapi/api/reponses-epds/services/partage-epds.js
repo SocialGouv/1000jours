@@ -77,12 +77,13 @@ const buildTextAppBloc = () =>
 
 const buildHtmlAppBloc = () =>
   `
-  <p>Gardez votre compagnon numérique 1000J dans votre poche pour vous aider au quotidien :
-    <a href="https://play.google.com/store/apps/details?id=com.fabrique.millejours" target="noopener noreferrer">
-      <img width={200} src="/img/dnl_apple.svg" alt="Lien pour télécharger l'application sur le Play Store"/>
+  <p>Gardez votre compagnon numérique 1000J dans votre poche pour vous aider au quotidien : <br/>
+    <a href="https://play.google.com/store/apps/details?id=com.fabrique.millejours" style="text-decoration: none">
+      <img src="https://backoffice-les1000jours.fabrique.social.gouv.fr/uploads/logo_playstore_b9c60a2a46.png"/>
     </a>
-    <a href="https://apps.apple.com/us/app/1000-premiers-jours/id1573729958" target="noopener noreferrer">
-      <img width={200} src="/img/dnl_apple.svg" alt="Lien pour télécharger l'application sur l'Apple store"/>
+    &emsp;
+    <a href="https://apps.apple.com/us/app/1000-premiers-jours/id1573729958">
+      <img src="https://backoffice-les1000jours.fabrique.social.gouv.fr/uploads/logo_appstore_356683af57.png"/>
     </a>
   </p>
   `;
@@ -105,7 +106,7 @@ const emailPartagePatientTemplate = (info) => ({
 
     Suite à votre passage de l'EPDS avec un professionnel, nous nous permettons de vous envoyer le score du questionnaire.
 
-    Score total du questionnaire EPDS  :  <%- score %> / 30 - ${scoreOpinion(info)}
+    Score total du questionnaire EPDS : <% - score %> / 30 - ${scoreOpinion(info)}
 
     Nous en profitons pour vous adresser le lien à une liste de structures et de professionnels sensibilisés à l'accompagnement périnatal. 
     ${RESOURCES_URL}
@@ -116,22 +117,22 @@ const emailPartagePatientTemplate = (info) => ({
     L'application 1000 premiers jours
 
     ${showAppBloc(info) ? buildTextAppBloc() : ""}
-    `)(info),
+  `)(info),
   html: _.template(`
-  <p>Bonjour,</p>
+    <p> Bonjour,</p >
 
-  <p>Suite à votre passage de l'EPDS avec un professionnel, nous nous permettons de vous envoyer le score du questionnaire.</p>
+    <p>Suite à votre passage de l'EPDS avec un professionnel, nous nous permettons de vous envoyer le score du questionnaire.</p>
 
-  <p>Score total du questionnaire EPDS  :  <%- score %> / 30 - ${scoreOpinion(info)}</p>
+    <p>Score total du questionnaire EPDS : <%- score %> / 30 - ${scoreOpinion(info)}</p>
 
-  <p>Nous en profitons pour vous adresser le lien à une liste de structures et de professionnels sensibilisés à l'accompagnement périnatal.<br/><a href="${RESOURCES_URL}" target="_blank">${RESOURCES_URL}</a></p>
+    <p>Nous en profitons pour vous adresser le lien à une liste de structures et de professionnels sensibilisés à l'accompagnement périnatal.<br/><a href="${RESOURCES_URL}" target="_blank">${RESOURCES_URL}</a></p>
 
-  <p>Vous pourrez ainsi trouver l'aide adaptée à vos besoins.</p>
+    <p>Vous pourrez ainsi trouver l'aide adaptée à vos besoins.</p>
 
-  <p>Bien cordialement,<br/>
-  L'application 1000 premiers jours</p>
+    <p>Bien cordialement,<br/>
+    L'application 1000 premiers jours</p>
 
-  ${showAppBloc(info) ? buildHtmlAppBloc() : ""}
+    ${showAppBloc(info) ? buildHtmlAppBloc() : ""}
   `)(info),
 });
 
