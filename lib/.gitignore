@@ -1,0 +1,26 @@
+# OSX
+#
+.DS_Store
+
+# Visual Studio Code
+#
+.vscode/
+
+# node.js
+#
+node_modules/
+
+# Build package
+#
+/lib
+
+# Env
+#
+.env 
+
+
+# Sonar & Coverage
+#
+test-report.xml
+coverage
+.scannerwork
