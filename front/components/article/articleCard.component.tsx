@@ -2,8 +2,9 @@ import ExpoFastImage from "expo-fast-image";
 import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { ListItem } from "react-native-elements";
+import { Image, ListItem } from "react-native-elements";
 
+import DefaultImage from "../../assets/images/default.png";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../constants";
 import type { Article, Step } from "../../types";
 import * as RootNavigation from "../../utils/rootNavigation.util";
@@ -29,11 +30,18 @@ const ArticleCard: FC<Props> = ({ article, step }) => {
       containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
       style={[styles.listItem, styles.borderLeftRadius]}
     >
-      <ExpoFastImage
-        uri={getVisuelFormat(article.visuel, VisuelFormat.thumbnail)}
-        cacheKey={article.visuel?.hash}
-        style={[styles.articleImage, styles.borderLeftRadius]}
-      />
+      {article.visuel?.id ? (
+        <ExpoFastImage
+          uri={getVisuelFormat(article.visuel, VisuelFormat.thumbnail)}
+          cacheKey={article.visuel.id}
+          style={[styles.articleImage, styles.borderLeftRadius]}
+        />
+      ) : (
+        <Image
+          source={DefaultImage}
+          containerStyle={[styles.articleImage, styles.borderLeftRadius]}
+        />
+      )}
       <ListItem.Content style={styles.articleContent}>
         <ListItem.Title style={styles.articleTitleContainer}>
           <CommonText style={styles.articleTitle}>{article.titre}</CommonText>
