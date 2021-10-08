@@ -70,6 +70,8 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
         lienUrl3: lien_3_url
         lienUrl4: lien_4_url
         visuel {
+          id
+          hash
           url
           height
           width

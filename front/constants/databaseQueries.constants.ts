@@ -94,6 +94,8 @@ export const GET_EVENT_ARTICLES = (
       titre
       resume
       visuel {
+        id
+        hash
         url
         height
         width
