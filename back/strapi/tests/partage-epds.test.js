@@ -2,8 +2,8 @@ const { showAppBloc, scoreOpinion } = require("../api/reponses-epds/services/par
 
 describe('Page résultats', () => {
 
-  const SCORE_UNTIL_8 = "Votre score est rassurant";
-  const SCORE_BETWEEN_9_AND_12 = "Votre score présente un risque, nous vous recommandons de garder le contact avec votre professionnel";
+  const SCORE_UNTIL_8 = "Votre score est rassurant.";
+  const SCORE_BETWEEN_9_AND_12 = "Votre score présente un risque, nous vous recommandons de garder le contact avec votre professionnel.";
   const SCORE_ABOVE_13 = "Votre score présente un risque, il est important de garder le contact avec votre professionnel.";
 
   describe('score < 9', () => {
