@@ -1,3 +1,10 @@
+# [1.79.0](https://github.com/SocialGouv/1000jours/compare/v1.78.1...v1.79.0) (2021-10-11)
+
+
+### Features
+
+* 🎸 Ajoute les articles liés aux événements (depuis le BO) ([#782](https://github.com/SocialGouv/1000jours/issues/782)) ([5813677](https://github.com/SocialGouv/1000jours/commit/5813677be2e6c5ae8337defe50cf3fb2abbc510d)), closes [#777](https://github.com/SocialGouv/1000jours/issues/777)
+
 ## [1.78.1](https://github.com/SocialGouv/1000jours/compare/v1.78.0...v1.78.1) (2021-10-11)
 
 
