@@ -1,3 +1,10 @@
+## [1.78.1](https://github.com/SocialGouv/1000jours/compare/v1.78.0...v1.78.1) (2021-10-11)
+
+
+### Bug Fixes
+
+* **articles:** Cache les articles en mode draft ([#779](https://github.com/SocialGouv/1000jours/issues/779)) ([e5c711e](https://github.com/SocialGouv/1000jours/commit/e5c711e36a891b1e5494523120ec14a0e54e90d8))
+
 # [1.78.0](https://github.com/SocialGouv/1000jours/compare/v1.77.0...v1.78.0) (2021-10-11)
 
 
