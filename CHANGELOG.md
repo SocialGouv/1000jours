@@ -1,3 +1,10 @@
+# [1.78.0](https://github.com/SocialGouv/1000jours/compare/v1.77.0...v1.78.0) (2021-10-11)
+
+
+### Features
+
+* **epds:** mail patient ([#760](https://github.com/SocialGouv/1000jours/issues/760)) ([487468a](https://github.com/SocialGouv/1000jours/commit/487468a0a207a9562eaa5b70f0216e799cb423aa)), closes [#752](https://github.com/SocialGouv/1000jours/issues/752) [#751](https://github.com/SocialGouv/1000jours/issues/751)
+
 # [1.77.0](https://github.com/SocialGouv/1000jours/compare/v1.76.0...v1.77.0) (2021-10-08)
 
 
