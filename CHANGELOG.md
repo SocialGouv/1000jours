@@ -1,3 +1,10 @@
+## [1.79.1](https://github.com/SocialGouv/1000jours/compare/v1.79.0...v1.79.1) (2021-10-12)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le crash de la carto sous iOS 15 ([#785](https://github.com/SocialGouv/1000jours/issues/785)) ([f143f3e](https://github.com/SocialGouv/1000jours/commit/f143f3ea70cc42551f5ff03180083d91c86da500))
+
 # [1.79.0](https://github.com/SocialGouv/1000jours/compare/v1.78.1...v1.79.0) (2021-10-11)
 
 
