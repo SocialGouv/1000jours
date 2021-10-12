@@ -160,3 +160,28 @@ export const PARENTS_DOCUMENTS = gql`
     }
   }
 `;
+
+export const SEARCH_ARTICLES_BY_KEYWORDS = (keywords: string): DocumentNode => {
+  return gql`
+    query SearchArticlesByKeywords {
+      articles(
+        where: { _q: "${keywords}"}
+      ) {
+        id
+        titre
+        resume
+        visuel {
+          id
+          hash
+          url
+          height
+          width
+        }
+        thematiques {
+          nom
+          id
+        }
+      }
+    }
+  `;
+};
