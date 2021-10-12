@@ -15,7 +15,7 @@ export type BottomTabParamList = {
   tabHome: undefined;
   tabCalendar: undefined;
   tabFavorites: undefined;
-  tabAroundMe: undefined;
+  tabSearch: undefined;
 };
 
 export type TabHomeParamList = {
@@ -42,6 +42,10 @@ export type TabFavoritesParamList = {
 
 export type TabAroundMeParamList = {
   tabAroundMeScreen: undefined;
+};
+
+export type TabSearchParamList = {
+  tabSearchScreen: undefined;
 };
 
 export type UserSituation = {

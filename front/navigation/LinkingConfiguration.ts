@@ -9,11 +9,6 @@ export default {
       profile: "profile",
       root: {
         screens: {
-          tabAroundMe: {
-            screens: {
-              tabAroundMeScreen: "around-me",
-            },
-          },
           tabCalendar: {
             screens: {
               tabCalendarScreen: "calendar",
@@ -27,6 +22,11 @@ export default {
           tabHome: {
             screens: {
               tabHomeScreen: "home",
+            },
+          },
+          tabSearch: {
+            screens: {
+              tabSearchScreen: "search",
             },
           },
         },

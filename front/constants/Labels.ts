@@ -438,10 +438,15 @@ export default {
     title: "À quelle étape êtes-vous ?",
     update: "Modifier ma situation",
   },
+  search: {
+    findAdaptedResponses:
+      "Trouver des réponses à vos questions, vos problèmes, et sollicitez de l'aide auprès de professionnels adaptés autour de chez vous.",
+    title: "Que recherchez-vous ?",
+  },
   tabs: {
-    aroundMeTitle: "Autour de moi",
     calendarTitle: "Calendrier",
     favoritesTitle: "Favoris",
+    helpTitle: "Aide",
     homeTitle: "Accueil",
     testEpds: "Post-partum",
   },
