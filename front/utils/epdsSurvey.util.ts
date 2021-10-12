@@ -105,7 +105,7 @@ export const getCurrentQuestionPoints = (
 ): number | undefined =>
   question.answers.find((answer) => answer.isChecked)?.points;
 
-export const getResultLabelAndStyle = (result: number) => {
+export const getResultIconAndStateOfMind = (result: number) => {
   const labelsStateOfMind = Labels.epdsSurveyLight.stateOfMind;
 
   if (result < EpdsConstants.RESULT_WELL_VALUE) {
@@ -127,6 +127,14 @@ export const getResultLabelAndStyle = (result: number) => {
       stateOfMind: labelsStateOfMind.plusDeQuinze,
     };
   }
+};
+
+export const getResultIntroductionText = (result: number): string => {
+  const introductionTexts = Labels.epdsSurveyLight.textesExplication;
+
+  if (result < EpdsConstants.RESULT_WELL_VALUE)
+    return introductionTexts.moinsDeNeuf;
+  else return introductionTexts.plusDeNeuf;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

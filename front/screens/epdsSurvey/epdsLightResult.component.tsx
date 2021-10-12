@@ -122,7 +122,8 @@ const EpdsLightResult: React.FC<Props> = ({
     return iconsMap.get(icone);
   };
 
-  const iconAndStateOfMind = EpdsSurveyUtils.getResultLabelAndStyle(result);
+  const iconAndStateOfMind =
+    EpdsSurveyUtils.getResultIconAndStateOfMind(result);
   const colorStyle = { color: iconAndStateOfMind.color };
 
   return (
@@ -139,11 +140,16 @@ const EpdsLightResult: React.FC<Props> = ({
           {Labels.epdsSurveyLight.oserEnParler}
         </SecondaryText>
         <SecondaryText style={styles.text}>
-          {/* {Labels.epdsSurveyLight.changementsImportants} */}
+          {EpdsSurveyUtils.getResultIntroductionText(result)}
         </SecondaryText>
-        {result < EpdsConstants.RESULT_BAD_VALUE && (
+        {result < EpdsConstants.RESULT_WELL_VALUE && (
           <SecondaryText style={[styles.text, styles.fontBold]}>
             {labelsResultats.retakeTestInvitation}
+          </SecondaryText>
+        )}
+        {result >= 11 && (
+          <SecondaryText style={[styles.text, styles.fontBold]}>
+            {Labels.epdsSurveyLight.textesExplication.contactParElise}
           </SecondaryText>
         )}
         {showBeContactedButton && (
