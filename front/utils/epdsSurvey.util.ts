@@ -7,7 +7,7 @@ import {
 import type {
   EpdsAnswer,
   EpdsQuestionAndAnswers,
-  EpdsResultData,
+  EpdsResultIconAndStateOfMind,
   EpdsUpdatedSurvey,
   QuestionnaireEpdsFromDB,
 } from "../type";
@@ -105,7 +105,9 @@ export const getCurrentQuestionPoints = (
 ): number | undefined =>
   question.answers.find((answer) => answer.isChecked)?.points;
 
-export const getResultIconAndStateOfMind = (result: number) => {
+export const getResultIconAndStateOfMind = (
+  result: number
+): EpdsResultIconAndStateOfMind => {
   const labelsStateOfMind = Labels.epdsSurveyLight.stateOfMind;
 
   if (result < EpdsConstants.RESULT_WELL_VALUE) {
@@ -157,14 +159,6 @@ export const incrementEpdsSurveyCounterAndGetNewValue =
 
     return newCounter;
   };
-
-export const getResultLabelAndStyleLight = (): EpdsResultData => {
-  return {
-    color: Colors.secondaryGreenDark,
-    icon: EpdsConstants.ResultIconValueEnum.bien,
-    resultLabels: Labels.epdsSurveyLight,
-  };
-};
 
 export const getEachQuestionScore = (
   questionsAndAnswers: EpdsQuestionAndAnswers[]

@@ -65,7 +65,6 @@ const EpdsLightResult: React.FC<Props> = ({
   const [showSnackBar, setShowSnackBar] = useState(false);
 
   const labelsResultats = Labels.epdsSurvey.resultats;
-  const resultData = EpdsSurveyUtils.getResultLabelAndStyleLight();
 
   useEffect(() => {
     const saveEpdsSurveyResults = async () => {
@@ -168,7 +167,7 @@ const EpdsLightResult: React.FC<Props> = ({
         )}
         <EpdsResultInformation
           leftBorderColor={Colors.white}
-          informationList={resultData.resultLabels.professionalsList}
+          informationList={Labels.epdsSurveyLight.professionalsList}
         />
         <View style={styles.validateButton}>
           <Button
