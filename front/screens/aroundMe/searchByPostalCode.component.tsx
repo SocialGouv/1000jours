@@ -4,7 +4,7 @@ import * as Location from "expo-location";
 import * as React from "react";
 import { useEffect } from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import type { LatLng, Region } from "react-native-maps";
+import type { Region } from "react-native-maps";
 import { HelperText } from "react-native-paper";
 
 import { Button } from "../../components";
@@ -12,12 +12,16 @@ import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
   Colors,
+  FontNames,
+  FontWeight,
+  getFontFamilyName,
   Labels,
   Margins,
   Paddings,
   Sizes,
 } from "../../constants";
 import {
+  MAJOR_VERSION_IOS,
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
@@ -169,7 +173,12 @@ const SearchByPostalCode: React.FC<Props> = ({
         <Button
           buttonStyle={styles.searchByPostalCodeButton}
           title={Labels.aroundMe.searchButton}
-          titleStyle={styles.fontButton}
+          titleStyle={
+            // HotFix iOS 15 (font comfortaa => crash)
+            PLATFORM_IS_IOS && MAJOR_VERSION_IOS >= 15
+              ? styles.fontButtonIos15
+              : styles.fontButton
+          }
           rounded={true}
           disabled={postalCodeInvalid}
           action={onSearchByPostalCodeButtonClick}
@@ -198,6 +207,10 @@ const SearchByPostalCode: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   fontButton: {
+    fontSize: Sizes.xxs,
+  },
+  fontButtonIos15: {
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.bold),
     fontSize: Sizes.xxs,
   },
   geolicationIconStyle: {
