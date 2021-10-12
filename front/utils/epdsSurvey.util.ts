@@ -105,26 +105,26 @@ export const getCurrentQuestionPoints = (
 ): number | undefined =>
   question.answers.find((answer) => answer.isChecked)?.points;
 
-export const getResultLabelAndStyle = (result: number): EpdsResultData => {
-  const labelsResultats = Labels.epdsSurvey.resultats;
+export const getResultLabelAndStyle = (result: number) => {
+  const labelsStateOfMind = Labels.epdsSurveyLight.stateOfMind;
 
-  if (result <= EpdsConstants.RESULT_WELL_VALUE) {
+  if (result < EpdsConstants.RESULT_WELL_VALUE) {
     return {
       color: Colors.secondaryGreenDark,
       icon: EpdsConstants.ResultIconValueEnum.bien,
-      resultLabels: labelsResultats.moinsDeNeuf,
+      stateOfMind: labelsStateOfMind.moinsDeNeuf,
     };
-  } else if (result <= EpdsConstants.RESULT_NOTSOWELL_VALUE) {
+  } else if (result < EpdsConstants.RESULT_NOTSOWELL_VALUE) {
     return {
       color: Colors.primaryYellowDark,
       icon: EpdsConstants.ResultIconValueEnum.moyen,
-      resultLabels: labelsResultats.entreDixEtDouze,
+      stateOfMind: labelsStateOfMind.entreDixEtQuartorze,
     };
   } else {
     return {
       color: Colors.secondaryRedLight,
       icon: EpdsConstants.ResultIconValueEnum.pasBien,
-      resultLabels: labelsResultats.plusDeTreize,
+      stateOfMind: labelsStateOfMind.plusDeQuinze,
     };
   }
 };

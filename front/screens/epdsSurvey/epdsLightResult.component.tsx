@@ -132,14 +132,14 @@ const EpdsLightResult: React.FC<Props> = ({
         <View style={styles.rowView}>
           {getIcon(iconAndStateOfMind.icon)}
           <CommonText style={[styles.stateOfMind, colorStyle]}>
-            {iconAndStateOfMind.resultLabels.stateOfMind}
+            {iconAndStateOfMind.stateOfMind}
           </CommonText>
         </View>
         <SecondaryText style={[styles.text, styles.fontBold]}>
           {Labels.epdsSurveyLight.oserEnParler}
         </SecondaryText>
         <SecondaryText style={styles.text}>
-          {Labels.epdsSurveyLight.changementsImportants}
+          {/* {Labels.epdsSurveyLight.changementsImportants} */}
         </SecondaryText>
         {result < EpdsConstants.RESULT_BAD_VALUE && (
           <SecondaryText style={[styles.text, styles.fontBold]}>
