@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     padding: Paddings.default,
   },
   rowView: {
-    alignSelf: "center",
+    alignSelf: "flex-start",
     flexDirection: "row",
   },
   stateOfMind: {
