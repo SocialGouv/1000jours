@@ -62,6 +62,11 @@ export interface EpdsResultIconAndStateOfMind {
   icon: EpdsConstants.ResultIconValueEnum;
 }
 
+export interface BeContactedColors {
+  primaryColor: string;
+  secondaryColor: string;
+}
+
 export interface EpdsUpdatedSurvey {
   updatedSurvey: EpdsQuestionAndAnswers[];
   lastQuestionHasThreePointAnswer: boolean;

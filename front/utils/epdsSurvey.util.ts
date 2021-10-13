@@ -5,6 +5,7 @@ import {
   StorageKeysConstants,
 } from "../constants";
 import type {
+  BeContactedColors,
   EpdsAnswer,
   EpdsQuestionAndAnswers,
   EpdsResultIconAndStateOfMind,
@@ -116,7 +117,7 @@ export const getResultIconAndStateOfMind = (
       icon: EpdsConstants.ResultIconValueEnum.bien,
       stateOfMind: labelsStateOfMind.moinsDeNeuf,
     };
-  } else if (result < EpdsConstants.RESULT_NOTSOWELL_VALUE) {
+  } else if (result < EpdsConstants.RESULT_BAD_VALUE) {
     return {
       color: Colors.primaryYellowDark,
       icon: EpdsConstants.ResultIconValueEnum.moyen,
@@ -131,12 +132,27 @@ export const getResultIconAndStateOfMind = (
   }
 };
 
+export const getPrimaryAndSecondaryBeContactedColors = (
+  result: number
+): BeContactedColors => {
+  if (result < EpdsConstants.RESULT_BAD_VALUE)
+    return {
+      primaryColor: Colors.primaryYellowDark,
+      secondaryColor: Colors.primaryYellowLight,
+    };
+  else
+    return {
+      primaryColor: Colors.secondaryRedLight,
+      secondaryColor: Colors.secondaryRedDark,
+    };
+};
+
 export const getResultIntroductionText = (result: number): string => {
   const introductionTexts = Labels.epdsSurveyLight.textesExplication;
 
-  if (result < EpdsConstants.RESULT_WELL_VALUE)
-    return introductionTexts.moinsDeNeuf;
-  else return introductionTexts.plusDeNeuf;
+  return result < EpdsConstants.RESULT_WELL_VALUE
+    ? introductionTexts.moinsDeNeuf
+    : introductionTexts.plusDeNeuf;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
