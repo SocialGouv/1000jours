@@ -117,7 +117,8 @@ export const getResultIconAndStateOfMind = (
       icon: EpdsConstants.ResultIconValueEnum.bien,
       stateOfMind: labelsStateOfMind.moinsDeNeuf,
     };
-  } else if (result < EpdsConstants.RESULT_BAD_VALUE) {
+  }
+  if (result < EpdsConstants.RESULT_BAD_VALUE) {
     return {
       color: Colors.primaryYellowDark,
       icon: EpdsConstants.ResultIconValueEnum.moyen,
