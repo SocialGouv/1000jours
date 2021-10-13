@@ -123,13 +123,12 @@ export const getResultIconAndStateOfMind = (
       icon: EpdsConstants.ResultIconValueEnum.moyen,
       stateOfMind: labelsStateOfMind.entreDixEtQuartorze,
     };
-  } else {
-    return {
-      color: Colors.secondaryRedLight,
-      icon: EpdsConstants.ResultIconValueEnum.pasBien,
-      stateOfMind: labelsStateOfMind.plusDeQuinze,
-    };
   }
+  return {
+    color: Colors.secondaryRedLight,
+    icon: EpdsConstants.ResultIconValueEnum.pasBien,
+    stateOfMind: labelsStateOfMind.plusDeQuinze,
+  };
 };
 
 export const getPrimaryAndSecondaryBeContactedColors = (
@@ -140,11 +139,11 @@ export const getPrimaryAndSecondaryBeContactedColors = (
       primaryColor: Colors.primaryYellowDark,
       secondaryColor: Colors.primaryYellowLight,
     };
-  else
-    return {
-      primaryColor: Colors.secondaryRedLight,
-      secondaryColor: Colors.secondaryRedDark,
-    };
+
+  return {
+    primaryColor: Colors.secondaryRedLight,
+    secondaryColor: Colors.secondaryRedDark,
+  };
 };
 
 export const getResultIntroductionText = (result: number): string => {
