@@ -111,7 +111,10 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
   useEffect(() => {
     if (!loading && data) {
       const results = (data as { articles: Article[] }).articles;
-      setArticles(results);
+      const eventArticles: Article[] = event.articles
+        ? event.articles.concat(results)
+        : results;
+      setArticles(eventArticles);
     }
   }, [loading, data]);
 
