@@ -148,7 +148,7 @@ const EpdsLightResult: React.FC<Props> = ({
           />
         )}
         <EpdsResultInformation
-          leftBorderColor={Colors.white}
+          leftBorderColor={Colors.primaryBlue}
           informationList={Labels.epdsSurveyLight.professionalsList}
         />
         <View style={styles.validateButton}>
