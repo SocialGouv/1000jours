@@ -94,9 +94,7 @@ export const getUpdatedScore = (
     const answeredQuestionPoints = question.answers.find(
       (answer) => answer.isChecked
     )?.points;
-    if (answeredQuestionPoints) {
-      score += answeredQuestionPoints;
-    }
+    if (answeredQuestionPoints) score += answeredQuestionPoints;
   });
   return score;
 };
@@ -135,11 +133,12 @@ export const getResultIconAndStateOfMind = (
 export const getPrimaryAndSecondaryBeContactedColors = (
   result: number
 ): BeContactedColors => {
-  if (result < EpdsConstants.RESULT_BAD_VALUE)
+  if (result < EpdsConstants.RESULT_BAD_VALUE) {
     return {
       primaryColor: Colors.primaryYellowDark,
       secondaryColor: Colors.primaryYellowLight,
     };
+  }
 
   return {
     primaryColor: Colors.secondaryRedLight,

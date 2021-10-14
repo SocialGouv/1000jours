@@ -6,6 +6,7 @@ import { useState } from "react";
 import { StyleSheet } from "react-native";
 import { Image } from "react-native-elements";
 
+import portraitElise from "../../assets/images/epds/portrait_elise.jpg";
 import { Button, SecondaryText } from "../../components";
 import { View } from "../../components/Themed";
 import { FontWeight, Labels, Margins, Paddings, Sizes } from "../../constants";
@@ -26,7 +27,6 @@ const EpdsResultContactMamanBlues: React.FC<EpdsResultContactMamanBluesProps> =
     const backgroundColor = { backgroundColor: secondaryColor };
     const buttonColor = { backgroundColor: primaryColor };
     const pictureBorderColor = { borderColor: primaryColor };
-    const portraitElise = require("../../assets/images/epds/portrait_elise.jpg");
 
     return (
       <View style={[styles.mainView, backgroundColor]}>
@@ -80,20 +80,12 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     paddingTop: Paddings.light,
   },
-  borderLeftRadius: {
-    borderBottomLeftRadius: Sizes.xxxxxs,
-    borderTopLeftRadius: Sizes.xxxxxs,
-  },
   fontBold: {
     fontWeight: FontWeight.bold,
   },
   fontButton: {
     fontSize: Sizes.sm,
     textTransform: "uppercase",
-  },
-  icon: {
-    backgroundColor: "transparent",
-    marginHorizontal: Margins.smaller,
   },
   mainView: {
     flexDirection: "column",
@@ -107,8 +99,8 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     alignSelf: "center",
-    maxWidth: "70%",
     fontSize: Sizes.sm,
+    maxWidth: "70%",
   },
 });
 

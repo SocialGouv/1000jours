@@ -186,18 +186,6 @@ const styles = StyleSheet.create({
     fontSize: Sizes.md,
     textTransform: "uppercase",
   },
-  itemBorder: {
-    borderBottomColor: Colors.disabled,
-    borderBottomWidth: 1,
-    paddingBottom: Margins.smaller,
-    paddingTop: Margins.smallest,
-  },
-  professionalBanner: {
-    borderStartColor: Colors.primaryYellowDark,
-    borderStartWidth: Margins.smaller,
-    margin: Margins.default,
-    padding: Paddings.default,
-  },
   rowView: {
     alignSelf: "flex-start",
     flexDirection: "row",
