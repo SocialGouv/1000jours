@@ -2,11 +2,12 @@ import { useLazyQuery } from "@apollo/client";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, useWindowDimensions, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { ScrollView } from "react-native-gesture-handler";
+import { SceneMap, TabView } from "react-native-tab-view";
 
-import { Button, CommonText, ErrorMessage, TitleH1 } from "../components";
+import { Button, CommonText, ErrorMessage, Text, TitleH1 } from "../components";
 import ArticleCard from "../components/article/articleCard.component";
 import { Colors, Labels, Margins, Paddings } from "../constants";
 import { SEARCH_ARTICLES_BY_KEYWORDS } from "../constants/databaseQueries.constants";
@@ -20,6 +21,22 @@ interface Props {
 const TabSearchScreen: React.FC<Props> = ({ navigation }) => {
   const [keywords, setKeywords] = useState("");
   const [articles, setArticles] = useState<Article[]>([]);
+
+  // Tabs
+  const layout = useWindowDimensions();
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    {
+      accessible: true,
+      key: "articlesSearchResult",
+      title: Labels.search.articles,
+    },
+    {
+      accessible: true,
+      key: "poisSearchResult",
+      title: Labels.search.aroundMe,
+    },
+  ]);
 
   const [getSearchArticlesByKeywords, { loading, error, data }] = useLazyQuery(
     SEARCH_ARTICLES_BY_KEYWORDS(keywords)
@@ -40,35 +57,54 @@ const TabSearchScreen: React.FC<Props> = ({ navigation }) => {
   if (error) return <ErrorMessage error={error} />;
 
   return (
-    <ScrollView style={[styles.mainContainer]}>
-      <TitleH1
-        title={Labels.search.title}
-        description={Labels.search.findAdaptedResponses}
-        animated={false}
-      />
-
-      <View style={styles.searchBloc}>
-        <CommonText>{Labels.search.yourSearch}</CommonText>
-        <TextInput
-          style={styles.searchInput}
-          onChangeText={(text) => {
-            setKeywords(text);
-          }}
-          placeholder={Labels.search.writeKeywordPlaceholder}
-          value={keywords}
+    <>
+      <View style={[styles.mainContainer]}>
+        <TitleH1
+          title={Labels.search.title}
+          description={Labels.search.findAdaptedResponses}
+          animated={false}
         />
 
-        <View style={styles.center}>
-          <Button
-            title={Labels.search.validButton}
-            rounded={true}
-            action={onSearchByKeywords}
+        <View style={styles.searchBloc}>
+          <CommonText>{Labels.search.yourSearch}</CommonText>
+          <TextInput
+            style={styles.searchInput}
+            onChangeText={(text) => {
+              setKeywords(text);
+            }}
+            placeholder={Labels.search.writeKeywordPlaceholder}
+            value={keywords}
           />
+
+          <View style={styles.center}>
+            <Button
+              title={Labels.search.validButton}
+              rounded={true}
+              action={onSearchByKeywords}
+            />
+          </View>
         </View>
       </View>
 
-      <View style={styles.listContainer}>
-        {articles.map((article, index) => (
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={SceneMap({
+          articlesSearchResult: () => articlesRoute(articles),
+          poisSearchResult: poisRoute,
+        })}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        style={{ backgroundColor: Colors.white }}
+      />
+    </>
+  );
+};
+
+const articlesRoute = (articles: Article[]) => {
+  if (articles.length > 0) {
+    return (
+      <ScrollView style={styles.listContainer}>
+        {articles.map((article: Article, index: number) => (
           <Animatable.View
             key={index}
             animation="fadeInUp"
@@ -78,24 +114,33 @@ const TabSearchScreen: React.FC<Props> = ({ navigation }) => {
             <ArticleCard article={article} />
           </Animatable.View>
         ))}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    );
+  }
+
+  return (
+    <View style={styles.center}>
+      <Text>{Labels.search.noArticleFound}</Text>
+    </View>
   );
 };
+
+const poisRoute = () => (
+  <View style={{ backgroundColor: Colors.white, flex: 1 }} />
+);
 
 const styles = StyleSheet.create({
   center: {
     alignItems: "center",
-    flex: 1,
     justifyContent: "center",
-    marginTop: Margins.default,
+    marginVertical: Margins.default,
   },
   listContainer: {
     paddingHorizontal: Paddings.default,
     paddingVertical: Paddings.smallest,
   },
   mainContainer: {
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     paddingLeft: Paddings.default,
     paddingRight: Paddings.default,
     paddingTop: Paddings.default,

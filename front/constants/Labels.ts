@@ -439,8 +439,11 @@ export default {
     update: "Modifier ma situation",
   },
   search: {
+    aroundMe: "Autour de moi",
+    articles: "Articles",
     findAdaptedResponses:
       "Trouver des réponses à vos questions, vos problèmes, et sollicitez de l'aide auprès de professionnels adaptés autour de chez vous.",
+    noArticleFound: "Auncun article ne correspond à votre recherche",
     title: "Que recherchez-vous ?",
     validButton: "Valider",
     writeKeywordPlaceholder: "Saisissez ici votre mot clé",
