@@ -113,7 +113,7 @@ export const getResultIconAndStateOfMind = (
 
   if (result < EpdsConstants.RESULT_WELL_VALUE) {
     return {
-      color: Colors.secondaryGreenDark,
+      color: Colors.primaryBlue,
       icon: EpdsConstants.ResultIconValueEnum.bien,
       stateOfMind: labelsStateOfMind.moinsDeNeuf,
     };
