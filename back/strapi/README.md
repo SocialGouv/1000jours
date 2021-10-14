@@ -39,3 +39,11 @@ Importer les données depuis le backoffice de preprod (efface la base actuelle) 
 ```
 yarn seed:import
 ```
+
+---
+
+Pour exécuter les tests :
+
+```
+yarn test
+```

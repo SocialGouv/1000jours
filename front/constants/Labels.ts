@@ -447,7 +447,13 @@ export default {
   },
   timeline: {
     description:
-      "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. À chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
+      "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. A chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
+    library: {
+      description:
+        "Texte descriptif quii explique qu'il sagit des documents utiles durant le parcours des 1000 premiers jours.",
+      download: "Télécharger",
+      nom: "Parenthèque",
+    },
     notification: {
       body: "Vous entrez dans une nouvelle étape du parcours 1000 jours : ",
       redirectTitle: "Modifier ma situation",

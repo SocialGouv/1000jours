@@ -79,6 +79,42 @@ export const EPDS_CONTACT_INFORMATION = gql`
   }
 `;
 
+export const ALL_EVENTS = gql`
+  query GetEvents {
+    evenements {
+      id
+      nom
+      description
+      debut
+      fin
+      thematique {
+        id
+        nom
+      }
+      etapes {
+        id
+        nom
+      }
+      articles {
+        id
+        titre
+        resume
+        visuel {
+          id
+          hash
+          url
+          height
+          width
+        }
+        thematiques {
+          nom
+          id
+        }
+      }
+    }
+  }
+`;
+
 export const GET_EVENT_ARTICLES = (
   whereCondition: string,
   limit: number
@@ -94,6 +130,8 @@ export const GET_EVENT_ARTICLES = (
       titre
       resume
       visuel {
+        id
+        hash
         url
         height
         width
@@ -143,5 +181,18 @@ export const CARTO_SEND_SUGGESTIONS = gql`
       nombre_enfants: $nombreEnfants
       code_postal: $codePostal
     )
+  }
+`;
+
+export const PARENTS_DOCUMENTS = gql`
+  query GetParenthequeDocuments {
+    parenthequeDocuments {
+      id
+      nom
+      description
+      fichier {
+        url
+      }
+    }
   }
 `;

@@ -18,7 +18,7 @@ export default {
         "READ_CALENDAR",
         "WRITE_CALENDAR",
       ],
-      versionCode: 28,
+      versionCode: 30,
     },
     assetBundlePatterns: ["**/*"],
     hooks: {
@@ -36,13 +36,15 @@ export default {
     },
     icon: "./assets/images/icon.png",
     ios: {
-      buildNumber: "1.0.28",
+      buildNumber: "1.0.30",
       bundleIdentifier: "com.fabrique.millejours",
       infoPlist: {
+        NSCalendarsUsageDescription:
+          "Permet de synchroniser les événements avec le calendrier de votre téléphone",
         NSLocationWhenInUseUsageDescription:
           "Permet de vous positionner précisément sur la carte et de lancer une recherche des POI autour de vous.",
         NSRemindersUsageDescription:
-          "Permet de synchroniser les événements avec le calendrier de votre téléphone",
+          "Permet à l'application de vous faire des rappels sur les événements",
       },
       supportsTablet: true,
     },
@@ -59,7 +61,7 @@ export default {
       fallbackToCacheTimeout: 0,
     },
     userInterfaceStyle: "light",
-    version: "1.0.28",
+    version: "1.0.30",
     web: {
       favicon: "./assets/images/favicon.png",
     },

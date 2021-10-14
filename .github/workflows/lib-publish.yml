@@ -3,7 +3,7 @@ name: Publish library
 on:
   push:
     branches:
-      - 'master'
+      - 'develop'
     paths:
       - 'lib/**'
       - '.github/workflows/lib-publish.yml'

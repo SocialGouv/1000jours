@@ -21,6 +21,7 @@ export type BottomTabParamList = {
 export type TabHomeParamList = {
   tabHomeScreen: undefined;
   listArticles: { step: Step };
+  listParentsDocuments: { step: Step };
   article: { id: number; step?: Step };
   epdsSurvey: undefined;
 };
@@ -89,6 +90,7 @@ export type Event = {
   fin: number;
   thematique?: Thematique;
   etapes?: Step[];
+  articles?: Article[];
   isClosestEvent?: boolean;
 };
 export type AgendaItems<TEvent> = Record<string, TEvent[]>;
@@ -168,4 +170,13 @@ export type Tag = {
   name: string;
   color: string;
   bgColor: string;
+};
+
+export type Document = {
+  id: number;
+  nom: string;
+  description: string;
+  url: string;
+  thematique: Thematique;
+  etapes?: Step[];
 };

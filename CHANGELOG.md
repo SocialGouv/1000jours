@@ -1,3 +1,52 @@
+## [1.79.1](https://github.com/SocialGouv/1000jours/compare/v1.79.0...v1.79.1) (2021-10-12)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le crash de la carto sous iOS 15 ([#785](https://github.com/SocialGouv/1000jours/issues/785)) ([f143f3e](https://github.com/SocialGouv/1000jours/commit/f143f3ea70cc42551f5ff03180083d91c86da500))
+
+# [1.79.0](https://github.com/SocialGouv/1000jours/compare/v1.78.1...v1.79.0) (2021-10-11)
+
+
+### Features
+
+* 🎸 Ajoute les articles liés aux événements (depuis le BO) ([#782](https://github.com/SocialGouv/1000jours/issues/782)) ([5813677](https://github.com/SocialGouv/1000jours/commit/5813677be2e6c5ae8337defe50cf3fb2abbc510d)), closes [#777](https://github.com/SocialGouv/1000jours/issues/777)
+
+## [1.78.1](https://github.com/SocialGouv/1000jours/compare/v1.78.0...v1.78.1) (2021-10-11)
+
+
+### Bug Fixes
+
+* **articles:** Cache les articles en mode draft ([#779](https://github.com/SocialGouv/1000jours/issues/779)) ([e5c711e](https://github.com/SocialGouv/1000jours/commit/e5c711e36a891b1e5494523120ec14a0e54e90d8))
+
+# [1.78.0](https://github.com/SocialGouv/1000jours/compare/v1.77.0...v1.78.0) (2021-10-11)
+
+
+### Features
+
+* **epds:** mail patient ([#760](https://github.com/SocialGouv/1000jours/issues/760)) ([487468a](https://github.com/SocialGouv/1000jours/commit/487468a0a207a9562eaa5b70f0216e799cb423aa)), closes [#752](https://github.com/SocialGouv/1000jours/issues/752) [#751](https://github.com/SocialGouv/1000jours/issues/751)
+
+# [1.77.0](https://github.com/SocialGouv/1000jours/compare/v1.76.0...v1.77.0) (2021-10-08)
+
+
+### Features
+
+* **parentheque:** affichage s'il existe des documents ([#754](https://github.com/SocialGouv/1000jours/issues/754)) ([2984861](https://github.com/SocialGouv/1000jours/commit/2984861ba554a8e44d12ce8c4161135fe8b4d953)), closes [#750](https://github.com/SocialGouv/1000jours/issues/750) [#753](https://github.com/SocialGouv/1000jours/issues/753)
+
+# [1.76.0](https://github.com/SocialGouv/1000jours/compare/v1.75.1...v1.76.0) (2021-10-08)
+
+
+### Features
+
+* parenthèque ([#677](https://github.com/SocialGouv/1000jours/issues/677)) ([bf1f367](https://github.com/SocialGouv/1000jours/commit/bf1f367515dce2b240b78490a362dd982429df69))
+
+## [1.75.1](https://github.com/SocialGouv/1000jours/compare/v1.75.0...v1.75.1) (2021-10-08)
+
+
+### Reverts
+
+* Revert "feat: intégration de la  lib métier (#761)" (#766) ([32a23a1](https://github.com/SocialGouv/1000jours/commit/32a23a18e6c40519f1e69295648343d31a9c2c25)), closes [#761](https://github.com/SocialGouv/1000jours/issues/761) [#766](https://github.com/SocialGouv/1000jours/issues/766)
+
 # [1.75.0](https://github.com/SocialGouv/1000jours/compare/v1.74.5...v1.75.0) (2021-10-07)
 
 

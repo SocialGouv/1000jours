@@ -17,6 +17,7 @@ import {
   TitleH1,
   View,
 } from "../components";
+import TimelineStepLibrary from "../components/timeline/timelineStepLibrary.component";
 import {
   FetchPoliciesConstants,
   Paddings,
@@ -24,6 +25,7 @@ import {
   StorageKeysConstants,
 } from "../constants";
 import Colors from "../constants/Colors";
+import { PARENTS_DOCUMENTS } from "../constants/databaseQueries.constants";
 import Labels from "../constants/Labels";
 import type { Step, TabHomeParamList, UserSituation } from "../types";
 import { AroundMeUtils, StorageUtils, TrackerUtils } from "../utils";
@@ -35,7 +37,7 @@ import { getCurrentStepId } from "../utils/step.util";
 import { stringIsNotNullNorEmpty } from "../utils/strings.util";
 
 interface Props {
-  navigation: StackNavigationProp<TabHomeParamList, "listArticles">;
+  navigation: StackNavigationProp<TabHomeParamList>;
 }
 
 const TabHomeScreen: FC<Props> = ({ navigation }) => {
@@ -63,6 +65,18 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     { fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK }
   );
 
+  const [counterDocument, setCounterDocument] = useState(0);
+  const [
+    loadParentheque,
+    {
+      loading: loadingParentheque,
+      error: errorParentheque,
+      data: dataParentheque,
+    },
+  ] = useLazyQuery(PARENTS_DOCUMENTS, {
+    fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
+  });
+
   const init = async () => {
     const previousStepId = await StorageUtils.getStringValue(
       StorageKeysConstants.currentStepId
@@ -85,6 +99,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
       setCurrentStepId(stepId);
     }
     loadSteps();
+    loadParentheque();
   };
 
   const checkIfCurrentStepHasChanged = (currentStep: Step) => {
@@ -123,6 +138,14 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     return unsubscribe;
   }, []);
 
+  useEffect(() => {
+    if (!loadingParentheque && dataParentheque) {
+      const results = (dataParentheque as { parenthequeDocuments: Document[] })
+        .parenthequeDocuments;
+      setCounterDocument(results.length);
+    }
+  }, [loadingParentheque, dataParentheque, errorParentheque]);
+
   if (!called || loading) return <Loader />;
   if (error) return <ErrorMessage error={error} />;
 
@@ -144,6 +167,57 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     }
   }
 
+  const ViewItemParentheque = () => {
+    const stepParentheque: Step = {
+      active: null,
+      debut: null,
+      description: Labels.timeline.library.description,
+      fin: null,
+      id: "0",
+      nom: Labels.timeline.library.nom,
+      ordre: 0,
+    };
+
+    if (counterDocument > 0)
+      return (
+        <View
+          style={[
+            styles.timelineStepContainer,
+            styles.timelineStepLibraryContainer,
+          ]}
+        >
+          <View style={[styles.timelineContainer]}>
+            <View
+              style={[
+                styles.timelineBlock,
+                styles.timelineLibraryBlock,
+                styles.timelineBlockLeft,
+              ]}
+            />
+          </View>
+          {[stepParentheque].map((step, index) => (
+            <TimelineStepLibrary
+              order={step.ordre}
+              name={step.nom}
+              key={index}
+              onPress={() => {
+                navigation.navigate("listParentsDocuments", { step });
+              }}
+            />
+          ))}
+        </View>
+      );
+
+    return (
+      <View
+        style={[
+          styles.timelineStepContainer,
+          styles.timelineStepLibraryContainer,
+        ]}
+      />
+    );
+  };
+
   return (
     <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>
       <TitleH1
@@ -151,6 +225,9 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
         description={Labels.timeline.description}
         animated={false}
       />
+
+      <ViewItemParentheque />
+
       <View style={[styles.timelineStepContainer]}>
         <View style={[styles.timelineContainer]}>
           <View
@@ -235,10 +312,19 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
   },
+  timelineLibraryBlock: {
+    borderBottomWidth: 0,
+    borderColor: Colors.primaryBlue,
+    borderStyle: "solid",
+    borderTopWidth: 1,
+  },
   timelineStepContainer: {
     marginBottom: Sizes.step,
     marginLeft: "5%",
     marginRight: "5%",
+  },
+  timelineStepLibraryContainer: {
+    marginBottom: 0,
     marginTop: Sizes.step,
   },
 });
