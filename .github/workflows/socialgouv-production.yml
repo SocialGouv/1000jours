@@ -41,7 +41,7 @@ jobs:
     needs: [register]
     environment:
       name: production
-      url: https://1000jours.fabrique.social.gouv.fr/
+      url: https://backoffice-les1000jours.fabrique.social.gouv.fr
     steps:
 
     - name: Use autodevops manifests generation
