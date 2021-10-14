@@ -1,3 +1,10 @@
+# [1.80.0](https://github.com/SocialGouv/1000jours/compare/v1.79.1...v1.80.0) (2021-10-14)
+
+
+### Features
+
+* **epds:** ajout partie colorée Être contacté ([#798](https://github.com/SocialGouv/1000jours/issues/798)) ([21a5190](https://github.com/SocialGouv/1000jours/commit/21a51903a3a3cbaa013968a15998fe8a7fb397b2))
+
 ## [1.79.1](https://github.com/SocialGouv/1000jours/compare/v1.79.0...v1.79.1) (2021-10-12)
 
 
