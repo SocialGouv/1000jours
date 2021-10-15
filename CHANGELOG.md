@@ -1,3 +1,10 @@
+# [1.81.0](https://github.com/SocialGouv/1000jours/compare/v1.80.0...v1.81.0) (2021-10-15)
+
+
+### Features
+
+* **documents:** ajout d'un champ de tri ([#803](https://github.com/SocialGouv/1000jours/issues/803)) ([1390167](https://github.com/SocialGouv/1000jours/commit/13901674fc6b6b7e74ab30322a0cfdd444382d5f)), closes [#802](https://github.com/SocialGouv/1000jours/issues/802)
+
 # [1.80.0](https://github.com/SocialGouv/1000jours/compare/v1.79.1...v1.80.0) (2021-10-14)
 
 
