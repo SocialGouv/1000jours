@@ -3,6 +3,7 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import { addDays, format } from "date-fns";
 import * as Calendar from "expo-calendar";
 import * as Localization from "expo-localization";
+import _ from "lodash";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
@@ -107,10 +108,6 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
       sourceId: defaultCalendarSource.id,
       title: Labels.appName,
     });
-    await StorageUtils.storeStringValue(
-      StorageKeysConstants.osCalendarId,
-      newCalendarID
-    );
     return newCalendarID;
   };
 
@@ -122,12 +119,23 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     return `${date}T${strNewHour}:00:00.000Z`;
   };
 
+  const getAppCalendar = async () => {
+    const calendars = await Calendar.getCalendarsAsync(
+      Calendar.EntityTypes.EVENT
+    );
+    const calendar = _.find(calendars, {
+      allowsModifications: true,
+      color: Colors.primaryBlue,
+      title: Labels.appName,
+    });
+    return calendar;
+  };
+
   const syncEventsWithOsCalendar = async () => {
     trackScreenView(TrackerUtils.TrackingEvent.CALENDAR_SYNC);
-    const calendarId = await StorageUtils.getStringValue(
-      StorageKeysConstants.osCalendarId
-    );
-    if (calendarId) void Calendar.deleteCalendarAsync(calendarId);
+
+    const appCalendar = await getAppCalendar();
+    if (appCalendar?.id) void Calendar.deleteCalendarAsync(appCalendar.id);
     const newCalendarId = await createCalendar();
 
     events.forEach((event) => {
