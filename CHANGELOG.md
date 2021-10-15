@@ -1,3 +1,10 @@
+## [1.81.1](https://github.com/SocialGouv/1000jours/compare/v1.81.0...v1.81.1) (2021-10-15)
+
+
+### Bug Fixes
+
+* 🐛 Corrige les retours design sur les événements ([#786](https://github.com/SocialGouv/1000jours/issues/786)) ([f32d0f0](https://github.com/SocialGouv/1000jours/commit/f32d0f0b522f8b0e75c77e332f453bc3da47be88)), closes [#35](https://github.com/SocialGouv/1000jours/issues/35)
+
 # [1.81.0](https://github.com/SocialGouv/1000jours/compare/v1.80.0...v1.81.0) (2021-10-15)
 
 
