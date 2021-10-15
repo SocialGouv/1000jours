@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { useMutation } from "@apollo/client/react/hooks";
+import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
@@ -25,8 +26,13 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import type { EpdsQuestionAndAnswers } from "../../type";
-import { EpdsSurveyUtils, NotificationUtils, StorageUtils } from "../../utils";
-import EpdsResultContactMamanBlues from "./epdsResultContactMamanBlues.component";
+import {
+  EpdsSurveyUtils,
+  NotificationUtils,
+  StorageUtils,
+  TrackerUtils,
+} from "../../utils";
+import BeContacted from "./beContacted.component";
 import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation.component";
 
 interface Props {
@@ -54,9 +60,12 @@ const EpdsLightResult: React.FC<Props> = ({
       console.log(err);
     },
   });
+  const { trackScreenView } = useMatomo();
+  const [showBeContactedModal, setShowBeContactedModal] = useState(false);
   const [showSnackBar, setShowSnackBar] = useState(false);
 
   const labelsResultats = Labels.epdsSurvey.resultats;
+  const resultData = EpdsSurveyUtils.getResultLabelAndStyleLight();
 
   useEffect(() => {
     const saveEpdsSurveyResults = async () => {
@@ -113,11 +122,8 @@ const EpdsLightResult: React.FC<Props> = ({
     return iconsMap.get(icone);
   };
 
-  const iconAndStateOfMind =
-    EpdsSurveyUtils.getResultIconAndStateOfMind(result);
+  const iconAndStateOfMind = EpdsSurveyUtils.getResultLabelAndStyle(result);
   const colorStyle = { color: iconAndStateOfMind.color };
-  const beContactedColors =
-    EpdsSurveyUtils.getPrimaryAndSecondaryBeContactedColors(result);
 
   return (
     <>
@@ -126,30 +132,37 @@ const EpdsLightResult: React.FC<Props> = ({
         <View style={styles.rowView}>
           {getIcon(iconAndStateOfMind.icon)}
           <CommonText style={[styles.stateOfMind, colorStyle]}>
-            {iconAndStateOfMind.stateOfMind}
+            {iconAndStateOfMind.resultLabels.stateOfMind}
           </CommonText>
         </View>
         <SecondaryText style={[styles.text, styles.fontBold]}>
           {Labels.epdsSurveyLight.oserEnParler}
         </SecondaryText>
         <SecondaryText style={styles.text}>
-          {EpdsSurveyUtils.getResultIntroductionText(result)}
+          {Labels.epdsSurveyLight.changementsImportants}
         </SecondaryText>
-        {result < EpdsConstants.RESULT_WELL_VALUE && (
+        {result < EpdsConstants.RESULT_BAD_VALUE && (
           <SecondaryText style={[styles.text, styles.fontBold]}>
             {labelsResultats.retakeTestInvitation}
           </SecondaryText>
         )}
         {showBeContactedButton && (
-          <EpdsResultContactMamanBlues
-            primaryColor={beContactedColors.primaryColor}
-            secondaryColor={beContactedColors.secondaryColor}
-            showSnackBar={setShowSnackBar}
-          />
+          <View style={styles.validateButton}>
+            <Button
+              title={Labels.epdsSurvey.beContacted.button}
+              titleStyle={styles.fontButton}
+              rounded={true}
+              disabled={false}
+              action={() => {
+                trackScreenView(TrackerUtils.TrackingEvent.EPDS_BE_CONTACTED);
+                setShowBeContactedModal(true);
+              }}
+            />
+          </View>
         )}
         <EpdsResultInformation
-          leftBorderColor={Colors.primaryBlue}
-          informationList={Labels.epdsSurveyLight.professionalsList}
+          leftBorderColor={Colors.white}
+          informationList={resultData.resultLabels.professionalsList}
         />
         <View style={styles.validateButton}>
           <Button
@@ -162,6 +175,13 @@ const EpdsLightResult: React.FC<Props> = ({
             }}
           />
         </View>
+        <BeContacted
+          visible={showBeContactedModal}
+          hideModal={(showSB: boolean) => {
+            setShowBeContactedModal(false);
+            setShowSnackBar(showSB);
+          }}
+        />
       </ScrollView>
       <CustomSnackbar
         duration={AroundMeConstants.SNACKBAR_DURATION}
@@ -186,8 +206,20 @@ const styles = StyleSheet.create({
     fontSize: Sizes.md,
     textTransform: "uppercase",
   },
+  itemBorder: {
+    borderBottomColor: Colors.disabled,
+    borderBottomWidth: 1,
+    paddingBottom: Margins.smaller,
+    paddingTop: Margins.smallest,
+  },
+  professionalBanner: {
+    borderStartColor: Colors.primaryYellowDark,
+    borderStartWidth: Margins.smaller,
+    margin: Margins.default,
+    padding: Paddings.default,
+  },
   rowView: {
-    alignSelf: "flex-start",
+    alignSelf: "center",
     flexDirection: "row",
   },
   stateOfMind: {
