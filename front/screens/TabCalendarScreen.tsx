@@ -15,14 +15,20 @@ import {
   CommonText,
   ErrorMessage,
   Events,
+  Icomoon,
+  IcomoonIcons,
   Loader,
   TitleH1,
 } from "../components";
+import { SecondaryTextItalic } from "../components/StyledText";
 import { View } from "../components/Themed";
 import {
   Colors,
   FetchPoliciesConstants,
+  FontNames,
+  FontWeight,
   Formats,
+  getFontFamilyName,
   Labels,
   Paddings,
   Sizes,
@@ -230,23 +236,31 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
         <View style={styles.calendarContainer}>
           {childBirthday.length > 0 ? (
             <>
-              <View>
+              <View style={styles.flexStart}>
                 <Button
                   title={Labels.calendar.synchronise}
-                  titleStyle={styles.buttonTitle}
-                  buttonStyle={{ alignSelf: "center" }}
-                  rounded={true}
+                  icon={
+                    <Icomoon
+                      name={IcomoonIcons.synchroniser}
+                      size={Sizes.sm}
+                      color={Colors.secondaryGreen}
+                    />
+                  }
+                  rounded={false}
+                  disabled={false}
                   action={syncEventsWithOsCalendar}
+                  titleStyle={styles.buttonTitleStyle}
+                  buttonStyle={styles.buttonStyle}
                 />
-                <CommonText style={styles.lastSyncDate}>
-                  {lastSyncDate
-                    ? `${Labels.calendar.lastSyncDate} ${format(
-                        new Date(lastSyncDate),
-                        Formats.dateTimeFR
-                      )}`
-                    : ""}
-                </CommonText>
               </View>
+              <SecondaryTextItalic style={styles.lastSyncDate}>
+                {lastSyncDate
+                  ? `(${Labels.calendar.lastSyncDate} ${format(
+                      new Date(lastSyncDate),
+                      Formats.dateTimeFR
+                    )})`
+                  : ""}
+              </SecondaryTextItalic>
               <Events
                 evenements={events}
                 childBirthday={childBirthday}
@@ -274,9 +288,16 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  buttonTitle: {
-    fontSize: Sizes.md,
-    textTransform: "uppercase",
+  buttonStyle: {
+    paddingBottom: Paddings.smaller,
+    paddingHorizontal: 0,
+    paddingTop: 0,
+  },
+  buttonTitleStyle: {
+    color: Colors.secondaryGreen,
+    fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
+    fontSize: Sizes.sm,
+    textAlign: "left",
   },
   calendarContainer: {
     flex: 1,
@@ -291,10 +312,17 @@ const styles = StyleSheet.create({
     height: "100%",
     padding: Paddings.default,
   },
+  flexStart: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
   lastSyncDate: {
-    alignSelf: "center",
-    fontSize: Sizes.xs,
-    paddingVertical: Paddings.light,
+    color: Colors.commonText,
+    fontFamily: "avenir-italic",
+    fontSize: Sizes.xxs,
+    fontStyle: "italic",
+    paddingBottom: Paddings.default,
   },
   noChildBirthday: {
     paddingVertical: Paddings.default,

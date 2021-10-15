@@ -31,3 +31,9 @@ export const SecondaryText: FC<TextProps> = (props) => {
     />
   );
 };
+
+export const SecondaryTextItalic: FC<TextProps> = (props) => {
+  return (
+    <Text {...props} style={[props.style, { fontFamily: "avenir-italic" }]} />
+  );
+};
