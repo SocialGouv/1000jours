@@ -1,3 +1,10 @@
+## [1.83.1](https://github.com/SocialGouv/1000jours/compare/v1.83.0...v1.83.1) (2021-10-15)
+
+
+### Reverts
+
+* Revert "feat(epds): ajout partie colorée Être contacté (#798)" (#811) ([167bac5](https://github.com/SocialGouv/1000jours/commit/167bac5dfe5141fe89a4955e79a0c5ae235b8c54)), closes [#798](https://github.com/SocialGouv/1000jours/issues/798) [#811](https://github.com/SocialGouv/1000jours/issues/811)
+
 # [1.83.0](https://github.com/SocialGouv/1000jours/compare/v1.82.0...v1.83.0) (2021-10-15)
 
 
