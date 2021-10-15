@@ -56,15 +56,10 @@ export interface EpdsAnswer {
   isChecked: boolean;
 }
 
-export interface EpdsResultIconAndStateOfMind {
-  stateOfMind: string;
+export interface EpdsResultData {
+  resultLabels: any;
   color: string;
   icon: EpdsConstants.ResultIconValueEnum;
-}
-
-export interface BeContactedColors {
-  primaryColor: string;
-  secondaryColor: string;
 }
 
 export interface EpdsUpdatedSurvey {
@@ -91,6 +86,6 @@ export interface EpdsResultContactInformation {
   thematic: string;
 }
 
-export interface EpdsResultInformationType {
-  paragraphs: EpdsResultContactInformation[] | EpdsResultSimpleInformation[];
-}
+export type EpdsResultInformationType =
+  | EpdsResultContactInformation
+  | EpdsResultSimpleInformation;
