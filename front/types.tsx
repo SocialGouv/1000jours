@@ -176,6 +176,7 @@ export type Document = {
   id: number;
   nom: string;
   description: string;
+  ordre: number;
   url: string;
   thematique: Thematique;
   etapes?: Step[];
