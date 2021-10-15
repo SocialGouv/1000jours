@@ -5,7 +5,7 @@ import { project } from "@socialgouv/kosko-charts/testing/fake/github-actions.en
 
 jest.setTimeout(1000 * 60);
 test("kosko generate --prod", async () => {
-  process.env.PRODUCTION_NAMESPACE = "les1000jours";
+  process.env.SOCIALGOUV_PRODUCTION_NAMESPACE = "les1000jours";
   expect(
     await getEnvManifests("prod", "", project("1000jours").prod)
   ).toMatchSnapshot();

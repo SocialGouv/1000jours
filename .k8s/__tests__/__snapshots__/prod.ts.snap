@@ -15,12 +15,12 @@ metadata:
     app.github.com/sha: '0123456'
   labels:
     app: strapi-cache
-    application: 1000jours
-    component: 1000jours
-    owner: 1000jours
-    team: 1000jours
+    application: les1000jours
+    component: les1000jours
+    owner: les1000jours
+    team: les1000jours
   name: strapi-cache
-  namespace: 1000jours
+  namespace: les1000jours
 spec:
   replicas: 1
   selector:
@@ -38,10 +38,10 @@ spec:
         app.github.com/sha: '0123456'
       labels:
         app: strapi-cache
-        application: 1000jours
-        component: 1000jours
-        owner: 1000jours
-        team: 1000jours
+        application: les1000jours
+        component: les1000jours
+        owner: les1000jours
+        team: les1000jours
     spec:
       containers:
         - image: nginx:1.19.6
@@ -104,10 +104,10 @@ kind: Service
 metadata:
   labels:
     app: strapi-cache
-    application: 1000jours
-    component: 1000jours
-    owner: 1000jours
-    team: 1000jours
+    application: les1000jours
+    component: les1000jours
+    owner: les1000jours
+    team: les1000jours
   name: strapi-cache
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
@@ -117,7 +117,7 @@ metadata:
     app.github.com/repo: socialgouv/1000jours
     app.github.com/run: '1234'
     app.github.com/sha: '0123456'
-  namespace: 1000jours
+  namespace: les1000jours
 spec:
   ports:
     - name: http
@@ -146,15 +146,15 @@ metadata:
     nginx.ingress.kubernetes.io/limit-rpm: '300'
   labels:
     app: strapi-cache
-    application: 1000jours
-    component: 1000jours
-    owner: 1000jours
-    team: 1000jours
+    application: les1000jours
+    component: les1000jours
+    owner: les1000jours
+    team: les1000jours
   name: strapi-cache
-  namespace: 1000jours
+  namespace: les1000jours
 spec:
   rules:
-    - host: backoffice-1000jours.fabrique.social.gouv.fr
+    - host: backoffice-les1000jours.fabrique.social.gouv.fr
       http:
         paths:
           - backend:
@@ -166,7 +166,7 @@ spec:
             pathType: Prefix
   tls:
     - hosts:
-        - backoffice-1000jours.fabrique.social.gouv.fr
+        - backoffice-les1000jours.fabrique.social.gouv.fr
       secretName: strapi-cache-crt
 ---
 apiVersion: v1
@@ -174,17 +174,17 @@ kind: ConfigMap
 metadata:
   name: strapi-cache
   labels:
-    application: 1000jours
-    component: 1000jours
-    owner: 1000jours
-    team: 1000jours
+    application: les1000jours
+    component: les1000jours
+    owner: les1000jours
+    team: les1000jours
   annotations:
     app.github.com/job: '5678'
     app.github.com/ref: refs/tags/v1.2.3
     app.github.com/repo: socialgouv/1000jours
     app.github.com/run: '1234'
     app.github.com/sha: '0123456'
-  namespace: 1000jours
+  namespace: les1000jours
 data:
   nginx.conf: |-
 
@@ -252,7 +252,7 @@ apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: strapi-cache
-  namespace: 1000jours
+  namespace: les1000jours
 spec:
   maxReplicas: 5
   metrics:
@@ -284,12 +284,12 @@ metadata:
     app.github.com/run: '1234'
     app.github.com/sha: '0123456'
   name: azure-pg-user
-  namespace: 1000jours
+  namespace: les1000jours
   labels:
-    application: 1000jours
-    component: 1000jours
-    owner: 1000jours
-    team: 1000jours
+    application: les1000jours
+    component: les1000jours
+    owner: les1000jours
+    team: les1000jours
 spec:
   encryptedData:
     DATABASE_URL: >-
@@ -321,10 +321,10 @@ spec:
       name: azure-pg-user
       namespace: les1000jours
       labels:
-        application: 1000jours
-        component: 1000jours
-        owner: 1000jours
-        team: 1000jours
+        application: les1000jours
+        component: les1000jours
+        owner: les1000jours
+        team: les1000jours
     type: Opaque
 ---
 apiVersion: apps/v1
@@ -340,12 +340,12 @@ metadata:
     app.github.com/sha: '0123456'
   labels:
     app: strapi
-    application: 1000jours
-    component: 1000jours
-    owner: 1000jours
-    team: 1000jours
+    application: les1000jours
+    component: les1000jours
+    owner: les1000jours
+    team: les1000jours
   name: strapi
-  namespace: 1000jours
+  namespace: les1000jours
 spec:
   replicas: 1
   selector:
@@ -363,10 +363,10 @@ spec:
         app.github.com/sha: '0123456'
       labels:
         app: strapi
-        application: 1000jours
-        component: 1000jours
-        owner: 1000jours
-        team: 1000jours
+        application: les1000jours
+        component: les1000jours
+        owner: les1000jours
+        team: les1000jours
     spec:
       containers:
         - image: >-
@@ -409,7 +409,7 @@ spec:
                 name: strapi-configmap
           env:
             - name: BACKOFFICE_URL
-              value: https://backoffice-1000jours.fabrique.social.gouv.fr
+              value: https://backoffice-les1000jours.fabrique.social.gouv.fr
             - name: DATABASE_CLIENT
               value: postgres
             - name: DATABASE_NAME
@@ -458,12 +458,12 @@ metadata:
     app.github.com/run: '1234'
     app.github.com/sha: '0123456'
   name: strapi
-  namespace: 1000jours
+  namespace: les1000jours
   labels:
-    application: 1000jours
-    component: 1000jours
-    owner: 1000jours
-    team: 1000jours
+    application: les1000jours
+    component: les1000jours
+    owner: les1000jours
+    team: les1000jours
 spec:
   encryptedData:
     MAIL_HOST: >-
@@ -491,17 +491,17 @@ spec:
       name: strapi
       namespace: les1000jours
       labels:
-        application: 1000jours
-        component: 1000jours
-        owner: 1000jours
-        team: 1000jours
+        application: les1000jours
+        component: les1000jours
+        owner: les1000jours
+        team: les1000jours
     type: Opaque
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: strapi-configmap
-  namespace: 1000jours
+  namespace: les1000jours
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
@@ -511,24 +511,26 @@ metadata:
     app.github.com/run: '1234'
     app.github.com/sha: '0123456'
   labels:
-    application: 1000jours
-    component: 1000jours
-    owner: 1000jours
-    team: 1000jours
+    application: les1000jours
+    component: les1000jours
+    owner: les1000jours
+    team: les1000jours
 data:
   STRAPI_LOG_LEVEL: info
   NODE_ENV: production
   SENTRY_DSN: https://5dbac413000f4a43a073841acebc82f5@sentry.fabrique.social.gouv.fr/55
+  RESOURCES_URL: >-
+    https://nos1000jours-web-pro.fabrique.social.gouv.fr/annexes/ressources-parents
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
     app: strapi
-    application: 1000jours
-    component: 1000jours
-    owner: 1000jours
-    team: 1000jours
+    application: les1000jours
+    component: les1000jours
+    owner: les1000jours
+    team: les1000jours
   name: strapi
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
@@ -538,7 +540,7 @@ metadata:
     app.github.com/repo: socialgouv/1000jours
     app.github.com/run: '1234'
     app.github.com/sha: '0123456'
-  namespace: 1000jours
+  namespace: les1000jours
 spec:
   ports:
     - name: http
@@ -552,7 +554,7 @@ apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
   annotations: {}
-  name: azure-1000jours-volume
+  name: azure-les1000jours-volume
   namespace: les1000jours
 spec:
   encryptedData:
@@ -563,7 +565,7 @@ spec:
   template:
     metadata:
       annotations: {}
-      name: azure-1000jours-volume
+      name: azure-les1000jours-volume
       namespace: les1000jours
     type: Opaque
 ---
@@ -571,7 +573,7 @@ apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: strapi
-  namespace: 1000jours
+  namespace: les1000jours
 spec:
   maxReplicas: 5
   metrics:
@@ -604,11 +606,11 @@ metadata:
     app.github.com/run: '1234'
     app.github.com/sha: '0123456'
   labels:
-    application: 1000jours
-    component: 1000jours
-    owner: 1000jours
-    team: 1000jours
-  namespace: 1000jours
+    application: les1000jours
+    component: les1000jours
+    owner: les1000jours
+    team: les1000jours
+  namespace: les1000jours
 spec:
   accessModes:
     - ReadWriteMany
@@ -617,32 +619,32 @@ spec:
       storage: 5Gi
   selector:
     matchLabels:
-      usage: 1000jours-uploads
+      usage: les1000jours-uploads
   storageClassName: ''
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   labels:
-    usage: 1000jours-uploads
-    application: 1000jours
-    component: 1000jours
-    owner: 1000jours
-    team: 1000jours
-  name: 1000jours-uploads
+    usage: les1000jours-uploads
+    application: les1000jours
+    component: les1000jours
+    owner: les1000jours
+    team: les1000jours
+  name: les1000jours-uploads
   annotations:
     app.github.com/job: '5678'
     app.github.com/ref: refs/tags/v1.2.3
     app.github.com/repo: socialgouv/1000jours
     app.github.com/run: '1234'
     app.github.com/sha: '0123456'
-  namespace: 1000jours
+  namespace: les1000jours
 spec:
   accessModes:
     - ReadWriteMany
   azureFile:
-    secretName: azure-1000jours-volume
-    secretNamespace: 1000jours
+    secretName: azure-les1000jours-volume
+    secretNamespace: les1000jours
     shareName: uploads
   capacity:
     storage: 5Gi

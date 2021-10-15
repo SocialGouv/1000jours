@@ -111,7 +111,10 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
   useEffect(() => {
     if (!loading && data) {
       const results = (data as { articles: Article[] }).articles;
-      setArticles(results);
+      const eventArticles: Article[] = event.articles
+        ? event.articles.concat(results)
+        : results;
+      setArticles(eventArticles);
     }
   }, [loading, data]);
 
@@ -157,9 +160,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
             <Button
               rounded={true}
               title={Labels.event.seeOnTheMap}
-              titleStyle={{
-                textTransform: "uppercase",
-              }}
+              titleStyle={styles.buttonTitle}
               buttonStyle={{ alignSelf: "center" }}
               action={seeOnTheMap}
             />
@@ -188,6 +189,10 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
 };
 
 const styles = StyleSheet.create({
+  buttonTitle: {
+    fontSize: Sizes.xs,
+    textTransform: "uppercase",
+  },
   dateTag: {
     alignSelf: "flex-start",
     color: Colors.primaryBlueDark,
@@ -232,7 +237,7 @@ const styles = StyleSheet.create({
   },
   eventTitle: {
     color: Colors.primaryBlueDark,
-    fontSize: Sizes.xs,
+    fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
     paddingBottom: Paddings.light,
   },
@@ -258,7 +263,7 @@ const styles = StyleSheet.create({
   listArticlesTitle: {
     color: Colors.primaryBlueDark,
     fontSize: Sizes.sm,
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.bold,
     paddingBottom: Paddings.light,
   },
   listItemContainer: {
