@@ -1,3 +1,10 @@
+# [1.83.0](https://github.com/SocialGouv/1000jours/compare/v1.82.0...v1.83.0) (2021-10-15)
+
+
+### Features
+
+* **parentheque:** phrase d'intro et ordre des documents ([#808](https://github.com/SocialGouv/1000jours/issues/808)) ([4005e66](https://github.com/SocialGouv/1000jours/commit/4005e6628fb811eeae8a9d617734cdb54dffe71f))
+
 # [1.82.0](https://github.com/SocialGouv/1000jours/compare/v1.81.1...v1.82.0) (2021-10-15)
 
 
