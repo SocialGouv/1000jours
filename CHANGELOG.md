@@ -1,3 +1,10 @@
+## [1.83.2](https://github.com/SocialGouv/1000jours/compare/v1.83.1...v1.83.2) (2021-10-15)
+
+
+### Bug Fixes
+
+* 🐛 Tri les documents directement via l'api graphql ([#812](https://github.com/SocialGouv/1000jours/issues/812)) ([4a94fbc](https://github.com/SocialGouv/1000jours/commit/4a94fbc018ddcb2f19aadee1c28e5e0dd615d97d))
+
 ## [1.83.1](https://github.com/SocialGouv/1000jours/compare/v1.83.0...v1.83.1) (2021-10-15)
 
 
