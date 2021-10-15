@@ -190,6 +190,7 @@ export const PARENTS_DOCUMENTS = gql`
       id
       nom
       description
+      ordre
       fichier {
         url
       }
