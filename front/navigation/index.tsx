@@ -105,6 +105,8 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => (
             onPress={() => {
               onPressMenu(true);
             }}
+            accessibilityRole="button"
+            accessibilityLabel={Labels.menu.title}
           >
             <Icomoon
               name={IcomoonIcons.menu}

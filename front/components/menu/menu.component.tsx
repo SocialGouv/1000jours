@@ -102,6 +102,8 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
                 setShowMenu(false);
                 menuItem.onPress();
               }}
+              accessibilityRole="button"
+              accessibilityLabel={menuItem.title}
               bottomDivider
             >
               <View style={styles.menuItemIcon}>
