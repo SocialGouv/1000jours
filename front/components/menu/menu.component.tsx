@@ -1,9 +1,9 @@
 import type { NavigationContainerRef } from "@react-navigation/native";
 import Constants from "expo-constants";
 import * as React from "react";
-import { Dimensions, Linking, StyleSheet } from "react-native";
-import * as Animatable from "react-native-animatable";
+import { Dimensions, Linking, Modal, StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
+import GestureRecognizer from "react-native-swipe-gestures";
 import BottomSheet from "reanimated-bottom-sheet";
 
 import {
@@ -82,55 +82,75 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
   ];
 
   const renderContent = () => (
-    <Animatable.View animation="slideInUp" duration={500}>
-      <View style={styles.menuContainer}>
-        <View>
-          <View style={styles.swipeIndicator}></View>
-        </View>
-        <View>
-          <ListItem bottomDivider>
-            <ListItem.Content>
-              <ListItem.Title style={styles.title}>
-                {Labels.menu.title}
-              </ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-          {menuItems.map((menuItem, index) => (
-            <ListItem
-              key={index}
-              onPress={() => {
-                setShowMenu(false);
-                menuItem.onPress();
-              }}
-              accessibilityRole="button"
-              accessibilityLabel={menuItem.title}
-              bottomDivider
-            >
-              <View style={styles.menuItemIcon}>
-                <Icomoon
-                  name={menuItem.icon}
-                  size={Sizes.xl}
-                  color={Colors.primaryBlueDark}
-                />
-              </View>
+    <GestureRecognizer
+      style={{ flex: 1 }}
+      onSwipeUp={() => {
+        setShowMenu(true);
+      }}
+      onSwipeDown={() => {
+        setShowMenu(false);
+      }}
+    >
+      <Modal animationType="slide" transparent={true} visible={showMenu}>
+        <View style={styles.modalView}>
+          <View
+            style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
+            accessibilityRole="button"
+            accessibilityLabel={Labels.accessibility.closeMenu}
+            onTouchEnd={() => {
+              setShowMenu(false);
+            }}
+          >
+            <View style={styles.swipeIndicator}></View>
+          </View>
+          <View>
+            <ListItem bottomDivider>
               <ListItem.Content>
-                <ListItem.Title style={styles.menuItemTitle}>
-                  {menuItem.title}
+                <ListItem.Title style={styles.title}>
+                  {Labels.menu.title}
                 </ListItem.Title>
               </ListItem.Content>
             </ListItem>
-          ))}
-          {/* App Version */}
-          <ListItem>
-            <ListItem.Content>
-              <ListItem.Title style={styles.version}>
-                {`${Labels.version}${Constants.manifest.version}`}
-              </ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
+            {menuItems.map((menuItem, index) => (
+              <ListItem
+                key={index}
+                onPress={() => {
+                  setShowMenu(false);
+                  menuItem.onPress();
+                }}
+                accessibilityRole="button"
+                accessibilityLabel={menuItem.title}
+                bottomDivider
+              >
+                <View style={styles.menuItemIcon}>
+                  <Icomoon
+                    name={menuItem.icon}
+                    size={Sizes.xl}
+                    color={Colors.primaryBlueDark}
+                  />
+                </View>
+                <ListItem.Content>
+                  <ListItem.Title style={styles.menuItemTitle}>
+                    {menuItem.title}
+                  </ListItem.Title>
+                </ListItem.Content>
+              </ListItem>
+            ))}
+            {/* App Version */}
+            <ListItem>
+              <ListItem.Content>
+                <ListItem.Title
+                  style={styles.version}
+                  accessibilityLabel={`${Labels.accessibility.version}${Constants.manifest.version}`}
+                >
+                  {`${Labels.version}${Constants.manifest.version}`}
+                </ListItem.Title>
+              </ListItem.Content>
+            </ListItem>
+          </View>
         </View>
-      </View>
-    </Animatable.View>
+      </Modal>
+    </GestureRecognizer>
   );
   const sheetRef = React.useRef<BottomSheet>(null);
 
@@ -160,11 +180,6 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  menuContainer: {
-    backgroundColor: "white",
-    height: "100%",
-    opacity: 1,
-  },
   menuItemIcon: {
     backgroundColor: "transparent",
     paddingLeft: Paddings.default,
@@ -173,6 +188,11 @@ const styles = StyleSheet.create({
   menuItemTitle: {
     color: Colors.primaryBlueDark,
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
+  },
+  modalView: {
+    backgroundColor: "rgba(0,0,0,0.2)",
+    flex: 1,
+    justifyContent: "flex-end",
   },
   swipeIndicator: {
     alignSelf: "center",
@@ -194,6 +214,7 @@ const styles = StyleSheet.create({
     color: Colors.commonText,
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.light),
     fontSize: Sizes.xs,
+    paddingBottom: Paddings.default,
   },
 });
 
