@@ -106,7 +106,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
           <View>
             <ListItem bottomDivider>
               <ListItem.Content>
-                <ListItem.Title style={styles.title}>
+                <ListItem.Title style={styles.title} accessibilityRole="header">
                   {Labels.menu.title}
                 </ListItem.Title>
               </ListItem.Content>
