@@ -5,14 +5,13 @@ import {
 } from "./aroundMe.types";
 import { DataFetchingType } from "./dataFetching.types";
 import {
-  BeContactedColors,
   BeContactedData,
   EpdsAnswer,
   EpdsGenders,
   EpdsGenderType,
   EpdsQuestionAndAnswers,
   EpdsResultContactInformation,
-  EpdsResultIconAndStateOfMind,
+  EpdsResultData,
   EpdsResultInformationType,
   EpdsResultSimpleInformation,
   EpdsUpdatedSurvey,
@@ -20,7 +19,6 @@ import {
 } from "./epdsSurvey.types";
 
 export {
-  BeContactedColors,
   BeContactedData,
   CartoFilter,
   CartoFilterStorage,
@@ -30,7 +28,7 @@ export {
   EpdsGenderType,
   EpdsQuestionAndAnswers,
   EpdsResultContactInformation,
-  EpdsResultIconAndStateOfMind,
+  EpdsResultData,
   EpdsResultInformationType,
   EpdsResultSimpleInformation,
   EpdsUpdatedSurvey,

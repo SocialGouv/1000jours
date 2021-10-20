@@ -1,3 +1,31 @@
+## [1.83.2](https://github.com/SocialGouv/1000jours/compare/v1.83.1...v1.83.2) (2021-10-15)
+
+
+### Bug Fixes
+
+* 🐛 Tri les documents directement via l'api graphql ([#812](https://github.com/SocialGouv/1000jours/issues/812)) ([4a94fbc](https://github.com/SocialGouv/1000jours/commit/4a94fbc018ddcb2f19aadee1c28e5e0dd615d97d))
+
+## [1.83.1](https://github.com/SocialGouv/1000jours/compare/v1.83.0...v1.83.1) (2021-10-15)
+
+
+### Reverts
+
+* Revert "feat(epds): ajout partie colorée Être contacté (#798)" (#811) ([167bac5](https://github.com/SocialGouv/1000jours/commit/167bac5dfe5141fe89a4955e79a0c5ae235b8c54)), closes [#798](https://github.com/SocialGouv/1000jours/issues/798) [#811](https://github.com/SocialGouv/1000jours/issues/811)
+
+# [1.83.0](https://github.com/SocialGouv/1000jours/compare/v1.82.0...v1.83.0) (2021-10-15)
+
+
+### Features
+
+* **parentheque:** phrase d'intro et ordre des documents ([#808](https://github.com/SocialGouv/1000jours/issues/808)) ([4005e66](https://github.com/SocialGouv/1000jours/commit/4005e6628fb811eeae8a9d617734cdb54dffe71f))
+
+# [1.82.0](https://github.com/SocialGouv/1000jours/compare/v1.81.1...v1.82.0) (2021-10-15)
+
+
+### Features
+
+* 🎸 Force l'alignement des textes article (justifié) ([#809](https://github.com/SocialGouv/1000jours/issues/809)) ([9419fd4](https://github.com/SocialGouv/1000jours/commit/9419fd4999e4001b2b6cd26677464e88010a6b98)), closes [#596](https://github.com/SocialGouv/1000jours/issues/596)
+
 ## [1.81.1](https://github.com/SocialGouv/1000jours/compare/v1.81.0...v1.81.1) (2021-10-15)
 
 

@@ -90,6 +90,7 @@ const TimelineStep: FC<TimelineStepProps> = ({
             styles.justifyContentCenter,
             active ? styles.stepActive : null,
           ]}
+          accessibilityLabel={name}
           type="clear"
         />
       </View>

@@ -47,6 +47,7 @@ const TimelineStepLibrary: FC<TimelineStepLibraryProps> = ({
             styles.stepIconButtonLibrary,
             styles.justifyContentCenter,
           ]}
+          accessibilityLabel={name}
           type="clear"
         />
       </View>
