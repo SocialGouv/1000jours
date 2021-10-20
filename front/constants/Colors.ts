@@ -41,4 +41,8 @@ export default {
   white: "#FFFFFF",
   backdrop: "#00000080",
   transparentGrey: "rgba(52, 52, 52, 0.8)",
+  onBoardingSwiperFlatList: {
+    paginationDefault: "#26366E",
+    paginationActive: "#74C09F",
+  },
 };

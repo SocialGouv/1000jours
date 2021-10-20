@@ -23,13 +23,13 @@ import {
   Colors,
   FontWeight,
   Labels,
-  Margins,
   Paddings,
   Sizes,
   StorageKeysConstants,
 } from "../constants";
 import type { RootStackParamList } from "../types";
 import { StorageUtils, TrackerUtils } from "../utils";
+import { CustomPagination } from "./customOnboardingPagination.component";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -88,16 +88,23 @@ const Onboarding: FC<Props> = ({ navigation }) => {
         <View style={styles.flexCenter}>
           <ScrollView>
             <SwiperFlatList
+              importantForAccessibility="no"
               ref={swiperRef}
               onChangeIndex={({ index }) => {
                 setSwiperCurrentIndex(index);
               }}
               autoplay={false}
               showPagination
-              paginationDefaultColor="lightgray"
-              paginationActiveColor={Colors.secondaryGreen}
-              paginationStyleItem={styles.swipePaginationItem}
-              paginationStyle={styles.swipePagination}
+              PaginationComponent={() => {
+                return (
+                  <View accessible={false}>
+                    <CustomPagination
+                      currentIndex={swiperCurrentIndex}
+                      slidesNumber={slideViews.length}
+                    />
+                  </View>
+                );
+              }}
             >
               {slideViews.map((slideView, index) => (
                 <View
@@ -110,7 +117,10 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                     >
                       {slideView.image}
                     </View>
-                    <CommonText style={[styles.title, styles.textAlignCenter]}>
+                    <CommonText
+                      accessibilityRole="header"
+                      style={[styles.title, styles.textAlignCenter]}
+                    >
                       {slideView.title}
                     </CommonText>
                     <SecondaryText
@@ -223,14 +233,6 @@ const styles = StyleSheet.create({
   },
   slideImage: {
     paddingBottom: Paddings.larger,
-  },
-  swipePagination: {
-    paddingTop: Paddings.light,
-  },
-  swipePaginationItem: {
-    height: 5,
-    marginHorizontal: Margins.smaller,
-    width: 32,
   },
   swipeView: {
     width,
