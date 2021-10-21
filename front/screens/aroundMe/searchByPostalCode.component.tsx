@@ -64,6 +64,7 @@ const SearchByPostalCode: React.FC<Props> = ({
     if (status !== Location.PermissionStatus.GRANTED) {
       showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
       setIsLoading(false);
+      setSearchIsReady(true); // Si on refuse la géoloc, on peut toujours lancer une recherche (manuelle ou via CP)
       return;
     }
 
