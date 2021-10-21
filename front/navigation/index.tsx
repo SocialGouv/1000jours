@@ -113,7 +113,10 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => (
               size={Sizes.xxxxxs}
               color={Colors.primaryBlue}
             />
-            <Text style={[styles.headerRightButtonText]}>
+            <Text
+              style={[styles.headerRightButtonText]}
+              allowFontScaling={false}
+            >
               {Labels.menu.title}
             </Text>
           </TouchableOpacity>

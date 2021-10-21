@@ -130,7 +130,10 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
                   />
                 </View>
                 <ListItem.Content>
-                  <ListItem.Title style={styles.menuItemTitle}>
+                  <ListItem.Title
+                    style={styles.menuItemTitle}
+                    allowFontScaling={false}
+                  >
                     {menuItem.title}
                   </ListItem.Title>
                 </ListItem.Content>

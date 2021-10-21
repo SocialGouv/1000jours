@@ -57,8 +57,12 @@ const TimelineStepLibrary: FC<TimelineStepLibraryProps> = ({
         </TouchableOpacity>
       </View>
       <View style={[styles.stepTitleContainer]}>
-        <CommonText style={[styles.stepTitle]}>{name}</CommonText>
-        <SecondaryText style={getStepNumStyles()}>{order}</SecondaryText>
+        <CommonText style={[styles.stepTitle]} allowFontScaling={false}>
+          {name}
+        </CommonText>
+        <SecondaryText style={getStepNumStyles()} allowFontScaling={false}>
+          {order}
+        </SecondaryText>
       </View>
     </Pressable>
   );

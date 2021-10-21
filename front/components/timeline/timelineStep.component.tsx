@@ -112,8 +112,13 @@ const TimelineStep: FC<TimelineStepProps> = ({
             : null,
         ]}
       >
-        <CommonText style={[styles.stepTitle]}>{name}</CommonText>
-        <SecondaryText style={getStepNumStyles(listIndex)}>
+        <CommonText style={[styles.stepTitle]} allowFontScaling={false}>
+          {name}
+        </CommonText>
+        <SecondaryText
+          style={getStepNumStyles(listIndex)}
+          allowFontScaling={false}
+        >
           {order}
         </SecondaryText>
       </View>
