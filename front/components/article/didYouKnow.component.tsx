@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   didYouKnowTitle: {
-    color: Colors.primaryYellow,
+    color: Colors.didYouKnowYellow,
     fontSize: Sizes.md,
     fontWeight: FontWeight.bold,
     marginVertical: "auto",

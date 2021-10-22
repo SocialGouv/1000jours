@@ -45,4 +45,5 @@ export default {
     paginationDefault: "#26366E",
     paginationActive: "#74C09F",
   },
+  didYouKnowYellow: "#BD8C09",
 };

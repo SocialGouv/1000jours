@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   thematique: {
-    color: Colors.primaryBlue,
+    color: Colors.primaryBlueDark,
     fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
   },
