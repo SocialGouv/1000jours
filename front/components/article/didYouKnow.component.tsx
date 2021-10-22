@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
   cardTitleContainer: {
     backgroundColor: "transparent",
     flex: 1,
-    height: Sizes.xxxl,
     justifyContent: "center",
+    minHeight: Sizes.xxxl,
     paddingLeft: Paddings.default,
   },
   didYouKnowBackgroundSymbol: {
