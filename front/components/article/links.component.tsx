@@ -29,12 +29,15 @@ const Links: FC<Props> = ({ linksArray }) => {
       <View style={styles.linksContainer}>
         {filter(linksArray, "label").map((item, index) => (
           <View key={index} style={[styles.linkContainer]}>
-            <SecondaryText style={[styles.dot]}>{"\u2B24"}</SecondaryText>
+            <SecondaryText style={[styles.dot]} importantForAccessibility="no">
+              {"\u2B24"}
+            </SecondaryText>
             <SecondaryText
               style={[styles.link]}
               onPress={() => {
                 goToUrl(item.url);
               }}
+              accessibilityRole="link"
             >
               {item.label}
             </SecondaryText>
