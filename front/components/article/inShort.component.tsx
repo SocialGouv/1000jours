@@ -62,6 +62,7 @@ const InShort: FC<Props> = ({ inShortArray }) => {
         </CommonText>
         <Text
           style={[styles.cardBackgroundSymbol, styles.inShortBackgroundSymbol]}
+          importantForAccessibility="no"
         >
           !
         </Text>
