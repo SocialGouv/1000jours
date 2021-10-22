@@ -22,7 +22,7 @@ const DidYouKnow: FC<Props> = ({ description }) => {
   return description?.length > 0 ? (
     <View style={styles.didYouKnowContainer}>
       <View style={[styles.cardTitleContainer, styles.positionRelative]}>
-        <CommonText style={[styles.didYouKnowTitle]}>
+        <CommonText style={[styles.didYouKnowTitle]} accessibilityRole="header">
           {Labels.article.didYouKnowTitle}
         </CommonText>
         <Text

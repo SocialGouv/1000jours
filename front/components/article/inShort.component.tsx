@@ -57,7 +57,7 @@ const InShort: FC<Props> = ({ inShortArray }) => {
   return filter(inShortArray, "text").length > 0 ? (
     <View style={styles.inShortContainer}>
       <View style={[styles.cardTitleContainer, styles.positionRelative]}>
-        <CommonText style={[styles.inShortTitle]}>
+        <CommonText style={[styles.inShortTitle]} accessibilityRole="header">
           {Labels.article.inShortTitle}
         </CommonText>
         <Text
