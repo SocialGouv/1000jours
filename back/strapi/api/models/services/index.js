@@ -21,9 +21,6 @@ const completeUrls = (entity) => {
 
     entity[key] = value.replace(/(^|")\/uploads/g, `$1${serverUrl}/uploads`);
 
-    if (value !== entity[key])
-      console.log({ serverUrl, value, key, entityKey: entity[key] });
-
     return entity;
   });
 };
