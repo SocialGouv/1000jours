@@ -16,7 +16,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^29.2.0",
+    "@ckeditor/ckeditor5-build-classic": "^30.0.0",
     "@ckeditor/ckeditor5-react": "^3.0.2",
     "axios": "^0.21.4",
     "csv-string": "^4.0.1",
