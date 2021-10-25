@@ -122,7 +122,11 @@ const EpdsLightResult: React.FC<Props> = ({
   return (
     <>
       <ScrollView>
-        <TitleH1 title={Labels.epdsSurveyLight.titleLight} animated={false} />
+        <TitleH1
+          title={Labels.epdsSurveyLight.titleLight}
+          animated={false}
+          style={styles.marginHorizontal}
+        />
         <View style={styles.rowView}>
           {getIcon(iconAndStateOfMind.icon)}
           <CommonText style={[styles.stateOfMind, colorStyle]}>
@@ -186,9 +190,13 @@ const styles = StyleSheet.create({
     fontSize: Sizes.md,
     textTransform: "uppercase",
   },
+  marginHorizontal: {
+    marginHorizontal: Margins.default,
+  },
   rowView: {
     alignSelf: "flex-start",
     flexDirection: "row",
+    marginHorizontal: Margins.default,
   },
   stateOfMind: {
     alignSelf: "center",
@@ -201,6 +209,7 @@ const styles = StyleSheet.create({
     fontSize: Sizes.sm,
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.mmd,
+    marginHorizontal: Margins.default,
     paddingTop: Paddings.default,
   },
   validateButton: {

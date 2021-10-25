@@ -187,7 +187,6 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    marginHorizontal: Margins.default,
     marginTop: Margins.smaller,
   },
   surveyContainer: {
