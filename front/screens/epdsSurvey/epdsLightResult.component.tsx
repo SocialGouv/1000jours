@@ -33,6 +33,7 @@ interface Props {
   result: number;
   epdsSurvey: EpdsQuestionAndAnswers[];
   showBeContactedButton: boolean;
+  lastQuestionHasThreePointsAnswer: boolean;
   startSurveyOver: () => void;
 }
 
@@ -46,6 +47,7 @@ const EpdsLightResult: React.FC<Props> = ({
   result,
   epdsSurvey,
   showBeContactedButton,
+  lastQuestionHasThreePointsAnswer,
   startSurveyOver,
 }) => {
   const [addReponseQuery] = useMutation(DatabaseQueries.EPDS_ADD_RESPONSE, {
@@ -113,8 +115,10 @@ const EpdsLightResult: React.FC<Props> = ({
     return iconsMap.get(icone);
   };
 
-  const iconAndStateOfMind =
-    EpdsSurveyUtils.getResultIconAndStateOfMind(result);
+  const iconAndStateOfMind = EpdsSurveyUtils.getResultIconAndStateOfMind(
+    result,
+    lastQuestionHasThreePointsAnswer
+  );
   const introductionText = EpdsSurveyUtils.getResultIntroductionText(result);
   const colorStyle = { color: iconAndStateOfMind.color };
   const beContactedColors =

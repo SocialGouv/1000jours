@@ -106,28 +106,34 @@ export const getCurrentQuestionPoints = (
   question.answers.find((answer) => answer.isChecked)?.points;
 
 export const getResultIconAndStateOfMind = (
-  result: number
+  result: number,
+  lastQuestionHasThreePointsAnswer: boolean
 ): EpdsResultIconAndStateOfMind => {
   const labelsStateOfMind = Labels.epdsSurveyLight.stateOfMind;
 
-  if (result < EpdsConstants.RESULT_WELL_VALUE) {
+  if (
+    result >= EpdsConstants.RESULT_BAD_VALUE ||
+    lastQuestionHasThreePointsAnswer
+  ) {
     return {
-      color: Colors.primaryBlue,
-      icon: EpdsConstants.ResultIconValueEnum.bien,
-      stateOfMind: labelsStateOfMind.moinsDeNeuf,
+      color: Colors.secondaryRedLight,
+      icon: EpdsConstants.ResultIconValueEnum.pasBien,
+      stateOfMind: labelsStateOfMind.plusDeQuinze,
     };
   }
-  if (result < EpdsConstants.RESULT_BAD_VALUE) {
+
+  if (result >= EpdsConstants.RESULT_WELL_VALUE) {
     return {
       color: Colors.primaryYellowDark,
       icon: EpdsConstants.ResultIconValueEnum.moyen,
       stateOfMind: labelsStateOfMind.entreDixEtQuartorze,
     };
   }
+
   return {
-    color: Colors.secondaryRedLight,
-    icon: EpdsConstants.ResultIconValueEnum.pasBien,
-    stateOfMind: labelsStateOfMind.plusDeQuinze,
+    color: Colors.primaryBlue,
+    icon: EpdsConstants.ResultIconValueEnum.bien,
+    stateOfMind: labelsStateOfMind.moinsDeNeuf,
   };
 };
 
