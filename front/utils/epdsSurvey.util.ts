@@ -10,6 +10,7 @@ import type {
   EpdsQuestionAndAnswers,
   EpdsResultIconAndStateOfMind,
   EpdsUpdatedSurvey,
+  IntroductionText,
   QuestionnaireEpdsFromDB,
 } from "../type";
 import { getObjectValue, multiRemove, storeObjectValue } from "./storage.util";
@@ -146,12 +147,15 @@ export const getPrimaryAndSecondaryBeContactedColors = (
   };
 };
 
-export const getResultIntroductionText = (result: number): string => {
+export const getResultIntroductionText = (result: number): IntroductionText => {
   const introductionTexts = Labels.epdsSurveyLight.textesExplication;
 
   return result < EpdsConstants.RESULT_WELL_VALUE
-    ? introductionTexts.moinsDeNeuf
-    : introductionTexts.plusDeNeuf;
+    ? { text: introductionTexts.moinsDeNeuf }
+    : {
+        boldText: introductionTexts.plusDeNeufBold,
+        text: introductionTexts.plusDeNeuf,
+      };
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

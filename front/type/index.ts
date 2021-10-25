@@ -16,6 +16,7 @@ import {
   EpdsResultInformationType,
   EpdsResultSimpleInformation,
   EpdsUpdatedSurvey,
+  IntroductionText,
   QuestionnaireEpdsFromDB,
 } from "./epdsSurvey.types";
 
@@ -35,5 +36,6 @@ export {
   EpdsResultSimpleInformation,
   EpdsUpdatedSurvey,
   FetchedFilterFromDb,
+  IntroductionText,
   QuestionnaireEpdsFromDB,
 };
