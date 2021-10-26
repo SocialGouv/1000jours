@@ -99,10 +99,6 @@ const Datepicker: React.FC<Props> = ({ date, onChange }) => {
           />
         }
         titleStyle={styles.pickerButtonStyle}
-        accessibilityLabel={`${Labels.accessibility.updateDate} : ${buttonLabel}`}
-        buttonStyle={{
-          paddingVertical: Paddings.smallest,
-        }}
       />
       {modalVisible ? (
         PLATFORM_IS_ANDROID ? (

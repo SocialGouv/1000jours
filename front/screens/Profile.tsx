@@ -1,6 +1,6 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { format } from "date-fns";
-import _, { filter } from "lodash";
+import _, { filter, find } from "lodash";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
@@ -11,12 +11,12 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
+  Text,
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 import ProfileImage from "../assets/images/Humaaans_Space_1.svg";
-import AppLogo from "../assets/images/logo.svg";
-import { Button, CommonText, Datepicker } from "../components";
+import { Button, Checkbox, CommonText, Datepicker } from "../components";
+import HeaderApp from "../components/base/headerApp.component";
 import Icomoon, { IcomoonIcons } from "../components/base/icomoon.component";
 import { View } from "../components/Themed";
 import {
@@ -41,47 +41,42 @@ interface Props {
 
 const Profile: FC<Props> = ({ navigation }) => {
   const { trackScreenView } = useMatomo();
+  const image = <ProfileImage />;
   const defaultUserContext: UserContext = {
     childBirthday: null,
     situations: [
       {
-        childBirthdayLabel: "",
-        childBirthdayRequired: false,
         id: "projet",
         isChecked: false,
         label: Labels.profile.situations.project,
       },
       {
-        childBirthdayLabel: "",
-        childBirthdayRequired: false,
         id: "conception",
         isChecked: false,
         label: Labels.profile.situations.search,
       },
       {
-        childBirthdayLabel: Labels.profile.childBirthday.planned,
-        childBirthdayRequired: true,
         id: "grossesse",
         isChecked: false,
         label: Labels.profile.situations.pregnant,
       },
       {
-        childBirthdayLabel: Labels.profile.childBirthday.firstChild,
-        childBirthdayRequired: true,
         id: "enfant",
         isChecked: false,
         label: Labels.profile.situations.oneChild,
       },
       {
-        childBirthdayLabel: Labels.profile.childBirthday.lastChild,
-        childBirthdayRequired: true,
         id: "enfants",
         isChecked: false,
         label: Labels.profile.situations.severalChildren,
       },
     ],
   };
-
+  const userSituationsIdsWhereChildBirthdayIsNeeded = [
+    "grossesse",
+    "enfant",
+    "enfants",
+  ];
   const hasCheckedSituation = () => {
     return filter(userSituations, ["isChecked", true]).length > 0;
   };
@@ -135,12 +130,26 @@ const Profile: FC<Props> = ({ navigation }) => {
 
   const getCheckedUserSituationsWhereChildBirthdayIsNeeded = () => {
     return filter(userSituations, (userSituation) => {
-      return userSituation.isChecked && userSituation.childBirthdayRequired;
+      return (
+        userSituation.isChecked &&
+        userSituationsIdsWhereChildBirthdayIsNeeded.includes(userSituation.id)
+      );
     });
   };
   const childBirthdayIsNeeded = () => {
     const results = getCheckedUserSituationsWhereChildBirthdayIsNeeded();
     return results.length > 0;
+  };
+  const getChildBirthdayLabel = () => {
+    const results = getCheckedUserSituationsWhereChildBirthdayIsNeeded();
+    if (find(results, ["id", 3])) {
+      return Labels.profile.childBirthday.planned;
+    } else if (find(results, ["id", 4])) {
+      return Labels.profile.childBirthday.firstChild;
+    } else if (find(results, ["id", 5])) {
+      return Labels.profile.childBirthday.lastChild;
+    }
+    return Labels.profile.childBirthday.firstChild;
   };
 
   const navigateToRoot = () => {
@@ -160,7 +169,10 @@ const Profile: FC<Props> = ({ navigation }) => {
     );
 
     const situationChecked = _.find(userSituations, { isChecked: true });
-    if (situationChecked?.childBirthdayRequired) {
+    if (
+      situationChecked &&
+      userSituationsIdsWhereChildBirthdayIsNeeded.includes(situationChecked.id)
+    ) {
       await StorageUtils.storeStringValue(
         StorageKeysConstants.userChildBirthdayKey,
         childBirthday
@@ -189,27 +201,16 @@ const Profile: FC<Props> = ({ navigation }) => {
   };
 
   return (
-    <View style={[styles.mainContainer]}>
+    <View style={[styles.mainContainer, styles.flexColumn]}>
+      <HeaderApp />
       <KeyboardAvoidingView
         behavior={PlatformConstants.PLATFORM_IS_IOS ? "padding" : undefined}
         style={{ flex: 1 }}
       >
         <View style={styles.mainView}>
           <ScrollView style={styles.mainMargins} ref={scrollViewRef}>
-            <View style={styles.appLogo}>
-              <AppLogo
-                height={Sizes.logo}
-                accessible
-                accessibilityRole="image"
-                accessibilityLabel={`${Labels.accessibility.logoApp} ${Labels.appName}`}
-              />
-            </View>
             <View style={[styles.profileImage, styles.justifyContentCenter]}>
-              <ProfileImage
-                accessible
-                accessibilityRole="image"
-                accessibilityLabel={Labels.accessibility.illustrationProfile}
-              />
+              {image}
             </View>
             <CommonText style={[styles.title, styles.textAlignCenter]}>
               {Labels.profile.title}
@@ -217,74 +218,60 @@ const Profile: FC<Props> = ({ navigation }) => {
             <CommonText style={[styles.subTitle, styles.textAlignCenter]}>
               {Labels.profile.subTitle}
             </CommonText>
-            <View
-              onLayout={(event: LayoutChangeEvent) => {
-                const { layout } = event.nativeEvent;
-                scrollTo(layout.y + layout.height);
-              }}
-            >
+            <View style={[styles.choices]}>
               {userSituations.map((situation, index) => (
-                <View
-                  key={index}
-                  style={[
-                    styles.item,
-                    situation.isChecked ? styles.itemSelected : null,
-                  ]}
-                >
-                  <TouchableOpacity
+                <View key={index}>
+                  <Checkbox
+                    title={situation.label}
+                    checked={situation.isChecked}
                     onPress={() => {
                       updateUserSituations(situation);
                     }}
-                    disabled={situation.isChecked}
-                    accessibilityRole="checkbox"
-                    accessibilityState={{ checked: situation.isChecked }}
-                  >
-                    <CommonText
-                      style={
-                        situation.isChecked ? styles.itemTextSelected : null
-                      }
-                    >
-                      {situation.label}
-                    </CommonText>
-                  </TouchableOpacity>
-                  <View style={[styles.mainMargins, styles.bgTransparent]}>
-                    {situation.isChecked &&
-                      situation.childBirthdayRequired &&
-                      datePickerIsReady && (
-                        <View
-                          style={[
-                            styles.bgTransparent,
-                            styles.birthdayConatiner,
-                          ]}
-                        >
-                          <CommonText>
-                            {situation.childBirthdayLabel}
-                          </CommonText>
-                          <View
-                            style={[styles.bgTransparent, styles.flexStart]}
-                          >
-                            <Datepicker
-                              date={
-                                childBirthday.length > 0
-                                  ? new Date(childBirthday)
-                                  : undefined
-                              }
-                              onChange={(date) => {
-                                setChildBirthday(format(date, Formats.dateISO));
-                              }}
-                            />
-                          </View>
-                        </View>
-                      )}
-                  </View>
+                  />
                 </View>
               ))}
             </View>
+            {datePickerIsReady && (
+              <View
+                style={[
+                  styles.birthdayConatiner,
+                  childBirthdayIsNeeded() ? null : styles.hide,
+                ]}
+                onLayout={(event: LayoutChangeEvent) => {
+                  const { layout } = event.nativeEvent;
+                  scrollTo(layout.y + layout.height);
+                }}
+              >
+                <Text style={[styles.colorPrimaryDark, styles.textAlignCenter]}>
+                  {getChildBirthdayLabel()}
+                </Text>
+                <View>
+                  <Datepicker
+                    date={
+                      childBirthday.length > 0
+                        ? new Date(childBirthday)
+                        : undefined
+                    }
+                    onChange={(date) => {
+                      setChildBirthday(format(date, Formats.dateISO));
+                    }}
+                  />
+                </View>
+              </View>
+            )}
           </ScrollView>
-          <View style={[styles.footer]}>
-            <View style={styles.buttonContainer}>
+        </View>
+
+        <View
+          style={[
+            styles.footer,
+            styles.justifyContentCenter,
+            styles.mainMargins,
+          ]}
+        >
+          <View style={[styles.buttonsContainer, styles.justifyContentCenter]}>
+            <View style={[styles.buttonContainer]}>
               <Button
-                buttonStyle={{ alignItems: "center" }}
                 title={Labels.buttons.pass}
                 rounded={false}
                 disabled={false}
@@ -303,9 +290,8 @@ const Profile: FC<Props> = ({ navigation }) => {
                 }}
               />
             </View>
-            <View style={styles.buttonContainer}>
+            <View style={[styles.buttonContainer]}>
               <Button
-                buttonStyle={styles.flexStart}
                 title={Labels.buttons.validate}
                 rounded={true}
                 disabled={!canValidate}
@@ -320,82 +306,34 @@ const Profile: FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  appLogo: {
-    alignItems: "center",
-    display: "flex",
-    paddingBottom: Paddings.light,
-  },
-  bgTransparent: {
-    backgroundColor: "transparent",
-  },
   birthdayConatiner: {
     paddingTop: Paddings.larger,
   },
   buttonContainer: {
-    alignContent: "space-between",
-    alignItems: "center",
     flex: 1,
-    justifyContent: "center",
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+  },
+  choices: {
+    alignSelf: "center",
   },
   colorPrimaryDark: {
     color: Colors.primaryBlueDark,
   },
   datepickerContainer: {
-    backgroundColor: "transparent",
     padding: Paddings.default,
   },
-  flexRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  flexStart: {
-    alignSelf: "flex-start",
+  flexColumn: {
+    flex: 1,
+    flexDirection: "column",
   },
   footer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    paddingVertical: Paddings.light,
-  },
-  genderContainer: {
-    paddingTop: Paddings.default,
-  },
-  genderItem: {
-    alignContent: "space-between",
-    alignItems: "center",
     flex: 1,
-    justifyContent: "center",
+    paddingVertical: Paddings.light,
   },
   hide: {
     display: "none",
-  },
-  item: {
-    backgroundColor: Colors.white,
-    borderColor: Colors.borderGrey,
-    borderWidth: 1,
-    flex: 1,
-    marginHorizontal: Margins.smaller,
-    marginVertical: Margins.light,
-    paddingHorizontal: Paddings.default,
-    paddingVertical: Paddings.default,
-    shadowColor: Colors.navigation,
-    shadowOffset: {
-      height: 2,
-      width: 2,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 1,
-  },
-  itemSelected: {
-    backgroundColor: Colors.primaryBlueLight,
-    borderColor: Colors.primaryBlueDark,
-    borderWidth: 1,
-    shadowColor: Colors.primaryBlueDark,
-  },
-  itemTextSelected: {
-    color: Colors.primaryBlueDark,
-    fontWeight: FontWeight.bold,
   },
   justifyContentCenter: {
     alignItems: "center",
@@ -403,36 +341,35 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
+    flexDirection: "column",
     paddingTop: Paddings.larger,
   },
   mainMargins: {
-    marginHorizontal: Margins.larger,
+    marginHorizontal: Margins.default,
   },
   mainView: {
-    flex: 1,
-    marginTop: Paddings.larger,
+    flex: 8,
   },
   profileImage: {
-    paddingBottom: Paddings.default,
+    padding: Paddings.default,
   },
   subTitle: {
     color: Colors.primaryBlue,
     fontSize: Sizes.sm,
     fontWeight: FontWeight.normal,
-    marginBottom: Paddings.larger,
+    paddingBottom: Paddings.larger,
   },
   textAlignCenter: {
     textAlign: "center",
-  },
-  textSelectGender: {
-    marginHorizontal: Margins.smaller,
-    paddingVertical: Paddings.light,
   },
   title: {
     color: Colors.primaryBlueDark,
     fontSize: Sizes.md,
     fontWeight: "bold",
     paddingVertical: Paddings.light,
+  },
+  w100: {
+    width: "100%",
   },
 });
 

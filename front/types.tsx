@@ -48,8 +48,6 @@ export type UserSituation = {
   id: string;
   label: string;
   isChecked: boolean;
-  childBirthdayRequired: boolean;
-  childBirthdayLabel: string;
 };
 
 export type UserContext = {

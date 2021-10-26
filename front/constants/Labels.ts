@@ -5,11 +5,7 @@ import { epdsInformation } from "./epdsResultInformation.constants";
 export default {
   accessibility: {
     closeMenu: "Fermer le menu",
-    illustrationProfile: "Illustration profil",
-    logoApp: "Logo de l'application",
-    logoRepubliqueFr: "Logo de la république française",
     step: "étape",
-    updateDate: "Modifier la date",
     version: "version.",
   },
   appName: "1000 premiers jours",
