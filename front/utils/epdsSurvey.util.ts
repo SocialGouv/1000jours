@@ -138,28 +138,38 @@ export const getResultIconAndStateOfMind = (
 };
 
 export const getPrimaryAndSecondaryBeContactedColors = (
-  result: number
+  result: number,
+  lastQuestionHasThreePointsAnswer: boolean
 ): BeContactedColors => {
-  if (result < EpdsConstants.RESULT_BAD_VALUE) {
+  if (
+    result >= EpdsConstants.RESULT_BAD_VALUE ||
+    lastQuestionHasThreePointsAnswer
+  ) {
     return {
-      primaryColor: Colors.primaryYellowDark,
-      secondaryColor: Colors.primaryYellowLight,
+      primaryColor: Colors.secondaryRedLight,
+      secondaryColor: Colors.secondaryRedDark,
     };
   }
 
   return {
-    primaryColor: Colors.secondaryRedLight,
-    secondaryColor: Colors.secondaryRedDark,
+    primaryColor: Colors.primaryYellowDark,
+    secondaryColor: Colors.primaryYellowLight,
   };
 };
 
-export const getResultIntroductionText = (result: number): IntroductionText => {
+export const getResultIntroductionText = (
+  result: number,
+  lastQuestionHasThreePointsAnswer: boolean
+): IntroductionText => {
   const introductionTexts = Labels.epdsSurveyLight.textesExplication;
 
-  return result < EpdsConstants.RESULT_WELL_VALUE
-    ? { text: introductionTexts.moinsDeNeuf }
-    : {
+  return result >= EpdsConstants.RESULT_WELL_VALUE ||
+    lastQuestionHasThreePointsAnswer
+    ? {
         boldText: introductionTexts.plusDeNeufBold,
+        text: introductionTexts.moinsDeNeuf,
+      }
+    : {
         text: introductionTexts.plusDeNeuf,
       };
 };
