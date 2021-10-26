@@ -119,10 +119,16 @@ const EpdsLightResult: React.FC<Props> = ({
     result,
     lastQuestionHasThreePointsAnswer
   );
-  const introductionText = EpdsSurveyUtils.getResultIntroductionText(result);
+  const introductionText = EpdsSurveyUtils.getResultIntroductionText(
+    result,
+    lastQuestionHasThreePointsAnswer
+  );
   const colorStyle = { color: iconAndStateOfMind.color };
   const beContactedColors =
-    EpdsSurveyUtils.getPrimaryAndSecondaryBeContactedColors(result);
+    EpdsSurveyUtils.getPrimaryAndSecondaryBeContactedColors(
+      result,
+      lastQuestionHasThreePointsAnswer
+    );
 
   return (
     <>
