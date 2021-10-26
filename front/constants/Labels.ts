@@ -7,7 +7,7 @@ export default {
     closeMenu: "Fermer le menu",
     illustrationProfile: "Illustration profil",
     logoApp: "Logo de l'application",
-    logoRepubliqueFr: "Logo de la république française",
+    logoRepubliqueFr: "Logo de la République française",
     step: "étape",
     updateDate: "Modifier la date",
     version: "version.",
