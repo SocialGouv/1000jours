@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { format } from "date-fns";
 import _, { filter } from "lodash";
@@ -8,13 +10,13 @@ import { useEffect, useState } from "react";
 import type { LayoutChangeEvent } from "react-native";
 import {
   Alert,
+  Image,
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import ProfileImage from "../assets/images/Humaaans_Space_1.svg";
 import AppLogo from "../assets/images/logo.svg";
 import { Button, CommonText, Datepicker } from "../components";
 import Icomoon, { IcomoonIcons } from "../components/base/icomoon.component";
@@ -40,6 +42,7 @@ interface Props {
 }
 
 const Profile: FC<Props> = ({ navigation }) => {
+  const imageProfile = require("../assets/images/profile.png");
   const { trackScreenView } = useMatomo();
   const defaultUserContext: UserContext = {
     childBirthday: null,
@@ -204,8 +207,10 @@ const Profile: FC<Props> = ({ navigation }) => {
                 accessibilityLabel={`${Labels.accessibility.logoApp} ${Labels.appName}`}
               />
             </View>
-            <View style={[styles.profileImage, styles.justifyContentCenter]}>
-              <ProfileImage
+            <View style={styles.justifyContentCenter}>
+              <Image
+                source={imageProfile}
+                style={styles.imageProfile}
                 accessible
                 accessibilityRole="image"
                 accessibilityLabel={Labels.accessibility.illustrationProfile}
@@ -241,7 +246,9 @@ const Profile: FC<Props> = ({ navigation }) => {
                   >
                     <CommonText
                       style={
-                        situation.isChecked ? styles.itemTextSelected : null
+                        situation.isChecked
+                          ? styles.itemTextSelected
+                          : styles.itemText
                       }
                     >
                       {situation.label}
@@ -257,7 +264,7 @@ const Profile: FC<Props> = ({ navigation }) => {
                             styles.birthdayConatiner,
                           ]}
                         >
-                          <CommonText>
+                          <CommonText style={{ color: Colors.white }}>
                             {situation.childBirthdayLabel}
                           </CommonText>
                           <View
@@ -272,6 +279,7 @@ const Profile: FC<Props> = ({ navigation }) => {
                               onChange={(date) => {
                                 setChildBirthday(format(date, Formats.dateISO));
                               }}
+                              color={Colors.primaryYellow}
                             />
                           </View>
                         </View>
@@ -370,9 +378,15 @@ const styles = StyleSheet.create({
   hide: {
     display: "none",
   },
+  imageProfile: {
+    height: Sizes.big,
+    resizeMode: "contain",
+    width: Sizes.big,
+  },
   item: {
     backgroundColor: Colors.white,
     borderColor: Colors.borderGrey,
+    borderRadius: Sizes.xxxxxs,
     borderWidth: 1,
     flex: 1,
     marginHorizontal: Margins.smaller,
@@ -388,13 +402,16 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
   },
   itemSelected: {
-    backgroundColor: Colors.primaryBlueLight,
+    backgroundColor: Colors.primaryBlueDark,
     borderColor: Colors.primaryBlueDark,
     borderWidth: 1,
     shadowColor: Colors.primaryBlueDark,
   },
-  itemTextSelected: {
+  itemText: {
     color: Colors.primaryBlueDark,
+  },
+  itemTextSelected: {
+    color: Colors.white,
     fontWeight: FontWeight.bold,
   },
   justifyContentCenter: {
@@ -411,9 +428,6 @@ const styles = StyleSheet.create({
   mainView: {
     flex: 1,
     marginTop: Paddings.larger,
-  },
-  profileImage: {
-    paddingBottom: Paddings.default,
   },
   subTitle: {
     color: Colors.primaryBlue,
