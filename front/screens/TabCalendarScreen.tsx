@@ -8,7 +8,7 @@ import type { FC } from "react";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 import {
   Button,
@@ -222,7 +222,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   }, [events]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.scrollviewContainer}>
       <TitleH1
         title={Labels.tabs.calendarTitle}
         description={Labels.calendar.description}
@@ -283,7 +283,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
           )}
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -308,10 +308,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  container: {
-    height: "100%",
-    padding: Paddings.default,
-  },
   flexStart: {
     alignItems: "flex-start",
     flexDirection: "row",
@@ -326,6 +322,10 @@ const styles = StyleSheet.create({
   },
   noChildBirthday: {
     paddingVertical: Paddings.default,
+  },
+  scrollviewContainer: {
+    backgroundColor: Colors.white,
+    padding: Paddings.default,
   },
   switchViewMode: {
     alignItems: "flex-end",

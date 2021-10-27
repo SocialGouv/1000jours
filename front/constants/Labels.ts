@@ -5,6 +5,8 @@ import { epdsInformation } from "./epdsResultInformation.constants";
 export default {
   accessibility: {
     closeMenu: "Fermer le menu",
+    eventDescription: "Description",
+    eventTitle: "Titre de l'événement",
     illustrationProfile: "Illustration profil",
     logoApp: "Logo de l'application",
     logoRepubliqueFr: "Logo de la république française",

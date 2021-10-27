@@ -129,6 +129,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
         onPress={() => {
           onPressed(event.id.toString());
         }}
+        accessibilityLabel={`${Labels.accessibility.eventTitle} : ${event.nom}. ${Labels.accessibility.eventDescription} : ${event.description}`}
       >
         <View style={styles.eventContainer}>
           <View style={styles.eventIconContainer}>
