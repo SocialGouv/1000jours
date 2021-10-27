@@ -1,3 +1,17 @@
+## [1.83.4](https://github.com/SocialGouv/1000jours/compare/v1.83.3...v1.83.4) (2021-10-26)
+
+
+### Bug Fixes
+
+* **carto:** fix refus géoloc ([#816](https://github.com/SocialGouv/1000jours/issues/816)) ([9593ac4](https://github.com/SocialGouv/1000jours/commit/9593ac4f7ccd2869176947f9530480546af316c2))
+
+## [1.83.3](https://github.com/SocialGouv/1000jours/compare/v1.83.2...v1.83.3) (2021-10-22)
+
+
+### Bug Fixes
+
+* **api:** supprime un log de débugging ([#818](https://github.com/SocialGouv/1000jours/issues/818)) ([c635582](https://github.com/SocialGouv/1000jours/commit/c6355823ff33bd078a085d35a8c0297d36120ec8))
+
 ## [1.83.2](https://github.com/SocialGouv/1000jours/compare/v1.83.1...v1.83.2) (2021-10-15)
 
 
