@@ -2,6 +2,7 @@ import { filter } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
 import { Alert, Linking, StyleSheet } from "react-native";
+import { ListItem } from "react-native-elements";
 
 import { Colors, Labels, Paddings, Sizes } from "../../constants";
 import type { ArticleLink } from "../../types";
@@ -28,9 +29,12 @@ const Links: FC<Props> = ({ linksArray }) => {
       <SubTitle title={Labels.article.learnMoreAboutIt} />
       <View style={styles.linksContainer}>
         {filter(linksArray, "label").map((item, index) => (
-          <View key={index} style={[styles.linkContainer]}>
-            <SecondaryText style={[styles.dot]}>{"\u2B24"}</SecondaryText>
+          <ListItem.Content key={index} style={[styles.linkContainer]}>
+            <SecondaryText style={[styles.dot]} importantForAccessibility="no">
+              {"\u2B24"}
+            </SecondaryText>
             <SecondaryText
+              accessibilityRole="link"
               style={[styles.link]}
               onPress={() => {
                 goToUrl(item.url);
@@ -38,7 +42,7 @@ const Links: FC<Props> = ({ linksArray }) => {
             >
               {item.label}
             </SecondaryText>
-          </View>
+          </ListItem.Content>
         ))}
       </View>
     </View>
@@ -61,6 +65,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   linkContainer: {
+    alignSelf: "flex-start",
     flexDirection: "row",
     paddingVertical: Paddings.smaller,
   },
