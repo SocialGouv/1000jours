@@ -167,10 +167,10 @@ export const getResultIntroductionText = (
     lastQuestionHasThreePointsAnswer
     ? {
         boldText: introductionTexts.plusDeNeufBold,
-        text: introductionTexts.moinsDeNeuf,
+        text: introductionTexts.plusDeNeuf,
       }
     : {
-        text: introductionTexts.plusDeNeuf,
+        text: introductionTexts.moinsDeNeuf,
       };
 };
 
