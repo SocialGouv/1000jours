@@ -27,9 +27,10 @@ import Icomoon, { IcomoonIcons } from "./icomoon.component";
 interface Props {
   date?: Date;
   onChange: (date: Date) => void;
+  color?: string;
 }
 
-const Datepicker: React.FC<Props> = ({ date, onChange }) => {
+const Datepicker: React.FC<Props> = ({ date, onChange, color }) => {
   const buildButtonTitle = (newDate: Date | undefined): string =>
     newDate ? format(newDate, Formats.dateFR) : Labels.dateFormatLabel;
 
@@ -95,10 +96,10 @@ const Datepicker: React.FC<Props> = ({ date, onChange }) => {
           <Icomoon
             name={IcomoonIcons.calendrier}
             size={Sizes.xl}
-            color={Colors.primaryBlue}
+            color={color ?? Colors.primaryBlue}
           />
         }
-        titleStyle={styles.pickerButtonStyle}
+        titleStyle={[styles.pickerButtonStyle, { color }]}
         accessibilityLabel={`${Labels.accessibility.updateDate} : ${buttonLabel}`}
         buttonStyle={{
           paddingVertical: Paddings.smallest,
@@ -194,6 +195,7 @@ const styles = StyleSheet.create({
   },
   pickerButtonStyle: {
     fontSize: Sizes.sm,
+    textDecorationLine: "underline",
   },
 });
 
