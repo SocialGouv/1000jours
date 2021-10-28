@@ -150,7 +150,7 @@ const EpdsLightResult: React.FC<Props> = ({
         <SecondaryText style={styles.text}>
           {introductionText.text}
           {introductionText.boldText && (
-            <SecondaryText style={styles.fontBold}>
+            <SecondaryText style={[styles.text, styles.fontBold]}>
               {introductionText.boldText}
             </SecondaryText>
           )}
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
   },
   validateButton: {
     alignItems: "center",
-    paddingTop: Paddings.light,
+    paddingBottom: Paddings.default,
   },
 });
 
