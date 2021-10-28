@@ -31,6 +31,8 @@ export default {
   secondaryGreen: "#83BCA0",
   secondaryGreenDark: "#5A8C74",
   secondaryGreenLight: "#F0FFEF",
+  secondaryRedDark: "#FFEDDF",
+  secondaryRedMiddle: "#D15903",
   secondaryRedLight: "#E86404",
   navigation: "#DCDCDC",
   commonText: "#4C4C4C",
