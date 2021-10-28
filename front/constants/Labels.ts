@@ -4,6 +4,11 @@ import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
   accessibility: {
+    articlesFilters: {
+      activeFilter: "filtre actif",
+      availableArticles: "articles disponibles",
+    },
+    close: "Fermer",
     closeMenu: "Fermer le menu",
     step: "étape",
     version: "version.",

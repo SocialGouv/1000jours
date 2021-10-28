@@ -66,6 +66,15 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
     return number ? `(${number} actif(s))` : "";
   };
 
+  const numberActiveAccessibilityFilters = () => {
+    const number = filters.filter((item) => item.active).length;
+    return `${Labels.listArticles.filters}. (${number} ${Labels.accessibility.articlesFilters.activeFilter})`;
+  };
+
+  const checkboxAccessibilityLabel = (filter: ArticleFilter) => {
+    return `${filter.thematique.nom}. (${filter.nbArticles} ${Labels.accessibility.articlesFilters.availableArticles})`;
+  };
+
   const resetFilters = () => {
     setFilters(initalFilters);
   };
@@ -83,6 +92,7 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
         title={`${Labels.listArticles.filters} ${numberActiveFilters()}`}
         rounded={true}
         disabled={false}
+        accessibilityLabel={numberActiveAccessibilityFilters()}
         icon={
           <Icomoon
             name={IcomoonIcons.filtrer}
@@ -129,6 +139,8 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
                   onPress={() => {
                     cancelFiltersModal();
                   }}
+                  accessibilityLabel={Labels.accessibility.close}
+                  accessibilityRole="button"
                 >
                   <Icomoon
                     name={IcomoonIcons.fermer}
@@ -152,7 +164,7 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
                     uncheckedColor={Colors.primaryBlueDark}
                     checkedColor={Colors.primaryBlueDark}
                     title={`${filter.thematique.nom} (${filter.nbArticles})`}
-                    accessibilityLabel={`${filter.thematique.nom} (${filter.nbArticles})`}
+                    accessibilityLabel={checkboxAccessibilityLabel(filter)}
                     checked={filter.active}
                     onPress={() => {
                       filter.active = !filter.active;
