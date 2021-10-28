@@ -56,9 +56,7 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
   }, [articles]);
 
   useEffect(() => {
-    if (modalVisible) {
-      setInitalFilters(_.cloneDeep(filters));
-    }
+    if (modalVisible) setInitalFilters(_.cloneDeep(filters));
   }, [modalVisible]);
 
   const numberActiveFilters = () => {
@@ -71,9 +69,8 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
     return `${Labels.listArticles.filters}. (${number} ${Labels.accessibility.articlesFilters.activeFilter})`;
   };
 
-  const checkboxAccessibilityLabel = (filter: ArticleFilter) => {
-    return `${filter.thematique.nom}. (${filter.nbArticles} ${Labels.accessibility.articlesFilters.availableArticles})`;
-  };
+  const checkboxAccessibilityLabel = (filter: ArticleFilter) =>
+    `${filter.thematique.nom}. (${filter.nbArticles} ${Labels.accessibility.articlesFilters.availableArticles})`;
 
   const resetFilters = () => {
     setFilters(initalFilters);
@@ -109,10 +106,26 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
         {modalVisible && (
           <View style={styles.behindOfModal}>
             <View style={styles.mainContainer}>
+              <TouchableOpacity
+                style={styles.closeModalView}
+                onPress={() => {
+                  cancelFiltersModal();
+                }}
+                accessibilityLabel={Labels.accessibility.close}
+                accessibilityRole="button"
+              >
+                <Icomoon
+                  name={IcomoonIcons.fermer}
+                  size={Sizes.xs}
+                  color={Colors.primaryBlue}
+                />
+              </TouchableOpacity>
+
               <View
                 style={{
                   alignItems: "center",
                   flexDirection: "row",
+                  flexWrap: "wrap",
                   justifyContent: "space-between",
                 }}
               >
@@ -134,20 +147,6 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
                     resetFilters();
                   }}
                 />
-                <TouchableOpacity
-                  style={styles.closeModalView}
-                  onPress={() => {
-                    cancelFiltersModal();
-                  }}
-                  accessibilityLabel={Labels.accessibility.close}
-                  accessibilityRole="button"
-                >
-                  <Icomoon
-                    name={IcomoonIcons.fermer}
-                    size={Sizes.xs}
-                    color={Colors.primaryBlue}
-                  />
-                </TouchableOpacity>
               </View>
 
               <ScrollView>
@@ -240,7 +239,6 @@ const styles = StyleSheet.create({
   },
   closeModalView: {
     alignSelf: "flex-end",
-    marginBottom: Margins.largest,
     padding: Paddings.default,
   },
   filterButton: {

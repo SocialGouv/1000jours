@@ -4,6 +4,7 @@ import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
   accessibility: {
+    articleToRead: "article à lire",
     articlesFilters: {
       activeFilter: "filtre actif",
       availableArticles: "articles disponibles",
