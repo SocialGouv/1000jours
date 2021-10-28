@@ -146,7 +146,7 @@ export const getPrimaryAndSecondaryBeContactedColors = (
     lastQuestionHasThreePointsAnswer
   ) {
     return {
-      primaryColor: Colors.secondaryRedLight,
+      primaryColor: Colors.secondaryRedMiddle,
       secondaryColor: Colors.secondaryRedDark,
     };
   }
