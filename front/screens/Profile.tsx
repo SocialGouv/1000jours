@@ -18,7 +18,7 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import AppLogo from "../assets/images/logo.svg";
-import { Button, CommonText, Datepicker } from "../components";
+import { Button, CommonText, Datepicker, SecondaryText } from "../components";
 import Icomoon, { IcomoonIcons } from "../components/base/icomoon.component";
 import { View } from "../components/Themed";
 import {
@@ -244,7 +244,7 @@ const Profile: FC<Props> = ({ navigation }) => {
                     accessibilityRole="checkbox"
                     accessibilityState={{ checked: situation.isChecked }}
                   >
-                    <CommonText
+                    <SecondaryText
                       style={
                         situation.isChecked
                           ? styles.itemTextSelected
@@ -252,7 +252,7 @@ const Profile: FC<Props> = ({ navigation }) => {
                       }
                     >
                       {situation.label}
-                    </CommonText>
+                    </SecondaryText>
                   </TouchableOpacity>
                   <View style={[styles.mainMargins, styles.bgTransparent]}>
                     {situation.isChecked &&
@@ -264,9 +264,9 @@ const Profile: FC<Props> = ({ navigation }) => {
                             styles.birthdayConatiner,
                           ]}
                         >
-                          <CommonText style={{ color: Colors.white }}>
+                          <SecondaryText style={{ color: Colors.white }}>
                             {situation.childBirthdayLabel}
-                          </CommonText>
+                          </SecondaryText>
                           <View
                             style={[styles.bgTransparent, styles.flexStart]}
                           >
