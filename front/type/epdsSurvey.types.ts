@@ -62,6 +62,11 @@ export interface EpdsResultIconAndStateOfMind {
   icon: EpdsConstants.ResultIconValueEnum;
 }
 
+export interface IntroductionText {
+  text: string;
+  boldText?: string;
+}
+
 export interface BeContactedColors {
   primaryColor: string;
   secondaryColor: string;

@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   textStyle: {
     alignSelf: "center",
     fontSize: Sizes.sm,
-    maxWidth: "70%",
+    maxWidth: "75%",
   },
 });
 

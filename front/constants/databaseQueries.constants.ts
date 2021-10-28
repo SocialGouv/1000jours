@@ -186,7 +186,7 @@ export const CARTO_SEND_SUGGESTIONS = gql`
 
 export const PARENTS_DOCUMENTS = gql`
   query GetParenthequeDocuments {
-    parenthequeDocuments {
+    parenthequeDocuments(sort: "ordre") {
       id
       nom
       description
