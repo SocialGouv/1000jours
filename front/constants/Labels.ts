@@ -392,6 +392,7 @@ export default {
   listArticles: {
     articlesToRead: "article(s) à lire",
     filters: "Filtrer",
+    resetFilters: "Réinitialiser",
   },
   mandatoryField: "Ce champ est obligatoire",
   menu: {

@@ -2,13 +2,25 @@ import _ from "lodash";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { Modal, StyleSheet, TouchableOpacity } from "react-native";
+import { CheckBox } from "react-native-elements";
+import { ScrollView } from "react-native-gesture-handler";
 
-import { Colors, Labels, Margins, Paddings, Sizes } from "../../constants";
-import { PLATFORM_IS_ANDROID } from "../../constants/platform.constants";
+import CheckedIcon from "../../assets/images/checkbox_checked.svg";
+import {
+  Colors,
+  Labels,
+  Margins,
+  Paddings,
+  Shadow,
+  Sizes,
+} from "../../constants";
+import {
+  MAJOR_VERSION_IOS,
+  PLATFORM_IS_ANDROID,
+} from "../../constants/platform.constants";
 import type { Article, ArticleFilter } from "../../types";
-import Button from "../base/button.component";
-import Chip from "../base/chip.component";
+import { Button, TitleH1 } from "..";
 import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
 import { View } from "../Themed";
 
@@ -33,19 +45,42 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
       })
       .value();
   };
-  const [showFilters, setShowFilters] = React.useState(false);
+
   const [filters, setFilters] = React.useState<ArticleFilter[]>([]);
+  const [initalFilters, setInitalFilters] = React.useState<ArticleFilter[]>([]);
+  const [triggerUpdateFilters, setTriggerUpdateFilters] = React.useState(false);
+  const [modalVisible, setModalVisible] = React.useState(false);
 
   useEffect(() => {
     if (filters.length === 0) setFilters(getFilters(articles));
   }, [articles]);
+
+  useEffect(() => {
+    if (modalVisible) {
+      setInitalFilters(_.cloneDeep(filters));
+    }
+  }, [modalVisible]);
+
+  const numberActiveFilters = () => {
+    const number = filters.filter((item) => item.active).length;
+    return number ? `(${number} actif(s))` : "";
+  };
+
+  const resetFilters = () => {
+    setFilters(initalFilters);
+  };
+
+  const cancelFiltersModal = () => {
+    setModalVisible(false);
+    resetFilters();
+  };
 
   return (
     <View style={styles.paddingsDefault}>
       <Button
         buttonStyle={styles.filterButton}
         titleStyle={styles.filterButtonTitle}
-        title={Labels.listArticles.filters}
+        title={`${Labels.listArticles.filters} ${numberActiveFilters()}`}
         rounded={true}
         disabled={false}
         icon={
@@ -56,30 +91,146 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
           />
         }
         action={() => {
-          setShowFilters(!showFilters);
+          setModalVisible(!modalVisible);
         }}
       />
-      {showFilters && (
-        <View style={styles.filterContainer}>
-          {filters.map((filter, index) => (
-            <Chip
-              id={filter.thematique.id}
-              key={index}
-              title={`${filter.thematique.nom} (${filter.nbArticles})`}
-              selected={filter.active}
-              action={() => {
-                filter.active = !filter.active;
-                applyFilters(filters);
-              }}
-            />
-          ))}
-        </View>
-      )}
+
+      <Modal transparent={true} visible={modalVisible} animationType="fade">
+        {modalVisible && (
+          <View style={styles.behindOfModal}>
+            <View style={styles.mainContainer}>
+              <View
+                style={{
+                  alignItems: "center",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <TitleH1 title={Labels.listArticles.filters} animated={false} />
+                <Button
+                  buttonStyle={[styles.filterButton]}
+                  titleStyle={styles.filterButtonTitle}
+                  title={Labels.listArticles.resetFilters}
+                  rounded={true}
+                  disabled={false}
+                  icon={
+                    <Icomoon
+                      name={IcomoonIcons.filtrer}
+                      size={Sizes.xxs}
+                      color={Colors.primaryBlue}
+                    />
+                  }
+                  action={() => {
+                    resetFilters();
+                  }}
+                />
+                <TouchableOpacity
+                  style={styles.closeModalView}
+                  onPress={() => {
+                    cancelFiltersModal();
+                  }}
+                >
+                  <Icomoon
+                    name={IcomoonIcons.fermer}
+                    size={Sizes.xs}
+                    color={Colors.primaryBlue}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <ScrollView>
+                {filters.map((filter, index) => (
+                  <CheckBox
+                    containerStyle={styles.checkboxItem}
+                    textStyle={{ flex: 1 }}
+                    key={index}
+                    iconRight
+                    uncheckedIcon="circle-o"
+                    checkedIcon={
+                      <CheckedIcon width={Sizes.lg} height={Sizes.lg} />
+                    }
+                    uncheckedColor={Colors.primaryBlueDark}
+                    checkedColor={Colors.primaryBlueDark}
+                    title={`${filter.thematique.nom} (${filter.nbArticles})`}
+                    accessibilityLabel={`${filter.thematique.nom} (${filter.nbArticles})`}
+                    checked={filter.active}
+                    onPress={() => {
+                      filter.active = !filter.active;
+                      setTriggerUpdateFilters(!triggerUpdateFilters);
+                    }}
+                  />
+                ))}
+              </ScrollView>
+
+              <View style={styles.buttonsContainer}>
+                <View style={styles.buttonContainer}>
+                  <Button
+                    title={Labels.buttons.cancel}
+                    titleStyle={styles.buttonTitleStyle}
+                    rounded={false}
+                    disabled={false}
+                    icon={
+                      <Icomoon
+                        name={IcomoonIcons.fermer}
+                        size={14}
+                        color={Colors.primaryBlue}
+                      />
+                    }
+                    action={() => {
+                      cancelFiltersModal();
+                    }}
+                  />
+                </View>
+                <View style={styles.buttonContainer}>
+                  <Button
+                    title={Labels.buttons.validate}
+                    titleStyle={styles.buttonTitleStyle}
+                    rounded={true}
+                    disabled={false}
+                    action={() => {
+                      applyFilters(filters);
+                      setModalVisible(false);
+                    }}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        )}
+      </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  behindOfModal: {
+    backgroundColor: Colors.transparentGrey,
+    flex: 1,
+  },
+  buttonContainer: {
+    flex: 1,
+  },
+  buttonTitleStyle: {
+    fontSize: Sizes.sm,
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    marginTop: Margins.default,
+  },
+  centeredView: {
+    alignItems: MAJOR_VERSION_IOS < 14 ? "stretch" : "center",
+    justifyContent: "center",
+    marginTop: Margins.default,
+  },
+  checkboxItem: {
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+  },
+  closeModalView: {
+    alignSelf: "flex-end",
+    marginBottom: Margins.largest,
+    padding: Paddings.default,
+  },
   filterButton: {
     alignSelf: "flex-start",
     backgroundColor: Colors.cardWhite,
@@ -97,12 +248,36 @@ const styles = StyleSheet.create({
   },
   filterButtonTitle: {
     color: Colors.primaryBlue,
-    fontSize: Sizes.sm,
+    fontSize: Sizes.xxs,
   },
   filterContainer: {
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
+  },
+  mainContainer: {
+    backgroundColor: Colors.white,
+    borderColor: Colors.primaryBlue,
+    borderRadius: Sizes.xs,
+    borderWidth: 1,
+    flex: 1,
+    margin: Margins.default,
+    padding: Paddings.default,
+  },
+  modalView: {
+    alignItems: MAJOR_VERSION_IOS < 14 ? "stretch" : "center",
+    backgroundColor: Colors.white,
+    borderRadius: Sizes.mmd,
+    elevation: 5,
+    margin: Margins.larger,
+    padding: Paddings.larger,
+    shadowColor: "black",
+    shadowOffset: {
+      height: Shadow.offsetHeight,
+      width: Shadow.offsetWidth,
+    },
+    shadowOpacity: Shadow.opacity,
+    shadowRadius: Shadow.radius,
   },
   paddingsDefault: {
     paddingHorizontal: Paddings.default,
