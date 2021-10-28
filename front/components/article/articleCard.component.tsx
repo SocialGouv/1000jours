@@ -29,6 +29,7 @@ const ArticleCard: FC<Props> = ({ article, step }) => {
       pad={0}
       containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
       style={[styles.listItem, styles.borderLeftRadius]}
+      accessibilityRole="button"
     >
       {article.visuel?.id ? (
         <ExpoFastImage
