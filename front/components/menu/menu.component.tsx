@@ -96,6 +96,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
           <View
             style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
             accessibilityRole="button"
+            accessible
             accessibilityLabel={Labels.accessibility.closeMenu}
             onTouchEnd={() => {
               setShowMenu(false);
