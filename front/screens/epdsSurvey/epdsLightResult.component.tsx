@@ -33,6 +33,7 @@ interface Props {
   result: number;
   epdsSurvey: EpdsQuestionAndAnswers[];
   showBeContactedButton: boolean;
+  lastQuestionHasThreePointsAnswer: boolean;
   startSurveyOver: () => void;
 }
 
@@ -46,6 +47,7 @@ const EpdsLightResult: React.FC<Props> = ({
   result,
   epdsSurvey,
   showBeContactedButton,
+  lastQuestionHasThreePointsAnswer,
   startSurveyOver,
 }) => {
   const [addReponseQuery] = useMutation(DatabaseQueries.EPDS_ADD_RESPONSE, {
@@ -113,16 +115,29 @@ const EpdsLightResult: React.FC<Props> = ({
     return iconsMap.get(icone);
   };
 
-  const iconAndStateOfMind =
-    EpdsSurveyUtils.getResultIconAndStateOfMind(result);
+  const iconAndStateOfMind = EpdsSurveyUtils.getResultIconAndStateOfMind(
+    result,
+    lastQuestionHasThreePointsAnswer
+  );
+  const introductionText = EpdsSurveyUtils.getResultIntroductionText(
+    result,
+    lastQuestionHasThreePointsAnswer
+  );
   const colorStyle = { color: iconAndStateOfMind.color };
   const beContactedColors =
-    EpdsSurveyUtils.getPrimaryAndSecondaryBeContactedColors(result);
+    EpdsSurveyUtils.getPrimaryAndSecondaryBeContactedColors(
+      result,
+      lastQuestionHasThreePointsAnswer
+    );
 
   return (
     <>
       <ScrollView>
-        <TitleH1 title={Labels.epdsSurveyLight.titleLight} animated={false} />
+        <TitleH1
+          title={Labels.epdsSurveyLight.titleLight}
+          animated={false}
+          style={styles.marginHorizontal}
+        />
         <View style={styles.rowView}>
           {getIcon(iconAndStateOfMind.icon)}
           <CommonText style={[styles.stateOfMind, colorStyle]}>
@@ -133,7 +148,12 @@ const EpdsLightResult: React.FC<Props> = ({
           {Labels.epdsSurveyLight.oserEnParler}
         </SecondaryText>
         <SecondaryText style={styles.text}>
-          {EpdsSurveyUtils.getResultIntroductionText(result)}
+          {introductionText.text}
+          {introductionText.boldText && (
+            <SecondaryText style={[styles.text, styles.fontBold]}>
+              {introductionText.boldText}
+            </SecondaryText>
+          )}
         </SecondaryText>
         {result < EpdsConstants.RESULT_WELL_VALUE && (
           <SecondaryText style={[styles.text, styles.fontBold]}>
@@ -186,9 +206,13 @@ const styles = StyleSheet.create({
     fontSize: Sizes.md,
     textTransform: "uppercase",
   },
+  marginHorizontal: {
+    marginHorizontal: Margins.default,
+  },
   rowView: {
     alignSelf: "flex-start",
     flexDirection: "row",
+    marginHorizontal: Margins.default,
   },
   stateOfMind: {
     alignSelf: "center",
@@ -201,11 +225,12 @@ const styles = StyleSheet.create({
     fontSize: Sizes.sm,
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.mmd,
+    marginHorizontal: Margins.default,
     paddingTop: Paddings.default,
   },
   validateButton: {
     alignItems: "center",
-    paddingTop: Paddings.light,
+    paddingBottom: Paddings.default,
   },
 });
 
