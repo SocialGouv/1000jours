@@ -4,6 +4,12 @@ import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
   accessibility: {
+    articleToRead: "article à lire",
+    articlesFilters: {
+      activeFilter: "filtre actif",
+      availableArticles: "articles disponibles",
+    },
+    close: "Fermer",
     closeMenu: "Fermer le menu",
     illustrationProfile: "Illustration profil",
     logoApp: "Logo de l'application",
@@ -410,6 +416,7 @@ export default {
   listArticles: {
     articlesToRead: "article(s) à lire",
     filters: "Filtrer",
+    resetFilters: "Réinitialiser",
   },
   mandatoryField: "Ce champ est obligatoire",
   menu: {
