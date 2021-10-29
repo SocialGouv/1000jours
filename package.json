@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "git-cz": "^4.7.6"
+    "git-cz": "^4.8.0"
   },
   "devDependencies": {
     "@socialgouv/eslint-config-typescript": "^1.88.0",
