@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
   dateTag: {
     alignSelf: "flex-start",
     color: Colors.primaryBlueDark,
+    fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
     marginVertical: Margins.smallest,
     overflow: "hidden",

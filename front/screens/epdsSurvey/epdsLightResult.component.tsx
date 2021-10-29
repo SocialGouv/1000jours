@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { useMutation } from "@apollo/client/react/hooks";
-import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
@@ -26,19 +25,15 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import type { EpdsQuestionAndAnswers } from "../../type";
-import {
-  EpdsSurveyUtils,
-  NotificationUtils,
-  StorageUtils,
-  TrackerUtils,
-} from "../../utils";
-import BeContacted from "./beContacted.component";
+import { EpdsSurveyUtils, NotificationUtils, StorageUtils } from "../../utils";
+import EpdsResultContactMamanBlues from "./epdsResultContactMamanBlues.component";
 import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation.component";
 
 interface Props {
   result: number;
   epdsSurvey: EpdsQuestionAndAnswers[];
   showBeContactedButton: boolean;
+  lastQuestionHasThreePointsAnswer: boolean;
   startSurveyOver: () => void;
 }
 
@@ -52,6 +47,7 @@ const EpdsLightResult: React.FC<Props> = ({
   result,
   epdsSurvey,
   showBeContactedButton,
+  lastQuestionHasThreePointsAnswer,
   startSurveyOver,
 }) => {
   const [addReponseQuery] = useMutation(DatabaseQueries.EPDS_ADD_RESPONSE, {
@@ -60,12 +56,9 @@ const EpdsLightResult: React.FC<Props> = ({
       console.log(err);
     },
   });
-  const { trackScreenView } = useMatomo();
-  const [showBeContactedModal, setShowBeContactedModal] = useState(false);
   const [showSnackBar, setShowSnackBar] = useState(false);
 
   const labelsResultats = Labels.epdsSurvey.resultats;
-  const resultData = EpdsSurveyUtils.getResultLabelAndStyleLight();
 
   useEffect(() => {
     const saveEpdsSurveyResults = async () => {
@@ -122,47 +115,61 @@ const EpdsLightResult: React.FC<Props> = ({
     return iconsMap.get(icone);
   };
 
-  const iconAndStateOfMind = EpdsSurveyUtils.getResultLabelAndStyle(result);
+  const iconAndStateOfMind = EpdsSurveyUtils.getResultIconAndStateOfMind(
+    result,
+    lastQuestionHasThreePointsAnswer
+  );
+  const introductionText = EpdsSurveyUtils.getResultIntroductionText(
+    result,
+    lastQuestionHasThreePointsAnswer
+  );
   const colorStyle = { color: iconAndStateOfMind.color };
+  const beContactedColors =
+    EpdsSurveyUtils.getPrimaryAndSecondaryBeContactedColors(
+      result,
+      lastQuestionHasThreePointsAnswer
+    );
 
   return (
     <>
       <ScrollView>
-        <TitleH1 title={Labels.epdsSurveyLight.titleLight} animated={false} />
+        <TitleH1
+          title={Labels.epdsSurveyLight.titleLight}
+          animated={false}
+          style={styles.marginHorizontal}
+        />
         <View style={styles.rowView}>
           {getIcon(iconAndStateOfMind.icon)}
           <CommonText style={[styles.stateOfMind, colorStyle]}>
-            {iconAndStateOfMind.resultLabels.stateOfMind}
+            {iconAndStateOfMind.stateOfMind}
           </CommonText>
         </View>
         <SecondaryText style={[styles.text, styles.fontBold]}>
           {Labels.epdsSurveyLight.oserEnParler}
         </SecondaryText>
         <SecondaryText style={styles.text}>
-          {Labels.epdsSurveyLight.changementsImportants}
+          {introductionText.text}
+          {introductionText.boldText && (
+            <SecondaryText style={[styles.text, styles.fontBold]}>
+              {introductionText.boldText}
+            </SecondaryText>
+          )}
         </SecondaryText>
-        {result < EpdsConstants.RESULT_BAD_VALUE && (
+        {result < EpdsConstants.RESULT_WELL_VALUE && (
           <SecondaryText style={[styles.text, styles.fontBold]}>
             {labelsResultats.retakeTestInvitation}
           </SecondaryText>
         )}
         {showBeContactedButton && (
-          <View style={styles.validateButton}>
-            <Button
-              title={Labels.epdsSurvey.beContacted.button}
-              titleStyle={styles.fontButton}
-              rounded={true}
-              disabled={false}
-              action={() => {
-                trackScreenView(TrackerUtils.TrackingEvent.EPDS_BE_CONTACTED);
-                setShowBeContactedModal(true);
-              }}
-            />
-          </View>
+          <EpdsResultContactMamanBlues
+            primaryColor={beContactedColors.primaryColor}
+            secondaryColor={beContactedColors.secondaryColor}
+            showSnackBar={setShowSnackBar}
+          />
         )}
         <EpdsResultInformation
-          leftBorderColor={Colors.white}
-          informationList={resultData.resultLabels.professionalsList}
+          leftBorderColor={Colors.primaryBlue}
+          informationList={Labels.epdsSurveyLight.professionalsList}
         />
         <View style={styles.validateButton}>
           <Button
@@ -175,13 +182,6 @@ const EpdsLightResult: React.FC<Props> = ({
             }}
           />
         </View>
-        <BeContacted
-          visible={showBeContactedModal}
-          hideModal={(showSB: boolean) => {
-            setShowBeContactedModal(false);
-            setShowSnackBar(showSB);
-          }}
-        />
       </ScrollView>
       <CustomSnackbar
         duration={AroundMeConstants.SNACKBAR_DURATION}
@@ -206,21 +206,13 @@ const styles = StyleSheet.create({
     fontSize: Sizes.md,
     textTransform: "uppercase",
   },
-  itemBorder: {
-    borderBottomColor: Colors.disabled,
-    borderBottomWidth: 1,
-    paddingBottom: Margins.smaller,
-    paddingTop: Margins.smallest,
-  },
-  professionalBanner: {
-    borderStartColor: Colors.primaryYellowDark,
-    borderStartWidth: Margins.smaller,
-    margin: Margins.default,
-    padding: Paddings.default,
+  marginHorizontal: {
+    marginHorizontal: Margins.default,
   },
   rowView: {
-    alignSelf: "center",
+    alignSelf: "flex-start",
     flexDirection: "row",
+    marginHorizontal: Margins.default,
   },
   stateOfMind: {
     alignSelf: "center",
@@ -233,11 +225,12 @@ const styles = StyleSheet.create({
     fontSize: Sizes.sm,
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.mmd,
+    marginHorizontal: Margins.default,
     paddingTop: Paddings.default,
   },
   validateButton: {
     alignItems: "center",
-    paddingTop: Paddings.light,
+    paddingBottom: Paddings.default,
   },
 });
 
