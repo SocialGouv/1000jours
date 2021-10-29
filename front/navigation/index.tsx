@@ -105,13 +105,18 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => (
             onPress={() => {
               onPressMenu(true);
             }}
+            accessibilityRole="button"
+            accessibilityLabel={Labels.menu.title}
           >
             <Icomoon
               name={IcomoonIcons.menu}
               size={Sizes.xxxxxs}
               color={Colors.primaryBlue}
             />
-            <Text style={[styles.headerRightButtonText]}>
+            <Text
+              style={[styles.headerRightButtonText]}
+              allowFontScaling={false}
+            >
               {Labels.menu.title}
             </Text>
           </TouchableOpacity>

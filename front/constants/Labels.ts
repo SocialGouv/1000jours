@@ -3,6 +3,11 @@ import { NUMBER_OF_DAYS_NOTIF_REMINDER } from "./epdsConstants.constants";
 import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
+  accessibility: {
+    closeMenu: "Fermer le menu",
+    step: "étape",
+    version: "version.",
+  },
   appName: "1000 premiers jours",
   aroundMe: {
     addressesListLabelEnd:
