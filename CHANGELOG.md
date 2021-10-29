@@ -1,3 +1,10 @@
+## [1.83.6](https://github.com/SocialGouv/1000jours/compare/v1.83.5...v1.83.6) (2021-10-29)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la duplication de calendrier via la synchro ([#806](https://github.com/SocialGouv/1000jours/issues/806)) ([d2d7bb6](https://github.com/SocialGouv/1000jours/commit/d2d7bb6955d8c42e6b83222674e0fa530cac068c)), closes [#801](https://github.com/SocialGouv/1000jours/issues/801)
+
 ## [1.83.5](https://github.com/SocialGouv/1000jours/compare/v1.83.4...v1.83.5) (2021-10-28)
 
 
