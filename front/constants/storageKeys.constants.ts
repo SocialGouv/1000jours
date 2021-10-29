@@ -13,7 +13,6 @@ export const cartoIsFirstLaunch = "@cartoIsFirstLaunch";
 export const notifIdNextStep = "@notifIdNextStep";
 export const notifIdsEvents = "@notifIdsEvents";
 export const eventsCalcFromBirthday = "@eventsCalcFromBirthday";
-export const osCalendarId = "@osCalendarId";
 export const osCalendarSyncDate = "@osCalendarSyncDate";
 
 export const allStorageKeys = [
@@ -31,7 +30,6 @@ export const allStorageKeys = [
   notifIdNextStep,
   notifIdsEvents,
   eventsCalcFromBirthday,
-  osCalendarId,
   osCalendarSyncDate,
 ];
 
