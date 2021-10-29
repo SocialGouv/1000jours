@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.cardGrey,
     borderStartWidth: Margins.smaller,
     borderWidth: Margins.smallest,
+    marginHorizontal: Margins.default,
     marginVertical: Margins.smaller,
   },
   icon: {

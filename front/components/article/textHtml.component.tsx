@@ -63,7 +63,7 @@ const TextHtml: FC<Props> = ({ html, offsetTotal }) => {
       baseStyle={styles.baseStyle}
       source={{ html: htmlContent }}
       tagsStyles={{ b: styles.bold, strong: styles.bold }}
-      ignoredStyles={["color"]}
+      ignoredStyles={["color", "textAlign"]}
       renderersProps={{
         iframe: {
           scalesPageToFit: true,
@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     lineHeight: Sizes.lg,
     margin: 0,
     padding: 0,
+    textAlign: "justify",
   },
   bold: {
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.bold),

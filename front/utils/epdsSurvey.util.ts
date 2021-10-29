@@ -5,10 +5,12 @@ import {
   StorageKeysConstants,
 } from "../constants";
 import type {
+  BeContactedColors,
   EpdsAnswer,
   EpdsQuestionAndAnswers,
-  EpdsResultData,
+  EpdsResultIconAndStateOfMind,
   EpdsUpdatedSurvey,
+  IntroductionText,
   QuestionnaireEpdsFromDB,
 } from "../type";
 import { getObjectValue, multiRemove, storeObjectValue } from "./storage.util";
@@ -93,9 +95,7 @@ export const getUpdatedScore = (
     const answeredQuestionPoints = question.answers.find(
       (answer) => answer.isChecked
     )?.points;
-    if (answeredQuestionPoints) {
-      score += answeredQuestionPoints;
-    }
+    if (answeredQuestionPoints) score += answeredQuestionPoints;
   });
   return score;
 };
@@ -105,28 +105,73 @@ export const getCurrentQuestionPoints = (
 ): number | undefined =>
   question.answers.find((answer) => answer.isChecked)?.points;
 
-export const getResultLabelAndStyle = (result: number): EpdsResultData => {
-  const labelsResultats = Labels.epdsSurvey.resultats;
+export const getResultIconAndStateOfMind = (
+  result: number,
+  lastQuestionHasThreePointsAnswer: boolean
+): EpdsResultIconAndStateOfMind => {
+  const labelsStateOfMind = Labels.epdsSurveyLight.stateOfMind;
 
-  if (result <= EpdsConstants.RESULT_WELL_VALUE) {
-    return {
-      color: Colors.secondaryGreenDark,
-      icon: EpdsConstants.ResultIconValueEnum.bien,
-      resultLabels: labelsResultats.moinsDeNeuf,
-    };
-  } else if (result <= EpdsConstants.RESULT_NOTSOWELL_VALUE) {
-    return {
-      color: Colors.primaryYellowDark,
-      icon: EpdsConstants.ResultIconValueEnum.moyen,
-      resultLabels: labelsResultats.entreDixEtDouze,
-    };
-  } else {
+  if (
+    result >= EpdsConstants.RESULT_BAD_VALUE ||
+    lastQuestionHasThreePointsAnswer
+  ) {
     return {
       color: Colors.secondaryRedLight,
       icon: EpdsConstants.ResultIconValueEnum.pasBien,
-      resultLabels: labelsResultats.plusDeTreize,
+      stateOfMind: labelsStateOfMind.plusDeQuinze,
     };
   }
+
+  if (result >= EpdsConstants.RESULT_WELL_VALUE) {
+    return {
+      color: Colors.primaryYellowDark,
+      icon: EpdsConstants.ResultIconValueEnum.moyen,
+      stateOfMind: labelsStateOfMind.entreDixEtQuartorze,
+    };
+  }
+
+  return {
+    color: Colors.primaryBlue,
+    icon: EpdsConstants.ResultIconValueEnum.bien,
+    stateOfMind: labelsStateOfMind.moinsDeNeuf,
+  };
+};
+
+export const getPrimaryAndSecondaryBeContactedColors = (
+  result: number,
+  lastQuestionHasThreePointsAnswer: boolean
+): BeContactedColors => {
+  if (
+    result >= EpdsConstants.RESULT_BAD_VALUE ||
+    lastQuestionHasThreePointsAnswer
+  ) {
+    return {
+      primaryColor: Colors.secondaryRedMiddle,
+      secondaryColor: Colors.secondaryRedDark,
+    };
+  }
+
+  return {
+    primaryColor: Colors.primaryYellowDark,
+    secondaryColor: Colors.primaryYellowLight,
+  };
+};
+
+export const getResultIntroductionText = (
+  result: number,
+  lastQuestionHasThreePointsAnswer: boolean
+): IntroductionText => {
+  const introductionTexts = Labels.epdsSurveyLight.textesExplication;
+
+  return result >= EpdsConstants.RESULT_WELL_VALUE ||
+    lastQuestionHasThreePointsAnswer
+    ? {
+        boldText: introductionTexts.plusDeNeufBold,
+        text: introductionTexts.plusDeNeuf,
+      }
+    : {
+        text: introductionTexts.moinsDeNeuf,
+      };
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -149,14 +194,6 @@ export const incrementEpdsSurveyCounterAndGetNewValue =
 
     return newCounter;
   };
-
-export const getResultLabelAndStyleLight = (): EpdsResultData => {
-  return {
-    color: Colors.secondaryGreenDark,
-    icon: EpdsConstants.ResultIconValueEnum.bien,
-    resultLabels: Labels.epdsSurveyLight,
-  };
-};
 
 export const getEachQuestionScore = (
   questionsAndAnswers: EpdsQuestionAndAnswers[]

@@ -1,3 +1,94 @@
+## [1.83.5](https://github.com/SocialGouv/1000jours/compare/v1.83.4...v1.83.5) (2021-10-28)
+
+
+### Bug Fixes
+
+* **epds:** corrections retours PO ([#822](https://github.com/SocialGouv/1000jours/issues/822)) ([f663910](https://github.com/SocialGouv/1000jours/commit/f663910a2421a4ba326095c18c0cb3f0ad2ec5c1))
+
+## [1.83.4](https://github.com/SocialGouv/1000jours/compare/v1.83.3...v1.83.4) (2021-10-26)
+
+
+### Bug Fixes
+
+* **carto:** fix refus géoloc ([#816](https://github.com/SocialGouv/1000jours/issues/816)) ([9593ac4](https://github.com/SocialGouv/1000jours/commit/9593ac4f7ccd2869176947f9530480546af316c2))
+
+## [1.83.3](https://github.com/SocialGouv/1000jours/compare/v1.83.2...v1.83.3) (2021-10-22)
+
+
+### Bug Fixes
+
+* **api:** supprime un log de débugging ([#818](https://github.com/SocialGouv/1000jours/issues/818)) ([c635582](https://github.com/SocialGouv/1000jours/commit/c6355823ff33bd078a085d35a8c0297d36120ec8))
+
+## [1.83.2](https://github.com/SocialGouv/1000jours/compare/v1.83.1...v1.83.2) (2021-10-15)
+
+
+### Bug Fixes
+
+* 🐛 Tri les documents directement via l'api graphql ([#812](https://github.com/SocialGouv/1000jours/issues/812)) ([4a94fbc](https://github.com/SocialGouv/1000jours/commit/4a94fbc018ddcb2f19aadee1c28e5e0dd615d97d))
+
+## [1.83.1](https://github.com/SocialGouv/1000jours/compare/v1.83.0...v1.83.1) (2021-10-15)
+
+
+### Reverts
+
+* Revert "feat(epds): ajout partie colorée Être contacté (#798)" (#811) ([167bac5](https://github.com/SocialGouv/1000jours/commit/167bac5dfe5141fe89a4955e79a0c5ae235b8c54)), closes [#798](https://github.com/SocialGouv/1000jours/issues/798) [#811](https://github.com/SocialGouv/1000jours/issues/811)
+
+# [1.83.0](https://github.com/SocialGouv/1000jours/compare/v1.82.0...v1.83.0) (2021-10-15)
+
+
+### Features
+
+* **parentheque:** phrase d'intro et ordre des documents ([#808](https://github.com/SocialGouv/1000jours/issues/808)) ([4005e66](https://github.com/SocialGouv/1000jours/commit/4005e6628fb811eeae8a9d617734cdb54dffe71f))
+
+# [1.82.0](https://github.com/SocialGouv/1000jours/compare/v1.81.1...v1.82.0) (2021-10-15)
+
+
+### Features
+
+* 🎸 Force l'alignement des textes article (justifié) ([#809](https://github.com/SocialGouv/1000jours/issues/809)) ([9419fd4](https://github.com/SocialGouv/1000jours/commit/9419fd4999e4001b2b6cd26677464e88010a6b98)), closes [#596](https://github.com/SocialGouv/1000jours/issues/596)
+
+## [1.81.1](https://github.com/SocialGouv/1000jours/compare/v1.81.0...v1.81.1) (2021-10-15)
+
+
+### Bug Fixes
+
+* 🐛 Corrige les retours design sur les événements ([#786](https://github.com/SocialGouv/1000jours/issues/786)) ([f32d0f0](https://github.com/SocialGouv/1000jours/commit/f32d0f0b522f8b0e75c77e332f453bc3da47be88)), closes [#35](https://github.com/SocialGouv/1000jours/issues/35)
+
+# [1.81.0](https://github.com/SocialGouv/1000jours/compare/v1.80.0...v1.81.0) (2021-10-15)
+
+
+### Features
+
+* **documents:** ajout d'un champ de tri ([#803](https://github.com/SocialGouv/1000jours/issues/803)) ([1390167](https://github.com/SocialGouv/1000jours/commit/13901674fc6b6b7e74ab30322a0cfdd444382d5f)), closes [#802](https://github.com/SocialGouv/1000jours/issues/802)
+
+# [1.80.0](https://github.com/SocialGouv/1000jours/compare/v1.79.1...v1.80.0) (2021-10-14)
+
+
+### Features
+
+* **epds:** ajout partie colorée Être contacté ([#798](https://github.com/SocialGouv/1000jours/issues/798)) ([21a5190](https://github.com/SocialGouv/1000jours/commit/21a51903a3a3cbaa013968a15998fe8a7fb397b2))
+
+## [1.79.1](https://github.com/SocialGouv/1000jours/compare/v1.79.0...v1.79.1) (2021-10-12)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le crash de la carto sous iOS 15 ([#785](https://github.com/SocialGouv/1000jours/issues/785)) ([f143f3e](https://github.com/SocialGouv/1000jours/commit/f143f3ea70cc42551f5ff03180083d91c86da500))
+
+# [1.79.0](https://github.com/SocialGouv/1000jours/compare/v1.78.1...v1.79.0) (2021-10-11)
+
+
+### Features
+
+* 🎸 Ajoute les articles liés aux événements (depuis le BO) ([#782](https://github.com/SocialGouv/1000jours/issues/782)) ([5813677](https://github.com/SocialGouv/1000jours/commit/5813677be2e6c5ae8337defe50cf3fb2abbc510d)), closes [#777](https://github.com/SocialGouv/1000jours/issues/777)
+
+## [1.78.1](https://github.com/SocialGouv/1000jours/compare/v1.78.0...v1.78.1) (2021-10-11)
+
+
+### Bug Fixes
+
+* **articles:** Cache les articles en mode draft ([#779](https://github.com/SocialGouv/1000jours/issues/779)) ([e5c711e](https://github.com/SocialGouv/1000jours/commit/e5c711e36a891b1e5494523120ec14a0e54e90d8))
+
 # [1.78.0](https://github.com/SocialGouv/1000jours/compare/v1.77.0...v1.78.0) (2021-10-11)
 
 

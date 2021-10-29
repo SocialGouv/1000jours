@@ -299,8 +299,6 @@ export default {
     titleResults: "Résultat",
   },
   epdsSurveyLight: {
-    changementsImportants:
-      "Les changements importants liés à l’arrivée d’un bébé sont des facteurs de stress dont certains signes évocateurs sont normaux durant cette période. Parlez de vos difficultés des premiers mois, est essentiel pour que le professionnel de santé qui vous suit puisse à tout moment vous accompagner. Des aides et un accompagnement peuvent être mis en place pour vous aider durant cette période qui nécessite du soutien. En parler avec un professionnel de santé et votre entourage, c’est se soigner. Parce que vous n’êtes pas seul(e) et qu’en parler a permis à de nombreux parents d’aller mieux.",
     oserEnParler:
       "Oser en parler, c'est déjà prendre soin de soi et de son enfant !",
     professionalsList: [
@@ -372,6 +370,22 @@ export default {
         sectionTitle: "Contacter",
       },
     ],
+    stateOfMind: {
+      entreDixEtQuartorze: "Je vais moins bien",
+      moinsDeNeuf: "Je vais bien",
+      plusDeQuinze: "Je ne vais pas bien",
+    },
+    textesExplication: {
+      contactParElise:
+        "Vous pouvez être contacté(e) par Élise, notre partenaire (association composée par des volontaires ayant connu la difficulté maternelle), afin de",
+      contactParEliseBold: " trouver une aide adaptée autour de vous.",
+      moinsDeNeuf:
+        "Les changements importants liés à l’arrivée d’un bébé sont des facteurs de stress dont certains signes évocateurs sont normaux durant cette période. Parlez de vos difficultés des premiers mois est essentiel pour que le professionnel de santé qui vous suit puisse à tout moment vous accompagner. Des aides et un accompagnement peuvent être mis en place pour vous aider durant cette période qui nécessite du soutien. En parler avec un professionnel de santé et votre entourage, c’est se soigner. Parce que vous n’êtes pas seul(e) et qu’en parler a permis à de nombreux parents d’aller mieux.",
+      plusDeNeuf:
+        "Les changements importants liés à l’arrivée d’un bébé sont des facteurs de stress dont certains signes peuvent évoquer ceux de la dépression post partum. Vous exprimez des signes évocateurs de la dépression post partum, il est donc nécessaire de",
+      plusDeNeufBold:
+        " consulter le professionnel de santé qui vous suit pour échanger.",
+    },
     titleLight: "Et si c'était une dépression post-partum ? Les ressources",
   },
   errorMsg: "Une erreur est survenue, merci de réessayer plus tard",
@@ -450,7 +464,7 @@ export default {
       "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. A chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
     library: {
       description:
-        "Texte descriptif quii explique qu'il sagit des documents utiles durant le parcours des 1000 premiers jours.",
+        "Retrouvez ici les documents utiles pour l'ensemble des 1000 premiers jours.",
       download: "Télécharger",
       nom: "Parenthèque",
     },
