@@ -14,28 +14,23 @@ interface OnboardingPaginationProps {
 export const CustomPagination: FC<OnboardingPaginationProps> = ({
   currentIndex,
   slidesNumber,
-}) => {
-  return (
-    <View
-      importantForAccessibility="no-hide-descendants"
-      style={styles.rowView}
-    >
-      {range(slidesNumber).map((value) => (
-        <View key={value} style={styles.paginationElement}>
-          <View
-            style={[
-              styles.defaultPaginationStyle,
-              value === currentIndex
-                ? styles.selectedIndex
-                : styles.notSelectedIndex,
-            ]}
-          />
-          <CommonText style={styles.textStyle}>{value}</CommonText>
-        </View>
-      ))}
-    </View>
-  );
-};
+}) => (
+  <View importantForAccessibility="no-hide-descendants" style={styles.rowView}>
+    {range(slidesNumber).map((value) => (
+      <View key={value} style={styles.paginationElement}>
+        <View
+          style={[
+            styles.defaultPaginationStyle,
+            value === currentIndex
+              ? styles.selectedIndex
+              : styles.notSelectedIndex,
+          ]}
+        />
+        <CommonText style={styles.textStyle}>{value}</CommonText>
+      </View>
+    ))}
+  </View>
+);
 
 const styles = StyleSheet.create({
   defaultPaginationStyle: {

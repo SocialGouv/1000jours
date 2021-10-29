@@ -95,14 +95,12 @@ const Onboarding: FC<Props> = ({ navigation }) => {
               }}
               autoplay={false}
               showPagination
-              PaginationComponent={() => {
-                return (
-                  <CustomPagination
-                    currentIndex={swiperCurrentIndex}
-                    slidesNumber={slideViews.length}
-                  />
-                );
-              }}
+              PaginationComponent={() => (
+                <CustomPagination
+                  currentIndex={swiperCurrentIndex}
+                  slidesNumber={slideViews.length}
+                />
+              )}
             >
               {slideViews.map((slideView, index) => (
                 <View
