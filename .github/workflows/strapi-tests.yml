@@ -1,0 +1,19 @@
+name: Strapi Tests
+
+on:
+  pull_request:
+
+jobs:
+  strapi-tests:
+    name: Strapi Tests
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: yarn --cwd back/strapi install
+
+    - name: Run tests
+      run: yarn --cwd back/strapi test

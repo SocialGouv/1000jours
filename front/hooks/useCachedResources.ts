@@ -27,6 +27,7 @@ const useCachedResources = (): boolean => {
           "avenir-light": require("../assets/fonts/Avenir-Light.ttf"),
           "avenir-medium": require("../assets/fonts/Avenir-Medium.ttf"),
           "avenir-regular": require("../assets/fonts/Avenir-Roman.ttf"),
+          "avenir-italic": require("../assets/fonts/Avenir-Italic.ttf"),
         });
       } catch (error: unknown) {
         // We might want to provide this error information to an error reporting service

@@ -1,5 +1,4 @@
 import { useLazyQuery } from "@apollo/client";
-import { gql } from "@apollo/client/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { addDays, format } from "date-fns";
 import * as Calendar from "expo-calendar";
@@ -16,19 +15,26 @@ import {
   CommonText,
   ErrorMessage,
   Events,
+  Icomoon,
+  IcomoonIcons,
   Loader,
   TitleH1,
 } from "../components";
+import { SecondaryTextItalic } from "../components/StyledText";
 import { View } from "../components/Themed";
 import {
   Colors,
   FetchPoliciesConstants,
+  FontNames,
+  FontWeight,
   Formats,
+  getFontFamilyName,
   Labels,
   Paddings,
   Sizes,
   StorageKeysConstants,
 } from "../constants";
+import { ALL_EVENTS } from "../constants/databaseQueries.constants";
 import { ICLOUD, PLATFORM_IS_IOS } from "../constants/platform.constants";
 import type { Event, TabCalendarParamList } from "../types";
 import { NotificationUtils, StorageUtils, TrackerUtils } from "../utils";
@@ -144,25 +150,6 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     setLastSyncDate(date);
   };
 
-  const ALL_EVENTS = gql`
-    query GetEvents {
-      evenements {
-        id
-        nom
-        description
-        debut
-        fin
-        thematique {
-          id
-          nom
-        }
-        etapes {
-          id
-          nom
-        }
-      }
-    }
-  `;
   const [loadEvents, { loading, error, data }] = useLazyQuery(ALL_EVENTS, {
     fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
   });
@@ -249,23 +236,31 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
         <View style={styles.calendarContainer}>
           {childBirthday.length > 0 ? (
             <>
-              <View>
+              <View style={styles.flexStart}>
                 <Button
                   title={Labels.calendar.synchronise}
-                  titleStyle={styles.buttonTitle}
-                  buttonStyle={{ alignSelf: "center" }}
-                  rounded={true}
+                  icon={
+                    <Icomoon
+                      name={IcomoonIcons.synchroniser}
+                      size={Sizes.sm}
+                      color={Colors.secondaryGreen}
+                    />
+                  }
+                  rounded={false}
+                  disabled={false}
                   action={syncEventsWithOsCalendar}
+                  titleStyle={styles.buttonTitleStyle}
+                  buttonStyle={styles.buttonStyle}
                 />
-                <CommonText style={styles.lastSyncDate}>
-                  {lastSyncDate
-                    ? `${Labels.calendar.lastSyncDate} ${format(
-                        new Date(lastSyncDate),
-                        Formats.dateTimeFR
-                      )}`
-                    : ""}
-                </CommonText>
               </View>
+              <SecondaryTextItalic style={styles.lastSyncDate}>
+                {lastSyncDate
+                  ? `(${Labels.calendar.lastSyncDate} ${format(
+                      new Date(lastSyncDate),
+                      Formats.dateTimeFR
+                    )})`
+                  : ""}
+              </SecondaryTextItalic>
               <Events
                 evenements={events}
                 childBirthday={childBirthday}
@@ -293,9 +288,16 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  buttonTitle: {
-    fontSize: Sizes.md,
-    textTransform: "uppercase",
+  buttonStyle: {
+    paddingBottom: Paddings.smaller,
+    paddingHorizontal: 0,
+    paddingTop: 0,
+  },
+  buttonTitleStyle: {
+    color: Colors.secondaryGreen,
+    fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
+    fontSize: Sizes.sm,
+    textAlign: "left",
   },
   calendarContainer: {
     flex: 1,
@@ -310,10 +312,17 @@ const styles = StyleSheet.create({
     height: "100%",
     padding: Paddings.default,
   },
+  flexStart: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
   lastSyncDate: {
-    alignSelf: "center",
-    fontSize: Sizes.xs,
-    paddingVertical: Paddings.light,
+    color: Colors.commonText,
+    fontFamily: "avenir-italic",
+    fontSize: Sizes.xxs,
+    fontStyle: "italic",
+    paddingBottom: Paddings.default,
   },
   noChildBirthday: {
     paddingVertical: Paddings.default,

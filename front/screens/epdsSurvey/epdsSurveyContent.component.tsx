@@ -155,6 +155,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
             score >= EpdsConstants.RESULT_BECONTACTED_VALUE ||
             lastQuestionHas3PointAnswer
           }
+          lastQuestionHasThreePointsAnswer={lastQuestionHas3PointAnswer}
           startSurveyOver={async () => {
             await restartSurvey();
           }}
@@ -187,7 +188,6 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    marginHorizontal: Margins.default,
     marginTop: Margins.smaller,
   },
   surveyContainer: {

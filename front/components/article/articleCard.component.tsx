@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   articleTitle: {
     color: Colors.primaryBlueDark,
-    fontSize: Sizes.md,
+    fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
   },
   articleTitleContainer: {

@@ -10,6 +10,9 @@ interface Props {
 }
 
 export enum IcomoonIcons {
+  partager = "partager",
+  synchroniser = "synchroniser",
+  commenter = "commenter",
   mairie = "mairie",
   email = "email",
   aide = "aide",
