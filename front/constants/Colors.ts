@@ -27,6 +27,7 @@ export default {
   primaryBlueDisabled: "#cdd6f3",
   primaryYellow: "#E8AA05",
   primaryYellowDark: "#DA9F03",
+  primaryYellowVeryDark: "#BD8C09",
   primaryYellowLight: "#FFF8E4",
   secondaryGreen: "#83BCA0",
   secondaryGreenDark: "#5A8C74",
