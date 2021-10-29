@@ -1,6 +1,5 @@
 export const appActiveCounter = "@appActiveCounter";
 export const isFirstLaunchKey = "@isFirstLaunch";
-export const lastVersionLaunchKey = "@lastVersionLaunchKey";
 export const currentStepId = "@currentStepId";
 export const userSituationsKey = "@userSituations";
 export const userChildBirthdayKey = "@userChildBirthday";
@@ -14,14 +13,11 @@ export const cartoIsFirstLaunch = "@cartoIsFirstLaunch";
 export const notifIdNextStep = "@notifIdNextStep";
 export const notifIdsEvents = "@notifIdsEvents";
 export const eventsCalcFromBirthday = "@eventsCalcFromBirthday";
-export const forceToScheduleEventsNotif = "@forceToScheduleEventsNotif";
-export const osCalendarId = "@osCalendarId";
 export const osCalendarSyncDate = "@osCalendarSyncDate";
 
 export const allStorageKeys = [
   appActiveCounter,
   isFirstLaunchKey,
-  lastVersionLaunchKey,
   currentStepId,
   userSituationsKey,
   userChildBirthdayKey,
@@ -34,8 +30,6 @@ export const allStorageKeys = [
   notifIdNextStep,
   notifIdsEvents,
   eventsCalcFromBirthday,
-  forceToScheduleEventsNotif,
-  osCalendarId,
   osCalendarSyncDate,
 ];
 

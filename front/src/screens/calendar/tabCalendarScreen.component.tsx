@@ -4,68 +4,61 @@ import { addDays, format } from "date-fns";
 import * as Calendar from "expo-calendar";
 import * as Localization from "expo-localization";
 import _ from "lodash";
+import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
-import { useEffect, useState } from "react";
 import * as React from "react";
-import { Image, StyleSheet, TouchableOpacity } from "react-native";
+// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
+import { useEffect } from "react";
+import { StyleSheet } from "react-native";
 
-import HelpIcon from "../../assets/images/help.png";
 import {
+  Button,
   CommonText,
-  CustomButton,
   ErrorMessage,
+  Events,
   Icomoon,
   IcomoonIcons,
   Loader,
-  ModalHelp,
-  SecondaryTextItalic,
   TitleH1,
-  View,
-} from "../../components/baseComponents";
-import Events from "../../components/calendar/events.component";
-import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import {
-  FetchPoliciesConstants,
-  Formats,
-  Labels,
-  StorageKeysConstants,
-} from "../../constants";
-import { ALL_EVENTS } from "../../constants/databaseQueries.constants";
-import {
-  ICLOUD,
-  PLATFORM_IS_IOS,
-  SCREEN_WIDTH,
-} from "../../constants/platform.constants";
+} from "../components";
+import { SecondaryTextItalic } from "../components/StyledText";
+import { View } from "../components/Themed";
 import {
   Colors,
+  FetchPoliciesConstants,
   FontNames,
   FontWeight,
+  Formats,
   getFontFamilyName,
+  Labels,
   Paddings,
   Sizes,
-} from "../../styles";
-import type { Event, TabCalendarParamList } from "../../types";
-import { NotificationUtils, StorageUtils, TrackerUtils } from "../../utils";
-import * as RootNavigation from "../../utils/rootNavigation.util";
-import { stringIsNotNullNorEmpty } from "../../utils/strings.util";
+  StorageKeysConstants,
+} from "../constants";
+import { ALL_EVENTS } from "../constants/databaseQueries.constants";
+import { ICLOUD, PLATFORM_IS_IOS } from "../constants/platform.constants";
+import type { Event, TabCalendarParamList } from "../types";
+import { NotificationUtils, StorageUtils, TrackerUtils } from "../utils";
+import * as RootNavigation from "../utils/rootNavigation.util";
+import { stringIsNotNullNorEmpty } from "../utils/strings.util";
 
 interface Props {
   navigation: StackNavigationProp<TabCalendarParamList, "eventDetails">;
 }
 
 const TabCalendarScreen: FC<Props> = ({ navigation }) => {
-  const [childBirthday, setChildBirthday] = useState("");
-  const [eventsCalcFromBirthday, setEventsCalcFromBirthday] = useState("");
-  const [events, setEvents] = useState<Event[]>([]);
-  const [loadingEvents, setLoadingEvents] = useState(false);
-  const [lastSyncDate, setLastSyncDate] = useState<string | null>(null);
+  const { trackScreenView } = useMatomo();
+  const [childBirthday, setChildBirthday] = React.useState("");
+  const [eventsCalcFromBirthday, setEventsCalcFromBirthday] =
+    React.useState("");
+  const [events, setEvents] = React.useState<Event[]>([]);
+  const [loadingEvents, setLoadingEvents] = React.useState(false);
+  const [lastSyncDate, setLastSyncDate] = React.useState("");
   const hourWhenEventStart = 8; // Commence à 8h
   const hourWhenEventEnd = 18; // Se Termine à 18h
 
-  const [showModalHelp, setShowModalHelp] = useState(false);
-  const [trackerAction, setTrackerAction] = useState("");
-
   useEffect(() => {
+    trackScreenView(TrackerUtils.TrackingEvent.CALENDAR);
     void requestCalendarPermission();
     void getLastSyncDate();
 
@@ -139,7 +132,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   };
 
   const syncEventsWithOsCalendar = async () => {
-    setTrackerAction(TrackerUtils.TrackingEvent.CALENDAR_SYNC);
+    trackScreenView(TrackerUtils.TrackingEvent.CALENDAR_SYNC);
 
     const appCalendar = await getAppCalendar();
     if (appCalendar?.id) void Calendar.deleteCalendarAsync(appCalendar.id);
@@ -183,7 +176,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
 
     if (childBirthdayStr.length > 0) {
       setLoadingEvents(true);
-      void loadEvents();
+      loadEvents();
     }
   };
 
@@ -218,20 +211,10 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     const notifIdsEventsStored = await StorageUtils.getObjectValue(
       StorageKeysConstants.notifIdsEvents
     );
-    const forceToScheduleEventsNotif = await StorageUtils.getObjectValue(
-      StorageKeysConstants.forceToScheduleEventsNotif
-    );
     if (
       stringIsNotNullNorEmpty(eventsCalcFromBirthday) &&
-      (!notifIdsEventsStored ||
-        eventsCalcFromBirthday !== childBirthday ||
-        forceToScheduleEventsNotif)
+      (!notifIdsEventsStored || eventsCalcFromBirthday !== childBirthday)
     ) {
-      await StorageUtils.storeObjectValue(
-        StorageKeysConstants.forceToScheduleEventsNotif,
-        false
-      );
-
       // Supprimme les anciennes et planifie les nouvelles notifications des événements
       void NotificationUtils.cancelScheduleEventsNotification().then(() => {
         NotificationUtils.scheduleEventsNotification(events);
@@ -247,11 +230,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   }, [events]);
 
   return (
-    <View style={styles.mainContainer}>
-      <TrackerHandler
-        screenName={TrackerUtils.TrackingEvent.CALENDAR}
-        actionName={trackerAction}
-      />
+    <View style={styles.container}>
       <TitleH1
         title={Labels.tabs.calendarTitle}
         description={Labels.calendar.description}
@@ -266,41 +245,30 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
           {childBirthday.length > 0 ? (
             <>
               <View style={styles.flexStart}>
-                <View style={{ flex: 0 }}>
-                  <CustomButton
-                    title={Labels.calendar.synchronise}
-                    icon={
-                      <Icomoon
-                        name={IcomoonIcons.synchroniser}
-                        size={Sizes.sm}
-                        color={Colors.primaryBlue}
-                      />
-                    }
-                    rounded={true}
-                    disabled={false}
-                    action={syncEventsWithOsCalendar}
-                    titleStyle={styles.buttonTitleStyle}
-                    buttonStyle={styles.buttonStyle}
-                  />
-                </View>
-                <View style={styles.helpBtnContainer}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setShowModalHelp(true);
-                    }}
-                  >
-                    <Image source={HelpIcon} style={styles.helpIconStyle} />
-                  </TouchableOpacity>
-                </View>
+                <Button
+                  title={Labels.calendar.synchronise}
+                  icon={
+                    <Icomoon
+                      name={IcomoonIcons.synchroniser}
+                      size={Sizes.sm}
+                      color={Colors.secondaryGreen}
+                    />
+                  }
+                  rounded={false}
+                  disabled={false}
+                  action={syncEventsWithOsCalendar}
+                  titleStyle={styles.buttonTitleStyle}
+                  buttonStyle={styles.buttonStyle}
+                />
               </View>
-              {lastSyncDate && (
-                <SecondaryTextItalic style={styles.lastSyncDate}>
-                  {`(${Labels.calendar.lastSyncDate} ${format(
-                    new Date(lastSyncDate),
-                    Formats.dateTimeFR
-                  )})`}
-                </SecondaryTextItalic>
-              )}
+              <SecondaryTextItalic style={styles.lastSyncDate}>
+                {lastSyncDate
+                  ? `(${Labels.calendar.lastSyncDate} ${format(
+                      new Date(lastSyncDate),
+                      Formats.dateTimeFR
+                    )})`
+                  : ""}
+              </SecondaryTextItalic>
               <Events
                 evenements={events}
                 childBirthday={childBirthday}
@@ -312,26 +280,16 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
               <CommonText style={styles.noChildBirthday}>
                 {Labels.calendar.noChildBirthday}
               </CommonText>
-              <CustomButton
+              <Button
                 title={Labels.profile.update}
                 rounded={true}
                 action={() => {
-                  void RootNavigation.navigate("profile", null);
+                  RootNavigation.navigate("profile", null);
                 }}
               />
             </View>
           )}
         </View>
-      )}
-      {showModalHelp && (
-        <ModalHelp
-          icon={IcomoonIcons.synchroniser}
-          title={Labels.calendar.synchronization}
-          body={Labels.calendar.synchronizationHelper}
-          onDismiss={() => {
-            setShowModalHelp(false);
-          }}
-        />
       )}
     </View>
   );
@@ -339,16 +297,14 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   buttonStyle: {
-    backgroundColor: Colors.white,
-    borderColor: Colors.primaryBlue,
-    borderWidth: 1,
-    maxWidth: SCREEN_WIDTH * 0.8,
     paddingBottom: Paddings.smaller,
+    paddingHorizontal: 0,
+    paddingTop: 0,
   },
   buttonTitleStyle: {
-    color: Colors.primaryBlue,
+    color: Colors.secondaryGreen,
     fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
-    fontSize: Sizes.xs,
+    fontSize: Sizes.sm,
     textAlign: "left",
   },
   calendarContainer: {
@@ -360,31 +316,21 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
+  container: {
+    height: "100%",
+    padding: Paddings.default,
+  },
   flexStart: {
-    alignItems: "center",
+    alignItems: "flex-start",
     flexDirection: "row",
     flexWrap: "wrap",
-    paddingBottom: Paddings.light,
-  },
-  helpBtnContainer: {
-    flex: 0,
-    paddingHorizontal: Paddings.light,
-  },
-  helpIconStyle: {
-    height: Sizes.xxl,
-    width: Sizes.xxl,
   },
   lastSyncDate: {
     color: Colors.commonText,
     fontFamily: "avenir-italic",
-    fontSize: Sizes.xs,
+    fontSize: Sizes.xxs,
     fontStyle: "italic",
     paddingBottom: Paddings.default,
-  },
-  mainContainer: {
-    backgroundColor: Colors.white,
-    height: "100%",
-    padding: Paddings.default,
   },
   noChildBirthday: {
     paddingVertical: Paddings.default,
