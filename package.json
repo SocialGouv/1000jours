@@ -6,10 +6,10 @@
     "git-cz": "^4.7.6"
   },
   "devDependencies": {
-    "@socialgouv/eslint-config-typescript": "^1.88.0",
+    "@socialgouv/eslint-config-typescript": "^1.97.0",
     "commitizen": "^4.2.4",
     "eslint": "^7.32.0",
-    "prettier": "^2.3.2",
+    "prettier": "^2.4.1",
     "typescript": "^4.4.4"
   },
   "scripts": {
