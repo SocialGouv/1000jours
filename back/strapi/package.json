@@ -54,7 +54,7 @@
   "strapi": {},
   "engines": {
     "node": ">=10.16.0 <=14.x.x",
-    "npm": "^7.24.2"
+    "npm": "^8.1.2"
   },
   "license": "MIT",
   "devDependencies": {
