@@ -33,16 +33,17 @@ const EpdsSurveyQuestionsPagination: React.FC<EpdsSurveyQuestionsPaginationProps
     };
 
     return (
-      <View style={styles.mainContainer}>
+      <View
+        style={styles.mainContainer}
+        importantForAccessibility="no-hide-descendants"
+        accessibilityElementsHidden={true}
+      >
         <LinearProgress
           color={Colors.primaryYellowVeryDark}
           value={progressValue}
           variant="determinate"
           trackColor={Colors.primaryYellowLight}
           style={styles.progressBar}
-          accessibilityLabel={`Question ${currentQuestionIndex} sur ${totalNumberOfQuestions}. Vous êtes à ${
-            progressValue * 100
-          }%`}
         />
         <View style={styles.textView}>{displayNumber()}</View>
       </View>
