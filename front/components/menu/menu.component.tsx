@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
   },
   modalView: {
-    backgroundColor: "rgba(0,0,0,0.2)",
+    backgroundColor: Colors.transparentGrey,
     flex: 1,
     justifyContent: "flex-end",
   },

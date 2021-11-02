@@ -7,6 +7,7 @@ import { CheckBox } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
 import CheckedIcon from "../../assets/images/checkbox_checked.svg";
+import UncheckedIcon from "../../assets/images/checkbox_unchecked.svg";
 import {
   Colors,
   Labels,
@@ -106,57 +107,64 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
         {modalVisible && (
           <View style={styles.behindOfModal}>
             <View style={styles.mainContainer}>
-              <TouchableOpacity
-                style={styles.closeModalView}
-                onPress={() => {
-                  cancelFiltersModal();
-                }}
-                accessibilityLabel={Labels.accessibility.close}
-                accessibilityRole="button"
-              >
-                <Icomoon
-                  name={IcomoonIcons.fermer}
-                  size={Sizes.xs}
-                  color={Colors.primaryBlue}
-                />
-              </TouchableOpacity>
-
               <View
                 style={{
                   alignItems: "center",
                   flexDirection: "row",
-                  flexWrap: "wrap",
                   justifyContent: "space-between",
                 }}
               >
-                <TitleH1 title={Labels.listArticles.filters} animated={false} />
-                <Button
-                  buttonStyle={[styles.filterButton]}
-                  titleStyle={styles.filterButtonTitle}
-                  title={Labels.listArticles.resetFilters}
-                  rounded={true}
-                  disabled={false}
-                  icon={
-                    <Icomoon
-                      name={IcomoonIcons.filtrer}
-                      size={Sizes.xxs}
-                      color={Colors.primaryBlue}
-                    />
-                  }
-                  action={() => {
-                    resetFilters();
-                  }}
+                <TitleH1
+                  title={Labels.listArticles.filters}
+                  animated={false}
+                  style={{ paddingTop: Paddings.larger }}
                 />
+                <TouchableOpacity
+                  style={styles.closeModalView}
+                  onPress={() => {
+                    cancelFiltersModal();
+                  }}
+                  accessibilityLabel={Labels.accessibility.close}
+                  accessibilityRole="button"
+                >
+                  <Icomoon
+                    name={IcomoonIcons.fermer}
+                    size={Sizes.xs}
+                    color={Colors.primaryBlue}
+                  />
+                </TouchableOpacity>
               </View>
+              <Button
+                buttonStyle={[styles.filterButton]}
+                titleStyle={styles.filterButtonTitle}
+                title={Labels.listArticles.resetFilters}
+                rounded={true}
+                disabled={false}
+                icon={
+                  <Icomoon
+                    name={IcomoonIcons.filtrer}
+                    size={Sizes.xxs}
+                    color={Colors.primaryBlue}
+                  />
+                }
+                action={() => {
+                  resetFilters();
+                }}
+              />
 
               <ScrollView>
                 {filters.map((filter, index) => (
                   <CheckBox
                     containerStyle={styles.checkboxItem}
-                    textStyle={{ flex: 1 }}
+                    textStyle={{
+                      flex: 1,
+                      fontWeight: filter.active ? "bold" : "normal",
+                    }}
                     key={index}
                     iconRight
-                    uncheckedIcon="circle-o"
+                    uncheckedIcon={
+                      <UncheckedIcon width={Sizes.lg} height={Sizes.lg} />
+                    }
                     checkedIcon={
                       <CheckedIcon width={Sizes.lg} height={Sizes.lg} />
                     }
@@ -238,7 +246,6 @@ const styles = StyleSheet.create({
     borderColor: "transparent",
   },
   closeModalView: {
-    alignSelf: "flex-end",
     padding: Paddings.default,
   },
   filterButton: {
@@ -273,6 +280,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: Margins.default,
     padding: Paddings.default,
+    paddingTop: 0,
   },
   modalView: {
     alignItems: MAJOR_VERSION_IOS < 14 ? "stretch" : "center",
