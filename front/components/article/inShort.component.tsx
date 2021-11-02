@@ -63,6 +63,7 @@ const InShort: FC<Props> = ({ inShortArray }) => {
         <Text
           style={[styles.cardBackgroundSymbol, styles.inShortBackgroundSymbol]}
           importantForAccessibility="no"
+          accessible={false}
         >
           !
         </Text>
@@ -76,7 +77,13 @@ const InShort: FC<Props> = ({ inShortArray }) => {
               imageStyle={styles.imageBackground}
               style={styles.listItemIcon}
             >
-              {inShortIcons[item.icon]}
+              <View
+                importantForAccessibility="no-hide-descendants"
+                accessible={false}
+                accessibilityElementsHidden={true}
+              >
+                {inShortIcons[item.icon]}
+              </View>
             </ImageBackground>
             <ListItem.Content>
               <ListItem.Title>
