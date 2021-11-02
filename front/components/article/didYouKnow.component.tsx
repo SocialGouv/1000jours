@@ -31,6 +31,7 @@ const DidYouKnow: FC<Props> = ({ description }) => {
             styles.didYouKnowBackgroundSymbol,
           ]}
           importantForAccessibility="no"
+          accessible={false}
         >
           ?
         </Text>
