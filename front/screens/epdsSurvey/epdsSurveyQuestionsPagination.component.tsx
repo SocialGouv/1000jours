@@ -1,3 +1,4 @@
+import { range } from "lodash";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { LinearProgress } from "react-native-elements";
@@ -13,6 +14,23 @@ interface EpdsSurveyQuestionsPaginationProps {
 const EpdsSurveyQuestionsPagination: React.FC<EpdsSurveyQuestionsPaginationProps> =
   ({ currentQuestionIndex, totalNumberOfQuestions }) => {
     const progressValue = currentQuestionIndex / totalNumberOfQuestions;
+    const hideNumber = (index: number) =>
+      index != currentQuestionIndex - 1 && index != totalNumberOfQuestions - 1;
+
+    const displayNumber = () => {
+      return range(totalNumberOfQuestions).map((index) => (
+        <CommonText
+          style={[
+            styles.textStyle,
+            hideNumber(index) ? styles.hideNumber : null,
+          ]}
+          importantForAccessibility="no"
+          accessibilityElementsHidden={true}
+        >
+          {index + 1}
+        </CommonText>
+      ));
+    };
 
     return (
       <View style={styles.mainContainer}>
@@ -22,18 +40,19 @@ const EpdsSurveyQuestionsPagination: React.FC<EpdsSurveyQuestionsPaginationProps
           variant="determinate"
           trackColor={Colors.primaryYellowLight}
           style={styles.progressBar}
+          accessibilityLabel={`Question ${currentQuestionIndex} sur ${totalNumberOfQuestions}. Vous êtes à ${
+            progressValue * 100
+          }%`}
         />
-        <View style={styles.textView}>
-          <CommonText style={styles.textStyle}>1</CommonText>
-          <CommonText style={styles.textStyle}>
-            {totalNumberOfQuestions}
-          </CommonText>
-        </View>
+        <View style={styles.textView}>{displayNumber()}</View>
       </View>
     );
   };
 
 const styles = StyleSheet.create({
+  hideNumber: {
+    color: "transparent",
+  },
   mainContainer: {
     marginHorizontal: Margins.largest,
   },

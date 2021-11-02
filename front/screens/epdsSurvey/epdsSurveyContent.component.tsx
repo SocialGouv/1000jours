@@ -117,8 +117,12 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
       {!showResult ? (
         surveyCanBeStarted ? (
           <>
-            <TitleH1 title={Labels.epdsSurvey.title} animated={false} />
-            <CommonText style={styles.instruction}>
+            <TitleH1
+              title={Labels.epdsSurvey.title}
+              animated={false}
+              style={styles.marginTitle}
+            />
+            <CommonText style={styles.instruction} style={styles.marginTitle}>
               {Labels.epdsSurvey.instruction}
             </CommonText>
             <View style={styles.surveyContainer}>
@@ -188,7 +192,11 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    marginTop: Margins.smaller,
+    marginTop: Margins.default,
+  },
+  marginTitle: {
+    marginEnd: Margins.default,
+    marginStart: Margins.default,
   },
   surveyContainer: {
     flex: 1,
