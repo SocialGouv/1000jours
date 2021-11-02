@@ -1,6 +1,6 @@
-import { range } from "lodash";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { LinearProgress } from "react-native-elements";
 
 import { CommonText } from "../../components";
 import { Colors, FontWeight, Margins, Sizes } from "../../constants";
@@ -12,26 +12,17 @@ interface EpdsSurveyQuestionsPaginationProps {
 
 const EpdsSurveyQuestionsPagination: React.FC<EpdsSurveyQuestionsPaginationProps> =
   ({ currentQuestionIndex, totalNumberOfQuestions }) => {
-    const questionAnsweredStyle = [styles.defaultStyle, styles.answeredColor];
-    const questionNotAnsweredStyle = [
-      styles.defaultStyle,
-      styles.notAnsweredColor,
-    ];
+    const progressValue = currentQuestionIndex / totalNumberOfQuestions;
 
     return (
       <View style={styles.mainContainer}>
-        <View style={styles.gaugeView}>
-          {range(totalNumberOfQuestions).map((index) => (
-            <View
-              key={index}
-              style={
-                index < currentQuestionIndex
-                  ? questionAnsweredStyle
-                  : questionNotAnsweredStyle
-              }
-            />
-          ))}
-        </View>
+        <LinearProgress
+          color={Colors.primaryYellowVeryDark}
+          value={progressValue}
+          variant="determinate"
+          trackColor={Colors.primaryYellowLight}
+          style={styles.progressBar}
+        />
         <View style={styles.textView}>
           <CommonText style={styles.textStyle}>1</CommonText>
           <CommonText style={styles.textStyle}>
@@ -43,24 +34,14 @@ const EpdsSurveyQuestionsPagination: React.FC<EpdsSurveyQuestionsPaginationProps
   };
 
 const styles = StyleSheet.create({
-  answeredColor: {
-    backgroundColor: Colors.primaryYellowDark,
-  },
-  defaultStyle: {
-    flexGrow: 1,
-  },
-  gaugeView: {
-    flexDirection: "row",
-    height: Sizes.xxxxs,
-  },
   mainContainer: {
     marginHorizontal: Margins.largest,
   },
-  notAnsweredColor: {
-    backgroundColor: Colors.primaryYellowLight,
+  progressBar: {
+    height: Sizes.xxxxs,
   },
   textStyle: {
-    color: Colors.primaryYellowDark,
+    color: Colors.primaryYellowVeryDark,
     fontWeight: FontWeight.bold,
   },
   textView: {
