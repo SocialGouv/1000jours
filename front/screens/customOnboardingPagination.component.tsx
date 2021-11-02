@@ -17,7 +17,7 @@ export const CustomPagination: FC<OnboardingPaginationProps> = ({
 }) => (
   <View importantForAccessibility="no-hide-descendants" style={styles.rowView}>
     {range(slidesNumber).map((value) => (
-      <View key={value} style={styles.paginationElement}>
+      <View key={value}>
         <View
           style={[
             styles.defaultPaginationStyle,
@@ -26,7 +26,9 @@ export const CustomPagination: FC<OnboardingPaginationProps> = ({
               : styles.notSelectedIndex,
           ]}
         />
-        <CommonText style={styles.textStyle}>{value}</CommonText>
+        {value === currentIndex && (
+          <CommonText style={styles.textStyle}>{value + 1}</CommonText>
+        )}
       </View>
     ))}
   </View>
@@ -34,14 +36,14 @@ export const CustomPagination: FC<OnboardingPaginationProps> = ({
 
 const styles = StyleSheet.create({
   defaultPaginationStyle: {
+    alignSelf: "center",
     borderRadius: Sizes.xxxl,
-    height: Sizes.xs,
+    height: Sizes.xxxs,
+    marginHorizontal: Margins.smallest,
+    width: Sizes.xxxxl,
   },
   notSelectedIndex: {
     backgroundColor: Colors.onBoardingSwiperFlatList.paginationDefault,
-  },
-  paginationElement: {
-    marginHorizontal: Margins.smallest,
   },
   rowView: {
     alignSelf: "center",
@@ -51,7 +53,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.onBoardingSwiperFlatList.paginationActive,
   },
   textStyle: {
+    alignSelf: "center",
+    color: Colors.onBoardingSwiperFlatList.paginationActive,
     fontSize: Sizes.md,
-    marginHorizontal: Margins.largest,
   },
 });
