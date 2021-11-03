@@ -100,6 +100,9 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                 <CustomPagination
                   currentIndex={swiperCurrentIndex}
                   slidesNumber={slideViews.length}
+                  scrollToIndex={(index: number) => {
+                    swiperRef.current?.scrollToIndex({ index });
+                  }}
                 />
               )}
             >
