@@ -28,7 +28,7 @@ import {
   StorageKeysConstants,
 } from "../constants";
 import type { RootStackParamList } from "../types";
-import { StorageUtils, TrackerUtils } from "../utils";
+import { AccessibilityUtils, StorageUtils, TrackerUtils } from "../utils";
 import { CustomPagination } from "./customOnboardingPagination.component";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
@@ -67,10 +67,15 @@ const Onboarding: FC<Props> = ({ navigation }) => {
   ];
 
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
+  const [screenReaderIsEnabled, setScreenReaderIsEnabled] = useState(false);
   const swiperRef = useRef<SwiperFlatList>(null);
 
   useEffect(() => {
     trackScreenView(TrackerUtils.TrackingEvent.ONBOARDING);
+
+    void AccessibilityUtils.screenReaderIsEnabled().then((value) => {
+      setScreenReaderIsEnabled(value);
+    });
   }, []);
 
   const navigateToProfile = () => {
@@ -89,7 +94,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
           <ScrollView>
             <SwiperFlatList
               importantForAccessibility="no"
-              disableGesture
+              disableGesture={screenReaderIsEnabled}
               ref={swiperRef}
               onChangeIndex={({ index }) => {
                 setSwiperCurrentIndex(index);
