@@ -20,8 +20,6 @@ import Loader from "./base/loader.component";
 import Tags from "./base/tags.component";
 import TitleH1 from "./base/titleH1.component";
 import TitleH2 from "./base/titleH2.component";
-import Agenda from "./calendar/agenda.component";
-import Events from "./calendar/events.component";
 import Menu from "./menu/menu.component";
 import { CommonText, SecondaryText } from "./StyledText";
 import { Text, View } from "./Themed";
@@ -29,7 +27,6 @@ import StepIcon from "./timeline/stepIcon.component";
 import TimelineStep from "./timeline/timelineStep.component";
 
 export {
-  Agenda,
   BackButton,
   Backdrop,
   Button,
@@ -39,7 +36,6 @@ export {
   Datepicker,
   DidYouKnow,
   ErrorMessage,
-  Events,
   Filters,
   HeaderApp,
   Icomoon,

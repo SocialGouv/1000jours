@@ -14,12 +14,12 @@ import {
   Button,
   CommonText,
   ErrorMessage,
-  Events,
   Icomoon,
   IcomoonIcons,
   Loader,
   TitleH1,
 } from "../components";
+import Events from "../components/calendar/events.component";
 import { SecondaryTextItalic } from "../components/StyledText";
 import { View } from "../components/Themed";
 import {
@@ -222,7 +222,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   }, [events]);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.mainContainer}>
       <TitleH1
         title={Labels.tabs.calendarTitle}
         description={Labels.calendar.description}
@@ -308,10 +308,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  container: {
-    height: "100%",
-    padding: Paddings.default,
-  },
   flexStart: {
     alignItems: "flex-start",
     flexDirection: "row",
@@ -323,6 +319,11 @@ const styles = StyleSheet.create({
     fontSize: Sizes.xxs,
     fontStyle: "italic",
     paddingBottom: Paddings.default,
+  },
+  mainContainer: {
+    backgroundColor: Colors.white,
+    height: "100%",
+    padding: Paddings.default,
   },
   noChildBirthday: {
     paddingVertical: Paddings.default,
