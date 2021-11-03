@@ -89,6 +89,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
           <ScrollView>
             <SwiperFlatList
               importantForAccessibility="no"
+              disableGesture
               ref={swiperRef}
               onChangeIndex={({ index }) => {
                 setSwiperCurrentIndex(index);
@@ -120,6 +121,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                       {slideView.title}
                     </CommonText>
                     <SecondaryText
+                      accessibilityRole="text"
                       style={[styles.description, styles.textAlignCenter]}
                     >
                       {slideView.description}
