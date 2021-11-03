@@ -32,6 +32,7 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
         }}
         autoplay={false}
         disableGesture
+        importantForAccessibility="no"
       >
         {epdsSurvey.map((questionView, questionIndex) => (
           <View key={questionIndex}>
