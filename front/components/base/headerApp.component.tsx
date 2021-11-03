@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
   },
   logoMinistere: {
     aspectRatio: 1,
-    margin: Paddings.light,
+    marginLeft: Paddings.default,
+    marginTop: Paddings.default,
   },
 });
 

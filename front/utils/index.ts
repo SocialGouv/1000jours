@@ -1,3 +1,4 @@
+import * as AccessibilityUtils from "./accessibility.util";
 import * as AroundMeUtils from "./aroundMe.util";
 import * as AssestUtils from "./asset.util";
 import * as DataFetchingUtils from "./dataFetching.util";
@@ -11,6 +12,7 @@ import * as StringUtils from "./strings.util";
 import * as TrackerUtils from "./tracker.util";
 
 export {
+  AccessibilityUtils,
   AroundMeUtils,
   AssestUtils,
   DataFetchingUtils,

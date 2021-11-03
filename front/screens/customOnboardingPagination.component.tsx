@@ -2,6 +2,7 @@ import { range } from "lodash";
 import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 import { CommonText } from "../components";
 import { Colors, Margins, Sizes } from "../constants";
@@ -9,15 +10,22 @@ import { Colors, Margins, Sizes } from "../constants";
 interface OnboardingPaginationProps {
   currentIndex: number;
   slidesNumber: number;
+  scrollToIndex: (index: number) => void;
 }
 
 export const CustomPagination: FC<OnboardingPaginationProps> = ({
   currentIndex,
   slidesNumber,
+  scrollToIndex,
 }) => (
   <View importantForAccessibility="no-hide-descendants" style={styles.rowView}>
     {range(slidesNumber).map((value) => (
-      <View key={value}>
+      <TouchableWithoutFeedback
+        key={value}
+        onPress={() => {
+          scrollToIndex(value);
+        }}
+      >
         <View
           style={[
             styles.defaultPaginationStyle,
@@ -29,7 +37,7 @@ export const CustomPagination: FC<OnboardingPaginationProps> = ({
         {value === currentIndex && (
           <CommonText style={styles.textStyle}>{value + 1}</CommonText>
         )}
-      </View>
+      </TouchableWithoutFeedback>
     ))}
   </View>
 );
