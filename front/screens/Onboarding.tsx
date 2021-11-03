@@ -7,9 +7,9 @@ import { useEffect, useRef, useState } from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 
-import ThirdSlideImage from "../assets/images/Humaaans_2_Characters.svg";
-import FirstSlideImage from "../assets/images/Humaaans_3_Characters.svg";
-import SecondSlideImage from "../assets/images/Humaaans_Sitting.svg";
+import FirstSlideImage from "../assets/images/Onboarding_1.svg";
+import SecondSlideImage from "../assets/images/Onboarding_2.svg";
+import ThirdSlideImage from "../assets/images/Onboarding_3.svg";
 import {
   Button,
   CommonText,
@@ -89,6 +89,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
           <ScrollView>
             <SwiperFlatList
               importantForAccessibility="no"
+              disableGesture
               ref={swiperRef}
               onChangeIndex={({ index }) => {
                 setSwiperCurrentIndex(index);
@@ -120,6 +121,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                       {slideView.title}
                     </CommonText>
                     <SecondaryText
+                      accessibilityRole="text"
                       style={[styles.description, styles.textAlignCenter]}
                     >
                       {slideView.description}
