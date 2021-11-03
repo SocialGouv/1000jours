@@ -26,6 +26,7 @@ const EpdsSurveyQuestionsPagination: React.FC<EpdsSurveyQuestionsPaginationProps
           ]}
           importantForAccessibility="no"
           accessibilityElementsHidden={true}
+          key={index}
         >
           {index + 1}
         </CommonText>

@@ -1,6 +1,6 @@
 import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
-import { Dimensions, ScrollView, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 import Checkbox from "../../components/base/checkbox.component";
 import { CommonText } from "../../components/StyledText";
@@ -21,10 +21,7 @@ const EpdsQuestion: React.FC<Props> = ({
 }) => {
   const { trackScreenView } = useMatomo();
   return (
-    <ScrollView
-      style={styles.swipeView}
-      contentContainerStyle={styles.justifyContentCenter}
-    >
+    <View style={[styles.swipeView, styles.justifyContentCenter]}>
       <View style={[styles.swipeViewMargin, styles.paddingRight]}>
         <CommonText style={styles.question}>
           {questionAndAnswers.questionNumber}. {questionAndAnswers.question}
@@ -46,7 +43,7 @@ const EpdsQuestion: React.FC<Props> = ({
           ))}
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
