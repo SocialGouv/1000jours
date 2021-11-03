@@ -4,6 +4,10 @@ import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
   accessibility: {
+    articleCard: {
+      description: "Description",
+      title: "Titre de l'article",
+    },
     articleToRead: "article à lire",
     articlesFilters: {
       activeFilter: "filtre actif",
@@ -11,10 +15,15 @@ export default {
     },
     close: "Fermer",
     closeMenu: "Fermer le menu",
+    eventCard: {
+      description: "Description",
+      title: "Titre de l'événement",
+    },
     illustrationProfile: "Illustration profil",
     logoApp: "Logo de l'application",
     logoRepubliqueFr: "Logo de la République française",
     step: "étape",
+    tapForMoreInfo: "Appuyer deux fois pour avoir plus d'informations",
     updateDate: "Modifier la date",
     version: "version.",
   },
