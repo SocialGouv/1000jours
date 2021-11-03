@@ -1,6 +1,7 @@
 import { range } from "lodash";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { LinearProgress } from "react-native-elements";
 
 import { CommonText } from "../../components";
 import { Colors, FontWeight, Margins, Sizes } from "../../constants";
@@ -12,55 +13,56 @@ interface EpdsSurveyQuestionsPaginationProps {
 
 const EpdsSurveyQuestionsPagination: React.FC<EpdsSurveyQuestionsPaginationProps> =
   ({ currentQuestionIndex, totalNumberOfQuestions }) => {
-    const questionAnsweredStyle = [styles.defaultStyle, styles.answeredColor];
-    const questionNotAnsweredStyle = [
-      styles.defaultStyle,
-      styles.notAnsweredColor,
-    ];
+    const progressValue = currentQuestionIndex / totalNumberOfQuestions;
+    const hideNumber = (index: number) =>
+      index != currentQuestionIndex - 1 && index != totalNumberOfQuestions - 1;
+
+    const displayNumber = () => {
+      return range(totalNumberOfQuestions).map((index) => (
+        <CommonText
+          style={[
+            styles.textStyle,
+            hideNumber(index) ? styles.hideNumber : null,
+          ]}
+          importantForAccessibility="no"
+          accessibilityElementsHidden={true}
+          key={index}
+        >
+          {index + 1}
+        </CommonText>
+      ));
+    };
 
     return (
-      <View style={styles.mainContainer}>
-        <View style={styles.gaugeView}>
-          {range(totalNumberOfQuestions).map((index) => (
-            <View
-              key={index}
-              style={
-                index < currentQuestionIndex
-                  ? questionAnsweredStyle
-                  : questionNotAnsweredStyle
-              }
-            />
-          ))}
-        </View>
-        <View style={styles.textView}>
-          <CommonText style={styles.textStyle}>1</CommonText>
-          <CommonText style={styles.textStyle}>
-            {totalNumberOfQuestions}
-          </CommonText>
-        </View>
+      <View
+        style={styles.mainContainer}
+        importantForAccessibility="no-hide-descendants"
+        accessibilityElementsHidden={true}
+      >
+        <LinearProgress
+          color={Colors.primaryYellowVeryDark}
+          value={progressValue}
+          variant="determinate"
+          trackColor={Colors.primaryYellowLight}
+          style={styles.progressBar}
+        />
+        <View style={styles.textView}>{displayNumber()}</View>
       </View>
     );
   };
 
 const styles = StyleSheet.create({
-  answeredColor: {
-    backgroundColor: Colors.primaryYellowDark,
-  },
-  defaultStyle: {
-    flexGrow: 1,
-  },
-  gaugeView: {
-    flexDirection: "row",
-    height: Sizes.xxxxs,
+  hideNumber: {
+    color: "transparent",
   },
   mainContainer: {
     marginHorizontal: Margins.largest,
   },
-  notAnsweredColor: {
-    backgroundColor: Colors.primaryYellowLight,
+  progressBar: {
+    height: Sizes.xxxxs,
   },
   textStyle: {
-    color: Colors.primaryYellowDark,
+    color: Colors.primaryYellowVeryDark,
     fontWeight: FontWeight.bold,
   },
   textView: {
