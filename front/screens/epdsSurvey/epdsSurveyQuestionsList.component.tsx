@@ -34,6 +34,7 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
       {epdsSurvey.map((questionView, questionIndex) => (
         <EpdsQuestion
           key={questionIndex}
+          totalNumberOfQuestions={epdsSurvey.length}
           questionAndAnswers={questionView}
           updatePressedAnswer={updatePressedAnswer}
         />

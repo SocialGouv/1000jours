@@ -16,6 +16,10 @@ export default {
     },
     close: "Fermer",
     closeMenu: "Fermer le menu",
+    epds: {
+      onTotalQuestion: "sur",
+      question: "Question",
+    },
     eventCard: {
       description: "Description",
       title: "Titre de l'événement",
