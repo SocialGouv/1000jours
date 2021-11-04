@@ -4,6 +4,7 @@ import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
   accessibility: {
+    array: "Tableau",
     articleCard: {
       description: "Description",
       title: "Titre de l'article",
@@ -23,7 +24,9 @@ export default {
     logoApp: "Logo de l'application",
     logoRepubliqueFr: "Logo de la République française",
     step: "étape",
+    subtitle: "Sous-Titre",
     tapForMoreInfo: "Appuyer deux fois pour avoir plus d'informations",
+    title: "Titre",
     updateDate: "Modifier la date",
     version: "version.",
   },

@@ -7,9 +7,10 @@ import { ScrollView } from "react-native-gesture-handler";
 import HTML from "react-native-render-html";
 import WebView from "react-native-webview";
 
-import { FontWeight, Paddings } from "../../constants";
+import { Colors, FontWeight, Labels, Paddings } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { AssestUtils } from "../../utils";
+import { Icomoon, IcomoonIcons } from "..";
 import { View } from "../Themed";
 import Button from "./button.component";
 
@@ -66,12 +67,23 @@ const ModalHtmlContent: React.FC<Props> = ({
       onRequestClose={hideModal}
     >
       <SafeAreaView>
-        <ScrollView style={styles.mainContainer}>
-          <View style={styles.closeButton}>
-            <Button title="X" rounded={true} action={hideModal} />
+        <ScrollView>
+          <View style={styles.mainContainer}>
+            <View style={styles.closeButtonContainer}>
+              <Button
+                title=""
+                accessibilityLabel={Labels.accessibility.close}
+                icon={
+                  <Icomoon name={IcomoonIcons.fermer} color={Colors.white} />
+                }
+                rounded={true}
+                action={hideModal}
+                buttonStyle={styles.closeButton}
+              />
+            </View>
+            {content && <>{content}</>}
+            {html && <>{buildContent(html)}</>}
           </View>
-          {content && <View>{content}</View>}
-          {html && <View>{buildContent(html)}</View>}
         </ScrollView>
       </SafeAreaView>
     </RNModal>
@@ -83,6 +95,9 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
   },
   closeButton: {
+    paddingVertical: Paddings.default,
+  },
+  closeButtonContainer: {
     alignSelf: "flex-end",
   },
   mainContainer: {
