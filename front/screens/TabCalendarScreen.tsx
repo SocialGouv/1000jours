@@ -52,7 +52,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     React.useState("");
   const [events, setEvents] = React.useState<Event[]>([]);
   const [loadingEvents, setLoadingEvents] = React.useState(false);
-  const [lastSyncDate, setLastSyncDate] = React.useState("");
+  const [lastSyncDate, setLastSyncDate] = React.useState(null);
   const hourWhenEventStart = 8; // Commence à 8h
   const hourWhenEventEnd = 18; // Se Termine à 18h
 
