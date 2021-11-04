@@ -30,7 +30,12 @@ const Links: FC<Props> = ({ linksArray }) => {
       <View style={styles.linksContainer}>
         {filter(linksArray, "label").map((item, index) => (
           <ListItem.Content key={index} style={[styles.linkContainer]}>
-            <SecondaryText style={[styles.dot]} importantForAccessibility="no">
+            <SecondaryText
+              style={[styles.dot]}
+              importantForAccessibility="no"
+              accessibilityElementsHidden={true}
+              accessible={false}
+            >
               {"\u2B24"}
             </SecondaryText>
             <SecondaryText
