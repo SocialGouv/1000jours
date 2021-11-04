@@ -253,14 +253,14 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
                   buttonStyle={styles.buttonStyle}
                 />
               </View>
-              <SecondaryTextItalic style={styles.lastSyncDate}>
-                {lastSyncDate
-                  ? `(${Labels.calendar.lastSyncDate} ${format(
-                      new Date(lastSyncDate),
-                      Formats.dateTimeFR
-                    )})`
-                  : ""}
-              </SecondaryTextItalic>
+              {lastSyncDate && (
+                <SecondaryTextItalic style={styles.lastSyncDate}>
+                  {`${Labels.calendar.lastSyncDate} ${format(
+                    new Date(lastSyncDate),
+                    Formats.dateTimeFR
+                  )}`}
+                </SecondaryTextItalic>
+              )}
               <Events
                 evenements={events}
                 childBirthday={childBirthday}
