@@ -14,6 +14,7 @@ import {
   Labels,
   Margins,
   Paddings,
+  PlatformConstants,
   Sizes,
 } from "../../constants";
 import { emailContact } from "../../constants/email.constants";
@@ -117,7 +118,11 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
                 key={index}
                 onPress={() => {
                   setShowMenu(false);
-                  menuItem.onPress();
+                  // Sur iOS, sans le "setTimeout" la modal n'apparaît pas, il faut attendre la fermeture du menu.
+                  setTimeout(
+                    menuItem.onPress,
+                    PlatformConstants.PLATFORM_IS_IOS ? 200 : 0
+                  );
                 }}
                 accessibilityRole="button"
                 accessibilityLabel={menuItem.title}

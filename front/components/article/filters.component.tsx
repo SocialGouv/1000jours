@@ -2,7 +2,7 @@ import _ from "lodash";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect } from "react";
-import { Modal, StyleSheet, TouchableOpacity } from "react-native";
+import { Modal, StyleSheet } from "react-native";
 import { CheckBox } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -21,7 +21,7 @@ import {
   PLATFORM_IS_ANDROID,
 } from "../../constants/platform.constants";
 import type { Article, ArticleFilter } from "../../types";
-import { Button, TitleH1 } from "..";
+import { Button, CloseButton, TitleH1 } from "..";
 import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
 import { View } from "../Themed";
 
@@ -119,20 +119,13 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
                   animated={false}
                   style={{ paddingTop: Paddings.larger }}
                 />
-                <TouchableOpacity
-                  style={styles.closeModalView}
+
+                <CloseButton
                   onPress={() => {
                     cancelFiltersModal();
                   }}
-                  accessibilityLabel={Labels.accessibility.close}
-                  accessibilityRole="button"
-                >
-                  <Icomoon
-                    name={IcomoonIcons.fermer}
-                    size={Sizes.xs}
-                    color={Colors.primaryBlue}
-                  />
-                </TouchableOpacity>
+                  clear={true}
+                />
               </View>
               <Button
                 buttonStyle={[styles.filterButton]}
@@ -244,9 +237,6 @@ const styles = StyleSheet.create({
   checkboxItem: {
     backgroundColor: "transparent",
     borderColor: "transparent",
-  },
-  closeModalView: {
-    padding: Paddings.default,
   },
   filterButton: {
     alignSelf: "flex-start",

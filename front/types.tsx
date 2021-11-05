@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 export type RootStackParamList = {
@@ -181,4 +181,10 @@ export type Document = {
   url: string;
   thematique: Thematique;
   etapes?: Step[];
+};
+
+export type TableData = {
+  head: string[];
+  data: ReactNode[][] | string[][];
+  caption: string;
 };
