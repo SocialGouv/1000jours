@@ -14,12 +14,12 @@ import {
   Button,
   CommonText,
   ErrorMessage,
-  Events,
   Icomoon,
   IcomoonIcons,
   Loader,
   TitleH1,
 } from "../components";
+import Events from "../components/calendar/events.component";
 import { SecondaryTextItalic } from "../components/StyledText";
 import { View } from "../components/Themed";
 import {
