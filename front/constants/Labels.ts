@@ -116,6 +116,7 @@ export default {
     next: "Suivant",
     ok: "Ok",
     pass: "Passer",
+    previous: "Précédent",
     start: "Commencer",
     validate: "Valider",
   },

@@ -1,6 +1,12 @@
 import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import {
+  AccessibilityInfo,
+  Dimensions,
+  findNodeHandle,
+  StyleSheet,
+  Text,
+} from "react-native";
 
 import Checkbox from "../../components/base/checkbox.component";
 import { CommonText } from "../../components/StyledText";
@@ -14,27 +20,47 @@ interface Props {
   questionAndAnswers: EpdsQuestionAndAnswers;
   totalNumberOfQuestions: number;
   updatePressedAnswer: (answer: EpdsAnswer) => void;
+  nextButtonState: boolean;
 }
 
 const EpdsQuestion: React.FC<Props> = ({
   questionAndAnswers,
   totalNumberOfQuestions,
   updatePressedAnswer,
+  nextButtonState,
 }) => {
   const { trackScreenView } = useMatomo();
+
   const numberLabel = `${Labels.accessibility.epds.question} ${questionAndAnswers.questionNumber} ${Labels.accessibility.epds.onTotalQuestion} ${totalNumberOfQuestions}`;
+  const questionNumberRef = React.useRef<Text>(null);
+
+  React.useEffect(() => {
+    if (questionAndAnswers.questionNumber > 1) {
+      setAccessibilityFocus();
+    }
+  }, [nextButtonState]);
+
+  const setAccessibilityFocus = () => {
+    if (questionNumberRef.current) {
+      const reactTag = findNodeHandle(questionNumberRef.current);
+      if (reactTag) {
+        AccessibilityInfo.setAccessibilityFocus(reactTag);
+      }
+    }
+  };
 
   return (
     <View style={[styles.swipeView, styles.justifyContentCenter]}>
       <View style={[styles.swipeViewMargin, styles.paddingRight]}>
         <View style={{ alignItems: "baseline", flexDirection: "row" }}>
-          <CommonText
+          <Text
+            ref={questionNumberRef}
             style={styles.stepNum}
             allowFontScaling={false}
             accessibilityLabel={numberLabel}
           >
             {questionAndAnswers.questionNumber}
-          </CommonText>
+          </Text>
           <CommonText style={styles.question}>
             {questionAndAnswers.question}
           </CommonText>
