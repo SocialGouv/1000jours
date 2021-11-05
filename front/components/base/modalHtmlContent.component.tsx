@@ -7,12 +7,11 @@ import { ScrollView } from "react-native-gesture-handler";
 import HTML from "react-native-render-html";
 import WebView from "react-native-webview";
 
-import { Colors, FontWeight, Labels, Paddings } from "../../constants";
+import { Colors, FontWeight, Paddings } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { AssestUtils } from "../../utils";
-import { Icomoon, IcomoonIcons } from "..";
+import { CloseButton } from "..";
 import { View } from "../Themed";
-import Button from "./button.component";
 
 interface Props {
   content?: React.ReactNode;
@@ -68,21 +67,16 @@ const ModalHtmlContent: React.FC<Props> = ({
     >
       <SafeAreaView>
         <ScrollView>
-          <View style={styles.mainContainer}>
-            <View style={styles.closeButtonContainer}>
-              <Button
-                title=""
-                accessibilityLabel={Labels.accessibility.close}
-                icon={
-                  <Icomoon name={IcomoonIcons.fermer} color={Colors.white} />
-                }
-                rounded={true}
-                action={hideModal}
-                buttonStyle={styles.closeButton}
-              />
+          <View>
+            <View style={styles.headContainer}>
+              <View style={styles.closeButtonContainer}>
+                <CloseButton onPress={hideModal} clear={false} />
+              </View>
             </View>
-            {content && <>{content}</>}
-            {html && <>{buildContent(html)}</>}
+            <View style={styles.mainContainer}>
+              {content && <>{content}</>}
+              {html && <>{buildContent(html)}</>}
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -100,8 +94,14 @@ const styles = StyleSheet.create({
   closeButtonContainer: {
     alignSelf: "flex-end",
   },
+  headContainer: {
+    borderBottomWidth: 1,
+    borderColor: Colors.borderGrey,
+    paddingHorizontal: Paddings.default,
+    paddingVertical: Paddings.smaller,
+  },
   mainContainer: {
-    padding: Paddings.default,
+    paddingHorizontal: Paddings.default,
   },
 });
 

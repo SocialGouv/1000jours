@@ -11,6 +11,7 @@ import BackButton from "./base/backButton.component";
 import Backdrop from "./base/backdrop.component";
 import Button from "./base/button.component";
 import Checkbox from "./base/checkbox.component";
+import CloseButton from "./base/closeButton.component";
 import CustomSnackbar from "./base/customSnackbar.component";
 import Datepicker from "./base/datePicker.component";
 import ErrorMessage from "./base/errorMessage.component";
@@ -31,6 +32,7 @@ export {
   Backdrop,
   Button,
   Checkbox,
+  CloseButton,
   CommonText,
   CustomSnackbar,
   Datepicker,
