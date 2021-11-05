@@ -115,7 +115,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
   };
 
   const progressBarAndButtons = () => (
-    <View style={styles.footer}>
+    <View>
       <EpdsSurveyQuestionsPagination
         currentQuestionIndex={swiperCurrentIndex + 1}
         totalNumberOfQuestions={epdsSurvey.length}
@@ -188,9 +188,6 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
 };
 
 const styles = StyleSheet.create({
-  footer: {
-    marginTop: Margins.smaller,
-  },
   instruction: {
     color: Colors.commonText,
     fontSize: Sizes.xs,
@@ -204,6 +201,7 @@ const styles = StyleSheet.create({
   },
   surveyContainer: {
     flex: 1,
+    marginTop: Margins.smaller,
   },
 });
 

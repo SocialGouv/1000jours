@@ -5,6 +5,7 @@ import { Alert, Linking, StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
 
 import { Colors, Labels, Paddings, Sizes } from "../../constants";
+import SpecialChars from "../../constants/specialChars";
 import type { ArticleLink } from "../../types";
 import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";
@@ -30,8 +31,13 @@ const Links: FC<Props> = ({ linksArray }) => {
       <View style={styles.linksContainer}>
         {filter(linksArray, "label").map((item, index) => (
           <ListItem.Content key={index} style={[styles.linkContainer]}>
-            <SecondaryText style={[styles.dot]} importantForAccessibility="no">
-              {"\u2B24"}
+            <SecondaryText
+              style={[styles.dot]}
+              importantForAccessibility="no"
+              accessibilityElementsHidden={true}
+              accessible={false}
+            >
+              {SpecialChars.blackLargeCircle}
             </SecondaryText>
             <SecondaryText
               accessibilityRole="link"

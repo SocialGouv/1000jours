@@ -20,12 +20,15 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
   saveCurrentSurvey,
   updatePressedAnswer,
 }) => {
+  const [nextButtonState, setNextButtonState] = React.useState(false);
+
   return (
     <SwiperFlatList
       ref={swiperRef}
       index={swiperCurrentIndex}
       onChangeIndex={({ index }) => {
         saveCurrentSurvey(index);
+        setNextButtonState(!nextButtonState);
       }}
       autoplay={false}
       disableGesture
@@ -34,8 +37,10 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
       {epdsSurvey.map((questionView, questionIndex) => (
         <EpdsQuestion
           key={questionIndex}
+          totalNumberOfQuestions={epdsSurvey.length}
           questionAndAnswers={questionView}
           updatePressedAnswer={updatePressedAnswer}
+          nextButtonState={nextButtonState}
         />
       ))}
     </SwiperFlatList>
