@@ -143,7 +143,7 @@ export default {
       invalidEmail: "L'email n'est pas valide",
       invalidPhoneNumber: "Le tél. n'est pas valide",
       mailsCanBeReceivedInSpams:
-        "Les retours peuvent se glisser dans vos spams ou mails indésirables, merci de les vérifier.",
+        "(*) Les mails peuvent se glisser dans vos spams ou être considérés comme indésirables. Pensez à vérifier votre boîte.",
       numberOfChildren: "Nombre d'enfants",
       title: "Être contacté(e)",
       yourEmail: "Votre email",
