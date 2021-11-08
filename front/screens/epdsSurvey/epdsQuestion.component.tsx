@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     width,
   },
   swipeViewMargin: {
-    marginHorizontal: "10%",
+    marginHorizontal: "15%",
   },
 });
 
