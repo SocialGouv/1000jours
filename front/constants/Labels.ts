@@ -449,7 +449,6 @@ export default {
     openTheApp: "Ouverture de l'app",
   },
   onboarding: {
-    screenNumber: "Écran n°",
     slidesText: [
       {
         description:

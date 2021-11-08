@@ -3,9 +3,9 @@ import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
-import { useCallback, useEffect, useRef, useState } from "react";
-import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
-import { Dimensions, FlatList, ScrollView, StyleSheet } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Dimensions, ScrollView, StyleSheet } from "react-native";
+import { SwiperFlatList } from "react-native-swiper-flatlist";
 
 import FirstSlideImage from "../assets/images/Onboarding_1.svg";
 import SecondSlideImage from "../assets/images/Onboarding_2.svg";
@@ -28,7 +28,7 @@ import {
   StorageKeysConstants,
 } from "../constants";
 import type { RootStackParamList } from "../types";
-import { StorageUtils, TrackerUtils } from "../utils";
+import { AccessibilityUtils, StorageUtils, TrackerUtils } from "../utils";
 import { CustomPagination } from "./customOnboardingPagination.component";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
@@ -67,10 +67,15 @@ const Onboarding: FC<Props> = ({ navigation }) => {
   ];
 
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
-  const flatListRef = useRef<FlatList>(null);
+  const [screenReaderIsEnabled, setScreenReaderIsEnabled] = useState(false);
+  const swiperRef = useRef<SwiperFlatList>(null);
 
   useEffect(() => {
     trackScreenView(TrackerUtils.TrackingEvent.ONBOARDING);
+
+    void AccessibilityUtils.screenReaderIsEnabled().then((value) => {
+      setScreenReaderIsEnabled(value);
+    });
   }, []);
 
   const navigateToProfile = () => {
@@ -81,68 +86,60 @@ const Onboarding: FC<Props> = ({ navigation }) => {
     navigation.navigate("profile");
   };
 
-  const renderItem = ({ item, index }: { item: SlideView; index: number }) => {
-    return (
-      <View style={[styles.swipeView, styles.justifyContentCenter]} key={index}>
-        <View style={styles.swipeViewMargin}>
-          <View style={[styles.slideImage, styles.justifyContentCenter]}>
-            {item.image}
-          </View>
-          <View accessible>
-            <CommonText
-              accessibilityRole="header"
-              accessibilityLabel={`${Labels.onboarding.screenNumber}${
-                index + 1
-              }${item.title}`}
-              style={[styles.title, styles.textAlignCenter]}
-            >
-              {item.title}
-            </CommonText>
-            <SecondaryText
-              accessibilityRole="text"
-              accessibilityLabel={item.description}
-              style={[styles.description, styles.textAlignCenter]}
-            >
-              {item.description}
-            </SecondaryText>
-          </View>
-        </View>
-      </View>
-    );
-  };
-
-  const onScroll = useCallback(
-    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-      const slideSize = event.nativeEvent.layoutMeasurement.width;
-      const index = event.nativeEvent.contentOffset.x / slideSize;
-      setSwiperCurrentIndex(Math.round(index));
-    },
-    []
-  );
-
   return (
     <View style={[styles.mainContainer, styles.flexColumn]}>
       <HeaderApp />
       <View style={styles.mainView}>
         <View style={styles.flexCenter}>
           <ScrollView>
-            <FlatList
-              pagingEnabled
-              showsHorizontalScrollIndicator={false}
-              data={slideViews}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.title}
-              horizontal={true}
-              ref={flatListRef}
-              onScroll={onScroll}
-            />
-            <CustomPagination
-              currentIndex={swiperCurrentIndex}
-              slidesNumber={slideViews.length}
-              scrollToIndex={(index: number) => {
-                flatListRef.current?.scrollToIndex({ index });
+            <SwiperFlatList
+              importantForAccessibility="no"
+              disableGesture={screenReaderIsEnabled}
+              ref={swiperRef}
+              onChangeIndex={({ index }) => {
+                setSwiperCurrentIndex(index);
               }}
-            />
+              autoplay={false}
+              showPagination
+              PaginationComponent={() => (
+                <CustomPagination
+                  currentIndex={swiperCurrentIndex}
+                  slidesNumber={slideViews.length}
+                  scrollToIndex={(index: number) => {
+                    swiperRef.current?.scrollToIndex({ index });
+                  }}
+                />
+              )}
+            >
+              {slideViews.map((slideView, index) => (
+                <View
+                  style={[styles.swipeView, styles.justifyContentCenter]}
+                  key={index}
+                >
+                  <View style={[styles.swipeViewMargin]}>
+                    <View
+                      style={[styles.slideImage, styles.justifyContentCenter]}
+                    >
+                      {slideView.image}
+                    </View>
+                    <View accessible>
+                      <CommonText
+                        accessibilityRole="header"
+                        style={[styles.title, styles.textAlignCenter]}
+                      >
+                        {slideView.title}
+                      </CommonText>
+                      <SecondaryText
+                        accessibilityRole="text"
+                        style={[styles.description, styles.textAlignCenter]}
+                      >
+                        {slideView.description}
+                      </SecondaryText>
+                    </View>
+                  </View>
+                </View>
+              ))}
+            </SwiperFlatList>
           </ScrollView>
         </View>
       </View>
