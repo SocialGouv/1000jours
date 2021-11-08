@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.disabled,
     borderBottomWidth: 1,
     paddingRight: Paddings.smaller,
+    paddingVertical: Paddings.smaller,
   },
   paddingVertical: {
     paddingVertical: Paddings.default,

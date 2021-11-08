@@ -23,13 +23,15 @@ const EpdsResultUrlParagraph: React.FC<EpdsResultUrlParagraphProps> = ({
         </SecondaryText>
       )}
       {urls.map((url, index) => (
-        <View key={index}>
-          <TouchableOpacity onPress={async () => LinkingUtils.openWebsite(url)}>
-            <SecondaryText style={[styles.urls, styles.underline]}>
-              {url}
-            </SecondaryText>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          key={index}
+          onPress={async () => LinkingUtils.openWebsite(url)}
+          accessibilityRole="link"
+        >
+          <SecondaryText style={[styles.urls, styles.underline]}>
+            {url}
+          </SecondaryText>
+        </TouchableOpacity>
       ))}
     </View>
   );
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
   urls: {
     color: Colors.primaryBlue,
     fontSize: Sizes.sm,
-    lineHeight: Sizes.mmd,
+    lineHeight: Sizes.lg,
   },
 });
 
