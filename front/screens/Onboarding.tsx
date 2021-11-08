@@ -186,7 +186,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                   />
                 }
                 action={() => {
-                  swiperRef.current?.scrollToIndex({
+                  flatListRef.current?.scrollToIndex({
                     index: swiperCurrentIndex + 1,
                   });
                 }}
