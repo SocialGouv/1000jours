@@ -122,18 +122,20 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                     >
                       {slideView.image}
                     </View>
-                    <CommonText
-                      accessibilityRole="header"
-                      style={[styles.title, styles.textAlignCenter]}
-                    >
-                      {slideView.title}
-                    </CommonText>
-                    <SecondaryText
-                      accessibilityRole="text"
-                      style={[styles.description, styles.textAlignCenter]}
-                    >
-                      {slideView.description}
-                    </SecondaryText>
+                    <View accessible>
+                      <CommonText
+                        accessibilityRole="header"
+                        style={[styles.title, styles.textAlignCenter]}
+                      >
+                        {slideView.title}
+                      </CommonText>
+                      <SecondaryText
+                        accessibilityRole="text"
+                        style={[styles.description, styles.textAlignCenter]}
+                      >
+                        {slideView.description}
+                      </SecondaryText>
+                    </View>
                   </View>
                 </View>
               ))}
