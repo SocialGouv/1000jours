@@ -25,7 +25,7 @@ const EpdsResultSimpleParagraph: React.FC<EpdsResultSimpleParagraphProps> = ({
   return (
     <View style={styles.itemBorder}>
       {paragraph.title && (
-        <SecondaryText style={styles.paragraphTitle}>
+        <SecondaryText style={styles.paragraphTitle} accessibilityRole="header">
           {paragraph.title}
         </SecondaryText>
       )}
@@ -37,6 +37,7 @@ const EpdsResultSimpleParagraph: React.FC<EpdsResultSimpleParagraphProps> = ({
       {paragraph.pdfUrl && (
         <TouchableOpacity
           onPress={async () => LinkingUtils.openWebsite(paragraph.pdfUrl)}
+          accessibilityRole="link"
         >
           <SecondaryText style={[styles.pdfUrl, styles.underline]}>
             ({paragraph.pdfUrl})
