@@ -1,26 +1,57 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import {
+  AccessibilityInfo,
+  findNodeHandle,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 
 import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
-import { Colors, FontWeight, Margins, Sizes } from "../../../constants";
+import {
+  Colors,
+  FontNames,
+  FontWeight,
+  getFontFamilyName,
+  Margins,
+  Sizes,
+} from "../../../constants";
 import { LinkingUtils } from "../../../utils";
 
 interface EpdsResultUrlParagraphProps {
   paragraphTitle?: string;
   urls: string[];
+  isFocusOnFirstElement: boolean;
 }
 
 const EpdsResultUrlParagraph: React.FC<EpdsResultUrlParagraphProps> = ({
   paragraphTitle,
   urls,
+  isFocusOnFirstElement,
 }) => {
+  const titleRef = React.useRef<Text>(null);
+  const setAccessibilityFocus = () => {
+    if (titleRef.current) {
+      const reactTag = findNodeHandle(titleRef.current);
+      if (reactTag) {
+        AccessibilityInfo.setAccessibilityFocus(reactTag);
+      }
+    }
+  };
+
+  if (isFocusOnFirstElement) {
+    setTimeout(() => {
+      setAccessibilityFocus();
+    }, 300);
+  }
+
   return (
     <View style={styles.itemBorder}>
       {paragraphTitle && paragraphTitle.length > 0 && (
-        <SecondaryText style={styles.paragraphTitle}>
+        <Text style={styles.paragraphTitle} ref={titleRef}>
           {paragraphTitle}
-        </SecondaryText>
+        </Text>
       )}
       {urls.map((url, index) => (
         <TouchableOpacity
@@ -48,6 +79,7 @@ const styles = StyleSheet.create({
   },
   paragraphTitle: {
     color: Colors.commonText,
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.bold),
     fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
     lineHeight: Sizes.mmd,

@@ -45,27 +45,32 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
     return paragraphs.map(
       (paragraph: EpdsResultInformationType, index: number) => (
         <View key={index} style={styles.accordionItem}>
-          {renderParagraph(paragraph)}
+          {renderParagraph(paragraph, index == 0)}
         </View>
       )
     );
   };
 
-  const renderParagraph = (paragraph: any) => {
+  const renderParagraph = (paragraph: any, isFocusOnFirstElement: boolean) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return paragraph.contacts ? (
       <EpdsResultContactParagraph
         paragraphTitle={paragraph.title}
         contacts={paragraph.contacts}
         titleColor={leftBorderColor}
+        isFocusOnFirstElement={isFocusOnFirstElement}
       />
     ) : paragraph.urls ? (
       <EpdsResultUrlParagraph
         paragraphTitle={paragraph.title}
         urls={paragraph.urls}
+        isFocusOnFirstElement={isFocusOnFirstElement}
       />
     ) : (
-      <EpdsResultSimpleParagraph paragraph={paragraph} />
+      <EpdsResultSimpleParagraph
+        paragraph={paragraph}
+        isFocusOnFirstElement={isFocusOnFirstElement}
+      />
     );
   };
 

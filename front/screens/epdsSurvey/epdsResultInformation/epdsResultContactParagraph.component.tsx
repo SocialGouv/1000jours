@@ -1,12 +1,19 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import {
+  AccessibilityInfo,
+  findNodeHandle,
+  StyleSheet,
+  Text,
+} from "react-native";
 
 import Button from "../../../components/base/button.component";
 import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
 import {
   Colors,
+  FontNames,
   FontWeight,
+  getFontFamilyName,
   Labels,
   Margins,
   Paddings,
@@ -19,20 +26,40 @@ interface EpdsResultContactParagraphProps {
   paragraphTitle?: string;
   contacts: EpdsResultContactInformation[];
   titleColor: string;
+  isFocusOnFirstElement: boolean;
 }
 
 const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
   paragraphTitle,
   contacts,
   titleColor,
+  isFocusOnFirstElement,
 }) => {
   const titleColorStyle = { color: titleColor };
-
   const titleStyle = [styles.contactName, { fontSize: Sizes.sm }];
+  const titleRef = React.useRef<Text>(null);
+
+  const setAccessibilityFocus = () => {
+    if (titleRef.current) {
+      const reactTag = findNodeHandle(titleRef.current);
+      if (reactTag) {
+        AccessibilityInfo.setAccessibilityFocus(reactTag);
+      }
+    }
+  };
+
+  if (isFocusOnFirstElement) {
+    setTimeout(() => {
+      setAccessibilityFocus();
+    }, 300);
+  }
+
   return (
     <View style={styles.itemBorder}>
       {paragraphTitle && paragraphTitle.length > 0 && (
-        <SecondaryText style={titleStyle}>{paragraphTitle}</SecondaryText>
+        <Text style={titleStyle} ref={titleRef}>
+          {paragraphTitle}
+        </Text>
       )}
       {contacts.map((contact, index) => (
         <View
@@ -84,8 +111,8 @@ const styles = StyleSheet.create({
   },
   contactName: {
     color: Colors.commonText,
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.bold),
     fontSize: Sizes.sm,
-    fontWeight: FontWeight.bold,
     lineHeight: Sizes.mmd,
   },
   fontBold: {
