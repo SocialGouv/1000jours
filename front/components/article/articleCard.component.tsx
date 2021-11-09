@@ -17,6 +17,17 @@ interface Props {
 }
 
 const ArticleCard: FC<Props> = ({ article, step }) => {
+  // Permet de forcer le composant ExpoFastImage à être actualiser
+  const [showImage, setShowImage] = React.useState(false);
+  React.useEffect(() => {
+    setShowImage(false);
+    setTimeout(() => {
+      if (article.visuel?.id) {
+        setShowImage(true);
+      }
+    }, 100);
+  }, [article]);
+
   return (
     <ListItem
       bottomDivider
@@ -31,10 +42,10 @@ const ArticleCard: FC<Props> = ({ article, step }) => {
       style={[styles.listItem, styles.borderLeftRadius]}
       accessibilityRole="button"
     >
-      {article.visuel?.id ? (
+      {showImage ? (
         <ExpoFastImage
           uri={getVisuelFormat(article.visuel, VisuelFormat.thumbnail)}
-          cacheKey={article.visuel.id}
+          cacheKey={article.visuel?.id}
           style={[styles.articleImage, styles.borderLeftRadius]}
         />
       ) : (
