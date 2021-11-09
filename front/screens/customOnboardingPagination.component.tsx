@@ -5,7 +5,7 @@ import { StyleSheet, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 import { CommonText } from "../components";
-import { Colors, Margins, Sizes } from "../constants";
+import { Colors, Labels, Margins, Sizes } from "../constants";
 
 interface OnboardingPaginationProps {
   currentIndex: number;
@@ -18,13 +18,14 @@ export const CustomPagination: FC<OnboardingPaginationProps> = ({
   slidesNumber,
   scrollToIndex,
 }) => (
-  <View accessible={false} style={styles.rowView}>
+  <View style={styles.rowView}>
     {range(slidesNumber).map((value) => (
       <TouchableWithoutFeedback
         key={value}
         onPress={() => {
           scrollToIndex(value);
         }}
+        accessibilityLabel={`${Labels.onboarding.screenNumber}${value + 1}`}
       >
         <View
           style={[
