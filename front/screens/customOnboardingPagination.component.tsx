@@ -18,7 +18,7 @@ export const CustomPagination: FC<OnboardingPaginationProps> = ({
   slidesNumber,
   scrollToIndex,
 }) => (
-  <View importantForAccessibility="no-hide-descendants" style={styles.rowView}>
+  <View accessible={false} style={styles.rowView}>
     {range(slidesNumber).map((value) => (
       <TouchableWithoutFeedback
         key={value}
