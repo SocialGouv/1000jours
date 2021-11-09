@@ -84,28 +84,24 @@ const Onboarding: FC<Props> = ({ navigation }) => {
   const renderItem = ({ item, index }: { item: SlideView; index: number }) => {
     return (
       <View style={[styles.swipeView, styles.justifyContentCenter]} key={index}>
-        <View style={styles.swipeViewMargin}>
-          <View style={[styles.slideImage, styles.justifyContentCenter]}>
-            {item.image}
-          </View>
-          <View accessible>
-            <CommonText
-              accessibilityRole="header"
-              accessibilityLabel={`${Labels.onboarding.screenNumber}${
-                index + 1
-              }${item.title}`}
-              style={[styles.title, styles.textAlignCenter]}
-            >
-              {item.title}
-            </CommonText>
-            <SecondaryText
-              accessibilityRole="text"
-              accessibilityLabel={item.description}
-              style={[styles.description, styles.textAlignCenter]}
-            >
-              {item.description}
-            </SecondaryText>
-          </View>
+        <View style={styles.slideImage}>{item.image}</View>
+        <View accessible>
+          <CommonText
+            accessibilityRole="header"
+            accessibilityLabel={`${Labels.onboarding.screenNumber}${index + 1}${
+              item.title
+            }`}
+            style={[styles.title, styles.textAlignCenter]}
+          >
+            {item.title}
+          </CommonText>
+          <SecondaryText
+            accessibilityRole="text"
+            accessibilityLabel={item.description}
+            style={[styles.description, styles.textAlignCenter]}
+          >
+            {item.description}
+          </SecondaryText>
         </View>
       </View>
     );
@@ -246,13 +242,11 @@ const styles = StyleSheet.create({
     paddingBottom: Paddings.larger,
   },
   swipeView: {
+    marginBottom: "10%",
     width,
   },
-  swipeViewMargin: {
-    marginBottom: "10%",
-    marginHorizontal: "10%",
-  },
   textAlignCenter: {
+    marginHorizontal: "10%",
     textAlign: "center",
   },
   title: {
