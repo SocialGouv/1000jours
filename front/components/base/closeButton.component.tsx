@@ -20,7 +20,7 @@ const CloseButton: React.FC<Props> = ({ onPress, clear }) => {
       <Icomoon
         name={IcomoonIcons.fermer}
         size={Sizes.xs}
-        color={clear ? Colors.primaryBlue : Colors.white}
+        color={clear ? Colors.primaryBlueDark : Colors.white}
       />
     </TouchableOpacity>
   );
