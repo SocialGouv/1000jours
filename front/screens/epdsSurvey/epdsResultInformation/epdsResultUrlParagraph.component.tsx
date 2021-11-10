@@ -1,11 +1,5 @@
 import * as React from "react";
-import {
-  AccessibilityInfo,
-  findNodeHandle,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
@@ -18,6 +12,7 @@ import {
   Sizes,
 } from "../../../constants";
 import { LinkingUtils } from "../../../utils";
+import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
 
 interface EpdsResultUrlParagraphProps {
   paragraphTitle?: string;
@@ -31,18 +26,10 @@ const EpdsResultUrlParagraph: React.FC<EpdsResultUrlParagraphProps> = ({
   isFocusOnFirstElement,
 }) => {
   const titleRef = React.useRef<Text>(null);
-  const setAccessibilityFocus = () => {
-    if (titleRef.current) {
-      const reactTag = findNodeHandle(titleRef.current);
-      if (reactTag) {
-        AccessibilityInfo.setAccessibilityFocus(reactTag);
-      }
-    }
-  };
 
   if (isFocusOnFirstElement) {
     setTimeout(() => {
-      setAccessibilityFocus();
+      setAccessibilityFocusOnText(titleRef);
     }, 300);
   }
 

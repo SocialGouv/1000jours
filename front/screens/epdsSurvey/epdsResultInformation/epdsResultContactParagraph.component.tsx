@@ -1,10 +1,5 @@
 import * as React from "react";
-import {
-  AccessibilityInfo,
-  findNodeHandle,
-  StyleSheet,
-  Text,
-} from "react-native";
+import { StyleSheet, Text } from "react-native";
 
 import Button from "../../../components/base/button.component";
 import { SecondaryText } from "../../../components/StyledText";
@@ -21,6 +16,7 @@ import {
 } from "../../../constants";
 import type { EpdsResultContactInformation } from "../../../type";
 import { LinkingUtils } from "../../../utils";
+import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
 
 interface EpdsResultContactParagraphProps {
   paragraphTitle?: string;
@@ -39,18 +35,9 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
   const titleStyle = [styles.contactName, { fontSize: Sizes.sm }];
   const titleRef = React.useRef<Text>(null);
 
-  const setAccessibilityFocus = () => {
-    if (titleRef.current) {
-      const reactTag = findNodeHandle(titleRef.current);
-      if (reactTag) {
-        AccessibilityInfo.setAccessibilityFocus(reactTag);
-      }
-    }
-  };
-
   if (isFocusOnFirstElement) {
     setTimeout(() => {
-      setAccessibilityFocus();
+      setAccessibilityFocusOnText(titleRef);
     }, 300);
   }
 
@@ -113,6 +100,7 @@ const styles = StyleSheet.create({
     color: Colors.commonText,
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.bold),
     fontSize: Sizes.sm,
+    fontWeight: FontWeight.bold,
     lineHeight: Sizes.mmd,
   },
   fontBold: {
