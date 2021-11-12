@@ -101,6 +101,7 @@ const Profile: FC<Props> = ({ navigation }) => {
     defaultUserContext.situations
   );
   const [datePickerIsReady, setDatePickerIsReady] = useState(false);
+  const [positionOfScroll, setPositionOfScroll] = useState(0);
 
   useEffect(() => {
     trackScreenView(TrackerUtils.TrackingEvent.PROFILE);
@@ -184,10 +185,10 @@ const Profile: FC<Props> = ({ navigation }) => {
   };
 
   const scrollViewRef = React.useRef<ScrollView>(null);
-  const scrollTo = (positionY: number) => {
+  const scrollTo = () => {
     scrollViewRef.current?.scrollTo({
       animated: true,
-      y: positionY,
+      y: positionOfScroll,
     });
   };
 
@@ -225,7 +226,7 @@ const Profile: FC<Props> = ({ navigation }) => {
             <View
               onLayout={(event: LayoutChangeEvent) => {
                 const { layout } = event.nativeEvent;
-                scrollTo(layout.y + layout.height);
+                setPositionOfScroll(layout.y + layout.height);
               }}
             >
               {userSituations.map((situation, index) => (
@@ -239,6 +240,7 @@ const Profile: FC<Props> = ({ navigation }) => {
                   <TouchableOpacity
                     onPress={() => {
                       updateUserSituations(situation);
+                      scrollTo();
                     }}
                     disabled={situation.isChecked}
                     accessibilityRole="checkbox"
