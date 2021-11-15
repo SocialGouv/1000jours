@@ -1,3 +1,10 @@
+## [1.83.5](https://github.com/SocialGouv/1000jours/compare/v1.83.4...v1.83.5) (2021-10-28)
+
+
+### Bug Fixes
+
+* **epds:** corrections retours PO ([#822](https://github.com/SocialGouv/1000jours/issues/822)) ([f663910](https://github.com/SocialGouv/1000jours/commit/f663910a2421a4ba326095c18c0cb3f0ad2ec5c1))
+
 ## [1.83.4](https://github.com/SocialGouv/1000jours/compare/v1.83.3...v1.83.4) (2021-10-26)
 
 

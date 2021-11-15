@@ -5,7 +5,14 @@ import { StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
 
 import DefaultImage from "../../assets/images/default.png";
-import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../constants";
+import {
+  Colors,
+  FontWeight,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../../constants";
 import type { Article, Step } from "../../types";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { getVisuelFormat, VisuelFormat } from "../../utils/visuel.util";
@@ -40,7 +47,8 @@ const ArticleCard: FC<Props> = ({ article, step }) => {
       pad={0}
       containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
       style={[styles.listItem, styles.borderLeftRadius]}
-      accessibilityRole="button"
+      accessibilityHint={Labels.accessibility.tapForMoreInfo}
+      accessibilityLabel={`${Labels.accessibility.articleCard.title} : ${article.titre}. ${Labels.accessibility.articleCard.description} : ${article.resume}`}
     >
       {showImage ? (
         <ExpoFastImage

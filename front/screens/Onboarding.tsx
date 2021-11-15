@@ -3,13 +3,13 @@ import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
-import { useEffect, useRef, useState } from "react";
-import { Dimensions, ScrollView, StyleSheet } from "react-native";
-import { SwiperFlatList } from "react-native-swiper-flatlist";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
+import { Dimensions, FlatList, ScrollView, StyleSheet } from "react-native";
 
-import ThirdSlideImage from "../assets/images/Humaaans_2_Characters.svg";
-import FirstSlideImage from "../assets/images/Humaaans_3_Characters.svg";
-import SecondSlideImage from "../assets/images/Humaaans_Sitting.svg";
+import FirstSlideImage from "../assets/images/Onboarding_1.svg";
+import SecondSlideImage from "../assets/images/Onboarding_2.svg";
+import ThirdSlideImage from "../assets/images/Onboarding_3.svg";
 import {
   Button,
   CommonText,
@@ -67,7 +67,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
   ];
 
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
-  const swiperRef = useRef<SwiperFlatList>(null);
+  const flatListRef = useRef<FlatList>(null);
 
   useEffect(() => {
     trackScreenView(TrackerUtils.TrackingEvent.ONBOARDING);
@@ -81,53 +81,64 @@ const Onboarding: FC<Props> = ({ navigation }) => {
     navigation.navigate("profile");
   };
 
+  const renderItem = ({ item, index }: { item: SlideView; index: number }) => {
+    return (
+      <View style={[styles.swipeView, styles.justifyContentCenter]} key={index}>
+        <View style={styles.slideImage}>{item.image}</View>
+        <View accessible>
+          <CommonText
+            accessibilityRole="header"
+            accessibilityLabel={`${Labels.onboarding.screenNumber}${index + 1}${
+              item.title
+            }`}
+            style={[styles.title, styles.textAlignCenter]}
+          >
+            {item.title}
+          </CommonText>
+          <SecondaryText
+            accessibilityRole="text"
+            accessibilityLabel={item.description}
+            style={[styles.description, styles.textAlignCenter]}
+          >
+            {item.description}
+          </SecondaryText>
+        </View>
+      </View>
+    );
+  };
+
+  const onScroll = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const slideSize = event.nativeEvent.layoutMeasurement.width;
+      const index = event.nativeEvent.contentOffset.x / slideSize;
+      setSwiperCurrentIndex(Math.round(index));
+    },
+    []
+  );
+
   return (
     <View style={[styles.mainContainer, styles.flexColumn]}>
       <HeaderApp />
       <View style={styles.mainView}>
         <View style={styles.flexCenter}>
           <ScrollView>
-            <SwiperFlatList
-              importantForAccessibility="no"
-              ref={swiperRef}
-              onChangeIndex={({ index }) => {
-                setSwiperCurrentIndex(index);
+            <FlatList
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              data={slideViews}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.title}
+              horizontal={true}
+              ref={flatListRef}
+              onScroll={onScroll}
+            />
+            <CustomPagination
+              currentIndex={swiperCurrentIndex}
+              slidesNumber={slideViews.length}
+              scrollToIndex={(index: number) => {
+                flatListRef.current?.scrollToIndex({ index });
               }}
-              autoplay={false}
-              showPagination
-              PaginationComponent={() => (
-                <CustomPagination
-                  currentIndex={swiperCurrentIndex}
-                  slidesNumber={slideViews.length}
-                />
-              )}
-            >
-              {slideViews.map((slideView, index) => (
-                <View
-                  style={[styles.swipeView, styles.justifyContentCenter]}
-                  key={index}
-                >
-                  <View style={[styles.swipeViewMargin]}>
-                    <View
-                      style={[styles.slideImage, styles.justifyContentCenter]}
-                    >
-                      {slideView.image}
-                    </View>
-                    <CommonText
-                      accessibilityRole="header"
-                      style={[styles.title, styles.textAlignCenter]}
-                    >
-                      {slideView.title}
-                    </CommonText>
-                    <SecondaryText
-                      style={[styles.description, styles.textAlignCenter]}
-                    >
-                      {slideView.description}
-                    </SecondaryText>
-                  </View>
-                </View>
-              ))}
-            </SwiperFlatList>
+            />
           </ScrollView>
         </View>
       </View>
@@ -171,7 +182,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                   />
                 }
                 action={() => {
-                  swiperRef.current?.scrollToIndex({
+                  flatListRef.current?.scrollToIndex({
                     index: swiperCurrentIndex + 1,
                   });
                 }}
@@ -231,13 +242,11 @@ const styles = StyleSheet.create({
     paddingBottom: Paddings.larger,
   },
   swipeView: {
+    marginBottom: "10%",
     width,
   },
-  swipeViewMargin: {
-    marginBottom: "10%",
-    marginHorizontal: "10%",
-  },
   textAlignCenter: {
+    marginHorizontal: "10%",
     textAlign: "center",
   },
   title: {

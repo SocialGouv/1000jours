@@ -2,6 +2,7 @@ import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useEffect, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import type { SwiperFlatList } from "react-native-swiper-flatlist";
 
 import { TitleH1 } from "../../components";
@@ -23,6 +24,7 @@ import EpdsLoadPreviousSurvey from "./epdsLoadPreviousSurvey.component";
 // import EpdsResult from "./epdsResult.component";
 import EpdsSurveyFooter from "./epdsSurveyFooter.component";
 import EpdsSurveyQuestionsList from "./epdsSurveyQuestionsList.component";
+import EpdsSurveyQuestionsPagination from "./epdsSurveyQuestionsPagination.component";
 
 interface Props {
   epdsSurvey: EpdsQuestionAndAnswers[];
@@ -112,17 +114,38 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
     setShowResult(false);
   };
 
+  const progressBarAndButtons = () => (
+    <View>
+      <EpdsSurveyQuestionsPagination
+        currentQuestionIndex={swiperCurrentIndex + 1}
+        totalNumberOfQuestions={epdsSurvey.length}
+      />
+      <EpdsSurveyFooter
+        swiperCurrentIndex={swiperCurrentIndex}
+        swiperRef={swiperRef}
+        showValidateButton={showValidateButton}
+        questionIsAnswered={questionIsAnswered}
+        setShowResult={setShowResult}
+      />
+    </View>
+  );
+
   return (
     <View style={styles.mainContainer}>
       {!showResult ? (
         surveyCanBeStarted ? (
           <>
-            <TitleH1 title={Labels.epdsSurvey.title} animated={false} />
-            <CommonText style={styles.instruction}>
-              {Labels.epdsSurvey.instruction}
-            </CommonText>
-            <View style={styles.surveyContainer}>
-              <View>
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                justifyContent: "space-between",
+              }}
+            >
+              <TitleH1 title={Labels.epdsSurvey.title} animated={false} />
+              <CommonText style={styles.instruction}>
+                {Labels.epdsSurvey.instruction}
+              </CommonText>
+              <View style={styles.surveyContainer}>
                 <EpdsSurveyQuestionsList
                   epdsSurvey={questionsAndAnswers}
                   swiperRef={swiperRef}
@@ -131,16 +154,8 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
                   updatePressedAnswer={updatePressedAnswer}
                 />
               </View>
-              <View style={styles.footer}>
-                <EpdsSurveyFooter
-                  swiperCurrentIndex={swiperCurrentIndex}
-                  swiperRef={swiperRef}
-                  showValidateButton={showValidateButton}
-                  questionIsAnswered={questionIsAnswered}
-                  setShowResult={setShowResult}
-                />
-              </View>
-            </View>
+            </ScrollView>
+            {progressBarAndButtons()}
           </>
         ) : (
           <EpdsLoadPreviousSurvey
@@ -173,12 +188,6 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
 };
 
 const styles = StyleSheet.create({
-  footer: {
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-    right: 0,
-  },
   instruction: {
     color: Colors.commonText,
     fontSize: Sizes.xs,
@@ -188,11 +197,11 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    marginTop: Margins.smaller,
+    margin: Margins.default,
   },
   surveyContainer: {
     flex: 1,
-    justifyContent: "center",
+    marginTop: Margins.smaller,
   },
 });
 

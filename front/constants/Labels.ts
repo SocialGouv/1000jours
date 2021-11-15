@@ -4,6 +4,11 @@ import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
   accessibility: {
+    array: "Tableau",
+    articleCard: {
+      description: "Description",
+      title: "Titre de l'article",
+    },
     articleToRead: "article à lire",
     articlesFilters: {
       activeFilter: "filtre actif",
@@ -11,10 +16,21 @@ export default {
     },
     close: "Fermer",
     closeMenu: "Fermer le menu",
+    epds: {
+      onTotalQuestion: "sur",
+      question: "Question",
+    },
+    eventCard: {
+      description: "Description",
+      title: "Titre de l'événement",
+    },
     illustrationProfile: "Illustration profil",
     logoApp: "Logo de l'application",
     logoRepubliqueFr: "Logo de la République française",
     step: "étape",
+    subtitle: "Sous-Titre",
+    tapForMoreInfo: "Appuyer deux fois pour avoir plus d'informations",
+    title: "Titre",
     updateDate: "Modifier la date",
     version: "version.",
   },
@@ -100,6 +116,7 @@ export default {
     next: "Suivant",
     ok: "Ok",
     pass: "Passer",
+    previous: "Précédent",
     start: "Commencer",
     validate: "Valider",
   },
@@ -126,7 +143,7 @@ export default {
       invalidEmail: "L'email n'est pas valide",
       invalidPhoneNumber: "Le tél. n'est pas valide",
       mailsCanBeReceivedInSpams:
-        "Les retours peuvent se glisser dans vos spams ou mails indésirables, merci de les vérifier.",
+        "(*) Les mails peuvent se glisser dans vos spams ou être considérés comme indésirables. Pensez à vérifier votre boîte.",
       numberOfChildren: "Nombre d'enfants",
       title: "Être contacté(e)",
       yourEmail: "Votre email",
@@ -178,7 +195,7 @@ export default {
         {
           boldIndexes: [],
           description:
-            "Il existe des questionnaires de dépistage d’utilisations simple. N’hésitez pas à en parler à votre sage-femme ou votre médecin, ils pourront faire le point avec vous.  Si vous souhaitez utiliser le questionnaire (EPDS), il est important qu’il se fasse en présence d’un professionnel de santé, qui est le seul à pouvoir poser un diagnostic.",
+            "Il existe des questionnaires de dépistage d’utilisation simple. N’hésitez pas à en parler à votre sage-femme ou votre médecin, ils pourront faire le point avec vous.  Si vous souhaitez utiliser le questionnaire (EPDS), il est important qu’il se fasse en présence d’un professionnel de santé, qui est le seul à pouvoir poser un diagnostic.",
           title: "Informations",
         },
         {
@@ -199,7 +216,7 @@ export default {
         ],
         title: "Étapes",
       },
-      title: "Dépression post partum, en parler c’est soigner !",
+      title: "Dépression post partum, en parler c’est se soigner !",
     },
     previousSurvey: {
       continueButton: "Continuer",
@@ -432,6 +449,7 @@ export default {
     openTheApp: "Ouverture de l'app",
   },
   onboarding: {
+    screenNumber: "Écran n°",
     slidesText: [
       {
         description:
