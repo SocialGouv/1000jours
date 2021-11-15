@@ -58,7 +58,7 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
         >
           {/* Utiliser la ligne ci-dessous pour afficher le nom du contact en couleur selon le résultat EPDS */}
           {/* <SecondaryText style={[styles.contactName, titleColorStyle]}> */}
-          <SecondaryText style={styles.contactName}>
+          <SecondaryText style={styles.contactName} accessibilityRole="header">
             {contact.contactName}
           </SecondaryText>
           <SecondaryText style={styles.contactDescription}>

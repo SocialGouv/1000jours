@@ -135,7 +135,7 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
                 disabled={false}
                 icon={
                   <Icomoon
-                    name={IcomoonIcons.filtrer}
+                    name={IcomoonIcons.actualiser}
                     size={Sizes.xxs}
                     color={Colors.primaryBlue}
                   />
