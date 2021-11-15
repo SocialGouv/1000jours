@@ -67,7 +67,10 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
           <SecondaryText style={[styles.contactDescription, styles.fontBold]}>
             {contact.openingTime}
           </SecondaryText>
-          <SecondaryText style={[styles.contactDescription, styles.fontBold]}>
+          <SecondaryText
+            style={[styles.contactDescription, styles.fontBold]}
+            accessibilityLabel={contact.phoneNumberVoice}
+          >
             {contact.phoneNumber}
           </SecondaryText>
           <Button
