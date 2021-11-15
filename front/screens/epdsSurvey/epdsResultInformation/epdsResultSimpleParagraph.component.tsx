@@ -1,12 +1,14 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import { Button } from "../../../components";
 import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
 import {
   Colors,
+  FontNames,
   FontWeight,
+  getFontFamilyName,
   Labels,
   Margins,
   Paddings,
@@ -14,20 +16,35 @@ import {
 } from "../../../constants";
 import type { EpdsResultSimpleInformation } from "../../../type";
 import { LinkingUtils } from "../../../utils";
+import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
 
 interface EpdsResultSimpleParagraphProps {
   paragraph: EpdsResultSimpleInformation;
+  isFocusOnFirstElement: boolean;
 }
 
 const EpdsResultSimpleParagraph: React.FC<EpdsResultSimpleParagraphProps> = ({
   paragraph,
+  isFocusOnFirstElement,
 }) => {
+  const titleRef = React.useRef<Text>(null);
+
+  if (isFocusOnFirstElement) {
+    setTimeout(() => {
+      setAccessibilityFocusOnText(titleRef);
+    }, 300);
+  }
+
   return (
     <View style={styles.itemBorder}>
       {paragraph.title && (
-        <SecondaryText style={styles.paragraphTitle}>
+        <Text
+          style={styles.paragraphTitle}
+          accessibilityRole="header"
+          ref={titleRef}
+        >
           {paragraph.title}
-        </SecondaryText>
+        </Text>
       )}
       {paragraph.description && (
         <SecondaryText style={styles.paragraphDescription}>
@@ -37,6 +54,7 @@ const EpdsResultSimpleParagraph: React.FC<EpdsResultSimpleParagraphProps> = ({
       {paragraph.pdfUrl && (
         <TouchableOpacity
           onPress={async () => LinkingUtils.openWebsite(paragraph.pdfUrl)}
+          accessibilityRole="link"
         >
           <SecondaryText style={[styles.pdfUrl, styles.underline]}>
             ({paragraph.pdfUrl})
@@ -80,6 +98,7 @@ const styles = StyleSheet.create({
   },
   paragraphTitle: {
     color: Colors.commonText,
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.bold),
     fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
     lineHeight: Sizes.mmd,

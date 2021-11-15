@@ -43,7 +43,7 @@ const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
     if (!loading && data) {
       const results = (data as { parenthequeDocuments: Document[] })
         .parenthequeDocuments;
-      setDocuments(results);
+      setDocuments(sortDocuments(results));
     }
   }, [loading, data]);
 
@@ -84,6 +84,14 @@ const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
       )}
     </ScrollView>
   );
+};
+
+const sortDocuments = (documents: Document[]) => {
+  return _.sortBy(documents, [
+    function (doc) {
+      return doc.ordre;
+    },
+  ]);
 };
 
 const styles = StyleSheet.create({

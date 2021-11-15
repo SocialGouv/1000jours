@@ -22,7 +22,7 @@ const DidYouKnow: FC<Props> = ({ description }) => {
   return description?.length > 0 ? (
     <View style={styles.didYouKnowContainer}>
       <View style={[styles.cardTitleContainer, styles.positionRelative]}>
-        <CommonText style={[styles.didYouKnowTitle]}>
+        <CommonText style={[styles.didYouKnowTitle]} accessibilityRole="header">
           {Labels.article.didYouKnowTitle}
         </CommonText>
         <Text
@@ -30,6 +30,8 @@ const DidYouKnow: FC<Props> = ({ description }) => {
             styles.cardBackgroundSymbol,
             styles.didYouKnowBackgroundSymbol,
           ]}
+          importantForAccessibility="no"
+          accessible={false}
         >
           ?
         </Text>
@@ -52,8 +54,8 @@ const styles = StyleSheet.create({
   cardTitleContainer: {
     backgroundColor: "transparent",
     flex: 1,
-    height: Sizes.xxxl,
     justifyContent: "center",
+    minHeight: Sizes.xxxl,
     paddingLeft: Paddings.default,
   },
   didYouKnowBackgroundSymbol: {
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   didYouKnowTitle: {
-    color: Colors.primaryYellow,
+    color: Colors.primaryYellowVeryDark,
     fontSize: Sizes.md,
     fontWeight: FontWeight.bold,
     marginVertical: "auto",

@@ -7,7 +7,7 @@ import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { AccessibilityInfo, ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
 import {
@@ -125,12 +125,16 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
         hide: hide,
       };
     });
+
     setArticles(result);
   };
 
   const { loading, error, data } = useQuery(STEP_ARTICLES, {
     fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
   });
+
+  const articleToReadAccessibilityLabel = () =>
+    `${filteredArticles.length} ${Labels.accessibility.articleToRead}`;
 
   useEffect(() => {
     if (!loading && data) {
@@ -139,6 +143,13 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
       setShowArticles(true);
     }
   }, [articles]);
+
+  useEffect(() => {
+    if (filteredArticles.length > 0)
+      AccessibilityInfo.announceForAccessibility(
+        articleToReadAccessibilityLabel()
+      );
+  }, [filteredArticles]);
 
   useEffect(() => {
     if (!loading && data) {
@@ -188,7 +199,10 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
 
       {showArticles ? (
         <View style={styles.listContainer}>
-          <SecondaryText style={styles.headerListInfo}>
+          <SecondaryText
+            style={styles.headerListInfo}
+            accessibilityLabel={articleToReadAccessibilityLabel()}
+          >
             {filteredArticles.length} {Labels.listArticles.articlesToRead}
           </SecondaryText>
           {filteredArticles.map((article, index) => (

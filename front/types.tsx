@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 export type RootStackParamList = {
@@ -48,6 +48,8 @@ export type UserSituation = {
   id: string;
   label: string;
   isChecked: boolean;
+  childBirthdayRequired: boolean;
+  childBirthdayLabel: string;
 };
 
 export type UserContext = {
@@ -176,7 +178,14 @@ export type Document = {
   id: number;
   nom: string;
   description: string;
+  ordre: number;
   url: string;
   thematique: Thematique;
   etapes?: Step[];
+};
+
+export type TableData = {
+  head: string[];
+  data: ReactNode[][] | string[][];
+  caption: string;
 };

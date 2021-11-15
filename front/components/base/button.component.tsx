@@ -22,6 +22,7 @@ interface Props {
   buttonStyle?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
   onPressIn?: () => void;
+  accessibilityLabel?: string;
 }
 
 const Button: React.FC<Props> = ({
@@ -33,6 +34,7 @@ const Button: React.FC<Props> = ({
   buttonStyle,
   titleStyle,
   onPressIn,
+  accessibilityLabel,
 }) => {
   return (
     <RNEButton
@@ -53,6 +55,7 @@ const Button: React.FC<Props> = ({
       onPressIn={onPressIn}
       onPress={action}
       type={rounded ? "solid" : "clear"}
+      accessibilityLabel={accessibilityLabel}
     />
   );
 };

@@ -1,9 +1,9 @@
-import { range } from "lodash";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { LinearProgress } from "react-native-elements";
 
 import { CommonText } from "../../components";
-import { Colors, FontWeight, Margins, Sizes } from "../../constants";
+import { Colors, FontWeight, Labels, Margins, Sizes } from "../../constants";
 
 interface EpdsSurveyQuestionsPaginationProps {
   currentQuestionIndex: number;
@@ -12,55 +12,50 @@ interface EpdsSurveyQuestionsPaginationProps {
 
 const EpdsSurveyQuestionsPagination: React.FC<EpdsSurveyQuestionsPaginationProps> =
   ({ currentQuestionIndex, totalNumberOfQuestions }) => {
-    const questionAnsweredStyle = [styles.defaultStyle, styles.answeredColor];
-    const questionNotAnsweredStyle = [
-      styles.defaultStyle,
-      styles.notAnsweredColor,
-    ];
+    const progressValue = currentQuestionIndex / totalNumberOfQuestions;
 
     return (
-      <View style={styles.mainContainer}>
-        <View style={styles.gaugeView}>
-          {range(totalNumberOfQuestions).map((index) => (
-            <View
-              key={index}
-              style={
-                index < currentQuestionIndex
-                  ? questionAnsweredStyle
-                  : questionNotAnsweredStyle
-              }
-            />
-          ))}
-        </View>
+      <View
+        style={styles.mainContainer}
+        importantForAccessibility="no-hide-descendants"
+        accessibilityElementsHidden={true}
+      >
+        <CommonText
+          style={{
+            fontWeight: "bold",
+            marginBottom: Margins.light,
+          }}
+        >
+          {Labels.accessibility.epds.question} {currentQuestionIndex}{" "}
+          {Labels.accessibility.epds.onTotalQuestion} {totalNumberOfQuestions}
+        </CommonText>
+        <LinearProgress
+          color={Colors.primaryBlueDark}
+          value={progressValue}
+          variant="determinate"
+          trackColor={Colors.primaryBlueLight}
+          style={styles.progressBar}
+        />
         <View style={styles.textView}>
-          <CommonText style={styles.textStyle}>1</CommonText>
-          <CommonText style={styles.textStyle}>
-            {totalNumberOfQuestions}
-          </CommonText>
+          <CommonText>1</CommonText>
+          <CommonText>{totalNumberOfQuestions}</CommonText>
         </View>
       </View>
     );
   };
 
 const styles = StyleSheet.create({
-  answeredColor: {
-    backgroundColor: Colors.primaryYellowDark,
-  },
-  defaultStyle: {
-    flexGrow: 1,
-  },
-  gaugeView: {
-    flexDirection: "row",
-    height: Sizes.xxxxs,
+  hideNumber: {
+    color: "transparent",
   },
   mainContainer: {
     marginHorizontal: Margins.largest,
+    marginVertical: Margins.smaller,
   },
-  notAnsweredColor: {
-    backgroundColor: Colors.primaryYellowLight,
+  progressBar: {
+    height: Sizes.xxxxs,
   },
   textStyle: {
-    color: Colors.primaryYellowDark,
     fontWeight: FontWeight.bold,
   },
   textView: {

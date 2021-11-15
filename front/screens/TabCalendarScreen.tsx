@@ -15,12 +15,12 @@ import {
   Button,
   CommonText,
   ErrorMessage,
-  Events,
   Icomoon,
   IcomoonIcons,
   Loader,
   TitleH1,
 } from "../components";
+import Events from "../components/calendar/events.component";
 import { SecondaryTextItalic } from "../components/StyledText";
 import { View } from "../components/Themed";
 import {
@@ -53,7 +53,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     React.useState("");
   const [events, setEvents] = React.useState<Event[]>([]);
   const [loadingEvents, setLoadingEvents] = React.useState(false);
-  const [lastSyncDate, setLastSyncDate] = React.useState("");
+  const [lastSyncDate, setLastSyncDate] = React.useState<string | null>(null);
   const hourWhenEventStart = 8; // Commence à 8h
   const hourWhenEventEnd = 18; // Se Termine à 18h
 
@@ -230,7 +230,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   }, [events]);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.mainContainer}>
       <TitleH1
         title={Labels.tabs.calendarTitle}
         description={Labels.calendar.description}
@@ -261,14 +261,14 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
                   buttonStyle={styles.buttonStyle}
                 />
               </View>
-              <SecondaryTextItalic style={styles.lastSyncDate}>
-                {lastSyncDate
-                  ? `(${Labels.calendar.lastSyncDate} ${format(
-                      new Date(lastSyncDate),
-                      Formats.dateTimeFR
-                    )})`
-                  : ""}
-              </SecondaryTextItalic>
+              {lastSyncDate && (
+                <SecondaryTextItalic style={styles.lastSyncDate}>
+                  {`${Labels.calendar.lastSyncDate} ${format(
+                    new Date(lastSyncDate),
+                    Formats.dateTimeFR
+                  )}`}
+                </SecondaryTextItalic>
+              )}
               <Events
                 evenements={events}
                 childBirthday={childBirthday}
@@ -316,10 +316,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  container: {
-    height: "100%",
-    padding: Paddings.default,
-  },
   flexStart: {
     alignItems: "flex-start",
     flexDirection: "row",
@@ -331,6 +327,11 @@ const styles = StyleSheet.create({
     fontSize: Sizes.xxs,
     fontStyle: "italic",
     paddingBottom: Paddings.default,
+  },
+  mainContainer: {
+    backgroundColor: Colors.white,
+    height: "100%",
+    padding: Paddings.default,
   },
   noChildBirthday: {
     paddingVertical: Paddings.default,

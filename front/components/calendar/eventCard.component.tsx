@@ -2,9 +2,15 @@ import { useLazyQuery } from "@apollo/client";
 import _ from "lodash";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import * as React from "react";
-import { ImageBackground, StyleSheet, View } from "react-native";
+import {
+  AccessibilityInfo,
+  findNodeHandle,
+  ImageBackground,
+  StyleSheet,
+  View,
+} from "react-native";
 import { ListItem } from "react-native-elements";
 
 import BgImage from "../../assets/images/bg-icon-event-type.png";
@@ -23,11 +29,11 @@ import type { Article, Event, Tag } from "../../types";
 import { StorageUtils, TrackerUtils } from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { getThematiqueIcon } from "../../utils/thematique.util";
-import { Loader } from "..";
 import ArticleCard from "../article/articleCard.component";
 import Button from "../base/button.component";
 import ErrorMessage from "../base/errorMessage.component";
 import Icomoon from "../base/icomoon.component";
+import Loader from "../base/loader.component";
 import Tags from "../base/tags.component";
 import { CommonText, SecondaryText } from "../StyledText";
 
@@ -42,6 +48,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
   const { trackScreenView } = useMatomo();
   const [articles, setArticles] = React.useState<Article[]>([]);
   const MAX_ARTICLES = 10;
+  const elementRef = useRef<View>(null);
 
   const getEventTags = () => {
     const tags: Tag[] = [];
@@ -80,6 +87,15 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
     RootNavigation.navigate("tabAroundMe", null);
   };
 
+  const setAccessibilityFocus = () => {
+    if (elementRef.current) {
+      const reactTag = findNodeHandle(elementRef.current);
+      if (reactTag) {
+        AccessibilityInfo.setAccessibilityFocus(reactTag);
+      }
+    }
+  };
+
   const buildWhereCondition = () => {
     let condition = "";
     condition +=
@@ -115,6 +131,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
         ? event.articles.concat(results)
         : results;
       setArticles(eventArticles);
+      setAccessibilityFocus();
     }
   }, [loading, data]);
 
@@ -123,12 +140,13 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
   return (
     <View style={styles.eventCard} key={event.id}>
       <ListItem
-        key={event.id}
         pad={0}
         containerStyle={styles.listItemContainer}
         onPress={() => {
           onPressed(event.id.toString());
         }}
+        accessibilityHint={Labels.accessibility.tapForMoreInfo}
+        accessibilityLabel={`${Labels.accessibility.eventCard.title} : ${event.nom}. ${Labels.accessibility.eventCard.description} : ${event.description}`}
       >
         <View style={styles.eventContainer}>
           <View style={styles.eventIconContainer}>
@@ -156,7 +174,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
 
       {isExpanded && (
         <View style={styles.eventDetailsContainer}>
-          <View style={styles.linkCarto}>
+          <View style={styles.linkCarto} ref={elementRef} accessible={true}>
             <Button
               rounded={true}
               title={Labels.event.seeOnTheMap}

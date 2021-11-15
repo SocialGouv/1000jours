@@ -27,7 +27,8 @@ export default {
   primaryBlueDisabled: "#cdd6f3",
   primaryYellow: "#E8AA05",
   primaryYellowDark: "#DA9F03",
-  primaryYellowLight: "#FFF8E4",
+  primaryYellowVeryDark: "#BD8C09",
+  primaryYellowLight: "#FFF8E1",
   secondaryGreen: "#83BCA0",
   secondaryGreenDark: "#5A8C74",
   secondaryGreenLight: "#F0FFEF",
@@ -43,4 +44,8 @@ export default {
   white: "#FFFFFF",
   backdrop: "#00000080",
   transparentGrey: "rgba(52, 52, 52, 0.8)",
+  onBoardingSwiperFlatList: {
+    paginationDefault: "#26366E",
+    paginationActive: "#74C09F",
+  },
 };

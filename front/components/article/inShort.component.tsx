@@ -57,11 +57,13 @@ const InShort: FC<Props> = ({ inShortArray }) => {
   return filter(inShortArray, "text").length > 0 ? (
     <View style={styles.inShortContainer}>
       <View style={[styles.cardTitleContainer, styles.positionRelative]}>
-        <CommonText style={[styles.inShortTitle]}>
+        <CommonText style={[styles.inShortTitle]} accessibilityRole="header">
           {Labels.article.inShortTitle}
         </CommonText>
         <Text
           style={[styles.cardBackgroundSymbol, styles.inShortBackgroundSymbol]}
+          importantForAccessibility="no"
+          accessible={false}
         >
           !
         </Text>
@@ -75,7 +77,13 @@ const InShort: FC<Props> = ({ inShortArray }) => {
               imageStyle={styles.imageBackground}
               style={styles.listItemIcon}
             >
-              {inShortIcons[item.icon]}
+              <View
+                importantForAccessibility="no-hide-descendants"
+                accessible={false}
+                accessibilityElementsHidden={true}
+              >
+                {inShortIcons[item.icon]}
+              </View>
             </ImageBackground>
             <ListItem.Content>
               <ListItem.Title>
@@ -101,8 +109,8 @@ const styles = StyleSheet.create({
   cardTitleContainer: {
     backgroundColor: "transparent",
     flex: 1,
-    height: Sizes.xxxl,
     justifyContent: "center",
+    minHeight: Sizes.xxxl,
     paddingLeft: Paddings.default,
   },
   colorPrimaryBlueDark: {
