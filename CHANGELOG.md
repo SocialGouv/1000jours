@@ -1,3 +1,79 @@
+# [1.84.0](https://github.com/SocialGouv/1000jours/compare/v1.83.6...v1.84.0) (2021-11-15)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le problème d'actualisation des images ([#858](https://github.com/SocialGouv/1000jours/issues/858)) ([c3530e8](https://github.com/SocialGouv/1000jours/commit/c3530e80855dc840fd047f9ad7e9548122761bf7)), closes [#857](https://github.com/SocialGouv/1000jours/issues/857)
+* **accessibilite:** ajout label onboarding ([#856](https://github.com/SocialGouv/1000jours/issues/856)) ([0017810](https://github.com/SocialGouv/1000jours/commit/0017810b89d7a3648fcfe7db0fe52ddabd74318b))
+* **accessibilite:** fix lecture iOS ([#853](https://github.com/SocialGouv/1000jours/issues/853)) ([4614fc5](https://github.com/SocialGouv/1000jours/commit/4614fc56c3376963ad10509f06ff1b2221b6ef07))
+* **accessibilite:** utilisation flatlist RN + gestion écrans ([#855](https://github.com/SocialGouv/1000jours/issues/855)) ([921f066](https://github.com/SocialGouv/1000jours/commit/921f0664bb2b4fe03ec6a0a7f1dd4b9ad9feaa45))
+* 🐛 Corrige la font utilisé sur certains labels ([6614aa4](https://github.com/SocialGouv/1000jours/commit/6614aa4ebc8e94cc4547ccd35c38c66020a475aa))
+* 🐛 Corrige les dépendences incompatibles ([#850](https://github.com/SocialGouv/1000jours/issues/850)) ([6d8914b](https://github.com/SocialGouv/1000jours/commit/6d8914b2c81415f2980e28bfa6ce5071df7b588e))
+* 🐛 Corrige les imports (Require Cycle) ([#849](https://github.com/SocialGouv/1000jours/issues/849)) ([dcc4bda](https://github.com/SocialGouv/1000jours/commit/dcc4bda83493f17c1ca6b7f13f09182192e6bc52))
+* 🐛 Corrige les retours design ([1f707bf](https://github.com/SocialGouv/1000jours/commit/1f707bfe68cc061913b884114cf8891966adf240))
+* 🐛 downgrade matomo-tracker-react-native ([#851](https://github.com/SocialGouv/1000jours/issues/851)) ([2a94a31](https://github.com/SocialGouv/1000jours/commit/2a94a3196639a9f2b66afc204feb9d2a67ab1d3d))
+* 🐛 Initialise lastSyncDate à null ([#848](https://github.com/SocialGouv/1000jours/issues/848)) ([e8d5f7b](https://github.com/SocialGouv/1000jours/commit/e8d5f7bbc73d6015406526d89e90e690ec47cffd))
+* **accessibilite:** icones non accesssibles sur les articles ([#839](https://github.com/SocialGouv/1000jours/issues/839)) ([1c887cf](https://github.com/SocialGouv/1000jours/commit/1c887cf4e173d89d1bed8fdea914939435607313))
+* **accessibilite:** tutoriel - retours PO ([#842](https://github.com/SocialGouv/1000jours/issues/842)) ([f084880](https://github.com/SocialGouv/1000jours/commit/f0848804ef6b5a641c02a52668d054d24a8f3e6f))
+* **carto:** fix refus géoloc ([add8099](https://github.com/SocialGouv/1000jours/commit/add8099ae805bf8cafdb50298cf9f525ad03056f))
+* **carto:** fix snackbar message ([b96ebce](https://github.com/SocialGouv/1000jours/commit/b96ebce43468671b8d7a000d70eb932233ce064c))
+* **deps:** update all dependencies ([#733](https://github.com/SocialGouv/1000jours/issues/733)) ([964b625](https://github.com/SocialGouv/1000jours/commit/964b6257d6f710ee0886e4dc9c7db6664f261d57))
+* **deps:** update all dependencies ([#831](https://github.com/SocialGouv/1000jours/issues/831)) ([a383b07](https://github.com/SocialGouv/1000jours/commit/a383b079fcef8ce4b54bfffeb36e2bb6f2907ca4))
+* **deps:** update all non-major dependencies ([#833](https://github.com/SocialGouv/1000jours/issues/833)) ([e21e975](https://github.com/SocialGouv/1000jours/commit/e21e975e2d45d33ac465c03f93e42fc201385d2c))
+* **deps:** update dependency @ckeditor/ckeditor5-build-classic to v31 ([#838](https://github.com/SocialGouv/1000jours/issues/838)) ([2acbe83](https://github.com/SocialGouv/1000jours/commit/2acbe83b0bc5dc09aefc3c8026c5a282a9f18dc3))
+* **epds:** correction texte ([d9ab01a](https://github.com/SocialGouv/1000jours/commit/d9ab01ac863faad50cfd8326425731db3cd04034))
+* **epds:** correction texte gras ([3e2b826](https://github.com/SocialGouv/1000jours/commit/3e2b826c55146d525ade83038b802797c26a7412))
+* **epds:** fix affichage humeur ([d3c1b06](https://github.com/SocialGouv/1000jours/commit/d3c1b060876d73b173757c85a5cb80d0b1c53321))
+* **epds:** fix design ([756a681](https://github.com/SocialGouv/1000jours/commit/756a68149671ed369ab2e7c5140ca6caba6b2c04))
+* **epds:** fix largeur écran ([18a9236](https://github.com/SocialGouv/1000jours/commit/18a92362e58c8f3cc03532d2bc5cd7f29bfc5ff8))
+* **epds:** fix retours PO ([5fdf2a2](https://github.com/SocialGouv/1000jours/commit/5fdf2a2722bf140dd9519f9ebb1bf8d54b31b831))
+* 🐛 PR (Accessibilité) Ecran profil ([437375e](https://github.com/SocialGouv/1000jours/commit/437375e359134c0379f4e3527161acac0d3698ee))
+* **epds:** fix taille image ([8af522c](https://github.com/SocialGouv/1000jours/commit/8af522c349023eebd549e8d88fc644c2423318e4))
+* 🐛 PR (Accessibilité) Ecran profil ([ee4f8f1](https://github.com/SocialGouv/1000jours/commit/ee4f8f117e9b181c5d3497d980829a74aa9e8cb4))
+* **lib:** fix fichier workflow ([#753](https://github.com/SocialGouv/1000jours/issues/753)) ([e4938a2](https://github.com/SocialGouv/1000jours/commit/e4938a21707ec7b2cd869c50a00a7852629e20f6))
+* **parentheque:** modification de la phrase d'intro ([a46ecd9](https://github.com/SocialGouv/1000jours/commit/a46ecd9de5ee571a8554be5e238092185a7ae971))
+
+
+### Features
+
+* **accessibilite:** resultats epds ([#854](https://github.com/SocialGouv/1000jours/issues/854)) ([87d107c](https://github.com/SocialGouv/1000jours/commit/87d107cc0e667a76f0015c7fa8a5c6fd8cbdb005))
+* 🎸 ACCESSIBILITE - Ecran 7 : Calendrier  ([#847](https://github.com/SocialGouv/1000jours/issues/847)) ([6869bb6](https://github.com/SocialGouv/1000jours/commit/6869bb69314c0fd7767653e94ff24361276a16b9)), closes [#797](https://github.com/SocialGouv/1000jours/issues/797) [#797](https://github.com/SocialGouv/1000jours/issues/797)
+* 🎸 ACCESSIBILITE - Ecran 7 : Calendrier ([#841](https://github.com/SocialGouv/1000jours/issues/841)) ([05886e6](https://github.com/SocialGouv/1000jours/commit/05886e6a8d7f0eb123185a36bfd7f827bbb40836)), closes [#797](https://github.com/SocialGouv/1000jours/issues/797)
+* 🎸 ACCESSIBILITE : Politiques de confidentialité ([#846](https://github.com/SocialGouv/1000jours/issues/846)) ([38cf8d8](https://github.com/SocialGouv/1000jours/commit/38cf8d829e6b64151d597a6b2ec4d75b8c477c4c)), closes [#794](https://github.com/SocialGouv/1000jours/issues/794)
+* **accessibilite:** Ajout des labels ([425ab12](https://github.com/SocialGouv/1000jours/commit/425ab12c0e73aa3f3a474b08a03991d3a8a7f403))
+* **accessibilite:** Ajout modal pour filtreer les articles ([df51ee1](https://github.com/SocialGouv/1000jours/commit/df51ee113e5e3b61c879be9d2986a4b811d709fd))
+* **accessibilite:** ajout role boutton sur la liste des arcticles ([5bf618b](https://github.com/SocialGouv/1000jours/commit/5bf618b7cfa900abb83209ecbb18a03caab168bb))
+* **accessibilite:** ajout role header dans les articles ([2fc7aae](https://github.com/SocialGouv/1000jours/commit/2fc7aae6ab3b0d1b3dbed9017eb3c5a29e4a8221))
+* **accessibilite:** ajout role link dans les articles ([d7bf468](https://github.com/SocialGouv/1000jours/commit/d7bf46827f546d23056df47a6994dddc79e213fc))
+* **accessibilite:** Bloquer la taille sur l'accueil pour un zoom 200% ([f218f94](https://github.com/SocialGouv/1000jours/commit/f218f946a2e6b326f88b84f87682a1c877a30c40))
+* **accessibilite:** bouton fermer du menu ([c8745b0](https://github.com/SocialGouv/1000jours/commit/c8745b04b3c2d7f50a7820ab34a526525290b156))
+* **accessibilite:** citer le nombre d'article à lire + fix UI sur iOS ([a3caf0d](https://github.com/SocialGouv/1000jours/commit/a3caf0dba32718959152fbb44256d235fa2692bd))
+* **accessibilite:** couleur jaune ([9bc28a1](https://github.com/SocialGouv/1000jours/commit/9bc28a17bf6ac60e3935db0b865e03f7c23f2566))
+* **accessibilite:** Labels & Role sur les boutons du menu ([b9a0f1f](https://github.com/SocialGouv/1000jours/commit/b9a0f1fc2a765dc7028eb13a7130693ae434bb67))
+* **accessibilite:** Labels sur les boutons de la timeline ([785960c](https://github.com/SocialGouv/1000jours/commit/785960c1e2f9f13ffce72cfffe84a04e9f9c9ddd))
+* **accessibilite:** liste de liens et ajour du rôle  sur les articles ([2d15876](https://github.com/SocialGouv/1000jours/commit/2d158768e4b675c35f40d74b7a9b834fa4356e25))
+* **accessibilite:** liste des articles ([#817](https://github.com/SocialGouv/1000jours/issues/817)) ([0a01141](https://github.com/SocialGouv/1000jours/commit/0a01141c559a0ee4dd124af3fc3aca595574d77e))
+* **accessibilite:** masquer des éléments sur les articles ([b561034](https://github.com/SocialGouv/1000jours/commit/b56103420b4830455886974a022f4e886baee650))
+* **accessibilite:** Modification du menu en modal ([b999884](https://github.com/SocialGouv/1000jours/commit/b9998848ed79aa1975bce6b45886467d84b2b813))
+* **accessibilite:** questionnaire ([#843](https://github.com/SocialGouv/1000jours/issues/843)) ([638dea3](https://github.com/SocialGouv/1000jours/commit/638dea3eebe58c51cf5ad249f7a8ea309f86ee1a))
+* **accessibilite:** remplacement des couleurs dans les articles ([d4bf50f](https://github.com/SocialGouv/1000jours/commit/d4bf50fc4c6cb56cec5a56e0bbb36daa09013a6b))
+* **accessibilite:** Role titre sur l'accueil et le menu ([5ad9a31](https://github.com/SocialGouv/1000jours/commit/5ad9a31c2ab0e8d946ef9eb90cb5b2c7125fa48b))
+* **accessibilite:** textes tronqués à 200% ([52a43ad](https://github.com/SocialGouv/1000jours/commit/52a43ad79d41f051f5296959f62efaa3ee301355))
+* **accessibilite:** tutoriel - retours design et PO ([#844](https://github.com/SocialGouv/1000jours/issues/844)) ([bb1d41a](https://github.com/SocialGouv/1000jours/commit/bb1d41a35fe944b99e72ab415e4af49be980ae62))
+* 🎸 (Accessibilité) Ecran profil ([7dc5994](https://github.com/SocialGouv/1000jours/commit/7dc59943b2922d90dd30a94e4fb90ed5e3a3db3a)), closes [#792](https://github.com/SocialGouv/1000jours/issues/792)
+* 🎸 (Accessibilité) Ecran profil  ([#820](https://github.com/SocialGouv/1000jours/issues/820)) ([abd773a](https://github.com/SocialGouv/1000jours/commit/abd773a98438f8445737fac0a8eb17d55bd47a4f)), closes [#792](https://github.com/SocialGouv/1000jours/issues/792)
+* **acessibilite:** regrouper les élements dans la timeline ([5e16527](https://github.com/SocialGouv/1000jours/commit/5e1652796f6c95f239210759565e3000236b5c09))
+* **onboarding:** PR ([b76a198](https://github.com/SocialGouv/1000jours/commit/b76a198ca07dce621aeec74feff4fbff52922dbf))
+* **onboarding:** propriétés accessibilite ([4878701](https://github.com/SocialGouv/1000jours/commit/48787017173a3a041dea3b8e663b97196a2067a7))
+* **parenthque:** affichage par ordre ([a9a15e7](https://github.com/SocialGouv/1000jours/commit/a9a15e703efdc94f4840c84ace374e806446675d))
+* 🎸 Force l'alignement des textes article (justifié) ([#731](https://github.com/SocialGouv/1000jours/issues/731)) ([22397e4](https://github.com/SocialGouv/1000jours/commit/22397e482f951d5603dbef9ed5e589cc45d53247)), closes [#596](https://github.com/SocialGouv/1000jours/issues/596)
+* intégration de la lib métier ([#750](https://github.com/SocialGouv/1000jours/issues/750)) ([a5e8cd1](https://github.com/SocialGouv/1000jours/commit/a5e8cd11c100734333243a629c6b463dc08e970b))
+
+
+### Reverts
+
+* Revert "Revert "feat(epds): ajout partie colorée Être contacté (#798)" (#811)" ([57d19ac](https://github.com/SocialGouv/1000jours/commit/57d19acedb1491f3dfd29c1a86f8845961ebd627)), closes [#798](https://github.com/SocialGouv/1000jours/issues/798) [#811](https://github.com/SocialGouv/1000jours/issues/811)
+
 ## [1.83.6](https://github.com/SocialGouv/1000jours/compare/v1.83.5...v1.83.6) (2021-10-29)
 
 
