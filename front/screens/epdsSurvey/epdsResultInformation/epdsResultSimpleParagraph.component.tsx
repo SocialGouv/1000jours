@@ -17,6 +17,7 @@ import {
 import type { EpdsResultSimpleInformation } from "../../../type";
 import { LinkingUtils } from "../../../utils";
 import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
+import { TIMEOUT_FOCUS } from "./epdsResultInformation.component";
 
 interface EpdsResultSimpleParagraphProps {
   paragraph: EpdsResultSimpleInformation;
@@ -32,7 +33,7 @@ const EpdsResultSimpleParagraph: React.FC<EpdsResultSimpleParagraphProps> = ({
   if (isFocusOnFirstElement) {
     setTimeout(() => {
       setAccessibilityFocusOnText(titleRef);
-    }, 300);
+    }, TIMEOUT_FOCUS);
   }
 
   return (
