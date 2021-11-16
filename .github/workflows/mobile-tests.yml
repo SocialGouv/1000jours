@@ -1,0 +1,15 @@
+name: Mobile Tests
+
+on:
+  pull_request:
+
+jobs:
+  mobile-tests:
+    name: Mobile Tests
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Run tests
+      run: |
+          cd front
+          yarn test
