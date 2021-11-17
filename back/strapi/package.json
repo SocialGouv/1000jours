@@ -29,7 +29,7 @@
     "lodash": "^4.17.21",
     "pg": "latest",
     "pg-query-stream": "^4.2.1",
-    "slugify": "^1.6.1",
+    "slugify": "^1.6.2",
     "strapi": "^3.6.8",
     "strapi-admin": "^3.6.8",
     "strapi-connector-bookshelf": "^3.6.8",
@@ -39,7 +39,7 @@
     "strapi-plugin-content-type-builder": "^3.6.8",
     "strapi-plugin-email": "^3.6.8",
     "strapi-plugin-graphql": "^3.6.8",
-    "strapi-plugin-import-export-content": "^0.4.1",
+    "strapi-plugin-import-export-content": "^0.4.2",
     "strapi-plugin-sentry": "^3.6.8",
     "strapi-plugin-upload": "^3.6.8",
     "strapi-plugin-users-permissions": "^3.6.8",
@@ -54,7 +54,7 @@
   "strapi": {},
   "engines": {
     "node": ">=10.16.0 <=14.x.x",
-    "npm": "^8.1.2"
+    "npm": "^8.1.3"
   },
   "license": "MIT",
   "devDependencies": {
@@ -62,7 +62,7 @@
     "babel-eslint": "^10.1.0",
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-jest": "^25.2.2",
+    "eslint-plugin-jest": "^25.2.4",
     "jest": "^27.3.1",
     "node-fetch": "^3.0.0",
     "prettier": "^2.3.2"
