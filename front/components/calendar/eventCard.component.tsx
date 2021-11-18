@@ -1,4 +1,3 @@
-import { useLazyQuery } from "@apollo/client";
 import _ from "lodash";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
@@ -23,17 +22,14 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../constants";
-import { GET_EVENT_ARTICLES } from "../../constants/databaseQueries.constants";
 import type { CartoFilterStorage } from "../../type";
-import type { Article, Event, Tag } from "../../types";
+import type { Event, Tag } from "../../types";
 import { StorageUtils, TrackerUtils } from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { getThematiqueIcon } from "../../utils/thematique.util";
 import ArticleCard from "../article/articleCard.component";
 import Button from "../base/button.component";
-import ErrorMessage from "../base/errorMessage.component";
 import Icomoon from "../base/icomoon.component";
-import Loader from "../base/loader.component";
 import Tags from "../base/tags.component";
 import { CommonText, SecondaryText } from "../StyledText";
 
@@ -46,8 +42,6 @@ const dotIconSize = Sizes.xxxs;
 
 const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
   const { trackScreenView } = useMatomo();
-  const [articles, setArticles] = React.useState<Article[]>([]);
-  const MAX_ARTICLES = 10;
   const elementRef = useRef<View>(null);
 
   const getEventTags = () => {
@@ -96,46 +90,9 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
     }
   };
 
-  const buildWhereCondition = () => {
-    let condition = "";
-    condition +=
-      event.etapes && event.etapes.length > 0
-        ? "etapes: { id_in: $etapeIds }" // <field>_in: Matches any value in the array of values.
-        : "etapes: { id_nin: $etapeIds }"; // <field>_nin: Doesn't match any value in the array of values.
-
-    condition += event.thematique?.id
-      ? "thematiques: { id: $thematiqueId }"
-      : "thematiques: { id_ne: $thematiqueId }"; // <field>_ne: Not equals.
-
-    return condition;
-  };
-
-  const [loadArticles, { loading, error, data }] = useLazyQuery(
-    GET_EVENT_ARTICLES(buildWhereCondition(), MAX_ARTICLES),
-    {
-      variables: {
-        etapeIds: _.map(event.etapes, "id"),
-        thematiqueId: event.thematique?.id,
-      },
-    }
-  );
-
   useEffect(() => {
-    if (isExpanded) loadArticles();
+    if (isExpanded) setAccessibilityFocus();
   }, [isExpanded]);
-
-  useEffect(() => {
-    if (!loading && data) {
-      const results = (data as { articles: Article[] }).articles;
-      const eventArticles: Article[] = event.articles
-        ? event.articles.concat(results)
-        : results;
-      setArticles(eventArticles);
-      setAccessibilityFocus();
-    }
-  }, [loading, data]);
-
-  if (error) return <ErrorMessage error={error} />;
 
   return (
     <View style={styles.eventCard} key={event.id}>
@@ -184,21 +141,17 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
             />
           </View>
 
-          {loading ? (
-            <Loader />
-          ) : (
-            articles.length > 0 && (
-              <View style={styles.listArticles}>
-                <CommonText style={styles.listArticlesTitle}>
-                  {Labels.event.matchingArticles} :
-                </CommonText>
-                {articles.map((article, index) => (
-                  <View key={index}>
-                    <ArticleCard article={article} />
-                  </View>
-                ))}
-              </View>
-            )
+          {event.articles && event.articles.length > 0 && (
+            <View style={styles.listArticles}>
+              <CommonText style={styles.listArticlesTitle}>
+                {Labels.event.matchingArticles} :
+              </CommonText>
+              {event.articles.map((article, index) => (
+                <View key={index}>
+                  <ArticleCard article={article} />
+                </View>
+              ))}
+            </View>
           )}
         </View>
       )}
