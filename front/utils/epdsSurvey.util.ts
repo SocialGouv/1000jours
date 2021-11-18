@@ -63,6 +63,7 @@ export const getUpdatedSurvey = (
   selectedAnswer: EpdsAnswer
 ): EpdsUpdatedSurvey => {
   let lastQuestionHasThreePointAnswer = false;
+
   const updatedSurvey = questionsAndAnswers.map((question, questionIndex) => {
     const questionIsCurrent = questionIndex === selectedQuestionIndex;
     const answers = questionIsCurrent
