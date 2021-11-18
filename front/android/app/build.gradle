@@ -182,22 +182,20 @@ android {
         }
     }
 
-    /*flavorDimensions "default"
+    flavorDimensions "default"
 
     productFlavors {
 
-        selectGoogleServicesFile()
-
-        Dev {
+        'Dev' {
             resValue "string", "app_name", "1000 jours Dev"
         }
-        Rec {
+        'Rec' {
             resValue "string", "app_name", "1000 jours Rec"
         }
-        Prod {
+        'Prod' {
             resValue "string", "app_name", "1000 jours"
         }
-    }*/
+    }
 }
 
 dependencies {
