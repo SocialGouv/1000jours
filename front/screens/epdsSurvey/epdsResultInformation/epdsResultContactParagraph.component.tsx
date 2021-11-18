@@ -17,6 +17,7 @@ import {
 import type { EpdsResultContactInformation } from "../../../type";
 import { LinkingUtils } from "../../../utils";
 import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
+import { TIMEOUT_FOCUS } from "./epdsResultInformation.component";
 
 interface EpdsResultContactParagraphProps {
   paragraphTitle?: string;
@@ -38,7 +39,7 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
   if (isFocusOnFirstElement) {
     setTimeout(() => {
       setAccessibilityFocusOnText(titleRef);
-    }, 300);
+    }, TIMEOUT_FOCUS);
   }
 
   return (
@@ -58,7 +59,7 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
         >
           {/* Utiliser la ligne ci-dessous pour afficher le nom du contact en couleur selon le résultat EPDS */}
           {/* <SecondaryText style={[styles.contactName, titleColorStyle]}> */}
-          <SecondaryText style={styles.contactName}>
+          <SecondaryText style={styles.contactName} accessibilityRole="header">
             {contact.contactName}
           </SecondaryText>
           <SecondaryText style={styles.contactDescription}>
@@ -67,7 +68,10 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
           <SecondaryText style={[styles.contactDescription, styles.fontBold]}>
             {contact.openingTime}
           </SecondaryText>
-          <SecondaryText style={[styles.contactDescription, styles.fontBold]}>
+          <SecondaryText
+            style={[styles.contactDescription, styles.fontBold]}
+            accessibilityLabel={contact.phoneNumberVoice}
+          >
             {contact.phoneNumber}
           </SecondaryText>
           <Button

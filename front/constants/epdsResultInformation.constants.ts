@@ -5,6 +5,7 @@ const epdsContacts = [
     contactName: "FNEPE",
     openingTime: "Du lundi au samedi 10h-13h et 14h-20h",
     phoneNumber: "0 805 382 300",
+    phoneNumberVoice: "0805382300",
     thematic:
       "Ligne dédiée à l'écoute des parents qui éprouvent des difficultés dans leurs relations avec leurs enfants.",
   },
@@ -19,12 +20,14 @@ const epdsContacts = [
     contactName: "Enfance & Covid",
     openingTime: "Du lundi au samedi de 10h à 18h",
     phoneNumber: "0 805 827 827",
+    phoneNumberVoice: "0805827827",
     thematic: "Grossesse - naissance - parents de bébés",
   },
   {
     contactName: "Enfance et Partage",
     openingTime: "Du lundi à vendredi de 10h à 13h et de 14h à 17h",
     phoneNumber: "0 800 00 3456",
+    phoneNumberVoice: "0800003456",
     thematic: "Grossesse - naissance - parents de bébés",
   },
   {
@@ -32,18 +35,21 @@ const epdsContacts = [
     openingTime:
       "Du lundi au samedi de 9h à 12h et de 14h à 17h\nNocturne en plus les mercredi et vendredis : de 20h à 22h.",
     phoneNumber: "0 974 763 963",
+    phoneNumberVoice: "0974763963",
     thematic: "Inquiétudes et angoisses liées à la famille",
   },
   {
     contactName: "Psychologues Sans Frontières",
     openingTime: "Du lundi au dimanche de 9h à 12h30 et de 13h30 à 17h",
     phoneNumber: "0 805 383 922",
+    phoneNumberVoice: "0805383 22",
     thematic: "Entretiens  psychologique en français, anglais et arabe.",
   },
   {
     contactName: "E-enfance",
     openingTime: "Du lundi au vendredi de 9h à 20h et le samedi de 9h à 18h",
-    phoneNumber: " 0 800 200 000",
+    phoneNumber: "0 800 200 000",
+    phoneNumberVoice: "0800200000",
     thematic:
       "Numérique: protection de l'enfance sur le numérique et parentalité numérique (cyberharcèlment…)",
   },
@@ -51,13 +57,15 @@ const epdsContacts = [
     contactName: "Jumeaux et Plus",
     openingTime: "Du lundi au samedi de 9h à 21h",
     phoneNumber: "0 974 763 963",
+    phoneNumberVoice: "0974763963",
     thematic: "Naissance et éducation de jumeaux, triplés et plus",
   },
   {
     contactName: "SOS Prema",
     openingTime:
-      "lundi: 10h-12h et 14h-16h\nmardi : 10h-12h\nmercredi: 10h-12\njeudi: 14h-16h",
+      "lundi: 10h-12h et 14h-16h\nmardi : 10h-12h\nmercredi: 10h-12h\njeudi: 14h-16h",
     phoneNumber: "0 800 96 60 60",
+    phoneNumberVoice: "0800966060",
     thematic: "Prématurité",
   },
 ];
