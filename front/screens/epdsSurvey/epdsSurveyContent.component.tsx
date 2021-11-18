@@ -141,8 +141,12 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
                 justifyContent: "space-between",
               }}
             >
-              <TitleH1 title={Labels.epdsSurvey.title} animated={false} />
-              <CommonText style={styles.instruction}>
+              <TitleH1
+                style={styles.marginHorizontal}
+                title={Labels.epdsSurvey.title}
+                animated={false}
+              />
+              <CommonText style={[styles.marginHorizontal, styles.instruction]}>
                 {Labels.epdsSurvey.instruction}
               </CommonText>
               <View style={styles.surveyContainer}>
@@ -197,7 +201,10 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    margin: Margins.default,
+    marginVertical: Margins.default,
+  },
+  marginHorizontal: {
+    marginHorizontal: Margins.default,
   },
   surveyContainer: {
     flex: 1,
