@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
+import _ from "lodash";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect } from "react";
@@ -75,7 +76,7 @@ const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
               duration={1000}
               delay={0}
             >
-              <DocumentCard document={document} index={index} />
+              <DocumentCard document={document} />
             </Animatable.View>
           ))}
         </View>

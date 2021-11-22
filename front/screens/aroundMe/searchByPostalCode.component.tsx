@@ -175,12 +175,7 @@ const SearchByPostalCode: React.FC<Props> = ({
         <Button
           buttonStyle={styles.searchByPostalCodeButton}
           title={Labels.aroundMe.searchButton}
-          titleStyle={
-            // HotFix iOS 15 (font comfortaa => crash)
-            PLATFORM_IS_IOS && MAJOR_VERSION_IOS >= 15
-              ? styles.fontButtonIos15
-              : styles.fontButton
-          }
+          titleStyle={styles.fontButton}
           rounded={true}
           disabled={postalCodeInvalid}
           action={onSearchByPostalCodeButtonClick}
