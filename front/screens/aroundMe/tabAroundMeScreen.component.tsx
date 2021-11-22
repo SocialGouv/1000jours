@@ -4,6 +4,7 @@ import type { Poi } from "@socialgouv/nos1000jours-lib";
 import { useMatomo } from "matomo-tracker-react-native";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
+import type { LayoutChangeEvent } from "react-native";
 import { Image, StyleSheet } from "react-native";
 import type { LatLng, Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
@@ -79,6 +80,7 @@ const TabAroundMeScreen: React.FC = () => {
   const [searchIsReady, setSearchIsReady] = useState(false);
   const [locationPermissionIsGranted, setLocationPermissionIsGranted] =
     useState(false);
+  const [heightOfMapView, setHeightOfMapView] = useState(0);
 
   const currentUserLocatioIcon = require("../../assets/images/carto/current_location.png");
 
@@ -200,80 +202,87 @@ const TabAroundMeScreen: React.FC = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <FetchPoisCoords
-        triggerSearchByGpsCoords={triggerSearchByGpsCoords}
-        postalCode={postalCodeInput}
-        region={region}
-        setFetchedPois={handleFetchedPois}
-        chooseFilterMessage={() => {
-          setTimeout(
-            () => {
-              setIsLoading(false);
-            },
-            PLATFORM_IS_IOS ? 500 : 0
-          );
-          showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
-        }}
-        searchIsReady={searchIsReady}
-        setIsLoading={setIsLoading}
-        locationPermissionIsGranted={locationPermissionIsGranted}
-      />
-      <View style={styles.topContainer}>
-        <TitleH1
-          title={Labels.aroundMe.title}
-          description={Labels.aroundMe.instruction}
-          animated={false}
+      <View style={{ flex: 0 }}>
+        <FetchPoisCoords
+          triggerSearchByGpsCoords={triggerSearchByGpsCoords}
+          postalCode={postalCodeInput}
+          region={region}
+          setFetchedPois={handleFetchedPois}
+          chooseFilterMessage={() => {
+            setTimeout(
+              () => {
+                setIsLoading(false);
+              },
+              PLATFORM_IS_IOS ? 500 : 0
+            );
+            showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
+          }}
+          searchIsReady={searchIsReady}
+          setIsLoading={setIsLoading}
+          locationPermissionIsGranted={locationPermissionIsGranted}
         />
-      </View>
-      <SearchByPostalCode
-        postalCodeInput={postalCodeInput}
-        setPostalCodeInput={setPostalCodeInput}
-        postalCodeInvalid={postalCodeInvalid}
-        setPostalCodeInvalid={setPostalCodeInvalid}
-        hideSnackBar={() => {
-          setShowSnackBar(false);
-        }}
-        setAndGoToNewRegion={(newRegion: Region) => {
-          setShowAddressDetails(false);
-          setRegion(newRegion);
-          mapRef.current?.animateToRegion(newRegion);
-          setMoveToRegionBecauseOfPCResearch(true);
-          setSelectedPoiIndex(-1);
-        }}
-        showSnackBarWithMessage={showSnackBarWithMessage}
-        setIsLoading={setIsLoading}
-        updateUserLocation={async (newRegion: Region | undefined) => {
-          if (newRegion) {
-            setSelectedPoiIndex(-1);
-            setCurrentUserLocation({
-              latitude: newRegion.latitude,
-              longitude: newRegion.longitude,
-            });
+        <View style={styles.topContainer}>
+          <TitleH1
+            title={Labels.aroundMe.title}
+            description={Labels.aroundMe.instruction}
+            animated={false}
+          />
+        </View>
+        <SearchByPostalCode
+          postalCodeInput={postalCodeInput}
+          setPostalCodeInput={setPostalCodeInput}
+          postalCodeInvalid={postalCodeInvalid}
+          setPostalCodeInvalid={setPostalCodeInvalid}
+          hideSnackBar={() => {
+            setShowSnackBar(false);
+          }}
+          setAndGoToNewRegion={(newRegion: Region) => {
+            setShowAddressDetails(false);
             setRegion(newRegion);
             mapRef.current?.animateToRegion(newRegion);
-          } else {
-            const savedRegion: Region | undefined =
-              await StorageUtils.getObjectValue(
-                StorageKeysConstants.cartoSavedRegion
+            setMoveToRegionBecauseOfPCResearch(true);
+            setSelectedPoiIndex(-1);
+          }}
+          showSnackBarWithMessage={showSnackBarWithMessage}
+          setIsLoading={setIsLoading}
+          updateUserLocation={async (newRegion: Region | undefined) => {
+            if (newRegion) {
+              setSelectedPoiIndex(-1);
+              setCurrentUserLocation({
+                latitude: newRegion.latitude,
+                longitude: newRegion.longitude,
+              });
+              setRegion(newRegion);
+              mapRef.current?.animateToRegion(newRegion);
+            } else {
+              const savedRegion: Region | undefined =
+                await StorageUtils.getObjectValue(
+                  StorageKeysConstants.cartoSavedRegion
+                );
+              moveMapToCoordinates(
+                savedRegion?.latitude ??
+                  AroundMeConstants.COORDINATE_PARIS.latitude,
+                savedRegion?.longitude ??
+                  AroundMeConstants.COORDINATE_PARIS.longitude
               );
-            moveMapToCoordinates(
-              savedRegion?.latitude ??
-                AroundMeConstants.COORDINATE_PARIS.latitude,
-              savedRegion?.longitude ??
-                AroundMeConstants.COORDINATE_PARIS.longitude
-            );
-          }
-          setMoveToRegionBecauseOfPCResearch(true);
+            }
+            setMoveToRegionBecauseOfPCResearch(true);
+          }}
+          setSearchIsReady={setSearchIsReady}
+          setLocationPermissionIsGranted={setLocationPermissionIsGranted}
+        />
+      </View>
+      <View
+        style={{ flex: 1 }}
+        onLayout={(event: LayoutChangeEvent) => {
+          setHeightOfMapView(event.nativeEvent.layout.height);
         }}
-        setSearchIsReady={setSearchIsReady}
-        setLocationPermissionIsGranted={setLocationPermissionIsGranted}
-      />
-      <View style={styles.map}>
+      >
         <MapView
           minZoomLevel={AroundMeConstants.MAPVIEW_MIN_ZOOM_LEVEL}
           ref={setMapViewRef}
           provider={PROVIDER_DEFAULT}
-          style={styles.map}
+          style={{ height: heightOfMapView }}
           initialRegion={region}
           onRegionChange={() => {
             setMapWasOnlyTouched(false);
