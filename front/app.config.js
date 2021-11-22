@@ -18,7 +18,7 @@ export default {
         "READ_CALENDAR",
         "WRITE_CALENDAR",
       ],
-      versionCode: 33,
+      versionCode: 34,
     },
     assetBundlePatterns: ["**/*"],
     hooks: {
@@ -36,7 +36,7 @@ export default {
     },
     icon: "./assets/images/icon.png",
     ios: {
-      buildNumber: "1.1.33",
+      buildNumber: "1.1.34",
       bundleIdentifier: "com.fabrique.millejours",
       infoPlist: {
         NSCalendarsUsageDescription:
@@ -61,7 +61,7 @@ export default {
       fallbackToCacheTimeout: 0,
     },
     userInterfaceStyle: "light",
-    version: "1.1.33",
+    version: "1.1.34",
     web: {
       favicon: "./assets/images/favicon.png",
     },
