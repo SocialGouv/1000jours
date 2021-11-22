@@ -14,7 +14,7 @@ const CloseButton: React.FC<Props> = ({ onPress, clear }) => {
     <TouchableOpacity
       style={[styles.closeModalView, clear ? null : styles.solidRounded]}
       onPress={onPress}
-      accessibilityLabel={Labels.accessibility.close}
+      accessibilityLabel={Labels.buttons.close}
       accessibilityRole="button"
     >
       <Icomoon
