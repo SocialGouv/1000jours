@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import type { Poi } from "@socialgouv/nos1000jours-lib";
-import type { FC } from "react";
+import { useMatomo } from "matomo-tracker-react-native";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import type { LayoutChangeEvent } from "react-native";
@@ -11,27 +11,23 @@ import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import BulbIcon from "../../assets/images/carto/bulb.svg";
 import {
-  AddressDetails,
-  AroundMeFilter,
-  CustomMapMarker,
-  FetchPoisCoords,
-  SearchByPostalCode,
-  SlidingUpPanelAddressesList,
-  SubmitNewFilter,
-} from "../../components";
-import {
-  CustomButton,
+  Button,
   CustomSnackbar,
   Icomoon,
   IcomoonIcons,
   Loader,
   TitleH1,
-  View,
-} from "../../components/baseComponents";
-import TrackerHandler from "../../components/tracker/trackerHandler.component";
+} from "../../components";
+import FetchPoisCoords from "../../components/aroundMe/fetchPoisCoords.component";
+import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
+  Colors,
+  FontWeight,
   Labels,
+  Margins,
+  Paddings,
+  Sizes,
   StorageKeysConstants,
 } from "../../constants";
 import {
@@ -39,10 +35,16 @@ import {
   PLATFORM_IS_IOS,
   SCREEN_HEIGHT,
 } from "../../constants/platform.constants";
-import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
+import AddressDetails from "./addressDetails.component";
+import AroundMeFilter from "./aroundMeFilter.component";
+import CustomMapMarker from "./customMapMarker.component";
+import SearchByPostalCode from "./searchByPostalCode.component";
+import SlidingUpPanelAddressesList from "./slidingUpPanelAddressesList.component";
+import SubmitNewFilter from "./submitNewFilter.component";
 
-const TabAroundMeScreen: FC = () => {
+const TabAroundMeScreen: React.FC = () => {
+  const { trackScreenView } = useMatomo();
   const mapRef = useRef<MapView>();
   const [postalCodeInput, setPostalCodeInput] = useState("");
   const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
@@ -79,13 +81,11 @@ const TabAroundMeScreen: FC = () => {
   const [locationPermissionIsGranted, setLocationPermissionIsGranted] =
     useState(false);
   const [heightOfMapView, setHeightOfMapView] = useState(0);
-  const [widthOfMapView, setWidthOfMapView] = useState(0);
-
-  const [trackerAction, setTrackerAction] = useState("");
 
   const currentUserLocatioIcon = require("../../assets/images/carto/current_location.png");
 
   useEffect(() => {
+    trackScreenView(TrackerUtils.TrackingEvent.CARTO);
     const checkIfSavedRegion = async () => {
       const savedRegion: Region | undefined = await StorageUtils.getObjectValue(
         StorageKeysConstants.cartoSavedRegion
@@ -174,7 +174,7 @@ const TabAroundMeScreen: FC = () => {
   };
 
   const onMarkerClick = (poiIndex: number) => {
-    setTrackerAction(TrackerUtils.TrackingEvent.CARTO_CLICK_POI);
+    trackScreenView(TrackerUtils.TrackingEvent.CARTO_CLICK_POI);
     if (PLATFORM_IS_IOS) {
       moveMapToCoordinates(
         poisArray[poiIndex].position_latitude,
@@ -202,10 +202,6 @@ const TabAroundMeScreen: FC = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <TrackerHandler
-        screenName={TrackerUtils.TrackingEvent.CARTO}
-        actionName={trackerAction}
-      />
       <View style={{ flex: 0 }}>
         <FetchPoisCoords
           triggerSearchByGpsCoords={triggerSearchByGpsCoords}
@@ -279,15 +275,14 @@ const TabAroundMeScreen: FC = () => {
       <View
         style={{ flex: 1 }}
         onLayout={(event: LayoutChangeEvent) => {
-          setHeightOfMapView(Math.round(event.nativeEvent.layout.height));
-          setWidthOfMapView(Math.round(event.nativeEvent.layout.width));
+          setHeightOfMapView(event.nativeEvent.layout.height);
         }}
       >
         <MapView
           minZoomLevel={AroundMeConstants.MAPVIEW_MIN_ZOOM_LEVEL}
           ref={setMapViewRef}
           provider={PROVIDER_DEFAULT}
-          style={{ height: heightOfMapView, width: widthOfMapView }}
+          style={{ height: heightOfMapView }}
           initialRegion={region}
           onRegionChange={() => {
             setMapWasOnlyTouched(false);
@@ -331,7 +326,7 @@ const TabAroundMeScreen: FC = () => {
           )}
         </MapView>
         <View style={styles.filterView}>
-          <CustomButton
+          <Button
             buttonStyle={styles.relaunchSearchButton}
             title={Labels.listArticles.filters}
             titleStyle={styles.relaunchSearchButtonText}
@@ -347,7 +342,7 @@ const TabAroundMeScreen: FC = () => {
               setShowFilter(true);
             }}
           />
-          <CustomButton
+          <Button
             buttonStyle={styles.submitNewFilterButton}
             title=""
             rounded={true}
@@ -359,7 +354,7 @@ const TabAroundMeScreen: FC = () => {
         </View>
         {showRelaunchResearchButton && (
           <View style={styles.relaunchSearchView}>
-            <CustomButton
+            <Button
               buttonStyle={styles.relaunchSearchButton}
               title={Labels.aroundMe.relaunchSearch}
               titleStyle={styles.relaunchSearchButtonText}
