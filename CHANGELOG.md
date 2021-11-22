@@ -1,3 +1,10 @@
+## [1.84.1](https://github.com/SocialGouv/1000jours/compare/v1.84.0...v1.84.1) (2021-11-22)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le crash de la carto sur iOS et de la parenthèque ([#889](https://github.com/SocialGouv/1000jours/issues/889)) ([6c78ee1](https://github.com/SocialGouv/1000jours/commit/6c78ee10acced5dd95dfd498e55b80627972e99b))
+
 # [1.84.0](https://github.com/SocialGouv/1000jours/compare/v1.83.6...v1.84.0) (2021-11-15)
 
 
