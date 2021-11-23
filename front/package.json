@@ -2,7 +2,7 @@
   "scripts": {
     "start": "react-native start",
     "start-clear": "expo start --clear",
-    "android": "react-native run-android",
+    "android": "react-native run-android --variant=DevDebug",
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "eject": "expo eject",

@@ -122,6 +122,11 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  * and the benefits of using Hermes will therefore be sharply reduced.
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('app/signing.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -132,6 +137,7 @@ android {
     }
 
     defaultConfig {
+        resValue "string", "app_name", "1000 jours"
         applicationId 'com.fabrique.millejours'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -153,6 +159,14 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            if (keystorePropertiesFile.exists()) {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+           }
+        }
     }
     buildTypes {
         debug {
@@ -161,7 +175,13 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            if (keystorePropertiesFile.exists()) {
+                print("keystorePropertiesFile found, using release")
+                signingConfig signingConfigs.release
+            } else {
+                print("keystorePropertiesFile not found, using debug")
+                    signingConfig signingConfigs.debug
+            }
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -179,6 +199,23 @@ android {
                         versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
             }
 
+        }
+    }
+
+    flavorDimensions "default"
+
+    productFlavors {
+
+        Dev {
+            resValue "string", "app_name", "1000 jours Dev"
+            applicationIdSuffix ".dev"
+        }
+        Rec {
+            resValue "string", "app_name", "1000 jours Rec"
+            applicationIdSuffix ".rec"
+        }
+        Prod {
+            resValue "string", "app_name", "1000 jours"
         }
     }
 }
