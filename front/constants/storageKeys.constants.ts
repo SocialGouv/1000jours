@@ -13,6 +13,7 @@ export const cartoSavedRegion = "@cartoSavedRegion";
 export const cartoIsFirstLaunch = "@cartoIsFirstLaunch";
 export const notifIdNextStep = "@notifIdNextStep";
 export const notifIdsEvents = "@notifIdsEvents";
+export const notifIdsBeContacted = "@notifIdsBeContacted";
 export const eventsCalcFromBirthday = "@eventsCalcFromBirthday";
 export const forceToScheduleEventsNotif = "@forceToScheduleEventsNotif";
 export const osCalendarId = "@osCalendarId";
@@ -33,6 +34,7 @@ export const allStorageKeys = [
   cartoIsFirstLaunch,
   notifIdNextStep,
   notifIdsEvents,
+  notifIdsBeContacted,
   eventsCalcFromBirthday,
   forceToScheduleEventsNotif,
   osCalendarId,

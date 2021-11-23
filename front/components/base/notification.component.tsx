@@ -2,13 +2,15 @@ import type { Notification as ExpoNotificaiton } from "expo-notifications";
 import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Modal, StyleSheet, TouchableOpacity } from "react-native";
+import { Modal, StyleSheet } from "react-native";
 
 import { Colors, FontWeight, Paddings, Sizes } from "../../constants";
+import BeContacted from "../../screens/epdsSurvey/beContacted.component";
 import type { NotificationStyle } from "../../types";
 import { NotificationType } from "../../utils/notification.util";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { TrackingEvent } from "../../utils/tracker.util";
+import { CloseButton } from "..";
 import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 import Button from "./button.component";
@@ -32,6 +34,10 @@ notifStyles.set(NotificationType.nextStep, {
   color: Colors.secondaryGreenDark,
   icon: IcomoonIcons.informations,
 });
+notifStyles.set(NotificationType.beContacted, {
+  color: Colors.primaryBlueDark,
+  icon: IcomoonIcons.email,
+});
 
 const Notification: React.FC<Props> = ({ notification, onDismiss }) => {
   const { trackScreenView } = useMatomo();
@@ -39,6 +45,8 @@ const Notification: React.FC<Props> = ({ notification, onDismiss }) => {
     .type as NotificationType;
 
   const [modalVisible, setModalVisible] = useState(true);
+  const [beContactedModalVisible, setBeContactedModalVisible] =
+    React.useState(false);
 
   const action = () => {
     const buttonTitle = notification.request.content.data.redirectTitle ?? "";
@@ -54,7 +62,12 @@ const Notification: React.FC<Props> = ({ notification, onDismiss }) => {
         RootNavigation.navigate("root", { screen: redirectTo });
       else RootNavigation.navigate(redirectTo, null);
     }
-    setModalVisible(false);
+
+    if (notificationType == NotificationType.beContacted) {
+      setBeContactedModalVisible(true);
+    } else {
+      setModalVisible(false);
+    }
   };
 
   useEffect(() => {
@@ -62,59 +75,62 @@ const Notification: React.FC<Props> = ({ notification, onDismiss }) => {
   }, [modalVisible]);
 
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        setModalVisible(!modalVisible);
-      }}
-    >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <TouchableOpacity
-            style={styles.closeButton}
-            onPress={() => {
-              setModalVisible(false);
-            }}
-          >
-            <Icomoon
-              name={IcomoonIcons.fermer}
-              color={Colors.disabled}
-              size={Sizes.lg}
+    <>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <CloseButton
+              onPress={() => {
+                setModalVisible(false);
+              }}
+              clear={true}
             />
-          </TouchableOpacity>
-          <Icomoon
-            name={
-              notifStyles.get(notificationType)?.icon ??
-              IcomoonIcons.notification
-            }
-            color={notifStyles.get(notificationType)?.color}
-            size={Sizes.xxxxl}
-          />
-          <SecondaryText
-            style={[
-              styles.title,
-              { color: notifStyles.get(notificationType)?.color },
-            ]}
-          >
-            {notification.request.content.title}
-          </SecondaryText>
-          <SecondaryText style={styles.body}>
-            {notification.request.content.body}
-          </SecondaryText>
-          <Button
-            title={notification.request.content.data.redirectTitle as string}
-            rounded={true}
-            action={action}
-            titleStyle={styles.buttonTitle}
-            buttonStyle={{
-              backgroundColor: notifStyles.get(notificationType)?.color,
-            }}
-          />
+            <Icomoon
+              name={
+                notifStyles.get(notificationType)?.icon ??
+                IcomoonIcons.notification
+              }
+              color={notifStyles.get(notificationType)?.color}
+              size={Sizes.xxxxl}
+            />
+            <SecondaryText
+              style={[
+                styles.title,
+                { color: notifStyles.get(notificationType)?.color },
+              ]}
+            >
+              {notification.request.content.title}
+            </SecondaryText>
+            <SecondaryText style={styles.body}>
+              {notification.request.content.body}
+            </SecondaryText>
+            <Button
+              title={notification.request.content.data.redirectTitle as string}
+              rounded={true}
+              action={action}
+              titleStyle={styles.buttonTitle}
+              buttonStyle={{
+                backgroundColor: notifStyles.get(notificationType)?.color,
+              }}
+            />
+          </View>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+      <BeContacted
+        visible={beContactedModalVisible}
+        hideModal={() => {
+          setBeContactedModalVisible(false);
+          setModalVisible(false);
+        }}
+      />
+    </>
   );
 };
 

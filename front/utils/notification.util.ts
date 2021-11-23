@@ -15,6 +15,7 @@ export enum NotificationType {
   epds = "epds",
   nextStep = "nextStep",
   event = "event",
+  beContacted = "beContacted",
 }
 
 const NUMBER_OF_DAYS_NOTIF_EVENT_REMINDER = 7;
@@ -216,4 +217,50 @@ export const logAllScheduledNotifications = async (): Promise<void> => {
   for (const notif of scheduledNotifs) {
     console.log(notif);
   }
+};
+
+export const cancelScheduleNotifications = async (
+  storageKey: string
+): Promise<void> => {
+  const notificationIds = (await StorageUtils.getObjectValue(storageKey)) as
+    | string[]
+    | null;
+  if (notificationIds && notificationIds.length > 0) {
+    notificationIds.forEach((notificationId) => {
+      void Notifications.cancelScheduledNotificationAsync(notificationId);
+    });
+  }
+  return StorageUtils.removeKey(storageKey);
+};
+
+const updateStoreNotifIds = async (id: string, storageKey: string) => {
+  const notificationIds =
+    ((await StorageUtils.getObjectValue(storageKey)) as string[] | null) ?? [];
+  notificationIds.push(id);
+  await StorageUtils.storeObjectValue(storageKey, notificationIds);
+};
+
+export const scheduleBeContactedReminderNotification = async (
+  numberOfDay: number
+) => {
+  const content = {
+    body: Labels.epdsSurvey.beContacted.reminderBeContacted,
+    categoryIdentifier: NotificationType.beContacted,
+    data: {
+      redirectTitle: Labels.epdsSurvey.beContacted.button,
+      type: NotificationType.beContacted,
+    },
+    title: Labels.epdsSurvey.beContacted.button.toUpperCase(),
+  };
+
+  //const trigger = { seconds: 60 * numberOfDay }; // tests
+  const trigger = new Date();
+  trigger.setDate(trigger.getDate() + numberOfDay);
+  
+  const notificationId = await sendNotificationReminder(content, trigger);
+  if (notificationId)
+    await updateStoreNotifIds(
+      notificationId,
+      StorageKeysConstants.notifIdsBeContacted
+    );
 };
