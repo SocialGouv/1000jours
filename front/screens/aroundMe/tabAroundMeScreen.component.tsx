@@ -81,6 +81,7 @@ const TabAroundMeScreen: React.FC = () => {
   const [locationPermissionIsGranted, setLocationPermissionIsGranted] =
     useState(false);
   const [heightOfMapView, setHeightOfMapView] = useState(0);
+  const [widthOfMapView, setWidthOfMapView] = useState(0);
 
   const currentUserLocatioIcon = require("../../assets/images/carto/current_location.png");
 
@@ -275,14 +276,15 @@ const TabAroundMeScreen: React.FC = () => {
       <View
         style={{ flex: 1 }}
         onLayout={(event: LayoutChangeEvent) => {
-          setHeightOfMapView(event.nativeEvent.layout.height);
+          setHeightOfMapView(Math.round(event.nativeEvent.layout.height));
+          setWidthOfMapView(Math.round(event.nativeEvent.layout.width));
         }}
       >
         <MapView
           minZoomLevel={AroundMeConstants.MAPVIEW_MIN_ZOOM_LEVEL}
           ref={setMapViewRef}
           provider={PROVIDER_DEFAULT}
-          style={{ height: heightOfMapView }}
+          style={{ height: heightOfMapView, width: widthOfMapView }}
           initialRegion={region}
           onRegionChange={() => {
             setMapWasOnlyTouched(false);
