@@ -20,7 +20,7 @@
     "publish-prod": "yarn upload:android && yarn upload:ios"
   },
   "jest": {
-    "preset": "react-native",
+    "preset": "jest-expo",
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -31,7 +31,11 @@
     ],
     "transformIgnorePatterns": [
       "./node_modules/(?!native-base)/"
-    ]
+    ],
+    "setupFiles": [
+      "./jest/setup.js"
+    ],
+    "collectCoverage": true
   },
   "dependencies": {
     "@apollo/client": "^3.4.17",
@@ -107,6 +111,7 @@
     "babel-jest": "^26.6.3",
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
+    "jest-expo": "^43.0.1",
     "prettier": "^2.3.2",
     "react-native-svg-transformer": "^0.14.3",
     "typescript": "~4.4.4"
