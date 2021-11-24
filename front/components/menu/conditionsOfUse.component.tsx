@@ -256,7 +256,7 @@ const ConditionsOfUse: FC<Props> = ({ setIsVisible }) => {
 
       <H4>e) Données d’hébergeur ou de connexion</H4>
       <P>
-        Ce traitement est nécessaire au respect d'une obligation légale à
+        Ce traitement est nécessaire au respect d’une obligation légale à
         laquelle le responsable de traitement est soumis au sens de l'article
         6-c du Règlement (UE) 2016/679 du Parlement européen et du Conseil du 27
         avril 2016 relatif à la protection des personnes physiques à l'égard du
