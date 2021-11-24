@@ -95,14 +95,19 @@ const Notification: React.FC<Props> = ({ notification, onDismiss }) => {
               />
             </View>
             <View style={styles.content}>
-              <Icomoon
-                name={
-                  notifStyles.get(notificationType)?.icon ??
-                  IcomoonIcons.notification
-                }
-                color={notifStyles.get(notificationType)?.color}
-                size={Sizes.xxxxl}
-              />
+              <View
+                importantForAccessibility="no-hide-descendants"
+                accessible={false}
+              >
+                <Icomoon
+                  name={
+                    notifStyles.get(notificationType)?.icon ??
+                    IcomoonIcons.notification
+                  }
+                  color={notifStyles.get(notificationType)?.color}
+                  size={Sizes.xxxxl}
+                />
+              </View>
               <SecondaryText
                 style={[
                   styles.title,

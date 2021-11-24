@@ -252,15 +252,27 @@ export const scheduleBeContactedReminderNotification = async (
     },
     title: Labels.epdsSurvey.beContacted.button.toUpperCase(),
   };
+  const trigger = {
+    seconds: numberOfDay > 0 ? convertDayInSeconds(numberOfDay) : 1,
+  };
 
-  //const trigger = { seconds: 60 * numberOfDay }; // tests
-  const trigger = new Date();
-  trigger.setDate(trigger.getDate() + numberOfDay);
-  
+  await StorageUtils.storeStringValue(
+    StorageKeysConstants.epdsOpenBeContactedReminderKey,
+    (new Date().getTime() + convertDayInMillis(numberOfDay)).toString()
+  );
+
   const notificationId = await sendNotificationReminder(content, trigger);
-  if (notificationId)
+  if (notificationId && numberOfDay > 0)
     await updateStoreNotifIds(
       notificationId,
       StorageKeysConstants.notifIdsBeContacted
     );
+};
+
+export const convertDayInSeconds = (numberOfDay: number): number => {
+  return 3600 * 24 * numberOfDay;
+};
+
+export const convertDayInMillis = (numberOfDay: number): number => {
+  return 1000 * 3600 * 24 * numberOfDay;
 };

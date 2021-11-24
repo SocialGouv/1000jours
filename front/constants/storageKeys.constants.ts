@@ -8,6 +8,7 @@ export const epdsGenderKey = "@epdsGender";
 export const epdsQuestionAndAnswersKey = "@epdsQuestionAndAnswersKey";
 export const epdsQuestionIndexKey = "@epdsQuestionIndexKey";
 export const epdsSurveyCounterKey = "@epdsSurveyCounterKey";
+export const epdsOpenBeContactedReminderKey = "@epdsOpenBeContactedReminderKey";
 export const cartoFilterKey = "@cartoFilterKey";
 export const cartoSavedRegion = "@cartoSavedRegion";
 export const cartoIsFirstLaunch = "@cartoIsFirstLaunch";
@@ -29,6 +30,7 @@ export const allStorageKeys = [
   epdsGenderKey,
   epdsQuestionAndAnswersKey,
   epdsQuestionIndexKey,
+  epdsOpenBeContactedReminderKey,
   cartoFilterKey,
   cartoSavedRegion,
   cartoIsFirstLaunch,
