@@ -103,7 +103,6 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     loadParentheque();
 
     const sendNotif = await sendNewNotifToCompleteBeContacted(new Date());
-    console.log(sendNotif);
     if (sendNotif) void scheduleBeContactedReminderNotification(0);
   };
 
@@ -288,9 +287,6 @@ export const sendNewNotifToCompleteBeContacted = async (
   const notifsInStorage = await StorageUtils.getObjectValue(
     StorageKeysConstants.notifIdsBeContacted
   );
-  console.log(todayInMillis);
-  console.log(lastNotifInMillis);
-  console.log(notifsInStorage);
 
   return todayInMillis > Number(lastNotifInMillis) && notifsInStorage != null;
 };
