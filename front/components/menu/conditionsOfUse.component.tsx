@@ -328,7 +328,7 @@ const ConditionsOfUse: FC<Props> = ({ setIsVisible }) => {
         courrier élaboré par la CNIL :
       </P>
       <A url="https://www.cnil.fr/fr/modele/courrier/exercer-son-droit-dacces">
-        Exercer son droit d'accès
+        Exercer son droit d’accès
       </A>
       <P>
         Le responsable de traitement s’engage à répondre dans un délai
