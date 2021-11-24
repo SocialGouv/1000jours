@@ -4,6 +4,8 @@
     "start-clear": "expo start --clear",
     "android": "react-native run-android --variant=DevDebug",
     "ios": "react-native run-ios --scheme=1000joursDev --configuration=DebugDev",
+    "expo:android": "expo start --android",
+    "expo:ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest",
