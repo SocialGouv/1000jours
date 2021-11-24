@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "millejours.app"
+               BuildableName = "1000 jours Dev.app"
                BlueprintName = "1000jours"
                ReferencedContainer = "container:1000jours.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "millejours.app"
+            BuildableName = "1000 jours Dev.app"
             BlueprintName = "1000jours"
             ReferencedContainer = "container:1000jours.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "millejours.app"
+            BuildableName = "1000 jours Dev.app"
             BlueprintName = "1000jours"
             ReferencedContainer = "container:1000jours.xcodeproj">
          </BuildableReference>
