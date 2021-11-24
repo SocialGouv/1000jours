@@ -1,3 +1,10 @@
+## [1.84.2](https://github.com/SocialGouv/1000jours/compare/v1.84.1...v1.84.2) (2021-11-24)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le crash et le freeze de la carto ([#894](https://github.com/SocialGouv/1000jours/issues/894)) ([0c7c8bf](https://github.com/SocialGouv/1000jours/commit/0c7c8bfd3b5ede515263be8077bee91fb3652cd1))
+
 ## [1.84.1](https://github.com/SocialGouv/1000jours/compare/v1.84.0...v1.84.1) (2021-11-22)
 
 
