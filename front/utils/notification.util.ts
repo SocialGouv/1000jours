@@ -269,10 +269,8 @@ export const scheduleBeContactedReminderNotification = async (
     );
 };
 
-export const convertDayInSeconds = (numberOfDay: number): number => {
-  return 3600 * 24 * numberOfDay;
-};
+export const convertDayInSeconds = (numberOfDay: number): number =>
+  3600 * 24 * numberOfDay;
 
-export const convertDayInMillis = (numberOfDay: number): number => {
-  return 1000 * 3600 * 24 * numberOfDay;
-};
+export const convertDayInMillis = (numberOfDay: number): number =>
+  1000 * 3600 * 24 * numberOfDay;
