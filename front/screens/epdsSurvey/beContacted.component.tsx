@@ -303,6 +303,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                 </View>
               )}
             </ScrollView>
+
             <View style={styles.buttonsContainer}>
               <View style={styles.buttonContainer}>
                 <Button
@@ -351,10 +352,9 @@ const styles = StyleSheet.create({
     fontSize: Sizes.sm,
   },
   buttonsContainer: {
-    bottom: 0,
     flexDirection: "row",
-    marginVertical: Margins.default,
-    position: "absolute",
+    marginEnd: Margins.default,
+    marginTop: Margins.default,
   },
   center: {
     alignSelf: "center",
@@ -379,6 +379,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.primaryBlue,
     borderRadius: Sizes.xs,
     borderWidth: 1,
+    display: "flex",
     flex: 1,
     margin: Margins.default,
     paddingBottom: Paddings.default,
