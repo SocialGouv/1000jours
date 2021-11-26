@@ -1,3 +1,20 @@
+# [1.85.0](https://github.com/SocialGouv/1000jours/compare/v1.84.2...v1.85.0) (2021-11-26)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le crash de la carto sur iOS et de la parenthèque ([#889](https://github.com/SocialGouv/1000jours/issues/889)) ([1882441](https://github.com/SocialGouv/1000jours/commit/18824412148d0204666e262f4673661f06b72ce6))
+* 🐛 Corrige le crash et le freeze de la carto ([#894](https://github.com/SocialGouv/1000jours/issues/894)) ([0a17386](https://github.com/SocialGouv/1000jours/commit/0a17386948de732b07ac23a7efeb66623f464315))
+* **accessibilite:** resultats epds ([#862](https://github.com/SocialGouv/1000jours/issues/862)) ([738e832](https://github.com/SocialGouv/1000jours/commit/738e832867e6b96744cb135853f265a796cc8c8b)), closes [#859](https://github.com/SocialGouv/1000jours/issues/859)
+* **back:** fix backend deployment ([#884](https://github.com/SocialGouv/1000jours/issues/884)) ([fb90011](https://github.com/SocialGouv/1000jours/commit/fb90011bf3428b7c15aad0f1c7a69e8e2cac643a))
+* **epds:** fix content margins ([#885](https://github.com/SocialGouv/1000jours/issues/885)) ([21138b5](https://github.com/SocialGouv/1000jours/commit/21138b505426f80756601bf59a491eb5f902dbd2))
+
+
+### Features
+
+* 🎸 Supprime les articles liés via thematique et étape ([#881](https://github.com/SocialGouv/1000jours/issues/881)) ([8c748ba](https://github.com/SocialGouv/1000jours/commit/8c748bab60a7335629da76e4d85ececce251a970)), closes [#861](https://github.com/SocialGouv/1000jours/issues/861)
+* **tests:** add mobile tests config ([#871](https://github.com/SocialGouv/1000jours/issues/871)) ([17d5ce8](https://github.com/SocialGouv/1000jours/commit/17d5ce8e9f9e8e4e9aa19549596fac420b8ca319))
+
 ## [1.84.2](https://github.com/SocialGouv/1000jours/compare/v1.84.1...v1.84.2) (2021-11-24)
 
 
