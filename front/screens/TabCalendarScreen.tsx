@@ -203,10 +203,20 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     const notifIdsEventsStored = await StorageUtils.getObjectValue(
       StorageKeysConstants.notifIdsEvents
     );
+    const forceToScheduleEventsNotif = await StorageUtils.getObjectValue(
+      StorageKeysConstants.forceToScheduleEventsNotif
+    );
     if (
       stringIsNotNullNorEmpty(eventsCalcFromBirthday) &&
-      (!notifIdsEventsStored || eventsCalcFromBirthday !== childBirthday)
+      (!notifIdsEventsStored ||
+        eventsCalcFromBirthday !== childBirthday ||
+        forceToScheduleEventsNotif)
     ) {
+      await StorageUtils.storeObjectValue(
+        StorageKeysConstants.forceToScheduleEventsNotif,
+        false
+      );
+
       // Supprimme les anciennes et planifie les nouvelles notifications des événements
       void NotificationUtils.cancelScheduleEventsNotification().then(() => {
         NotificationUtils.scheduleEventsNotification(events);
