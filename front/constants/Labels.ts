@@ -143,12 +143,18 @@ export default {
     beContacted: {
       beContactedSent: "Votre demande de contact a bien été envoyée",
       button: "Être contacté(e)",
+      introduction:
+        "Trouver une phrase que ce n'est pas simple d'écrire ou d'être appelé, que c’est le début d’une démarche pour être accompagné(e).",
       invalidEmail: "L'email n'est pas valide",
       invalidPhoneNumber: "Le tél. n'est pas valide",
       mailsCanBeReceivedInSpams:
         "(*) Les mails peuvent se glisser dans vos spams ou être considérés comme indésirables. Pensez à vérifier votre boîte.",
+      myAvailabilities: "Selon mes disponibilités, par :",
+      myAvailabilitiesHours:
+        "Quelles sont vos disponibilités pour être contacté(e) ? (du lundi au vendredi)",
       numberOfChildren: "Nombre d'enfants",
       title: "Être contacté(e)",
+      wayToBeContacted: "Par quel moyen préférez-vous être contacté(e) ?",
       yourEmail: "Votre email",
       yourFirstname: "Votre prénom",
       yourPhoneNumber: "Votre n° de tél. \nportable",
