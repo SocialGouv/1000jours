@@ -81,6 +81,10 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     });
   };
 
+  const enableNextButton = (): boolean =>
+    contactType.find((item) => item.isChecked) != undefined;
+  const showPreviousButton = (): boolean => swiperCurrentIndex > 0;
+
   const buildCard = (item: ContactType) => {
     return (
       <TouchableOpacity
@@ -193,30 +197,46 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
 
           <View style={styles.buttonsContainer}>
             <View style={styles.buttonContainer}>
+              {showPreviousButton() ? (
+                <Button
+                  title={Labels.buttons.previous}
+                  titleStyle={styles.buttonTitleStyle}
+                  rounded={false}
+                  disabled={false}
+                  icon={
+                    <Icomoon
+                      name={IcomoonIcons.precedent}
+                      size={14}
+                      color={Colors.primaryBlue}
+                    />
+                  }
+                  action={() => {
+                    flatListRef.current?.scrollToIndex({
+                      index: swiperCurrentIndex - 1,
+                    });
+                  }}
+                />
+              ) : null}
+            </View>
+            <View style={styles.buttonContainer}>
               <Button
-                title={Labels.buttons.cancel}
+                title={Labels.buttons.next}
                 titleStyle={styles.buttonTitleStyle}
+                disabledStyle={styles.disabledButton}
                 rounded={false}
-                disabled={false}
+                disabled={!enableNextButton()}
                 icon={
                   <Icomoon
-                    name={IcomoonIcons.fermer}
+                    name={IcomoonIcons.suivant}
                     size={14}
                     color={Colors.primaryBlue}
                   />
                 }
                 action={() => {
-                  hideModal(false);
+                  flatListRef.current?.scrollToIndex({
+                    index: swiperCurrentIndex + 1,
+                  });
                 }}
-              />
-            </View>
-            <View style={styles.buttonContainer}>
-              <Button
-                title={Labels.buttons.validate}
-                titleStyle={styles.buttonTitleStyle}
-                rounded={true}
-                disabled={false}
-                //action={onValidate}
               />
             </View>
           </View>
@@ -247,6 +267,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 0,
+  },
+  disabledButton: {
+    backgroundColor: Colors.white,
   },
   itemSelected: {
     backgroundColor: Colors.primaryBlueDark,

@@ -20,10 +20,17 @@ interface Props {
   icon?: IconNode;
   disabled?: boolean;
   buttonStyle?: StyleProp<ViewStyle>;
+  disabledStyle?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
   onPressIn?: () => void;
   accessibilityLabel?: string;
 }
+
+const setDisabledStyle = (
+  disabledStyle?: StyleProp<ViewStyle>
+): StyleProp<ViewStyle> => {
+  return disabledStyle ? disabledStyle : styles.disabledButton;
+};
 
 const Button: React.FC<Props> = ({
   title,
@@ -32,6 +39,7 @@ const Button: React.FC<Props> = ({
   disabled,
   action,
   buttonStyle,
+  disabledStyle,
   titleStyle,
   onPressIn,
   accessibilityLabel,
@@ -39,7 +47,7 @@ const Button: React.FC<Props> = ({
   return (
     <RNEButton
       disabled={disabled}
-      disabledStyle={disabled ? styles.disabledButton : null}
+      disabledStyle={disabled ? setDisabledStyle(disabledStyle) : null}
       icon={icon}
       iconRight={false}
       title={title}
