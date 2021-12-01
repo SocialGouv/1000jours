@@ -1,3 +1,10 @@
+## [1.85.1](https://github.com/SocialGouv/1000jours/compare/v1.85.0...v1.85.1) (2021-12-01)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'heure et la redirection des notifications ([#900](https://github.com/SocialGouv/1000jours/issues/900)) ([7c6ab2a](https://github.com/SocialGouv/1000jours/commit/7c6ab2a796c5109de96f54293cc8ecfd9ff41752)), closes [#860](https://github.com/SocialGouv/1000jours/issues/860) [#860](https://github.com/SocialGouv/1000jours/issues/860)
+
 # [1.85.0](https://github.com/SocialGouv/1000jours/compare/v1.84.2...v1.85.0) (2021-11-26)
 
 
