@@ -33,13 +33,13 @@ interface Props {
 interface SlideView {
   title: string;
   content: JSX.Element;
-  color: ColorValue;
 }
 
 interface ContactType {
   id: string;
   isChecked: boolean;
   text: string;
+  hours?: string;
 }
 
 const MARGINS_CONTAINER = Margins.default;
@@ -60,6 +60,19 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const [contactType, setContactType] =
     useState<ContactType[]>(defaultContactTypes);
 
+  const defaultContactHours: ContactType[] = [
+    { hours: "9h - 12h", id: "matinee", isChecked: false, text: "En matinée" },
+    { hours: "12h - 14h", id: "mide", isChecked: false, text: "Le midi" },
+    {
+      hours: "14h - 17h30",
+      id: "apres-midi",
+      isChecked: false,
+      text: "L'après-midi",
+    },
+  ];
+  const [contactHours, setContactHours] =
+    useState<ContactType[]>(defaultContactHours);
+
   const onScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const slideSize = event.nativeEvent.layoutMeasurement.width;
@@ -69,21 +82,44 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     []
   );
 
-  const updateItemSelected = (itemSelected: ContactType) => {
-    setContactType(() => {
-      return contactType.map((item) => {
-        if (item.id === itemSelected.id) {
-          return { ...item, isChecked: !itemSelected.isChecked };
-        } else {
-          return item;
-        }
-      });
+  const updateItemSelected = (
+    list: ContactType[],
+    itemSelected: ContactType
+  ): ContactType[] => {
+    return list.map((item) => {
+      if (item.id === itemSelected.id) {
+        return { ...item, isChecked: !itemSelected.isChecked };
+      } else {
+        return item;
+      }
     });
   };
 
-  const enableNextButton = (): boolean =>
-    contactType.find((item) => item.isChecked) != undefined;
+  const updateItem = (itemSelected: ContactType) => {
+    if (isHours(itemSelected)) {
+      setContactHours(() => {
+        return updateItemSelected(contactHours, itemSelected);
+      });
+    } else {
+      setContactType(() => {
+        return updateItemSelected(contactType, itemSelected);
+      });
+    }
+  };
+
+  const enableNextButton = (): boolean => {
+    switch (swiperCurrentIndex) {
+      case 0:
+        return contactType.find((item) => item.isChecked) != undefined;
+      case 1:
+        return contactHours.find((item) => item.isChecked) != undefined;
+      default:
+        return false;
+    }
+  };
+
   const showPreviousButton = (): boolean => swiperCurrentIndex > 0;
+  const isHours = (item: ContactType) => item.hours != undefined;
 
   const buildCard = (item: ContactType) => {
     return (
@@ -91,7 +127,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
         key={item.id}
         style={[styles.typeItem, item.isChecked ? styles.itemSelected : null]}
         onPress={() => {
-          updateItemSelected(item);
+          updateItem(item);
         }}
         accessibilityRole="checkbox"
         accessibilityState={{ checked: item.isChecked }}
@@ -106,6 +142,11 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
         <CommonText style={item.isChecked ? styles.textSelected : null}>
           {item.text}
         </CommonText>
+        {isHours(item) ? (
+          <CommonText style={item.isChecked ? styles.textSelected : null}>
+            {item.hours}
+          </CommonText>
+        ) : null}
       </TouchableOpacity>
     );
   };
@@ -141,7 +182,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
           {Labels.epdsSurvey.beContacted.myAvailabilitiesHours}
         </CommonText>
         <View style={styles.typeList}>
-          {/* {contactType.map((type, index) => buildCard(type))} */}
+          {contactHours.map((type, index) => buildCard(type))}
         </View>
       </View>
     );
@@ -149,12 +190,10 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
 
   const step1: SlideView[] = [
     {
-      color: "red",
       content: step1types(),
       title: "type",
     },
     {
-      color: "green",
       content: step2hours(),
       title: "horaire",
     },
