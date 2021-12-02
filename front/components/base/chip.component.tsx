@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Chip as RNChip } from "react-native-elements";
 
@@ -21,6 +22,11 @@ interface Props {
 
 const Chip: React.FC<Props> = ({ id, title, selected, action }) => {
   const [isSelected, setIsSelected] = React.useState(selected);
+
+  useEffect(() => {
+    setIsSelected(selected);
+  }, [selected]);
+
   const onPress = () => {
     action(id, !isSelected);
     setIsSelected(!isSelected);
