@@ -10,7 +10,7 @@ import { Card } from "react-native-paper";
 
 import ChevronDownIcon from "../../../assets/images/chevron_down.svg";
 import ChevronUpIcon from "../../../assets/images/chevron_up.svg";
-import { Icomoon } from "../../../components";
+import Icomoon from "../../../components/base/icomoon.component";
 import { View } from "../../../components/Themed";
 import {
   Colors,
@@ -30,8 +30,6 @@ interface EpdsResultInformationProps {
   leftBorderColor: string;
   informationList: EpdsResultInformationType[];
 }
-
-export const TIMEOUT_FOCUS = 300;
 
 const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
   leftBorderColor,

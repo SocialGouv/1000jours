@@ -3,8 +3,8 @@ import { StyleSheet, View } from "react-native";
 
 import { Colors, FontWeight, Labels } from "../../constants";
 import type { TableData } from "../../types";
-import { SecondaryText } from "..";
 import Caption from "../html/caption.component";
+import { SecondaryText } from "../StyledText";
 
 interface Props {
   tableData: TableData;

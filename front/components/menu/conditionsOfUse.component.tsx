@@ -3,7 +3,6 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
 import { FontWeight, Margins, Paddings } from "../../constants";
-import { SecondaryText } from "..";
 import ModalHtmlContent from "../base/modalHtmlContent.component";
 import A from "../html/a.component";
 import H1 from "../html/h1.component";
@@ -13,6 +12,7 @@ import H4 from "../html/h4.component";
 import Li from "../html/li.component";
 import P from "../html/p.component";
 import Table from "../html/table.component";
+import { SecondaryText } from "../StyledText";
 
 interface Props {
   setIsVisible: (showMenu: boolean) => void;

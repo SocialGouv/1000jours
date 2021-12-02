@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import { FontWeight, Paddings, Sizes } from "../../constants";
-import { SecondaryText } from "..";
+import { SecondaryText } from "../StyledText";
 import type { TextProps } from "../Themed";
 
 const H1: React.FC<TextProps> = (props) => (
