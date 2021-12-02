@@ -14,10 +14,10 @@ import {
   Paddings,
   Sizes,
 } from "../../../constants";
+import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
 import type { EpdsResultSimpleInformation } from "../../../type";
 import { LinkingUtils } from "../../../utils";
 import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
-import { TIMEOUT_FOCUS } from "./epdsResultInformation.component";
 
 interface EpdsResultSimpleParagraphProps {
   paragraph: EpdsResultSimpleInformation;
