@@ -6,6 +6,7 @@ export interface CartoFilter {
   name: string;
   active: boolean;
   filterType: AroundMeConstants.CartoFilterEnum;
+  associatedTypes?: string[];
 }
 
 export interface FetchedFilterFromDb {

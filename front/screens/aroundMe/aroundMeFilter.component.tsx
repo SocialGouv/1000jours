@@ -192,12 +192,24 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     filter: PoiType | Step,
     filterType: AroundMeConstants.CartoFilterEnum
   ): CartoFilter => {
-    return {
+    const cartoFilter = {
       active: false,
       filterType: filterType,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       name: filter.nom,
     };
+
+    if (filterType === AroundMeConstants.CartoFilterEnum.etape) {
+      return {
+        ...cartoFilter,
+        associatedTypes: (filter as Step).cartographie_types.map(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          (type) => type.nom
+        ),
+      };
+    }
+
+    return cartoFilter;
   };
 
   const updateQueryFilter = (filter: CartoFilter) => {
