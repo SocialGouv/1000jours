@@ -1,10 +1,6 @@
 import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type {
-  ColorValue,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-} from "react-native";
+import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import {
   Dimensions,
   FlatList,
@@ -15,6 +11,16 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
+import EmailContact from "../../assets/images/epds/email-contact.svg";
+import EmailContactSelected from "../../assets/images/epds/email-contact-selected.svg";
+import Sms from "../../assets/images/epds/sms.svg";
+import SmsSelected from "../../assets/images/epds/sms-selected.svg";
+import SoleilMatin from "../../assets/images/epds/soleil-matin.svg";
+import SoleilMatinSelected from "../../assets/images/epds/soleil-matin-selected.svg";
+import SoleilMidi from "../../assets/images/epds/soleil-midi.svg";
+import SoleilMidiSelected from "../../assets/images/epds/soleil-midi-selected.svg";
+import SoleilSoir from "../../assets/images/epds/soleil-soir.svg";
+import SoleilSoirSelected from "../../assets/images/epds/soleil-soir-selected.svg";
 import {
   Button,
   CloseButton,
@@ -39,6 +45,8 @@ interface ContactType {
   id: string;
   isChecked: boolean;
   text: string;
+  icon: React.ReactNode;
+  iconSelected: React.ReactNode;
   hours?: string;
 }
 
@@ -54,20 +62,48 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const flatListRef = useRef<FlatList>(null);
 
   const defaultContactTypes: ContactType[] = [
-    { id: "sms", isChecked: false, text: "Par SMS" },
-    { id: "email", isChecked: false, text: "Par email" },
+    {
+      icon: <Sms />,
+      iconSelected: <SmsSelected />,
+      id: "sms",
+      isChecked: false,
+      text: Labels.epdsSurvey.beContacted.bySms,
+    },
+    {
+      icon: <EmailContact />,
+      iconSelected: <EmailContactSelected />,
+      id: "email",
+      isChecked: false,
+      text: Labels.epdsSurvey.beContacted.byEmail,
+    },
   ];
   const [contactType, setContactType] =
     useState<ContactType[]>(defaultContactTypes);
 
   const defaultContactHours: ContactType[] = [
-    { hours: "9h - 12h", id: "matinee", isChecked: false, text: "En matinée" },
-    { hours: "12h - 14h", id: "mide", isChecked: false, text: "Le midi" },
     {
-      hours: "14h - 17h30",
-      id: "apres-midi",
+      hours: Labels.epdsSurvey.beContacted.hours.morningDetails,
+      icon: <SoleilMatin />,
+      iconSelected: <SoleilMatinSelected />,
+      id: "matin",
       isChecked: false,
-      text: "L'après-midi",
+      text: Labels.epdsSurvey.beContacted.hours.morning,
+    },
+    {
+      hours: Labels.epdsSurvey.beContacted.hours.noonDetails,
+      icon: <SoleilMidi />,
+      iconSelected: <SoleilMidiSelected />,
+      id: "midi",
+      isChecked: false,
+      text: Labels.epdsSurvey.beContacted.hours.noon,
+    },
+    {
+      hours: Labels.epdsSurvey.beContacted.hours.eveningDetails,
+      icon: <SoleilSoir />,
+      iconSelected: <SoleilSoirSelected />,
+      id: "soir",
+      isChecked: false,
+      text: Labels.epdsSurvey.beContacted.hours.evening,
     },
   ];
   const [contactHours, setContactHours] =
@@ -133,17 +169,18 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
         accessibilityState={{ checked: item.isChecked }}
       >
         <View style={{ alignSelf: "center" }}>
-          <Icomoon
-            name={IcomoonIcons.parents}
-            size={40}
-            color={item.isChecked ? Colors.white : Colors.primaryBlueDark}
-          />
+          {item.isChecked ? item.iconSelected : item.icon}
         </View>
         <CommonText style={item.isChecked ? styles.textSelected : null}>
           {item.text}
         </CommonText>
         {isHours(item) ? (
-          <CommonText style={item.isChecked ? styles.textSelected : null}>
+          <CommonText
+            style={[
+              item.isChecked ? styles.textSelected : null,
+              { fontStyle: "italic" },
+            ]}
+          >
             {item.hours}
           </CommonText>
         ) : null}
@@ -174,9 +211,6 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       <View>
         <CommonText style={styles.section}>
           {Labels.epdsSurvey.beContacted.introduction}
-        </CommonText>
-        <CommonText style={styles.section}>
-          {Labels.epdsSurvey.beContacted.wayToBeContacted}
         </CommonText>
         <CommonText style={styles.section}>
           {Labels.epdsSurvey.beContacted.myAvailabilitiesHours}
@@ -309,6 +343,9 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     backgroundColor: Colors.white,
+  },
+  imageItem: {
+    height: 40,
   },
   itemSelected: {
     backgroundColor: Colors.primaryBlueDark,

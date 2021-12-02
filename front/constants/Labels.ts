@@ -143,6 +143,16 @@ export default {
     beContacted: {
       beContactedSent: "Votre demande de contact a bien été envoyée",
       button: "Être contacté(e)",
+      byEmail: "Par email",
+      bySms: "Par SMS",
+      hours: {
+        evening: "L'après-midi",
+        eveningDetails: "14h - 17h30",
+        morning: "En matinée",
+        morningDetails: "9h - 12h",
+        noon: "Le midi",
+        noonDetails: "12h - 14h",
+      },
       introduction:
         "Trouver une phrase que ce n'est pas simple d'écrire ou d'être appelé, que c’est le début d’une démarche pour être accompagné(e).",
       invalidEmail: "L'email n'est pas valide",
