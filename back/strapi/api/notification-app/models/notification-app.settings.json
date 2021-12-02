@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "notification_app",
+  "info": {
+    "name": "Notification de l'application"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "deviceId": {
+      "type": "string",
+      "required": true
+    },
+    "acceptNotifNewArticle": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}
