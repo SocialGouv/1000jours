@@ -2966,10 +2966,10 @@
     eslint-import-resolver-typescript "~2.4.0"
     eslint-plugin-import "~2.24.2"
 
-"@socialgouv/nos1000jours-lib@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/nos1000jours-lib/-/nos1000jours-lib-1.1.0.tgz#e132ecbc3127722143dddace5a8ee4749fed2fdb"
-  integrity sha512-YGjfCAGC6E1jSOnGi/eSGyxmgy8upv+rPRdc2mXR+niudHeg828pVlzKOgzax+Eu0DUDhCtXLUXK+za11W+RWQ==
+"@socialgouv/nos1000jours-lib@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@socialgouv/nos1000jours-lib/-/nos1000jours-lib-1.2.1.tgz#053be0ac75f732f19d71343d8cfc071120895ba4"
+  integrity sha512-pnl2h+8ubL6AW0v3oQaQMCOm0WnmavyYpJ1HhR9w7kznAr+0VqrOPFYo4QPAJTScy+1Qlfe2mMC4BHHiSx4OyA==
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
