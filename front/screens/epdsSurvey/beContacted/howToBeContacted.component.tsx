@@ -1,3 +1,4 @@
+import { useMutation } from "@apollo/client";
 import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
@@ -6,30 +7,40 @@ import {
   FlatList,
   Modal,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import EmailContact from "../../assets/images/epds/email-contact.svg";
-import EmailContactSelected from "../../assets/images/epds/email-contact-selected.svg";
-import Sms from "../../assets/images/epds/sms.svg";
-import SmsSelected from "../../assets/images/epds/sms-selected.svg";
-import SoleilMatin from "../../assets/images/epds/soleil-matin.svg";
-import SoleilMatinSelected from "../../assets/images/epds/soleil-matin-selected.svg";
-import SoleilMidi from "../../assets/images/epds/soleil-midi.svg";
-import SoleilMidiSelected from "../../assets/images/epds/soleil-midi-selected.svg";
-import SoleilSoir from "../../assets/images/epds/soleil-soir.svg";
-import SoleilSoirSelected from "../../assets/images/epds/soleil-soir-selected.svg";
+import EmailContact from "../../../assets/images/epds/email-contact.svg";
+import EmailContactSelected from "../../../assets/images/epds/email-contact-selected.svg";
+import Sms from "../../../assets/images/epds/sms.svg";
+import SmsSelected from "../../../assets/images/epds/sms-selected.svg";
+import SoleilMatin from "../../../assets/images/epds/soleil-matin.svg";
+import SoleilMatinSelected from "../../../assets/images/epds/soleil-matin-selected.svg";
+import SoleilMidi from "../../../assets/images/epds/soleil-midi.svg";
+import SoleilMidiSelected from "../../../assets/images/epds/soleil-midi-selected.svg";
+import SoleilSoir from "../../../assets/images/epds/soleil-soir.svg";
+import SoleilSoirSelected from "../../../assets/images/epds/soleil-soir-selected.svg";
 import {
   Button,
   CloseButton,
   CommonText,
   Icomoon,
   IcomoonIcons,
+  SecondaryText,
   TitleH1,
-} from "../../components";
-import { Colors, Labels, Margins, Paddings, Sizes } from "../../constants";
+} from "../../../components";
+import {
+  Colors,
+  DatabaseQueries,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../../../constants";
+import BeContactedForm from "./beContactedForm.component";
 
 interface Props {
   visible: boolean;
@@ -55,11 +66,13 @@ const PADDINGS_CONTAINER = Margins.default;
 const width =
   Dimensions.get("window").width -
   MARGINS_CONTAINER * 2 -
-  PADDINGS_CONTAINER * 2;
+  PADDINGS_CONTAINER * 2 -
+  2;
 
 const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
+  const [isValidForm, setValidForm] = useState(false);
 
   const defaultContactTypes: ContactType[] = [
     {
@@ -118,6 +131,19 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     []
   );
 
+  const showPreviousButton = (): boolean => swiperCurrentIndex > 0;
+  const isHours = (item: ContactType) => item.hours != undefined;
+  const isFormView = (): boolean => swiperCurrentIndex == 1;
+  const isConfirmationView = (): boolean => swiperCurrentIndex == 2;
+  const isSmsSelected = (): boolean => {
+    if (contactType.find((item) => item.id == "sms")?.isChecked) return true;
+    else return false;
+  };
+  const isEmailSelected = (): boolean => {
+    if (contactType.find((item) => item.id == "email")?.isChecked) return true;
+    else return false;
+  };
+
   const updateItemSelected = (
     list: ContactType[],
     itemSelected: ContactType
@@ -138,7 +164,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       });
     } else {
       setContactType(() => {
-        return updateItemSelected(contactType, itemSelected);
+        return updateItemSelected(defaultContactTypes, itemSelected);
       });
     }
   };
@@ -146,16 +172,17 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const enableNextButton = (): boolean => {
     switch (swiperCurrentIndex) {
       case 0:
-        return contactType.find((item) => item.isChecked) != undefined;
+        if (isSmsSelected()) {
+          return contactHours.find((item) => item.isChecked) != undefined;
+        } else {
+          return contactType.find((item) => item.isChecked) != undefined;
+        }
       case 1:
-        return contactHours.find((item) => item.isChecked) != undefined;
+        return isValidForm;
       default:
         return false;
     }
   };
-
-  const showPreviousButton = (): boolean => swiperCurrentIndex > 0;
-  const isHours = (item: ContactType) => item.hours != undefined;
 
   const buildCard = (item: ContactType) => {
     return (
@@ -188,7 +215,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     );
   };
 
-  const step1types = () => {
+  const stepTypes = () => {
     return (
       <View>
         <CommonText style={styles.section}>
@@ -201,40 +228,133 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
           {Labels.epdsSurvey.beContacted.myAvailabilities}
         </CommonText>
         <View style={styles.typeList}>
-          {contactType.map((type, index) => buildCard(type))}
+          {contactType.map((type) => buildCard(type))}
         </View>
+
+        {isSmsSelected() ? stepHours() : null}
       </View>
     );
   };
-  const step2hours = () => {
+
+  const stepHours = () => {
     return (
-      <View>
-        <CommonText style={styles.section}>
-          {Labels.epdsSurvey.beContacted.introduction}
-        </CommonText>
+      <View style={{ marginTop: Margins.default }}>
         <CommonText style={styles.section}>
           {Labels.epdsSurvey.beContacted.myAvailabilitiesHours}
         </CommonText>
         <View style={styles.typeList}>
-          {contactHours.map((type, index) => buildCard(type))}
+          {contactHours.map((type) => buildCard(type))}
         </View>
       </View>
     );
   };
 
-  const step1: SlideView[] = [
+  const stepSendValidated = () => {
+    return (
+      <View
+        style={{
+          alignItems: "center",
+          marginTop: Margins.default,
+          width: width,
+        }}
+      >
+        {isSmsSelected() ? <EmailContact /> : <EmailContactSelected />}
+        <SecondaryText style={{ color: Colors.primaryBlue }}>
+          {Labels.epdsSurvey.beContacted.requestSent}
+        </SecondaryText>
+        <SecondaryText style={{ marginTop: Margins.larger }}>
+          <Text style={{ fontWeight: "bold" }}>
+            {Labels.epdsSurvey.beContacted.formSend}
+          </Text>
+          {isSmsSelected()
+            ? Labels.epdsSurvey.beContacted.formForSmsSend
+            : Labels.epdsSurvey.beContacted.formForEmailSend}
+        </SecondaryText>
+      </View>
+    );
+  };
+
+  const steps: SlideView[] = [
     {
-      content: step1types(),
-      title: "type",
+      content: stepTypes(),
+      title: "typeAndHours",
     },
     {
-      content: step2hours(),
-      title: "horaire",
+      content: (
+        <View style={{ width: width }}>
+          <BeContactedForm
+            byEmail={isEmailSelected()}
+            bySms={isSmsSelected()}
+            validForm={(isValid: boolean) => {
+              setValidForm(isValid);
+            }}
+          />
+        </View>
+      ),
+      title: "form",
+    },
+    {
+      content: stepSendValidated(),
+      title: "sendValidated",
     },
   ];
 
-  const renderItem = ({ item, index }: { item: SlideView; index: number }) => {
+  const renderItem = ({ item }: { item: SlideView }) => {
     return item.content;
+  };
+
+  const nextOrValidationButton = (): JSX.Element => {
+    if (isFormView()) {
+      return (
+        <Button
+          title={Labels.buttons.validate}
+          titleStyle={[styles.buttonTitleStyle, { textTransform: "uppercase" }]}
+          rounded={true}
+          disabled={!enableNextButton()}
+          action={() => {
+            //TODO: send infos
+
+            flatListRef.current?.scrollToIndex({
+              index: swiperCurrentIndex + 1,
+            });
+          }}
+        />
+      );
+    } else if (isConfirmationView()) {
+      return (
+        <Button
+          title={Labels.buttons.close}
+          titleStyle={[styles.buttonTitleStyle, { textTransform: "uppercase" }]}
+          buttonStyle={{ alignSelf: "center" }}
+          rounded={true}
+          action={() => {
+            hideModal(true);
+          }}
+        />
+      );
+    } else {
+      return (
+        <Button
+          title={Labels.buttons.next}
+          titleStyle={styles.buttonTitleStyle}
+          disabledStyle={styles.disabledButton}
+          rounded={false}
+          disabled={!enableNextButton()}
+          icon={
+            <Icomoon
+              name={IcomoonIcons.suivant}
+              size={14}
+              color={Colors.primaryBlue}
+            />
+          }
+          action={() => {
+            flatListRef.current?.scrollToIndex({
+              index: swiperCurrentIndex + 1,
+            });
+          }}
+        />
+      );
+    }
   };
 
   return (
@@ -259,17 +379,23 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
             <FlatList
               pagingEnabled
               showsHorizontalScrollIndicator={false}
-              data={step1}
+              data={steps}
               renderItem={renderItem}
               keyExtractor={(item) => item.title}
               horizontal={true}
               ref={flatListRef}
               onScroll={onScroll}
+              scrollEnabled={false}
             />
           </ScrollView>
 
           <View style={styles.buttonsContainer}>
-            <View style={styles.buttonContainer}>
+            <View
+              style={[
+                styles.buttonContainer,
+                isConfirmationView() ? styles.hide : null,
+              ]}
+            >
               {showPreviousButton() ? (
                 <Button
                   title={Labels.buttons.previous}
@@ -284,6 +410,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                     />
                   }
                   action={() => {
+                    setValidForm(false);
                     flatListRef.current?.scrollToIndex({
                       index: swiperCurrentIndex - 1,
                     });
@@ -292,25 +419,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
               ) : null}
             </View>
             <View style={styles.buttonContainer}>
-              <Button
-                title={Labels.buttons.next}
-                titleStyle={styles.buttonTitleStyle}
-                disabledStyle={styles.disabledButton}
-                rounded={false}
-                disabled={!enableNextButton()}
-                icon={
-                  <Icomoon
-                    name={IcomoonIcons.suivant}
-                    size={14}
-                    color={Colors.primaryBlue}
-                  />
-                }
-                action={() => {
-                  flatListRef.current?.scrollToIndex({
-                    index: swiperCurrentIndex + 1,
-                  });
-                }}
-              />
+              {nextOrValidationButton()}
             </View>
           </View>
         </View>
@@ -335,27 +444,17 @@ const styles = StyleSheet.create({
     marginEnd: Margins.default,
     marginTop: Margins.default,
   },
-  closeModalButton: {
-    padding: Paddings.default,
-    position: "absolute",
-    right: 0,
-    top: 0,
-  },
   disabledButton: {
     backgroundColor: Colors.white,
   },
-  imageItem: {
-    height: 40,
+  hide: {
+    display: "none",
   },
   itemSelected: {
     backgroundColor: Colors.primaryBlueDark,
     borderColor: Colors.primaryBlueDark,
     borderWidth: 1,
     shadowColor: Colors.primaryBlueDark,
-  },
-  justifyContentCenter: {
-    alignItems: "center",
-    justifyContent: "center",
   },
   mainContainer: {
     backgroundColor: Colors.white,
@@ -378,10 +477,6 @@ const styles = StyleSheet.create({
     lineHeight: Sizes.mmd,
     marginBottom: Margins.default,
     maxWidth: width,
-  },
-  swipeView: {
-    marginBottom: "10%",
-    width,
   },
   textSelected: {
     color: Colors.white,
