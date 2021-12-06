@@ -9,12 +9,12 @@
   "dependencies": {
     "@kosko/env": "^2.0.1",
     "@kubernetes-models/sealed-secrets": "^2.0.2",
-    "@socialgouv/kosko-charts": "9.6.24",
+    "@socialgouv/kosko-charts": "9.8.10",
     "@types/node": "^16.11.10",
     "kosko": "^1.1.5",
     "kubernetes-models": "^2.0.2",
     "ts-node": "^10.4.0",
-    "typescript": "^4.4.4"
+    "typescript": "^4.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
