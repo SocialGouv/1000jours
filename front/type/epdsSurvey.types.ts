@@ -78,9 +78,11 @@ export interface EpdsUpdatedSurvey {
 }
 
 export interface BeContactedData {
-  label: string | undefined;
-  subLabel: string | undefined;
-  isEmptyVariable: boolean | undefined;
+  firstName?: string;
+  phoneNumber?: string;
+  email?: string;
+  numberOfChildren?: string;
+  lastChildBirthDate?: string;
 }
 
 export interface EpdsResultSimpleInformation {

@@ -13,12 +13,14 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../../constants";
+import type { BeContactedData } from "../../../type";
 import { StorageUtils, StringUtils } from "../../../utils";
 
 interface Props {
   byEmail: boolean;
   bySms: boolean;
   validForm: (isValid: boolean) => void;
+  setData: (data: BeContactedData) => void;
 }
 
 enum PersonalInformationType {
@@ -27,7 +29,12 @@ enum PersonalInformationType {
   phoneNumber = "phoneNumber",
 }
 
-const BeContactedForm: React.FC<Props> = ({ byEmail, bySms, validForm }) => {
+const BeContactedForm: React.FC<Props> = ({
+  byEmail,
+  bySms,
+  validForm,
+  setData,
+}) => {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [emailIsValid, setEmailIsValid] = useState(true);
@@ -49,6 +56,14 @@ const BeContactedForm: React.FC<Props> = ({ byEmail, bySms, validForm }) => {
 
   useEffect(() => {
     if ((emailIsValid && byEmail) || (phoneNumberIsValid && bySms)) {
+      const data: BeContactedData = {
+        email: email,
+        firstName: firstName,
+        lastChildBirthDate: childBirthDate,
+        numberOfChildren: numberOfChildren.toString(),
+        phoneNumber: phoneNumber,
+      };
+      setData(data);
       validForm(true);
     } else validForm(false);
   }, [firstName, emailIsValid, phoneNumberIsValid]);

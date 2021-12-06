@@ -1,4 +1,5 @@
 import { useMutation } from "@apollo/client";
+import { format } from "date-fns";
 import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
@@ -35,11 +36,14 @@ import {
 import {
   Colors,
   DatabaseQueries,
+  Formats,
   Labels,
   Margins,
   Paddings,
   Sizes,
 } from "../../../constants";
+import type { BeContactedData } from "../../../type";
+import { StringUtils } from "../../../utils";
 import BeContactedForm from "./beContactedForm.component";
 
 interface Props {
@@ -73,6 +77,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
   const [isValidForm, setValidForm] = useState(false);
+  const [dataForm, setDataForm] = useState<BeContactedData>();
 
   const defaultContactTypes: ContactType[] = [
     {
@@ -131,10 +136,10 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     []
   );
 
-  const showPreviousButton = (): boolean => swiperCurrentIndex > 0;
+  const showPreviousButton: boolean = swiperCurrentIndex > 0;
   const isHours = (item: ContactType) => item.hours != undefined;
-  const isFormView = (): boolean => swiperCurrentIndex == 1;
-  const isConfirmationView = (): boolean => swiperCurrentIndex == 2;
+  const isFormView: boolean = swiperCurrentIndex == 1;
+  const isConfirmationView: boolean = swiperCurrentIndex == 2;
   const isSmsSelected = (): boolean => {
     if (contactType.find((item) => item.id == "sms")?.isChecked) return true;
     else return false;
@@ -143,6 +148,15 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     if (contactType.find((item) => item.id == "email")?.isChecked) return true;
     else return false;
   };
+
+  const [sendContactInformation] = useMutation(
+    DatabaseQueries.EPDS_CONTACT_INFORMATION,
+    {
+      onError: (err) => {
+        console.log(err);
+      },
+    }
+  );
 
   const updateItemSelected = (
     list: ContactType[],
@@ -288,6 +302,9 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
             validForm={(isValid: boolean) => {
               setValidForm(isValid);
             }}
+            setData={(data: BeContactedData) => {
+              setDataForm(data);
+            }}
           />
         </View>
       ),
@@ -303,8 +320,31 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     return item.content;
   };
 
+  const onValidate = async () => {
+    if (dataForm) {
+      let dateAsString = "";
+      if (
+        dataForm.lastChildBirthDate &&
+        StringUtils.stringIsNotNullNorEmpty(dataForm.lastChildBirthDate)
+      ) {
+        const date = new Date(dataForm.lastChildBirthDate);
+        dateAsString = format(date, Formats.dateFR).replace(/\//g, "-");
+      }
+
+      await sendContactInformation({
+        variables: {
+          emai: dataForm.email,
+          naissanceDernierEnfant: dateAsString,
+          nombreEnfants: dataForm.numberOfChildren,
+          prenom: dataForm.firstName,
+          telephone: dataForm.phoneNumber,
+        },
+      });
+    }
+  };
+
   const nextOrValidationButton = (): JSX.Element => {
-    if (isFormView()) {
+    if (isFormView) {
       return (
         <Button
           title={Labels.buttons.validate}
@@ -312,7 +352,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
           rounded={true}
           disabled={!enableNextButton()}
           action={() => {
-            //TODO: send infos
+            void onValidate();
 
             flatListRef.current?.scrollToIndex({
               index: swiperCurrentIndex + 1,
@@ -320,7 +360,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
           }}
         />
       );
-    } else if (isConfirmationView()) {
+    } else if (isConfirmationView) {
       return (
         <Button
           title={Labels.buttons.close}
@@ -329,6 +369,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
           rounded={true}
           action={() => {
             hideModal(true);
+            setSwiperCurrentIndex(0);
           }}
         />
       );
@@ -393,10 +434,10 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
             <View
               style={[
                 styles.buttonContainer,
-                isConfirmationView() ? styles.hide : null,
+                isConfirmationView ? styles.hide : null,
               ]}
             >
-              {showPreviousButton() ? (
+              {showPreviousButton ? (
                 <Button
                   title={Labels.buttons.previous}
                   titleStyle={styles.buttonTitleStyle}
