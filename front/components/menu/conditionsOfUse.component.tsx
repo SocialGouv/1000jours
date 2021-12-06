@@ -40,7 +40,7 @@ const ConditionsOfUse: FC<Props> = ({ setIsVisible }) => {
       ],
       [
         "Données d’hébergeur",
-        "1 an, conformément au décret n°2011-219 du 25 février 2011",
+        "1 an, conformément au décret n°2021-1363 du 20 octobre 2021",
       ],
     ],
     head: ["Types de données", "Durée de conservation"],
@@ -265,8 +265,8 @@ const ConditionsOfUse: FC<Props> = ({ setIsVisible }) => {
       </P>
       <P>
         L'obligation légale est posée par la loi LCEN n° 2004-575 du 21 juin
-        2004 pour la confiance dans l'économie numérique et par les articles 1
-        et 3 du décret n°2011-219 du 25 février 2011.
+        2004 pour la confiance dans l'économie numérique et par l'article 1 du
+        décret n°2021-1363 du 20 octobre 2021.
       </P>
 
       <H4>f) Cookies</H4>
@@ -328,7 +328,7 @@ const ConditionsOfUse: FC<Props> = ({ setIsVisible }) => {
         courrier élaboré par la CNIL :
       </P>
       <A url="https://www.cnil.fr/fr/modele/courrier/exercer-son-droit-dacces">
-        Exercer son droit d'accès
+        Exercer son droit d’accès
       </A>
       <P>
         Le responsable de traitement s’engage à répondre dans un délai
