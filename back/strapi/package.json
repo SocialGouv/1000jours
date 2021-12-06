@@ -53,6 +53,7 @@
   },
   "strapi": {},
   "engines": {
+    "node": ">=10.16.0 <=17.x.x",
     "npm": "^7.21.1"
   },
   "license": "MIT",
