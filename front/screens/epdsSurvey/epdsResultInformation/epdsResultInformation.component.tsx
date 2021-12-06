@@ -31,6 +31,8 @@ interface EpdsResultInformationProps {
   informationList: EpdsResultInformationType[];
 }
 
+export const TIMEOUT_FOCUS = 300;
+
 const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
   leftBorderColor,
   informationList,

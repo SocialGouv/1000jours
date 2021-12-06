@@ -93,6 +93,7 @@ export interface EpdsResultContactInformation {
   contactName: string;
   openingTime: string;
   phoneNumber: string;
+  phoneNumberVoice?: string;
   thematic: string;
 }
 
