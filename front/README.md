@@ -32,6 +32,11 @@ Pour lancer l'émulateur iOS, utiliser :
 yarn ios
 ```
 
+Pour lancer les tests, utiliser :
+```bash
+yarn test
+```
+
 ## 🌓 Font d'icônes (Icomoon)
 
 Pour générer la font d'icônes nous utilisons Icomoon, pour ce faire rendez-vous sur le site :
