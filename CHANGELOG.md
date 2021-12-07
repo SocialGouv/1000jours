@@ -1,3 +1,10 @@
+# [1.86.0](https://github.com/SocialGouv/1000jours/compare/v1.85.1...v1.86.0) (2021-12-07)
+
+
+### Features
+
+* **epds:** ajout de l'id du test ([#886](https://github.com/SocialGouv/1000jours/issues/886)) ([99fff67](https://github.com/SocialGouv/1000jours/commit/99fff677dfaf75c178bd59cc57ff07bbd1d028af))
+
 ## [1.85.1](https://github.com/SocialGouv/1000jours/compare/v1.85.0...v1.85.1) (2021-12-01)
 
 
