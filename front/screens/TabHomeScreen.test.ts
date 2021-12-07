@@ -5,6 +5,10 @@ import { convertDayInMillis } from "../utils/notification.util";
 import * as TabHomeScreen from "./TabHomeScreen";
 
 describe("TabHomeScreen", () => {
+  afterEach(() => {
+    void AsyncStorage.clear();
+  });
+
   it("All notifs are sent and BeContacted is not completed", async () => {
     const resultEpdsDate = 1637762227304;
     const dateForNotifAfter48hours = 1637935027304;
