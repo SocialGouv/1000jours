@@ -44,6 +44,13 @@ const emailPartageHtml = (info) =>
         <th>Score</th>
       </tr>
       ${[...new Array(10)].map((_, i) => buildHtmlDetailScore(info, i)).join('\n    ')}
+      <tr>
+        <td colSpan="3">
+          <i>
+            Id questionnaire : <%- id_reponses %>
+          </i>
+        </td>
+      </tr>
     </table>
   </p>
   `)(info);
@@ -63,6 +70,7 @@ const emailPartageProTemplate = (info) => ({
     Détails des réponses :
     Question / Réponse / Score
     ${[...new Array(10)].map((_, i) => buildTextResponse(info, i)).join('\n    ')}
+    Id questionnaire : <%- id_reponses %>
     `)(info),
   html: emailPartageHtml(info),
 });
@@ -108,6 +116,8 @@ const emailPartagePatientTemplate = (info) => ({
 
     Score total du questionnaire EPDS : <% - score %> / 30 - ${scoreOpinion(info)}
 
+    L'identifiant de votre test est : <%- id_reponses %>
+
     Nous en profitons pour vous adresser le lien à une liste de structures et de professionnels sensibilisés à l'accompagnement périnatal. 
     ${RESOURCES_URL}
 
@@ -124,6 +134,8 @@ const emailPartagePatientTemplate = (info) => ({
     <p>Suite à votre passage de l'EPDS avec un professionnel, nous nous permettons de vous envoyer le score du questionnaire.</p>
 
     <p>Score total du questionnaire EPDS : <%- score %> / 30 - ${scoreOpinion(info)}</p>
+
+    <p>L'identifiant de votre test est : <%- id_reponses %></p>
 
     <p>Nous en profitons pour vous adresser le lien à une liste de structures et de professionnels sensibilisés à l'accompagnement périnatal.<br/><a href="${RESOURCES_URL}" target="_blank">${RESOURCES_URL}</a></p>
 
@@ -165,7 +177,8 @@ const partage = async ({
   score = "ND",
   detail_questions = "ND",
   detail_score = "ND",
-  detail_reponses = "ND"
+  detail_reponses = "ND",
+  id_reponses = "ND"
 }) => {
   if (!email_pro) throw new Error("Au moins une adresse email est nécessaire");
 
@@ -179,7 +192,8 @@ const partage = async ({
     score,
     detail_questions,
     detail_score,
-    detail_reponses
+    detail_reponses,
+    id_reponses
   };
 
   try {
