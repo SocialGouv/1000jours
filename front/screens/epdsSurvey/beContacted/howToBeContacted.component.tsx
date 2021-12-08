@@ -348,9 +348,16 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
         dateAsString = format(date, Formats.dateFR).replace(/\//g, "-");
       }
 
+      let horaires = "";
+      contactHours.forEach((item) => {
+        if (item.isChecked) horaires = `${horaires} ${item.id}`;
+      });
+
       await sendContactInformation({
         variables: {
           email: dataForm.email,
+          horaires: horaires,
+          moyen: contactType.find((item) => item.isChecked)?.id,
           naissanceDernierEnfant: dateAsString,
           nombreEnfants: dataForm.numberOfChildren,
           prenom: dataForm.firstName,

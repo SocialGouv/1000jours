@@ -83,6 +83,8 @@ export interface BeContactedData {
   email?: string;
   numberOfChildren?: number;
   lastChildBirthDate?: string;
+  type: string;
+  hours?: string[];
 }
 
 export interface EpdsResultSimpleInformation {
