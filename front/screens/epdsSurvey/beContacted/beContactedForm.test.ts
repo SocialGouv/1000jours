@@ -31,9 +31,11 @@ describe("BeContactedForm component", () => {
       const data: BeContactedData = {
         email: "toto@email.fr",
         firstName: "firstName",
+        hours: [],
         lastChildBirthDate: "21-06-2021",
         numberOfChildren: 1,
         phoneNumber: "",
+        type: "email",
       };
 
       expect(BeContactedForm.checkValidForm(data, true, false)).toBe(true);
@@ -43,9 +45,11 @@ describe("BeContactedForm component", () => {
       const data: BeContactedData = {
         email: "",
         firstName: "firstName",
+        hours: [],
         lastChildBirthDate: "21-06-2021",
         numberOfChildren: 1,
         phoneNumber: "0123456789",
+        type: "email",
       };
 
       expect(BeContactedForm.checkValidForm(data, true, false)).toBe(false);
@@ -55,9 +59,11 @@ describe("BeContactedForm component", () => {
       const data: BeContactedData = {
         email: "",
         firstName: "firstName",
+        hours: ["matin", "midi"],
         lastChildBirthDate: "21-06-2021",
         numberOfChildren: 1,
         phoneNumber: "0123456789",
+        type: "sms",
       };
 
       expect(BeContactedForm.checkValidForm(data, false, true)).toBe(true);
@@ -67,12 +73,56 @@ describe("BeContactedForm component", () => {
       const data: BeContactedData = {
         email: "toto@email.fr",
         firstName: "firstName",
+        hours: ["matin", "midi"],
         lastChildBirthDate: "21-06-2021",
         numberOfChildren: 1,
         phoneNumber: "",
+        type: "sms",
       };
 
       expect(BeContactedForm.checkValidForm(data, false, true)).toBe(false);
+    });
+
+    it("Have select 1 child but no date", () => {
+      const data: BeContactedData = {
+        email: "toto@email.fr",
+        firstName: "firstName",
+        hours: ["matin", "midi"],
+        lastChildBirthDate: "",
+        numberOfChildren: 1,
+        phoneNumber: "",
+        type: "sms",
+      };
+
+      expect(BeContactedForm.checkValidForm(data, false, true)).toBe(false);
+    });
+
+    it("Have select 1 child with date", () => {
+      const data: BeContactedData = {
+        email: "",
+        firstName: "firstName",
+        hours: ["matin", "midi"],
+        lastChildBirthDate: "21-01-2021",
+        numberOfChildren: 1,
+        phoneNumber: "0123456789",
+        type: "sms",
+      };
+
+      expect(BeContactedForm.checkValidForm(data, false, true)).toBe(true);
+    });
+
+    it("Have select 0 child", () => {
+      const data: BeContactedData = {
+        email: "",
+        firstName: "firstName",
+        hours: ["matin", "midi"],
+        lastChildBirthDate: "",
+        numberOfChildren: 0,
+        phoneNumber: "0123456789",
+        type: "sms",
+      };
+
+      expect(BeContactedForm.checkValidForm(data, false, true)).toBe(true);
     });
   });
 });

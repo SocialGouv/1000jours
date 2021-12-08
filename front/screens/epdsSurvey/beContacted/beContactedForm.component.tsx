@@ -247,9 +247,10 @@ export const checkValidForm = (
       data.phoneNumber.trimEnd()
     );
 
+  if (data.numberOfChildren > 0 && !data.lastChildBirthDate) return false;
   if (byEmail && isEmailValid) return true;
-  else if (bySms && isPhoneValid) return true;
-  else return false;
+  if (bySms && isPhoneValid) return true;
+  return false;
 };
 
 const styles = StyleSheet.create({

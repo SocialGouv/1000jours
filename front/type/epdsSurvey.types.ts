@@ -81,7 +81,7 @@ export interface BeContactedData {
   firstName?: string;
   phoneNumber?: string;
   email?: string;
-  numberOfChildren?: number;
+  numberOfChildren: number;
   lastChildBirthDate?: string;
   type: string;
   hours?: string[];
