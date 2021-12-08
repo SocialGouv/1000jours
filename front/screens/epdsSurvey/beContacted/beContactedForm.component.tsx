@@ -37,36 +37,33 @@ const BeContactedForm: React.FC<Props> = ({
 }) => {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
-  const [emailIsValid, setEmailIsValid] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [phoneNumberIsValid, setPhoneNumberIsValid] = useState(true);
   const [childBirthDate, setChildBirthDate] = useState("");
   const [numberOfChildren, setNumberOfChildren] = useState(0);
 
   useEffect(() => {
     const initDataWithStorageValue = async () => {
-      const childBirthdayStr =
-        (await StorageUtils.getStringValue(
-          StorageKeysConstants.userChildBirthdayKey
-        )) ?? "";
+      const childBirthdayStr = await getUserChildBirthday();
       setChildBirthDate(childBirthdayStr);
     };
+
     void initDataWithStorageValue();
   }, []);
 
   useEffect(() => {
-    if ((emailIsValid && byEmail) || (phoneNumberIsValid && bySms)) {
-      const data: BeContactedData = {
-        email: email,
-        firstName: firstName,
-        lastChildBirthDate: childBirthDate,
-        numberOfChildren: numberOfChildren.toString(),
-        phoneNumber: phoneNumber,
-      };
+    const data: BeContactedData = {
+      email: email,
+      firstName: firstName,
+      lastChildBirthDate: childBirthDate,
+      numberOfChildren: numberOfChildren,
+      phoneNumber: phoneNumber,
+    };
+
+    if (checkValidForm(data, byEmail, bySms)) {
       setData(data);
       validForm(true);
     } else validForm(false);
-  }, [firstName, emailIsValid, phoneNumberIsValid]);
+  }, [firstName, phoneNumber, email, numberOfChildren, childBirthDate]);
 
   const getPersonalInformationTypeLabel = (
     informationType: PersonalInformationType
@@ -108,13 +105,9 @@ const BeContactedForm: React.FC<Props> = ({
         break;
       case PersonalInformationType.email:
         setEmail(textInput);
-        setEmailIsValid(StringUtils.validateEmail(textInput.trimEnd()));
         break;
       case PersonalInformationType.phoneNumber:
         setPhoneNumber(textInput);
-        setPhoneNumberIsValid(
-          StringUtils.validateFrenchPhoneNumber(textInput.trimEnd())
-        );
         break;
     }
   };
@@ -229,6 +222,34 @@ const BeContactedForm: React.FC<Props> = ({
       )}
     </View>
   );
+};
+
+export const getUserChildBirthday = async (): Promise<string> => {
+  return (
+    (await StorageUtils.getStringValue(
+      StorageKeysConstants.userChildBirthdayKey
+    )) ?? ""
+  );
+};
+
+export const checkValidForm = (
+  data: BeContactedData,
+  byEmail: boolean,
+  bySms: boolean
+): boolean => {
+  let isEmailValid = false;
+  if (data.email)
+    isEmailValid = StringUtils.validateEmail(data.email.trimEnd());
+
+  let isPhoneValid = false;
+  if (data.phoneNumber)
+    isPhoneValid = StringUtils.validateFrenchPhoneNumber(
+      data.phoneNumber.trimEnd()
+    );
+
+  if (byEmail && isEmailValid) return true;
+  else if (bySms && isPhoneValid) return true;
+  else return false;
 };
 
 const styles = StyleSheet.create({

@@ -1,9 +1,10 @@
 import { useMutation } from "@apollo/client";
 import { format } from "date-fns";
 import * as React from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
   Modal,
@@ -14,9 +15,11 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
+import EmailSent from "../../../assets/images/epds/email_sent.svg";
 import EmailContact from "../../../assets/images/epds/email-contact.svg";
 import EmailContactSelected from "../../../assets/images/epds/email-contact-selected.svg";
 import Sms from "../../../assets/images/epds/sms.svg";
+import SmsSent from "../../../assets/images/epds/sms_sent.svg";
 import SmsSelected from "../../../assets/images/epds/sms-selected.svg";
 import SoleilMatin from "../../../assets/images/epds/soleil-matin.svg";
 import SoleilMatinSelected from "../../../assets/images/epds/soleil-matin-selected.svg";
@@ -78,6 +81,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const flatListRef = useRef<FlatList>(null);
   const [isValidForm, setValidForm] = useState(false);
   const [dataForm, setDataForm] = useState<BeContactedData>();
+  const [showLoader, setShowLoader] = useState(false);
 
   const defaultContactTypes: ContactType[] = [
     {
@@ -152,6 +156,9 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const [sendContactInformation] = useMutation(
     DatabaseQueries.EPDS_CONTACT_INFORMATION,
     {
+      onCompleted: (data) => {
+        setShowLoader(false);
+      },
       onError: (err) => {
         console.log(err);
       },
@@ -272,18 +279,28 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
           width: width,
         }}
       >
-        {isSmsSelected() ? <EmailContact /> : <EmailContactSelected />}
-        <SecondaryText style={{ color: Colors.primaryBlue }}>
-          {Labels.epdsSurvey.beContacted.requestSent}
-        </SecondaryText>
-        <SecondaryText style={{ marginTop: Margins.larger }}>
-          <Text style={{ fontWeight: "bold" }}>
-            {Labels.epdsSurvey.beContacted.formSend}
-          </Text>
-          {isSmsSelected()
-            ? Labels.epdsSurvey.beContacted.formForSmsSend
-            : Labels.epdsSurvey.beContacted.formForEmailSend}
-        </SecondaryText>
+        {isSmsSelected() ? <SmsSent /> : <EmailSent />}
+        {showLoader ? (
+          <ActivityIndicator
+            size="large"
+            color={Colors.primaryBlueDark}
+            style={{ marginTop: Margins.default }}
+          />
+        ) : (
+          <>
+            <SecondaryText style={{ color: Colors.primaryBlue }}>
+              {Labels.epdsSurvey.beContacted.requestSent}
+            </SecondaryText>
+            <SecondaryText style={{ marginTop: Margins.larger }}>
+              <Text style={{ fontWeight: "bold" }}>
+                {Labels.epdsSurvey.beContacted.formSend}
+              </Text>
+              {isSmsSelected()
+                ? Labels.epdsSurvey.beContacted.formForSmsSend
+                : Labels.epdsSurvey.beContacted.formForEmailSend}
+            </SecondaryText>
+          </>
+        )}
       </View>
     );
   };
@@ -333,7 +350,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
 
       await sendContactInformation({
         variables: {
-          emai: dataForm.email,
+          email: dataForm.email,
           naissanceDernierEnfant: dateAsString,
           nombreEnfants: dataForm.numberOfChildren,
           prenom: dataForm.firstName,
@@ -353,10 +370,10 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
           disabled={!enableNextButton()}
           action={() => {
             void onValidate();
-
             flatListRef.current?.scrollToIndex({
               index: swiperCurrentIndex + 1,
             });
+            setShowLoader(true);
           }}
         />
       );
