@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { HelperText } from "react-native-paper";
 
 import { Datepicker, SecondaryText } from "../../../components";
 import {
@@ -95,6 +96,35 @@ const BeContactedForm: React.FC<Props> = ({
     }
   };
 
+  const getPersonalInformationTypeError = (
+    informationType: PersonalInformationType
+  ): string => {
+    switch (informationType) {
+      case PersonalInformationType.email:
+        return Labels.epdsSurvey.beContacted.invalidEmail;
+      case PersonalInformationType.phoneNumber:
+        return Labels.epdsSurvey.beContacted.invalidPhoneNumber;
+      default:
+        return "";
+    }
+  };
+
+  const showInputError = (
+    informationType: PersonalInformationType
+  ): boolean => {
+    console.log(informationType);
+    switch (informationType) {
+      case PersonalInformationType.email:
+        console.log(email);
+        console.log(StringUtils.validateEmail(email.trimEnd()));
+        return !StringUtils.validateEmail(email.trimEnd());
+      case PersonalInformationType.phoneNumber:
+        return !StringUtils.validateFrenchPhoneNumber(phoneNumber.trimEnd());
+      default:
+        return false;
+    }
+  };
+
   const onChangeText = (
     informationType: PersonalInformationType,
     textInput: string
@@ -122,6 +152,8 @@ const BeContactedForm: React.FC<Props> = ({
     const placeholder: string =
       getPersonalInformationTypePlaceholder(informationType);
 
+    const [showError, setShowError] = useState(false);
+
     return (
       <View style={styles.textInputView}>
         <View>
@@ -134,10 +166,17 @@ const BeContactedForm: React.FC<Props> = ({
             style={styles.textInput}
             onChangeText={(text: string) => {
               onChangeText(informationType, text);
+              setShowError(showInputError(informationType));
             }}
             placeholder={placeholder}
             placeholderTextColor={Colors.primaryBlue}
           />
+
+          {showError ? (
+            <HelperText type="error">
+              {getPersonalInformationTypeError(informationType)}
+            </HelperText>
+          ) : null}
         </View>
 
         {isMandatory ? (
