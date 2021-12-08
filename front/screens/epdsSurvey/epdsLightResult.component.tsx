@@ -26,6 +26,8 @@ import {
 } from "../../constants";
 import type { EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, NotificationUtils, StorageUtils } from "../../utils";
+import { showContactReminder } from "../../utils/epdsSurvey.util";
+import { scheduleBeContactedReminderNotification } from "../../utils/notification.util";
 import EpdsResultContactMamanBlues from "./epdsResultContactMamanBlues.component";
 import EpdsResultInformation from "./epdsResultInformation/epdsResultInformation.component";
 
@@ -60,6 +62,13 @@ const EpdsLightResult: React.FC<Props> = ({
 
   const labelsResultats = Labels.epdsSurvey.resultats;
 
+  const setBeContactedReminder = (score: number) => {
+    if (showContactReminder(score)) {
+      void scheduleBeContactedReminderNotification(1);
+      void scheduleBeContactedReminderNotification(2);
+    }
+  };
+
   useEffect(() => {
     const saveEpdsSurveyResults = async () => {
       const newCounter =
@@ -91,6 +100,8 @@ const EpdsLightResult: React.FC<Props> = ({
           score: result,
         },
       });
+
+      setBeContactedReminder(result);
     };
 
     void saveEpdsSurveyResults();

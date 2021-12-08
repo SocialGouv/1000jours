@@ -15,9 +15,12 @@ export enum NotificationType {
   epds = "epds",
   nextStep = "nextStep",
   event = "event",
+  beContacted = "beContacted",
 }
 
 const NUMBER_OF_DAYS_NOTIF_EVENT_REMINDER = 7;
+const HOUR_TO_FIRED_NOTIF = 13;
+const SCREEN_CALENDAR = "tabCalendar";
 
 const sendNotificationReminder = async (
   content: NotificationContentInput,
@@ -106,8 +109,11 @@ export const scheduleNextStepNotification = async (
           seconds: 1,
         };
       } else {
-        trigger = addDays(new Date(childBirthday), nextStep.debut);
-        trigger.setHours(8);
+        trigger = new Date(
+          addDays(new Date(childBirthday), nextStep.debut).setHours(
+            HOUR_TO_FIRED_NOTIF
+          )
+        );
       }
       const notificationId = await sendNotificationReminder(content, trigger);
       if (notificationId) {
@@ -151,7 +157,7 @@ const buildEventNotificationContent = (
     data: {
       redirectFromRoot: true,
       redirectTitle: Labels.calendar.notification.redirectTitle,
-      redirectTo: "calendar",
+      redirectTo: SCREEN_CALENDAR,
       type: NotificationType.event,
     },
     title: isBeforeEventDate
@@ -162,30 +168,34 @@ const buildEventNotificationContent = (
 
 const scheduleEventNotification = async (event: Event) => {
   if (event.date) {
-    // Planifie la notification pour le jour J
-    let trigger = new Date(event.date);
-    trigger.setHours(8);
-    let content = buildEventNotificationContent(event, false);
-    let notificationId = await sendNotificationReminder(content, trigger);
-    if (notificationId) await updateStoreNotifEventIds(notificationId);
+    const now = new Date();
+    const eventDate = new Date(event.date);
 
-    // Planifie la notification pour un rappel avant le jour J
-    trigger = subDays(
-      new Date(event.date),
-      NUMBER_OF_DAYS_NOTIF_EVENT_REMINDER
-    );
-    content = buildEventNotificationContent(event, true);
-    notificationId = await sendNotificationReminder(content, trigger);
-    if (notificationId) await updateStoreNotifEventIds(notificationId);
+    if (isAfter(eventDate, now)) {
+      // Planifie la notification pour le jour J
+      let notifDate = new Date(eventDate.setHours(HOUR_TO_FIRED_NOTIF));
+      let content = buildEventNotificationContent(event, false);
+      let notificationId = await sendNotificationReminder(content, notifDate);
+      if (notificationId) await updateStoreNotifEventIds(notificationId);
+
+      // Planifie la notification pour un rappel avant le jour J
+      notifDate = new Date(
+        subDays(eventDate, NUMBER_OF_DAYS_NOTIF_EVENT_REMINDER).setHours(
+          HOUR_TO_FIRED_NOTIF
+        )
+      );
+      if (isAfter(new Date(notifDate), now)) {
+        content = buildEventNotificationContent(event, true);
+        notificationId = await sendNotificationReminder(content, notifDate);
+        if (notificationId) await updateStoreNotifEventIds(notificationId);
+      }
+    }
   }
 };
 
 export const scheduleEventsNotification = (events: Event[]): void => {
-  const now = new Date();
   events.forEach((event) => {
-    if (event.date && isAfter(new Date(event.date), now)) {
-      void scheduleEventNotification(event);
-    }
+    void scheduleEventNotification(event);
   });
 };
 
@@ -200,3 +210,67 @@ export const cancelScheduleEventsNotification = async (): Promise<void> => {
   }
   return StorageUtils.removeKey(StorageKeysConstants.notifIdsEvents);
 };
+
+export const logAllScheduledNotifications = async (): Promise<void> => {
+  const scheduledNotifs =
+    await Notifications.getAllScheduledNotificationsAsync();
+  for (const notif of scheduledNotifs) {
+    console.log(notif);
+  }
+};
+
+export const cancelScheduleNotifications = async (
+  storageKey: string
+): Promise<void> => {
+  const notificationIds = (await StorageUtils.getObjectValue(storageKey)) as
+    | string[]
+    | null;
+  if (notificationIds && notificationIds.length > 0) {
+    notificationIds.forEach((notificationId) => {
+      void Notifications.cancelScheduledNotificationAsync(notificationId);
+    });
+  }
+  return StorageUtils.removeKey(storageKey);
+};
+
+const updateStoreNotifIds = async (id: string, storageKey: string) => {
+  const notificationIds =
+    ((await StorageUtils.getObjectValue(storageKey)) as string[] | null) ?? [];
+  notificationIds.push(id);
+  await StorageUtils.storeObjectValue(storageKey, notificationIds);
+};
+
+export const scheduleBeContactedReminderNotification = async (
+  numberOfDay: number
+) => {
+  const content = {
+    body: Labels.epdsSurvey.beContacted.reminderBeContacted,
+    categoryIdentifier: NotificationType.beContacted,
+    data: {
+      redirectTitle: Labels.epdsSurvey.beContacted.button,
+      type: NotificationType.beContacted,
+    },
+    title: Labels.epdsSurvey.beContacted.button.toUpperCase(),
+  };
+  const trigger = {
+    seconds: numberOfDay > 0 ? convertDayInSeconds(numberOfDay) : 1,
+  };
+
+  await StorageUtils.storeStringValue(
+    StorageKeysConstants.epdsOpenBeContactedReminderKey,
+    (new Date().getTime() + convertDayInMillis(numberOfDay)).toString()
+  );
+
+  const notificationId = await sendNotificationReminder(content, trigger);
+  if (notificationId && numberOfDay > 0)
+    await updateStoreNotifIds(
+      notificationId,
+      StorageKeysConstants.notifIdsBeContacted
+    );
+};
+
+export const convertDayInSeconds = (numberOfDay: number): number =>
+  3600 * 24 * numberOfDay;
+
+export const convertDayInMillis = (numberOfDay: number): number =>
+  1000 * 3600 * 24 * numberOfDay;

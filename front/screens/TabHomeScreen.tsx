@@ -31,6 +31,7 @@ import type { Step, TabHomeParamList, UserSituation } from "../types";
 import { AroundMeUtils, StorageUtils, TrackerUtils } from "../utils";
 import {
   cancelScheduleNextStepNotification,
+  scheduleBeContactedReminderNotification,
   scheduleNextStepNotification,
 } from "../utils/notification.util";
 import { getCurrentStepId } from "../utils/step.util";
@@ -100,6 +101,9 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     }
     loadSteps();
     loadParentheque();
+
+    const sendNotif = await sendNewNotifToCompleteBeContacted(new Date());
+    if (sendNotif) void scheduleBeContactedReminderNotification(0);
   };
 
   const checkIfCurrentStepHasChanged = (currentStep: Step) => {
@@ -271,6 +275,20 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
       </View>
     </ScrollView>
   );
+};
+
+export const sendNewNotifToCompleteBeContacted = async (
+  now: Date
+): Promise<boolean> => {
+  const todayInMillis: number = now.getTime();
+  const lastNotifInMillis = await StorageUtils.getStringValue(
+    StorageKeysConstants.epdsOpenBeContactedReminderKey
+  );
+  const notifsInStorage = await StorageUtils.getObjectValue(
+    StorageKeysConstants.notifIdsBeContacted
+  );
+
+  return todayInMillis > Number(lastNotifInMillis) && notifsInStorage != null;
 };
 
 const styles = StyleSheet.create({

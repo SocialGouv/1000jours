@@ -11,9 +11,9 @@ import {
   Margins,
   Sizes,
 } from "../../../constants";
+import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
 import { LinkingUtils } from "../../../utils";
 import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
-import { TIMEOUT_FOCUS } from "./epdsResultInformation.component";
 
 interface EpdsResultUrlParagraphProps {
   paragraphTitle?: string;

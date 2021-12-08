@@ -3,5 +3,9 @@
   "extends": [
     "local>SocialGouv/renovate-config:light"
   ],
+  "patch": {
+    "automerge": false,
+    "extends": ["schedule:earlyMondays", "group:all"]
+  },
   "baseBranches": ["develop"]
 }

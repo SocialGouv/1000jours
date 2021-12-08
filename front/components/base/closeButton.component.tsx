@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { Colors, Labels, Paddings, Sizes } from "../../constants";
-import { Icomoon, IcomoonIcons } from "..";
+import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
 
 interface Props {
   onPress: () => void;
@@ -14,7 +14,7 @@ const CloseButton: React.FC<Props> = ({ onPress, clear }) => {
     <TouchableOpacity
       style={[styles.closeModalView, clear ? null : styles.solidRounded]}
       onPress={onPress}
-      accessibilityLabel={Labels.accessibility.close}
+      accessibilityLabel={Labels.buttons.close}
       accessibilityRole="button"
     >
       <Icomoon

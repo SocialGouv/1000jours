@@ -12,6 +12,7 @@ export enum TrackingEvent {
   ONBOARDING = "Onboarding",
   PROFILE = "Profil",
   HOME = "Accueil",
+  PARENTHEQUE = "Parenthèque",
   ARTICLE_LIST = "Liste d'articles",
   ARTICLE = "Article",
   CALENDAR = "Calendrier",
