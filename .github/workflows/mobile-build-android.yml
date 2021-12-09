@@ -26,19 +26,17 @@ jobs:
     - name: Write key properties
       shell: bash
       run: |
-        ls -la
-        cd front
-        ls -la
-        cd android
-        ls -la
+        cd front/android
         echo "$PROD_KEY_PROPERTIES_B64" | base64 --decode > key.properties
       env:
         PROD_KEY_PROPERTIES_B64: ${{ secrets.PROD_KEY_PROPERTIES_B64 }}
 
-    # - name: Write key store
-    #   shell: bash
-    #   run: |
-    #     mkdir android/keystore
-    #     echo "$PROD_KEYSTORE_B64" | base64 --decode > front/android/keystore/millejours.jks
-    #   env:
-    #     PROD_KEYSTORE_B64: ${{ secrets.PROD_KEYSTORE_B64 }}
+    - name: Write key store
+      shell: bash
+      run: |
+        cd front
+        ls -la
+        mkdir android/keystore
+        echo "$PROD_KEYSTORE_B64" | base64 --decode > front/android/keystore/millejours.jks
+      env:
+        PROD_KEYSTORE_B64: ${{ secrets.PROD_KEYSTORE_B64 }}
