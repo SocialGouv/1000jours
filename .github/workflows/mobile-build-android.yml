@@ -27,6 +27,7 @@ jobs:
     - name: Write key properties
       shell: bash
       run: |
+        cd front
         echo "$PROD_KEY_PROPERTIES_B64" | base64 --decode > android/key.properties
       env:
         STAGING_KEY_PROPERTIES_B64: ${{ secrets.PROD_KEY_PROPERTIES_B64 }}
@@ -34,6 +35,7 @@ jobs:
     - name: Write key store
       shell: bash
       run: |
+        cd front
         mkdir android/keystore
         echo "$PROD_KEYSTORE_B64" | base64 --decode > android/keystore/millejours.jks
       env:
