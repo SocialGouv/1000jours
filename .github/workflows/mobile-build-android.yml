@@ -26,14 +26,14 @@ jobs:
     - name: Write key properties
       shell: bash
       run: |
-        echo "$GOOGLE_MAPS_API_KEY"
+        ls -la
       env:
         GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
 
-    - name: Write key store
-      shell: bash
-      run: |
-        mkdir android/keystore
-        echo "$PROD_KEYSTORE_B64" | base64 --decode > front/android/keystore/millejours.jks
-      env:
-        PROD_KEYSTORE_B64: ${{ secrets.PROD_KEYSTORE_B64 }}
+    # - name: Write key store
+    #   shell: bash
+    #   run: |
+    #     mkdir android/keystore
+    #     echo "$PROD_KEYSTORE_B64" | base64 --decode > front/android/keystore/millejours.jks
+    #   env:
+    #     PROD_KEYSTORE_B64: ${{ secrets.PROD_KEYSTORE_B64 }}
