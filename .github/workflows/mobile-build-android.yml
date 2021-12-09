@@ -40,3 +40,8 @@ jobs:
         echo "$PROD_KEYSTORE_B64" | base64 --decode > keystore/millejours.jks
       env:
         PROD_KEYSTORE_B64: ${{ secrets.PROD_KEYSTORE_B64 }}
+
+    - name: Build the App
+      run: |
+        cd front/android
+        ./gradlew build
