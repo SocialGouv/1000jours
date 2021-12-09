@@ -27,7 +27,7 @@ describe("BeContactedForm component", () => {
   });
 
   describe("checkValidForm", () => {
-    it("Have select email and complete email", () => {
+    it("Have selected email and complete email", () => {
       const data: BeContactedData = {
         email: "toto@email.fr",
         firstName: "firstName",
@@ -41,7 +41,7 @@ describe("BeContactedForm component", () => {
       expect(BeContactedForm.checkValidForm(data, true, false)).toBe(true);
     });
 
-    it("Have select email and no complete email", () => {
+    it("Have selected email and no complete email", () => {
       const data: BeContactedData = {
         email: "",
         firstName: "firstName",
@@ -55,7 +55,7 @@ describe("BeContactedForm component", () => {
       expect(BeContactedForm.checkValidForm(data, true, false)).toBe(false);
     });
 
-    it("Have select phone and complete phone number", () => {
+    it("Have selected phone and complete phone number", () => {
       const data: BeContactedData = {
         email: "",
         firstName: "firstName",
@@ -69,7 +69,7 @@ describe("BeContactedForm component", () => {
       expect(BeContactedForm.checkValidForm(data, false, true)).toBe(true);
     });
 
-    it("Have select phone and no complete phone number", () => {
+    it("Have selected phone and no complete phone number", () => {
       const data: BeContactedData = {
         email: "toto@email.fr",
         firstName: "firstName",
@@ -83,7 +83,7 @@ describe("BeContactedForm component", () => {
       expect(BeContactedForm.checkValidForm(data, false, true)).toBe(false);
     });
 
-    it("Have select 1 child but no date", () => {
+    it("Have selected 1 child but no date", () => {
       const data: BeContactedData = {
         email: "toto@email.fr",
         firstName: "firstName",
@@ -97,7 +97,7 @@ describe("BeContactedForm component", () => {
       expect(BeContactedForm.checkValidForm(data, false, true)).toBe(false);
     });
 
-    it("Have select 1 child with date", () => {
+    it("Have selected 1 child with date", () => {
       const data: BeContactedData = {
         email: "",
         firstName: "firstName",
@@ -111,7 +111,7 @@ describe("BeContactedForm component", () => {
       expect(BeContactedForm.checkValidForm(data, false, true)).toBe(true);
     });
 
-    it("Have select 0 child", () => {
+    it("Have selected 0 child", () => {
       const data: BeContactedData = {
         email: "",
         firstName: "firstName",

@@ -112,11 +112,8 @@ const BeContactedForm: React.FC<Props> = ({
   const showInputError = (
     informationType: PersonalInformationType
   ): boolean => {
-    console.log(informationType);
     switch (informationType) {
       case PersonalInformationType.email:
-        console.log(email);
-        console.log(StringUtils.validateEmail(email.trimEnd()));
         return !StringUtils.validateEmail(email.trimEnd());
       case PersonalInformationType.phoneNumber:
         return !StringUtils.validateFrenchPhoneNumber(phoneNumber.trimEnd());
@@ -263,13 +260,10 @@ const BeContactedForm: React.FC<Props> = ({
   );
 };
 
-export const getUserChildBirthday = async (): Promise<string> => {
-  return (
-    (await StorageUtils.getStringValue(
-      StorageKeysConstants.userChildBirthdayKey
-    )) ?? ""
-  );
-};
+export const getUserChildBirthday = async (): Promise<string> =>
+  (await StorageUtils.getStringValue(
+    StorageKeysConstants.userChildBirthdayKey
+  )) ?? "";
 
 export const checkValidForm = (
   data: BeContactedData,
