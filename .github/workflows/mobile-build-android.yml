@@ -15,14 +15,14 @@ jobs:
       MATOMO_URL: https://matomo.fabrique.social.gouv.fr/
     steps:
 
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    # - name: Checkout repository
+    #   uses: actions/checkout@v2
 
-    - name: Run mobile tests
-      run: |
-          cd front
-          yarn install
-          yarn test
+    # - name: Run mobile tests
+    #   run: |
+    #       cd front
+    #       yarn install
+    #       yarn test
 
     - name: Write key properties
       shell: bash
