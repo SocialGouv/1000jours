@@ -45,6 +45,9 @@ const clientNoCache = new ApolloClient({
   uri: `${process.env.API_URL}/graphql?nocache`,
 });
 
+const TIME_IN_DAY_FOR_FIRST_NOTIFICATION: number = 1 / 24; // 1 day for prod && 1 hour (1/24) for test
+const TIME_IN_DAY_FOR_SECOND_NOTIFICATION: number = 2 / 24; // 2 days for prod && 1 hour (1/24) for test
+
 const EpdsLightResult: React.FC<Props> = ({
   result,
   epdsSurvey,
@@ -64,8 +67,12 @@ const EpdsLightResult: React.FC<Props> = ({
 
   const setBeContactedReminder = (score: number) => {
     if (showContactReminder(score)) {
-      void scheduleBeContactedReminderNotification(1);
-      void scheduleBeContactedReminderNotification(2);
+      void scheduleBeContactedReminderNotification(
+        TIME_IN_DAY_FOR_FIRST_NOTIFICATION
+      );
+      void scheduleBeContactedReminderNotification(
+        TIME_IN_DAY_FOR_SECOND_NOTIFICATION
+      );
     }
   };
 
