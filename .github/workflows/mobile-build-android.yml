@@ -27,6 +27,7 @@ jobs:
     - name: Write key properties
       shell: bash
       run: |
+        echo ::set-env name=TF_VAR_instance_label::${GITHUB_REPOSITORY#*/}-${GITHUB_SHA:0:7}
         echo "$PROD_KEY_PROPERTIES_B64" | base64 --decode > front/android/key.properties
       env:
         PROD_KEY_PROPERTIES_B64: ${{ secrets.PROD_KEY_PROPERTIES_B64 }}
