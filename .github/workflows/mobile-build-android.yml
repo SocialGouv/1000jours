@@ -41,7 +41,7 @@ jobs:
       env:
         PROD_KEYSTORE_B64: ${{ secrets.PROD_KEYSTORE_B64 }}
 
-    - name: Build the App
+    - name: Build the DevDebug App
       run: |
         cd front/android
-        ./gradlew build
+        ./gradlew bundleDevDebug
