@@ -208,4 +208,7 @@ export const getEachQuestionScore = (
   return scores;
 };
 
-export const showContactReminder = (score: number): boolean => score > 11;
+export const showContactReminder = (
+  score: number,
+  question10Score: number
+): boolean => score > 11 || question10Score == 3;

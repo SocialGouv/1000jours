@@ -65,8 +65,8 @@ const EpdsLightResult: React.FC<Props> = ({
 
   const labelsResultats = Labels.epdsSurvey.resultats;
 
-  const setBeContactedReminder = (score: number) => {
-    if (showContactReminder(score)) {
+  const setBeContactedReminder = (score: number, question10Score: number) => {
+    if (showContactReminder(score, question10Score)) {
       void scheduleBeContactedReminderNotification(
         TIME_IN_DAY_FOR_FIRST_NOTIFICATION
       );
@@ -108,7 +108,7 @@ const EpdsLightResult: React.FC<Props> = ({
         },
       });
 
-      setBeContactedReminder(result);
+      setBeContactedReminder(result, answersScores[9]);
     };
 
     void saveEpdsSurveyResults();
