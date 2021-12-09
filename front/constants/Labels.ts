@@ -135,7 +135,7 @@ export default {
     synchronise: "Synchroniser avec mon calendrier",
     synchronization: "Synchronisation",
     synchronizationHelper:
-      "Ce bouton permet de synchroniser votre calendrier personnel avec celui de l’application. Ainsi, les événements affichés ici, le seront aussi sur votre calendrier.",
+      "Ce bouton permet de synchroniser votre calendrier personnel avec celui de l’application. Ainsi, les événements affichés ici le seront aussi sur votre calendrier.",
     today: "Aujourd'hui",
   },
   dateFormatLabel: "Jour / Mois / Année",
