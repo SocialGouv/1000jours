@@ -8,8 +8,9 @@ import type { FC } from "react";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 
+import HelpIcon from "../assets/images/help.png";
 import {
   Button,
   CommonText,
@@ -19,6 +20,7 @@ import {
   Loader,
   TitleH1,
 } from "../components";
+import ModalHelp from "../components/base/modalHelp.component";
 import Events from "../components/calendar/events.component";
 import { SecondaryTextItalic } from "../components/StyledText";
 import { View } from "../components/Themed";
@@ -35,7 +37,11 @@ import {
   StorageKeysConstants,
 } from "../constants";
 import { ALL_EVENTS } from "../constants/databaseQueries.constants";
-import { ICLOUD, PLATFORM_IS_IOS } from "../constants/platform.constants";
+import {
+  ICLOUD,
+  PLATFORM_IS_IOS,
+  SCREEN_WIDTH,
+} from "../constants/platform.constants";
 import type { Event, TabCalendarParamList } from "../types";
 import { NotificationUtils, StorageUtils, TrackerUtils } from "../utils";
 import * as RootNavigation from "../utils/rootNavigation.util";
@@ -55,6 +61,8 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const [lastSyncDate, setLastSyncDate] = React.useState<string | null>(null);
   const hourWhenEventStart = 8; // Commence à 8h
   const hourWhenEventEnd = 18; // Se Termine à 18h
+
+  const [showModalHelp, setShowModalHelp] = React.useState(false);
 
   useEffect(() => {
     trackScreenView(TrackerUtils.TrackingEvent.CALENDAR);
@@ -247,28 +255,39 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
           {childBirthday.length > 0 ? (
             <>
               <View style={styles.flexStart}>
-                <Button
-                  title={Labels.calendar.synchronise}
-                  icon={
-                    <Icomoon
-                      name={IcomoonIcons.synchroniser}
-                      size={Sizes.sm}
-                      color={Colors.secondaryGreen}
-                    />
-                  }
-                  rounded={false}
-                  disabled={false}
-                  action={syncEventsWithOsCalendar}
-                  titleStyle={styles.buttonTitleStyle}
-                  buttonStyle={styles.buttonStyle}
-                />
+                <View style={{ flex: 0 }}>
+                  <Button
+                    title={Labels.calendar.synchronise}
+                    icon={
+                      <Icomoon
+                        name={IcomoonIcons.synchroniser}
+                        size={Sizes.sm}
+                        color={Colors.primaryBlue}
+                      />
+                    }
+                    rounded={true}
+                    disabled={false}
+                    action={syncEventsWithOsCalendar}
+                    titleStyle={styles.buttonTitleStyle}
+                    buttonStyle={styles.buttonStyle}
+                  />
+                </View>
+                <View style={styles.helpBtnContainer}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setShowModalHelp(true);
+                    }}
+                  >
+                    <Image source={HelpIcon} style={styles.helpIconStyle} />
+                  </TouchableOpacity>
+                </View>
               </View>
               {lastSyncDate && (
                 <SecondaryTextItalic style={styles.lastSyncDate}>
-                  {`${Labels.calendar.lastSyncDate} ${format(
+                  {`(${Labels.calendar.lastSyncDate} ${format(
                     new Date(lastSyncDate),
                     Formats.dateTimeFR
-                  )}`}
+                  )})`}
                 </SecondaryTextItalic>
               )}
               <Events
@@ -293,20 +312,32 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
           )}
         </View>
       )}
+      {showModalHelp && (
+        <ModalHelp
+          icon={IcomoonIcons.synchroniser}
+          title={Labels.calendar.synchronization}
+          body={Labels.calendar.synchronizationHelper}
+          onDismiss={() => {
+            setShowModalHelp(false);
+          }}
+        />
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   buttonStyle: {
+    backgroundColor: Colors.white,
+    borderColor: Colors.primaryBlue,
+    borderWidth: 1,
+    maxWidth: SCREEN_WIDTH * 0.8,
     paddingBottom: Paddings.smaller,
-    paddingHorizontal: 0,
-    paddingTop: 0,
   },
   buttonTitleStyle: {
-    color: Colors.secondaryGreen,
+    color: Colors.primaryBlue,
     fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
-    fontSize: Sizes.sm,
+    fontSize: Sizes.xs,
     textAlign: "left",
   },
   calendarContainer: {
@@ -319,14 +350,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   flexStart: {
-    alignItems: "flex-start",
+    alignItems: "center",
     flexDirection: "row",
     flexWrap: "wrap",
+    paddingBottom: Paddings.light,
+  },
+  helpBtnContainer: {
+    flex: 0,
+    paddingHorizontal: Paddings.light,
+  },
+  helpIconStyle: {
+    height: Sizes.xxl,
+    width: Sizes.xxl,
   },
   lastSyncDate: {
     color: Colors.commonText,
     fontFamily: "avenir-italic",
-    fontSize: Sizes.xxs,
+    fontSize: Sizes.xs,
     fontStyle: "italic",
     paddingBottom: Paddings.default,
   },
