@@ -34,9 +34,9 @@ jobs:
     - name: Write key store
       shell: bash
       run: |
-        cd front
+        cd front/android
         ls -la
-        mkdir android/keystore
-        echo "$PROD_KEYSTORE_B64" | base64 --decode > front/android/keystore/millejours.jks
+        mkdir keystore
+        echo "$PROD_KEYSTORE_B64" | base64 --decode > keystore/millejours.jks
       env:
         PROD_KEYSTORE_B64: ${{ secrets.PROD_KEYSTORE_B64 }}
