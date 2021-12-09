@@ -15,8 +15,7 @@ jobs:
       MATOMO_URL: https://matomo.fabrique.social.gouv.fr/
     steps:
 
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
     # - name: Run mobile tests
     #   run: |
