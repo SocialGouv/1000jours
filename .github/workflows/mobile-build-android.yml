@@ -27,16 +27,14 @@ jobs:
     - name: Write key properties
       shell: bash
       run: |
-        cd front
-        echo "$PROD_KEY_PROPERTIES_B64" | base64 --decode > android/key.properties
+        echo "$PROD_KEY_PROPERTIES_B64" | base64 --decode > front/android/key.properties
       env:
         PROD_KEY_PROPERTIES_B64: ${{ secrets.PROD_KEY_PROPERTIES_B64 }}
 
     - name: Write key store
       shell: bash
       run: |
-        cd front
         mkdir android/keystore
-        echo "$PROD_KEYSTORE_B64" | base64 --decode > android/keystore/millejours.jks
+        echo "$PROD_KEYSTORE_B64" | base64 --decode > front/android/keystore/millejours.jks
       env:
         PROD_KEYSTORE_B64: ${{ secrets.PROD_KEYSTORE_B64 }}
