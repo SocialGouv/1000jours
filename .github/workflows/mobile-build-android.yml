@@ -27,8 +27,13 @@ jobs:
       shell: bash
       run: |
         ls -la
+        cd front
+        ls -la
+        cd android
+        ls -la
+        echo "$PROD_KEY_PROPERTIES_B64" | base64 --decode > key.properties
       env:
-        GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+        PROD_KEY_PROPERTIES_B64: ${{ secrets.PROD_KEY_PROPERTIES_B64 }}
 
     # - name: Write key store
     #   shell: bash
