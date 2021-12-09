@@ -1,0 +1,40 @@
+name: Build Android App
+
+on:
+  push:
+    branches: develop-without-expo
+
+
+jobs:
+  mobile-tests:
+    name: Mobile Tests
+    runs-on: ubuntu-latest
+    env:
+      MATOMO_APPLICATION_ID: 46
+      MATOMO_ENABLED: false
+      MATOMO_URL: https://matomo.fabrique.social.gouv.fr/
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Run mobile tests
+      run: |
+          cd front
+          yarn install
+          yarn test
+
+    - name: Write key properties
+      shell: bash
+      run: |
+        echo "$PROD_KEY_PROPERTIES_B64" | base64 --decode > android/key.properties
+      env:
+        STAGING_KEY_PROPERTIES_B64: ${{ secrets.PROD_KEY_PROPERTIES_B64 }}
+
+    - name: Write key store
+      shell: bash
+      run: |
+        mkdir android/keystore
+        echo "$PROD_KEYSTORE_B64" | base64 --decode > android/keystore/millejours.jks
+      env:
+        STAGING_KEYSTORE_B64: ${{ secrets.PROD_KEYSTORE_B64 }}
