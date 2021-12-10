@@ -14,6 +14,11 @@ export default {
       activeFilter: "filtre actif",
       availableArticles: "articles disponibles",
     },
+    beContacted: {
+      less: "enlever",
+      more: "ajouter",
+      sendingInProgress: "Envoii en cours",
+    },
     close: "Fermer",
     closeMenu: "Fermer le menu",
     epds: {

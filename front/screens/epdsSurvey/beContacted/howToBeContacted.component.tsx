@@ -1,12 +1,10 @@
 import { useMutation } from "@apollo/client";
 import { format } from "date-fns";
 import * as React from "react";
-import { useCallback, useRef, useState } from "react";
-import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
+import { useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
-  FlatList,
   Modal,
   StyleSheet,
   Text,
@@ -54,11 +52,6 @@ interface Props {
   hideModal: (showSnackBar: boolean) => void;
 }
 
-interface SlideView {
-  title: string;
-  content: JSX.Element;
-}
-
 interface ContactType {
   id: string;
   isChecked: boolean;
@@ -78,7 +71,6 @@ const width =
 
 const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
-  const flatListRef = useRef<FlatList>(null);
   const [isValidForm, setValidForm] = useState(false);
   const [dataForm, setDataForm] = useState<BeContactedData>();
   const [showLoader, setShowLoader] = useState(false);
@@ -130,15 +122,6 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   ];
   const [contactHours, setContactHours] =
     useState<ContactType[]>(defaultContactHours);
-
-  const onScroll = useCallback(
-    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-      const slideSize = event.nativeEvent.layoutMeasurement.width;
-      const index = event.nativeEvent.contentOffset.x / slideSize;
-      setSwiperCurrentIndex(Math.round(index));
-    },
-    []
-  );
 
   const showPreviousButton: boolean = swiperCurrentIndex > 0;
   const isHours = (item: ContactType) => item.hours != undefined;
@@ -285,6 +268,9 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
             size="large"
             color={Colors.primaryBlueDark}
             style={{ marginTop: Margins.default }}
+            accessibilityLabel={
+              Labels.accessibility.beContacted.sendingInProgress
+            }
           />
         ) : (
           <>
@@ -303,38 +289,6 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
         )}
       </View>
     );
-  };
-
-  const steps: SlideView[] = [
-    {
-      content: stepTypes(),
-      title: "typeAndHours",
-    },
-    {
-      content: (
-        <View style={{ width: width }}>
-          <BeContactedForm
-            byEmail={isEmailSelected()}
-            bySms={isSmsSelected()}
-            validForm={(isValid: boolean) => {
-              setValidForm(isValid);
-            }}
-            setData={(data: BeContactedData) => {
-              setDataForm(data);
-            }}
-          />
-        </View>
-      ),
-      title: "form",
-    },
-    {
-      content: stepSendValidated(),
-      title: "sendValidated",
-    },
-  ];
-
-  const renderItem = ({ item }: { item: SlideView }) => {
-    return item.content;
   };
 
   const onValidate = async () => {
@@ -377,9 +331,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
           disabled={!enableNextButton()}
           action={() => {
             void onValidate();
-            flatListRef.current?.scrollToIndex({
-              index: swiperCurrentIndex + 1,
-            });
+            setSwiperCurrentIndex(swiperCurrentIndex + 1);
             setShowLoader(true);
           }}
         />
@@ -413,9 +365,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
             />
           }
           action={() => {
-            flatListRef.current?.scrollToIndex({
-              index: swiperCurrentIndex + 1,
-            });
+            setSwiperCurrentIndex(swiperCurrentIndex + 1);
           }}
         />
       );
@@ -441,17 +391,22 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
           </View>
 
           <ScrollView style={{ paddingEnd: PADDINGS_CONTAINER }}>
-            <FlatList
-              pagingEnabled
-              showsHorizontalScrollIndicator={false}
-              data={steps}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.title}
-              horizontal={true}
-              ref={flatListRef}
-              onScroll={onScroll}
-              scrollEnabled={false}
-            />
+            {swiperCurrentIndex == 0 ? stepTypes() : null}
+            {swiperCurrentIndex == 1 ? (
+              <View style={{ width: width }}>
+                <BeContactedForm
+                  byEmail={isEmailSelected()}
+                  bySms={isSmsSelected()}
+                  validForm={(isValid: boolean) => {
+                    setValidForm(isValid);
+                  }}
+                  setData={(data: BeContactedData) => {
+                    setDataForm(data);
+                  }}
+                />
+              </View>
+            ) : null}
+            {swiperCurrentIndex == 2 ? stepSendValidated() : null}
           </ScrollView>
 
           <View style={styles.buttonsContainer}>
@@ -476,9 +431,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                   }
                   action={() => {
                     setValidForm(false);
-                    flatListRef.current?.scrollToIndex({
-                      index: swiperCurrentIndex - 1,
-                    });
+                    setSwiperCurrentIndex(swiperCurrentIndex - 1);
                   }}
                 />
               ) : null}

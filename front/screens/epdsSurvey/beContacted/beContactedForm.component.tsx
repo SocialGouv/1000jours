@@ -216,6 +216,9 @@ const BeContactedForm: React.FC<Props> = ({
             onPress={() => {
               setNumberOfChildren(numberOfChildren - 1);
             }}
+            accessibilityLabel={Labels.accessibility.beContacted.less}
+            accessibilityRole="button"
+            accessibilityState={{ disabled: numberOfChildren == 0 }}
           >
             <SecondaryText
               style={[
@@ -235,6 +238,8 @@ const BeContactedForm: React.FC<Props> = ({
             onPress={() => {
               setNumberOfChildren(numberOfChildren + 1);
             }}
+            accessibilityRole="button"
+            accessibilityLabel={Labels.accessibility.beContacted.more}
           >
             <SecondaryText style={styles.counterSign}>+</SecondaryText>
           </TouchableOpacity>
