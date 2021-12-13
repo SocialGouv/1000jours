@@ -26,7 +26,7 @@ jobs:
       MATOMO_APPLICATION_ID: 46
       MATOMO_ENABLED: true
       MATOMO_URL: https://matomo.fabrique.social.gouv.fr/
-      SENTRY_DSN: https://5dbac413000f4a43a073841acebc82f5@sentry.fabrique.social.gouv.fr/55
+      SENTRY_DSN: https://d622675092bb449481c8016cab8ffd08@sentry.fabrique.social.gouv.fr/62
       SENTRY_ENABLED: true
       SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
       GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
