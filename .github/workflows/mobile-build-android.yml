@@ -45,3 +45,15 @@ jobs:
       run: |
         cd front/android
         ./gradlew bundleDevDebug
+
+    - name: Send APK by mail
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        # Required mail server port:
+        server_port: 465
+        subject: Android app
+        to: yjacqueline@ippon.fr
+         # Required sender full name (address can be skipped):
+        from: yjacqueline@ippon.fr
+        attachments: front/android/app/build/outputs/apk/Dev/debug/app-Dev-debug.apk
