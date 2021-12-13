@@ -42,6 +42,9 @@ const BeContactedForm: React.FC<Props> = ({
   const [childBirthDate, setChildBirthDate] = useState("");
   const [numberOfChildren, setNumberOfChildren] = useState(0);
 
+  const [emailIsValid, setEmailIsValid] = useState(true);
+  const [phoneNumberIsValid, setPhoneNumberIsValid] = useState(true);
+
   useEffect(() => {
     const initDataWithStorageValue = async () => {
       const childBirthdayStr = await getUserChildBirthday();
@@ -96,32 +99,6 @@ const BeContactedForm: React.FC<Props> = ({
     }
   };
 
-  const getPersonalInformationTypeError = (
-    informationType: PersonalInformationType
-  ): string => {
-    switch (informationType) {
-      case PersonalInformationType.email:
-        return Labels.epdsSurvey.beContacted.invalidEmail;
-      case PersonalInformationType.phoneNumber:
-        return Labels.epdsSurvey.beContacted.invalidPhoneNumber;
-      default:
-        return "";
-    }
-  };
-
-  const showInputError = (
-    informationType: PersonalInformationType
-  ): boolean => {
-    switch (informationType) {
-      case PersonalInformationType.email:
-        return !StringUtils.validateEmail(email.trimEnd());
-      case PersonalInformationType.phoneNumber:
-        return !StringUtils.validateFrenchPhoneNumber(phoneNumber.trimEnd());
-      default:
-        return false;
-    }
-  };
-
   const onChangeText = (
     informationType: PersonalInformationType,
     textInput: string
@@ -132,11 +109,27 @@ const BeContactedForm: React.FC<Props> = ({
         break;
       case PersonalInformationType.email:
         setEmail(textInput);
+        checkEmailInput(textInput);
         break;
       case PersonalInformationType.phoneNumber:
         setPhoneNumber(textInput);
+        checkPhoneInput(textInput);
         break;
     }
+  };
+
+  const checkEmailInput = (text: string) => {
+    if (text.trimEnd().length > 0) {
+      setEmailIsValid(StringUtils.validateEmail(text.trimEnd()));
+    } else setEmailIsValid(true);
+  };
+
+  const checkPhoneInput = (text: string) => {
+    if (text.trimEnd().length > 0) {
+      setPhoneNumberIsValid(
+        StringUtils.validateFrenchPhoneNumber(text.trimEnd())
+      );
+    } else setPhoneNumberIsValid(true);
   };
 
   const renderTextInputView = (
@@ -148,8 +141,6 @@ const BeContactedForm: React.FC<Props> = ({
     const label: string = getPersonalInformationTypeLabel(informationType);
     const placeholder: string =
       getPersonalInformationTypePlaceholder(informationType);
-
-    const [showError, setShowError] = useState(false);
 
     return (
       <View style={styles.textInputView}>
@@ -163,17 +154,23 @@ const BeContactedForm: React.FC<Props> = ({
             style={styles.textInput}
             onChangeText={(text: string) => {
               onChangeText(informationType, text);
-              setShowError(showInputError(informationType));
             }}
             placeholder={placeholder}
             placeholderTextColor={Colors.primaryBlue}
           />
 
-          {showError ? (
-            <HelperText type="error">
-              {getPersonalInformationTypeError(informationType)}
-            </HelperText>
-          ) : null}
+          {informationType === PersonalInformationType.email &&
+            !emailIsValid && (
+              <HelperText type="error">
+                {Labels.epdsSurvey.beContacted.invalidEmail}
+              </HelperText>
+            )}
+          {informationType === PersonalInformationType.phoneNumber &&
+            !phoneNumberIsValid && (
+              <HelperText type="error">
+                {Labels.epdsSurvey.beContacted.invalidPhoneNumber}
+              </HelperText>
+            )}
         </View>
 
         {isMandatory ? (
