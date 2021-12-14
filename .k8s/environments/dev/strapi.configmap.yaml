@@ -5,4 +5,5 @@ metadata:
 data:
   STRAPI_LOG_LEVEL: "debug"
   NODE_ENV: "production"
+  SENTRY_DSN: https://d622675092bb449481c8016cab8ffd08@sentry.fabrique.social.gouv.fr/62
   RESOURCES_URL: "https://nos1000jours-web-pro-develop.dev.fabrique.social.gouv.fr/annexes/ressources-parents"
