@@ -7,10 +7,6 @@ jobs:
   mobile-tests:
     name: Mobile Tests
     runs-on: ubuntu-latest
-    env:
-      MATOMO_APPLICATION_ID: 46
-      MATOMO_ENABLED: false
-      MATOMO_URL: https://matomo.fabrique.social.gouv.fr/
     steps:
 
     - name: Checkout repository
