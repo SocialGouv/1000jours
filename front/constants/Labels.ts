@@ -14,6 +14,7 @@ export default {
       activeFilter: "filtre actif",
       availableArticles: "articles disponibles",
     },
+    close: "Fermer",
     closeMenu: "Fermer le menu",
     epds: {
       onTotalQuestion: "sur",
@@ -110,7 +111,6 @@ export default {
   buttons: {
     back: "Retour",
     cancel: "Annuler",
-    close: "Fermer",
     contact: "Contacter",
     finish: "Terminer",
     next: "Suivant",
@@ -148,8 +148,6 @@ export default {
       mailsCanBeReceivedInSpams:
         "(*) Les mails peuvent se glisser dans vos spams ou être considérés comme indésirables. Pensez à vérifier votre boîte.",
       numberOfChildren: "Nombre d'enfants",
-      reminderBeContacted:
-        "Vous avez répondu au questionnaire sur la dépression post-partum. Pour vous accompagner sur cette période, vous pouvez être contaté(e) par notre partenaire, Élise.",
       title: "Être contacté(e)",
       yourEmail: "Votre email",
       yourFirstname: "Votre prénom",

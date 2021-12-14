@@ -32,7 +32,6 @@ import {
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import type { BeContactedData } from "../../type";
 import { StorageUtils, StringUtils } from "../../utils";
-import { cancelScheduleNotifications } from "../../utils/notification.util";
 
 interface Props {
   visible: boolean;
@@ -231,10 +230,6 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       setNumberOfChildren(1);
       setChildBirthDate("");
       setChildBirthDateIsEmpty(false);
-
-      void cancelScheduleNotifications(
-        StorageKeysConstants.notifIdsBeContacted
-      );
       hideModal(true);
     }
   };

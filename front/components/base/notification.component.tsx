@@ -2,15 +2,13 @@ import type { Notification as ExpoNotificaiton } from "expo-notifications";
 import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Modal, StyleSheet } from "react-native";
+import { Modal, StyleSheet, TouchableOpacity } from "react-native";
 
 import { Colors, FontWeight, Paddings, Sizes } from "../../constants";
-import BeContacted from "../../screens/epdsSurvey/beContacted.component";
 import type { NotificationStyle } from "../../types";
 import { NotificationType } from "../../utils/notification.util";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { TrackingEvent } from "../../utils/tracker.util";
-import { CloseButton } from "..";
 import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 import Button from "./button.component";
@@ -34,10 +32,6 @@ notifStyles.set(NotificationType.nextStep, {
   color: Colors.secondaryGreenDark,
   icon: IcomoonIcons.informations,
 });
-notifStyles.set(NotificationType.beContacted, {
-  color: Colors.primaryBlueDark,
-  icon: IcomoonIcons.email,
-});
 
 const Notification: React.FC<Props> = ({ notification, onDismiss }) => {
   const { trackScreenView } = useMatomo();
@@ -45,8 +39,6 @@ const Notification: React.FC<Props> = ({ notification, onDismiss }) => {
     .type as NotificationType;
 
   const [modalVisible, setModalVisible] = useState(true);
-  const [beContactedModalVisible, setBeContactedModalVisible] =
-    React.useState(false);
 
   const action = () => {
     const buttonTitle = notification.request.content.data.redirectTitle ?? "";
@@ -62,12 +54,7 @@ const Notification: React.FC<Props> = ({ notification, onDismiss }) => {
         RootNavigation.navigate("root", { screen: redirectTo });
       else RootNavigation.navigate(redirectTo, null);
     }
-
-    if (notificationType == NotificationType.beContacted) {
-      setBeContactedModalVisible(true);
-    } else {
-      setModalVisible(false);
-    }
+    setModalVisible(false);
   };
 
   useEffect(() => {
@@ -75,73 +62,59 @@ const Notification: React.FC<Props> = ({ notification, onDismiss }) => {
   }, [modalVisible]);
 
   return (
-    <>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View style={styles.closeButton}>
-              <CloseButton
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-                clear={true}
-              />
-            </View>
-            <View style={styles.content}>
-              <View
-                importantForAccessibility="no-hide-descendants"
-                accessible={false}
-              >
-                <Icomoon
-                  name={
-                    notifStyles.get(notificationType)?.icon ??
-                    IcomoonIcons.notification
-                  }
-                  color={notifStyles.get(notificationType)?.color}
-                  size={Sizes.xxxxl}
-                />
-              </View>
-              <SecondaryText
-                style={[
-                  styles.title,
-                  { color: notifStyles.get(notificationType)?.color },
-                ]}
-              >
-                {notification.request.content.title}
-              </SecondaryText>
-              <SecondaryText style={styles.body}>
-                {notification.request.content.body}
-              </SecondaryText>
-              <Button
-                title={
-                  notification.request.content.data.redirectTitle as string
-                }
-                rounded={true}
-                action={action}
-                titleStyle={styles.buttonTitle}
-                buttonStyle={{
-                  backgroundColor: notifStyles.get(notificationType)?.color,
-                }}
-              />
-            </View>
-          </View>
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        setModalVisible(!modalVisible);
+      }}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => {
+              setModalVisible(false);
+            }}
+          >
+            <Icomoon
+              name={IcomoonIcons.fermer}
+              color={Colors.disabled}
+              size={Sizes.lg}
+            />
+          </TouchableOpacity>
+          <Icomoon
+            name={
+              notifStyles.get(notificationType)?.icon ??
+              IcomoonIcons.notification
+            }
+            color={notifStyles.get(notificationType)?.color}
+            size={Sizes.xxxxl}
+          />
+          <SecondaryText
+            style={[
+              styles.title,
+              { color: notifStyles.get(notificationType)?.color },
+            ]}
+          >
+            {notification.request.content.title}
+          </SecondaryText>
+          <SecondaryText style={styles.body}>
+            {notification.request.content.body}
+          </SecondaryText>
+          <Button
+            title={notification.request.content.data.redirectTitle as string}
+            rounded={true}
+            action={action}
+            titleStyle={styles.buttonTitle}
+            buttonStyle={{
+              backgroundColor: notifStyles.get(notificationType)?.color,
+            }}
+          />
         </View>
-      </Modal>
-      <BeContacted
-        visible={beContactedModalVisible}
-        hideModal={() => {
-          setBeContactedModalVisible(false);
-          setModalVisible(false);
-        }}
-      />
-    </>
+      </View>
+    </Modal>
   );
 };
 
@@ -162,22 +135,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   closeButton: {
-    alignSelf: "flex-end",
-    backgroundColor: "transparent",
-    paddingEnd: Paddings.smaller,
-    paddingTop: Paddings.smaller,
-  },
-  content: {
-    alignItems: "center",
-    marginTop: -15,
-    paddingHorizontal: 35,
+    padding: Paddings.default,
+    position: "absolute",
+    right: 0,
+    top: 0,
   },
   modalView: {
-    backgroundColor: Colors.white,
+    alignItems: "center",
+    backgroundColor: "white",
     borderRadius: 20,
     elevation: 5,
     margin: 20,
-    paddingBottom: 35,
+    padding: 35,
     shadowColor: "#000",
     shadowOffset: {
       height: 2,
