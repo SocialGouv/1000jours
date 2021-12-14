@@ -1,5 +1,6 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import type { Subscription } from "@unimodules/core";
+import Constants from "expo-constants";
 import * as Font from "expo-font";
 import * as Notifications from "expo-notifications";
 import { StatusBar } from "expo-status-bar";
@@ -75,6 +76,30 @@ const MainAppContainer: FC = () => {
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
     if (nextAppState === "active") {
       void updateAppActiveCounter();
+      void manageStorage();
+    }
+  };
+
+  const manageStorage = async () => {
+    if (process.env.CLEAR_STORAGE === "true")
+      void StorageUtils.multiRemove(StorageKeysConstants.allStorageKeys);
+
+    const lastVersionLaunch = await StorageUtils.getStringValue(
+      StorageKeysConstants.lastVersionLaunchKey
+    );
+
+    if (
+      Constants.manifest.version &&
+      lastVersionLaunch !== Constants.manifest.version
+    ) {
+      await StorageUtils.storeStringValue(
+        StorageKeysConstants.lastVersionLaunchKey,
+        Constants.manifest.version
+      );
+      await StorageUtils.storeObjectValue(
+        StorageKeysConstants.forceToScheduleEventsNotif,
+        true
+      );
     }
   };
 
@@ -88,6 +113,8 @@ const MainAppContainer: FC = () => {
       .catch((error) => {
         console.log(error);
       });
+
+    void manageStorage();
 
     // Permet de détecter lorsque l'app change d'état ('active' | 'background' | 'inactive' | 'unknown' | 'extension')
     AppState.addEventListener("change", handleAppStateChange);
@@ -122,9 +149,6 @@ const MainAppContainer: FC = () => {
         Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
-
-  if (process.env.CLEAR_STORAGE === "true")
-    void StorageUtils.multiRemove(StorageKeysConstants.allStorageKeys);
 
   if (!fontsLoaded || !isLoadingComplete) {
     return null;

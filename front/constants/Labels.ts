@@ -3,6 +3,37 @@ import { NUMBER_OF_DAYS_NOTIF_REMINDER } from "./epdsConstants.constants";
 import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
+  accessibility: {
+    array: "Tableau",
+    articleCard: {
+      description: "Description",
+      title: "Titre de l'article",
+    },
+    articleToRead: "article à lire",
+    articlesFilters: {
+      activeFilter: "filtre actif",
+      availableArticles: "articles disponibles",
+    },
+    close: "Fermer",
+    closeMenu: "Fermer le menu",
+    epds: {
+      onTotalQuestion: "sur",
+      question: "Question",
+    },
+    eventCard: {
+      description: "Description",
+      title: "Titre de l'événement",
+    },
+    illustrationProfile: "Illustration profil",
+    logoApp: "Logo de l'application",
+    logoRepubliqueFr: "Logo de la République française",
+    step: "étape",
+    subtitle: "Sous-Titre",
+    tapForMoreInfo: "Appuyer deux fois pour avoir plus d'informations",
+    title: "Titre",
+    updateDate: "Modifier la date",
+    version: "version.",
+  },
   appName: "1000 premiers jours",
   aroundMe: {
     addressesListLabelEnd:
@@ -85,6 +116,7 @@ export default {
     next: "Suivant",
     ok: "Ok",
     pass: "Passer",
+    previous: "Précédent",
     start: "Commencer",
     validate: "Valider",
   },
@@ -100,7 +132,10 @@ export default {
       title: "Événement",
       titleReminder: "Événement à venir",
     },
-    synchronise: "Synchroniser",
+    synchronise: "Synchroniser avec mon calendrier",
+    synchronization: "Synchronisation",
+    synchronizationHelper:
+      "Ce bouton permet de synchroniser votre calendrier personnel avec celui de l’application. Ainsi, les événements affichés ici le seront aussi sur votre calendrier.",
     today: "Aujourd'hui",
   },
   dateFormatLabel: "Jour / Mois / Année",
@@ -111,7 +146,7 @@ export default {
       invalidEmail: "L'email n'est pas valide",
       invalidPhoneNumber: "Le tél. n'est pas valide",
       mailsCanBeReceivedInSpams:
-        "Les retours peuvent se glisser dans vos spams ou mails indésirables, merci de les vérifier.",
+        "(*) Les mails peuvent se glisser dans vos spams ou être considérés comme indésirables. Pensez à vérifier votre boîte.",
       numberOfChildren: "Nombre d'enfants",
       title: "Être contacté(e)",
       yourEmail: "Votre email",
@@ -163,7 +198,7 @@ export default {
         {
           boldIndexes: [],
           description:
-            "Il existe des questionnaires de dépistage d’utilisations simple. N’hésitez pas à en parler à votre sage-femme ou votre médecin, ils pourront faire le point avec vous.  Si vous souhaitez utiliser le questionnaire (EPDS), il est important qu’il se fasse en présence d’un professionnel de santé, qui est le seul à pouvoir poser un diagnostic.",
+            "Il existe des questionnaires de dépistage d’utilisation simple. N’hésitez pas à en parler à votre sage-femme ou votre médecin, ils pourront faire le point avec vous.  Si vous souhaitez utiliser le questionnaire (EPDS), il est important qu’il se fasse en présence d’un professionnel de santé, qui est le seul à pouvoir poser un diagnostic.",
           title: "Informations",
         },
         {
@@ -184,7 +219,7 @@ export default {
         ],
         title: "Étapes",
       },
-      title: "Dépression post partum, en parler c’est soigner !",
+      title: "Dépression post partum, en parler c’est se soigner !",
     },
     previousSurvey: {
       continueButton: "Continuer",
@@ -299,8 +334,6 @@ export default {
     titleResults: "Résultat",
   },
   epdsSurveyLight: {
-    changementsImportants:
-      "Les changements importants liés à l’arrivée d’un bébé sont des facteurs de stress dont certains signes évocateurs sont normaux durant cette période. Parlez de vos difficultés des premiers mois, est essentiel pour que le professionnel de santé qui vous suit puisse à tout moment vous accompagner. Des aides et un accompagnement peuvent être mis en place pour vous aider durant cette période qui nécessite du soutien. En parler avec un professionnel de santé et votre entourage, c’est se soigner. Parce que vous n’êtes pas seul(e) et qu’en parler a permis à de nombreux parents d’aller mieux.",
     oserEnParler:
       "Oser en parler, c'est déjà prendre soin de soi et de son enfant !",
     professionalsList: [
@@ -372,6 +405,22 @@ export default {
         sectionTitle: "Contacter",
       },
     ],
+    stateOfMind: {
+      entreDixEtQuartorze: "Je vais moins bien",
+      moinsDeNeuf: "Je vais bien",
+      plusDeQuinze: "Je ne vais pas bien",
+    },
+    textesExplication: {
+      contactParElise:
+        "Vous pouvez être contacté(e) par Élise, notre partenaire (association composée par des volontaires ayant connu la difficulté maternelle), afin de",
+      contactParEliseBold: " trouver une aide adaptée autour de vous.",
+      moinsDeNeuf:
+        "Les changements importants liés à l’arrivée d’un bébé sont des facteurs de stress dont certains signes évocateurs sont normaux durant cette période. Parlez de vos difficultés des premiers mois est essentiel pour que le professionnel de santé qui vous suit puisse à tout moment vous accompagner. Des aides et un accompagnement peuvent être mis en place pour vous aider durant cette période qui nécessite du soutien. En parler avec un professionnel de santé et votre entourage, c’est se soigner. Parce que vous n’êtes pas seul(e) et qu’en parler a permis à de nombreux parents d’aller mieux.",
+      plusDeNeuf:
+        "Les changements importants liés à l’arrivée d’un bébé sont des facteurs de stress dont certains signes peuvent évoquer ceux de la dépression post partum. Vous exprimez des signes évocateurs de la dépression post partum, il est donc nécessaire de",
+      plusDeNeufBold:
+        " consulter le professionnel de santé qui vous suit pour échanger.",
+    },
     titleLight: "Et si c'était une dépression post-partum ? Les ressources",
   },
   errorMsg: "Une erreur est survenue, merci de réessayer plus tard",
@@ -387,6 +436,7 @@ export default {
   listArticles: {
     articlesToRead: "article(s) à lire",
     filters: "Filtrer",
+    resetFilters: "Réinitialiser",
   },
   mandatoryField: "Ce champ est obligatoire",
   menu: {
@@ -402,6 +452,7 @@ export default {
     openTheApp: "Ouverture de l'app",
   },
   onboarding: {
+    screenNumber: "Écran n°",
     slidesText: [
       {
         description:
@@ -461,7 +512,7 @@ export default {
       "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. A chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
     library: {
       description:
-        "Texte descriptif quii explique qu'il sagit des documents utiles durant le parcours des 1000 premiers jours.",
+        "Retrouvez ici les documents utiles pour l'ensemble des 1000 premiers jours.",
       download: "Télécharger",
       nom: "Parenthèque",
     },

@@ -20,7 +20,9 @@ const TitleH1: React.FC<Props> = ({ title, animated, description, style }) =>
       duration={1500}
       style={style}
     >
-      <SecondaryText style={styles.title}>{title}</SecondaryText>
+      <SecondaryText style={styles.title} accessibilityRole="header">
+        {title}
+      </SecondaryText>
       {description && (
         <SecondaryText style={styles.description}>{description}</SecondaryText>
       )}

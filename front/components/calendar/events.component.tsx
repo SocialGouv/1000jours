@@ -103,7 +103,11 @@ const Events: FC<Props> = ({ evenements, childBirthday }) => {
           }}
         >
           <View style={styles.dateTagContainer}>
-            <View style={styles.dateTagIcon}>
+            <View
+              style={styles.dateTagIcon}
+              importantForAccessibility="no-hide-descendants"
+              accessibilityElementsHidden={true}
+            >
               <Icomoon
                 name={IcomoonIcons.point}
                 size={dotIconSize}
@@ -111,7 +115,7 @@ const Events: FC<Props> = ({ evenements, childBirthday }) => {
               />
             </View>
 
-            <CommonText style={styles.dateTag}>
+            <CommonText style={styles.dateTag} accessibilityRole="header">
               {getDateTagTitle(new Date(date))}
             </CommonText>
           </View>
@@ -134,6 +138,7 @@ const styles = StyleSheet.create({
   dateTag: {
     alignSelf: "flex-start",
     color: Colors.primaryBlueDark,
+    fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
     marginVertical: Margins.smallest,
     overflow: "hidden",

@@ -40,6 +40,9 @@
     "evenements": {
       "via": "documents",
       "collection": "evenement"
+    },
+    "ordre": {
+      "type": "integer"
     }
   }
 }

@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^29.2.0",
-    "@ckeditor/ckeditor5-react": "^3.0.2",
+    "@ckeditor/ckeditor5-react": "^3.0.3",
     "axios": "^0.21.4",
     "csv-string": "^4.0.1",
     "csvtojson": "^2.0.10",
@@ -29,7 +29,7 @@
     "lodash": "^4.17.21",
     "pg": "latest",
     "pg-query-stream": "^4.2.1",
-    "slugify": "^1.6.0",
+    "slugify": "^1.6.3",
     "strapi": "^3.6.8",
     "strapi-admin": "^3.6.8",
     "strapi-connector-bookshelf": "^3.6.8",
@@ -39,7 +39,7 @@
     "strapi-plugin-content-type-builder": "^3.6.8",
     "strapi-plugin-email": "^3.6.8",
     "strapi-plugin-graphql": "^3.6.8",
-    "strapi-plugin-import-export-content": "^0.4.1",
+    "strapi-plugin-import-export-content": "^0.4.2",
     "strapi-plugin-sentry": "^3.6.8",
     "strapi-plugin-upload": "^3.6.8",
     "strapi-plugin-users-permissions": "^3.6.8",
@@ -62,8 +62,8 @@
     "babel-eslint": "^10.1.0",
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-jest": "^24.4.2",
-    "jest": "^27.2.4",
+    "eslint-plugin-jest": "^24.4.3",
+    "jest": "^27.2.5",
     "node-fetch": "^3.0.0",
     "prettier": "^2.3.2"
   }

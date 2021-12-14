@@ -4,18 +4,13 @@ import { format } from "date-fns";
 import { range } from "lodash";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import {
-  Modal,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Modal, StyleSheet, TextInput, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { HelperText } from "react-native-paper";
 
 import {
   Button,
+  CloseButton,
   CommonText,
   Datepicker,
   Icomoon,
@@ -244,25 +239,21 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       <Modal transparent={true} visible={visible} animationType="fade">
         <View style={styles.behindOfModal}>
           <View style={styles.mainContainer}>
-            <TitleH1
-              title={Labels.epdsSurvey.beContacted.title}
-              animated={false}
-            />
-            <TouchableOpacity
-              style={styles.closeModalView}
-              onPress={() => {
-                hideModal(false);
-              }}
-            >
-              <View style={styles.closeModalButton}>
-                <Icomoon
-                  name={IcomoonIcons.fermer}
-                  size={Sizes.xs}
-                  color={Colors.primaryBlue}
-                />
-              </View>
-            </TouchableOpacity>
-            <ScrollView>
+            <View style={styles.modalHeader}>
+              <TitleH1
+                title={Labels.epdsSurvey.beContacted.title}
+                animated={false}
+                style={{ paddingTop: Paddings.default }}
+              />
+              <CloseButton
+                onPress={() => {
+                  hideModal(false);
+                }}
+                clear={true}
+              />
+            </View>
+
+            <ScrollView style={{ paddingEnd: Paddings.default }}>
               {renderTextInputView(PersonalInformationType.firstName, false)}
               {renderTextInputView(PersonalInformationType.email, true)}
               {renderTextInputView(PersonalInformationType.phoneNumber, false)}
@@ -312,6 +303,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                 </View>
               )}
             </ScrollView>
+
             <View style={styles.buttonsContainer}>
               <View style={styles.buttonContainer}>
                 <Button
@@ -360,10 +352,9 @@ const styles = StyleSheet.create({
     fontSize: Sizes.sm,
   },
   buttonsContainer: {
-    bottom: 0,
     flexDirection: "row",
-    marginVertical: Margins.default,
-    position: "absolute",
+    marginEnd: Margins.default,
+    marginTop: Margins.default,
   },
   center: {
     alignSelf: "center",
@@ -388,12 +379,19 @@ const styles = StyleSheet.create({
     borderColor: Colors.primaryBlue,
     borderRadius: Sizes.xs,
     borderWidth: 1,
+    display: "flex",
     flex: 1,
     margin: Margins.default,
-    padding: Paddings.default,
+    paddingBottom: Paddings.default,
+    paddingStart: Paddings.default,
   },
   mandatory: {
     color: "red",
+  },
+  modalHeader: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   rowView: {
     alignItems: "center",

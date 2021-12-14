@@ -3,14 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "git-cz": "^4.7.6"
+    "git-cz": "^4.8.0"
   },
   "devDependencies": {
     "@socialgouv/eslint-config-typescript": "^1.88.0",
     "commitizen": "^4.2.4",
     "eslint": "^7.32.0",
     "prettier": "^2.3.2",
-    "typescript": "^4.4.3"
+    "typescript": "^4.4.4"
   },
   "scripts": {
     "commit": "git-cz",

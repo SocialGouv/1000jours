@@ -1,35 +1,56 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
-import { Colors, FontWeight, Margins, Sizes } from "../../../constants";
+import {
+  Colors,
+  FontNames,
+  FontWeight,
+  getFontFamilyName,
+  Margins,
+  Sizes,
+} from "../../../constants";
+import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
 import { LinkingUtils } from "../../../utils";
+import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
 
 interface EpdsResultUrlParagraphProps {
   paragraphTitle?: string;
   urls: string[];
+  isFocusOnFirstElement: boolean;
 }
 
 const EpdsResultUrlParagraph: React.FC<EpdsResultUrlParagraphProps> = ({
   paragraphTitle,
   urls,
+  isFocusOnFirstElement,
 }) => {
+  const titleRef = React.useRef<Text>(null);
+
+  if (isFocusOnFirstElement) {
+    setTimeout(() => {
+      setAccessibilityFocusOnText(titleRef);
+    }, TIMEOUT_FOCUS);
+  }
+
   return (
     <View style={styles.itemBorder}>
       {paragraphTitle && paragraphTitle.length > 0 && (
-        <SecondaryText style={styles.paragraphTitle}>
+        <Text style={styles.paragraphTitle} ref={titleRef}>
           {paragraphTitle}
-        </SecondaryText>
+        </Text>
       )}
       {urls.map((url, index) => (
-        <View key={index}>
-          <TouchableOpacity onPress={async () => LinkingUtils.openWebsite(url)}>
-            <SecondaryText style={[styles.urls, styles.underline]}>
-              {url}
-            </SecondaryText>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          key={index}
+          onPress={async () => LinkingUtils.openWebsite(url)}
+          accessibilityRole="link"
+        >
+          <SecondaryText style={[styles.urls, styles.underline]}>
+            {url}
+          </SecondaryText>
+        </TouchableOpacity>
       ))}
     </View>
   );
@@ -46,6 +67,7 @@ const styles = StyleSheet.create({
   },
   paragraphTitle: {
     color: Colors.commonText,
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.bold),
     fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
     lineHeight: Sizes.mmd,
@@ -54,7 +76,7 @@ const styles = StyleSheet.create({
   urls: {
     color: Colors.primaryBlue,
     fontSize: Sizes.sm,
-    lineHeight: Sizes.mmd,
+    lineHeight: Sizes.lg,
   },
 });
 

@@ -101,6 +101,7 @@ const BottomTabNavigator: FC = () => {
           name={tabItem.name}
           component={tabItem.component}
           options={{
+            tabBarAllowFontScaling: false,
             tabBarIcon: ({ color, focused }) => tabItem.getIcon(color, focused),
             title: tabItem.title,
             unmountOnBlur: true,

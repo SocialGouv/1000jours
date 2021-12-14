@@ -1,10 +1,15 @@
-import { useLazyQuery } from "@apollo/client";
 import _ from "lodash";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import * as React from "react";
-import { ImageBackground, StyleSheet, View } from "react-native";
+import {
+  AccessibilityInfo,
+  findNodeHandle,
+  ImageBackground,
+  StyleSheet,
+  View,
+} from "react-native";
 import { ListItem } from "react-native-elements";
 
 import BgImage from "../../assets/images/bg-icon-event-type.png";
@@ -17,16 +22,13 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../constants";
-import { GET_EVENT_ARTICLES } from "../../constants/databaseQueries.constants";
 import type { CartoFilterStorage } from "../../type";
-import type { Article, Event, Tag } from "../../types";
+import type { Event, Tag } from "../../types";
 import { StorageUtils, TrackerUtils } from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { getThematiqueIcon } from "../../utils/thematique.util";
-import { Loader } from "..";
 import ArticleCard from "../article/articleCard.component";
 import Button from "../base/button.component";
-import ErrorMessage from "../base/errorMessage.component";
 import Icomoon from "../base/icomoon.component";
 import Tags from "../base/tags.component";
 import { CommonText, SecondaryText } from "../StyledText";
@@ -40,8 +42,7 @@ const dotIconSize = Sizes.xxxs;
 
 const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
   const { trackScreenView } = useMatomo();
-  const [articles, setArticles] = React.useState<Article[]>([]);
-  const MAX_ARTICLES = 10;
+  const elementRef = useRef<View>(null);
 
   const getEventTags = () => {
     const tags: Tag[] = [];
@@ -80,52 +81,29 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
     RootNavigation.navigate("tabAroundMe", null);
   };
 
-  const buildWhereCondition = () => {
-    let condition = "";
-    condition +=
-      event.etapes && event.etapes.length > 0
-        ? "etapes: { id_in: $etapeIds }" // <field>_in: Matches any value in the array of values.
-        : "etapes: { id_nin: $etapeIds }"; // <field>_nin: Doesn't match any value in the array of values.
-
-    condition += event.thematique?.id
-      ? "thematiques: { id: $thematiqueId }"
-      : "thematiques: { id_ne: $thematiqueId }"; // <field>_ne: Not equals.
-
-    return condition;
+  const setAccessibilityFocus = () => {
+    if (elementRef.current) {
+      const reactTag = findNodeHandle(elementRef.current);
+      if (reactTag) {
+        AccessibilityInfo.setAccessibilityFocus(reactTag);
+      }
+    }
   };
 
-  const [loadArticles, { loading, error, data }] = useLazyQuery(
-    GET_EVENT_ARTICLES(buildWhereCondition(), MAX_ARTICLES),
-    {
-      variables: {
-        etapeIds: _.map(event.etapes, "id"),
-        thematiqueId: event.thematique?.id,
-      },
-    }
-  );
-
   useEffect(() => {
-    if (isExpanded) loadArticles();
+    if (isExpanded) setAccessibilityFocus();
   }, [isExpanded]);
-
-  useEffect(() => {
-    if (!loading && data) {
-      const results = (data as { articles: Article[] }).articles;
-      setArticles(results);
-    }
-  }, [loading, data]);
-
-  if (error) return <ErrorMessage error={error} />;
 
   return (
     <View style={styles.eventCard} key={event.id}>
       <ListItem
-        key={event.id}
         pad={0}
         containerStyle={styles.listItemContainer}
         onPress={() => {
           onPressed(event.id.toString());
         }}
+        accessibilityHint={Labels.accessibility.tapForMoreInfo}
+        accessibilityLabel={`${Labels.accessibility.eventCard.title} : ${event.nom}. ${Labels.accessibility.eventCard.description} : ${event.description}`}
       >
         <View style={styles.eventContainer}>
           <View style={styles.eventIconContainer}>
@@ -153,33 +131,27 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
 
       {isExpanded && (
         <View style={styles.eventDetailsContainer}>
-          <View style={styles.linkCarto}>
+          <View style={styles.linkCarto} ref={elementRef} accessible={true}>
             <Button
               rounded={true}
               title={Labels.event.seeOnTheMap}
-              titleStyle={{
-                textTransform: "uppercase",
-              }}
+              titleStyle={styles.buttonTitle}
               buttonStyle={{ alignSelf: "center" }}
               action={seeOnTheMap}
             />
           </View>
 
-          {loading ? (
-            <Loader />
-          ) : (
-            articles.length > 0 && (
-              <View style={styles.listArticles}>
-                <CommonText style={styles.listArticlesTitle}>
-                  {Labels.event.matchingArticles} :
-                </CommonText>
-                {articles.map((article, index) => (
-                  <View key={index}>
-                    <ArticleCard article={article} />
-                  </View>
-                ))}
-              </View>
-            )
+          {event.articles && event.articles.length > 0 && (
+            <View style={styles.listArticles}>
+              <CommonText style={styles.listArticlesTitle}>
+                {Labels.event.matchingArticles} :
+              </CommonText>
+              {event.articles.map((article, index) => (
+                <View key={index}>
+                  <ArticleCard article={article} />
+                </View>
+              ))}
+            </View>
           )}
         </View>
       )}
@@ -188,6 +160,10 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
 };
 
 const styles = StyleSheet.create({
+  buttonTitle: {
+    fontSize: Sizes.xs,
+    textTransform: "uppercase",
+  },
   dateTag: {
     alignSelf: "flex-start",
     color: Colors.primaryBlueDark,
@@ -232,7 +208,7 @@ const styles = StyleSheet.create({
   },
   eventTitle: {
     color: Colors.primaryBlueDark,
-    fontSize: Sizes.xs,
+    fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
     paddingBottom: Paddings.light,
   },
@@ -258,7 +234,7 @@ const styles = StyleSheet.create({
   listArticlesTitle: {
     color: Colors.primaryBlueDark,
     fontSize: Sizes.sm,
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.bold,
     paddingBottom: Paddings.light,
   },
   listItemContainer: {

@@ -7,11 +7,11 @@ import { ScrollView } from "react-native-gesture-handler";
 import HTML from "react-native-render-html";
 import WebView from "react-native-webview";
 
-import { FontWeight, Paddings } from "../../constants";
+import { Colors, FontWeight, Paddings } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { AssestUtils } from "../../utils";
+import CloseButton from "../base/closeButton.component";
 import { View } from "../Themed";
-import Button from "./button.component";
 
 interface Props {
   content?: React.ReactNode;
@@ -66,12 +66,18 @@ const ModalHtmlContent: React.FC<Props> = ({
       onRequestClose={hideModal}
     >
       <SafeAreaView>
-        <ScrollView style={styles.mainContainer}>
-          <View style={styles.closeButton}>
-            <Button title="X" rounded={true} action={hideModal} />
+        <ScrollView>
+          <View>
+            <View style={styles.headContainer}>
+              <View style={styles.closeButtonContainer}>
+                <CloseButton onPress={hideModal} clear={false} />
+              </View>
+            </View>
+            <View style={styles.mainContainer}>
+              {content && <>{content}</>}
+              {html && <>{buildContent(html)}</>}
+            </View>
           </View>
-          {content && <View>{content}</View>}
-          {html && <View>{buildContent(html)}</View>}
         </ScrollView>
       </SafeAreaView>
     </RNModal>
@@ -83,10 +89,19 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
   },
   closeButton: {
+    paddingVertical: Paddings.default,
+  },
+  closeButtonContainer: {
     alignSelf: "flex-end",
   },
+  headContainer: {
+    borderBottomWidth: 1,
+    borderColor: Colors.borderGrey,
+    paddingHorizontal: Paddings.default,
+    paddingVertical: Paddings.smaller,
+  },
   mainContainer: {
-    padding: Paddings.default,
+    paddingHorizontal: Paddings.default,
   },
 });
 

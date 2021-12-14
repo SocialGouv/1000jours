@@ -1,11 +1,11 @@
 import type { FC } from "react";
 import * as React from "react";
 import type { LayoutChangeEvent } from "react-native";
-import { StyleSheet } from "react-native";
-import { Button as RNEButton } from "react-native-elements";
+import { Pressable, StyleSheet } from "react-native";
 import type { IconNode } from "react-native-elements/dist/icons/Icon";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { FontWeight, Margins, Paddings, Sizes } from "../../constants";
+import { FontWeight, Labels, Margins, Paddings, Sizes } from "../../constants";
 import Colors from "../../constants/Colors";
 import { IcomoonIcons } from "../base/icomoon.component";
 import { CommonText, SecondaryText } from "../StyledText";
@@ -80,18 +80,27 @@ const TimelineStep: FC<TimelineStepProps> = ({
   };
 
   return (
-    <View style={getStepStyles(listIndex, isTheLast)} onLayout={onLayout}>
-      <View style={[styles.stepIconContainer]}>
-        <RNEButton
-          icon={stepIcons[order - 1]}
-          onPress={onPress}
-          buttonStyle={[
+    <Pressable
+      style={getStepStyles(listIndex, isTheLast)}
+      onLayout={onLayout}
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`${Labels.accessibility.step} ${order}. ${name}`}
+    >
+      <View
+        style={[styles.stepIconContainer]}
+        importantForAccessibility="no-hide-descendants"
+      >
+        <TouchableOpacity
+          style={[
             styles.stepIconButton,
             styles.justifyContentCenter,
             active ? styles.stepActive : null,
           ]}
-          type="clear"
-        />
+          onPress={onPress}
+        >
+          {stepIcons[order - 1]}
+        </TouchableOpacity>
       </View>
       <View
         style={[
@@ -103,12 +112,17 @@ const TimelineStep: FC<TimelineStepProps> = ({
             : null,
         ]}
       >
-        <CommonText style={[styles.stepTitle]}>{name}</CommonText>
-        <SecondaryText style={getStepNumStyles(listIndex)}>
+        <CommonText style={[styles.stepTitle]} allowFontScaling={false}>
+          {name}
+        </CommonText>
+        <SecondaryText
+          style={getStepNumStyles(listIndex)}
+          allowFontScaling={false}
+        >
           {order}
         </SecondaryText>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

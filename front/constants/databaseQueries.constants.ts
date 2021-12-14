@@ -79,6 +79,42 @@ export const EPDS_CONTACT_INFORMATION = gql`
   }
 `;
 
+export const ALL_EVENTS = gql`
+  query GetEvents {
+    evenements {
+      id
+      nom
+      description
+      debut
+      fin
+      thematique {
+        id
+        nom
+      }
+      etapes {
+        id
+        nom
+      }
+      articles {
+        id
+        titre
+        resume
+        visuel {
+          id
+          hash
+          url
+          height
+          width
+        }
+        thematiques {
+          nom
+          id
+        }
+      }
+    }
+  }
+`;
+
 export const GET_EVENT_ARTICLES = (
   whereCondition: string,
   limit: number
@@ -150,10 +186,11 @@ export const CARTO_SEND_SUGGESTIONS = gql`
 
 export const PARENTS_DOCUMENTS = gql`
   query GetParenthequeDocuments {
-    parenthequeDocuments {
+    parenthequeDocuments(sort: "ordre") {
       id
       nom
       description
+      ordre
       fichier {
         url
       }

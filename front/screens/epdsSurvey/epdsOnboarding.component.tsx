@@ -46,8 +46,10 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
     return (
       <View style={styles.iconWithTitle}>
         <View>{getIcon(index)}</View>
-        <CommonText style={styles.stepNum}>{index + 1}</CommonText>
-        <CommonText style={styles.stepTitle}>
+        <CommonText style={styles.stepNum} allowFontScaling={false}>
+          {index + 1}
+        </CommonText>
+        <CommonText style={styles.stepTitle} allowFontScaling={false}>
           {Labels.epdsSurvey.onboarding.steps.elements[index]}
         </CommonText>
       </View>

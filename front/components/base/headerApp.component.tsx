@@ -4,13 +4,24 @@ import { StyleSheet, View } from "react-native";
 
 import LogoMinistere from "../../assets/images/Logo ministere.svg";
 import AppLogo from "../../assets/images/logo.svg";
-import { Paddings, Sizes } from "../../constants";
+import { Labels, Paddings, Sizes } from "../../constants";
 
 const HeaderApp: FC = () => (
   <View>
-    <LogoMinistere height={Sizes.xxxxl} style={styles.logoMinistere} />
+    <LogoMinistere
+      height={Sizes.xxxxl}
+      style={styles.logoMinistere}
+      accessible
+      accessibilityRole="image"
+      accessibilityLabel={Labels.accessibility.logoRepubliqueFr}
+    />
     <View style={styles.appLogo}>
-      <AppLogo height={Sizes.logo} />
+      <AppLogo
+        height={Sizes.logo}
+        accessible
+        accessibilityRole="image"
+        accessibilityLabel={`${Labels.accessibility.logoApp} ${Labels.appName}`}
+      />
     </View>
   </View>
 );
@@ -23,7 +34,8 @@ const styles = StyleSheet.create({
   },
   logoMinistere: {
     aspectRatio: 1,
-    margin: Paddings.light,
+    marginLeft: Paddings.default,
+    marginTop: Paddings.default,
   },
 });
 

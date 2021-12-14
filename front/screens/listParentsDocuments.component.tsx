@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import _ from "lodash";
+import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect } from "react";
@@ -19,6 +20,7 @@ import {
 } from "../constants";
 import { PARENTS_DOCUMENTS } from "../constants/databaseQueries.constants";
 import type { Document, Step, TabHomeParamList } from "../types";
+import { TrackerUtils } from "../utils";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;
@@ -28,6 +30,7 @@ interface Props {
 const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
   const screenTitle = route.params.step.nom;
   const description = route.params.step.description;
+  const { trackScreenView } = useMatomo();
 
   const [documents, setDocuments] = React.useState<Document[]>([]);
   const [showDocuments, setShowDocuments] = React.useState(false);
@@ -37,6 +40,10 @@ const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
   });
 
   useEffect(() => {
+    trackScreenView(`${TrackerUtils.TrackingEvent.PARENTHEQUE}`);
+  }, []);
+
+  useEffect(() => {
     if (!loading && data) setShowDocuments(true);
   }, [documents]);
 
@@ -44,7 +51,7 @@ const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
     if (!loading && data) {
       const results = (data as { parenthequeDocuments: Document[] })
         .parenthequeDocuments;
-      setDocuments(results);
+      setDocuments(sortDocuments(results));
     }
   }, [loading, data]);
 
@@ -76,7 +83,7 @@ const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
               duration={1000}
               delay={0}
             >
-              <DocumentCard document={document} index={index} />
+              <DocumentCard document={document} />
             </Animatable.View>
           ))}
         </View>
@@ -85,6 +92,14 @@ const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
       )}
     </ScrollView>
   );
+};
+
+const sortDocuments = (documents: Document[]) => {
+  return _.sortBy(documents, [
+    function (doc) {
+      return doc.ordre;
+    },
+  ]);
 };
 
 const styles = StyleSheet.create({

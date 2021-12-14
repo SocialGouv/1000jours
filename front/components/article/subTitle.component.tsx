@@ -12,7 +12,11 @@ interface Props {
 }
 
 const SubTitle: FC<Props> = ({ title }) =>
-  title?.length ? <CommonText style={styles.title}>{title}</CommonText> : null;
+  title?.length ? (
+    <CommonText style={styles.title} accessibilityRole="header">
+      {title}
+    </CommonText>
+  ) : null;
 
 const styles = StyleSheet.create({
   title: {

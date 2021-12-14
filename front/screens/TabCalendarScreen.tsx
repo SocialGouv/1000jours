@@ -1,5 +1,4 @@
 import { useLazyQuery } from "@apollo/client";
-import { gql } from "@apollo/client/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { addDays, format } from "date-fns";
 import * as Calendar from "expo-calendar";
@@ -9,27 +8,40 @@ import type { FC } from "react";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 
+import HelpIcon from "../assets/images/help.png";
 import {
   Button,
   CommonText,
   ErrorMessage,
-  Events,
+  Icomoon,
+  IcomoonIcons,
   Loader,
   TitleH1,
 } from "../components";
+import ModalHelp from "../components/base/modalHelp.component";
+import Events from "../components/calendar/events.component";
+import { SecondaryTextItalic } from "../components/StyledText";
 import { View } from "../components/Themed";
 import {
   Colors,
   FetchPoliciesConstants,
+  FontNames,
+  FontWeight,
   Formats,
+  getFontFamilyName,
   Labels,
   Paddings,
   Sizes,
   StorageKeysConstants,
 } from "../constants";
-import { ICLOUD, PLATFORM_IS_IOS } from "../constants/platform.constants";
+import { ALL_EVENTS } from "../constants/databaseQueries.constants";
+import {
+  ICLOUD,
+  PLATFORM_IS_IOS,
+  SCREEN_WIDTH,
+} from "../constants/platform.constants";
 import type { Event, TabCalendarParamList } from "../types";
 import { NotificationUtils, StorageUtils, TrackerUtils } from "../utils";
 import * as RootNavigation from "../utils/rootNavigation.util";
@@ -46,9 +58,11 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     React.useState("");
   const [events, setEvents] = React.useState<Event[]>([]);
   const [loadingEvents, setLoadingEvents] = React.useState(false);
-  const [lastSyncDate, setLastSyncDate] = React.useState("");
+  const [lastSyncDate, setLastSyncDate] = React.useState<string | null>(null);
   const hourWhenEventStart = 8; // Commence à 8h
   const hourWhenEventEnd = 18; // Se Termine à 18h
+
+  const [showModalHelp, setShowModalHelp] = React.useState(false);
 
   useEffect(() => {
     trackScreenView(TrackerUtils.TrackingEvent.CALENDAR);
@@ -144,25 +158,6 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     setLastSyncDate(date);
   };
 
-  const ALL_EVENTS = gql`
-    query GetEvents {
-      evenements {
-        id
-        nom
-        description
-        debut
-        fin
-        thematique {
-          id
-          nom
-        }
-        etapes {
-          id
-          nom
-        }
-      }
-    }
-  `;
   const [loadEvents, { loading, error, data }] = useLazyQuery(ALL_EVENTS, {
     fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
   });
@@ -216,10 +211,20 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     const notifIdsEventsStored = await StorageUtils.getObjectValue(
       StorageKeysConstants.notifIdsEvents
     );
+    const forceToScheduleEventsNotif = await StorageUtils.getObjectValue(
+      StorageKeysConstants.forceToScheduleEventsNotif
+    );
     if (
       stringIsNotNullNorEmpty(eventsCalcFromBirthday) &&
-      (!notifIdsEventsStored || eventsCalcFromBirthday !== childBirthday)
+      (!notifIdsEventsStored ||
+        eventsCalcFromBirthday !== childBirthday ||
+        forceToScheduleEventsNotif)
     ) {
+      await StorageUtils.storeObjectValue(
+        StorageKeysConstants.forceToScheduleEventsNotif,
+        false
+      );
+
       // Supprimme les anciennes et planifie les nouvelles notifications des événements
       void NotificationUtils.cancelScheduleEventsNotification().then(() => {
         NotificationUtils.scheduleEventsNotification(events);
@@ -235,7 +240,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   }, [events]);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.mainContainer}>
       <TitleH1
         title={Labels.tabs.calendarTitle}
         description={Labels.calendar.description}
@@ -249,23 +254,42 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
         <View style={styles.calendarContainer}>
           {childBirthday.length > 0 ? (
             <>
-              <View>
-                <Button
-                  title={Labels.calendar.synchronise}
-                  titleStyle={styles.buttonTitle}
-                  buttonStyle={{ alignSelf: "center" }}
-                  rounded={true}
-                  action={syncEventsWithOsCalendar}
-                />
-                <CommonText style={styles.lastSyncDate}>
-                  {lastSyncDate
-                    ? `${Labels.calendar.lastSyncDate} ${format(
-                        new Date(lastSyncDate),
-                        Formats.dateTimeFR
-                      )}`
-                    : ""}
-                </CommonText>
+              <View style={styles.flexStart}>
+                <View style={{ flex: 0 }}>
+                  <Button
+                    title={Labels.calendar.synchronise}
+                    icon={
+                      <Icomoon
+                        name={IcomoonIcons.synchroniser}
+                        size={Sizes.sm}
+                        color={Colors.primaryBlue}
+                      />
+                    }
+                    rounded={true}
+                    disabled={false}
+                    action={syncEventsWithOsCalendar}
+                    titleStyle={styles.buttonTitleStyle}
+                    buttonStyle={styles.buttonStyle}
+                  />
+                </View>
+                <View style={styles.helpBtnContainer}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setShowModalHelp(true);
+                    }}
+                  >
+                    <Image source={HelpIcon} style={styles.helpIconStyle} />
+                  </TouchableOpacity>
+                </View>
               </View>
+              {lastSyncDate && (
+                <SecondaryTextItalic style={styles.lastSyncDate}>
+                  {`(${Labels.calendar.lastSyncDate} ${format(
+                    new Date(lastSyncDate),
+                    Formats.dateTimeFR
+                  )})`}
+                </SecondaryTextItalic>
+              )}
               <Events
                 evenements={events}
                 childBirthday={childBirthday}
@@ -288,14 +312,33 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
           )}
         </View>
       )}
+      {showModalHelp && (
+        <ModalHelp
+          icon={IcomoonIcons.synchroniser}
+          title={Labels.calendar.synchronization}
+          body={Labels.calendar.synchronizationHelper}
+          onDismiss={() => {
+            setShowModalHelp(false);
+          }}
+        />
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  buttonTitle: {
-    fontSize: Sizes.md,
-    textTransform: "uppercase",
+  buttonStyle: {
+    backgroundColor: Colors.white,
+    borderColor: Colors.primaryBlue,
+    borderWidth: 1,
+    maxWidth: SCREEN_WIDTH * 0.8,
+    paddingBottom: Paddings.smaller,
+  },
+  buttonTitleStyle: {
+    color: Colors.primaryBlue,
+    fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
+    fontSize: Sizes.xs,
+    textAlign: "left",
   },
   calendarContainer: {
     flex: 1,
@@ -306,14 +349,31 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  container: {
-    height: "100%",
-    padding: Paddings.default,
+  flexStart: {
+    alignItems: "center",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    paddingBottom: Paddings.light,
+  },
+  helpBtnContainer: {
+    flex: 0,
+    paddingHorizontal: Paddings.light,
+  },
+  helpIconStyle: {
+    height: Sizes.xxl,
+    width: Sizes.xxl,
   },
   lastSyncDate: {
-    alignSelf: "center",
+    color: Colors.commonText,
+    fontFamily: "avenir-italic",
     fontSize: Sizes.xs,
-    paddingVertical: Paddings.light,
+    fontStyle: "italic",
+    paddingBottom: Paddings.default,
+  },
+  mainContainer: {
+    backgroundColor: Colors.white,
+    height: "100%",
+    padding: Paddings.default,
   },
   noChildBirthday: {
     paddingVertical: Paddings.default,

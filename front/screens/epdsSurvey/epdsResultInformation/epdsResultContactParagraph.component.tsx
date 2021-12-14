@@ -1,38 +1,53 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 
 import Button from "../../../components/base/button.component";
 import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
 import {
   Colors,
+  FontNames,
   FontWeight,
+  getFontFamilyName,
   Labels,
   Margins,
   Paddings,
   Sizes,
 } from "../../../constants";
+import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
 import type { EpdsResultContactInformation } from "../../../type";
 import { LinkingUtils } from "../../../utils";
+import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
 
 interface EpdsResultContactParagraphProps {
   paragraphTitle?: string;
   contacts: EpdsResultContactInformation[];
   titleColor: string;
+  isFocusOnFirstElement: boolean;
 }
 
 const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
   paragraphTitle,
   contacts,
   titleColor,
+  isFocusOnFirstElement,
 }) => {
   const titleColorStyle = { color: titleColor };
-
   const titleStyle = [styles.contactName, { fontSize: Sizes.sm }];
+  const titleRef = React.useRef<Text>(null);
+
+  if (isFocusOnFirstElement) {
+    setTimeout(() => {
+      setAccessibilityFocusOnText(titleRef);
+    }, TIMEOUT_FOCUS);
+  }
+
   return (
     <View style={styles.itemBorder}>
       {paragraphTitle && paragraphTitle.length > 0 && (
-        <SecondaryText style={titleStyle}>{paragraphTitle}</SecondaryText>
+        <Text style={titleStyle} ref={titleRef}>
+          {paragraphTitle}
+        </Text>
       )}
       {contacts.map((contact, index) => (
         <View
@@ -44,7 +59,7 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
         >
           {/* Utiliser la ligne ci-dessous pour afficher le nom du contact en couleur selon le résultat EPDS */}
           {/* <SecondaryText style={[styles.contactName, titleColorStyle]}> */}
-          <SecondaryText style={styles.contactName}>
+          <SecondaryText style={styles.contactName} accessibilityRole="header">
             {contact.contactName}
           </SecondaryText>
           <SecondaryText style={styles.contactDescription}>
@@ -53,7 +68,10 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
           <SecondaryText style={[styles.contactDescription, styles.fontBold]}>
             {contact.openingTime}
           </SecondaryText>
-          <SecondaryText style={[styles.contactDescription, styles.fontBold]}>
+          <SecondaryText
+            style={[styles.contactDescription, styles.fontBold]}
+            accessibilityLabel={contact.phoneNumberVoice}
+          >
             {contact.phoneNumber}
           </SecondaryText>
           <Button
@@ -84,6 +102,7 @@ const styles = StyleSheet.create({
   },
   contactName: {
     color: Colors.commonText,
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.bold),
     fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
     lineHeight: Sizes.mmd,
@@ -99,6 +118,7 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.disabled,
     borderBottomWidth: 1,
     paddingRight: Paddings.smaller,
+    paddingVertical: Paddings.smaller,
   },
   paddingVertical: {
     paddingVertical: Paddings.default,
