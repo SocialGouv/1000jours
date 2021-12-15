@@ -37,6 +37,10 @@
     "evenements": {
       "via": "types_poi",
       "collection": "evenement"
+    },
+    "articles": {
+      "via": "types_poi",
+      "collection": "article"
     }
   }
 }
