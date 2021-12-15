@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/questionnaire-epds-traductions",
+      "handler": "questionnaire-epds-traductions.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/questionnaire-epds-traductions/count",
+      "handler": "questionnaire-epds-traductions.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/questionnaire-epds-traductions/:id",
+      "handler": "questionnaire-epds-traductions.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/questionnaire-epds-traductions",
+      "handler": "questionnaire-epds-traductions.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/questionnaire-epds-traductions/:id",
+      "handler": "questionnaire-epds-traductions.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/questionnaire-epds-traductions/:id",
+      "handler": "questionnaire-epds-traductions.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

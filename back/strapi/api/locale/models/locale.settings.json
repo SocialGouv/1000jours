@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "locales",
+  "info": {
+    "name": "Locale",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "identifiant": {
+      "type": "string",
+      "required": true
+    },
+    "Libelle_francais": {
+      "type": "string"
+    },
+    "Libelle_langue": {
+      "type": "string"
+    },
+    "drapeau": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    }
+  }
+}
