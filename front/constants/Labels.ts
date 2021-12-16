@@ -14,6 +14,11 @@ export default {
       activeFilter: "filtre actif",
       availableArticles: "articles disponibles",
     },
+    beContacted: {
+      less: "enlever",
+      more: "ajouter",
+      sendingInProgress: "Envoii en cours",
+    },
     close: "Fermer",
     closeMenu: "Fermer le menu",
     epds: {
@@ -143,16 +148,44 @@ export default {
     beContacted: {
       beContactedSent: "Votre demande de contact a bien été envoyée",
       button: "Être contacté(e)",
+      byEmail: "Par email",
+      bySms: "Par SMS",
+      formForEmailSend:
+        "Vous devriez recevoir un email d’Elise dans les 48h. \nPensez bien à vérifier dans vos spams.",
+      formForSmsSend:
+        "Vous devriez recevoir un SMS d’Elise dans les 48h en fonction des disponibilités sélectionnées.",
+      formSend: "Votre demande de contact a bien été prise en compte. ",
+      hours: {
+        evening: "L'après-midi",
+        eveningDetails: "14h - 17h30",
+        morning: "En matinée",
+        morningDetails: "9h - 12h",
+        noon: "Le midi",
+        noonDetails: "12h - 14h",
+      },
+      introduction:
+        "Trouver une phrase que ce n'est pas simple d'écrire ou d'être appelé, que c’est le début d’une démarche pour être accompagné(e).",
       invalidEmail: "L'email n'est pas valide",
       invalidPhoneNumber: "Le tél. n'est pas valide",
       mailsCanBeReceivedInSpams:
         "(*) Les mails peuvent se glisser dans vos spams ou être considérés comme indésirables. Pensez à vérifier votre boîte.",
-      numberOfChildren: "Nombre d'enfants",
+      myAvailabilities: "Selon mes disponibilités, par :",
+      myAvailabilitiesHours:
+        "Quelles sont vos disponibilités pour être contacté(e) ? (du lundi au vendredi)",
+      numberOfChildren: "Nombre d'enfant(s) :",
+      reminderBeContacted:
+        "Vous avez répondu au questionnaire sur la dépression post-partum. Pour vous accompagner sur cette période, vous pouvez être contaté(e) par notre partenaire, Élise.",
+      requestSent: "Demande envoyée",
+      requiredField: "*Champ obligatoire",
+      selectDate: "Sélectionner la date",
       title: "Être contacté(e)",
+      wayToBeContacted: "Par quel moyen préférez-vous être contacté(e) ?",
       yourEmail: "Votre email",
+      yourEmailPlaceholder: "Écrivez ici l’adresse mail",
       yourFirstname: "Votre prénom",
-      yourPhoneNumber: "Votre n° de tél. \nportable",
-      yourPhoneNumberPlaceholder: "Votre n° de tél. portable",
+      yourFirstnamePlaceholder: "Écrivez ici votre prénom",
+      yourPhoneNumber: "Votre numéro de téléphone",
+      yourPhoneNumberPlaceholder: "Écrivez ici le numéro pour vous contacter",
     },
     description:
       "Vous venez d'avoir un bébé et nous aimerions savoir comment vous vous sentez.",

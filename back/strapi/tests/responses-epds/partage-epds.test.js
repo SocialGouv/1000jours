@@ -1,4 +1,4 @@
-const { showAppBloc, scoreOpinion } = require("../api/reponses-epds/services/partage-epds");
+const { showAppBloc, scoreOpinion } = require("../../api/reponses-epds/services/partage-epds");
 
 describe('Page résultats', () => {
 

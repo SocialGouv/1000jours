@@ -22,11 +22,13 @@ module.exports = {
   definition: ``,
   mutation: `
     epdsContact (
-      email: String!
+      email: String
       telephone: String
       prenom: String
       nombre_enfants: Int
       naissance_dernier_enfant: String
+      moyen: String
+      horaires: String
     ): Boolean
     
     epdsPartage (

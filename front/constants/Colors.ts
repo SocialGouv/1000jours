@@ -41,6 +41,7 @@ export default {
   cardWhite: "#FEFEFE",
   disabled: "#BDBDBD",
   borderGrey: "#E7E7E7",
+  grey: "#878787",
   white: "#FFFFFF",
   backdrop: "#00000080",
   transparentGrey: "rgba(52, 52, 52, 0.8)",

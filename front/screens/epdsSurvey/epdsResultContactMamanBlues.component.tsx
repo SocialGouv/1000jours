@@ -11,7 +11,7 @@ import { Button, SecondaryText } from "../../components";
 import { View } from "../../components/Themed";
 import { FontWeight, Labels, Margins, Paddings, Sizes } from "../../constants";
 import { TrackerUtils } from "../../utils";
-import BeContacted from "./beContacted.component";
+import HowToBeContacted from "./beContacted/howToBeContacted.component";
 
 interface EpdsResultContactMamanBluesProps {
   primaryColor: string;
@@ -55,7 +55,7 @@ const EpdsResultContactMamanBlues: React.FC<EpdsResultContactMamanBluesProps> =
             }}
           />
         </View>
-        <BeContacted
+        <HowToBeContacted
           visible={showBeContactedModal}
           hideModal={(showSB: boolean) => {
             setShowBeContactedModal(false);
