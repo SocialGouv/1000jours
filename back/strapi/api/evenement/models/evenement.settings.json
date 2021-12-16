@@ -25,6 +25,10 @@
     "fin": {
       "type": "integer"
     },
+    "important": {
+      "type": "boolean",
+      "default": false
+    },
     "etapes": {
       "collection": "etape",
       "via": "evenements",
