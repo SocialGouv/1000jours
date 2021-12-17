@@ -1,3 +1,10 @@
+# [1.87.0](https://github.com/SocialGouv/1000jours/compare/v1.86.0...v1.87.0) (2021-12-17)
+
+
+### Features
+
+* **evenements:** ajout de la mention 'important', closes [#908](https://github.com/SocialGouv/1000jours/issues/908) ([2527e7a](https://github.com/SocialGouv/1000jours/commit/2527e7a21ee9ad167535099f6b36555fb099ed63))
+
 # [1.86.0](https://github.com/SocialGouv/1000jours/compare/v1.85.1...v1.86.0) (2021-12-07)
 
 
