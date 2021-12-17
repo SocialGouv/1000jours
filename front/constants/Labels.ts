@@ -167,7 +167,7 @@ export default {
       introduction:
         "Trouver une phrase que ce n'est pas simple d'écrire ou d'être appelé, que c’est le début d’une démarche pour être accompagné(e).",
       invalidEmail: "L'email n'est pas valide",
-      invalidPhoneNumber: "Le tél. n'est pas valide",
+      invalidPhoneNumber: "Le numéro de téléphone n'est pas valide",
       mailsCanBeReceivedInSpams:
         "(*) Les mails peuvent se glisser dans vos spams ou être considérés comme indésirables. Pensez à vérifier votre boîte.",
       myAvailabilities: "Selon mes disponibilités, par :",
