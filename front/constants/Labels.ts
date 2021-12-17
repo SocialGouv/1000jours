@@ -116,6 +116,7 @@ export default {
   buttons: {
     back: "Retour",
     cancel: "Annuler",
+    close: "Fermer",
     contact: "Contacter",
     finish: "Terminer",
     next: "Suivant",
