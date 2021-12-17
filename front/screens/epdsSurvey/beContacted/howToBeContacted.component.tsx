@@ -202,18 +202,18 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
         <View style={{ alignSelf: "center" }}>
           {item.isChecked ? item.iconSelected : item.icon}
         </View>
-        <CommonText style={item.isChecked ? styles.textSelected : null}>
+        <SecondaryText style={item.isChecked ? styles.textSelected : null}>
           {item.text}
-        </CommonText>
+        </SecondaryText>
         {isHours(item) ? (
-          <CommonText
+          <SecondaryText
             style={[
               item.isChecked ? styles.textSelected : null,
               { fontStyle: "italic" },
             ]}
           >
             {item.hours}
-          </CommonText>
+          </SecondaryText>
         ) : null}
       </TouchableOpacity>
     );
@@ -222,15 +222,15 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const stepTypes = () => {
     return (
       <View>
-        <CommonText style={styles.section}>
+        <SecondaryText style={styles.section}>
           {Labels.epdsSurvey.beContacted.introduction}
-        </CommonText>
-        <CommonText style={styles.section}>
+        </SecondaryText>
+        <SecondaryText style={styles.section}>
           {Labels.epdsSurvey.beContacted.wayToBeContacted}
-        </CommonText>
-        <CommonText style={styles.section}>
+        </SecondaryText>
+        <SecondaryText style={styles.section}>
           {Labels.epdsSurvey.beContacted.myAvailabilities}
-        </CommonText>
+        </SecondaryText>
         <View style={styles.typeList}>
           {contactType.map((type) => buildCard(type))}
         </View>
@@ -243,9 +243,9 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const stepHours = () => {
     return (
       <View style={{ marginTop: Margins.default }}>
-        <CommonText style={styles.section}>
+        <SecondaryText style={styles.section}>
           {Labels.epdsSurvey.beContacted.myAvailabilitiesHours}
-        </CommonText>
+        </SecondaryText>
         <View style={styles.typeList}>
           {contactHours.map((type) => buildCard(type))}
         </View>
@@ -491,7 +491,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   section: {
-    fontSize: Sizes.xs,
+    fontSize: Sizes.sm,
     lineHeight: Sizes.mmd,
     marginBottom: Margins.default,
     maxWidth: width,

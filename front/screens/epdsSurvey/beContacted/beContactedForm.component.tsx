@@ -202,7 +202,7 @@ const BeContactedForm: React.FC<Props> = ({
       {byEmail ? renderInputByEmail() : renderInputBySms()}
 
       <View style={styles.rowView}>
-        <SecondaryText>
+        <SecondaryText style={{ fontSize: Sizes.sm }}>
           {Labels.epdsSurvey.beContacted.numberOfChildren}
         </SecondaryText>
 
@@ -245,7 +245,7 @@ const BeContactedForm: React.FC<Props> = ({
 
       {numberOfChildren > 0 && (
         <View style={styles.columnView}>
-          <SecondaryText>
+          <SecondaryText style={{ fontSize: Sizes.sm }}>
             {Labels.profile.childBirthday.lastChild} :
           </SecondaryText>
           <Datepicker
@@ -319,11 +319,11 @@ const styles = StyleSheet.create({
   textInput: {
     borderColor: Colors.primaryBlue,
     borderWidth: 1,
-    fontSize: Sizes.xxs,
+    fontSize: Sizes.xs,
     paddingHorizontal: Paddings.smaller,
   },
   textInputLabel: {
-    fontSize: Sizes.xs,
+    fontSize: Sizes.sm,
     marginBottom: Margins.smaller,
   },
   textInputView: {
