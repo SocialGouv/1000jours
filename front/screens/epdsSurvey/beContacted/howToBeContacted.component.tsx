@@ -518,6 +518,8 @@ const styles = StyleSheet.create({
   },
   typeList: {
     flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
 });
 

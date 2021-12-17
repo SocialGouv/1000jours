@@ -17,7 +17,7 @@ export default {
     beContacted: {
       less: "enlever",
       more: "ajouter",
-      sendingInProgress: "Envoii en cours",
+      sendingInProgress: "Envoi en cours",
     },
     close: "Fermer",
     closeMenu: "Fermer le menu",
