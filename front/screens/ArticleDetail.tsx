@@ -29,18 +29,29 @@ import type {
 import { TrackerUtils } from "../utils";
 
 interface Props {
-  route: RouteProp<{ params: { id: number; step?: Step } }, "params">;
-  navigation: StackNavigationProp<TabHomeParamList>;
+  route?: RouteProp<{ params: { id: number; step?: Step } }, "params">;
+  navigation?: StackNavigationProp<TabHomeParamList>;
+  _articleId?: number;
+  _articleStep?: Step | undefined;
+  goBack?: () => void;
 }
 
 const paddingMainContent = Paddings.default;
 const paddingArticleContent = Paddings.light;
 
-const ArticleDetail: FC<Props> = ({ route, navigation }) => {
+const ArticleDetail: FC<Props> = ({
+  route,
+  navigation,
+  _articleId,
+  _articleStep,
+  goBack,
+}) => {
   const { trackScreenView } = useMatomo();
-  const articleId = route.params.id;
-  const screenTitle = route.params.step?.nom;
-  const description = route.params.step?.description;
+  const articleId = route ? route.params.id : _articleId;
+  const screenTitle = route ? route.params.step?.nom : _articleStep?.nom;
+  const description = route
+    ? route.params.step?.description
+    : _articleStep?.description;
   let inShortArray: ArticleInShortItem[] = [];
   let linksArray: ArticleLink[] = [];
 
@@ -120,7 +131,8 @@ const ArticleDetail: FC<Props> = ({ route, navigation }) => {
           <View style={[styles.flexStart]}>
             <BackButton
               action={() => {
-                navigation.goBack();
+                if (goBack) goBack();
+                else navigation?.goBack();
               }}
             />
           </View>

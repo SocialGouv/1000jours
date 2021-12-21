@@ -11,8 +11,9 @@ import { Button, CommonText, ErrorMessage, Text, TitleH1 } from "../components";
 import ArticleCard from "../components/article/articleCard.component";
 import { Colors, Labels, Margins, Paddings } from "../constants";
 import { SEARCH_ARTICLES_BY_KEYWORDS } from "../constants/databaseQueries.constants";
-import type { Article, TabSearchParamList } from "../types";
+import type { Article, Step, TabSearchParamList } from "../types";
 import { KeyboardUtils } from "../utils";
+import { ArticleDetail, TabAroundMeScreen } from ".";
 
 interface Props {
   navigation: StackNavigationProp<TabSearchParamList>;
@@ -42,9 +43,9 @@ const TabSearchScreen: React.FC<Props> = ({ navigation }) => {
     SEARCH_ARTICLES_BY_KEYWORDS(keywords)
   );
 
-  const onSearchByKeywords = () => {
+  const onSearchByKeywords = async () => {
     KeyboardUtils.dismissKeyboard();
-    getSearchArticlesByKeywords();
+    await getSearchArticlesByKeywords();
   };
 
   useEffect(() => {
@@ -58,7 +59,7 @@ const TabSearchScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <>
-      <View style={[styles.mainContainer]}>
+      <View style={styles.mainContainer}>
         <TitleH1
           title={Labels.search.title}
           description={Labels.search.findAdaptedResponses}
@@ -101,8 +102,22 @@ const TabSearchScreen: React.FC<Props> = ({ navigation }) => {
 };
 
 const articlesRoute = (articles: Article[]) => {
+  const [showArticle, setShowArticle] = useState(false);
+  const [currentArticleId, setCurrentArticleId] = useState(0);
+  const [currentArticleStep, setCurrentArticleStep] = useState<
+    Step | undefined
+  >();
+
   if (articles.length > 0) {
-    return (
+    return showArticle ? (
+      <ArticleDetail
+        _articleId={currentArticleId}
+        _articleStep={currentArticleStep}
+        goBack={() => {
+          setShowArticle(false);
+        }}
+      />
+    ) : (
       <ScrollView style={styles.listContainer}>
         {articles.map((article: Article, index: number) => (
           <Animatable.View
@@ -111,7 +126,15 @@ const articlesRoute = (articles: Article[]) => {
             duration={1000}
             delay={0}
           >
-            <ArticleCard article={article} />
+            <ArticleCard
+              article={article}
+              isFromSearchScreen
+              setStepAndArticleId={(articleId, step) => {
+                setShowArticle(true);
+                setCurrentArticleId(articleId);
+                setCurrentArticleStep(step);
+              }}
+            />
           </Animatable.View>
         ))}
       </ScrollView>
@@ -126,7 +149,8 @@ const articlesRoute = (articles: Article[]) => {
 };
 
 const poisRoute = () => (
-  <View style={{ backgroundColor: Colors.white, flex: 1 }} />
+  <TabAroundMeScreen />
+  // <View style={{ backgroundColor: Colors.white, flex: 1 }} />
 );
 
 const styles = StyleSheet.create({

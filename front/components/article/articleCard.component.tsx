@@ -21,9 +21,16 @@ import { CommonText, SecondaryText } from "../StyledText";
 interface Props {
   article: Article;
   step?: Step;
+  isFromSearchScreen?: boolean;
+  setStepAndArticleId?: (articleId: number, step: Step | undefined) => void;
 }
 
-const ArticleCard: FC<Props> = ({ article, step }) => {
+const ArticleCard: FC<Props> = ({
+  article,
+  step,
+  isFromSearchScreen,
+  setStepAndArticleId,
+}) => {
   // Permet de forcer le composant ExpoFastImage à être actualiser
   const [showImage, setShowImage] = React.useState(false);
   React.useEffect(() => {
@@ -31,6 +38,7 @@ const ArticleCard: FC<Props> = ({ article, step }) => {
     setTimeout(() => {
       if (article.visuel?.id) {
         setShowImage(true);
+        return;
       }
     }, 100);
   }, [article]);
@@ -39,10 +47,14 @@ const ArticleCard: FC<Props> = ({ article, step }) => {
     <ListItem
       bottomDivider
       onPress={() => {
-        RootNavigation.navigate("article", {
-          id: article.id,
-          step: step,
-        });
+        if (isFromSearchScreen && setStepAndArticleId)
+          setStepAndArticleId(article.id, step);
+        else {
+          RootNavigation.navigate("article", {
+            id: article.id,
+            step: step,
+          });
+        }
       }}
       pad={0}
       containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
