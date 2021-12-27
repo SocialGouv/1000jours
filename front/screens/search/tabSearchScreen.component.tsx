@@ -1,5 +1,6 @@
 import { useLazyQuery } from "@apollo/client";
 import type { StackNavigationProp } from "@react-navigation/stack";
+import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { StyleSheet, TextInput, useWindowDimensions, View } from "react-native";
@@ -7,26 +8,33 @@ import * as Animatable from "react-native-animatable";
 import { ScrollView } from "react-native-gesture-handler";
 import { SceneMap, TabView } from "react-native-tab-view";
 
-import { Button, CommonText, ErrorMessage, Text, TitleH1 } from "../components";
-import ArticleCard from "../components/article/articleCard.component";
-import { Colors, Labels, Margins, Paddings } from "../constants";
-import { SEARCH_ARTICLES_BY_KEYWORDS } from "../constants/databaseQueries.constants";
-import type { Article, Step, TabSearchParamList } from "../types";
-import { KeyboardUtils } from "../utils";
-import { ArticleDetail, TabAroundMeScreen } from ".";
+import {
+  Button,
+  CommonText,
+  ErrorMessage,
+  Text,
+  TitleH1,
+} from "../../components";
+import ArticleCard from "../../components/article/articleCard.component";
+import { Colors, Labels, Margins, Paddings } from "../../constants";
+import { SEARCH_ARTICLES_BY_KEYWORDS } from "../../constants/databaseQueries.constants";
+import type { Article, Step, TabSearchParamList } from "../../types";
+import { KeyboardUtils } from "../../utils";
+import { ArticleDetail } from "..";
+import TabAroundMeInstruction from "./tabAroundMeInstruction.component";
 
 interface Props {
   navigation: StackNavigationProp<TabSearchParamList>;
 }
 
-const TabSearchScreen: React.FC<Props> = ({ navigation }) => {
+const TabSearchScreen: FC<Props> = ({ navigation }) => {
   const [keywords, setKeywords] = useState("");
   const [articles, setArticles] = useState<Article[]>([]);
 
   // Tabs
   const layout = useWindowDimensions();
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
     {
       accessible: true,
       key: "articlesSearchResult",
@@ -91,7 +99,7 @@ const TabSearchScreen: React.FC<Props> = ({ navigation }) => {
         navigationState={{ index, routes }}
         renderScene={SceneMap({
           articlesSearchResult: () => articlesRoute(articles),
-          poisSearchResult: poisRoute,
+          poisSearchResult: () => poisRoute(articles),
         })}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
@@ -148,10 +156,17 @@ const articlesRoute = (articles: Article[]) => {
   );
 };
 
-const poisRoute = () => (
-  <TabAroundMeScreen />
-  // <View style={{ backgroundColor: Colors.white, flex: 1 }} />
-);
+const poisRoute = (articles: Article[]) =>
+  articles.length > 0 ? (
+    <TabAroundMeInstruction />
+  ) : (
+    <View style={styles.center}>
+      <Text>{Labels.search.writeKeyword}</Text>
+    </View>
+  );
+// return ({(articles.length > 0) && <TabAroundMeInstruction />});
+// <TabAroundMeInstruction />
+// <View style={{ backgroundColor: Colors.white, flex: 1 }} />
 
 const styles = StyleSheet.create({
   center: {

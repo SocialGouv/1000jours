@@ -14,8 +14,8 @@ import {
   ListParentsDocuments,
   TabCalendarScreen,
   TabHomeScreen,
+  TabSearchScreen,
 } from "../screens";
-import TabSearchScreen from "../screens/tabSearchScreen.component";
 import type {
   BottomTabParamList,
   TabCalendarParamList,

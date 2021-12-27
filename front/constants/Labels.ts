@@ -74,6 +74,9 @@ export default {
     postalCodeNotFound: "Le code postal que vous recherchez n'a pas été trouvé",
     relaunchSearch: "Relancer la recherche",
     searchButton: "Rechercher",
+    searchGeolocInstruction:
+      "Afin de vous apporter une aidée personnalisée, veuillez renseigner votre localisation :",
+    searchPostalCodeInstruction: "Ou renseignez votre code postal :",
     submitNewFilter: {
       aboutYou: {
         numberOfChildren: "Nombre d'enfants",
@@ -96,6 +99,7 @@ export default {
       title: "Proposer un lieu",
     },
     title: "Autour de moi",
+    useMyGeolocation: "Utiliser ma géolocalisation",
   },
   article: {
     didYouKnowTitle: "Le saviez-vous ?",
@@ -494,9 +498,10 @@ export default {
     articles: "Articles",
     findAdaptedResponses:
       "Trouver des réponses à vos questions, vos problèmes, et sollicitez de l'aide auprès de professionnels adaptés autour de chez vous.",
-    noArticleFound: "Auncun article ne correspond à votre recherche",
+    noArticleFound: "Aucun article ne correspond à votre recherche",
     title: "Que recherchez-vous ?",
     validButton: "Valider",
+    writeKeyword: "Veuillez saisir un mot-clé",
     writeKeywordPlaceholder: "Saisissez ici votre mot clé",
     yourSearch: "Votre recherche :",
   },
