@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
+import type { Article } from "@socialgouv/nos1000jours-lib";
 import * as Location from "expo-location";
 import type { FC } from "react";
 import { useState } from "react";
@@ -25,13 +26,16 @@ import {
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
 import { AroundMeUtils } from "../../utils";
+import PoiList from "./poiList.component";
 
-const TabAroundMeInstruction: FC = () => {
+interface Props {
+  articles: Article[];
+}
+
+const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
   const [postalCodeInput, setPostalCodeInput] = useState("");
   const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
-  const [region, setRegion] = useState<Region | undefined>(
-    AroundMeConstants.INITIAL_REGION
-  );
+  const [region, setRegion] = useState<Region | undefined>(); // AroundMeConstants.INITIAL_REGION
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
 
@@ -131,7 +135,9 @@ const TabAroundMeInstruction: FC = () => {
     // setIsLoading(false);
   };
 
-  return (
+  return region ? (
+    <PoiList region={region} />
+  ) : (
     <ScrollView style={styles.mainContainer}>
       <SecondaryText style={styles.description}>
         {Labels.aroundMe.searchGeolocInstruction}

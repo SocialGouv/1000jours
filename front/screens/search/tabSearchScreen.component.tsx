@@ -158,7 +158,7 @@ const articlesRoute = (articles: Article[]) => {
 
 const poisRoute = (articles: Article[]) =>
   articles.length > 0 ? (
-    <TabAroundMeInstruction />
+    <TabAroundMeInstruction articles={articles} />
   ) : (
     <View style={styles.center}>
       <Text>{Labels.search.writeKeyword}</Text>
