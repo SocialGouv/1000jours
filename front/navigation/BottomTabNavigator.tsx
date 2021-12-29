@@ -16,6 +16,7 @@ import {
   TabHomeScreen,
   TabSearchScreen,
 } from "../screens";
+import AroundMeMap from "../screens/search/aroundMeMap.component";
 import type {
   BottomTabParamList,
   TabCalendarParamList,
@@ -165,6 +166,7 @@ const TabSearchNavigator: FC = () => (
       component={TabSearchScreen}
       options={{}}
     />
+    <TabSearchStack.Screen name="aroundMeMap" component={AroundMeMap} />
   </TabSearchStack.Navigator>
 );
 

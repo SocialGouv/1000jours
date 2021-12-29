@@ -1,4 +1,6 @@
+import { Poi } from "@socialgouv/nos1000jours-lib";
 import type { FC, ReactNode } from "react";
+import { Region } from "react-native-maps";
 
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 export type RootStackParamList = {
@@ -46,6 +48,11 @@ export type TabAroundMeParamList = {
 
 export type TabSearchParamList = {
   tabSearchScreen: undefined;
+  aroundMeMap: {
+    region: Region;
+    fetchedPois: Poi[];
+    selectedPoiIndex: number;
+  };
 };
 
 export type UserSituation = {

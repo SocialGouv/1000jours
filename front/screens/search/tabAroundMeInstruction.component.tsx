@@ -96,12 +96,6 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
           currentLocation.coords.longitude
         );
 
-        console.log({
-          latitude: currentLocation.coords.latitude,
-          latitudeDelta: newDelta,
-          longitude: currentLocation.coords.longitude,
-          longitudeDelta: newDelta,
-        });
         setRegion({
           latitude: currentLocation.coords.latitude,
           latitudeDelta: newDelta,
@@ -126,12 +120,8 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
       postalCodeInput
     );
 
-    if (newRegion) {
-      console.log(newRegion);
-      setRegion(newRegion);
-    } else {
-      showSnackBarWithMessage(Labels.aroundMe.postalCodeNotFound);
-    }
+    if (newRegion) setRegion(newRegion);
+    else showSnackBarWithMessage(Labels.aroundMe.postalCodeNotFound);
     // setIsLoading(false);
   };
 

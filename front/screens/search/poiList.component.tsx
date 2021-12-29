@@ -27,18 +27,14 @@ import {
 } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import { AroundMeUtils } from "../../utils";
+import * as RootNavigation from "../../utils/rootNavigation.util";
 import AddressDetails from "../aroundMe/addressDetails.component";
 
 interface Props {
   region: Region;
-  // poisArray: Poi[];
-  centerOnMarker?: (markerIndex: number) => void;
 }
 
-const PoiList: React.FC<Props> = ({
-  region,
-  /*poisArray,*/ centerOnMarker,
-}) => {
+const PoiList: React.FC<Props> = ({ region }) => {
   const [getPoisByGpsCoords] = useLazyQuery(gql(GET_POIS_BY_GPSCOORDS), {
     fetchPolicy: FetchPoliciesConstants.NO_CACHE,
     onCompleted: (data) => {
@@ -136,7 +132,10 @@ const PoiList: React.FC<Props> = ({
             <TouchableOpacity
               key={poiIndex}
               onPress={() => {
-                if (centerOnMarker) centerOnMarker(poiIndex);
+                RootNavigation.navigate("aroundMeMap", {
+                  fetchedPois: poisToDisplay,
+                  region,
+                });
               }}
             >
               {renderCard(poi)}
@@ -145,7 +144,11 @@ const PoiList: React.FC<Props> = ({
             <TouchableOpacityAndroid
               key={poiIndex}
               onPress={() => {
-                if (centerOnMarker) centerOnMarker(poiIndex);
+                RootNavigation.navigate("aroundMeMap", {
+                  fetchedPois: poisToDisplay,
+                  region,
+                  selectedPoiIndex: poiIndex,
+                });
               }}
             >
               {renderCard(poi)}
