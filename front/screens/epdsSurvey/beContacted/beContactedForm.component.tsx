@@ -1,7 +1,13 @@
 import { format } from "date-fns";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { HelperText } from "react-native-paper";
 
 import { Datepicker, SecondaryText } from "../../../components";
@@ -14,8 +20,10 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../../../constants";
+import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
 import type { BeContactedData } from "../../../type";
 import { StorageUtils, StringUtils } from "../../../utils";
+import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
 
 interface Props {
   byEmail: boolean;
@@ -45,6 +53,8 @@ const BeContactedForm: React.FC<Props> = ({
   const [emailIsValid, setEmailIsValid] = useState(true);
   const [phoneNumberIsValid, setPhoneNumberIsValid] = useState(true);
 
+  const componentRef = React.useRef<View>(null);
+
   useEffect(() => {
     const initDataWithStorageValue = async () => {
       const childBirthdayStr = await getUserChildBirthday();
@@ -52,6 +62,10 @@ const BeContactedForm: React.FC<Props> = ({
     };
 
     void initDataWithStorageValue();
+
+    setTimeout(() => {
+      setAccessibilityFocusOnText(componentRef);
+    }, TIMEOUT_FOCUS);
   }, []);
 
   useEffect(() => {
@@ -134,7 +148,8 @@ const BeContactedForm: React.FC<Props> = ({
 
   const renderTextInputView = (
     informationType: PersonalInformationType,
-    isMandatory: boolean
+    isMandatory: boolean,
+    ref?: React.RefObject<View>
   ) => {
     const isPhoneNumber =
       informationType === PersonalInformationType.phoneNumber;
@@ -145,9 +160,11 @@ const BeContactedForm: React.FC<Props> = ({
     return (
       <View style={styles.textInputView}>
         <View>
-          <SecondaryText style={styles.textInputLabel}>
-            {isMandatory ? `${label}* :` : `${label} :`}
-          </SecondaryText>
+          <Text ref={ref}>
+            <SecondaryText style={styles.textInputLabel}>
+              {isMandatory ? `${label}* :` : `${label} :`}
+            </SecondaryText>
+          </Text>
 
           <TextInput
             keyboardType={isPhoneNumber ? "phone-pad" : "default"}
@@ -198,11 +215,15 @@ const BeContactedForm: React.FC<Props> = ({
 
   return (
     <View style={{ marginTop: Margins.light }}>
-      {renderTextInputView(PersonalInformationType.firstName, false)}
+      {renderTextInputView(
+        PersonalInformationType.firstName,
+        false,
+        componentRef
+      )}
       {byEmail ? renderInputByEmail() : renderInputBySms()}
 
       <View style={styles.rowView}>
-        <SecondaryText>
+        <SecondaryText style={{ fontSize: Sizes.sm }}>
           {Labels.epdsSurvey.beContacted.numberOfChildren}
         </SecondaryText>
 
@@ -245,7 +266,7 @@ const BeContactedForm: React.FC<Props> = ({
 
       {numberOfChildren > 0 && (
         <View style={styles.columnView}>
-          <SecondaryText>
+          <SecondaryText style={{ fontSize: Sizes.sm }}>
             {Labels.profile.childBirthday.lastChild} :
           </SecondaryText>
           <Datepicker
@@ -319,11 +340,11 @@ const styles = StyleSheet.create({
   textInput: {
     borderColor: Colors.primaryBlue,
     borderWidth: 1,
-    fontSize: Sizes.xxs,
+    fontSize: Sizes.xs,
     paddingHorizontal: Paddings.smaller,
   },
   textInputLabel: {
-    fontSize: Sizes.xs,
+    fontSize: Sizes.sm,
     marginBottom: Margins.smaller,
   },
   textInputView: {

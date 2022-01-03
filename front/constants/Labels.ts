@@ -17,7 +17,7 @@ export default {
     beContacted: {
       less: "enlever",
       more: "ajouter",
-      sendingInProgress: "Envoii en cours",
+      sendingInProgress: "Envoi en cours",
     },
     close: "Fermer",
     closeMenu: "Fermer le menu",
@@ -116,6 +116,7 @@ export default {
   buttons: {
     back: "Retour",
     cancel: "Annuler",
+    close: "Fermer",
     contact: "Contacter",
     finish: "Terminer",
     next: "Suivant",
@@ -164,9 +165,9 @@ export default {
         noonDetails: "12h - 14h",
       },
       introduction:
-        "Trouver une phrase que ce n'est pas simple d'écrire ou d'être appelé, que c’est le début d’une démarche pour être accompagné(e).",
+        "Se rendre disponible en tant que parent n'est pas toujours simple. Nous vous proposons de choisir le créneau et le type de prise de contact qui vous conviennent.",
       invalidEmail: "L'email n'est pas valide",
-      invalidPhoneNumber: "Le tél. n'est pas valide",
+      invalidPhoneNumber: "Le numéro de téléphone n'est pas valide",
       mailsCanBeReceivedInSpams:
         "(*) Les mails peuvent se glisser dans vos spams ou être considérés comme indésirables. Pensez à vérifier votre boîte.",
       myAvailabilities: "Selon mes disponibilités, par :",
