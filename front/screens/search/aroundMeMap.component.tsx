@@ -11,7 +11,13 @@ import type { LatLng, Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import BulbIcon from "../../assets/images/carto/bulb.svg";
-import { Button, Icomoon, IcomoonIcons, Loader } from "../../components";
+import {
+  Button,
+  CustomSnackbar,
+  Icomoon,
+  IcomoonIcons,
+  Loader,
+} from "../../components";
 import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
@@ -68,6 +74,7 @@ const AroundMeMap: React.FC<Props> = ({ route, navigation }) => {
   const [showRelaunchResearchButton, setShowRelaunchResearchButton] =
     useState(true);
   const [showSnackBar, setShowSnackBar] = useState(false);
+  const [snackBarMessage, setSnackBarMessage] = useState("");
   const [showFilter, setShowFilter] = useState(false);
   const [showSubmitNewFilterModal, setShowSubmitNewFilterModal] =
     useState(false);
@@ -76,8 +83,6 @@ const AroundMeMap: React.FC<Props> = ({ route, navigation }) => {
   const [currentUserLocation, setCurrentUserLocation] = useState<LatLng | null>(
     null
   );
-  const [heightOfMapView, setHeightOfMapView] = useState(0);
-  const [widthOfMapView, setWidthOfMapView] = useState(0);
 
   const currentUserLocatioIcon = require("../../assets/images/carto/current_location.png");
 
@@ -140,6 +145,15 @@ const AroundMeMap: React.FC<Props> = ({ route, navigation }) => {
     // setPostalCodeInvalid(false);
     setShowRelaunchResearchButton(true);
     setMapWasOnlyTouched(true);
+  };
+
+  const showSnackBarWithMessage = (message: string) => {
+    setSnackBarMessage(message);
+    setShowSnackBar(true);
+  };
+
+  const onSnackBarDismiss = () => {
+    setShowSnackBar(false);
   };
 
   const onMarkerClick = (poiIndex: number) => {
@@ -281,6 +295,15 @@ const AroundMeMap: React.FC<Props> = ({ route, navigation }) => {
             />
           </View>
         )}
+        <CustomSnackbar
+          duration={AroundMeConstants.SNACKBAR_DURATION}
+          visible={showSnackBar}
+          isOnTop={true}
+          backgroundColor={Colors.aroundMeSnackbar.background}
+          onDismiss={onSnackBarDismiss}
+          textColor={Colors.aroundMeSnackbar.text}
+          text={snackBarMessage}
+        />
       </View>
       {showAddressDetails && addressDetails && (
         <View
