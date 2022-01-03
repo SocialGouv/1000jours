@@ -1,5 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { format } from "date-fns";
+import Constants from "expo-constants";
 import * as React from "react";
 import { useState } from "react";
 import {
@@ -450,6 +451,7 @@ const styles = StyleSheet.create({
   behindOfModal: {
     backgroundColor: Colors.transparentGrey,
     flex: 1,
+    paddingTop: Constants.statusBarHeight,
   },
   buttonContainer: {
     flex: 1,

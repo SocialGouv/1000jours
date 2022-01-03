@@ -1,3 +1,4 @@
+import Constants from "expo-constants";
 import _ from "lodash";
 import type { FC } from "react";
 import * as React from "react";
@@ -220,6 +221,7 @@ const styles = StyleSheet.create({
   behindOfModal: {
     backgroundColor: Colors.transparentGrey,
     flex: 1,
+    paddingTop: Constants.statusBarHeight,
   },
   buttonContainer: {
     flex: 1,
