@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client/react/hooks";
 import { Picker } from "@react-native-community/picker";
 import { format } from "date-fns";
+import Constants from "expo-constants";
 import { range } from "lodash";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -344,6 +345,7 @@ const styles = StyleSheet.create({
   behindOfModal: {
     backgroundColor: Colors.transparentGrey,
     flex: 1,
+    paddingTop: Constants.statusBarHeight,
   },
   buttonContainer: {
     flex: 1,
