@@ -165,7 +165,7 @@ export default {
         noonDetails: "12h - 14h",
       },
       introduction:
-        "Se rendre disponible en tant que parent n'est pas toujours simple. Nous vous proposons de choisir le créneau et le type de prise de contact qui vous convient.",
+        "Se rendre disponible en tant que parent n'est pas toujours simple. Nous vous proposons de choisir le créneau et le type de prise de contact qui vous conviennent.",
       invalidEmail: "L'email n'est pas valide",
       invalidPhoneNumber: "Le numéro de téléphone n'est pas valide",
       mailsCanBeReceivedInSpams:
