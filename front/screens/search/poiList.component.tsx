@@ -14,7 +14,7 @@ import {
 import type { Region } from "react-native-maps";
 import { Card } from "react-native-paper";
 
-import { CommonText } from "../../components";
+import { Button, CommonText, Icomoon, IcomoonIcons } from "../../components";
 import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
@@ -29,6 +29,7 @@ import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import { AroundMeUtils } from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import AddressDetails from "../aroundMe/addressDetails.component";
+import AroundMeFilter from "../aroundMe/aroundMeFilter.component";
 
 interface Props {
   region: Region;
@@ -52,6 +53,7 @@ const PoiList: React.FC<Props> = ({ region }) => {
   const [poisToDisplay, setPoisToDisplay] = useState<Poi[]>(
     poisArray.slice(0, currentEndIndex)
   );
+  const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
     setCurrentEndIndex(AroundMeConstants.PAGINATION_NUMBER_ADDRESSES_LIST);
@@ -122,6 +124,24 @@ const PoiList: React.FC<Props> = ({ region }) => {
         {Labels.aroundMe.addressesListLabelStart} {poisArray.length}{" "}
         {Labels.aroundMe.addressesListLabelEnd}
       </CommonText>
+      <View style={styles.filterView}>
+        <Button
+          buttonStyle={styles.relaunchSearchButton}
+          title={Labels.listArticles.filters}
+          titleStyle={styles.relaunchSearchButtonText}
+          rounded={true}
+          icon={
+            <Icomoon
+              name={IcomoonIcons.filtrer}
+              size={Sizes.sm}
+              color={Colors.primaryBlue}
+            />
+          }
+          action={() => {
+            setShowFilter(true);
+          }}
+        />
+      </View>
       <ScrollView
         onScroll={({ nativeEvent }) => {
           handleScroll(nativeEvent);
@@ -156,6 +176,16 @@ const PoiList: React.FC<Props> = ({ region }) => {
           )
         )}
       </ScrollView>
+      <AroundMeFilter
+        visible={showFilter}
+        hideModal={(filterWasSaved: boolean) => {
+          setShowFilter(false);
+          // if (filterWasSaved) {
+          // if (PLATFORM_IS_ANDROID) setIsLoading(true);
+          // setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+          // }
+        }}
+      />
     </View>
   );
 };
@@ -172,6 +202,21 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.cardGrey,
     borderBottomWidth: 1,
     margin: Margins.smaller,
+  },
+  filterView: {
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    margin: Margins.smaller,
+  },
+  relaunchSearchButton: {
+    backgroundColor: Colors.white,
+    borderColor: Colors.primaryBlue,
+    borderWidth: 1,
+    marginHorizontal: Margins.smallest,
+  },
+  relaunchSearchButtonText: {
+    color: Colors.primaryBlue,
+    fontSize: Sizes.xxs,
   },
   slidingUpPanelScrollView: {
     marginHorizontal: Margins.default,
