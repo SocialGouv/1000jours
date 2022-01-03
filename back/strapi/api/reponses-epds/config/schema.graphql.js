@@ -42,6 +42,7 @@ module.exports = {
       detail_questions: [String]
       detail_score: [String]
       detail_reponses: [String]
+      id_reponses: String
     ): Boolean
   `,
   resolver: {
