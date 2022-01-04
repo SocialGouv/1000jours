@@ -1,0 +1,59 @@
+{
+  "kind": "collectionType",
+  "collectionName": "questionnaire_epds_traductions",
+  "info": {
+    "name": "Questionnaire EPDS traductions",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "ordre": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "libelle": {
+      "type": "string",
+      "required": true
+    },
+    "reponse_1_libelle": {
+      "type": "string",
+      "required": true
+    },
+    "reponse_1_points": {
+      "type": "integer",
+      "required": true
+    },
+    "reponse_2_libelle": {
+      "type": "string",
+      "required": true
+    },
+    "reponse_2_points": {
+      "type": "integer",
+      "required": true
+    },
+    "reponse_3_libelle": {
+      "type": "string",
+      "required": true
+    },
+    "reponse_3_points": {
+      "type": "integer",
+      "required": true
+    },
+    "reponse_4_libelle": {
+      "type": "string",
+      "required": true
+    },
+    "reponse_4_points": {
+      "type": "integer",
+      "required": true
+    },
+    "locale": {
+      "model": "locale"
+    }
+  }
+}
