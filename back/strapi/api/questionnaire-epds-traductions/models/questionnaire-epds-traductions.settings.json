@@ -52,7 +52,7 @@
       "type": "integer",
       "required": true
     },
-    "langue": {
+    "locale": {
       "model": "locale"
     }
   }
