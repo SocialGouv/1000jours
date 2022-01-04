@@ -1,3 +1,10 @@
+# [1.88.0](https://github.com/SocialGouv/1000jours/compare/v1.87.0...v1.88.0) (2022-01-04)
+
+
+### Features
+
+* **epds:** traduction EPDS ([#927](https://github.com/SocialGouv/1000jours/issues/927)) ([7b7e3d8](https://github.com/SocialGouv/1000jours/commit/7b7e3d8de8c8c2102c19c2624ae974bac7a98056))
+
 # [1.87.0](https://github.com/SocialGouv/1000jours/compare/v1.86.0...v1.87.0) (2021-12-17)
 
 
