@@ -2,7 +2,7 @@
   "kind": "collectionType",
   "collectionName": "locales",
   "info": {
-    "name": "Locale",
+    "name": "Langue",
     "description": ""
   },
   "options": {
