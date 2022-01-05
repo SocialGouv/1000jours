@@ -1,3 +1,10 @@
+## [1.88.1](https://github.com/SocialGouv/1000jours/compare/v1.88.0...v1.88.1) (2022-01-05)
+
+
+### Bug Fixes
+
+* **epds:** change le terme locale en langue ([#961](https://github.com/SocialGouv/1000jours/issues/961)) ([233c70b](https://github.com/SocialGouv/1000jours/commit/233c70b45f10a04187e749d35ef5de7fe2ebc6e0))
+
 # [1.88.0](https://github.com/SocialGouv/1000jours/compare/v1.87.0...v1.88.0) (2022-01-04)
 
 
