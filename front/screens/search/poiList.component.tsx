@@ -28,6 +28,7 @@ import {
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import { AroundMeUtils } from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
+import SharedCartoData from "../../utils/sharedCartoData.class";
 import AddressDetails from "../aroundMe/addressDetails.component";
 import AroundMeFilter from "../aroundMe/aroundMeFilter.component";
 
@@ -152,10 +153,10 @@ const PoiList: React.FC<Props> = ({ region }) => {
             <TouchableOpacity
               key={poiIndex}
               onPress={() => {
-                RootNavigation.navigate("aroundMeMap", {
-                  fetchedPois: poisToDisplay,
-                  region,
-                });
+                SharedCartoData.fetchedPois = poisToDisplay;
+                SharedCartoData.region = region;
+                SharedCartoData.selectedPoiIndex = poiIndex;
+                RootNavigation.navigate("aroundMeMap", undefined);
               }}
             >
               {renderCard(poi)}
@@ -164,11 +165,10 @@ const PoiList: React.FC<Props> = ({ region }) => {
             <TouchableOpacityAndroid
               key={poiIndex}
               onPress={() => {
-                RootNavigation.navigate("aroundMeMap", {
-                  fetchedPois: poisToDisplay,
-                  region,
-                  selectedPoiIndex: poiIndex,
-                });
+                SharedCartoData.fetchedPois = poisToDisplay;
+                SharedCartoData.region = region;
+                SharedCartoData.selectedPoiIndex = poiIndex;
+                RootNavigation.navigate("aroundMeMap", undefined);
               }}
             >
               {renderCard(poi)}

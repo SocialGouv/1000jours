@@ -35,26 +35,27 @@ import {
 } from "../../constants/platform.constants";
 import type { TabSearchParamList } from "../../types";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
+import SharedCartoData from "../../utils/sharedCartoData.class";
 import AddressDetails from "../aroundMe/addressDetails.component";
 import AroundMeFilter from "../aroundMe/aroundMeFilter.component";
 import CustomMapMarker from "../aroundMe/customMapMarker.component";
 import SubmitNewFilter from "../aroundMe/submitNewFilter.component";
 
 interface Props {
-  route: RouteProp<
-    {
-      params: { region: Region; fetchedPois: Poi[]; selectedPoiIndex: number };
-    },
-    "params"
-  >;
+  // route: RouteProp<
+  //   {
+  //     params: { region: Region; fetchedPois: Poi[]; selectedPoiIndex: number };
+  //   },
+  //   "params"
+  // >;
   navigation: StackNavigationProp<TabSearchParamList>;
 }
 
-const AroundMeMap: React.FC<Props> = ({ route, navigation }) => {
+const AroundMeMap: React.FC<Props> = ({ navigation }) => {
   const { trackScreenView } = useMatomo();
   const mapRef = useRef<MapView>();
   const [region, setRegion] = useState<Region>(
-    route.params.region // AroundMeConstants.INITIAL_REGION
+    SharedCartoData.region // AroundMeConstants.INITIAL_REGION
   );
   const [moveToRegionBecauseOfPCResearch, setMoveToRegionBecauseOfPCResearch] =
     useState(false);
@@ -65,9 +66,11 @@ const AroundMeMap: React.FC<Props> = ({ route, navigation }) => {
   // Variable utilisée pour trigger le useEffect lors du relancement de la Recherche
   const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] =
     useState(false);
-  const [poisArray, setPoisArray] = useState<Poi[]>(route.params.fetchedPois);
+  const [poisArray, setPoisArray] = useState<Poi[]>(
+    SharedCartoData.fetchedPois
+  );
   const [selectedPoiIndex, setSelectedPoiIndex] = useState(
-    route.params.selectedPoiIndex
+    SharedCartoData.selectedPoiIndex
   );
   const [showAddressDetails, setShowAddressDetails] = useState(false);
   const [addressDetails, setAddressDetails] = useState<Poi>();

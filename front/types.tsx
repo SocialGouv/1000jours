@@ -48,11 +48,7 @@ export type TabAroundMeParamList = {
 
 export type TabSearchParamList = {
   tabSearchScreen: undefined;
-  aroundMeMap: {
-    region: Region;
-    fetchedPois: Poi[];
-    selectedPoiIndex: number;
-  };
+  aroundMeMap: undefined;
 };
 
 export type UserSituation = {
