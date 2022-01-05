@@ -63,7 +63,7 @@
     "reponse_10": {
       "type": "integer"
     },
-    "locale": {
+    "langue": {
       "model": "locale"
     }
   }
