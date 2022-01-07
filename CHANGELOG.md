@@ -1,3 +1,36 @@
+# [1.89.0](https://github.com/SocialGouv/1000jours/compare/v1.88.1...v1.89.0) (2022-01-07)
+
+
+### Bug Fixes
+
+* **epds:** change le terme locale en langue ([#961](https://github.com/SocialGouv/1000jours/issues/961)) ([ff59ee5](https://github.com/SocialGouv/1000jours/commit/ff59ee5999e9a443dc309e844eaf6c218044393b))
+* 🐛 Corrige l'affichage des modal (devices avec encoche) ([#955](https://github.com/SocialGouv/1000jours/issues/955)) ([5d18cb2](https://github.com/SocialGouv/1000jours/commit/5d18cb28f3c170406848218a6602155ab5d47d91)), closes [#830](https://github.com/SocialGouv/1000jours/issues/830)
+* **deps:** update all dependencies ([#888](https://github.com/SocialGouv/1000jours/issues/888)) ([5c5a9bc](https://github.com/SocialGouv/1000jours/commit/5c5a9bc3d8dbb1613d2c71e3fa80aac7c9519688))
+* **epds:** choix du mode de contact ([#931](https://github.com/SocialGouv/1000jours/issues/931)) ([e48321f](https://github.com/SocialGouv/1000jours/commit/e48321f7acfd1bf81e1d34ec10c0d2b4c9250674))
+* **expo:** fix mobile publish job ([#915](https://github.com/SocialGouv/1000jours/issues/915)) ([3b6be36](https://github.com/SocialGouv/1000jours/commit/3b6be36680a09d6fcd863f1421d192003d6a8bfa))
+* **secu:** add network policies ([#920](https://github.com/SocialGouv/1000jours/issues/920)) ([4389d4b](https://github.com/SocialGouv/1000jours/commit/4389d4bc0f2efc7d0dda4263e9abf248ab177f75))
+* **strapi:** add node-version in yml file ([#917](https://github.com/SocialGouv/1000jours/issues/917)) ([ebdfd38](https://github.com/SocialGouv/1000jours/commit/ebdfd3872faea1375448d98ac7e91ff5cce031a0))
+* 🐛 Corrige l'heure et la redirection des notifications ([#900](https://github.com/SocialGouv/1000jours/issues/900)) ([c6246cb](https://github.com/SocialGouv/1000jours/commit/c6246cb65684f82a2489b643acacdda3e9957118)), closes [#860](https://github.com/SocialGouv/1000jours/issues/860) [#860](https://github.com/SocialGouv/1000jours/issues/860)
+* 🐛 Corrige les problèmes de "require cycle" (imports) ([#907](https://github.com/SocialGouv/1000jours/issues/907)) ([ccd3e1c](https://github.com/SocialGouv/1000jours/commit/ccd3e1ca0d54276f90bf90e166bbf0e67b1a6193))
+
+
+### Features
+
+* **carto:** gestion des étapes dans le filtre ([#909](https://github.com/SocialGouv/1000jours/issues/909)) ([21629ad](https://github.com/SocialGouv/1000jours/commit/21629ad1a4898283ec2ebe1460c7d8ad180c45cb))
+* **COU:** update COU file ([#918](https://github.com/SocialGouv/1000jours/issues/918)) ([4d31eac](https://github.com/SocialGouv/1000jours/commit/4d31eac04638ca4d0c15f79e05d397fde543c895))
+* **epds:** choix du mode de contact ([#905](https://github.com/SocialGouv/1000jours/issues/905)) ([8c9ce97](https://github.com/SocialGouv/1000jours/commit/8c9ce97c227fecf664d212e4f93139f2ade76ce4))
+* **epds:** relance du formulaire "Etre contacté" ([#896](https://github.com/SocialGouv/1000jours/issues/896)) ([4c15b21](https://github.com/SocialGouv/1000jours/commit/4c15b21151e23c7caa672a1ae99cf88d636b2e4f))
+* **epds:** traduction EPDS ([#927](https://github.com/SocialGouv/1000jours/issues/927)) ([bdf92c3](https://github.com/SocialGouv/1000jours/commit/bdf92c321f649659c86165430b0350778aab6a7e))
+* **evenements:** ajout de la mention 'important', closes [#908](https://github.com/SocialGouv/1000jours/issues/908) ([#928](https://github.com/SocialGouv/1000jours/issues/928)) ([2aa7a37](https://github.com/SocialGouv/1000jours/commit/2aa7a376fedcf0879822d23c443cbf4718c6f5a7))
+* 🎸 Ajoute une aide pour le bouton synchroniser (calendar) ([#922](https://github.com/SocialGouv/1000jours/issues/922)) ([a01e069](https://github.com/SocialGouv/1000jours/commit/a01e06993d59d035ba186dba190b1c494ff62c23))
+* 🎸 Ajoute une instance sentry pour isoler les logs de prod ([#926](https://github.com/SocialGouv/1000jours/issues/926)) ([f154340](https://github.com/SocialGouv/1000jours/commit/f154340f808f5cde645a6fd18c47930135116f79)), closes [#924](https://github.com/SocialGouv/1000jours/issues/924)
+* **parentheque:** trackers sur les télécharg. de docs ([#914](https://github.com/SocialGouv/1000jours/issues/914)) ([056347a](https://github.com/SocialGouv/1000jours/commit/056347a2d94022a5788f012cb69d34cd82a3d126))
+
+
+### Reverts
+
+* Revert "feat(epds): relance du formulaire "Etre contacté" (#896)" (#925) ([dd21f99](https://github.com/SocialGouv/1000jours/commit/dd21f996f691af6f7f82fde30b91ba42d3e3863d)), closes [#896](https://github.com/SocialGouv/1000jours/issues/896) [#925](https://github.com/SocialGouv/1000jours/issues/925)
+
 ## [1.88.1](https://github.com/SocialGouv/1000jours/compare/v1.88.0...v1.88.1) (2022-01-05)
 
 
