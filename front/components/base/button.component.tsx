@@ -20,10 +20,16 @@ interface Props {
   icon?: IconNode;
   disabled?: boolean;
   buttonStyle?: StyleProp<ViewStyle>;
+  disabledStyle?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
   onPressIn?: () => void;
   accessibilityLabel?: string;
 }
+
+const setDisabledStyle = (
+  disabledStyle?: StyleProp<ViewStyle>
+): StyleProp<ViewStyle> =>
+  disabledStyle ? disabledStyle : styles.disabledButton;
 
 const Button: React.FC<Props> = ({
   title,
@@ -32,33 +38,32 @@ const Button: React.FC<Props> = ({
   disabled,
   action,
   buttonStyle,
+  disabledStyle,
   titleStyle,
   onPressIn,
   accessibilityLabel,
-}) => {
-  return (
-    <RNEButton
-      disabled={disabled}
-      disabledStyle={disabled ? styles.disabledButton : null}
-      icon={icon}
-      iconRight={false}
-      title={title}
-      buttonStyle={[rounded ? styles.roundedButton : null, buttonStyle]}
-      titleStyle={[
-        styles.font,
-        rounded ? styles.roundedButtonTitle : styles.clearButtonTitle,
-        icon ? styles.buttonWithIcon : null,
-        titleStyle,
-      ]}
-      disabledTitleStyle={rounded ? styles.roundedButtonTitle : null}
-      // Pour le volet de la carto, le onPress ne fonctionne pas sur Android, donc obligé d'ajouter onPressIn
-      onPressIn={onPressIn}
-      onPress={action}
-      type={rounded ? "solid" : "clear"}
-      accessibilityLabel={accessibilityLabel}
-    />
-  );
-};
+}) => (
+  <RNEButton
+    disabled={disabled}
+    disabledStyle={disabled ? setDisabledStyle(disabledStyle) : null}
+    icon={icon}
+    iconRight={false}
+    title={title}
+    buttonStyle={[rounded ? styles.roundedButton : null, buttonStyle]}
+    titleStyle={[
+      styles.font,
+      rounded ? styles.roundedButtonTitle : styles.clearButtonTitle,
+      icon ? styles.buttonWithIcon : null,
+      titleStyle,
+    ]}
+    disabledTitleStyle={rounded ? styles.roundedButtonTitle : null}
+    // Pour le volet de la carto, le onPress ne fonctionne pas sur Android, donc obligé d'ajouter onPressIn
+    onPressIn={onPressIn}
+    onPress={action}
+    type={rounded ? "solid" : "clear"}
+    accessibilityLabel={accessibilityLabel}
+  />
+);
 
 const styles = StyleSheet.create({
   buttonWithIcon: {

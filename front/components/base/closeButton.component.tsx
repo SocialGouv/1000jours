@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { Colors, Labels, Paddings, Sizes } from "../../constants";
-import { Icomoon, IcomoonIcons } from "..";
+import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
 
 interface Props {
   onPress: () => void;

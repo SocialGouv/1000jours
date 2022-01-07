@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 
 import { Paddings } from "../../constants";
 import SpecialChars from "../../constants/specialChars";
-import { SecondaryText } from "..";
+import { SecondaryText } from "../StyledText";
 import type { TextProps } from "../Themed";
 
 const Li: React.FC<TextProps> = (props) => {

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Linking, StyleSheet } from "react-native";
 
 import { Colors } from "../../constants";
-import { SecondaryText } from "..";
+import { SecondaryText } from "../StyledText";
 import type { TextProps } from "../Themed";
 
 interface AProps {

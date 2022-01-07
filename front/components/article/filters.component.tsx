@@ -1,3 +1,4 @@
+import Constants from "expo-constants";
 import _ from "lodash";
 import type { FC } from "react";
 import * as React from "react";
@@ -21,7 +22,8 @@ import {
   PLATFORM_IS_ANDROID,
 } from "../../constants/platform.constants";
 import type { Article, ArticleFilter } from "../../types";
-import { Button, CloseButton } from "..";
+import Button from "../base/button.component";
+import CloseButton from "../base/closeButton.component";
 import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
 import TitleH1 from "../base/titleH1.component";
 import { View } from "../Themed";
@@ -219,6 +221,7 @@ const styles = StyleSheet.create({
   behindOfModal: {
     backgroundColor: Colors.transparentGrey,
     flex: 1,
+    paddingTop: Constants.statusBarHeight,
   },
   buttonContainer: {
     flex: 1,

@@ -1,4 +1,5 @@
 import type { PoiType, Step } from "@socialgouv/nos1000jours-lib";
+import Constants from "expo-constants";
 import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -192,12 +193,24 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     filter: PoiType | Step,
     filterType: AroundMeConstants.CartoFilterEnum
   ): CartoFilter => {
-    return {
+    const cartoFilter = {
       active: false,
       filterType: filterType,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       name: filter.nom,
     };
+
+    if (filterType === AroundMeConstants.CartoFilterEnum.etape) {
+      return {
+        ...cartoFilter,
+        associatedTypes: (filter as Step).cartographie_types.map(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          (type) => type.nom
+        ),
+      };
+    }
+
+    return cartoFilter;
   };
 
   const updateQueryFilter = (filter: CartoFilter) => {
@@ -217,6 +230,48 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
       cartoFilterStorage.types = tempQueryFilter;
     else cartoFilterStorage.etapes = tempQueryFilter;
     setCartoFilterStorage(cartoFilterStorage);
+
+    if (
+      filter.filterType === AroundMeConstants.CartoFilterEnum.etape &&
+      filter.associatedTypes &&
+      filter.associatedTypes.length > 0
+    ) {
+      setDisplayedCartoFilters([
+        updateDisplayedFilters(displayedCartoFilters[0], filter),
+        updateDisplayedFilters(displayedCartoFilters[1], filter),
+        updateDisplayedFilters(displayedCartoFilters[2], filter),
+      ]);
+    }
+  };
+
+  const updateDisplayedFilters = (
+    _displayedFiltersElement: { title: string; filters: CartoFilter[] },
+    stepFilter: CartoFilter
+  ) => {
+    const stepIsActive = cartoFilterStorage.etapes.includes(stepFilter.name);
+
+    return {
+      filters: _displayedFiltersElement.filters.map((cartoFilter) => {
+        if (stepFilter.associatedTypes?.includes(cartoFilter.name)) {
+          cartoFilter.active = stepIsActive;
+        }
+
+        if (
+          cartoFilter.active &&
+          !cartoFilterStorage.types.includes(cartoFilter.name)
+        )
+          cartoFilterStorage.types.push(cartoFilter.name);
+        else {
+          cartoFilterStorage.types = cartoFilterStorage.types.filter(
+            (element) => element !== cartoFilter.name
+          );
+        }
+        setCartoFilterStorage(cartoFilterStorage);
+
+        return cartoFilter;
+      }),
+      title: _displayedFiltersElement.title,
+    };
   };
 
   const renderSection = (section: {
@@ -226,7 +281,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     return (
       <View style={styles.filterView}>
         <CommonText style={styles.partsTitle}>{section.title}</CommonText>
-        <View style={styles.behindOfModal}></View>
         <View style={styles.filterContainer}>
           {renderChips(section.filters)}
         </View>
@@ -352,6 +406,7 @@ const styles = StyleSheet.create({
   behindOfModal: {
     backgroundColor: Colors.transparentGrey,
     flex: 1,
+    paddingTop: Constants.statusBarHeight,
   },
   buttonContainer: {
     flex: 1,

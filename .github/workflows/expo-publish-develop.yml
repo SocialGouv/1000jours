@@ -26,7 +26,7 @@ jobs:
       MATOMO_APPLICATION_ID: 46
       MATOMO_ENABLED: true
       MATOMO_URL: https://matomo.fabrique.social.gouv.fr/
-      SENTRY_DSN: https://5dbac413000f4a43a073841acebc82f5@sentry.fabrique.social.gouv.fr/55
+      SENTRY_DSN: https://d622675092bb449481c8016cab8ffd08@sentry.fabrique.social.gouv.fr/62
       SENTRY_ENABLED: true
       SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
       GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
@@ -44,20 +44,14 @@ jobs:
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
 
-      - uses: socialgouv/actions/k8s-namespace@v1
-        id: namespace
-        with:
-          environment: "dev"
-
-      - name: Get branch name
-        run: |
-          echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      - uses: socialgouv/actions/autodevops-env@v1
+        id: env
 
       - name: Yarn
         run: |
           cd front
           yarn install
-          expo publish --release-channel $BRANCH_NAME
+          expo publish --release-channel ${{ steps.env.outputs.branch }}
         env:
           BRANCH_NAME: ${{ env.BRANCH_NAME }}
-          API_URL: https://backoffice-${{ steps.namespace.outputs.value }}.dev.fabrique.social.gouv.fr
+          API_URL: https://backoffice-${{ steps.env.outputs.namespace }}.dev.fabrique.social.gouv.fr
