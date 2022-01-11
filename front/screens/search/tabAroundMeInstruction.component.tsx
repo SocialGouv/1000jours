@@ -108,7 +108,6 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
     }
 
     // setIsLoading(false);
-    // setSearchIsReady(true);
   };
 
   const searchByPostalCode = async () => {

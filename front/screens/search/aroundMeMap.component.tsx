@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
-import type { RouteProp } from "@react-navigation/core";
+import type { RouteProp } from "@react-navigation/native";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import { useMatomo } from "matomo-tracker-react-native";
@@ -39,19 +39,15 @@ import SharedCartoData from "../../utils/sharedCartoData.class";
 import AddressDetails from "../aroundMe/addressDetails.component";
 import AroundMeFilter from "../aroundMe/aroundMeFilter.component";
 import CustomMapMarker from "../aroundMe/customMapMarker.component";
+import FetchPois from "../aroundMe/fetchPois.component";
 import SubmitNewFilter from "../aroundMe/submitNewFilter.component";
 
 interface Props {
-  // route: RouteProp<
-  //   {
-  //     params: { region: Region; fetchedPois: Poi[]; selectedPoiIndex: number };
-  //   },
-  //   "params"
-  // >;
   navigation: StackNavigationProp<TabSearchParamList>;
+  route: RouteProp<{ params: { updatePoiList: () => void } }, "params">;
 }
 
-const AroundMeMap: React.FC<Props> = ({ navigation }) => {
+const AroundMeMap: React.FC<Props> = ({ navigation, route }) => {
   const { trackScreenView } = useMatomo();
   const mapRef = useRef<MapView>();
   const [region, setRegion] = useState<Region>(
@@ -91,15 +87,6 @@ const AroundMeMap: React.FC<Props> = ({ navigation }) => {
 
   useEffect(() => {
     trackScreenView(TrackerUtils.TrackingEvent.CARTO);
-    // const checkIfSavedRegion = async () => {
-    //   const savedRegion: Region | undefined = await StorageUtils.getObjectValue(
-    //     StorageKeysConstants.cartoSavedRegion
-    //   );
-    //   if (!savedRegion) return;
-    //   mapRef.current?.animateToRegion(savedRegion);
-    //   setMoveToRegionBecauseOfPCResearch(true);
-    // };
-    // void checkIfSavedRegion();
     setTimeout(() => {
       moveMapToCoordinates(
         poisArray[selectedPoiIndex].position_latitude,
@@ -114,12 +101,26 @@ const AroundMeMap: React.FC<Props> = ({ navigation }) => {
     mapRef.current = ref;
   };
 
+  const handleFetchedPois = (pois: Poi[]) => {
+    if (pois.length === 0) {
+      showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
+    }
+
+    SharedCartoData.fetchedPois = pois;
+    route.params.updatePoiList();
+    setPoisArray(pois);
+    setShowAddressDetails(false);
+
+    setIsLoading(false);
+  };
+
   const onRegionChangeComplete = (newRegion: Region) => {
     void StorageUtils.storeObjectValue(
       StorageKeysConstants.cartoSavedRegion,
       newRegion
     );
     setRegion(newRegion);
+    SharedCartoData.region = newRegion;
     /* Lorsqu'on lance une recherche par CP, le moveToRegionBecauseOfPCResearch est mis à true
     et donc on ne cache pas directement la snackBar si elle a été affichée (en cas d'erreur) */
     if (moveToRegionBecauseOfPCResearch) {
@@ -145,7 +146,6 @@ const AroundMeMap: React.FC<Props> = ({ navigation }) => {
     } else {
       // setShowAddressesList(true);
     }
-    // setPostalCodeInvalid(false);
     setShowRelaunchResearchButton(true);
     setMapWasOnlyTouched(true);
   };
@@ -188,6 +188,11 @@ const AroundMeMap: React.FC<Props> = ({ navigation }) => {
 
   return (
     <View style={styles.mainContainer}>
+      <FetchPois
+        triggerSearchByGpsCoords={triggerSearchByGpsCoords}
+        region={region}
+        setFetchedPois={handleFetchedPois}
+      />
       <View style={styles.topContainer}>
         <Button
           buttonStyle={styles.backButton}

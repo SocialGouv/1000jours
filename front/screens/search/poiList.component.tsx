@@ -5,7 +5,7 @@ import type { Poi } from "@socialgouv/nos1000jours-lib";
 import { GET_POIS_BY_GPSCOORDS } from "@socialgouv/nos1000jours-lib";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import type { NativeScrollEvent } from "react-native";
+import { NativeScrollEvent, Share } from "react-native";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import {
   ScrollView,
@@ -43,11 +43,13 @@ const PoiList: React.FC<Props> = ({ region }) => {
       const { searchPois } = data as {
         searchPois: Poi[];
       };
+      SharedCartoData.fetchedPois = searchPois;
       setPoisArray(searchPois);
     },
   });
 
   const [poisArray, setPoisArray] = useState<Poi[]>([]);
+  const [currentRegion, setCurrentRegion] = useState(region);
   const [currentEndIndex, setCurrentEndIndex] = useState(
     AroundMeConstants.PAGINATION_NUMBER_ADDRESSES_LIST
   );
@@ -154,9 +156,14 @@ const PoiList: React.FC<Props> = ({ region }) => {
               key={poiIndex}
               onPress={() => {
                 SharedCartoData.fetchedPois = poisToDisplay;
-                SharedCartoData.region = region;
+                SharedCartoData.region = currentRegion;
                 SharedCartoData.selectedPoiIndex = poiIndex;
-                RootNavigation.navigate("aroundMeMap", undefined);
+                RootNavigation.navigate("aroundMeMap", {
+                  updatePoiList: () => {
+                    setPoisArray(SharedCartoData.fetchedPois);
+                    setCurrentRegion(SharedCartoData.region);
+                  },
+                });
               }}
             >
               {renderCard(poi)}
@@ -166,9 +173,14 @@ const PoiList: React.FC<Props> = ({ region }) => {
               key={poiIndex}
               onPress={() => {
                 SharedCartoData.fetchedPois = poisToDisplay;
-                SharedCartoData.region = region;
+                SharedCartoData.region = currentRegion;
                 SharedCartoData.selectedPoiIndex = poiIndex;
-                RootNavigation.navigate("aroundMeMap", undefined);
+                RootNavigation.navigate("aroundMeMap", {
+                  updatePoiList: () => {
+                    setPoisArray(SharedCartoData.fetchedPois);
+                    setCurrentRegion(SharedCartoData.region);
+                  },
+                });
               }}
             >
               {renderCard(poi)}

@@ -164,9 +164,6 @@ const poisRoute = (articles: Article[]) =>
       <Text>{Labels.search.writeKeyword}</Text>
     </View>
   );
-// return ({(articles.length > 0) && <TabAroundMeInstruction />});
-// <TabAroundMeInstruction />
-// <View style={{ backgroundColor: Colors.white, flex: 1 }} />
 
 const styles = StyleSheet.create({
   center: {
