@@ -1,5 +1,5 @@
 import type { Poi } from "@socialgouv/nos1000jours-lib";
-import type { Region } from "react-native-maps";
+import type { LatLng, Region } from "react-native-maps";
 
 import { AroundMeConstants } from "../constants";
 
@@ -11,6 +11,8 @@ export default class SharedCartoData {
   _region: Region = AroundMeConstants.INITIAL_REGION;
 
   _selectedPoiIndex = -1;
+
+  _userLocation: LatLng = { latitude: -1, longitude: -1 };
 
   static get inst(): SharedCartoData {
     if (SharedCartoData.instance === null) {
@@ -41,5 +43,13 @@ export default class SharedCartoData {
 
   static set selectedPoiIndex(selectedPoiIndex: number) {
     SharedCartoData.inst._selectedPoiIndex = selectedPoiIndex;
+  }
+
+  static get userLocation(): LatLng {
+    return SharedCartoData.inst._userLocation;
+  }
+
+  static set userLocation(userLocation: LatLng) {
+    SharedCartoData.inst._userLocation = userLocation;
   }
 }

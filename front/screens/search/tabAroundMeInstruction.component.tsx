@@ -26,6 +26,7 @@ import {
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
 import { AroundMeUtils } from "../../utils";
+import SharedCartoData from "../../utils/sharedCartoData.class";
 import PoiList from "./poiList.component";
 
 interface Props {
@@ -91,16 +92,16 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
         }
       }
       if (currentLocation) {
-        const newDelta = await AroundMeUtils.adaptZoomAccordingToRegion(
-          currentLocation.coords.latitude,
-          currentLocation.coords.longitude
-        );
+        SharedCartoData.userLocation = {
+          latitude: currentLocation.coords.latitude,
+          longitude: currentLocation.coords.longitude,
+        };
 
         setRegion({
           latitude: currentLocation.coords.latitude,
-          latitudeDelta: newDelta,
+          latitudeDelta: AroundMeConstants.DEFAULT_DELTA,
           longitude: currentLocation.coords.longitude,
-          longitudeDelta: newDelta,
+          longitudeDelta: AroundMeConstants.DEFAULT_DELTA,
         });
       } else setRegion(undefined);
     } catch {

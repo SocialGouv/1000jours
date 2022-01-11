@@ -73,8 +73,8 @@ const AroundMeMap: React.FC<Props> = ({ navigation, route }) => {
     useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [mapWasOnlyTouched, setMapWasOnlyTouched] = useState(false);
-  const [currentUserLocation, setCurrentUserLocation] = useState<LatLng | null>(
-    null
+  const [currentUserLocation] = useState<LatLng | null>(
+    SharedCartoData.userLocation
   );
 
   const currentUserLocatioIcon = require("../../assets/images/carto/current_location.png");
