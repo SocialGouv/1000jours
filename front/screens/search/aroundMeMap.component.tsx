@@ -53,12 +53,6 @@ const AroundMeMap: React.FC<Props> = ({ navigation, route }) => {
   const [region, setRegion] = useState<Region>(
     SharedCartoData.region // AroundMeConstants.INITIAL_REGION
   );
-  const [moveToRegionBecauseOfPCResearch, setMoveToRegionBecauseOfPCResearch] =
-    useState(false);
-  const [
-    moveToRegionBecauseOfMarkerClick,
-    setMoveToRegionBecauseOfMarkerClick,
-  ] = useState(false);
   // Variable utilisée pour trigger le useEffect lors du relancement de la Recherche
   const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] =
     useState(false);
@@ -121,31 +115,7 @@ const AroundMeMap: React.FC<Props> = ({ navigation, route }) => {
     );
     setRegion(newRegion);
     SharedCartoData.region = newRegion;
-    /* Lorsqu'on lance une recherche par CP, le moveToRegionBecauseOfPCResearch est mis à true
-    et donc on ne cache pas directement la snackBar si elle a été affichée (en cas d'erreur) */
-    if (moveToRegionBecauseOfPCResearch) {
-      // setIsLoading(true);
-      setMoveToRegionBecauseOfPCResearch(false);
-      /* sur iOS, cette fonction est appelée juste avant que la carte ait terminé de se déplacer,
-      du coup on se retrouve avec des mauvaises adresses qui ne s'affichent pas sur la bonne zone,
-      donc on est obligé de mettre un petit timeout */
-      setTimeout(
-        () => {
-          setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
-        },
-        PLATFORM_IS_IOS ? 1000 : 0
-      );
-    } else {
-      setShowSnackBar(false);
-    }
-
-    /* Lorsqu'on clique sur un marqueur, le moveToRegionBecauseOfMarkerClick est mis à true
-    et donc on ne cache pas directement le AddressDetails s'il a été affiché */
-    if (moveToRegionBecauseOfMarkerClick) {
-      setMoveToRegionBecauseOfMarkerClick(false);
-    } else {
-      // setShowAddressesList(true);
-    }
+    setShowSnackBar(false);
     setShowRelaunchResearchButton(true);
     setMapWasOnlyTouched(true);
   };
@@ -171,7 +141,6 @@ const AroundMeMap: React.FC<Props> = ({ navigation, route }) => {
     setAddressDetails(poisArray[poiIndex]);
     setPoisArray(poisArray);
     setShowAddressDetails(true);
-    setMoveToRegionBecauseOfMarkerClick(true);
     setSelectedPoiIndex(poiIndex);
   };
 
