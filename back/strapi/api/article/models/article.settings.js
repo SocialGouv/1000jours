@@ -108,7 +108,7 @@ module.exports = {
       via: "articles",
       collection: "evenement",
     },
-    types_poi: {
+    cartographie_pois_types: {
       collection: "cartographie-types",
       via: "articles",
       dominant: true,
