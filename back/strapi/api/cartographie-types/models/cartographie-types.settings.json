@@ -39,7 +39,7 @@
       "collection": "evenement"
     },
     "articles": {
-      "via": "types_poi",
+      "via": "cartographie_pois_types",
       "collection": "article"
     }
   }
