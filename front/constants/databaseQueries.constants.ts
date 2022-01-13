@@ -218,6 +218,9 @@ export const SEARCH_ARTICLES_BY_KEYWORDS = (keywords: string): DocumentNode => {
           nom
           id
         }
+        cartographie_pois_types {
+          nom
+        }
       }
     }
   `;

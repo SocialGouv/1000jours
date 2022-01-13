@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
-import type { Article } from "@socialgouv/nos1000jours-lib";
+import type { PoiType } from "@socialgouv/nos1000jours-lib";
 import * as Location from "expo-location";
 import type { FC } from "react";
 import { useState } from "react";
@@ -20,13 +20,17 @@ import {
   Margins,
   Paddings,
   Sizes,
+  StorageKeysConstants,
 } from "../../constants";
 import {
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
+import type { CartoFilterStorage } from "../../type";
+import type { Article } from "../../types";
 import { AroundMeUtils } from "../../utils";
 import SharedCartoData from "../../utils/sharedCartoData.class";
+import { storeObjectValue } from "../../utils/storage.util";
 import PoiList from "./poiList.component";
 
 interface Props {
@@ -37,6 +41,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
   const [postalCodeInput, setPostalCodeInput] = useState("");
   const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
   const [region, setRegion] = useState<Region | undefined>(); // AroundMeConstants.INITIAL_REGION
+  const [poiTypes, setPoiTypes] = useState<PoiType[]>([]);
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
 
@@ -52,7 +57,36 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
     setPostalCodeInvalid(false);
   };
 
+  const extractPoiTypesFromArticles = () => {
+    const finalCartographieTypes: PoiType[] = [];
+    articles
+      .map((article) => article.cartographie_pois_types)
+      .map((types) =>
+        types?.map((type) => {
+          if (
+            !finalCartographieTypes
+              .map((finalType) => finalType.nom)
+              .includes(type.nom)
+          )
+            finalCartographieTypes.push(type);
+        })
+      );
+    if (finalCartographieTypes.length > 0) {
+      setPoiTypes(finalCartographieTypes);
+      const cartoFilterStorage: CartoFilterStorage = {
+        etapes: [],
+        thematiques: [],
+        types: finalCartographieTypes.map((type) => type.nom),
+      };
+      void storeObjectValue(
+        StorageKeysConstants.cartoFilterKey,
+        cartoFilterStorage
+      );
+    }
+  };
+
   const checkLocation = async () => {
+    extractPoiTypesFromArticles();
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== Location.PermissionStatus.GRANTED) {
       showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
@@ -112,6 +146,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
   };
 
   const searchByPostalCode = async () => {
+    extractPoiTypesFromArticles();
     if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
       setPostalCodeInvalid(true);
       return;
@@ -126,7 +161,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
   };
 
   return region ? (
-    <PoiList region={region} />
+    <PoiList region={region} poiTypes={poiTypes} />
   ) : (
     <ScrollView style={styles.mainContainer}>
       <SecondaryText style={styles.description}>

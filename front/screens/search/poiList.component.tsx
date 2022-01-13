@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { gql, useLazyQuery } from "@apollo/client";
-import type { Poi } from "@socialgouv/nos1000jours-lib";
+import type { Poi, PoiType } from "@socialgouv/nos1000jours-lib";
 import { GET_POIS_BY_GPSCOORDS } from "@socialgouv/nos1000jours-lib";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { NativeScrollEvent, Share } from "react-native";
+import type { NativeScrollEvent } from "react-native";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import {
   ScrollView,
@@ -34,9 +34,10 @@ import AroundMeFilter from "../aroundMe/aroundMeFilter.component";
 
 interface Props {
   region: Region;
+  poiTypes: PoiType[];
 }
 
-const PoiList: React.FC<Props> = ({ region }) => {
+const PoiList: React.FC<Props> = ({ region, poiTypes }) => {
   const [getPoisByGpsCoords] = useLazyQuery(gql(GET_POIS_BY_GPSCOORDS), {
     fetchPolicy: FetchPoliciesConstants.NO_CACHE,
     onCompleted: (data) => {
@@ -86,7 +87,7 @@ const PoiList: React.FC<Props> = ({ region }) => {
       long1: topLeftPoint.longitude,
       long2: bottomRightPoint.longitude,
       // thematiques: savedFilters?.thematiques ? savedFilters.thematiques : [],
-      // types: savedFilters?.types ? savedFilters.types : [],
+      types: poiTypes.length > 0 ? poiTypes.map((type) => type.nom) : [],
     };
     await getPoisByGpsCoords({
       variables,

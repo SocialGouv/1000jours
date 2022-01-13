@@ -1,6 +1,5 @@
-import { Poi } from "@socialgouv/nos1000jours-lib";
+import type { PoiType } from "@socialgouv/nos1000jours-lib";
 import type { FC, ReactNode } from "react";
-import { Region } from "react-native-maps";
 
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 export type RootStackParamList = {
@@ -142,6 +141,8 @@ export type Article = {
   visuel?: Visuel;
   thematiques: Thematique[];
   hide?: boolean;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  cartographie_pois_types?: PoiType[];
 };
 
 export type ArticleInShortItem = {
