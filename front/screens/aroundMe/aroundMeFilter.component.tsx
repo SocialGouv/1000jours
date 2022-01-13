@@ -1,4 +1,5 @@
 import type { PoiType, Step } from "@socialgouv/nos1000jours-lib";
+import Constants from "expo-constants";
 import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -280,7 +281,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     return (
       <View style={styles.filterView}>
         <CommonText style={styles.partsTitle}>{section.title}</CommonText>
-        <View style={styles.behindOfModal}></View>
         <View style={styles.filterContainer}>
           {renderChips(section.filters)}
         </View>
@@ -406,6 +406,7 @@ const styles = StyleSheet.create({
   behindOfModal: {
     backgroundColor: Colors.transparentGrey,
     flex: 1,
+    paddingTop: Constants.statusBarHeight,
   },
   buttonContainer: {
     flex: 1,

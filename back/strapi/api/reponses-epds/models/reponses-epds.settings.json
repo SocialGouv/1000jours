@@ -62,6 +62,9 @@
     },
     "reponse_10": {
       "type": "integer"
+    },
+    "langue": {
+      "model": "locale"
     }
   }
 }

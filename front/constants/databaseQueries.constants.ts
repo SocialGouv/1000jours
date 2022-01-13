@@ -63,11 +63,13 @@ export const EPDS_ADD_RESPONSE = gql`
 
 export const EPDS_CONTACT_INFORMATION = gql`
   mutation (
-    $email: String!
+    $email: String
     $telephone: String
-    $prenom: String!
-    $nombreEnfants: Int!
-    $naissanceDernierEnfant: String!
+    $prenom: String
+    $nombreEnfants: Int
+    $naissanceDernierEnfant: String
+    $moyen: String
+    $horaires: String
   ) {
     epdsContact(
       email: $email
@@ -75,6 +77,8 @@ export const EPDS_CONTACT_INFORMATION = gql`
       prenom: $prenom
       nombre_enfants: $nombreEnfants
       naissance_dernier_enfant: $naissanceDernierEnfant
+      moyen: $moyen
+      horaires: $horaires
     )
   }
 `;

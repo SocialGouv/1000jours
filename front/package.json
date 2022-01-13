@@ -20,7 +20,7 @@
     "publish-prod": "yarn upload:android && yarn upload:ios"
   },
   "jest": {
-    "preset": "react-native",
+    "preset": "jest-expo",
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -31,7 +31,11 @@
     ],
     "transformIgnorePatterns": [
       "./node_modules/(?!native-base)/"
-    ]
+    ],
+    "setupFiles": [
+      "./jest/setup.js"
+    ],
+    "collectCoverage": true
   },
   "dependencies": {
     "@apollo/client": "^3.4.17",
@@ -69,6 +73,7 @@
     "expo-updates": "<=0.5.4",
     "expo-web-browser": "<=9.1.0",
     "graphql": "^15.7.2",
+    "jest-expo": "^43.0.1",
     "lodash": "^4.17.21",
     "matomo-tracker-react-native": "^0.2.4",
     "react": "17.0.2",
