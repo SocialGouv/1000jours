@@ -536,7 +536,7 @@ export default {
     title: "Que recherchez-vous ?",
     validButton: "Valider",
     writeKeyword: "Veuillez saisir un mot-clé",
-    writeKeywordPlaceholder: "Saisissez ici votre mot clé",
+    writeKeywordPlaceholder: "Saisissez ici votre mot-clé",
     yourSearch: "Votre recherche :",
   },
   tabs: {
