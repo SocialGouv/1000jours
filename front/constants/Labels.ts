@@ -80,7 +80,7 @@ export default {
     relaunchSearch: "Relancer la recherche",
     searchButton: "Rechercher",
     searchGeolocInstruction:
-      "Afin de vous apporter une aidée personnalisée, veuillez renseigner votre localisation :",
+      "Afin de vous apporter une aide personnalisée, veuillez renseigner votre localisation :",
     searchPostalCodeInstruction: "Ou renseignez votre code postal :",
     submitNewFilter: {
       aboutYou: {
