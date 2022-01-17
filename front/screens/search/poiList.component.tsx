@@ -113,13 +113,11 @@ const PoiList: React.FC<Props> = ({ region, poiTypes }) => {
     }
   };
 
-  const renderCard = (poi: Poi) => {
-    return (
-      <Card style={styles.card}>
-        <AddressDetails details={poi} />
-      </Card>
-    );
-  };
+  const renderCard = (poi: Poi) => (
+    <Card style={styles.card}>
+      <AddressDetails details={poi} />
+    </Card>
+  );
 
   return (
     <View style={styles.slidingUpPanelView}>

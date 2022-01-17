@@ -76,13 +76,11 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
     }
   };
 
-  const renderCard = (poi: Poi) => {
-    return (
-      <Card style={styles.card}>
-        <AddressDetails details={poi} />
-      </Card>
-    );
-  };
+  const renderCard = (poi: Poi) => (
+    <Card style={styles.card}>
+      <AddressDetails details={poi} />
+    </Card>
+  );
 
   const renderContent = () => {
     return (

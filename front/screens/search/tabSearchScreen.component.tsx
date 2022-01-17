@@ -116,43 +116,43 @@ const articlesRoute = (articles: Article[]) => {
     Step | undefined
   >();
 
-  if (articles.length > 0) {
-    return showArticle ? (
-      <ArticleDetail
-        _articleId={currentArticleId}
-        _articleStep={currentArticleStep}
-        goBack={() => {
-          setShowArticle(false);
-        }}
-      />
-    ) : (
-      <ScrollView style={styles.listContainer}>
-        {articles.map((article: Article, index: number) => (
-          <Animatable.View
-            key={index}
-            animation="fadeInUp"
-            duration={1000}
-            delay={0}
-          >
-            <ArticleCard
-              article={article}
-              isFromSearchScreen
-              setStepAndArticleId={(articleId, step) => {
-                setShowArticle(true);
-                setCurrentArticleId(articleId);
-                setCurrentArticleStep(step);
-              }}
-            />
-          </Animatable.View>
-        ))}
-      </ScrollView>
+  if (articles.length <= 0) {
+    return (
+      <View style={styles.center}>
+        <Text>{Labels.search.noArticleFound}</Text>
+      </View>
     );
   }
 
-  return (
-    <View style={styles.center}>
-      <Text>{Labels.search.noArticleFound}</Text>
-    </View>
+  return showArticle ? (
+    <ArticleDetail
+      _articleId={currentArticleId}
+      _articleStep={currentArticleStep}
+      goBack={() => {
+        setShowArticle(false);
+      }}
+    />
+  ) : (
+    <ScrollView style={styles.listContainer}>
+      {articles.map((article: Article, index: number) => (
+        <Animatable.View
+          key={index}
+          animation="fadeInUp"
+          duration={1000}
+          delay={0}
+        >
+          <ArticleCard
+            article={article}
+            isFromSearchScreen
+            setStepAndArticleId={(articleId, step) => {
+              setShowArticle(true);
+              setCurrentArticleId(articleId);
+              setCurrentArticleStep(step);
+            }}
+          />
+        </Animatable.View>
+      ))}
+    </ScrollView>
   );
 };
 

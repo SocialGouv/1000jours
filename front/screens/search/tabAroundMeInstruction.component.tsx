@@ -59,18 +59,17 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
 
   const extractPoiTypesFromArticles = () => {
     const finalCartographieTypes: PoiType[] = [];
-    articles
-      .map((article) => article.cartographie_pois_types)
-      .map((types) =>
-        types?.map((type) => {
-          if (
-            !finalCartographieTypes
-              .map((finalType) => finalType.nom)
-              .includes(type.nom)
-          )
-            finalCartographieTypes.push(type);
-        })
+    articles.map((article) => {
+      const pois = article.cartographie_pois_types?.filter(
+        (type) =>
+          !finalCartographieTypes
+            .map((finalType) => finalType.nom)
+            .includes(type.nom)
       );
+      if (pois && pois.length > 0)
+        pois.map((poi) => finalCartographieTypes.push(poi));
+    });
+
     if (finalCartographieTypes.length > 0) {
       setPoiTypes(finalCartographieTypes);
       const cartoFilterStorage: CartoFilterStorage = {
@@ -94,8 +93,6 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
       // setSearchIsReady(true); // Si on refuse la géoloc, on peut toujours lancer une recherche (manuelle ou via CP)
       return;
     }
-
-    // setLocationPermissionIsGranted(true);
     // setIsLoading(true);
     try {
       let currentLocation = undefined;
@@ -147,6 +144,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
 
   const searchByPostalCode = async () => {
     extractPoiTypesFromArticles();
+
     if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
       setPostalCodeInvalid(true);
       return;
