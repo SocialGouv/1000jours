@@ -10,7 +10,12 @@ import { ScrollView } from "react-native-gesture-handler";
 import type { Region } from "react-native-maps";
 import { HelperText } from "react-native-paper";
 
-import { Button, CustomSnackbar, SecondaryText } from "../../components";
+import {
+  Button,
+  CustomSnackbar,
+  Loader,
+  SecondaryText,
+} from "../../components";
 import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
@@ -44,6 +49,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
   const [poiTypes, setPoiTypes] = useState<PoiType[]>([]);
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const geolocationIcon = require("../../assets/images/carto/geolocation.png");
 
@@ -59,15 +65,15 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
 
   const extractPoiTypesFromArticles = () => {
     const finalCartographieTypes: PoiType[] = [];
-    articles.map((article) => {
-      const pois = article.cartographie_pois_types?.filter(
+    articles.forEach((article) => {
+      if (!article.cartographie_pois_types) return;
+      const filteredTypes = article.cartographie_pois_types.filter(
         (type) =>
-          !finalCartographieTypes
-            .map((finalType) => finalType.nom)
-            .includes(type.nom)
+          !finalCartographieTypes.some(
+            (finalType) => finalType.nom === type.nom
+          )
       );
-      if (pois && pois.length > 0)
-        pois.map((poi) => finalCartographieTypes.push(poi));
+      finalCartographieTypes.push(...filteredTypes);
     });
 
     if (finalCartographieTypes.length > 0) {
@@ -89,11 +95,11 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== Location.PermissionStatus.GRANTED) {
       showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
-      // setIsLoading(false);
+      setIsLoading(false);
       // setSearchIsReady(true); // Si on refuse la géoloc, on peut toujours lancer une recherche (manuelle ou via CP)
       return;
     }
-    // setIsLoading(true);
+    setIsLoading(true);
     try {
       let currentLocation = undefined;
       let locationSuccess = false;
@@ -139,10 +145,11 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
       setRegion(undefined);
     }
 
-    // setIsLoading(false);
+    setIsLoading(false);
   };
 
   const searchByPostalCode = async () => {
+    setIsLoading(true);
     extractPoiTypesFromArticles();
 
     if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
@@ -155,7 +162,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
 
     if (newRegion) setRegion(newRegion);
     else showSnackBarWithMessage(Labels.aroundMe.postalCodeNotFound);
-    // setIsLoading(false);
+    setIsLoading(false);
   };
 
   return region ? (
@@ -221,6 +228,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
         textColor={Colors.aroundMeSnackbar.text}
         text={snackBarMessage}
       />
+      {isLoading && <Loader />}
     </ScrollView>
   );
 };

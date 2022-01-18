@@ -1,5 +1,4 @@
 import { useLazyQuery } from "@apollo/client";
-import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -18,16 +17,12 @@ import {
 import ArticleCard from "../../components/article/articleCard.component";
 import { Colors, Labels, Margins, Paddings } from "../../constants";
 import { SEARCH_ARTICLES_BY_KEYWORDS } from "../../constants/databaseQueries.constants";
-import type { Article, Step, TabSearchParamList } from "../../types";
+import type { Article, Step } from "../../types";
 import { KeyboardUtils } from "../../utils";
 import { ArticleDetail } from "..";
 import TabAroundMeInstruction from "./tabAroundMeInstruction.component";
 
-interface Props {
-  navigation: StackNavigationProp<TabSearchParamList>;
-}
-
-const TabSearchScreen: FC<Props> = ({ navigation }) => {
+const TabSearchScreen: FC = () => {
   const [keywords, setKeywords] = useState("");
   const [articles, setArticles] = useState<Article[]>([]);
 
