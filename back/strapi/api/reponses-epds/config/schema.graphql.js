@@ -70,7 +70,7 @@ module.exports = {
       reponse_9: Int
       reponse_10: Int
       langue: ID
-      source_widget_nom: String
+      source_widget_nom: String!
     ): ReponsesEpds
   `,
   resolver: {
@@ -86,7 +86,7 @@ module.exports = {
         resolverOf: "application::reponses-epds.reponses-epds.partage",
       },
       createReponsesEpdsWidget: {
-        description: "Création d'une réponse EPDS lors de l'utilisation du widget",
+        description: "Création de réponses au questionnaire EPDS à travers l'utilisation du widget",
         resolver: createReponsesEpdsWidget,
         resolverOf: "application::reponses-epds.reponses-epds.createReponsesEpdsWidget",
       }

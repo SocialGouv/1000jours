@@ -16,7 +16,7 @@ const createReponsesEpdsWidget = async ({
   reponse_9,
   reponse_10,
   langue,
-  source_widget_nom = "ND"
+  source_widget_nom
 }) => {
   const reponseEpds = {
     genre,
@@ -36,22 +36,14 @@ const createReponsesEpdsWidget = async ({
     langue,
   }
 
-  let sourceWidget
-  if (source_widget_nom !== "ND") {
-    sourceWidget = await strapi
-      .query("widget-epds-sources")
-      .findOne({ nom: source_widget_nom });
+  if (!source_widget_nom) throw new Error(`Source du widget inconnu : ${source_widget_nom}`);
 
-    if (!sourceWidget) throw new Error(`Source du widget inconnu : ${source_widget_nom}`);
-  }
-
-  if (sourceWidget) {
-    reponseEpds.source_widget = sourceWidget
-  }
+  const sourceWidget = await strapi.query("widget-epds-sources").findOne({ nom: source_widget_nom });
+  if (!sourceWidget) throw new Error(`Source du widget inconnu : ${source_widget_nom}`);
+  reponseEpds.source_widget = sourceWidget;
 
   try {
-    return strapi.query("reponses-epds")
-      .create(reponseEpds)
+    return strapi.query("reponses-epds").create(reponseEpds);
   } catch (e) {
     throw new Error(`Error : ${e.message}`);
   }
