@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { gql, useLazyQuery } from "@apollo/client";
-import type { Poi, PoiType } from "@socialgouv/nos1000jours-lib";
-import { GET_POIS_BY_GPSCOORDS } from "@socialgouv/nos1000jours-lib";
+import type { Poi } from "@socialgouv/nos1000jours-lib";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import type { NativeScrollEvent } from "react-native";
@@ -14,41 +12,35 @@ import {
 import type { Region } from "react-native-maps";
 import { Card } from "react-native-paper";
 
-import { Button, CommonText, Icomoon, IcomoonIcons } from "../../components";
+import {
+  Button,
+  CommonText,
+  Icomoon,
+  IcomoonIcons,
+  Loader,
+} from "../../components";
 import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
   Colors,
-  FetchPoliciesConstants,
   FontWeight,
   Labels,
   Margins,
   Sizes,
 } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
-import { AroundMeUtils } from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import SharedCartoData from "../../utils/sharedCartoData.class";
 import AddressDetails from "../aroundMe/addressDetails.component";
 import AroundMeFilter from "../aroundMe/aroundMeFilter.component";
+import FetchPois from "../aroundMe/fetchPois.component";
 
 interface Props {
   region: Region;
-  poiTypes: PoiType[];
 }
 
-const PoiList: React.FC<Props> = ({ region, poiTypes }) => {
-  const [getPoisByGpsCoords] = useLazyQuery(gql(GET_POIS_BY_GPSCOORDS), {
-    fetchPolicy: FetchPoliciesConstants.NO_CACHE,
-    onCompleted: (data) => {
-      const { searchPois } = data as {
-        searchPois: Poi[];
-      };
-      SharedCartoData.fetchedPois = searchPois;
-      setPoisArray(searchPois);
-    },
-  });
-
+const PoiList: React.FC<Props> = ({ region }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [poisArray, setPoisArray] = useState<Poi[]>([]);
   const [currentRegion, setCurrentRegion] = useState(region);
   const [currentEndIndex, setCurrentEndIndex] = useState(
@@ -59,40 +51,14 @@ const PoiList: React.FC<Props> = ({ region, poiTypes }) => {
   );
   const [showFilter, setShowFilter] = useState(false);
 
+  const [trigger, setTrigger] = useState(false);
+
   useEffect(() => {
     setCurrentEndIndex(AroundMeConstants.PAGINATION_NUMBER_ADDRESSES_LIST);
     setPoisToDisplay(
       poisArray.slice(0, AroundMeConstants.PAGINATION_NUMBER_ADDRESSES_LIST)
     );
   }, [poisArray]);
-
-  useEffect(() => {
-    void searchByGPSCoords();
-  }, []);
-
-  const searchByGPSCoords = async () => {
-    const topLeftPoint = AroundMeUtils.getLatLngPoint(
-      region,
-      AroundMeConstants.LatLngPointType.topLeft
-    );
-    const bottomRightPoint = AroundMeUtils.getLatLngPoint(
-      region,
-      AroundMeConstants.LatLngPointType.bottomRight
-    );
-
-    const variables = {
-      // etapes: savedFilters?.etapes ? savedFilters.etapes : [],
-      lat1: topLeftPoint.latitude,
-      lat2: bottomRightPoint.latitude,
-      long1: topLeftPoint.longitude,
-      long2: bottomRightPoint.longitude,
-      // thematiques: savedFilters?.thematiques ? savedFilters.thematiques : [],
-      types: poiTypes.length > 0 ? poiTypes.map((type) => type.nom) : [],
-    };
-    await getPoisByGpsCoords({
-      variables,
-    });
-  };
 
   const handleScroll = ({
     layoutMeasurement,
@@ -119,8 +85,17 @@ const PoiList: React.FC<Props> = ({ region, poiTypes }) => {
     </Card>
   );
 
+  const handlePois = (pois: Poi[]) => {
+    setPoisArray(pois);
+    setIsLoading(false);
+  };
   return (
     <View style={styles.slidingUpPanelView}>
+      <FetchPois
+        triggerSearchByGpsCoords={trigger}
+        region={region}
+        setFetchedPois={handlePois}
+      />
       <View style={styles.swipeIndicator} />
       <CommonText style={styles.addressesListLabel}>
         {Labels.aroundMe.addressesListLabelStart} {poisArray.length}{" "}
@@ -191,12 +166,13 @@ const PoiList: React.FC<Props> = ({ region, poiTypes }) => {
         visible={showFilter}
         hideModal={(filterWasSaved: boolean) => {
           setShowFilter(false);
-          // if (filterWasSaved) {
-          // if (PLATFORM_IS_ANDROID) setIsLoading(true);
-          // setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
-          // }
+          if (filterWasSaved) {
+            setIsLoading(true);
+            setTrigger(!trigger);
+          }
         }}
       />
+      {isLoading && <Loader />}
     </View>
   );
 };

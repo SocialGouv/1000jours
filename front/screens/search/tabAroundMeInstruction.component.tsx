@@ -46,7 +46,6 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
   const [postalCodeInput, setPostalCodeInput] = useState("");
   const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
   const [region, setRegion] = useState<Region | undefined>(); // AroundMeConstants.INITIAL_REGION
-  const [poiTypes, setPoiTypes] = useState<PoiType[]>([]);
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -77,7 +76,6 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
     });
 
     if (finalCartographieTypes.length > 0) {
-      setPoiTypes(finalCartographieTypes);
       const cartoFilterStorage: CartoFilterStorage = {
         etapes: [],
         thematiques: [],
@@ -166,7 +164,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
   };
 
   return region ? (
-    <PoiList region={region} poiTypes={poiTypes} />
+    <PoiList region={region} />
   ) : (
     <ScrollView style={styles.mainContainer}>
       <SecondaryText style={styles.description}>
