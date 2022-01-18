@@ -1,0 +1,62 @@
+"use strict";
+
+const createReponsesEpdsWidget = async ({
+  genre,
+  compteur,
+  score,
+  source,
+  reponse_1,
+  reponse_2,
+  reponse_3,
+  reponse_4,
+  reponse_5,
+  reponse_6,
+  reponse_7,
+  reponse_8,
+  reponse_9,
+  reponse_10,
+  langue,
+  source_widget_nom = "ND"
+}) => {
+  const reponseEpds = {
+    genre,
+    compteur,
+    score,
+    source,
+    reponse_1,
+    reponse_2,
+    reponse_3,
+    reponse_4,
+    reponse_5,
+    reponse_6,
+    reponse_7,
+    reponse_8,
+    reponse_9,
+    reponse_10,
+    langue,
+  }
+
+  let sourceWidget
+  if (source_widget_nom !== "ND") {
+    sourceWidget = await strapi
+      .query("widget-epds-sources")
+      .findOne({ nom: source_widget_nom });
+
+    if (!sourceWidget) throw new Error(`Source du widget inconnu : ${source_widget_nom}`);
+  }
+
+  if (sourceWidget) {
+    reponseEpds.source_widget = sourceWidget
+  }
+
+  try {
+    return strapi.query("reponses-epds")
+      .create(reponseEpds)
+  } catch (e) {
+    throw new Error(`Error : ${e.message}`);
+  }
+}
+
+module.exports = {
+  createReponsesEpdsWidget
+};
