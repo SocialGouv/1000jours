@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "widget_epds_sources",
+  "info": {
+    "name": "Widget EPDS Sources",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "nom": {
+      "type": "uid",
+      "required": true
+    }
+  }
+}
