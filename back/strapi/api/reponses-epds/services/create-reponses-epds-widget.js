@@ -34,7 +34,7 @@ const createReponsesEpdsWidget = async ({
     reponse_9,
     reponse_10,
     langue,
-  }
+  };
 
   if (!source_widget_nom) throw new Error(`Source du widget inconnu : ${source_widget_nom}`);
 
@@ -47,7 +47,7 @@ const createReponsesEpdsWidget = async ({
   } catch (e) {
     throw new Error(`Error : ${e.message}`);
   }
-}
+};
 
 module.exports = {
   createReponsesEpdsWidget
