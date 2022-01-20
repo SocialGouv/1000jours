@@ -78,7 +78,7 @@ export default {
     postalCodeInvalid: "Le code postal que vous avez saisi n'est pas valide",
     postalCodeNotFound: "Le code postal que vous recherchez n'a pas été trouvé",
     relaunchSearch: "Relancer la recherche",
-    searchButton: "Rechercher",
+    searchButton: "Valider",
     searchGeolocInstruction:
       "Afin de vous apporter une aide personnalisée, veuillez renseigner votre localisation :",
     searchPostalCodeInstruction: "Ou renseignez votre code postal :",

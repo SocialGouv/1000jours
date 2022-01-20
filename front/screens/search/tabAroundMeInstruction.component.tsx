@@ -237,6 +237,7 @@ const styles = StyleSheet.create({
     fontSize: Sizes.xs,
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.md,
+    marginVertical: Margins.default,
   },
   fontButton: {
     fontSize: Sizes.xs,
@@ -251,7 +252,7 @@ const styles = StyleSheet.create({
   },
   geolocationRow: {
     flexDirection: "row",
-    margin: Margins.default,
+    marginVertical: Margins.default,
   },
   mainContainer: {
     flex: 1,
