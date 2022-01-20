@@ -12,6 +12,7 @@ import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import BulbIcon from "../../assets/images/carto/bulb.svg";
 import {
+  BackButton,
   Button,
   CustomSnackbar,
   Icomoon,
@@ -163,18 +164,8 @@ const AroundMeMap: React.FC<Props> = ({ navigation, route }) => {
         region={region}
         setFetchedPois={handleFetchedPois}
       />
-      <View style={styles.topContainer}>
-        <Button
-          buttonStyle={styles.backButton}
-          title={Labels.buttons.back}
-          rounded={false}
-          icon={
-            <Icomoon
-              name={IcomoonIcons.retour}
-              size={14}
-              color={Colors.primaryBlue}
-            />
-          }
+      <View style={styles.flexStart}>
+        <BackButton
           action={() => {
             navigation.goBack();
           }}
@@ -362,6 +353,12 @@ const styles = StyleSheet.create({
     margin: Margins.smaller,
     position: "absolute",
     top: 0,
+  },
+  flexStart: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    margin: Margins.smaller,
   },
   fontButton: {
     fontSize: Sizes.xxs,

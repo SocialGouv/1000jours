@@ -28,6 +28,7 @@ import { articlesRoute, poisRoute } from "./tabSearchRoutes.component";
 const TabSearchScreen: FC = () => {
   const [keywords, setKeywords] = useState("");
   const [articles, setArticles] = useState<Article[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Tabs
   const layout = useWindowDimensions();
@@ -50,6 +51,7 @@ const TabSearchScreen: FC = () => {
   );
 
   const onSearchByKeywords = async () => {
+    setIsLoading(true);
     KeyboardUtils.dismissKeyboard();
     await getSearchArticlesByKeywords();
   };
@@ -60,7 +62,7 @@ const TabSearchScreen: FC = () => {
       setArticles(results);
     }
 
-    return;
+    setIsLoading(false);
   }, [loading, data]);
 
   if (error) return <ErrorMessage error={error} />;
