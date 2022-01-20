@@ -535,7 +535,8 @@ export default {
     noArticleFound: "Aucun article ne correspond à votre recherche",
     title: "Que recherchez-vous ?",
     validButton: "Rechercher",
-    writeKeyword: "Veuillez saisir un mot-clé",
+    writeKeyword:
+      "Veuillez saisir votre mot-clé dans la barre de recherche pour afficher les résultats",
     writeKeywordPlaceholder: "Saisissez ici votre mot-clé",
     yourSearch: "Votre recherche :",
   },

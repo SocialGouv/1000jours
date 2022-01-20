@@ -31,16 +31,16 @@ const ArticleCard: FC<Props> = ({
   isFromSearchScreen,
   setStepAndArticleId,
 }) => {
-  // Permet de forcer le composant ExpoFastImage à être actualiser
+  // Permet de forcer le composant ExpoFastImage à être actualisé
   const [showImage, setShowImage] = React.useState(false);
   React.useEffect(() => {
-    setShowImage(false);
+    let mounted = true;
     setTimeout(() => {
-      if (article.visuel?.id) {
-        setShowImage(true);
-        return;
-      }
+      if (mounted) setShowImage(Boolean(article.visuel?.id));
     }, 100);
+    return () => {
+      mounted = false;
+    };
   }, [article]);
 
   return (

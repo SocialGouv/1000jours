@@ -5,8 +5,8 @@ import { StyleSheet, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { Text } from "../../components";
 import ArticleCard from "../../components/article/articleCard.component";
+import { SecondaryTextItalic } from "../../components/StyledText";
 import { Labels, Margins, Paddings } from "../../constants";
 import type { Article, Step } from "../../types";
 import { ArticleDetail } from "..";
@@ -22,7 +22,7 @@ export const articlesRoute = (articles: Article[]): ReactElement => {
   if (articles.length <= 0) {
     return (
       <View style={styles.center}>
-        <Text>{Labels.search.noArticleFound}</Text>
+        <SecondaryTextItalic>{Labels.search.writeKeyword}</SecondaryTextItalic>
       </View>
     );
   }
@@ -64,7 +64,7 @@ export const poisRoute = (articles: Article[]): ReactElement =>
     <TabAroundMeInstruction articles={articles} />
   ) : (
     <View style={styles.center}>
-      <Text>{Labels.search.writeKeyword}</Text>
+      <SecondaryTextItalic>{Labels.search.writeKeyword}</SecondaryTextItalic>
     </View>
   );
 
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   center: {
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: Margins.default,
+    margin: Margins.default,
   },
   listContainer: {
     paddingHorizontal: Paddings.default,
