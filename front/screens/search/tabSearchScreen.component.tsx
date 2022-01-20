@@ -3,10 +3,23 @@ import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { StyleSheet, TextInput, useWindowDimensions, View } from "react-native";
-import { SceneMap, TabView } from "react-native-tab-view";
+import type {
+  NavigationState,
+  SceneRendererProps,
+} from "react-native-tab-view";
+import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 
-import { Button, CommonText, ErrorMessage, TitleH1 } from "../../components";
-import { Colors, Labels, Margins, Paddings } from "../../constants";
+import { Button, ErrorMessage, SecondaryText, TitleH1 } from "../../components";
+import {
+  Colors,
+  FontNames,
+  FontWeight,
+  getFontFamilyName,
+  Labels,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../../constants";
 import { SEARCH_ARTICLES_BY_KEYWORDS } from "../../constants/databaseQueries.constants";
 import type { Article } from "../../types";
 import { KeyboardUtils } from "../../utils";
@@ -46,9 +59,28 @@ const TabSearchScreen: FC = () => {
       const results = (data as { articles: Article[] }).articles;
       setArticles(results);
     }
+
+    return;
   }, [loading, data]);
 
   if (error) return <ErrorMessage error={error} />;
+
+  const renderTabBar = (
+    props: SceneRendererProps & {
+      navigationState: NavigationState<{
+        accessible: boolean;
+        key: string;
+        title: string;
+      }>;
+    }
+  ) => (
+    <TabBar
+      {...props}
+      labelStyle={styles.tabBarLabel}
+      style={[styles.whiteBackground]}
+      indicatorStyle={styles.indicator}
+    />
+  );
 
   return (
     <>
@@ -56,11 +88,11 @@ const TabSearchScreen: FC = () => {
         <TitleH1
           title={Labels.search.title}
           description={Labels.search.findAdaptedResponses}
+          showDescription={articles.length === 0}
           animated={false}
         />
-
         <View style={styles.searchBloc}>
-          <CommonText>{Labels.search.yourSearch}</CommonText>
+          <SecondaryText>{Labels.search.yourSearch}</SecondaryText>
           <TextInput
             style={styles.searchInput}
             onChangeText={setKeywords}
@@ -70,6 +102,7 @@ const TabSearchScreen: FC = () => {
 
           <View style={styles.center}>
             <Button
+              titleStyle={styles.fontButton}
               title={Labels.search.validButton}
               rounded={true}
               action={onSearchByKeywords}
@@ -77,8 +110,8 @@ const TabSearchScreen: FC = () => {
           </View>
         </View>
       </View>
-
       <TabView
+        renderTabBar={renderTabBar}
         navigationState={{ index, routes }}
         renderScene={SceneMap({
           articlesSearchResult: () => articlesRoute(articles),
@@ -86,7 +119,7 @@ const TabSearchScreen: FC = () => {
         })}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
-        style={{ backgroundColor: Colors.white }}
+        style={styles.whiteBackground}
       />
     </>
   );
@@ -97,6 +130,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginVertical: Margins.default,
+  },
+  fontButton: {
+    fontSize: Sizes.sm,
+  },
+  indicator: {
+    backgroundColor: Colors.primaryBlue,
   },
   mainContainer: {
     backgroundColor: Colors.white,
@@ -110,9 +149,17 @@ const styles = StyleSheet.create({
   searchInput: {
     borderColor: Colors.primaryBlue,
     borderWidth: 1,
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
     marginVertical: Margins.smaller,
     paddingHorizontal: Paddings.light,
     paddingVertical: Paddings.smallest,
+  },
+  tabBarLabel: {
+    color: Colors.primaryBlue,
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
+  },
+  whiteBackground: {
+    backgroundColor: Colors.white,
   },
 });
 

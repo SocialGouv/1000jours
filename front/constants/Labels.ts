@@ -534,7 +534,7 @@ export default {
       "Trouver des réponses à vos questions, vos problèmes, et sollicitez de l'aide auprès de professionnels adaptés autour de chez vous.",
     noArticleFound: "Aucun article ne correspond à votre recherche",
     title: "Que recherchez-vous ?",
-    validButton: "Valider",
+    validButton: "Rechercher",
     writeKeyword: "Veuillez saisir un mot-clé",
     writeKeywordPlaceholder: "Saisissez ici votre mot-clé",
     yourSearch: "Votre recherche :",
@@ -542,7 +542,7 @@ export default {
   tabs: {
     calendarTitle: "Calendrier",
     favoritesTitle: "Favoris",
-    helpTitle: "Aide",
+    helpTitle: "Rechercher",
     homeTitle: "Accueil",
     testEpds: "Post-partum",
   },

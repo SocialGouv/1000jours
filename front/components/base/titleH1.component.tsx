@@ -10,10 +10,17 @@ interface Props {
   title?: string;
   animated: boolean;
   description?: string | null;
+  showDescription?: boolean;
   style?: ViewStyle;
 }
 
-const TitleH1: React.FC<Props> = ({ title, animated, description, style }) =>
+const TitleH1: React.FC<Props> = ({
+  title,
+  animated,
+  description,
+  showDescription,
+  style,
+}) =>
   title ? (
     <Animatable.View
       animation={animated ? "slideInRight" : undefined}
@@ -23,7 +30,7 @@ const TitleH1: React.FC<Props> = ({ title, animated, description, style }) =>
       <SecondaryText style={styles.title} accessibilityRole="header">
         {title}
       </SecondaryText>
-      {description && (
+      {showDescription && description && (
         <SecondaryText style={styles.description}>{description}</SecondaryText>
       )}
     </Animatable.View>
