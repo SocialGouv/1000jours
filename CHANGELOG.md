@@ -1,3 +1,10 @@
+# [1.90.0](https://github.com/SocialGouv/1000jours/compare/v1.89.0...v1.90.0) (2022-01-20)
+
+
+### Features
+
+* **epds:** ajout de la source pour le widget ([#973](https://github.com/SocialGouv/1000jours/issues/973)) ([effc19d](https://github.com/SocialGouv/1000jours/commit/effc19d5dfec048c4df782487773bc184805689c))
+
 # [1.89.0](https://github.com/SocialGouv/1000jours/compare/v1.88.1...v1.89.0) (2022-01-07)
 
 
