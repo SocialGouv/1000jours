@@ -1,7 +1,7 @@
 import { createIconSetFromIcoMoon } from "@expo/vector-icons";
 import * as React from "react";
 
-import IcomoonConfig from "../../assets/icomoon/selection.json";
+import IcomoonConfig from "../../../assets/icomoon/selection.json";
 
 interface Props {
   name: string;
