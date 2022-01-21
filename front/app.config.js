@@ -4,7 +4,7 @@ export default {
     android: {
       adaptiveIcon: {
         backgroundColor: "#FFFFFF",
-        foregroundImage: "./assets/images/adaptive-icon.png",
+        foregroundImage: "./src/assets/images/adaptive-icon.png",
       },
       config: {
         googleMaps: {
@@ -34,7 +34,7 @@ export default {
         },
       ],
     },
-    icon: "./assets/images/icon.png",
+    icon: "./src/assets/images/icon.png",
     ios: {
       buildNumber: "1.1.37",
       bundleIdentifier: "com.fabrique.millejours",
@@ -63,7 +63,7 @@ export default {
     userInterfaceStyle: "light",
     version: "1.1.37",
     web: {
-      favicon: "./assets/images/favicon.png",
+      favicon: "./src/assets/images/favicon.png",
     },
   },
 };

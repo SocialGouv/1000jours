@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 
 import { Colors, FontWeight, Labels } from "../../constants";
 import type { TableData } from "../../types";
-import Caption from "../html/caption.component";
+import Caption from "./caption.component";
 import { SecondaryText } from "../StyledText";
 
 interface Props {

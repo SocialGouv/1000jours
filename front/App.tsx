@@ -12,15 +12,15 @@ import type { AppStateStatus } from "react-native";
 import { AppState } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import IcomoonFont from "./assets/icomoon/icomoon.ttf";
-import { initLocales } from "./config/calendar-config";
-import { Labels, StorageKeysConstants } from "./constants";
-import useCachedResources from "./hooks/useCachedResources";
-import useColorScheme from "./hooks/useColorScheme";
-import Navigation from "./navigation";
-import { StorageUtils, TrackerUtils } from "./utils";
-import { initMonitoring } from "./utils/logging.util";
-import { registerForPushNotificationsAsync } from "./utils/notification.util";
+import IcomoonFont from "./src/assets/icomoon/icomoon.ttf";
+import { initLocales } from "./src/config/calendar-config";
+import { Labels, StorageKeysConstants } from "./src/constants";
+import useCachedResources from "./src/hooks/useCachedResources";
+import useColorScheme from "./src/hooks/useColorScheme";
+import Navigation from "./src/navigation";
+import { StorageUtils, TrackerUtils } from "./src/utils";
+import { initMonitoring } from "./src/utils/logging.util";
+import { registerForPushNotificationsAsync } from "./src/utils/notification.util";
 
 Notifications.setNotificationHandler({
   // eslint-disable-next-line @typescript-eslint/require-await

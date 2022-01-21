@@ -33,7 +33,7 @@
       "./node_modules/(?!native-base)/"
     ],
     "setupFiles": [
-      "./jest/setup.js"
+      "./src/jest/setup.js"
     ],
     "collectCoverage": true
   },
