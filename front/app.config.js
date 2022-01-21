@@ -54,7 +54,7 @@ export default {
     slug: "1000jours",
     splash: {
       backgroundColor: "#ffffff",
-      image: "./assets/images/splash.png",
+      image: "./src/assets/images/splash.png",
       resizeMode: "contain",
     },
     updates: {
