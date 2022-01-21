@@ -21,7 +21,6 @@ import {
   Sizes,
 } from "../../constants";
 import {
-  MAJOR_VERSION_IOS,
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";

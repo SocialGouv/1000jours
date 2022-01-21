@@ -29,7 +29,6 @@ import SoleilSoirSelected from "../../../assets/images/epds/soleil-soir-selected
 import {
   Button,
   CloseButton,
-  CommonText,
   Icomoon,
   IcomoonIcons,
   SecondaryText,
@@ -140,7 +139,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const [sendContactInformation] = useMutation(
     DatabaseQueries.EPDS_CONTACT_INFORMATION,
     {
-      onCompleted: (data) => {
+      onCompleted: () => {
         setShowLoader(false);
       },
       onError: (err) => {
