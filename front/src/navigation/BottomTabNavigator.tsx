@@ -23,7 +23,7 @@ import type {
   TabEpdsParamList,
   TabHomeParamList,
   TabItem,
-} from "../../types";
+} from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 

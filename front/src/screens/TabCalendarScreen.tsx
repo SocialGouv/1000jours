@@ -43,7 +43,7 @@ import {
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../constants/platform.constants";
-import type { Event, TabCalendarParamList } from "../../types";
+import type { Event, TabCalendarParamList } from "../types";
 import { NotificationUtils, StorageUtils, TrackerUtils } from "../utils";
 import * as RootNavigation from "../utils/rootNavigation.util";
 import { stringIsNotNullNorEmpty } from "../utils/strings.util";

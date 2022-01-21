@@ -27,7 +27,7 @@ import {
 import Colors from "../constants/Colors";
 import { PARENTS_DOCUMENTS } from "../constants/databaseQueries.constants";
 import Labels from "../constants/Labels";
-import type { Step, TabHomeParamList, UserSituation } from "../../types";
+import type { Step, TabHomeParamList, UserSituation } from "../types";
 import { AroundMeUtils, StorageUtils, TrackerUtils } from "../utils";
 import {
   cancelScheduleNextStepNotification,

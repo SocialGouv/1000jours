@@ -2,7 +2,7 @@ import type { LatLng, Region } from "react-native-maps";
 
 import { AroundMeConstants, StorageKeysConstants } from "../constants";
 import type { CartoFilterStorage } from "../type";
-import type { Step } from "../../types";
+import type { Step } from "../types";
 import { getObjectValue, storeObjectValue } from "./storage.util";
 
 export const saveCurrentEtapeForCartoFilter = async (

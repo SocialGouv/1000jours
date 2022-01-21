@@ -17,7 +17,7 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
-import type { Event } from "../../../types";
+import type { Event } from "../../types";
 import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
 import { CommonText } from "../StyledText";
 import EventCard from "./eventCard.component";

@@ -6,7 +6,7 @@ import { ListItem } from "react-native-elements";
 
 import { Colors, Labels, Paddings, Sizes } from "../../constants";
 import SpecialChars from "../../constants/specialChars";
-import type { ArticleLink } from "../../../types";
+import type { ArticleLink } from "../../types";
 import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 import SubTitle from "./subTitle.component";

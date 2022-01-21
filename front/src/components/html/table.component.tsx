@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
 import { Colors, FontWeight, Labels } from "../../constants";
-import type { TableData } from "../../../types";
+import type { TableData } from "../../types";
 import Caption from "./caption.component";
 import { SecondaryText } from "../StyledText";
 

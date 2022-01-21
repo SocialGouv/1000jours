@@ -8,7 +8,7 @@ import type {
 import * as Notifications from "expo-notifications";
 
 import { EpdsConstants, Labels, StorageKeysConstants } from "../constants";
-import type { Event, Step } from "../../types";
+import type { Event, Step } from "../types";
 import * as StorageUtils from "./storage.util";
 
 export enum NotificationType {

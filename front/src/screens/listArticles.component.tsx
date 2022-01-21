@@ -37,7 +37,7 @@ import type {
   Step,
   TabHomeParamList,
   Thematique,
-} from "../../types";
+} from "../types";
 import { TrackerUtils } from "../utils";
 
 interface Props {

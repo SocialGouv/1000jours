@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 
 import { FontWeight, Margins, Sizes } from "../../constants";
 import Colors from "../../constants/Colors";
-import type { Thematique } from "../../../types";
+import type { Thematique } from "../../types";
 import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 

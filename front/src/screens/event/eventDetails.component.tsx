@@ -24,7 +24,7 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import { GET_EVENT_DETAILS } from "../../constants/databaseQueries.constants";
-import type { Event, TabCalendarParamList } from "../../../types";
+import type { Event, TabCalendarParamList } from "../../types";
 import { StorageUtils, TrackerUtils } from "../../utils";
 
 interface Props {

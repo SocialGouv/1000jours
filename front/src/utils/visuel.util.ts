@@ -1,4 +1,4 @@
-import type { Visuel } from "../../types";
+import type { Visuel } from "../types";
 
 export enum VisuelFormat {
   thumbnail = "thumbnail",

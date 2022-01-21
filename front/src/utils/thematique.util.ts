@@ -1,5 +1,5 @@
 import { IcomoonIcons } from "../components/base/icomoon.component";
-import type { Thematique } from "../../types";
+import type { Thematique } from "../types";
 
 // Thematiques en dur pour le moment, à voir si on rajoute un champ au niveau des thématiques pour définir une icone directement depuis le BO.
 export enum Thematiques {

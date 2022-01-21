@@ -27,7 +27,7 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../constants";
-import type { RootStackParamList } from "../../types";
+import type { RootStackParamList } from "../types";
 import { StorageUtils, TrackerUtils } from "../utils";
 import { CustomPagination } from "./customOnboardingPagination.component";
 

@@ -3,7 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import { FontWeight, Margins, Paddings, Sizes } from "../../constants";
-import type { Tag } from "../../../types";
+import type { Tag } from "../../types";
 import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 

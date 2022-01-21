@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Alert, StyleSheet } from "react-native";
 
 import { Labels, Paddings } from "../../constants";
-import type { ApolloHealthResponse } from "../../../types";
+import type { ApolloHealthResponse } from "../../types";
 import { reportError } from "../../utils/logging.util";
 import { Text, View } from "../Themed";
 

@@ -19,7 +19,7 @@ import {
   Sizes,
 } from "../constants";
 import { PARENTS_DOCUMENTS } from "../constants/databaseQueries.constants";
-import type { Document, Step, TabHomeParamList } from "../../types";
+import type { Document, Step, TabHomeParamList } from "../types";
 import { TrackerUtils } from "../utils";
 
 interface Props {

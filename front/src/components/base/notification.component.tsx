@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Modal, StyleSheet, TouchableOpacity } from "react-native";
 
 import { Colors, FontWeight, Paddings, Sizes } from "../../constants";
-import type { NotificationStyle } from "../../../types";
+import type { NotificationStyle } from "../../types";
 import { NotificationType } from "../../utils/notification.util";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { TrackingEvent } from "../../utils/tracker.util";

@@ -12,7 +12,7 @@ import {
   Paddings,
   Sizes,
 } from "../../constants";
-import type { Document } from "../../../types";
+import type { Document } from "../../types";
 import { reportError } from "../../utils/logging.util";
 import { Button, IcomoonIcons, View } from "..";
 import { CommonText, SecondaryText } from "../StyledText";

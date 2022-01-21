@@ -6,7 +6,7 @@ import { StyleSheet, View } from "react-native";
 import { Agenda as RNAgenda } from "react-native-calendars";
 
 import { Colors, FontWeight, Formats, Labels } from "../../constants";
-import type { Event } from "../../../types";
+import type { Event } from "../../types";
 import { CommonText } from "../StyledText";
 
 interface Props {

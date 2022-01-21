@@ -8,7 +8,7 @@ import { StyleSheet } from "react-native";
 import { Loader } from "../components";
 import { View } from "../components/Themed";
 import { StorageKeysConstants } from "../constants";
-import type { RootStackParamList } from "../../types";
+import type { RootStackParamList } from "../types";
 import { StorageUtils } from "../utils";
 
 interface LoadingScreenProps {

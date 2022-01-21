@@ -7,7 +7,7 @@ import {
   subWeeks,
 } from "date-fns";
 
-import type { UserInfos, UserSituation } from "../../types";
+import type { UserInfos, UserSituation } from "../types";
 
 const ETAPE_PROJET = 1;
 const ETAPE_CONCEPTION = 2;

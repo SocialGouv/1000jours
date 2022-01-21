@@ -28,7 +28,7 @@ import LoadingScreen from "../screens/LoadingScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import Onboarding from "../screens/Onboarding";
 import Profile from "../screens/Profile";
-import type { RootStackParamList } from "../../types";
+import type { RootStackParamList } from "../types";
 import { navigationRef } from "../utils/rootNavigation.util";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";

@@ -23,7 +23,7 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import type { CartoFilterStorage } from "../../type";
-import type { Event, Tag } from "../../../types";
+import type { Event, Tag } from "../../types";
 import { StorageUtils, TrackerUtils } from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { getThematiqueIcon } from "../../utils/thematique.util";

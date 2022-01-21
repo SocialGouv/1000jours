@@ -32,7 +32,7 @@ import {
   Sizes,
   StorageKeysConstants,
 } from "../constants";
-import type { RootStackParamList, UserContext, UserSituation } from "../../types";
+import type { RootStackParamList, UserContext, UserSituation } from "../types";
 import { StorageUtils, TrackerUtils } from "../utils";
 import { cancelScheduleNextStepNotification } from "../utils/notification.util";
 import { checkErrorOnProfile } from "../utils/step.util";

@@ -3,7 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Image } from "react-native-elements";
 
-import type { Visuel } from "../../../types";
+import type { Visuel } from "../../types";
 import { getVisuelFormat, VisuelFormat } from "../../utils/visuel.util";
 
 interface Props {

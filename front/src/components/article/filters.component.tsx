@@ -21,7 +21,7 @@ import {
   MAJOR_VERSION_IOS,
   PLATFORM_IS_ANDROID,
 } from "../../constants/platform.constants";
-import type { Article, ArticleFilter } from "../../../types";
+import type { Article, ArticleFilter } from "../../types";
 import Button from "../base/button.component";
 import CloseButton from "../base/closeButton.component";
 import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
