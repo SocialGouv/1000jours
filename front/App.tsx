@@ -12,7 +12,7 @@ import type { AppStateStatus } from "react-native";
 import { AppState } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import IcomoonFont from "./assets/icomoon/icomoon.ttf";
+import IcomoonFont from "./src/assets/icomoon/icomoon.ttf";
 import { initLocales } from "./src/config/calendar-config";
 import { Labels, StorageKeysConstants } from "./src/constants";
 import useCachedResources from "./src/hooks/useCachedResources";
