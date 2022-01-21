@@ -22,17 +22,14 @@ import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
 interface EpdsResultContactParagraphProps {
   paragraphTitle?: string;
   contacts: EpdsResultContactInformation[];
-  titleColor: string;
   isFocusOnFirstElement: boolean;
 }
 
 const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
   paragraphTitle,
   contacts,
-  titleColor,
   isFocusOnFirstElement,
 }) => {
-  const titleColorStyle = { color: titleColor };
   const titleStyle = [styles.contactName, { fontSize: Sizes.sm }];
   const titleRef = React.useRef<Text>(null);
 

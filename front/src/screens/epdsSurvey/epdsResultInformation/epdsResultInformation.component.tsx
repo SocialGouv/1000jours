@@ -57,7 +57,6 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
       <EpdsResultContactParagraph
         paragraphTitle={paragraph.title}
         contacts={paragraph.contacts}
-        titleColor={leftBorderColor}
         isFocusOnFirstElement={isFocusOnFirstElement}
       />
     ) : paragraph.urls ? (
