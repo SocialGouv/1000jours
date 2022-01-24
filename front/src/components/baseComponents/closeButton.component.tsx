@@ -1,7 +1,8 @@
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-import { Colors, Labels, Paddings, Sizes } from "../../constants";
+import { Labels } from "../../constants";
+import { Colors, Paddings, Sizes } from "../../styles";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 
 interface Props {

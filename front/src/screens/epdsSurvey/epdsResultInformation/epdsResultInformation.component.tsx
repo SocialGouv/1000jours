@@ -20,7 +20,7 @@ import {
   Margins,
   Paddings,
   Sizes,
-} from "../../../constants";
+} from "../../../styles";
 import type { EpdsResultInformationType } from "../../../type";
 import EpdsResultContactParagraph from "./epdsResultContactParagraph.component";
 import EpdsResultSimpleParagraph from "./epdsResultSimpleParagraph.component";

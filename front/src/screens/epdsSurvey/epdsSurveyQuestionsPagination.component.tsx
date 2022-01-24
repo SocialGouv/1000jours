@@ -3,7 +3,8 @@ import { StyleSheet, View } from "react-native";
 import { LinearProgress } from "react-native-elements";
 
 import { CommonText } from "../../components";
-import { Colors, FontWeight, Labels, Margins, Sizes } from "../../constants";
+import { Labels } from "../../constants";
+import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 
 interface EpdsSurveyQuestionsPaginationProps {
   currentQuestionIndex: number;

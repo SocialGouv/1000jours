@@ -2,9 +2,7 @@ import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import { Margins, Sizes } from "../../constants";
-import Colors from "../../constants/Colors";
-import { FontWeight } from "../../constants/Layout";
+import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 import { CommonText } from "../StyledText";
 
 interface Props {

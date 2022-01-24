@@ -22,15 +22,8 @@ import {
   View,
 } from "../components";
 import ArticleCard from "../components/article/articleCard.component";
-import {
-  Colors,
-  FetchPoliciesConstants,
-  FontWeight,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../constants";
+import { FetchPoliciesConstants, Labels } from "../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../styles";
 import type {
   Article,
   ArticleFilter,

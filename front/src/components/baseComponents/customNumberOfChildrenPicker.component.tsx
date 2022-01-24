@@ -4,8 +4,9 @@ import * as React from "react";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { Colors, FontWeight, Labels, Margins } from "../../constants";
+import { Labels } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
+import { Colors, FontWeight, Margins } from "../../styles";
 import { CommonText } from "..";
 
 interface Props {

@@ -4,7 +4,8 @@ import { StyleSheet, View } from "react-native";
 
 import LogoMinistere from "../../assets/images/Logo ministere.svg";
 import AppLogo from "../../assets/images/logo.svg";
-import { Labels, Paddings, Sizes } from "../../constants";
+import { Labels } from "../../constants";
+import { Paddings, Sizes } from "../../styles";
 
 const HeaderApp: FC = () => (
   <View>

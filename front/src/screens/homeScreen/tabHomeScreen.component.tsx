@@ -17,14 +17,9 @@ import {
   TitleH1,
   View,
 } from "../../components";
-import {
-  FetchPoliciesConstants,
-  Paddings,
-  Sizes,
-  StorageKeysConstants,
-} from "../../constants";
-import Colors from "../../constants/Colors";
+import { FetchPoliciesConstants, StorageKeysConstants } from "../../constants";
 import Labels from "../../constants/Labels";
+import { Colors, Paddings, Sizes } from "../../styles";
 import type { Step, TabHomeParamList, UserSituation } from "../../types";
 import { AroundMeUtils, StorageUtils, TrackerUtils } from "../../utils";
 import {

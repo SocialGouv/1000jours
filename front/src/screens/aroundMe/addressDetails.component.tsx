@@ -25,19 +25,12 @@ import {
   SecondaryText,
   View,
 } from "../../components";
-import {
-  AroundMeConstants,
-  Colors,
-  FontWeight,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../../constants";
+import { AroundMeConstants, Labels } from "../../constants";
 import {
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
+import { Colors, FontNames, FontWeight, getFontFamilyName, Margins, Paddings, Sizes } from "../../styles";
 import { LinkingUtils, StringUtils, TrackerUtils } from "../../utils";
 
 interface AddressDetailsProps {

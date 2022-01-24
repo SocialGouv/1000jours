@@ -9,21 +9,20 @@ import { HelperText } from "react-native-paper";
 
 import { CustomButton } from "../../components";
 import { View } from "../../components/Themed";
-import {
-  AroundMeConstants,
-  Colors,
-  FontNames,
-  FontWeight,
-  getFontFamilyName,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../../constants";
+import { AroundMeConstants, Labels } from "../../constants";
 import {
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
+import {
+  Colors,
+  FontNames,
+  FontWeight,
+  getFontFamilyName,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../../styles";
 import { AroundMeUtils, KeyboardUtils } from "../../utils";
 
 interface Props {

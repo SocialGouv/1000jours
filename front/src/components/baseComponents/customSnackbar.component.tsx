@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-import { Colors, FontWeight, Margins, Paddings } from "../../constants";
+import { Colors, FontWeight, Margins, Paddings } from "../../styles";
 import { SecondaryText } from "../StyledText";
 
 interface Props {

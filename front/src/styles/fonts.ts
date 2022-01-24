@@ -1,7 +1,7 @@
 import type { StyleProp, TextStyle } from "react-native";
 import { StyleSheet } from "react-native";
 
-import { FontWeight } from "./Layout";
+import { FontWeight } from "./layout";
 
 export enum FontNames {
   comfortaa = "comfortaa",

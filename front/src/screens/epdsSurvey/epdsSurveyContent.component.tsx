@@ -8,20 +8,12 @@ import type { SwiperFlatList } from "react-native-swiper-flatlist";
 import { TitleH1 } from "../../components";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
-import {
-  Colors,
-  EpdsConstants,
-  FontWeight,
-  Labels,
-  Margins,
-  Sizes,
-  StorageKeysConstants,
-} from "../../constants";
+import { EpdsConstants, Labels, StorageKeysConstants } from "../../constants";
+import { Colors, FontStyle, Margins, Sizes } from "../../styles";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, StorageUtils } from "../../utils";
 import EpdsLightResult from "./epdsLightResult.component";
 import EpdsLoadPreviousSurvey from "./epdsLoadPreviousSurvey.component";
-// import EpdsResult from "./epdsResult.component";
 import EpdsSurveyFooter from "./epdsSurveyFooter.component";
 import EpdsSurveyQuestionsList from "./epdsSurveyQuestionsList.component";
 import EpdsSurveyQuestionsPagination from "./epdsSurveyQuestionsPagination.component";
@@ -130,43 +122,9 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
     </View>
   );
 
-  return (
-    <View style={styles.mainContainer}>
-      {!showResult ? (
-        surveyCanBeStarted ? (
-          <>
-            <ScrollView
-              contentContainerStyle={{
-                flexGrow: 1,
-                justifyContent: "space-between",
-              }}
-            >
-              <TitleH1
-                style={styles.marginHorizontal}
-                title={Labels.epdsSurvey.title}
-                animated={false}
-              />
-              <CommonText style={[styles.marginHorizontal, styles.instruction]}>
-                {Labels.epdsSurvey.instruction}
-              </CommonText>
-              <View style={styles.surveyContainer}>
-                <EpdsSurveyQuestionsList
-                  epdsSurvey={questionsAndAnswers}
-                  swiperRef={swiperRef}
-                  swiperCurrentIndex={swiperCurrentIndex}
-                  saveCurrentSurvey={saveCurrentSurvey}
-                  updatePressedAnswer={updatePressedAnswer}
-                />
-              </View>
-            </ScrollView>
-            {progressBarAndButtons()}
-          </>
-        ) : (
-          <EpdsLoadPreviousSurvey
-            startSurveyOver={getEpdsLoadPreviousSurveyReponse}
-          />
-        )
-      ) : (
+  const renderView = () => {
+    if (showResult)
+      return (
         <EpdsLightResult
           result={score}
           epdsSurvey={questionsAndAnswers}
@@ -179,24 +137,51 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
             await restartSurvey();
           }}
         />
-        // <EpdsResult
-        //   result={score}
-        //   epdsSurvey={questionsAndAnswers}
-        //   startSurveyOver={async () => {
-        //     await restartSurvey();
-        //   }}
-        // />
-      )}
-    </View>
-  );
+      );
+    else
+      return surveyCanBeStarted ? (
+        <>
+          <ScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
+              justifyContent: "space-between",
+            }}
+          >
+            <TitleH1
+              style={styles.marginHorizontal}
+              title={Labels.epdsSurvey.title}
+              animated={false}
+            />
+            <CommonText style={[styles.marginHorizontal, styles.instruction]}>
+              {Labels.epdsSurvey.instruction}
+            </CommonText>
+            <View style={styles.surveyContainer}>
+              <EpdsSurveyQuestionsList
+                epdsSurvey={questionsAndAnswers}
+                swiperRef={swiperRef}
+                swiperCurrentIndex={swiperCurrentIndex}
+                saveCurrentSurvey={saveCurrentSurvey}
+                updatePressedAnswer={updatePressedAnswer}
+              />
+            </View>
+          </ScrollView>
+          {progressBarAndButtons()}
+        </>
+      ) : (
+        <EpdsLoadPreviousSurvey
+          startSurveyOver={getEpdsLoadPreviousSurveyReponse}
+        />
+      );
+  };
+
+  return <View style={styles.mainContainer}>{renderView()}</View>;
 };
 
 const styles = StyleSheet.create({
   instruction: {
     color: Colors.commonText,
     fontSize: Sizes.xs,
-    fontStyle: "italic",
-    fontWeight: FontWeight.medium,
+    fontStyle: FontStyle.italic,
     lineHeight: Sizes.mmd,
   },
   mainContainer: {

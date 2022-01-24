@@ -14,16 +14,12 @@ import { CommonText, SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
-  Colors,
   DatabaseQueries,
   EpdsConstants,
-  FontWeight,
   Labels,
-  Margins,
-  Paddings,
-  Sizes,
   StorageKeysConstants,
 } from "../../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, NotificationUtils, StorageUtils } from "../../utils";
 import EpdsResultContactMamanBlues from "./epdsResultContactMamanBlues.component";

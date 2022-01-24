@@ -1,4 +1,5 @@
 import { range } from "lodash";
+import type { FC } from "react";
 import * as React from "react";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
@@ -8,15 +9,8 @@ import Checkbox from "../../components/baseComponents/checkbox.component";
 import CustomButton from "../../components/baseComponents/customButton.component";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
-import {
-  Colors,
-  FontWeight,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-  StorageKeysConstants,
-} from "../../constants";
+import { Labels, StorageKeysConstants } from "../../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { EpdsGenderType } from "../../type";
 import { EpdsGenders } from "../../type";
 import { StorageUtils } from "../../utils";
@@ -25,9 +19,7 @@ interface EpdsGenderEntryProps {
   goToEpdsSurvey: () => void;
 }
 
-const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
-  goToEpdsSurvey,
-}) => {
+const EpdsGenderEntry: FC<EpdsGenderEntryProps> = ({ goToEpdsSurvey }) => {
   const gendersArray: EpdsGenderType[] = range(
     Object.keys(EpdsGenders).length
   ).map((index) => {

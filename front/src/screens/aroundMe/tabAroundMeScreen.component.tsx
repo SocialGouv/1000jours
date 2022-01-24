@@ -22,12 +22,7 @@ import FetchPoisCoords from "../../components/aroundMe/fetchPoisCoords.component
 import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
-  Colors,
-  FontWeight,
   Labels,
-  Margins,
-  Paddings,
-  Sizes,
   StorageKeysConstants,
 } from "../../constants";
 import {
@@ -35,6 +30,7 @@ import {
   PLATFORM_IS_IOS,
   SCREEN_HEIGHT,
 } from "../../constants/platform.constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
 import AddressDetails from "./addressDetails.component";
 import AroundMeFilter from "./aroundMeFilter.component";

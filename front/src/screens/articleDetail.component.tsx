@@ -18,7 +18,8 @@ import Thematics from "../components/article/thematics.component";
 import Title from "../components/article/title.component";
 import BackButton from "../components/baseComponents/backButton.component";
 import { View } from "../components/Themed";
-import { FetchPoliciesConstants, Paddings } from "../constants";
+import { FetchPoliciesConstants } from "../constants";
+import { Paddings } from "../styles";
 import type {
   Article,
   ArticleInShortItem,

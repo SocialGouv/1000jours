@@ -89,7 +89,7 @@ const FetchPoisCoords: React.FC<Props> = ({
       thematiques: savedFilters?.thematiques ? savedFilters.thematiques : [],
       types: savedFilters?.types ? savedFilters.types : [],
     };
-    getPoisByGpsCoords({
+    void getPoisByGpsCoords({
       variables,
     });
   };

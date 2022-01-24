@@ -6,19 +6,18 @@ import { ListItem } from "react-native-elements";
 import GestureRecognizer from "react-native-swipe-gestures";
 import BottomSheet from "reanimated-bottom-sheet";
 
+import { Labels, PlatformConstants } from "../../constants";
+import { emailContact } from "../../constants/email.constants";
+import { reviewTypeForm } from "../../constants/links.constants";
 import {
   Colors,
   FontNames,
   FontWeight,
   getFontFamilyName,
-  Labels,
   Margins,
   Paddings,
-  PlatformConstants,
   Sizes,
-} from "../../constants";
-import { emailContact } from "../../constants/email.constants";
-import { reviewTypeForm } from "../../constants/links.constants";
+} from "../../styles";
 import type { MenuItem, RootStackParamList } from "../../types";
 import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
 import { View } from "../Themed";

@@ -12,7 +12,7 @@ import {
   Margins,
   Paddings,
   Sizes,
-} from "../../constants";
+} from "../../styles";
 
 interface Props {
   title: string;

@@ -5,8 +5,9 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
 import { TimelineStepLibrary, View } from "../../components";
-import { Colors, FetchPoliciesConstants, Labels, Sizes } from "../../constants";
+import { FetchPoliciesConstants, Labels } from "../../constants";
 import { PARENTS_DOCUMENTS } from "../../constants/databaseQueries.constants";
+import { Colors, Sizes } from "../../styles";
 import type { Step, TabHomeParamList } from "../../types";
 
 interface Props {

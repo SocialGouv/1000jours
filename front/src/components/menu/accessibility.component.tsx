@@ -2,7 +2,7 @@ import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
-import { Paddings } from "../../constants";
+import { Paddings } from "../../styles";
 import ModalHtmlContent from "../baseComponents/modalHtmlContent.component";
 import A from "../html/a.component";
 import H1 from "../html/h1.component";

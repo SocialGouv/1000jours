@@ -1,14 +1,14 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
+import { Labels } from "../../constants";
 import {
   Colors,
   FontNames,
   FontWeight,
   getFontFamilyName,
-  Labels,
   Sizes,
-} from "../../constants";
+} from "../../styles";
 import CustomButton from "./customButton.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 

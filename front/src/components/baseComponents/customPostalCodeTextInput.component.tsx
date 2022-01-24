@@ -2,14 +2,8 @@ import * as React from "react";
 import { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 
-import {
-  AroundMeConstants,
-  Colors,
-  FontWeight,
-  Labels,
-  Margins,
-  Paddings,
-} from "../../constants";
+import { AroundMeConstants, Labels } from "../../constants";
+import { Colors, FontWeight, Margins, Paddings } from "../../styles";
 import { CommonText } from "..";
 
 interface Props {

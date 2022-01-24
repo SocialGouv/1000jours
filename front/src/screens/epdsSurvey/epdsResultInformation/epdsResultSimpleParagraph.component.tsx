@@ -4,17 +4,17 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { CustomButton } from "../../../components";
 import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
+import { Labels } from "../../../constants";
+import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
 import {
   Colors,
   FontNames,
   FontWeight,
   getFontFamilyName,
-  Labels,
   Margins,
   Paddings,
   Sizes,
-} from "../../../constants";
-import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
+} from "../../../styles";
 import type { EpdsResultSimpleInformation } from "../../../type";
 import { LinkingUtils } from "../../../utils";
 import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";

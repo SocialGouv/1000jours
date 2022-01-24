@@ -20,10 +20,10 @@ import {
   FetchPoliciesConstants,
   Formats,
   Labels,
-  Paddings,
   StorageKeysConstants,
 } from "../../constants";
 import { GET_EVENT_DETAILS } from "../../constants/databaseQueries.constants";
+import { Paddings } from "../../styles";
 import type { Event, TabCalendarParamList } from "../../types";
 import { StorageUtils, TrackerUtils } from "../../utils";
 
