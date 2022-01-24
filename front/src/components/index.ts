@@ -22,6 +22,7 @@ import NotificationModal from "./baseComponents/notificationModal.component";
 import Tags from "./baseComponents/tags.component";
 import TitleH1 from "./baseComponents/titleH1.component";
 import TitleH2 from "./baseComponents/titleH2.component";
+import Events from "./calendar/events.component";
 import ConditionsOfUse from "./menu/conditionsOfUse.component";
 import LegalNotice from "./menu/legalNotice.component";
 import Menu from "./menu/menu.component";
@@ -42,6 +43,7 @@ export {
   Datepicker,
   DidYouKnow,
   ErrorMessage,
+  Events,
   Filters,
   HeaderApp,
   Icomoon,
