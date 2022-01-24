@@ -7,14 +7,13 @@ import _ from "lodash";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
-// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useEffect } from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 
 import HelpIcon from "../assets/images/help.png";
 import {
-  CustomButton,
   CommonText,
+  CustomButton,
   ErrorMessage,
   Icomoon,
   IcomoonIcons,

@@ -5,15 +5,17 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import type { RootStackParamList } from "../types";
 
-const NotFoundScreen: FC = ({
-  navigation,
-}: StackScreenProps<RootStackParamList, "notFound">) => {
+interface Props {
+  stackScreenProps: StackScreenProps<RootStackParamList, "notFound">;
+}
+
+const NotFoundScreen: FC<Props> = ({ stackScreenProps }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>This screen doesn't exist.</Text>
       <TouchableOpacity
         onPress={() => {
-          navigation.replace("root");
+          stackScreenProps.navigation.replace("root");
         }}
         style={styles.link}
       >
