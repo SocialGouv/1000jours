@@ -15,28 +15,40 @@ import { CommonText, SecondaryText } from "../StyledText";
 interface Props {
   article: Article;
   step?: Step;
+  isFromSearchScreen?: boolean;
+  setStepAndArticleId?: (articleId: number, step: Step | undefined) => void;
 }
 
-const ArticleCard: FC<Props> = ({ article, step }) => {
-  // Permet de forcer le composant ExpoFastImage à être actualiser
+const ArticleCard: FC<Props> = ({
+  article,
+  step,
+  isFromSearchScreen,
+  setStepAndArticleId,
+}) => {
+  // Permet de forcer le composant ExpoFastImage à être actualisé
   const [showImage, setShowImage] = React.useState(false);
   React.useEffect(() => {
-    setShowImage(false);
+    let mounted = true;
     setTimeout(() => {
-      if (article.visuel?.id) {
-        setShowImage(true);
-      }
+      if (mounted) setShowImage(Boolean(article.visuel?.id));
     }, 100);
+    return () => {
+      mounted = false;
+    };
   }, [article]);
 
   return (
     <ListItem
       bottomDivider
       onPress={() => {
-        RootNavigation.navigate("article", {
-          id: article.id,
-          step: step,
-        });
+        if (isFromSearchScreen && setStepAndArticleId)
+          setStepAndArticleId(article.id, step);
+        else {
+          RootNavigation.navigate("article", {
+            id: article.id,
+            step: step,
+          });
+        }
       }}
       pad={0}
       containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}

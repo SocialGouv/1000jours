@@ -78,7 +78,10 @@ export default {
     postalCodeInvalid: "Le code postal que vous avez saisi n'est pas valide",
     postalCodeNotFound: "Le code postal que vous recherchez n'a pas été trouvé",
     relaunchSearch: "Relancer la recherche",
-    searchButton: "Rechercher",
+    searchButton: "Valider",
+    searchGeolocInstruction:
+      "Afin de vous apporter une aide personnalisée, veuillez renseigner votre localisation :",
+    searchPostalCodeInstruction: "Ou renseignez votre code postal :",
     submitNewFilter: {
       aboutYou: {
         numberOfChildren: "Nombre d'enfants",
@@ -101,6 +104,7 @@ export default {
       title: "Proposer un lieu",
     },
     title: "Autour de moi",
+    useMyGeolocation: "Utiliser ma géolocalisation",
   },
   article: {
     didYouKnowTitle: "Le saviez-vous ?",
@@ -523,10 +527,23 @@ export default {
     title: "À quelle étape êtes-vous ?",
     update: "Modifier ma situation",
   },
+  search: {
+    aroundMe: "Autour de moi",
+    articles: "Articles",
+    findAdaptedResponses:
+      "Trouver des réponses à vos questions, vos problèmes, et sollicitez de l'aide auprès de professionnels adaptés autour de chez vous.",
+    noArticleFound: "Aucun article ne correspond à votre recherche",
+    title: "Que recherchez-vous ?",
+    validButton: "Rechercher",
+    writeKeyword:
+      "Veuillez saisir votre mot-clé dans la barre de recherche pour afficher les résultats",
+    writeKeywordPlaceholder: "Saisissez ici votre mot-clé",
+    yourSearch: "Votre recherche :",
+  },
   tabs: {
-    aroundMeTitle: "Autour de moi",
     calendarTitle: "Calendrier",
     favoritesTitle: "Favoris",
+    helpTitle: "Rechercher",
     homeTitle: "Accueil",
     testEpds: "Post-partum",
   },

@@ -11,18 +11,19 @@ import {
   EventDetails,
   ListArticles,
   ListParentsDocuments,
-  TabAroundMeScreen,
   TabCalendarScreen,
   TabHomeScreen,
+  TabSearchScreen,
 } from "../screens";
+import AroundMeMap from "../screens/search/aroundMeMap.component";
 import { Colors } from "../styles";
 import type {
   BottomTabParamList,
-  TabAroundMeParamList,
   TabCalendarParamList,
   TabEpdsParamList,
   TabHomeParamList,
   TabItem,
+  TabSearchParamList,
 } from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -71,7 +72,7 @@ const BottomTabNavigator: FC = () => {
       title: Labels.tabs.testEpds,
     },
     {
-      component: TabAroundMeNavigator,
+      component: TabSearchNavigator,
       getIcon: (tintColor, focused) => (
         <Icomoon
           name={
@@ -81,8 +82,8 @@ const BottomTabNavigator: FC = () => {
           size={iconSize}
         />
       ),
-      name: "tabAroundMe",
-      title: Labels.tabs.aroundMeTitle,
+      name: "tabSearch",
+      title: Labels.tabs.helpTitle,
     },
   ];
 
@@ -157,15 +158,16 @@ const TabEpdsNavigator: FC = () => (
   </TabEpdsStack.Navigator>
 );
 
-const TabAroundMeStack = createStackNavigator<TabAroundMeParamList>();
-const TabAroundMeNavigator: FC = () => (
-  <TabAroundMeStack.Navigator screenOptions={{ headerShown: false }}>
-    <TabAroundMeStack.Screen
-      name="tabAroundMeScreen"
-      component={TabAroundMeScreen}
+const TabSearchStack = createStackNavigator<TabSearchParamList>();
+const TabSearchNavigator: FC = () => (
+  <TabSearchStack.Navigator screenOptions={{ headerShown: false }}>
+    <TabSearchStack.Screen
+      name="tabSearchScreen"
+      component={TabSearchScreen}
       options={{}}
     />
-  </TabAroundMeStack.Navigator>
+    <TabSearchStack.Screen name="aroundMeMap" component={AroundMeMap} />
+  </TabSearchStack.Navigator>
 );
 
 export default BottomTabNavigator;

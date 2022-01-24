@@ -1,3 +1,4 @@
+import type { PoiType } from "@socialgouv/nos1000jours-lib";
 import type { FC, ReactNode } from "react";
 
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
@@ -15,7 +16,7 @@ export type BottomTabParamList = {
   tabHome: undefined;
   tabCalendar: undefined;
   tabFavorites: undefined;
-  tabAroundMe: undefined;
+  tabSearch: undefined;
 };
 
 export type TabHomeParamList = {
@@ -42,6 +43,11 @@ export type TabFavoritesParamList = {
 
 export type TabAroundMeParamList = {
   tabAroundMeScreen: undefined;
+};
+
+export type TabSearchParamList = {
+  tabSearchScreen: undefined;
+  aroundMeMap: { updatePoiList: () => void };
 };
 
 export type UserSituation = {
@@ -135,6 +141,8 @@ export type Article = {
   visuel?: Visuel;
   thematiques: Thematique[];
   hide?: boolean;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  cartographie_pois_types?: PoiType[];
 };
 
 export type ArticleInShortItem = {

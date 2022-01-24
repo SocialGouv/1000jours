@@ -9,6 +9,7 @@ import LoadingScreen from "./loadingScreen.component";
 import NotFoundScreen from "./notFoundScreen.component";
 import Onboarding from "./onboarding.component";
 import Profile from "./profile.component";
+import TabSearchScreen from "./search/tabSearchScreen.component";
 import TabCalendarScreen from "./tabCalendarScreen.component";
 import TabFavoritesScreen from "./tabFavoritesScreen.component";
 
@@ -26,4 +27,5 @@ export {
   TabCalendarScreen,
   TabFavoritesScreen,
   TabHomeScreen,
+  TabSearchScreen,
 };
