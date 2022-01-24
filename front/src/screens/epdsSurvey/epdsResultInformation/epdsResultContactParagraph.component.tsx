@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, Text } from "react-native";
 
-import Button from "../../../components/base/button.component";
+import CustomButton from "../../../components/baseComponents/customButton.component";
 import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
 import {
@@ -22,17 +22,14 @@ import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
 interface EpdsResultContactParagraphProps {
   paragraphTitle?: string;
   contacts: EpdsResultContactInformation[];
-  titleColor: string;
   isFocusOnFirstElement: boolean;
 }
 
 const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
   paragraphTitle,
   contacts,
-  titleColor,
   isFocusOnFirstElement,
 }) => {
-  const titleColorStyle = { color: titleColor };
   const titleStyle = [styles.contactName, { fontSize: Sizes.sm }];
   const titleRef = React.useRef<Text>(null);
 
@@ -74,7 +71,7 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
           >
             {contact.phoneNumber}
           </SecondaryText>
-          <Button
+          <CustomButton
             buttonStyle={styles.callButton}
             title={Labels.epdsSurvey.resultats.call}
             titleStyle={styles.fontButton}

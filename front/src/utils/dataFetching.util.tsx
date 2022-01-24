@@ -2,8 +2,8 @@ import type { DocumentNode } from "@apollo/client";
 import { useLazyQuery, useQuery } from "@apollo/client";
 import * as React from "react";
 
-import ErrorMessage from "../components/base/errorMessage.component";
-import Loader from "../components/base/loader.component";
+import ErrorMessage from "../components/baseComponents/errorMessage.component";
+import Loader from "../components/baseComponents/loader.component";
 import { FetchPoliciesConstants } from "../constants";
 import type { DataFetchingType } from "../type";
 

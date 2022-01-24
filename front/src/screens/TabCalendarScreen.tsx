@@ -13,7 +13,7 @@ import { Image, StyleSheet, TouchableOpacity } from "react-native";
 
 import HelpIcon from "../assets/images/help.png";
 import {
-  Button,
+  CustomButton,
   CommonText,
   ErrorMessage,
   Icomoon,
@@ -21,7 +21,7 @@ import {
   Loader,
   TitleH1,
 } from "../components";
-import ModalHelp from "../components/base/modalHelp.component";
+import ModalHelp from "../components/baseComponents/modalHelp.component";
 import Events from "../components/calendar/events.component";
 import { SecondaryTextItalic } from "../components/StyledText";
 import { View } from "../components/Themed";
@@ -264,7 +264,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
             <>
               <View style={styles.flexStart}>
                 <View style={{ flex: 0 }}>
-                  <Button
+                  <CustomButton
                     title={Labels.calendar.synchronise}
                     icon={
                       <Icomoon
@@ -309,7 +309,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
               <CommonText style={styles.noChildBirthday}>
                 {Labels.calendar.noChildBirthday}
               </CommonText>
-              <Button
+              <CustomButton
                 title={Labels.profile.update}
                 rounded={true}
                 action={() => {

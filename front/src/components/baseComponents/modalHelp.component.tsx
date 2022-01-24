@@ -3,11 +3,9 @@ import { useEffect, useState } from "react";
 import { Modal, StyleSheet } from "react-native";
 
 import { Colors, FontWeight, Labels, Paddings, Sizes } from "../../constants";
-import { CloseButton, IcomoonIcons } from "..";
+import { CloseButton, CustomButton, Icomoon, IcomoonIcons } from "..";
 import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";
-import Button from "./button.component";
-import Icomoon from "./icomoon.component";
 
 interface Props {
   icon: string;
@@ -64,7 +62,7 @@ const ModalHelp: React.FC<Props> = ({ icon, title, body, onDismiss }) => {
                 {title}
               </SecondaryText>
               <SecondaryText style={styles.body}>{body}</SecondaryText>
-              <Button
+              <CustomButton
                 title={Labels.buttons.close}
                 rounded={false}
                 action={action}

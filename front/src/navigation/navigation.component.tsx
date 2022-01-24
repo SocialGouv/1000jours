@@ -1,11 +1,8 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-} from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import type * as Notifications from "expo-notifications";
 import type { FC } from "react";
+import { useState } from "react";
 import * as React from "react";
 import type { ColorSchemeName } from "react-native";
 import { StyleSheet, TouchableOpacity } from "react-native";
@@ -14,21 +11,19 @@ import LogoMinistere from "../assets/images/Logo ministere.svg";
 import AppLogo from "../assets/images/logo.svg";
 import {
   Backdrop,
+  ConditionsOfUse,
   Icomoon,
   IcomoonIcons,
+  LegalNotice,
   Menu,
+  NotificationModal,
   Text,
   View,
 } from "../components";
-import Notification from "../components/base/notification.component";
-import ConditionsOfUse from "../components/menu/conditionsOfUse.component";
-import LegalNotice from "../components/menu/legalNotice.component";
 import { Colors, Labels, Paddings, Sizes } from "../constants";
-import LoadingScreen from "../screens/LoadingScreen";
-import NotFoundScreen from "../screens/NotFoundScreen";
-import Onboarding from "../screens/Onboarding";
-import Profile from "../screens/Profile";
+import { LoadingScreen, NotFoundScreen, Onboarding, Profile } from "../screens";
 import type { RootStackParamList } from "../types";
+import { getAppTheme } from "../utils";
 import { navigationRef } from "../utils/rootNavigation.util";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
@@ -46,13 +41,13 @@ const Navigation: FC<NavigationProps> = ({
   notification,
   setNotification,
 }) => {
-  const [showMenu, setShowMenu] = React.useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   return (
     <NavigationContainer
       ref={navigationRef}
       linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      theme={getAppTheme(colorScheme)}
     >
       <RootNavigator onPressMenu={setShowMenu} />
       <Backdrop
@@ -67,7 +62,7 @@ const Navigation: FC<NavigationProps> = ({
         navigation={navigationRef}
       />
       {notification ? (
-        <Notification
+        <NotificationModal
           notification={notification}
           onDismiss={() => {
             setNotification(null);

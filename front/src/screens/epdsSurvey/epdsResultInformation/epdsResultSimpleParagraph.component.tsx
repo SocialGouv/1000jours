@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-import { Button } from "../../../components";
+import { CustomButton } from "../../../components";
 import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
 import {
@@ -64,7 +64,7 @@ const EpdsResultSimpleParagraph: React.FC<EpdsResultSimpleParagraphProps> = ({
       )}
       {paragraph.title === "Contacter" && (
         <View style={styles.validateButton}>
-          <Button
+          <CustomButton
             title={Labels.buttons.contact}
             titleStyle={styles.fontButton}
             rounded={true}

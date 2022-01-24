@@ -1,7 +1,8 @@
+import type { FC } from "react";
 import * as React from "react";
 import type { StyleProp, TextStyle, ViewStyle } from "react-native";
 import { StyleSheet } from "react-native";
-import { Button as RNEButton } from "react-native-elements";
+import { Button } from "react-native-elements";
 import type { IconNode } from "react-native-elements/dist/icons/Icon";
 
 import {
@@ -31,7 +32,7 @@ const setDisabledStyle = (
 ): StyleProp<ViewStyle> =>
   disabledStyle ? disabledStyle : styles.disabledButton;
 
-const Button: React.FC<Props> = ({
+const CustomButton: FC<Props> = ({
   title,
   icon,
   rounded,
@@ -43,7 +44,7 @@ const Button: React.FC<Props> = ({
   onPressIn,
   accessibilityLabel,
 }) => (
-  <RNEButton
+  <Button
     disabled={disabled}
     disabledStyle={disabled ? setDisabledStyle(disabledStyle) : null}
     icon={icon}
@@ -93,4 +94,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Button;
+export default CustomButton;

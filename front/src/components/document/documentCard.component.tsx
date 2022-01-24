@@ -13,11 +13,11 @@ import {
   Sizes,
 } from "../../constants";
 import type { Document } from "../../types";
+import { TrackerUtils } from "../../utils";
 import { reportError } from "../../utils/logging.util";
-import { Button, IcomoonIcons, View } from "..";
+import { CustomButton, IcomoonIcons, View } from "..";
 import { CommonText, SecondaryText } from "../StyledText";
 import StepIconLibrary from "../timeline/stepIconLibrary.component";
-import { TrackerUtils } from "../../utils";
 
 interface Props {
   document: Document;
@@ -56,7 +56,7 @@ const DocumentCard: FC<Props> = ({ document }) => {
           </SecondaryText>
         </ListItem.Subtitle>
         <View style={styles.contentButton}>
-          <Button
+          <CustomButton
             title={Labels.timeline.library.download}
             titleStyle={styles.fontButton}
             rounded={true}

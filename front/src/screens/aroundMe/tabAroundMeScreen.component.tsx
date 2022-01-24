@@ -11,7 +11,7 @@ import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import BulbIcon from "../../assets/images/carto/bulb.svg";
 import {
-  Button,
+  CustomButton,
   CustomSnackbar,
   Icomoon,
   IcomoonIcons,
@@ -328,7 +328,7 @@ const TabAroundMeScreen: React.FC = () => {
           )}
         </MapView>
         <View style={styles.filterView}>
-          <Button
+          <CustomButton
             buttonStyle={styles.relaunchSearchButton}
             title={Labels.listArticles.filters}
             titleStyle={styles.relaunchSearchButtonText}
@@ -344,7 +344,7 @@ const TabAroundMeScreen: React.FC = () => {
               setShowFilter(true);
             }}
           />
-          <Button
+          <CustomButton
             buttonStyle={styles.submitNewFilterButton}
             title=""
             rounded={true}
@@ -356,7 +356,7 @@ const TabAroundMeScreen: React.FC = () => {
         </View>
         {showRelaunchResearchButton && (
           <View style={styles.relaunchSearchView}>
-            <Button
+            <CustomButton
               buttonStyle={styles.relaunchSearchButton}
               title={Labels.aroundMe.relaunchSearch}
               titleStyle={styles.relaunchSearchButtonText}

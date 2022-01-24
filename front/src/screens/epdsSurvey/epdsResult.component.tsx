@@ -9,7 +9,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
 import IconeResultatMoyen from "../../assets/images/icone_resultats_moyen.svg";
 import IconeResultatPasBien from "../../assets/images/icone_resultats_pasbien.svg";
-import { Button, TitleH1 } from "../../components";
+import { CustomButton, TitleH1 } from "../../components";
 import { CommonText, SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
@@ -44,7 +44,11 @@ const clientNoCache = new ApolloClient({
   uri: `${process.env.API_URL}/graphql?nocache`,
 });
 
-const EpdsResult: React.FC<Props> = ({ result, epdsSurvey, startSurveyOver }) => {
+const EpdsResult: React.FC<Props> = ({
+  result,
+  epdsSurvey,
+  startSurveyOver,
+}) => {
   const [addReponseQuery] = useMutation(DatabaseQueries.EPDS_ADD_RESPONSE, {
     client: clientNoCache,
     onError: (err) => {
@@ -67,11 +71,14 @@ const EpdsResult: React.FC<Props> = ({ result, epdsSurvey, startSurveyOver }) =>
         StorageKeysConstants.epdsGenderKey
       );
 
-      const answersScores = epdsSurvey.answers.reduce((answersScores, answer, answerIndex) => {
-        answersScores[`reponse_${answerIndex}`] = answer.score;
+      const answersScores = epdsSurvey.answers.reduce(
+        (answersScores, answer, answerIndex) => {
+          answersScores[`reponse_${answerIndex}`] = answer.score;
 
-        return answersScores;
-      }, {});
+          return answersScores;
+        },
+        {}
+      );
 
       await addReponseQuery({
         variables: {
@@ -128,7 +135,7 @@ const EpdsResult: React.FC<Props> = ({ result, epdsSurvey, startSurveyOver }) =>
             {resultData.resultLabels.contacterNotrePartenaire}
           </SecondaryText>
           <View style={styles.validateButton}>
-            <Button
+            <CustomButton
               title={Labels.buttons.contact}
               titleStyle={styles.fontButton}
               rounded={true}
@@ -158,7 +165,7 @@ const EpdsResult: React.FC<Props> = ({ result, epdsSurvey, startSurveyOver }) =>
         informationList={resultData.resultLabels.professionalsList}
       />
       <View style={styles.validateButton}>
-        <Button
+        <CustomButton
           title={Labels.epdsSurvey.restartSurvey}
           titleStyle={styles.fontButton}
           rounded={true}

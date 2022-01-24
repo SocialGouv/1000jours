@@ -11,7 +11,7 @@ import FirstSlideImage from "../assets/images/Onboarding_1.svg";
 import SecondSlideImage from "../assets/images/Onboarding_2.svg";
 import ThirdSlideImage from "../assets/images/Onboarding_3.svg";
 import {
-  Button,
+  CustomButton,
   CommonText,
   HeaderApp,
   Icomoon,
@@ -145,7 +145,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
       <View style={[styles.footer, styles.justifyContentCenter]}>
         {swiperCurrentIndex === slideViews.length - 1 ? (
           <View style={[styles.justifyContentCenter]}>
-            <Button
+            <CustomButton
               title={Labels.buttons.start}
               rounded={true}
               disabled={false}
@@ -155,7 +155,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
         ) : (
           <View style={[styles.buttonsContainer, styles.justifyContentCenter]}>
             <View style={[styles.buttonContainer]}>
-              <Button
+              <CustomButton
                 title={Labels.buttons.pass}
                 rounded={false}
                 disabled={false}
@@ -170,7 +170,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
               />
             </View>
             <View style={styles.buttonContainer}>
-              <Button
+              <CustomButton
                 title={Labels.buttons.next}
                 rounded={false}
                 disabled={false}

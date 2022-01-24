@@ -1,23 +1,27 @@
-import ConditionsOfUse from "../components/menu/conditionsOfUse.component";
-import LegalNotice from "../components/menu/legalNotice.component";
 import TabAroundMeScreen from "./aroundMe/tabAroundMeScreen.component";
 import ArticleDetail from "./ArticleDetail";
 import EpdsSurveyScreen from "./epdsSurvey/epdsSurveyScreen.component";
 import EventDetails from "./event/eventDetails.component";
 import ListArticles from "./listArticles.component";
 import ListParentsDocuments from "./listParentsDocuments.component";
+import LoadingScreen from "./LoadingScreen";
+import NotFoundScreen from "./NotFoundScreen";
+import Onboarding from "./onboarding.component";
+import Profile from "./profile.component";
 import TabCalendarScreen from "./TabCalendarScreen";
 import TabFavoritesScreen from "./TabFavoritesScreen";
 import TabHomeScreen from "./TabHomeScreen";
 
 export {
   ArticleDetail,
-  ConditionsOfUse,
   EpdsSurveyScreen,
   EventDetails,
-  LegalNotice,
   ListArticles,
   ListParentsDocuments,
+  LoadingScreen,
+  NotFoundScreen,
+  Onboarding,
+  Profile,
   TabAroundMeScreen,
   TabCalendarScreen,
   TabFavoritesScreen,

@@ -10,9 +10,9 @@ import { ScrollView } from "react-native-gesture-handler";
 import { HelperText } from "react-native-paper";
 
 import {
-  Button,
   CloseButton,
   CommonText,
+  CustomButton,
   Datepicker,
   Icomoon,
   IcomoonIcons,
@@ -307,7 +307,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
 
             <View style={styles.buttonsContainer}>
               <View style={styles.buttonContainer}>
-                <Button
+                <CustomButton
                   title={Labels.buttons.cancel}
                   titleStyle={styles.buttonTitleStyle}
                   rounded={false}
@@ -325,7 +325,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                 />
               </View>
               <View style={styles.buttonContainer}>
-                <Button
+                <CustomButton
                   title={Labels.buttons.validate}
                   titleStyle={styles.buttonTitleStyle}
                   rounded={true}

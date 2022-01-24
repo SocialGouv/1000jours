@@ -9,7 +9,7 @@ import {
   Labels,
   Sizes,
 } from "../../constants";
-import Button from "./button.component";
+import CustomButton from "./customButton.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 
 interface Props {
@@ -23,7 +23,7 @@ const BackButton: React.FC<Props> = ({
   color = Colors.secondaryGreen,
 }) => {
   return (
-    <Button
+    <CustomButton
       title={Labels.buttons.back}
       icon={
         <Icomoon

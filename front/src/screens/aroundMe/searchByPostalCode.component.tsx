@@ -7,7 +7,7 @@ import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import type { Region } from "react-native-maps";
 import { HelperText } from "react-native-paper";
 
-import { Button } from "../../components";
+import { CustomButton } from "../../components";
 import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
@@ -21,7 +21,6 @@ import {
   Sizes,
 } from "../../constants";
 import {
-  MAJOR_VERSION_IOS,
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
@@ -172,7 +171,7 @@ const SearchByPostalCode: React.FC<Props> = ({
           keyboardType="number-pad"
           maxLength={AroundMeConstants.POSTAL_CODE_MAX_LENGTH}
         />
-        <Button
+        <CustomButton
           buttonStyle={styles.searchByPostalCodeButton}
           title={Labels.aroundMe.searchButton}
           titleStyle={styles.fontButton}

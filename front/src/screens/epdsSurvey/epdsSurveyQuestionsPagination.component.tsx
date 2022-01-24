@@ -10,39 +10,40 @@ interface EpdsSurveyQuestionsPaginationProps {
   totalNumberOfQuestions: number;
 }
 
-const EpdsSurveyQuestionsPagination: React.FC<EpdsSurveyQuestionsPaginationProps> =
-  ({ currentQuestionIndex, totalNumberOfQuestions }) => {
-    const progressValue = currentQuestionIndex / totalNumberOfQuestions;
+const EpdsSurveyQuestionsPagination: React.FC<
+  EpdsSurveyQuestionsPaginationProps
+> = ({ currentQuestionIndex, totalNumberOfQuestions }) => {
+  const progressValue = currentQuestionIndex / totalNumberOfQuestions;
 
-    return (
-      <View
-        style={styles.mainContainer}
-        importantForAccessibility="no-hide-descendants"
-        accessibilityElementsHidden={true}
+  return (
+    <View
+      style={styles.mainContainer}
+      importantForAccessibility="no-hide-descendants"
+      accessibilityElementsHidden={true}
+    >
+      <CommonText
+        style={{
+          fontWeight: "bold",
+          marginBottom: Margins.light,
+        }}
       >
-        <CommonText
-          style={{
-            fontWeight: "bold",
-            marginBottom: Margins.light,
-          }}
-        >
-          {Labels.accessibility.epds.question} {currentQuestionIndex}{" "}
-          {Labels.accessibility.epds.onTotalQuestion} {totalNumberOfQuestions}
-        </CommonText>
-        <LinearProgress
-          color={Colors.primaryBlueDark}
-          value={progressValue}
-          variant="determinate"
-          trackColor={Colors.primaryBlueLight}
-          style={styles.progressBar}
-        />
-        <View style={styles.textView}>
-          <CommonText>1</CommonText>
-          <CommonText>{totalNumberOfQuestions}</CommonText>
-        </View>
+        {Labels.accessibility.epds.question} {currentQuestionIndex}{" "}
+        {Labels.accessibility.epds.onTotalQuestion} {totalNumberOfQuestions}
+      </CommonText>
+      <LinearProgress
+        color={Colors.primaryBlueDark}
+        value={progressValue}
+        variant="determinate"
+        trackColor={Colors.primaryBlueLight}
+        style={styles.progressBar}
+      />
+      <View style={styles.textView}>
+        <CommonText>1</CommonText>
+        <CommonText>{totalNumberOfQuestions}</CommonText>
       </View>
-    );
-  };
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   hideNumber: {

@@ -16,7 +16,7 @@ import SubTitle from "../components/article/subTitle.component";
 import TextHtml from "../components/article/textHtml.component";
 import Thematics from "../components/article/thematics.component";
 import Title from "../components/article/title.component";
-import BackButton from "../components/base/backButton.component";
+import BackButton from "../components/baseComponents/backButton.component";
 import { View } from "../components/Themed";
 import { FetchPoliciesConstants, Paddings } from "../constants";
 import type {

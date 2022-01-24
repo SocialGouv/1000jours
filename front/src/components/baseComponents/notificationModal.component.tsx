@@ -1,5 +1,6 @@
 import type { Notification as ExpoNotificaiton } from "expo-notifications";
 import { useMatomo } from "matomo-tracker-react-native";
+import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { Modal, StyleSheet, TouchableOpacity } from "react-native";
@@ -11,7 +12,7 @@ import * as RootNavigation from "../../utils/rootNavigation.util";
 import { TrackingEvent } from "../../utils/tracker.util";
 import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";
-import Button from "./button.component";
+import CustomButton from "./customButton.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 
 interface Props {
@@ -33,7 +34,7 @@ notifStyles.set(NotificationType.nextStep, {
   icon: IcomoonIcons.informations,
 });
 
-const Notification: React.FC<Props> = ({ notification, onDismiss }) => {
+const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
   const { trackScreenView } = useMatomo();
   const notificationType = notification.request.content.data
     .type as NotificationType;
@@ -103,7 +104,7 @@ const Notification: React.FC<Props> = ({ notification, onDismiss }) => {
           <SecondaryText style={styles.body}>
             {notification.request.content.body}
           </SecondaryText>
-          <Button
+          <CustomButton
             title={notification.request.content.data.redirectTitle as string}
             rounded={true}
             action={action}
@@ -162,4 +163,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Notification;
+export default NotificationModal;

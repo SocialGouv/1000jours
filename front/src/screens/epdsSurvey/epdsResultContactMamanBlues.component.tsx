@@ -7,7 +7,7 @@ import { StyleSheet } from "react-native";
 import { Image } from "react-native-elements";
 
 import portraitElise from "../../assets/images/epds/portrait_elise.jpg";
-import { Button, SecondaryText } from "../../components";
+import { CustomButton, SecondaryText } from "../../components";
 import { View } from "../../components/Themed";
 import { FontWeight, Labels, Margins, Paddings, Sizes } from "../../constants";
 import { TrackerUtils } from "../../utils";
@@ -19,52 +19,53 @@ interface EpdsResultContactMamanBluesProps {
   showSnackBar: (showSnackBar: boolean) => void;
 }
 
-const EpdsResultContactMamanBlues: React.FC<EpdsResultContactMamanBluesProps> =
-  ({ primaryColor, secondaryColor, showSnackBar }) => {
-    const { trackScreenView } = useMatomo();
-    const [showBeContactedModal, setShowBeContactedModal] = useState(false);
+const EpdsResultContactMamanBlues: React.FC<
+  EpdsResultContactMamanBluesProps
+> = ({ primaryColor, secondaryColor, showSnackBar }) => {
+  const { trackScreenView } = useMatomo();
+  const [showBeContactedModal, setShowBeContactedModal] = useState(false);
 
-    const backgroundColor = { backgroundColor: secondaryColor };
-    const buttonColor = { backgroundColor: primaryColor };
-    const pictureBorderColor = { borderColor: primaryColor };
+  const backgroundColor = { backgroundColor: secondaryColor };
+  const buttonColor = { backgroundColor: primaryColor };
+  const pictureBorderColor = { borderColor: primaryColor };
 
-    return (
-      <View style={[styles.mainView, backgroundColor]}>
-        <View style={[styles.rowView]}>
-          <Image
-            source={portraitElise}
-            containerStyle={[styles.articleImage, pictureBorderColor]}
-          />
-          <SecondaryText style={styles.textStyle}>
-            {Labels.epdsSurveyLight.textesExplication.contactParElise}
-            <SecondaryText style={styles.fontBold}>
-              {Labels.epdsSurveyLight.textesExplication.contactParEliseBold}
-            </SecondaryText>
+  return (
+    <View style={[styles.mainView, backgroundColor]}>
+      <View style={[styles.rowView]}>
+        <Image
+          source={portraitElise}
+          containerStyle={[styles.articleImage, pictureBorderColor]}
+        />
+        <SecondaryText style={styles.textStyle}>
+          {Labels.epdsSurveyLight.textesExplication.contactParElise}
+          <SecondaryText style={styles.fontBold}>
+            {Labels.epdsSurveyLight.textesExplication.contactParEliseBold}
           </SecondaryText>
-        </View>
-        <View style={[styles.beContactedButton]}>
-          <Button
-            buttonStyle={buttonColor}
-            title={Labels.epdsSurvey.beContacted.button}
-            titleStyle={styles.fontButton}
-            rounded={true}
-            disabled={false}
-            action={() => {
-              trackScreenView(TrackerUtils.TrackingEvent.EPDS_BE_CONTACTED);
-              setShowBeContactedModal(true);
-            }}
-          />
-        </View>
-        <HowToBeContacted
-          visible={showBeContactedModal}
-          hideModal={(showSB: boolean) => {
-            setShowBeContactedModal(false);
-            showSnackBar(showSB);
+        </SecondaryText>
+      </View>
+      <View style={[styles.beContactedButton]}>
+        <CustomButton
+          buttonStyle={buttonColor}
+          title={Labels.epdsSurvey.beContacted.button}
+          titleStyle={styles.fontButton}
+          rounded={true}
+          disabled={false}
+          action={() => {
+            trackScreenView(TrackerUtils.TrackingEvent.EPDS_BE_CONTACTED);
+            setShowBeContactedModal(true);
           }}
         />
       </View>
-    );
-  };
+      <HowToBeContacted
+        visible={showBeContactedModal}
+        hideModal={(showSB: boolean) => {
+          setShowBeContactedModal(false);
+          showSnackBar(showSB);
+        }}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   articleImage: {
