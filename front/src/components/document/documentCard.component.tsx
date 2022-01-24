@@ -4,18 +4,12 @@ import * as React from "react";
 import { Linking, StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
 
-import {
-  Colors,
-  FontWeight,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../../constants";
+import { Labels } from "../../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Document } from "../../types";
 import { TrackerUtils } from "../../utils";
 import { reportError } from "../../utils/logging.util";
-import { Button, IcomoonIcons, View } from "..";
+import { CustomButton, IcomoonIcons, View } from "..";
 import { CommonText, SecondaryText } from "../StyledText";
 import StepIconLibrary from "../timeline/stepIconLibrary.component";
 
@@ -56,7 +50,7 @@ const DocumentCard: FC<Props> = ({ document }) => {
           </SecondaryText>
         </ListItem.Subtitle>
         <View style={styles.contentButton}>
-          <Button
+          <CustomButton
             title={Labels.timeline.library.download}
             titleStyle={styles.fontButton}
             rounded={true}

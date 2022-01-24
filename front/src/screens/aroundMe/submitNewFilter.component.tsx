@@ -12,25 +12,24 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 
 import {
-  Button,
   CommonText,
+  CustomButton,
   Icomoon,
   IcomoonIcons,
   TitleH1,
 } from "../../components";
-import CustomNumberOfChildrenPicker from "../../components/base/customNumberOfChildrenPicker.component";
-import CustomPostalCodeTextInput from "../../components/base/customPostalCodeTextInput.component";
+import CustomNumberOfChildrenPicker from "../../components/baseComponents/customNumberOfChildrenPicker.component";
+import CustomPostalCodeTextInput from "../../components/baseComponents/customPostalCodeTextInput.component";
+import { DatabaseQueries, Labels } from "../../constants";
 import {
   Colors,
-  DatabaseQueries,
   FontNames,
   FontWeight,
   getFontFamilyName,
-  Labels,
   Margins,
   Paddings,
   Sizes,
-} from "../../constants";
+} from "../../styles";
 
 interface Props {
   visible: boolean;
@@ -161,7 +160,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
           </ScrollView>
           <View style={styles.buttonsContainer}>
             <View style={styles.buttonContainer}>
-              <Button
+              <CustomButton
                 title={Labels.buttons.cancel}
                 titleStyle={styles.buttonTitleStyle}
                 rounded={false}
@@ -179,7 +178,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
               />
             </View>
             <View style={styles.buttonContainer}>
-              <Button
+              <CustomButton
                 title={Labels.buttons.validate}
                 titleStyle={styles.buttonTitleStyle}
                 rounded={true}

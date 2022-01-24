@@ -48,23 +48,21 @@ const EpdsSurveyScreen: FC = () => {
     setGenderIsEntered(true);
   };
 
-  return (
-    <View style={styles.mainContainer}>
-      {onboardingIsDone ? (
-        genderIsEntered ? (
-          <EpdsSurveyContent epdsSurvey={questionAndAnswers} />
-        ) : (
-          <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />
-        )
-      ) : (
+  const getViewToDisplay = () => {
+    if (!onboardingIsDone)
+      return (
         <EpdsOnboarding
           onBoardingIsDone={() => {
             setOnboardingIsDone(true);
           }}
         />
-      )}
-    </View>
-  );
+      );
+    else if (!genderIsEntered)
+      return <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />;
+    else return <EpdsSurveyContent epdsSurvey={questionAndAnswers} />;
+  };
+
+  return <View style={styles.mainContainer}>{getViewToDisplay()}</View>;
 };
 
 const styles = StyleSheet.create({

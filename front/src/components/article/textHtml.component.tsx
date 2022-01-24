@@ -5,14 +5,14 @@ import { StyleSheet } from "react-native";
 import HTML from "react-native-render-html";
 import WebView from "react-native-webview";
 
+import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import {
   Colors,
   FontNames,
   FontWeight,
   getFontFamilyName,
   Sizes,
-} from "../../constants";
-import { SCREEN_WIDTH } from "../../constants/platform.constants";
+} from "../../styles";
 
 interface Props {
   html: string;

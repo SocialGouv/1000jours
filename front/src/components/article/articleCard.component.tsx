@@ -5,14 +5,8 @@ import { StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
 
 import DefaultImage from "../../assets/images/default.png";
-import {
-  Colors,
-  FontWeight,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../../constants";
+import { Labels } from "../../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Article, Step } from "../../types";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { getVisuelFormat, VisuelFormat } from "../../utils/visuel.util";

@@ -8,17 +8,10 @@ import * as React from "react";
 import type { LayoutChangeEvent } from "react-native";
 import { ScrollView, StyleSheet, View } from "react-native";
 
-import {
-  Colors,
-  FontWeight,
-  Formats,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../../constants";
+import { Formats, Labels } from "../../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Event } from "../../types";
-import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
+import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
 import { CommonText } from "../StyledText";
 import EventCard from "./eventCard.component";
 

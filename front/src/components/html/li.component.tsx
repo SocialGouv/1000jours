@@ -1,8 +1,8 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import { Paddings } from "../../constants";
 import SpecialChars from "../../constants/specialChars";
+import { Paddings } from "../../styles";
 import { SecondaryText } from "../StyledText";
 import type { TextProps } from "../Themed";
 

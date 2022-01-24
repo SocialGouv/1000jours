@@ -5,9 +5,9 @@ import { Pressable, StyleSheet } from "react-native";
 import type { IconNode } from "react-native-elements/dist/icons/Icon";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { FontWeight, Labels, Margins, Paddings, Sizes } from "../../constants";
-import Colors from "../../constants/Colors";
-import { IcomoonIcons } from "../base/icomoon.component";
+import { Labels } from "../../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
+import { IcomoonIcons } from "../baseComponents/icomoon.component";
 import { CommonText, SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 import StepIcon from "./stepIcon.component";

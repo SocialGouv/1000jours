@@ -27,22 +27,15 @@ import SoleilMidiSelected from "../../../assets/images/epds/soleil-midi-selected
 import SoleilSoir from "../../../assets/images/epds/soleil-soir.svg";
 import SoleilSoirSelected from "../../../assets/images/epds/soleil-soir-selected.svg";
 import {
-  Button,
   CloseButton,
+  CustomButton,
   Icomoon,
   IcomoonIcons,
   SecondaryText,
   TitleH1,
 } from "../../../components";
-import {
-  Colors,
-  DatabaseQueries,
-  Formats,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../../../constants";
+import { DatabaseQueries, Formats, Labels } from "../../../constants";
+import { Colors, Margins, Paddings, Sizes } from "../../../styles";
 import type { BeContactedData } from "../../../type";
 import { StringUtils } from "../../../utils";
 import BeContactedForm from "./beContactedForm.component";
@@ -324,7 +317,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const nextOrValidationButton = (): JSX.Element => {
     if (isFormView) {
       return (
-        <Button
+        <CustomButton
           title={Labels.buttons.validate}
           titleStyle={[styles.buttonTitleStyle, { textTransform: "uppercase" }]}
           rounded={true}
@@ -338,7 +331,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       );
     } else if (isConfirmationView) {
       return (
-        <Button
+        <CustomButton
           title={Labels.buttons.close}
           titleStyle={[styles.buttonTitleStyle, { textTransform: "uppercase" }]}
           buttonStyle={{ alignSelf: "center" }}
@@ -351,7 +344,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       );
     } else {
       return (
-        <Button
+        <CustomButton
           title={Labels.buttons.next}
           titleStyle={styles.buttonTitleStyle}
           disabledStyle={styles.disabledButton}
@@ -417,7 +410,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
               ]}
             >
               {showPreviousButton ? (
-                <Button
+                <CustomButton
                   title={Labels.buttons.previous}
                   titleStyle={styles.buttonTitleStyle}
                   rounded={false}

@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
+import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
 import {
   Colors,
   FontNames,
@@ -10,8 +11,7 @@ import {
   getFontFamilyName,
   Margins,
   Sizes,
-} from "../../../constants";
-import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
+} from "../../../styles";
 import { LinkingUtils } from "../../../utils";
 import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
 

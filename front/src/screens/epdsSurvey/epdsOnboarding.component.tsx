@@ -6,10 +6,11 @@ import IconeRepasserTest from "../../assets/images/epds/onboarding_repasser_test
 import IconeRepondreQuestions from "../../assets/images/epds/onboarding_repondre_questions.svg";
 import IconeTrouverAide from "../../assets/images/epds/onboarding_trouver_aide.svg";
 import { TitleH1 } from "../../components";
-import Button from "../../components/base/button.component";
+import CustomButton from "../../components/baseComponents/customButton.component";
 import { CommonText, SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
-import { Colors, FontWeight, Labels, Margins, Sizes } from "../../constants";
+import { Labels } from "../../constants";
+import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 
 interface Props {
   onBoardingIsDone: () => void;
@@ -92,7 +93,7 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
         {renderStep(3)}
       </View>
       <View style={styles.validateButton}>
-        <Button
+        <CustomButton
           title={Labels.buttons.start}
           titleStyle={styles.fontButton}
           rounded={true}

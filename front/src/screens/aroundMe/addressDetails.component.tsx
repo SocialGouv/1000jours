@@ -18,26 +18,19 @@ import TypePlanningFamilialIcon from "../../assets/images/carto/type_planning_fa
 import TypePmiCafCpamIcon from "../../assets/images/carto/type_pmi_caf_cpam.svg";
 import TypeSaadIcon from "../../assets/images/carto/type_saad.svg";
 import {
-  Button,
   CommonText,
+  CustomButton,
   Icomoon,
   IcomoonIcons,
   SecondaryText,
   View,
 } from "../../components";
-import {
-  AroundMeConstants,
-  Colors,
-  FontWeight,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../../constants";
+import { AroundMeConstants, Labels } from "../../constants";
 import {
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
+import { Colors, FontNames, FontWeight, getFontFamilyName, Margins, Paddings, Sizes } from "../../styles";
 import { LinkingUtils, StringUtils, TrackerUtils } from "../../utils";
 
 interface AddressDetailsProps {
@@ -182,7 +175,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
           renderTouchableView(ContactType.siteInternet, details.site_internet)}
       </View>
       <View style={styles.goThereView}>
-        <Button
+        <CustomButton
           title={Labels.aroundMe.goThere}
           titleStyle={styles.fontButton}
           rounded={true}

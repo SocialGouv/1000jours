@@ -11,7 +11,7 @@ import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import BulbIcon from "../../assets/images/carto/bulb.svg";
 import {
-  Button,
+  CustomButton,
   CustomSnackbar,
   Icomoon,
   IcomoonIcons,
@@ -22,12 +22,7 @@ import FetchPoisCoords from "../../components/aroundMe/fetchPoisCoords.component
 import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
-  Colors,
-  FontWeight,
   Labels,
-  Margins,
-  Paddings,
-  Sizes,
   StorageKeysConstants,
 } from "../../constants";
 import {
@@ -35,6 +30,7 @@ import {
   PLATFORM_IS_IOS,
   SCREEN_HEIGHT,
 } from "../../constants/platform.constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
 import AddressDetails from "./addressDetails.component";
 import AroundMeFilter from "./aroundMeFilter.component";
@@ -328,7 +324,7 @@ const TabAroundMeScreen: React.FC = () => {
           )}
         </MapView>
         <View style={styles.filterView}>
-          <Button
+          <CustomButton
             buttonStyle={styles.relaunchSearchButton}
             title={Labels.listArticles.filters}
             titleStyle={styles.relaunchSearchButtonText}
@@ -344,7 +340,7 @@ const TabAroundMeScreen: React.FC = () => {
               setShowFilter(true);
             }}
           />
-          <Button
+          <CustomButton
             buttonStyle={styles.submitNewFilterButton}
             title=""
             rounded={true}
@@ -356,7 +352,7 @@ const TabAroundMeScreen: React.FC = () => {
         </View>
         {showRelaunchResearchButton && (
           <View style={styles.relaunchSearchView}>
-            <Button
+            <CustomButton
               buttonStyle={styles.relaunchSearchButton}
               title={Labels.aroundMe.relaunchSearch}
               titleStyle={styles.relaunchSearchButtonText}

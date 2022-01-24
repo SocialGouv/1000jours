@@ -9,23 +9,17 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import CheckedIcon from "../../assets/images/checkbox_checked.svg";
 import UncheckedIcon from "../../assets/images/checkbox_unchecked.svg";
-import {
-  Colors,
-  Labels,
-  Margins,
-  Paddings,
-  Shadow,
-  Sizes,
-} from "../../constants";
+import { Labels } from "../../constants";
 import {
   MAJOR_VERSION_IOS,
   PLATFORM_IS_ANDROID,
 } from "../../constants/platform.constants";
+import { Colors, Margins, Paddings, Shadow, Sizes } from "../../styles";
 import type { Article, ArticleFilter } from "../../types";
-import Button from "../base/button.component";
-import CloseButton from "../base/closeButton.component";
-import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
-import TitleH1 from "../base/titleH1.component";
+import CloseButton from "../baseComponents/closeButton.component";
+import CustomButton from "../baseComponents/customButton.component";
+import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
+import TitleH1 from "../baseComponents/titleH1.component";
 import { View } from "../Themed";
 
 interface Props {
@@ -87,7 +81,7 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
 
   return (
     <View style={styles.paddingsDefault}>
-      <Button
+      <CustomButton
         buttonStyle={styles.filterButton}
         titleStyle={styles.filterButtonTitle}
         title={`${Labels.listArticles.filters} ${numberActiveFilters()}`}
@@ -130,7 +124,7 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
                   clear={true}
                 />
               </View>
-              <Button
+              <CustomButton
                 buttonStyle={[styles.filterButton]}
                 titleStyle={styles.filterButtonTitle}
                 title={Labels.listArticles.resetFilters}
@@ -179,7 +173,7 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
 
               <View style={styles.buttonsContainer}>
                 <View style={styles.buttonContainer}>
-                  <Button
+                  <CustomButton
                     title={Labels.buttons.cancel}
                     titleStyle={styles.buttonTitleStyle}
                     rounded={false}
@@ -197,7 +191,7 @@ const Filters: FC<Props> = ({ articles, applyFilters }) => {
                   />
                 </View>
                 <View style={styles.buttonContainer}>
-                  <Button
+                  <CustomButton
                     title={Labels.buttons.validate}
                     titleStyle={styles.buttonTitleStyle}
                     rounded={true}

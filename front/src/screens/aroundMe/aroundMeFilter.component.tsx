@@ -12,23 +12,20 @@ import {
 } from "react-native";
 
 import {
-  Button,
   CommonText,
+  CustomButton,
   Icomoon,
   IcomoonIcons,
   TitleH1,
 } from "../../components";
 import FetchFilterData from "../../components/aroundMe/fetchFilterData.component";
-import Chip from "../../components/base/chip.component";
+import Chip from "../../components/baseComponents/chip.component";
 import {
   AroundMeConstants,
-  Colors,
   Labels,
-  Margins,
-  Paddings,
-  Sizes,
   StorageKeysConstants,
 } from "../../constants";
+import { Colors, Margins, Paddings, Sizes } from "../../styles";
 import type {
   CartoFilter,
   CartoFilterStorage,
@@ -348,7 +345,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
               </ScrollView>
               <View style={styles.buttonsContainer}>
                 <View style={styles.buttonContainer}>
-                  <Button
+                  <CustomButton
                     title={Labels.buttons.cancel}
                     titleStyle={styles.buttonTitleStyle}
                     rounded={false}
@@ -371,7 +368,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                   />
                 </View>
                 <View style={styles.buttonContainer}>
-                  <Button
+                  <CustomButton
                     title={Labels.buttons.validate}
                     titleStyle={styles.buttonTitleStyle}
                     rounded={true}

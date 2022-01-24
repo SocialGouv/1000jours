@@ -7,46 +7,55 @@ import SubTitle from "./article/subTitle.component";
 import TextHtml from "./article/textHtml.component";
 import Thematics from "./article/thematics.component";
 import Title from "./article/title.component";
-import BackButton from "./base/backButton.component";
-import Backdrop from "./base/backdrop.component";
-import Button from "./base/button.component";
-import Checkbox from "./base/checkbox.component";
-import CloseButton from "./base/closeButton.component";
-import CustomSnackbar from "./base/customSnackbar.component";
-import Datepicker from "./base/datePicker.component";
-import ErrorMessage from "./base/errorMessage.component";
-import HeaderApp from "./base/headerApp.component";
-import Icomoon, { IcomoonIcons } from "./base/icomoon.component";
-import Loader from "./base/loader.component";
-import Tags from "./base/tags.component";
-import TitleH1 from "./base/titleH1.component";
-import TitleH2 from "./base/titleH2.component";
+import BackButton from "./baseComponents/backButton.component";
+import Backdrop from "./baseComponents/backdrop.component";
+import Checkbox from "./baseComponents/checkbox.component";
+import CloseButton from "./baseComponents/closeButton.component";
+import CustomButton from "./baseComponents/customButton.component";
+import CustomSnackbar from "./baseComponents/customSnackbar.component";
+import Datepicker from "./baseComponents/datePicker.component";
+import ErrorMessage from "./baseComponents/errorMessage.component";
+import HeaderApp from "./baseComponents/headerApp.component";
+import Icomoon, { IcomoonIcons } from "./baseComponents/icomoon.component";
+import Loader from "./baseComponents/loader.component";
+import NotificationModal from "./baseComponents/notificationModal.component";
+import Tags from "./baseComponents/tags.component";
+import TitleH1 from "./baseComponents/titleH1.component";
+import TitleH2 from "./baseComponents/titleH2.component";
+import Events from "./calendar/events.component";
+import ConditionsOfUse from "./menu/conditionsOfUse.component";
+import LegalNotice from "./menu/legalNotice.component";
 import Menu from "./menu/menu.component";
 import { CommonText, SecondaryText } from "./StyledText";
 import { Text, View } from "./Themed";
 import StepIcon from "./timeline/stepIcon.component";
 import TimelineStep from "./timeline/timelineStep.component";
+import TimelineStepLibrary from "./timeline/timelineStepLibrary.component";
 
 export {
   BackButton,
   Backdrop,
-  Button,
   Checkbox,
   CloseButton,
   CommonText,
+  ConditionsOfUse,
+  CustomButton,
   CustomSnackbar,
   Datepicker,
   DidYouKnow,
   ErrorMessage,
+  Events,
   Filters,
   HeaderApp,
   Icomoon,
   IcomoonIcons,
   ImageBanner,
   InShort,
+  LegalNotice,
   Links,
   Loader,
   Menu,
+  NotificationModal,
   SecondaryText,
   StepIcon,
   SubTitle,
@@ -55,6 +64,7 @@ export {
   TextHtml,
   Thematics,
   TimelineStep,
+  TimelineStepLibrary,
   Title,
   TitleH1,
   TitleH2,

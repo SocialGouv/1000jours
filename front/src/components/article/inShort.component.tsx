@@ -5,16 +5,10 @@ import { ImageBackground, StyleSheet, Text } from "react-native";
 import { ListItem } from "react-native-elements";
 
 import BgImage from "../../assets/images/bg-icon-in-short.png";
-import {
-  Colors,
-  FontWeight,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../../constants";
+import { Labels } from "../../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { ArticleInShortItem } from "../../types";
-import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
+import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
 import { CommonText, SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 

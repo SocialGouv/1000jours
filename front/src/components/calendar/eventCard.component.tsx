@@ -13,24 +13,17 @@ import {
 import { ListItem } from "react-native-elements";
 
 import BgImage from "../../assets/images/bg-icon-event-type.png";
-import {
-  Colors,
-  FontWeight,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-  StorageKeysConstants,
-} from "../../constants";
+import { Labels, StorageKeysConstants } from "../../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { CartoFilterStorage } from "../../type";
 import type { Event, Tag } from "../../types";
 import { StorageUtils, TrackerUtils } from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { getThematiqueIcon } from "../../utils/thematique.util";
 import ArticleCard from "../article/articleCard.component";
-import Button from "../base/button.component";
-import Icomoon from "../base/icomoon.component";
-import Tags from "../base/tags.component";
+import CustomButton from "../baseComponents/customButton.component";
+import Icomoon from "../baseComponents/icomoon.component";
+import Tags from "../baseComponents/tags.component";
 import { CommonText, SecondaryText } from "../StyledText";
 
 interface Props {
@@ -132,7 +125,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
       {isExpanded && (
         <View style={styles.eventDetailsContainer}>
           <View style={styles.linkCarto} ref={elementRef} accessible={true}>
-            <Button
+            <CustomButton
               rounded={true}
               title={Labels.event.seeOnTheMap}
               titleStyle={styles.buttonTitle}

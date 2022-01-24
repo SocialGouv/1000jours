@@ -1,10 +1,11 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
-import { Colors, FontWeight, Labels } from "../../constants";
+import { Labels } from "../../constants";
+import { Colors, FontWeight } from "../../styles";
 import type { TableData } from "../../types";
-import Caption from "./caption.component";
 import { SecondaryText } from "../StyledText";
+import Caption from "./caption.component";
 
 interface Props {
   tableData: TableData;

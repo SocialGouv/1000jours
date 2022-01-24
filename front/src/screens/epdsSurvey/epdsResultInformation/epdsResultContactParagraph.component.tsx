@@ -1,20 +1,12 @@
 import * as React from "react";
 import { StyleSheet, Text } from "react-native";
 
-import Button from "../../../components/base/button.component";
+import CustomButton from "../../../components/baseComponents/customButton.component";
 import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
-import {
-  Colors,
-  FontNames,
-  FontWeight,
-  getFontFamilyName,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../../../constants";
+import { Labels } from "../../../constants";
 import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
+import { Colors, FontNames, FontWeight, getFontFamilyName, Margins, Paddings, Sizes } from "../../../styles";
 import type { EpdsResultContactInformation } from "../../../type";
 import { LinkingUtils } from "../../../utils";
 import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
@@ -71,7 +63,7 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
           >
             {contact.phoneNumber}
           </SecondaryText>
-          <Button
+          <CustomButton
             buttonStyle={styles.callButton}
             title={Labels.epdsSurvey.resultats.call}
             titleStyle={styles.fontButton}

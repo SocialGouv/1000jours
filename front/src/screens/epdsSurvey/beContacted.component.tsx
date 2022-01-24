@@ -10,9 +10,9 @@ import { ScrollView } from "react-native-gesture-handler";
 import { HelperText } from "react-native-paper";
 
 import {
-  Button,
   CloseButton,
   CommonText,
+  CustomButton,
   Datepicker,
   Icomoon,
   IcomoonIcons,
@@ -20,17 +20,13 @@ import {
   TitleH1,
 } from "../../components";
 import {
-  Colors,
   DatabaseQueries,
-  FontWeight,
   Formats,
   Labels,
-  Margins,
-  Paddings,
-  Sizes,
   StorageKeysConstants,
 } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { BeContactedData } from "../../type";
 import { StorageUtils, StringUtils } from "../../utils";
 
@@ -307,7 +303,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
 
             <View style={styles.buttonsContainer}>
               <View style={styles.buttonContainer}>
-                <Button
+                <CustomButton
                   title={Labels.buttons.cancel}
                   titleStyle={styles.buttonTitleStyle}
                   rounded={false}
@@ -325,7 +321,7 @@ const BeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                 />
               </View>
               <View style={styles.buttonContainer}>
-                <Button
+                <CustomButton
                   title={Labels.buttons.validate}
                   titleStyle={styles.buttonTitleStyle}
                   rounded={true}

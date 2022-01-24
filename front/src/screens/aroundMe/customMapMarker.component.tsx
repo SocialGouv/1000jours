@@ -7,7 +7,8 @@ import { Image, StyleSheet } from "react-native";
 import type { LatLng } from "react-native-maps";
 import { Marker } from "react-native-maps";
 
-import { AroundMeConstants, Margins } from "../../constants";
+import { AroundMeConstants } from "../../constants";
+import { Margins } from "../../styles";
 
 interface Props {
   coordinates: LatLng;

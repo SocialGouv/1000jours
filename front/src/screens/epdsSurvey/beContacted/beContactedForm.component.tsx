@@ -11,16 +11,9 @@ import {
 import { HelperText } from "react-native-paper";
 
 import { Datepicker, SecondaryText } from "../../../components";
-import {
-  Colors,
-  Formats,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-  StorageKeysConstants,
-} from "../../../constants";
+import { Formats, Labels, StorageKeysConstants } from "../../../constants";
 import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
+import { Colors, Margins, Paddings, Sizes } from "../../../styles";
 import type { BeContactedData } from "../../../type";
 import { StorageUtils, StringUtils } from "../../../utils";
 import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
