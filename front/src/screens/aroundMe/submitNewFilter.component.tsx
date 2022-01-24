@@ -18,8 +18,8 @@ import {
   IcomoonIcons,
   TitleH1,
 } from "../../components";
-import CustomNumberOfChildrenPicker from "../../components/base/customNumberOfChildrenPicker.component";
-import CustomPostalCodeTextInput from "../../components/base/customPostalCodeTextInput.component";
+import CustomNumberOfChildrenPicker from "../../components/baseComponents/customNumberOfChildrenPicker.component";
+import CustomPostalCodeTextInput from "../../components/baseComponents/customPostalCodeTextInput.component";
 import {
   Colors,
   DatabaseQueries,

@@ -19,7 +19,7 @@ import {
   TitleH1,
 } from "../../components";
 import FetchFilterData from "../../components/aroundMe/fetchFilterData.component";
-import Chip from "../../components/base/chip.component";
+import Chip from "../../components/baseComponents/chip.component";
 import {
   AroundMeConstants,
   Colors,

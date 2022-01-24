@@ -3,7 +3,7 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
 import { Paddings } from "../../constants";
-import ModalHtmlContent from "../base/modalHtmlContent.component";
+import ModalHtmlContent from "../baseComponents/modalHtmlContent.component";
 import A from "../html/a.component";
 import H1 from "../html/h1.component";
 import H2 from "../html/h2.component";

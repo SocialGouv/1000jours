@@ -10,7 +10,7 @@ import { Card } from "react-native-paper";
 
 import ChevronDownIcon from "../../../assets/images/chevron_down.svg";
 import ChevronUpIcon from "../../../assets/images/chevron_up.svg";
-import Icomoon from "../../../components/base/icomoon.component";
+import Icomoon from "../../../components/baseComponents/icomoon.component";
 import { View } from "../../../components/Themed";
 import {
   Colors,

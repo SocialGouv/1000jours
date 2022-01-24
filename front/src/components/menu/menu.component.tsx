@@ -20,7 +20,7 @@ import {
 import { emailContact } from "../../constants/email.constants";
 import { reviewTypeForm } from "../../constants/links.constants";
 import type { MenuItem, RootStackParamList } from "../../types";
-import Icomoon, { IcomoonIcons } from "../base/icomoon.component";
+import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
 import { View } from "../Themed";
 import Accessibility from "./accessibility.component";
 import ConditionsOfUse from "./conditionsOfUse.component";

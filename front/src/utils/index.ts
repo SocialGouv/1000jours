@@ -10,6 +10,7 @@ import { initMonitoring, reportError } from "./logging.util";
 import * as NotificationUtils from "./notification.util";
 import * as StorageUtils from "./storage.util";
 import * as StringUtils from "./strings.util";
+import { getAppTheme } from "./theme.util";
 import * as TrackerUtils from "./tracker.util";
 
 export {
@@ -18,6 +19,7 @@ export {
   AssestUtils,
   DataFetchingUtils,
   EpdsSurveyUtils,
+  getAppTheme,
   initMonitoring,
   KeyboardUtils,
   LinkingUtils,

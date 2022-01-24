@@ -16,7 +16,7 @@ import IcomoonFont from "./src/assets/icomoon/icomoon.ttf";
 import { initLocales } from "./src/config/calendar-config";
 import { Labels, StorageKeysConstants } from "./src/constants";
 import { useCachedResources, useColorScheme } from "./src/hooks";
-import Navigation from "./src/navigation";
+import Navigation from "./src/navigation/navigation.component";
 import { apolloService } from "./src/services";
 import {
   initMonitoring,

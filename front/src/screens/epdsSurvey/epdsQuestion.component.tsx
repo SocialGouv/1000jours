@@ -8,7 +8,7 @@ import {
   Text,
 } from "react-native";
 
-import Checkbox from "../../components/base/checkbox.component";
+import Checkbox from "../../components/baseComponents/checkbox.component";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import { FontWeight, Labels, Paddings, Sizes } from "../../constants";

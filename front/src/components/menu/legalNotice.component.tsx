@@ -2,7 +2,7 @@ import type { FC } from "react";
 import * as React from "react";
 import { View } from "react-native";
 
-import ModalHtmlContent from "../base/modalHtmlContent.component";
+import ModalHtmlContent from "../baseComponents/modalHtmlContent.component";
 import A from "../html/a.component";
 import H1 from "../html/h1.component";
 import H2 from "../html/h2.component";

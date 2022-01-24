@@ -28,9 +28,9 @@ import { StorageUtils, TrackerUtils } from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { getThematiqueIcon } from "../../utils/thematique.util";
 import ArticleCard from "../article/articleCard.component";
-import Button from "../base/button.component";
-import Icomoon from "../base/icomoon.component";
-import Tags from "../base/tags.component";
+import Button from "../baseComponents/button.component";
+import Icomoon from "../baseComponents/icomoon.component";
+import Tags from "../baseComponents/tags.component";
 import { CommonText, SecondaryText } from "../StyledText";
 
 interface Props {

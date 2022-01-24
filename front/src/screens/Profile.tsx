@@ -19,7 +19,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import AppLogo from "../assets/images/logo.svg";
 import { Button, CommonText, Datepicker, SecondaryText } from "../components";
-import Icomoon, { IcomoonIcons } from "../components/base/icomoon.component";
+import Icomoon, { IcomoonIcons } from "../components/baseComponents/icomoon.component";
 import { View } from "../components/Themed";
 import {
   Colors,

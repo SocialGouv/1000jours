@@ -6,7 +6,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { FontWeight, Labels, Margins, Paddings, Sizes } from "../../constants";
 import Colors from "../../constants/Colors";
-import { IcomoonIcons } from "../base/icomoon.component";
+import { IcomoonIcons } from "../baseComponents/icomoon.component";
 import { CommonText, SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 import StepIconLibrary from "./stepIconLibrary.component";

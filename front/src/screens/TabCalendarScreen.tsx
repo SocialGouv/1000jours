@@ -21,7 +21,7 @@ import {
   Loader,
   TitleH1,
 } from "../components";
-import ModalHelp from "../components/base/modalHelp.component";
+import ModalHelp from "../components/baseComponents/modalHelp.component";
 import Events from "../components/calendar/events.component";
 import { SecondaryTextItalic } from "../components/StyledText";
 import { View } from "../components/Themed";
