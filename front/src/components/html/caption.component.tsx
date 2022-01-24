@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import { Paddings, Sizes } from "../../constants";
+import { Paddings, Sizes } from "../../styles";
 import { SecondaryTextItalic } from "../StyledText";
 import type { TextProps } from "../Themed";
 

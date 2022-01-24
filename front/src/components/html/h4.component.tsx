@@ -1,7 +1,8 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import { FontWeight, Labels, Paddings, Sizes } from "../../constants";
+import { Labels } from "../../constants";
+import { FontWeight, Paddings, Sizes } from "../../styles";
 import { SecondaryText } from "../StyledText";
 import type { TextProps } from "../Themed";
 

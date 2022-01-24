@@ -20,8 +20,9 @@ import {
   Text,
   View,
 } from "../components";
-import { Colors, Labels, Paddings, Sizes } from "../constants";
+import { Labels } from "../constants";
 import { LoadingScreen, NotFoundScreen, Onboarding, Profile } from "../screens";
+import { Colors, Paddings, Sizes } from "../styles";
 import type { RootStackParamList } from "../types";
 import { getAppTheme } from "../utils";
 import { navigationRef } from "../utils/rootNavigation.util";

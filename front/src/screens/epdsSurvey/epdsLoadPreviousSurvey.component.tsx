@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
@@ -5,20 +6,14 @@ import { TitleH1 } from "../../components";
 import CustomButton from "../../components/baseComponents/customButton.component";
 import { SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
-import {
-  Colors,
-  FontWeight,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../../constants";
+import { Labels } from "../../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 
 interface EpdsLoadPreviousSurveyProps {
   startSurveyOver: (value: boolean) => void;
 }
 
-const EpdsLoadPreviousSurvey: React.FC<EpdsLoadPreviousSurveyProps> = ({
+const EpdsLoadPreviousSurvey: FC<EpdsLoadPreviousSurveyProps> = ({
   startSurveyOver,
 }) => {
   return (

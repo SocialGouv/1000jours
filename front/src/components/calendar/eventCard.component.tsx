@@ -13,15 +13,8 @@ import {
 import { ListItem } from "react-native-elements";
 
 import BgImage from "../../assets/images/bg-icon-event-type.png";
-import {
-  Colors,
-  FontWeight,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-  StorageKeysConstants,
-} from "../../constants";
+import { Labels, StorageKeysConstants } from "../../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { CartoFilterStorage } from "../../type";
 import type { Event, Tag } from "../../types";
 import { StorageUtils, TrackerUtils } from "../../utils";

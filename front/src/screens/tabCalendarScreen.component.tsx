@@ -7,14 +7,13 @@ import _ from "lodash";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
-// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useEffect } from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 
 import HelpIcon from "../assets/images/help.png";
 import {
-  CustomButton,
   CommonText,
+  CustomButton,
   ErrorMessage,
   Icomoon,
   IcomoonIcons,
@@ -26,15 +25,9 @@ import Events from "../components/calendar/events.component";
 import { SecondaryTextItalic } from "../components/StyledText";
 import { View } from "../components/Themed";
 import {
-  Colors,
   FetchPoliciesConstants,
-  FontNames,
-  FontWeight,
   Formats,
-  getFontFamilyName,
   Labels,
-  Paddings,
-  Sizes,
   StorageKeysConstants,
 } from "../constants";
 import { ALL_EVENTS } from "../constants/databaseQueries.constants";
@@ -43,6 +36,14 @@ import {
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../constants/platform.constants";
+import {
+  Colors,
+  FontNames,
+  FontWeight,
+  getFontFamilyName,
+  Paddings,
+  Sizes,
+} from "../styles";
 import type { Event, TabCalendarParamList } from "../types";
 import { NotificationUtils, StorageUtils, TrackerUtils } from "../utils";
 import * as RootNavigation from "../utils/rootNavigation.util";
@@ -184,7 +185,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
 
     if (childBirthdayStr.length > 0) {
       setLoadingEvents(true);
-      loadEvents();
+      void loadEvents();
     }
   };
 

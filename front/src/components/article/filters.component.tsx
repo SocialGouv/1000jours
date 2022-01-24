@@ -9,18 +9,12 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import CheckedIcon from "../../assets/images/checkbox_checked.svg";
 import UncheckedIcon from "../../assets/images/checkbox_unchecked.svg";
-import {
-  Colors,
-  Labels,
-  Margins,
-  Paddings,
-  Shadow,
-  Sizes,
-} from "../../constants";
+import { Labels } from "../../constants";
 import {
   MAJOR_VERSION_IOS,
   PLATFORM_IS_ANDROID,
 } from "../../constants/platform.constants";
+import { Colors, Margins, Paddings, Shadow, Sizes } from "../../styles";
 import type { Article, ArticleFilter } from "../../types";
 import CloseButton from "../baseComponents/closeButton.component";
 import CustomButton from "../baseComponents/customButton.component";

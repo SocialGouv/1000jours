@@ -11,22 +11,16 @@ import FirstSlideImage from "../assets/images/Onboarding_1.svg";
 import SecondSlideImage from "../assets/images/Onboarding_2.svg";
 import ThirdSlideImage from "../assets/images/Onboarding_3.svg";
 import {
-  CustomButton,
   CommonText,
+  CustomButton,
   HeaderApp,
   Icomoon,
   IcomoonIcons,
   SecondaryText,
   View,
 } from "../components";
-import {
-  Colors,
-  FontWeight,
-  Labels,
-  Paddings,
-  Sizes,
-  StorageKeysConstants,
-} from "../constants";
+import { Labels, StorageKeysConstants } from "../constants";
+import { Colors, FontWeight, Paddings, Sizes } from "../styles";
 import type { RootStackParamList } from "../types";
 import { StorageUtils, TrackerUtils } from "../utils";
 import { CustomPagination } from "./customOnboardingPagination.component";

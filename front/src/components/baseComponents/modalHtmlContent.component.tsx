@@ -7,11 +7,11 @@ import { ScrollView } from "react-native-gesture-handler";
 import HTML from "react-native-render-html";
 import WebView from "react-native-webview";
 
-import { Colors, FontWeight, Paddings } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
+import { Colors, FontWeight, Paddings } from "../../styles";
 import { AssestUtils } from "../../utils";
-import CloseButton from "./closeButton.component";
 import { View } from "../Themed";
+import CloseButton from "./closeButton.component";
 
 interface Props {
   content?: React.ReactNode;

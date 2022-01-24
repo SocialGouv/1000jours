@@ -11,7 +11,7 @@ import {
   Margins,
   Paddings,
   Sizes,
-} from "../../constants";
+} from "../../styles";
 
 interface Props {
   id: number;

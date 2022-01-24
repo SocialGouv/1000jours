@@ -4,8 +4,9 @@ import * as React from "react";
 import { Alert, Linking, StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
 
-import { Colors, Labels, Paddings, Sizes } from "../../constants";
+import { Labels } from "../../constants";
 import SpecialChars from "../../constants/specialChars";
+import { Colors, Paddings, Sizes } from "../../styles";
 import type { ArticleLink } from "../../types";
 import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";

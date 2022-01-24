@@ -9,7 +9,8 @@ import { TitleH1 } from "../../components";
 import CustomButton from "../../components/baseComponents/customButton.component";
 import { CommonText, SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
-import { Colors, FontWeight, Labels, Margins, Sizes } from "../../constants";
+import { Labels } from "../../constants";
+import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 
 interface Props {
   onBoardingIsDone: () => void;

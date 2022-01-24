@@ -20,17 +20,13 @@ import {
   TitleH1,
 } from "../../components";
 import {
-  Colors,
   DatabaseQueries,
-  FontWeight,
   Formats,
   Labels,
-  Margins,
-  Paddings,
-  Sizes,
   StorageKeysConstants,
 } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { BeContactedData } from "../../type";
 import { StorageUtils, StringUtils } from "../../utils";
 

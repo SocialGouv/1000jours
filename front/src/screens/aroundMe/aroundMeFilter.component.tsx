@@ -12,8 +12,8 @@ import {
 } from "react-native";
 
 import {
-  CustomButton,
   CommonText,
+  CustomButton,
   Icomoon,
   IcomoonIcons,
   TitleH1,
@@ -22,13 +22,10 @@ import FetchFilterData from "../../components/aroundMe/fetchFilterData.component
 import Chip from "../../components/baseComponents/chip.component";
 import {
   AroundMeConstants,
-  Colors,
   Labels,
-  Margins,
-  Paddings,
-  Sizes,
   StorageKeysConstants,
 } from "../../constants";
+import { Colors, Margins, Paddings, Sizes } from "../../styles";
 import type {
   CartoFilter,
   CartoFilterStorage,

@@ -3,7 +3,8 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { Alert, StyleSheet } from "react-native";
 
-import { Labels, Paddings } from "../../constants";
+import { Labels } from "../../constants";
+import { Paddings } from "../../styles";
 import type { ApolloHealthResponse } from "../../types";
 import { reportError } from "../../utils/logging.util";
 import { Text, View } from "../Themed";

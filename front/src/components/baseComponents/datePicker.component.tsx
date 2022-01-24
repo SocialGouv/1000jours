@@ -6,21 +6,13 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { Modal, StyleSheet, View } from "react-native";
 
-import {
-  Colors,
-  Formats,
-  Labels,
-  Locales,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../../constants";
+import { Formats, Labels, Locales } from "../../constants";
 import {
   MAJOR_VERSION_IOS,
   PLATFORM_IS_ANDROID,
   PLATFORM_IS_IOS,
 } from "../../constants/platform.constants";
-import Shadow from "../../constants/shadow.constants";
+import { Colors, Margins, Paddings, Shadow, Sizes } from "../../styles";
 import CustomButton from "./customButton.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 

@@ -2,7 +2,7 @@ import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import { FontWeight, Margins, Paddings, Sizes } from "../../constants";
+import { FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Tag } from "../../types";
 import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";

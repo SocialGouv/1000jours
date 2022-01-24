@@ -2,14 +2,8 @@ import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet, Text } from "react-native";
 
-import {
-  Colors,
-  FontWeight,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../../constants";
+import { Labels } from "../../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import { CommonText, SecondaryText } from "../StyledText";
 import { View } from "../Themed";
 

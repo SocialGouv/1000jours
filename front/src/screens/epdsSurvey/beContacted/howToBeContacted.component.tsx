@@ -27,22 +27,15 @@ import SoleilMidiSelected from "../../../assets/images/epds/soleil-midi-selected
 import SoleilSoir from "../../../assets/images/epds/soleil-soir.svg";
 import SoleilSoirSelected from "../../../assets/images/epds/soleil-soir-selected.svg";
 import {
-  CustomButton,
   CloseButton,
+  CustomButton,
   Icomoon,
   IcomoonIcons,
   SecondaryText,
   TitleH1,
 } from "../../../components";
-import {
-  Colors,
-  DatabaseQueries,
-  Formats,
-  Labels,
-  Margins,
-  Paddings,
-  Sizes,
-} from "../../../constants";
+import { DatabaseQueries, Formats, Labels } from "../../../constants";
+import { Colors, Margins, Paddings, Sizes } from "../../../styles";
 import type { BeContactedData } from "../../../type";
 import { StringUtils } from "../../../utils";
 import BeContactedForm from "./beContactedForm.component";

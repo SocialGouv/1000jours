@@ -28,16 +28,12 @@ import {
 } from "../components";
 import { View } from "../components/Themed";
 import {
-  Colors,
-  FontWeight,
   Formats,
   Labels,
-  Margins,
-  Paddings,
   PlatformConstants,
-  Sizes,
   StorageKeysConstants,
 } from "../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../styles";
 import type { RootStackParamList, UserContext, UserSituation } from "../types";
 import { StorageUtils, TrackerUtils } from "../utils";
 import { cancelScheduleNextStepNotification } from "../utils/notification.util";

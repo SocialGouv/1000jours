@@ -2,7 +2,7 @@ import * as React from "react";
 import { Modal as RNModal, SafeAreaView, StyleSheet, View } from "react-native";
 import { MaterialIndicator } from "react-native-indicators";
 
-import { Colors } from "../../constants";
+import { Colors } from "../../styles";
 
 const Loader: React.FC = () => (
   <RNModal visible={true} presentationStyle="overFullScreen" transparent={true}>

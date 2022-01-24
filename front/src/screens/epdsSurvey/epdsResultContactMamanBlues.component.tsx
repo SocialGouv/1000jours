@@ -9,7 +9,8 @@ import { Image } from "react-native-elements";
 import portraitElise from "../../assets/images/epds/portrait_elise.jpg";
 import { CustomButton, SecondaryText } from "../../components";
 import { View } from "../../components/Themed";
-import { FontWeight, Labels, Margins, Paddings, Sizes } from "../../constants";
+import { Labels } from "../../constants";
+import { FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import { TrackerUtils } from "../../utils";
 import HowToBeContacted from "./beContacted/howToBeContacted.component";
 

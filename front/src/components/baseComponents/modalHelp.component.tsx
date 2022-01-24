@@ -2,7 +2,8 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { Modal, StyleSheet } from "react-native";
 
-import { Colors, FontWeight, Labels, Paddings, Sizes } from "../../constants";
+import { Labels } from "../../constants";
+import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
 import { CloseButton, CustomButton, Icomoon, IcomoonIcons } from "..";
 import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";

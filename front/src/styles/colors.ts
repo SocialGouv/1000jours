@@ -2,7 +2,7 @@
 const tintColorLight = "#2f95dc";
 const tintColorDark = "#fff";
 
-export default {
+const Colors = {
   dark: {
     background: "#000",
     tabIconDefault: "#ccc",
@@ -50,3 +50,5 @@ export default {
     paginationActive: "#74C09F",
   },
 };
+
+export default Colors;

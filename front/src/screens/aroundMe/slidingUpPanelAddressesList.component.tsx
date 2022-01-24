@@ -13,15 +13,9 @@ import BottomSheet from "reanimated-bottom-sheet";
 
 import { CommonText } from "../../components";
 import { View } from "../../components/Themed";
-import {
-  AroundMeConstants,
-  Colors,
-  FontWeight,
-  Labels,
-  Margins,
-  Sizes,
-} from "../../constants";
+import { AroundMeConstants, Labels } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
+import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 import AddressDetails from "./addressDetails.component";
 
 interface Props {

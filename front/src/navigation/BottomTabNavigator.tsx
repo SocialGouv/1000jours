@@ -4,7 +4,6 @@ import type { FC } from "react";
 import * as React from "react";
 
 import { Icomoon, IcomoonIcons } from "../components";
-import Colors from "../constants/Colors";
 import Labels from "../constants/Labels";
 import {
   ArticleDetail,
@@ -16,6 +15,7 @@ import {
   TabCalendarScreen,
   TabHomeScreen,
 } from "../screens";
+import { Colors } from "../styles";
 import type {
   BottomTabParamList,
   TabAroundMeParamList,

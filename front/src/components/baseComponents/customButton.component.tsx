@@ -12,7 +12,7 @@ import {
   getFontFamilyName,
   Paddings,
   Sizes,
-} from "../../constants";
+} from "../../styles";
 
 interface Props {
   title: string;

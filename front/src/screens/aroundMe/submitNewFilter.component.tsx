@@ -20,17 +20,16 @@ import {
 } from "../../components";
 import CustomNumberOfChildrenPicker from "../../components/baseComponents/customNumberOfChildrenPicker.component";
 import CustomPostalCodeTextInput from "../../components/baseComponents/customPostalCodeTextInput.component";
+import { DatabaseQueries, Labels } from "../../constants";
 import {
   Colors,
-  DatabaseQueries,
   FontNames,
   FontWeight,
   getFontFamilyName,
-  Labels,
   Margins,
   Paddings,
   Sizes,
-} from "../../constants";
+} from "../../styles";
 
 interface Props {
   visible: boolean;

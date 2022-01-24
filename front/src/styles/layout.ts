@@ -15,6 +15,11 @@ export enum FontWeight {
   black = "900",
 }
 
+export enum FontStyle {
+  italic = "italic",
+  normal = "normal",
+}
+
 export default {
   isSmallDevice: width < 375,
   window: {
