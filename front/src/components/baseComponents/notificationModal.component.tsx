@@ -10,9 +10,10 @@ import type { NotificationStyle } from "../../types";
 import { NotificationType } from "../../utils/notification.util";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { TrackingEvent } from "../../utils/tracker.util";
-import { CustomButton, Icomoon, IcomoonIcons } from "..";
 import { SecondaryText } from "../StyledText";
 import { View } from "../Themed";
+import CustomButton from "./customButton.component";
+import Icomoon, { IcomoonIcons } from "./icomoon.component";
 
 interface Props {
   notification: ExpoNotificaiton;

@@ -9,7 +9,8 @@ import {
   Labels,
   Sizes,
 } from "../../constants";
-import { CustomButton, Icomoon, IcomoonIcons } from "..";
+import CustomButton from "./customButton.component";
+import Icomoon, { IcomoonIcons } from "./icomoon.component";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import { Modal, StyleSheet } from "react-native";
 import { CheckBox } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
-import { CustomButton } from "..";
 
 import CheckedIcon from "../../assets/images/checkbox_checked.svg";
 import UncheckedIcon from "../../assets/images/checkbox_unchecked.svg";
@@ -24,6 +23,7 @@ import {
 } from "../../constants/platform.constants";
 import type { Article, ArticleFilter } from "../../types";
 import CloseButton from "../baseComponents/closeButton.component";
+import CustomButton from "../baseComponents/customButton.component";
 import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
 import TitleH1 from "../baseComponents/titleH1.component";
 import { View } from "../Themed";
