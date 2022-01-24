@@ -2679,10 +2679,10 @@
   dependencies:
     invariant "^2.2.4"
 
-"@react-native-community/masked-view@<=0.1.10":
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.10.tgz#5dda643e19e587793bc2034dd9bf7398ad43d401"
-  integrity sha512-rk4sWFsmtOw8oyx8SD3KSvawwaK7gRBSEIy2TAwURyGt+3TizssXP1r8nx3zY+R7v2vYYHXZ+k2/GULAT/bcaQ==
+"@react-native-community/masked-view@<=0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.11.tgz#2f4c6e10bee0786abff4604e39a37ded6f3980ce"
+  integrity sha512-rQfMIGSR/1r/SyN87+VD8xHHzDYeHaJq6elOSCAD+0iLagXkSI2pfA0LmSXP21uw5i3em7GkkRjfJ8wpqWXZNw==
 
 "@react-native-community/picker@^1.8.1":
   version "1.8.1"
@@ -3939,12 +3939,7 @@ ansi-regex@^4.0.0, ansi-regex@^4.1.0:
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-4.1.0.tgz#8b9f8f08cf1acb843756a839ca8c7e3168c51997"
   integrity sha512-1apePfXM1UOSqw0o9IiFAovVz9M5S1Dg+4TrDwfMewQ6p/rmMueb7tWZjQ1rx4Loy1ArBggoqGpfqqdI4rondg==
 
-ansi-regex@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.0.tgz#388539f55179bf39339c81af30a654d69f87cb75"
-  integrity sha512-bY6fj56OUQ0hU1KjFNDQuJFezqKdrAyFdIevADiqrWHwSlbmBNMHp5ak2f40Pm8JTFyM2mqxkG6ngkHO11f/lg==
-
-ansi-regex@^5.0.1:
+ansi-regex@^5.0.0, ansi-regex@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.1.tgz#082cb2c89c9fe8659a311a53bd6a4dc5301db304"
   integrity sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==
@@ -6996,18 +6991,7 @@ expo-asset-utils@^2.0.0:
   resolved "https://registry.yarnpkg.com/expo-asset-utils/-/expo-asset-utils-2.0.0.tgz#6c262c14cd61297591d9fdcb122a52d51eee0f8f"
   integrity sha512-hkstktApGwTKjF5Y7xWcbc86taJEPk/gUw+fwUbab9VELrDAW2K/wzVjW4BthlHOL8bwfoCs2h61XC6/lgnpRw==
 
-expo-asset@<=8.3.1:
-  version "8.3.1"
-  resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-8.3.1.tgz#0779c8b4ae199ec8366d1d00671af37caf6dbfc1"
-  integrity sha512-NZVOa4/jF8fmFhY5Clmfuo0Fq7NPhFSp6+J/j/16K0fjWOAJT0dVUcwXLGXDgtTB9Rv/t22r2m3DmKlPtYi48g==
-  dependencies:
-    blueimp-md5 "^2.10.0"
-    invariant "^2.2.4"
-    md5-file "^3.2.3"
-    path-browserify "^1.0.0"
-    url-parse "^1.4.4"
-
-expo-asset@~8.3.1:
+expo-asset@<=8.3.3, expo-asset@~8.3.1:
   version "8.3.3"
   resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-8.3.3.tgz#b54ab9999efb3d2086329fc5b1bed04fede8f682"
   integrity sha512-qCm5d14tzswY8DcmRJ+0WkY9tc3OiVikBAiw2hCMC+bFpK/bEdqy4Zwfd69MFIAJ0taJpHWhdUoBRO0byQLlfg==
@@ -7192,10 +7176,10 @@ expo-pwa@0.0.102:
     commander "2.20.0"
     update-check "1.5.3"
 
-expo-splash-screen@<=0.10.2:
-  version "0.10.2"
-  resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-0.10.2.tgz#3e3d7c24c4ed180a60ce3ec64a77eefd04dd0d97"
-  integrity sha512-ngelW7g5yFqk3LWbyLDDxi3LYXEfgGFCJddL/Q8S/C1pMUc5foW2j9i/q+akK8i5mjYtSx3+Bk/qbyX92QIF/w==
+expo-splash-screen@<=0.10.3:
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-0.10.3.tgz#a4fae07fc0e0c9e997d88c1174ebaa66d02c370c"
+  integrity sha512-/9YPJodKjA5/Lq/YZf2aOeIaEjwkd5UW+7mr01CwvMJnZaNCIpt7d0xglxkdhCDQooQFihI/UrUoSDRDegmyjA==
   dependencies:
     "@expo/configure-splash-screen" "0.3.4"
 
@@ -7209,10 +7193,10 @@ expo-structured-headers@~1.0.1:
   resolved "https://registry.yarnpkg.com/expo-structured-headers/-/expo-structured-headers-1.0.1.tgz#2f3117fc9480e01aa6705493d3213060c2dcf683"
   integrity sha512-U4frE8rT5x1LqZv5Ru/9CtzY8gh0wp1MfwTu5hetPydnwxXfWchuXvKgWRjEHglFU2X/29kYFY/J1UkPvCN8xg==
 
-expo-updates@<=0.5.4:
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/expo-updates/-/expo-updates-0.5.4.tgz#ee1b395fee701fb230e7ae28729f4d7055dd3514"
-  integrity sha512-2lwvcBqZutUT4TwqPgTpcBuomjTHt781k1DjGKpf1lS9X/E4w1dgklESXfSASaTS84YuXfK/i6/7LjTWucCv/A==
+expo-updates@<=0.5.5:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/expo-updates/-/expo-updates-0.5.5.tgz#97118ce3fcc8cc77ce74ec8b7c91ac4c29dc770c"
+  integrity sha512-1R8EKkT3GoDjMRQnDaTYv31gIYIaYQGHOrjHJfwq8ai9f1W1AHux6KAH2/H6sc2o9a7roWVwjDn2kKwCm9AeHg==
   dependencies:
     "@expo/config-plugins" "^1.0.18"
     "@expo/metro-config" "^0.1.59"
@@ -12956,15 +12940,7 @@ prompts@2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prompts@^2.0.1, prompts@^2.3.2:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.4.1.tgz#befd3b1195ba052f9fd2fde8a486c4e82ee77f61"
-  integrity sha512-EQyfIuO2hPDsX1L/blblV+H7I0knhgAd82cVneCwcdND9B8AuCDuRcBH6yIcG4dFzlOUqbazQqwGjx5xmsNLuQ==
-  dependencies:
-    kleur "^3.0.3"
-    sisteransi "^1.0.5"
-
-prompts@^2.2.1:
+prompts@^2.0.1, prompts@^2.2.1, prompts@^2.3.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.4.2.tgz#7b57e73b3a48029ad10ebd44f74b01722a4cb069"
   integrity sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==
@@ -13406,10 +13382,10 @@ react-native-svg-transformer@^0.14.3:
     path-dirname "^1.0.2"
     semver "^5.6.0"
 
-react-native-svg@<=12.1.0:
-  version "12.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-12.1.0.tgz#acfe48c35cd5fca3d5fd767abae0560c36cfc03d"
-  integrity sha512-1g9qBRci7man8QsHoXn6tP3DhCDiypGgc6+AOWq+Sy+PmP6yiyf8VmvKuoqrPam/tf5x+ZaBT2KI0gl7bptZ7w==
+react-native-svg@<=12.1.1:
+  version "12.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-12.1.1.tgz#5f292410b8bcc07bbc52b2da7ceb22caf5bcaaee"
+  integrity sha512-NIAJ8jCnXGCqGWXkkJ1GTzO4a3Md5at5sagYV8Vh4MXYnL4z5Rh428Wahjhh+LIjx40EE5xM5YtwyJBqOIba2Q==
   dependencies:
     css-select "^2.1.0"
     css-tree "^1.0.0-alpha.39"
@@ -13451,10 +13427,10 @@ react-native-web@~0.16.5:
     normalize-css-color "^1.0.2"
     prop-types "^15.6.0"
 
-react-native-webview@<=11.2.3:
-  version "11.2.3"
-  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.2.3.tgz#1b82685ab60645d4161f2e25e98286493cdffa5d"
-  integrity sha512-r/K+Lf/O5aij72gRndMX2qsyQ/WLtDPiO75SS57y6JjqSKxedGASVL9Jwl1TM7fCXqUq8dgiwik/LuBHbJXAEg==
+react-native-webview@<=11.2.6:
+  version "11.2.6"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.2.6.tgz#de98e5d51a424ea2541c627388d8a2a415b85d3a"
+  integrity sha512-15lUERcm2EmU3if81MhDAMOg52ErCK470Lm+kEEP9MDqkFWrYp4w4vWwAIIrhp0BcukRgZktRWsU/jB6S1VpAA==
   dependencies:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
