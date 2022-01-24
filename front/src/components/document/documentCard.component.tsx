@@ -9,8 +9,13 @@ import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Document } from "../../types";
 import { TrackerUtils } from "../../utils";
 import { reportError } from "../../utils/logging.util";
-import { CustomButton, IcomoonIcons, View } from "..";
-import { CommonText, SecondaryText } from "../StyledText";
+import {
+  CommonText,
+  CustomButton,
+  IcomoonIcons,
+  SecondaryText,
+  View,
+} from "../baseComponents";
 import StepIconLibrary from "../timeline/stepIconLibrary.component";
 
 interface Props {

@@ -11,13 +11,6 @@ import type { Region } from "react-native-maps";
 import { HelperText } from "react-native-paper";
 
 import {
-  CustomButton,
-  CustomSnackbar,
-  Loader,
-  SecondaryText,
-} from "../../components";
-import { View } from "../../components/Themed";
-import {
   AroundMeConstants,
   Labels,
   StorageKeysConstants,
@@ -32,6 +25,13 @@ import type { Article } from "../../types";
 import { AroundMeUtils } from "../../utils";
 import SharedCartoData from "../../utils/sharedCartoData.class";
 import { storeObjectValue } from "../../utils/storage.util";
+import {
+  CustomButton,
+  CustomSnackbar,
+  Loader,
+  SecondaryText,
+  View,
+} from "../baseComponents";
 import PoiList from "./poiList.component";
 
 interface Props {

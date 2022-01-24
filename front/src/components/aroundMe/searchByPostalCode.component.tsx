@@ -7,8 +7,6 @@ import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import type { Region } from "react-native-maps";
 import { HelperText } from "react-native-paper";
 
-import { CustomButton } from "../../components";
-import { View } from "../../components/Themed";
 import { AroundMeConstants, Labels } from "../../constants";
 import {
   PLATFORM_IS_IOS,
@@ -24,6 +22,7 @@ import {
   Sizes,
 } from "../../styles";
 import { AroundMeUtils, KeyboardUtils } from "../../utils";
+import { CustomButton, View } from "../baseComponents";
 
 interface Props {
   postalCodeInput: string;

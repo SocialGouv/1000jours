@@ -5,9 +5,7 @@ import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import type { SwiperFlatList } from "react-native-swiper-flatlist";
 
-import { TitleH1 } from "../../components";
-import { CommonText } from "../../components/StyledText";
-import { View } from "../../components/Themed";
+import { CommonText, TitleH1, View } from "../../components/baseComponents";
 import { EpdsConstants, Labels, StorageKeysConstants } from "../../constants";
 import { Colors, FontStyle, Margins, Sizes } from "../../styles";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";

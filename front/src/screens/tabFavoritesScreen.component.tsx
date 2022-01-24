@@ -2,9 +2,8 @@ import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import { TitleH1 } from "../components";
-import { View } from "../components/Themed";
-import Labels from "../constants/Labels";
+import { TitleH1, View } from "../components/baseComponents";
+import { Labels } from "../constants";
 
 const TabFavoritesScreen: FC = () => (
   <View style={styles.container}>

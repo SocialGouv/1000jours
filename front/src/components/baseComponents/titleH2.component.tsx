@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
-import { CommonText, SecondaryText } from "../StyledText";
+import { CommonText, SecondaryText } from "./StyledText";
 
 interface Props {
   title: string;

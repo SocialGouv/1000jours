@@ -8,14 +8,14 @@ import * as React from "react";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 
+import { Events } from "../../components";
 import {
   BackButton,
   ErrorMessage,
-  Events,
   Loader,
   TitleH1,
   View,
-} from "../../components";
+} from "../../components/baseComponents";
 import {
   FetchPoliciesConstants,
   Formats,

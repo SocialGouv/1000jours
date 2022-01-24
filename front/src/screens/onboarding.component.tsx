@@ -18,7 +18,7 @@ import {
   IcomoonIcons,
   SecondaryText,
   View,
-} from "../components";
+} from "../components/baseComponents";
 import { Labels, StorageKeysConstants } from "../constants";
 import { Colors, FontWeight, Paddings, Sizes } from "../styles";
 import type { RootStackParamList } from "../types";

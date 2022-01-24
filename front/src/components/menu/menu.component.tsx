@@ -19,8 +19,7 @@ import {
   Sizes,
 } from "../../styles";
 import type { MenuItem, RootStackParamList } from "../../types";
-import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
-import { View } from "../Themed";
+import { Icomoon, IcomoonIcons, View } from "../baseComponents";
 import Accessibility from "./accessibility.component";
 import ConditionsOfUse from "./conditionsOfUse.component";
 import LegalNotice from "./legalNotice.component";

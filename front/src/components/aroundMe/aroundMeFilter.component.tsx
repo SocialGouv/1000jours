@@ -11,14 +11,14 @@ import {
   View,
 } from "react-native";
 
+import FetchFilterData from "../../components/aroundMe/fetchFilterData.component";
 import {
   CommonText,
   CustomButton,
   Icomoon,
   IcomoonIcons,
   TitleH1,
-} from "../../components";
-import FetchFilterData from "../../components/aroundMe/fetchFilterData.component";
+} from "../../components/baseComponents";
 import Chip from "../../components/baseComponents/chip.component";
 import {
   AroundMeConstants,

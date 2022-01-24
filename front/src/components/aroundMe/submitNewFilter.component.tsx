@@ -14,12 +14,12 @@ import { ScrollView } from "react-native-gesture-handler";
 import {
   CommonText,
   CustomButton,
+  CustomNumberOfChildrenPicker,
+  CustomPostalCodeTextInput,
   Icomoon,
   IcomoonIcons,
   TitleH1,
-} from "../../components";
-import CustomNumberOfChildrenPicker from "../../components/baseComponents/customNumberOfChildrenPicker.component";
-import CustomPostalCodeTextInput from "../../components/baseComponents/customPostalCodeTextInput.component";
+} from "../../components/baseComponents";
 import { DatabaseQueries, Labels } from "../../constants";
 import {
   Colors,

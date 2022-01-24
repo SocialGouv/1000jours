@@ -4,8 +4,7 @@ import { StyleSheet } from "react-native";
 
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 import type { Thematique } from "../../types";
-import { SecondaryText } from "../StyledText";
-import { View } from "../Themed";
+import { SecondaryText, View } from "../baseComponents";
 
 interface Props {
   items: Thematique[];

@@ -1,8 +1,7 @@
 import * as React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-import { SecondaryText } from "../../../components/StyledText";
-import { View } from "../../../components/Themed";
+import { SecondaryText, View } from "../../../components/baseComponents";
 import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
 import {
   Colors,

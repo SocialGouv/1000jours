@@ -1,12 +1,22 @@
 import * as React from "react";
 import { StyleSheet, Text } from "react-native";
 
-import CustomButton from "../../../components/baseComponents/customButton.component";
-import { SecondaryText } from "../../../components/StyledText";
-import { View } from "../../../components/Themed";
+import {
+  CustomButton,
+  SecondaryText,
+  View,
+} from "../../../components/baseComponents";
 import { Labels } from "../../../constants";
 import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
-import { Colors, FontNames, FontWeight, getFontFamilyName, Margins, Paddings, Sizes } from "../../../styles";
+import {
+  Colors,
+  FontNames,
+  FontWeight,
+  getFontFamilyName,
+  Margins,
+  Paddings,
+  Sizes,
+} from "../../../styles";
 import type { EpdsResultContactInformation } from "../../../type";
 import { LinkingUtils } from "../../../utils";
 import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";

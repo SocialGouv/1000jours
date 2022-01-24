@@ -7,7 +7,7 @@ import { Labels } from "../../constants";
 import { Paddings } from "../../styles";
 import type { ApolloHealthResponse } from "../../types";
 import { reportError } from "../../utils/logging.util";
-import { Text, View } from "../Themed";
+import { Text, View } from "./Themed";
 
 interface Props {
   error: ApolloError;

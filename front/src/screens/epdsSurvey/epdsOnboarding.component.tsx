@@ -5,10 +5,13 @@ import IconeAccederResultats from "../../assets/images/epds/onboarding_acceder_r
 import IconeRepasserTest from "../../assets/images/epds/onboarding_repasser_test.svg";
 import IconeRepondreQuestions from "../../assets/images/epds/onboarding_repondre_questions.svg";
 import IconeTrouverAide from "../../assets/images/epds/onboarding_trouver_aide.svg";
-import { TitleH1 } from "../../components";
+import {
+  CommonText,
+  SecondaryText,
+  TitleH1,
+  View,
+} from "../../components/baseComponents";
 import CustomButton from "../../components/baseComponents/customButton.component";
-import { CommonText, SecondaryText } from "../../components/StyledText";
-import { View } from "../../components/Themed";
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 

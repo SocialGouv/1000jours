@@ -3,8 +3,8 @@ import { StyleSheet } from "react-native";
 
 import SpecialChars from "../../constants/specialChars";
 import { Paddings } from "../../styles";
-import { SecondaryText } from "../StyledText";
-import type { TextProps } from "../Themed";
+import type { TextProps } from "../baseComponents";
+import { SecondaryText } from "../baseComponents";
 
 const Li: React.FC<TextProps> = (props) => {
   const newProps = {

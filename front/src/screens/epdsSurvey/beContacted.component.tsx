@@ -18,7 +18,7 @@ import {
   IcomoonIcons,
   SecondaryText,
   TitleH1,
-} from "../../components";
+} from "../../components/baseComponents";
 import {
   DatabaseQueries,
   Formats,

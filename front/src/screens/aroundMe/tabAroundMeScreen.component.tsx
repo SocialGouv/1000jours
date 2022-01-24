@@ -13,19 +13,21 @@ import BulbIcon from "../../assets/images/carto/bulb.svg";
 import {
   AddressDetails,
   AroundMeFilter,
-  CustomButton,
   CustomMapMarker,
-  CustomSnackbar,
   FetchPoisCoords,
-  Icomoon,
-  IcomoonIcons,
-  Loader,
   SearchByPostalCode,
   SlidingUpPanelAddressesList,
   SubmitNewFilter,
-  TitleH1,
 } from "../../components";
-import { View } from "../../components/Themed";
+import {
+  CustomButton,
+  CustomSnackbar,
+  Icomoon,
+  IcomoonIcons,
+  Loader,
+  TitleH1,
+  View,
+} from "../../components/baseComponents";
 import {
   AroundMeConstants,
   Labels,

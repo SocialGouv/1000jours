@@ -4,11 +4,13 @@ import * as React from "react";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 
-import { TitleH1 } from "../../components";
-import Checkbox from "../../components/baseComponents/checkbox.component";
-import CustomButton from "../../components/baseComponents/customButton.component";
-import { CommonText } from "../../components/StyledText";
-import { View } from "../../components/Themed";
+import {
+  Checkbox,
+  CommonText,
+  CustomButton,
+  TitleH1,
+  View,
+} from "../../components/baseComponents";
 import { Labels, StorageKeysConstants } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { EpdsGenderType } from "../../type";

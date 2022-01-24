@@ -15,7 +15,7 @@ import {
   Loader,
   TitleH1,
   View,
-} from "../../components";
+} from "../../components/baseComponents";
 import DocumentCard from "../../components/document/documentCard.component";
 import { FetchPoliciesConstants } from "../../constants";
 import { PARENTS_DOCUMENTS } from "../../constants/databaseQueries.constants";

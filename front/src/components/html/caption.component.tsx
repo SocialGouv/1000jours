@@ -2,8 +2,8 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import { Paddings, Sizes } from "../../styles";
-import { SecondaryTextItalic } from "../StyledText";
-import type { TextProps } from "../Themed";
+import type { TextProps } from "../baseComponents";
+import { SecondaryTextItalic } from "../baseComponents";
 
 const Caption: React.FC<TextProps> = (props) => (
   <SecondaryTextItalic {...props} style={[styles.caption, props.style]} />

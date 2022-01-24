@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import { View } from "../Themed";
+import { View } from "./Themed";
 
 interface Props {
   isVisible: boolean;

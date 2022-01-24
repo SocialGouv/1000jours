@@ -4,7 +4,7 @@ import { StyleSheet, TextInput, View } from "react-native";
 
 import { AroundMeConstants, Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings } from "../../styles";
-import { CommonText } from "..";
+import { CommonText } from "./StyledText";
 
 interface Props {
   updatePostalCode: (postalCode: string) => void;

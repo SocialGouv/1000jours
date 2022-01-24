@@ -1,9 +1,11 @@
 import * as React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-import { CustomButton } from "../../../components";
-import { SecondaryText } from "../../../components/StyledText";
-import { View } from "../../../components/Themed";
+import {
+  CustomButton,
+  SecondaryText,
+  View,
+} from "../../../components/baseComponents";
 import { Labels } from "../../../constants";
 import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
 import {

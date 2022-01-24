@@ -4,7 +4,7 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
-import { CommonText } from "../components";
+import { CommonText } from "../components/baseComponents";
 import { Labels } from "../constants";
 import { Colors, Margins, Sizes } from "../styles";
 

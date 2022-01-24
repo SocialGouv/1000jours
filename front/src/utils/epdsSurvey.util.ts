@@ -1,9 +1,5 @@
-import {
-  Colors,
-  EpdsConstants,
-  Labels,
-  StorageKeysConstants,
-} from "../constants";
+import { EpdsConstants, Labels, StorageKeysConstants } from "../constants";
+import { Colors } from "../styles";
 import type {
   BeContactedColors,
   EpdsAnswer,

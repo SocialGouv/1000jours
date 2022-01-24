@@ -3,12 +3,14 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import type SwiperFlatListRefProps from "react-native-swiper-flatlist";
 
-import CustomButton from "../../components/baseComponents/customButton.component";
-import Icomoon, {
+import {
+  CustomButton,
+  Icomoon,
   IcomoonIcons,
-} from "../../components/baseComponents/icomoon.component";
-import { View } from "../../components/Themed";
-import { Colors, Labels } from "../../constants";
+  View,
+} from "../../components/baseComponents";
+import { Labels } from "../../constants";
+import { Colors } from "../../styles";
 import { TrackerUtils } from "../../utils";
 
 interface Props {

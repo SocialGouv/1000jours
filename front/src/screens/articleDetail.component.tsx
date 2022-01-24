@@ -7,7 +7,6 @@ import type { FC } from "react";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
-import { ErrorMessage, Loader, TitleH1 } from "../components";
 import DidYouKnow from "../components/article/didYouKnow.component";
 import ImageBanner from "../components/article/imageBanner.component";
 import InShort from "../components/article/inShort.component";
@@ -16,8 +15,13 @@ import SubTitle from "../components/article/subTitle.component";
 import TextHtml from "../components/article/textHtml.component";
 import Thematics from "../components/article/thematics.component";
 import Title from "../components/article/title.component";
+import {
+  ErrorMessage,
+  Loader,
+  TitleH1,
+  View,
+} from "../components/baseComponents";
 import BackButton from "../components/baseComponents/backButton.component";
-import { View } from "../components/Themed";
 import { FetchPoliciesConstants } from "../constants";
 import { Paddings } from "../styles";
 import type {

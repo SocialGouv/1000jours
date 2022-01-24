@@ -18,12 +18,12 @@ import {
   Icomoon,
   IcomoonIcons,
   Loader,
+  ModalHelp,
+  SecondaryTextItalic,
   TitleH1,
-} from "../components";
-import ModalHelp from "../components/baseComponents/modalHelp.component";
+  View,
+} from "../components/baseComponents";
 import Events from "../components/calendar/events.component";
-import { SecondaryTextItalic } from "../components/StyledText";
-import { View } from "../components/Themed";
 import {
   FetchPoliciesConstants,
   Formats,

@@ -9,9 +9,14 @@ import { ScrollView, StyleSheet } from "react-native";
 import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
 import IconeResultatMoyen from "../../assets/images/icone_resultats_moyen.svg";
 import IconeResultatPasBien from "../../assets/images/icone_resultats_pasbien.svg";
-import { CustomButton, CustomSnackbar, TitleH1 } from "../../components";
-import { CommonText, SecondaryText } from "../../components/StyledText";
-import { View } from "../../components/Themed";
+import {
+  CommonText,
+  CustomButton,
+  CustomSnackbar,
+  SecondaryText,
+  TitleH1,
+  View,
+} from "../../components/baseComponents";
 import {
   AroundMeConstants,
   DatabaseQueries,

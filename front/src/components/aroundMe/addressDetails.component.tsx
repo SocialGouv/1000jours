@@ -31,7 +31,7 @@ import {
   IcomoonIcons,
   SecondaryText,
   View,
-} from "..";
+} from "../baseComponents";
 
 interface AddressDetailsProps {
   details: Poi;

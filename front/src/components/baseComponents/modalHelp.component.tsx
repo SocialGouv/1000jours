@@ -4,9 +4,11 @@ import { Modal, StyleSheet } from "react-native";
 
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
-import { CloseButton, CustomButton, Icomoon, IcomoonIcons } from "..";
-import { SecondaryText } from "../StyledText";
-import { View } from "../Themed";
+import CloseButton from "./closeButton.component";
+import CustomButton from "./customButton.component";
+import Icomoon, { IcomoonIcons } from "./icomoon.component";
+import { SecondaryText } from "./StyledText";
+import { View } from "./Themed";
 
 interface Props {
   icon: string;

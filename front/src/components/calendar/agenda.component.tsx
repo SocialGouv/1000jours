@@ -5,9 +5,10 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { Agenda as RNAgenda } from "react-native-calendars";
 
-import { Colors, FontWeight, Formats, Labels } from "../../constants";
+import { Formats, Labels } from "../../constants";
+import { Colors, FontWeight } from "../../styles";
 import type { Event } from "../../types";
-import { CommonText } from "../StyledText";
+import { CommonText } from "../baseComponents";
 
 interface Props {
   evenements: Event[];

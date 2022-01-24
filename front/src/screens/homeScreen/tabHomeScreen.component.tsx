@@ -10,13 +10,13 @@ import type { LayoutChangeEvent } from "react-native";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
+import { TimelineStep } from "../../components";
 import {
   ErrorMessage,
   Loader,
-  TimelineStep,
   TitleH1,
   View,
-} from "../../components";
+} from "../../components/baseComponents";
 import { FetchPoliciesConstants, StorageKeysConstants } from "../../constants";
 import Labels from "../../constants/Labels";
 import { Colors, Paddings, Sizes } from "../../styles";

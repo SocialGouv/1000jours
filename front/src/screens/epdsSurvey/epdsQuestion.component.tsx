@@ -8,9 +8,7 @@ import {
   Text,
 } from "react-native";
 
-import Checkbox from "../../components/baseComponents/checkbox.component";
-import { CommonText } from "../../components/StyledText";
-import { View } from "../../components/Themed";
+import { Checkbox, CommonText, View } from "../../components/baseComponents";
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";

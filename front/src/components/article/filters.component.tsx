@@ -16,11 +16,14 @@ import {
 } from "../../constants/platform.constants";
 import { Colors, Margins, Paddings, Shadow, Sizes } from "../../styles";
 import type { Article, ArticleFilter } from "../../types";
-import CloseButton from "../baseComponents/closeButton.component";
-import CustomButton from "../baseComponents/customButton.component";
-import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
-import TitleH1 from "../baseComponents/titleH1.component";
-import { View } from "../Themed";
+import {
+  CloseButton,
+  CustomButton,
+  Icomoon,
+  IcomoonIcons,
+  TitleH1,
+  View,
+} from "../baseComponents";
 
 interface Props {
   articles: Article[];

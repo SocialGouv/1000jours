@@ -7,7 +7,7 @@ import { StyleSheet, View } from "react-native";
 import { Labels } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins } from "../../styles";
-import { CommonText } from "..";
+import { CommonText } from "./StyledText";
 
 interface Props {
   updateNumberOfChildren: (numberOfChildren: number) => void;

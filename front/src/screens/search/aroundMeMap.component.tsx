@@ -14,17 +14,19 @@ import BulbIcon from "../../assets/images/carto/bulb.svg";
 import {
   AddressDetails,
   AroundMeFilter,
+  CustomMapMarker,
+  FetchPois,
+  SubmitNewFilter,
+} from "../../components";
+import {
   BackButton,
   CustomButton,
-  CustomMapMarker,
   CustomSnackbar,
-  FetchPois,
   Icomoon,
   IcomoonIcons,
   Loader,
-  SubmitNewFilter,
-} from "../../components";
-import { View } from "../../components/Themed";
+  View,
+} from "../../components/baseComponents";
 import {
   AroundMeConstants,
   Labels,

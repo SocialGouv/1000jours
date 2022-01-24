@@ -10,18 +10,18 @@ import { useEffect } from "react";
 import { AccessibilityInfo, ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
+import { Filters } from "../components";
+import ArticleCard from "../components/article/articleCard.component";
 import {
   BackButton,
   CommonText,
   CustomButton,
   ErrorMessage,
-  Filters,
   Loader,
   SecondaryText,
   TitleH1,
   View,
-} from "../components";
-import ArticleCard from "../components/article/articleCard.component";
+} from "../components/baseComponents";
 import { FetchPoliciesConstants, Labels } from "../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../styles";
 import type {

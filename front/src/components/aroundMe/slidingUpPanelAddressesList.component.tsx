@@ -11,11 +11,10 @@ import {
 import { Card } from "react-native-paper";
 import BottomSheet from "reanimated-bottom-sheet";
 
-import { CommonText } from "../../components";
-import { View } from "../../components/Themed";
 import { AroundMeConstants, Labels } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
+import { CommonText, View } from "../baseComponents";
 import AddressDetails from "./addressDetails.component";
 
 interface Props {

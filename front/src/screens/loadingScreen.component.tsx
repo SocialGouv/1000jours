@@ -5,8 +5,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 
-import { Loader } from "../components";
-import { View } from "../components/Themed";
+import { Loader, View } from "../components/baseComponents";
 import { StorageKeysConstants } from "../constants";
 import type { RootStackParamList } from "../types";
 import { StorageUtils } from "../utils";

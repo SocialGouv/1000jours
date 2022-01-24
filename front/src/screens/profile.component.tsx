@@ -25,8 +25,8 @@ import {
   Icomoon,
   IcomoonIcons,
   SecondaryText,
-} from "../components";
-import { View } from "../components/Themed";
+  View,
+} from "../components/baseComponents";
 import {
   Formats,
   Labels,

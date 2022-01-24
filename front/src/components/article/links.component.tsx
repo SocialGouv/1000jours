@@ -8,8 +8,7 @@ import { Labels } from "../../constants";
 import SpecialChars from "../../constants/specialChars";
 import { Colors, Paddings, Sizes } from "../../styles";
 import type { ArticleLink } from "../../types";
-import { SecondaryText } from "../StyledText";
-import { View } from "../Themed";
+import { SecondaryText, View } from "../baseComponents";
 import SubTitle from "./subTitle.component";
 
 interface Props {

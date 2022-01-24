@@ -4,7 +4,8 @@ import type { FC } from "react";
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
-import { TimelineStepLibrary, View } from "../../components";
+import { TimelineStepLibrary } from "../../components";
+import { View } from "../../components/baseComponents";
 import { FetchPoliciesConstants, Labels } from "../../constants";
 import { PARENTS_DOCUMENTS } from "../../constants/databaseQueries.constants";
 import { Colors, Sizes } from "../../styles";

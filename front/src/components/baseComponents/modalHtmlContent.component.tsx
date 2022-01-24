@@ -10,7 +10,7 @@ import WebView from "react-native-webview";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { Colors, FontWeight, Paddings } from "../../styles";
 import { AssestUtils } from "../../utils";
-import { View } from "../Themed";
+import { View } from "../baseComponents";
 import CloseButton from "./closeButton.component";
 
 interface Props {
