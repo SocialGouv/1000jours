@@ -13,22 +13,16 @@ import type { Region } from "react-native-maps";
 import { Card } from "react-native-paper";
 
 import {
-  Button,
   CommonText,
+  CustomButton,
   Icomoon,
   IcomoonIcons,
   Loader,
 } from "../../components";
 import { View } from "../../components/Themed";
-import {
-  AroundMeConstants,
-  Colors,
-  FontWeight,
-  Labels,
-  Margins,
-  Sizes,
-} from "../../constants";
+import { AroundMeConstants, Labels } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
+import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import SharedCartoData from "../../utils/sharedCartoData.class";
 import AddressDetails from "../aroundMe/addressDetails.component";
@@ -102,7 +96,7 @@ const PoiList: React.FC<Props> = ({ region }) => {
         {Labels.aroundMe.addressesListLabelEnd}
       </CommonText>
       <View style={styles.filterView}>
-        <Button
+        <CustomButton
           buttonStyle={styles.relaunchSearchButton}
           title={Labels.listArticles.filters}
           titleStyle={styles.relaunchSearchButtonText}

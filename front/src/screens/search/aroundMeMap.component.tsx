@@ -13,7 +13,7 @@ import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 import BulbIcon from "../../assets/images/carto/bulb.svg";
 import {
   BackButton,
-  Button,
+  CustomButton,
   CustomSnackbar,
   Icomoon,
   IcomoonIcons,
@@ -22,12 +22,7 @@ import {
 import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
-  Colors,
-  FontWeight,
   Labels,
-  Margins,
-  Paddings,
-  Sizes,
   StorageKeysConstants,
 } from "../../constants";
 import {
@@ -35,6 +30,7 @@ import {
   PLATFORM_IS_IOS,
   SCREEN_HEIGHT,
 } from "../../constants/platform.constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { TabSearchParamList } from "../../types";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
 import SharedCartoData from "../../utils/sharedCartoData.class";
@@ -220,7 +216,7 @@ const AroundMeMap: React.FC<Props> = ({ navigation, route }) => {
           )}
         </MapView>
         <View style={styles.filterView}>
-          <Button
+          <CustomButton
             buttonStyle={styles.relaunchSearchButton}
             title={Labels.listArticles.filters}
             titleStyle={styles.relaunchSearchButtonText}
@@ -236,7 +232,7 @@ const AroundMeMap: React.FC<Props> = ({ navigation, route }) => {
               setShowFilter(true);
             }}
           />
-          <Button
+          <CustomButton
             buttonStyle={styles.submitNewFilterButton}
             title=""
             rounded={true}
@@ -248,7 +244,7 @@ const AroundMeMap: React.FC<Props> = ({ navigation, route }) => {
         </View>
         {showRelaunchResearchButton && (
           <View style={styles.relaunchSearchView}>
-            <Button
+            <CustomButton
               buttonStyle={styles.relaunchSearchButton}
               title={Labels.aroundMe.relaunchSearch}
               titleStyle={styles.relaunchSearchButtonText}

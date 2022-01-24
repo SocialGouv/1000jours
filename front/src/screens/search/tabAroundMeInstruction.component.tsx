@@ -11,7 +11,7 @@ import type { Region } from "react-native-maps";
 import { HelperText } from "react-native-paper";
 
 import {
-  Button,
+  CustomButton,
   CustomSnackbar,
   Loader,
   SecondaryText,
@@ -19,18 +19,14 @@ import {
 import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
-  Colors,
-  FontWeight,
   Labels,
-  Margins,
-  Paddings,
-  Sizes,
   StorageKeysConstants,
 } from "../../constants";
 import {
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { CartoFilterStorage } from "../../type";
 import type { Article } from "../../types";
 import { AroundMeUtils } from "../../utils";
@@ -178,7 +174,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
         >
           <Image source={geolocationIcon} style={styles.geolicationIconStyle} />
         </TouchableOpacity>
-        <Button
+        <CustomButton
           buttonStyle={styles.geolicationButtonStyle}
           title={Labels.aroundMe.useMyGeolocation}
           titleStyle={styles.fontButton}
@@ -203,7 +199,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
           keyboardType="number-pad"
           maxLength={AroundMeConstants.POSTAL_CODE_MAX_LENGTH}
         />
-        <Button
+        <CustomButton
           buttonStyle={styles.searchByPostalCodeButton}
           title={Labels.aroundMe.searchButton}
           titleStyle={styles.fontButton}

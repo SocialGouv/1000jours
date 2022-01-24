@@ -9,18 +9,23 @@ import type {
 } from "react-native-tab-view";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 
-import { Button, ErrorMessage, SecondaryText, TitleH1 } from "../../components";
+import {
+  CustomButton,
+  ErrorMessage,
+  SecondaryText,
+  TitleH1,
+} from "../../components";
+import { Labels } from "../../constants";
+import { SEARCH_ARTICLES_BY_KEYWORDS } from "../../constants/databaseQueries.constants";
 import {
   Colors,
   FontNames,
   FontWeight,
   getFontFamilyName,
-  Labels,
   Margins,
   Paddings,
   Sizes,
-} from "../../constants";
-import { SEARCH_ARTICLES_BY_KEYWORDS } from "../../constants/databaseQueries.constants";
+} from "../../styles";
 import type { Article } from "../../types";
 import { KeyboardUtils } from "../../utils";
 import { articlesRoute, poisRoute } from "./tabSearchRoutes.component";
@@ -103,7 +108,7 @@ const TabSearchScreen: FC = () => {
           />
 
           <View style={styles.center}>
-            <Button
+            <CustomButton
               titleStyle={styles.fontButton}
               title={Labels.search.validButton}
               rounded={true}
