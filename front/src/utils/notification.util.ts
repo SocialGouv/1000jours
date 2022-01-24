@@ -20,14 +20,7 @@ export enum NotificationType {
 const NUMBER_OF_DAYS_NOTIF_EVENT_REMINDER = 7;
 const HOUR_TO_FIRED_NOTIF = 13;
 const SCREEN_CALENDAR = "tabCalendar";
-Notifications.setNotificationHandler({
-  // eslint-disable-next-line @typescript-eslint/require-await
-  handleNotification: async () => ({
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-    shouldShowAlert: false,
-  }),
-});
+
 const sendNotificationReminder = async (
   content: NotificationContentInput,
   trigger: NotificationTriggerInput
