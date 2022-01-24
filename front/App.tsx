@@ -1,4 +1,4 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
 import type { Subscription } from "@unimodules/core";
 import Constants from "expo-constants";
 import * as Font from "expo-font";
@@ -15,12 +15,15 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import IcomoonFont from "./src/assets/icomoon/icomoon.ttf";
 import { initLocales } from "./src/config/calendar-config";
 import { Labels, StorageKeysConstants } from "./src/constants";
-import useCachedResources from "./src/hooks/useCachedResources";
-import useColorScheme from "./src/hooks/useColorScheme";
+import { useCachedResources, useColorScheme } from "./src/hooks";
 import Navigation from "./src/navigation";
-import { StorageUtils, TrackerUtils } from "./src/utils";
-import { initMonitoring } from "./src/utils/logging.util";
-import { registerForPushNotificationsAsync } from "./src/utils/notification.util";
+import { apolloService } from "./src/services";
+import {
+  initMonitoring,
+  NotificationUtils,
+  StorageUtils,
+  TrackerUtils,
+} from "./src/utils";
 
 Notifications.setNotificationHandler({
   // eslint-disable-next-line @typescript-eslint/require-await
@@ -31,11 +34,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  headers: { "content-type": "application/json" },
-  uri: `${process.env.API_URL}/graphql`,
-});
+const client = apolloService.getApolloClient();
 
 initLocales();
 initMonitoring();
@@ -120,7 +119,7 @@ const MainAppContainer: FC = () => {
     AppState.addEventListener("change", handleAppStateChange);
 
     // Notifications
-    void registerForPushNotificationsAsync();
+    void NotificationUtils.registerForPushNotificationsAsync();
     // Se déclenche lorsque l'on reçoit une notification et que l'app est ouverte
     notificationListener.current =
       Notifications.addNotificationReceivedListener((newNotification) => {
