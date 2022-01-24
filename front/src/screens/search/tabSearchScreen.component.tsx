@@ -10,8 +10,10 @@ import type {
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 
 import {
+  articlesRoute,
   CustomButton,
   ErrorMessage,
+  poisRoute,
   SecondaryText,
   TitleH1,
 } from "../../components";
@@ -28,7 +30,6 @@ import {
 } from "../../styles";
 import type { Article } from "../../types";
 import { KeyboardUtils } from "../../utils";
-import { articlesRoute, poisRoute } from "./tabSearchRoutes.component";
 
 const TabSearchScreen: FC = () => {
   const [keywords, setKeywords] = useState("");

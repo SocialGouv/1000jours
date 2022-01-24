@@ -11,14 +11,20 @@ import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import BulbIcon from "../../assets/images/carto/bulb.svg";
 import {
+  AddressDetails,
+  AroundMeFilter,
   CustomButton,
+  CustomMapMarker,
   CustomSnackbar,
+  FetchPoisCoords,
   Icomoon,
   IcomoonIcons,
   Loader,
+  SearchByPostalCode,
+  SlidingUpPanelAddressesList,
+  SubmitNewFilter,
   TitleH1,
 } from "../../components";
-import FetchPoisCoords from "../../components/aroundMe/fetchPoisCoords.component";
 import { View } from "../../components/Themed";
 import {
   AroundMeConstants,
@@ -32,12 +38,6 @@ import {
 } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
-import AddressDetails from "./addressDetails.component";
-import AroundMeFilter from "./aroundMeFilter.component";
-import CustomMapMarker from "./customMapMarker.component";
-import SearchByPostalCode from "./searchByPostalCode.component";
-import SlidingUpPanelAddressesList from "./slidingUpPanelAddressesList.component";
-import SubmitNewFilter from "./submitNewFilter.component";
 
 const TabAroundMeScreen: React.FC = () => {
   const { trackScreenView } = useMatomo();

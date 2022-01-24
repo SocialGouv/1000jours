@@ -8,9 +8,9 @@ import { ScrollView } from "react-native-gesture-handler";
 import ArticleCard from "../../components/article/articleCard.component";
 import { SecondaryTextItalic } from "../../components/StyledText";
 import { Labels } from "../../constants";
+import ArticleDetail from "../../screens/articleDetail.component";
 import { Margins, Paddings } from "../../styles";
 import type { Article, Step } from "../../types";
-import ArticleDetail from "../articleDetail.component";
 import TabAroundMeInstruction from "./tabAroundMeInstruction.component";
 
 export const articlesRoute = (articles: Article[]): ReactElement => {

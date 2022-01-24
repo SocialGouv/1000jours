@@ -17,6 +17,13 @@ import TypeMaterniteIcon from "../../assets/images/carto/type_maternite.svg";
 import TypePlanningFamilialIcon from "../../assets/images/carto/type_planning_familial.svg";
 import TypePmiCafCpamIcon from "../../assets/images/carto/type_pmi_caf_cpam.svg";
 import TypeSaadIcon from "../../assets/images/carto/type_saad.svg";
+import { AroundMeConstants, Labels } from "../../constants";
+import {
+  PLATFORM_IS_IOS,
+  SCREEN_WIDTH,
+} from "../../constants/platform.constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
+import { LinkingUtils, StringUtils, TrackerUtils } from "../../utils";
 import {
   CommonText,
   CustomButton,
@@ -24,14 +31,7 @@ import {
   IcomoonIcons,
   SecondaryText,
   View,
-} from "../../components";
-import { AroundMeConstants, Labels } from "../../constants";
-import {
-  PLATFORM_IS_IOS,
-  SCREEN_WIDTH,
-} from "../../constants/platform.constants";
-import { Colors, FontNames, FontWeight, getFontFamilyName, Margins, Paddings, Sizes } from "../../styles";
-import { LinkingUtils, StringUtils, TrackerUtils } from "../../utils";
+} from "..";
 
 interface AddressDetailsProps {
   details: Poi;

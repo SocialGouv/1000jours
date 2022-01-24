@@ -12,22 +12,14 @@ import {
 import type { Region } from "react-native-maps";
 import { Card } from "react-native-paper";
 
-import {
-  CommonText,
-  CustomButton,
-  Icomoon,
-  IcomoonIcons,
-  Loader,
-} from "../../components";
-import { View } from "../../components/Themed";
 import { AroundMeConstants, Labels } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import SharedCartoData from "../../utils/sharedCartoData.class";
+import { AroundMeFilter, CommonText, CustomButton, FetchPois, Icomoon, IcomoonIcons, Loader } from "..";
 import AddressDetails from "../aroundMe/addressDetails.component";
-import AroundMeFilter from "../aroundMe/aroundMeFilter.component";
-import FetchPois from "../aroundMe/fetchPois.component";
+import { View } from "../Themed";
 
 interface Props {
   region: Region;
