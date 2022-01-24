@@ -12,7 +12,7 @@ import {
 } from "react-native";
 
 import {
-  Button,
+  CustomButton,
   CommonText,
   Icomoon,
   IcomoonIcons,
@@ -348,7 +348,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
               </ScrollView>
               <View style={styles.buttonsContainer}>
                 <View style={styles.buttonContainer}>
-                  <Button
+                  <CustomButton
                     title={Labels.buttons.cancel}
                     titleStyle={styles.buttonTitleStyle}
                     rounded={false}
@@ -371,7 +371,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                   />
                 </View>
                 <View style={styles.buttonContainer}>
-                  <Button
+                  <CustomButton
                     title={Labels.buttons.validate}
                     titleStyle={styles.buttonTitleStyle}
                     rounded={true}

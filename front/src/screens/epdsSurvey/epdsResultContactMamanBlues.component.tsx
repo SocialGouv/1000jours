@@ -7,7 +7,7 @@ import { StyleSheet } from "react-native";
 import { Image } from "react-native-elements";
 
 import portraitElise from "../../assets/images/epds/portrait_elise.jpg";
-import { Button, SecondaryText } from "../../components";
+import { CustomButton, SecondaryText } from "../../components";
 import { View } from "../../components/Themed";
 import { FontWeight, Labels, Margins, Paddings, Sizes } from "../../constants";
 import { TrackerUtils } from "../../utils";
@@ -44,7 +44,7 @@ const EpdsResultContactMamanBlues: React.FC<
         </SecondaryText>
       </View>
       <View style={[styles.beContactedButton]}>
-        <Button
+        <CustomButton
           buttonStyle={buttonColor}
           title={Labels.epdsSurvey.beContacted.button}
           titleStyle={styles.fontButton}

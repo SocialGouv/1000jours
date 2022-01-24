@@ -12,8 +12,8 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 
 import {
-  Button,
   CommonText,
+  CustomButton,
   Icomoon,
   IcomoonIcons,
   TitleH1,
@@ -161,7 +161,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
           </ScrollView>
           <View style={styles.buttonsContainer}>
             <View style={styles.buttonContainer}>
-              <Button
+              <CustomButton
                 title={Labels.buttons.cancel}
                 titleStyle={styles.buttonTitleStyle}
                 rounded={false}
@@ -179,7 +179,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
               />
             </View>
             <View style={styles.buttonContainer}>
-              <Button
+              <CustomButton
                 title={Labels.buttons.validate}
                 titleStyle={styles.buttonTitleStyle}
                 rounded={true}

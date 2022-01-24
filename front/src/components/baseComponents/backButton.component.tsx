@@ -9,8 +9,7 @@ import {
   Labels,
   Sizes,
 } from "../../constants";
-import Button from "./button.component";
-import Icomoon, { IcomoonIcons } from "./icomoon.component";
+import { CustomButton, Icomoon, IcomoonIcons } from "..";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,7 +22,7 @@ const BackButton: React.FC<Props> = ({
   color = Colors.secondaryGreen,
 }) => {
   return (
-    <Button
+    <CustomButton
       title={Labels.buttons.back}
       icon={
         <Icomoon

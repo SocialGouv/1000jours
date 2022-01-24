@@ -3,8 +3,10 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import type SwiperFlatListRefProps from "react-native-swiper-flatlist";
 
-import Button from "../../components/baseComponents/button.component";
-import Icomoon, { IcomoonIcons } from "../../components/baseComponents/icomoon.component";
+import CustomButton from "../../components/baseComponents/customButton.component";
+import Icomoon, {
+  IcomoonIcons,
+} from "../../components/baseComponents/icomoon.component";
 import { View } from "../../components/Themed";
 import { Colors, Labels } from "../../constants";
 import { TrackerUtils } from "../../utils";
@@ -30,7 +32,7 @@ const EpdsSurveyFooter: React.FC<Props> = ({
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonContainer}>
           {swiperCurrentIndex > 0 && (
-            <Button
+            <CustomButton
               title={Labels.buttons.back}
               rounded={false}
               disabled={false}
@@ -52,7 +54,7 @@ const EpdsSurveyFooter: React.FC<Props> = ({
         <View style={styles.buttonContainer}>
           {showValidateButton ? (
             <View style={styles.justifyContentCenter}>
-              <Button
+              <CustomButton
                 title={Labels.buttons.finish}
                 rounded={true}
                 disabled={false}
@@ -66,7 +68,7 @@ const EpdsSurveyFooter: React.FC<Props> = ({
             </View>
           ) : (
             questionIsAnswered && (
-              <Button
+              <CustomButton
                 title={Labels.buttons.next}
                 rounded={false}
                 disabled={false}

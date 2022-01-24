@@ -28,7 +28,7 @@ import { StorageUtils, TrackerUtils } from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { getThematiqueIcon } from "../../utils/thematique.util";
 import ArticleCard from "../article/articleCard.component";
-import Button from "../baseComponents/button.component";
+import CustomButton from "../baseComponents/customButton.component";
 import Icomoon from "../baseComponents/icomoon.component";
 import Tags from "../baseComponents/tags.component";
 import { CommonText, SecondaryText } from "../StyledText";
@@ -132,7 +132,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
       {isExpanded && (
         <View style={styles.eventDetailsContainer}>
           <View style={styles.linkCarto} ref={elementRef} accessible={true}>
-            <Button
+            <CustomButton
               rounded={true}
               title={Labels.event.seeOnTheMap}
               titleStyle={styles.buttonTitle}

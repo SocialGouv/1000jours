@@ -4,8 +4,8 @@ import { useState } from "react";
 import { StyleSheet } from "react-native";
 
 import { TitleH1 } from "../../components";
-import Button from "../../components/baseComponents/button.component";
 import Checkbox from "../../components/baseComponents/checkbox.component";
+import CustomButton from "../../components/baseComponents/customButton.component";
 import { CommonText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
@@ -96,7 +96,7 @@ const EpdsGenderEntry: React.FC<EpdsGenderEntryProps> = ({
         </View>
       </View>
       <View style={styles.validateButton}>
-        <Button
+        <CustomButton
           title={Labels.buttons.validate}
           rounded={true}
           disabled={!genderIsSelected}

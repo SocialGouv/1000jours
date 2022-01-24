@@ -9,9 +9,9 @@ import Thematics from "./article/thematics.component";
 import Title from "./article/title.component";
 import BackButton from "./baseComponents/backButton.component";
 import Backdrop from "./baseComponents/backdrop.component";
-import Button from "./baseComponents/button.component";
 import Checkbox from "./baseComponents/checkbox.component";
 import CloseButton from "./baseComponents/closeButton.component";
+import CustomButton from "./baseComponents/customButton.component";
 import CustomSnackbar from "./baseComponents/customSnackbar.component";
 import Datepicker from "./baseComponents/datePicker.component";
 import ErrorMessage from "./baseComponents/errorMessage.component";
@@ -33,11 +33,11 @@ import TimelineStep from "./timeline/timelineStep.component";
 export {
   BackButton,
   Backdrop,
-  Button,
   Checkbox,
   CloseButton,
   CommonText,
   ConditionsOfUse,
+  CustomButton,
   CustomSnackbar,
   Datepicker,
   DidYouKnow,

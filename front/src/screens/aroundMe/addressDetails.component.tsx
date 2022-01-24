@@ -18,8 +18,8 @@ import TypePlanningFamilialIcon from "../../assets/images/carto/type_planning_fa
 import TypePmiCafCpamIcon from "../../assets/images/carto/type_pmi_caf_cpam.svg";
 import TypeSaadIcon from "../../assets/images/carto/type_saad.svg";
 import {
-  Button,
   CommonText,
+  CustomButton,
   Icomoon,
   IcomoonIcons,
   SecondaryText,
@@ -182,7 +182,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
           renderTouchableView(ContactType.siteInternet, details.site_internet)}
       </View>
       <View style={styles.goThereView}>
-        <Button
+        <CustomButton
           title={Labels.aroundMe.goThere}
           titleStyle={styles.fontButton}
           rounded={true}

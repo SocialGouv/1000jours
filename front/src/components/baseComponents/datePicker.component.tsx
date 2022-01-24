@@ -21,7 +21,7 @@ import {
   PLATFORM_IS_IOS,
 } from "../../constants/platform.constants";
 import Shadow from "../../constants/shadow.constants";
-import Button from "./button.component";
+import CustomButton from "./customButton.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 
 interface Props {
@@ -85,7 +85,7 @@ const Datepicker: React.FC<Props> = ({ date, onChange, color }) => {
 
   return (
     <View style={styles.centeredView}>
-      <Button
+      <CustomButton
         rounded={false}
         action={() => {
           setSelectedDate(validatedDate ?? new Date());
@@ -124,7 +124,7 @@ const Datepicker: React.FC<Props> = ({ date, onChange, color }) => {
                   style={[styles.buttonsContainer, styles.justifyContentCenter]}
                 >
                   <View style={styles.buttonContainer}>
-                    <Button
+                    <CustomButton
                       title={Labels.buttons.cancel}
                       rounded={false}
                       disabled={false}
@@ -134,7 +134,7 @@ const Datepicker: React.FC<Props> = ({ date, onChange, color }) => {
                     />
                   </View>
                   <View style={styles.buttonContainer}>
-                    <Button
+                    <CustomButton
                       title={Labels.buttons.validate}
                       rounded={false}
                       disabled={false}

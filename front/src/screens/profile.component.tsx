@@ -18,8 +18,14 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import AppLogo from "../assets/images/logo.svg";
-import { Button, CommonText, Datepicker, SecondaryText } from "../components";
-import Icomoon, { IcomoonIcons } from "../components/baseComponents/icomoon.component";
+import {
+  CommonText,
+  CustomButton,
+  Datepicker,
+  Icomoon,
+  IcomoonIcons,
+  SecondaryText,
+} from "../components";
 import { View } from "../components/Themed";
 import {
   Colors,
@@ -293,7 +299,7 @@ const Profile: FC<Props> = ({ navigation }) => {
           </ScrollView>
           <View style={[styles.footer]}>
             <View style={styles.buttonContainer}>
-              <Button
+              <CustomButton
                 buttonStyle={{ alignItems: "center" }}
                 title={Labels.buttons.pass}
                 rounded={false}
@@ -314,7 +320,7 @@ const Profile: FC<Props> = ({ navigation }) => {
               />
             </View>
             <View style={styles.buttonContainer}>
-              <Button
+              <CustomButton
                 buttonStyle={styles.flexStart}
                 title={Labels.buttons.validate}
                 rounded={true}

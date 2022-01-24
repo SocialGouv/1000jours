@@ -12,8 +12,8 @@ import * as Animatable from "react-native-animatable";
 
 import {
   BackButton,
-  Button,
   CommonText,
+  CustomButton,
   ErrorMessage,
   Filters,
   Loader,
@@ -184,7 +184,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
           <SecondaryText style={styles.bannerDescription}>
             {Labels.article.firstThreeMonths.description}
           </SecondaryText>
-          <Button
+          <CustomButton
             buttonStyle={styles.bannerButton}
             titleStyle={styles.bannerButtonTitle}
             title={Labels.article.firstThreeMonths.buttonLabel}

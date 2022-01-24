@@ -9,7 +9,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
 import IconeResultatMoyen from "../../assets/images/icone_resultats_moyen.svg";
 import IconeResultatPasBien from "../../assets/images/icone_resultats_pasbien.svg";
-import { Button, TitleH1 } from "../../components";
+import { CustomButton, TitleH1 } from "../../components";
 import { CommonText, SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
@@ -135,7 +135,7 @@ const EpdsResult: React.FC<Props> = ({
             {resultData.resultLabels.contacterNotrePartenaire}
           </SecondaryText>
           <View style={styles.validateButton}>
-            <Button
+            <CustomButton
               title={Labels.buttons.contact}
               titleStyle={styles.fontButton}
               rounded={true}
@@ -165,7 +165,7 @@ const EpdsResult: React.FC<Props> = ({
         informationList={resultData.resultLabels.professionalsList}
       />
       <View style={styles.validateButton}>
-        <Button
+        <CustomButton
           title={Labels.epdsSurvey.restartSurvey}
           titleStyle={styles.fontButton}
           rounded={true}

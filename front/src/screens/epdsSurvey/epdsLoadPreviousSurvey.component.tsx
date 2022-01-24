@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import { TitleH1 } from "../../components";
-import Button from "../../components/baseComponents/button.component";
+import CustomButton from "../../components/baseComponents/customButton.component";
 import { SecondaryText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import {
@@ -30,7 +30,7 @@ const EpdsLoadPreviousSurvey: React.FC<EpdsLoadPreviousSurveyProps> = ({
         </SecondaryText>
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
-            <Button
+            <CustomButton
               title={Labels.epdsSurvey.previousSurvey.continueButton}
               titleStyle={styles.titleButtonStyle}
               buttonStyle={styles.buttonStyle}
@@ -41,7 +41,7 @@ const EpdsLoadPreviousSurvey: React.FC<EpdsLoadPreviousSurveyProps> = ({
             />
           </View>
           <View style={styles.buttonContainer}>
-            <Button
+            <CustomButton
               title={Labels.epdsSurvey.previousSurvey.startOverButton}
               titleStyle={styles.titleButtonStyle}
               buttonStyle={styles.buttonStyle}

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, Text } from "react-native";
 
-import Button from "../../../components/baseComponents/button.component";
+import CustomButton from "../../../components/baseComponents/customButton.component";
 import { SecondaryText } from "../../../components/StyledText";
 import { View } from "../../../components/Themed";
 import {
@@ -71,7 +71,7 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
           >
             {contact.phoneNumber}
           </SecondaryText>
-          <Button
+          <CustomButton
             buttonStyle={styles.callButton}
             title={Labels.epdsSurvey.resultats.call}
             titleStyle={styles.fontButton}
