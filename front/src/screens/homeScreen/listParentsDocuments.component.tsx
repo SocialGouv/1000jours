@@ -9,18 +9,18 @@ import { useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-import { BackButton, ErrorMessage, Loader, TitleH1, View } from "../components";
-import DocumentCard from "../components/document/documentCard.component";
+import { BackButton, ErrorMessage, Loader, TitleH1, View } from "../../components";
+import DocumentCard from "../../components/document/documentCard.component";
 import {
   Colors,
   FetchPoliciesConstants,
   FontWeight,
   Paddings,
   Sizes,
-} from "../constants";
-import { PARENTS_DOCUMENTS } from "../constants/databaseQueries.constants";
-import type { Document, Step, TabHomeParamList } from "../types";
-import { TrackerUtils } from "../utils";
+} from "../../constants";
+import { PARENTS_DOCUMENTS } from "../../constants/databaseQueries.constants";
+import type { Document, Step, TabHomeParamList } from "../../types";
+import { TrackerUtils } from "../../utils";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;
