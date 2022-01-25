@@ -10,14 +10,17 @@ import { Labels } from "../../constants";
 import { NotificationUtils, TrackerUtils } from "../../utils";
 import { NotificationModal } from "../baseComponents";
 
-Notifications.setNotificationHandler({
-  // eslint-disable-next-line @typescript-eslint/require-await
-  handleNotification: async () => ({
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-    shouldShowAlert: false,
-  }),
-});
+// Called in App.tsx
+export const setNotificationHandler = (): void => {
+  Notifications.setNotificationHandler({
+    // eslint-disable-next-line @typescript-eslint/require-await
+    handleNotification: async () => ({
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+      shouldShowAlert: false,
+    }),
+  });
+};
 
 const NotificationHandler: FC = () => {
   const [notification, setNotification] = useState<Notification | null>(null);
