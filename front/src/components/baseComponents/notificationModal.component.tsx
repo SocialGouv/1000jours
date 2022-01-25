@@ -52,8 +52,8 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
       const redirectFromRoot = notification.request.content.data
         .redirectFromRoot as boolean;
       if (redirectFromRoot)
-        RootNavigation.navigate("root", { screen: redirectTo });
-      else RootNavigation.navigate(redirectTo, null);
+        void RootNavigation.navigate("root", { screen: redirectTo });
+      else void RootNavigation.navigate(redirectTo, null);
     }
     setModalVisible(false);
   };

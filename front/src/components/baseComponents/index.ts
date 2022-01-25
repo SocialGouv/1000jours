@@ -13,6 +13,7 @@ import Icomoon, { IcomoonIcons } from "./icomoon.component";
 import Loader from "./loader.component";
 import ModalHelp from "./modalHelp.component";
 import NotificationModal from "./notificationModal.component";
+import ShareButton, { SharePageType } from "./shareButton.component";
 import { CommonText, SecondaryText, SecondaryTextItalic } from "./StyledText";
 import Tags from "./tags.component";
 import type { TextProps } from "./Themed";
@@ -40,6 +41,8 @@ export {
   NotificationModal,
   SecondaryText,
   SecondaryTextItalic,
+  ShareButton,
+  SharePageType,
   Tags,
   Text,
   TextProps,

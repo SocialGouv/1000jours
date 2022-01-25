@@ -127,6 +127,7 @@ export default {
     ok: "Ok",
     pass: "Passer",
     previous: "Précédent",
+    share: "Partager",
     start: "Commencer",
     validate: "Valider",
   },
@@ -540,6 +541,16 @@ export default {
     writeKeywordPlaceholder: "Saisissez ici votre mot-clé",
     yourSearch: "Votre recherche :",
   },
+  share: {
+    article: {
+      messageEnd: "vous a été partagé.",
+      messageStart: "L'article",
+    },
+    event: {
+      messageEnd: "vous a été partagé.",
+      messageStart: "L'événement",
+    },
+  },
   tabs: {
     calendarTitle: "Calendrier",
     favoritesTitle: "Favoris",
@@ -563,6 +574,7 @@ export default {
     },
     title: "Choisissez l'étape que vous souhaitez approfondir",
   },
+  toAccessCickHere: "Pour y accéder, vous pouvez cliquer ici : ",
   version: "v.",
   warning: "Attention",
 };

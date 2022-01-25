@@ -126,7 +126,7 @@ const PoiList: React.FC<Props> = ({ region }) => {
                 SharedCartoData.fetchedPois = poisToDisplay;
                 SharedCartoData.region = currentRegion;
                 SharedCartoData.selectedPoiIndex = poiIndex;
-                RootNavigation.navigate("aroundMeMap", {
+                void RootNavigation.navigate("aroundMeMap", {
                   updatePoiList: () => {
                     setPoisArray(SharedCartoData.fetchedPois);
                     setCurrentRegion(SharedCartoData.region);
@@ -143,7 +143,7 @@ const PoiList: React.FC<Props> = ({ region }) => {
                 SharedCartoData.fetchedPois = poisToDisplay;
                 SharedCartoData.region = currentRegion;
                 SharedCartoData.selectedPoiIndex = poiIndex;
-                RootNavigation.navigate("aroundMeMap", {
+                void RootNavigation.navigate("aroundMeMap", {
                   updatePoiList: () => {
                     setPoisArray(SharedCartoData.fetchedPois);
                     setCurrentRegion(SharedCartoData.region);

@@ -19,10 +19,12 @@ import {
   BackButton,
   ErrorMessage,
   Loader,
+  ShareButton,
+  SharePageType,
   TitleH1,
   View,
 } from "../../components/baseComponents";
-import { FetchPoliciesConstants } from "../../constants";
+import { FetchPoliciesConstants, Labels } from "../../constants";
 import { Paddings } from "../../styles";
 import type {
   Article,
@@ -148,7 +150,19 @@ const ArticleDetail: FC<Props> = ({
           />
         </View>
         <View>
-          <ImageBanner visuel={result.article.visuel} />
+          <View style={styles.imageBannerContainer}>
+            <ImageBanner visuel={result.article.visuel} />
+            <View style={styles.flexEnd}>
+              <ShareButton
+                buttonTitle={Labels.buttons.share}
+                title={Labels.appName}
+                message={`${Labels.share.article.messageStart} "${result.article.titre}" ${Labels.share.article.messageEnd}`}
+                page={SharePageType.article}
+                id={result.article.id}
+                buttonStyle={styles.shareButton}
+              />
+            </View>
+          </View>
           <View style={styles.articleDetails}>
             <Title title={result.article.titre} />
             <Thematics items={result.article.thematiques} />
@@ -177,13 +191,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: paddingArticleContent,
     paddingTop: Paddings.light,
   },
+  flexEnd: {
+    alignSelf: "flex-end",
+    backgroundColor: "transparent",
+    bottom: Paddings.light,
+    position: "absolute",
+    right: Paddings.light,
+  },
   flexStart: {
     alignItems: "flex-start",
     flexDirection: "row",
     flexWrap: "wrap",
   },
+  imageBannerContainer: {
+    marginBottom: 15,
+    marginTop: 15,
+  },
   mainContainer: {
     padding: paddingMainContent,
+  },
+  shareButton: {
+    marginBottom: 0,
   },
 });
 
