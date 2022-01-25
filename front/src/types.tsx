@@ -15,7 +15,7 @@ export type RootStackParamList = {
 export type BottomTabParamList = {
   tabHome: undefined;
   tabCalendar: undefined;
-  tabFavorites: undefined;
+  tabEpds: undefined;
   tabSearch: undefined;
 };
 
@@ -37,12 +37,8 @@ export type TabEpdsParamList = {
   tabEpdsScreen: undefined;
 };
 
-export type TabFavoritesParamList = {
-  tabFavoritesScreen: undefined;
-};
-
 export type TabAroundMeParamList = {
-  tabAroundMeScreen: undefined;
+  tabAroundMe: undefined;
 };
 
 export type TabSearchParamList = {

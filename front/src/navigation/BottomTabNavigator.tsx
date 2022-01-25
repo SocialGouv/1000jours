@@ -6,16 +6,16 @@ import * as React from "react";
 import { Icomoon, IcomoonIcons } from "../components/baseComponents";
 import Labels from "../constants/Labels";
 import {
+  AroundMeMap,
   ArticleDetail,
-  EpdsSurveyScreen,
   EventDetails,
   ListArticles,
   ListParentsDocuments,
   TabCalendarScreen,
+  TabEpdsScreen,
   TabHomeScreen,
   TabSearchScreen,
 } from "../screens";
-import AroundMeMap from "../screens/search/aroundMeMap.component";
 import { Colors } from "../styles";
 import type {
   BottomTabParamList,
@@ -68,7 +68,7 @@ const BottomTabNavigator: FC = () => {
           size={iconSize}
         />
       ),
-      name: "tabFavorites",
+      name: "tabEpds",
       title: Labels.tabs.testEpds,
     },
     {
@@ -130,7 +130,7 @@ const TabHomeNavigator: FC = () => (
       component={ListParentsDocuments}
     />
     <TabHomeStack.Screen name="article" component={ArticleDetail} />
-    <TabHomeStack.Screen name="epdsSurvey" component={EpdsSurveyScreen} />
+    <TabHomeStack.Screen name="epdsSurvey" component={TabEpdsScreen} />
   </TabHomeStack.Navigator>
 );
 
@@ -152,7 +152,7 @@ const TabEpdsNavigator: FC = () => (
   <TabEpdsStack.Navigator screenOptions={{ headerShown: false }}>
     <TabEpdsStack.Screen
       name="tabEpdsScreen"
-      component={EpdsSurveyScreen}
+      component={TabEpdsScreen}
       options={{}}
     />
   </TabEpdsStack.Navigator>
