@@ -3,6 +3,7 @@ import AroundMeFilter from "./aroundMe/aroundMeFilter.component";
 import CustomMapMarker from "./aroundMe/customMapMarker.component";
 import FetchPois from "./aroundMe/fetchPois.component";
 import FetchPoisCoords from "./aroundMe/fetchPoisCoords.component";
+import PoiList from "./aroundMe/poiList.component";
 import SearchByPostalCode from "./aroundMe/searchByPostalCode.component";
 import SlidingUpPanelAddressesList from "./aroundMe/slidingUpPanelAddressesList.component";
 import SubmitNewFilter from "./aroundMe/submitNewFilter.component";
@@ -20,7 +21,7 @@ import ConditionsOfUse from "./menu/conditionsOfUse.component";
 import LegalNotice from "./menu/legalNotice.component";
 import Menu from "./menu/menu.component";
 import NotificationHandler from "./notification/notificationHandler.component";
-import PoiList from "./search/poiList.component";
+import AroundMePoiList from "./search/aroundMePoiList.component";
 import { articlesRoute, poisRoute } from "./search/tabSearchRoutes.component";
 import StepIcon from "./timeline/stepIcon.component";
 import TimelineStep from "./timeline/timelineStep.component";
@@ -29,6 +30,7 @@ import TimelineStepLibrary from "./timeline/timelineStepLibrary.component";
 export {
   AddressDetails,
   AroundMeFilter,
+  AroundMePoiList,
   articlesRoute,
   ConditionsOfUse,
   CustomMapMarker,
