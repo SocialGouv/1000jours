@@ -19,7 +19,7 @@ export default {
           data: [
             {
               host: process.env.DEEPLINK_DOMAIN,
-              pathPrefix: `/${process.env.DEEPLINK_DOMAIN}`,
+              pathPrefix: `/${process.env.DEEPLINK_PATH}`,
               scheme: "https",
             },
           ],
