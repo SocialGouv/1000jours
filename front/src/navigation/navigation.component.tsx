@@ -9,17 +9,15 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 
 import LogoMinistere from "../assets/images/Logo ministere.svg";
 import AppLogo from "../assets/images/logo.svg";
+import { ConditionsOfUse, LegalNotice, Menu } from "../components";
 import {
   Backdrop,
-  ConditionsOfUse,
   Icomoon,
   IcomoonIcons,
-  LegalNotice,
-  Menu,
   NotificationModal,
   Text,
   View,
-} from "../components";
+} from "../components/baseComponents";
 import { Labels } from "../constants";
 import { LoadingScreen, NotFoundScreen, Onboarding, Profile } from "../screens";
 import { Colors, Paddings, Sizes } from "../styles";

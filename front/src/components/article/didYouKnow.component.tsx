@@ -4,8 +4,7 @@ import { StyleSheet, Text } from "react-native";
 
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
-import { CommonText, SecondaryText } from "../StyledText";
-import { View } from "../Themed";
+import { CommonText, SecondaryText, View } from "../baseComponents";
 
 interface Props {
   description: string;

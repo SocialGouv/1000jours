@@ -14,9 +14,9 @@ export default {
               tabCalendarScreen: "calendar",
             },
           },
-          tabFavorites: {
+          tabEpds: {
             screens: {
-              tabFavoritesScreen: "favorites",
+              tabEpdsScreen: "epds",
             },
           },
           tabHome: {

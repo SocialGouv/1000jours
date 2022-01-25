@@ -7,7 +7,7 @@ export const screenReaderIsEnabled = async (): Promise<boolean> => {
 
 export const setAccessibilityFocusOnText = (
   elementRef: React.RefObject<Text>
-) => {
+): void => {
   if (!elementRef.current) return;
   const reactTag = findNodeHandle(elementRef.current);
 

@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { Labels } from "../../constants";
 import { Colors, FontWeight } from "../../styles";
 import type { TableData } from "../../types";
-import { SecondaryText } from "../StyledText";
+import { SecondaryText } from "../baseComponents";
 import Caption from "./caption.component";
 
 interface Props {

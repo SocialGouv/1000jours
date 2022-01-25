@@ -3,7 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
-import { CommonText } from "../StyledText";
+import { CommonText } from "../baseComponents";
 
 interface Props {
   title: string | null;

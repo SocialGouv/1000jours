@@ -12,14 +12,21 @@ import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import BulbIcon from "../../assets/images/carto/bulb.svg";
 import {
+  AddressDetails,
+  AroundMeFilter,
+  CustomMapMarker,
+  FetchPois,
+  SubmitNewFilter,
+} from "../../components";
+import {
   BackButton,
   CustomButton,
   CustomSnackbar,
   Icomoon,
   IcomoonIcons,
   Loader,
-} from "../../components";
-import { View } from "../../components/Themed";
+  View,
+} from "../../components/baseComponents";
 import {
   AroundMeConstants,
   Labels,
@@ -34,11 +41,6 @@ import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { TabSearchParamList } from "../../types";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
 import SharedCartoData from "../../utils/sharedCartoData.class";
-import AddressDetails from "../aroundMe/addressDetails.component";
-import AroundMeFilter from "../aroundMe/aroundMeFilter.component";
-import CustomMapMarker from "../aroundMe/customMapMarker.component";
-import FetchPois from "../aroundMe/fetchPois.component";
-import SubmitNewFilter from "../aroundMe/submitNewFilter.component";
 
 interface Props {
   navigation: StackNavigationProp<TabSearchParamList>;

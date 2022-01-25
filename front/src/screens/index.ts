@@ -1,21 +1,23 @@
-import TabAroundMeScreen from "./aroundMe/tabAroundMeScreen.component";
-import ArticleDetail from "./articleDetail.component";
-import EpdsSurveyScreen from "./epdsSurvey/epdsSurveyScreen.component";
-import EventDetails from "./event/eventDetails.component";
-import ListParentsDocuments from "./homeScreen/listParentsDocuments.component";
-import TabHomeScreen from "./homeScreen/tabHomeScreen.component";
-import ListArticles from "./listArticles.component";
-import LoadingScreen from "./loadingScreen.component";
-import NotFoundScreen from "./notFoundScreen.component";
-import Onboarding from "./onboarding.component";
-import Profile from "./profile.component";
+import TabAroundMeScreen from "./aroundMe_old/tabAroundMeScreen.component";
+import ArticleDetail from "./articles/articleDetail.component";
+import ListArticles from "./articles/listArticles.component";
+import EventDetails from "./calendar/eventDetails.component";
+import TabCalendarScreen from "./calendar/tabCalendarScreen.component";
+import EpdsResult from "./epdsSurvey/epdsResult.component";
+import TabEpdsScreen from "./epdsSurvey/tabEpdsScreen.component";
+import ListParentsDocuments from "./home/listParentsDocuments.component";
+import TabHomeScreen from "./home/tabHomeScreen.component";
+import LoadingScreen from "./loading/loading.component";
+import NotFoundScreen from "./notFound/notFound.component";
+import Onboarding from "./onboardingAndProfile/onboarding.component";
+import Profile from "./onboardingAndProfile/profile.component";
+import AroundMeMap from "./search/aroundMeMap.component";
 import TabSearchScreen from "./search/tabSearchScreen.component";
-import TabCalendarScreen from "./tabCalendarScreen.component";
-import TabFavoritesScreen from "./tabFavoritesScreen.component";
 
 export {
+  AroundMeMap,
   ArticleDetail,
-  EpdsSurveyScreen,
+  EpdsResult,
   EventDetails,
   ListArticles,
   ListParentsDocuments,
@@ -25,7 +27,7 @@ export {
   Profile,
   TabAroundMeScreen,
   TabCalendarScreen,
-  TabFavoritesScreen,
+  TabEpdsScreen,
   TabHomeScreen,
   TabSearchScreen,
 };

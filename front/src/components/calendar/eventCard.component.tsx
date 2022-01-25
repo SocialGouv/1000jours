@@ -21,10 +21,10 @@ import { StorageUtils, TrackerUtils } from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { getThematiqueIcon } from "../../utils/thematique.util";
 import ArticleCard from "../article/articleCard.component";
+import { CommonText, SecondaryText } from "../baseComponents";
 import CustomButton from "../baseComponents/customButton.component";
 import Icomoon from "../baseComponents/icomoon.component";
 import Tags from "../baseComponents/tags.component";
-import { CommonText, SecondaryText } from "../StyledText";
 
 interface Props {
   event: Event;

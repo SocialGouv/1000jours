@@ -2,8 +2,8 @@ import * as React from "react";
 import { Linking, StyleSheet } from "react-native";
 
 import { Colors } from "../../styles";
-import { SecondaryText } from "../StyledText";
-import type { TextProps } from "../Themed";
+import type { TextProps } from "../baseComponents";
+import { SecondaryText } from "../baseComponents";
 
 interface AProps {
   url: string;

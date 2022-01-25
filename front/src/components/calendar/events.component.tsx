@@ -11,8 +11,8 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Formats, Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Event } from "../../types";
+import { CommonText } from "../baseComponents";
 import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
-import { CommonText } from "../StyledText";
 import EventCard from "./eventCard.component";
 
 interface Props {

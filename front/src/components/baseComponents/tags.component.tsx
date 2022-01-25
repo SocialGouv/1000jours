@@ -4,8 +4,8 @@ import { StyleSheet } from "react-native";
 
 import { FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Tag } from "../../types";
-import { SecondaryText } from "../StyledText";
-import { View } from "../Themed";
+import { SecondaryText } from "./StyledText";
+import { View } from "./Themed";
 
 interface Props {
   tags: Tag[];

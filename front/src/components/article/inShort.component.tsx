@@ -8,9 +8,13 @@ import BgImage from "../../assets/images/bg-icon-in-short.png";
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { ArticleInShortItem } from "../../types";
-import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
-import { CommonText, SecondaryText } from "../StyledText";
-import { View } from "../Themed";
+import {
+  CommonText,
+  Icomoon,
+  IcomoonIcons,
+  SecondaryText,
+  View,
+} from "../baseComponents";
 
 export const inShortIconNames = {
   baby: "bebe",
