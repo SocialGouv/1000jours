@@ -314,7 +314,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
                 title={Labels.profile.update}
                 rounded={true}
                 action={() => {
-                  RootNavigation.navigate("profile", null);
+                  void RootNavigation.navigate("profile", null);
                 }}
               />
             </View>

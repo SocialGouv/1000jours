@@ -2,6 +2,7 @@ import { ApolloProvider } from "@apollo/client";
 import type { Subscription } from "@unimodules/core";
 import Constants from "expo-constants";
 import * as Font from "expo-font";
+import * as Linking from "expo-linking";
 import * as Notifications from "expo-notifications";
 import { StatusBar } from "expo-status-bar";
 import { MatomoProvider, useMatomo } from "matomo-tracker-react-native";
@@ -14,13 +15,14 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import IcomoonFont from "./src/assets/icomoon/icomoon.ttf";
 import { initLocales } from "./src/config/calendar-config";
-import { Labels, StorageKeysConstants } from "./src/constants";
+import { Labels, Links, StorageKeysConstants } from "./src/constants";
 import { useCachedResources, useColorScheme } from "./src/hooks";
 import Navigation from "./src/navigation/navigation.component";
 import { apolloService } from "./src/services";
 import {
   initMonitoring,
   NotificationUtils,
+  RootNavigation,
   StorageUtils,
   TrackerUtils,
 } from "./src/utils";
@@ -102,6 +104,19 @@ const MainAppContainer: FC = () => {
     }
   };
 
+  const redirectDeepLink = (url: string) => {
+    const { path, queryParams } = Linking.parse(url);
+    if (path === Linking.parse(Links.deepLinkUrl).path) {
+      void RootNavigation.navigate(queryParams.page as string, {
+        id: queryParams.id,
+      });
+    }
+  };
+
+  const handleOpenURL = ({ url }: { url: string }) => {
+    if (url) redirectDeepLink(url);
+  };
+
   useEffect(() => {
     trackAppStart();
 
@@ -136,8 +151,25 @@ const MainAppContainer: FC = () => {
         setNotification(response.notification);
       });
 
+    // Permet de récupérer l'url qui a déclenché l'ouverture de l'app lorsque celle-ci est déjà ouverte.
+    Linking.addEventListener("url", handleOpenURL);
+
+    // Permet de récupérer l'url qui a déclenché l'ouverture de l'app lorsque celle-ci n'est pas déjà ouverte
+    Linking.getInitialURL()
+      .then((url) => {
+        if (url) {
+          setTimeout(() => {
+            redirectDeepLink(url);
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        console.error("An error occurred", err);
+      });
+
     return () => {
       AppState.removeEventListener("change", handleAppStateChange);
+      Linking.removeEventListener("url", handleOpenURL);
 
       if (notificationListener.current)
         Notifications.removeNotificationSubscription(

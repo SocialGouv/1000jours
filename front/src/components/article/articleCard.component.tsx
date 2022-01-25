@@ -8,8 +8,7 @@ import DefaultImage from "../../assets/images/default.png";
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Article, Step } from "../../types";
-import * as RootNavigation from "../../utils/rootNavigation.util";
-import { getVisuelFormat, VisuelFormat } from "../../utils/visuel.util";
+import { getVisuelFormat, RootNavigation, VisuelFormat } from "../../utils";
 import { CommonText, SecondaryText } from "../baseComponents";
 
 interface Props {
@@ -44,7 +43,7 @@ const ArticleCard: FC<Props> = ({
         if (isFromSearchScreen && setStepAndArticleId)
           setStepAndArticleId(article.id, step);
         else {
-          RootNavigation.navigate("article", {
+          void RootNavigation.navigate("article", {
             id: article.id,
             step: step,
           });
