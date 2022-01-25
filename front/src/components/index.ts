@@ -19,6 +19,7 @@ import Events from "./calendar/events.component";
 import ConditionsOfUse from "./menu/conditionsOfUse.component";
 import LegalNotice from "./menu/legalNotice.component";
 import Menu from "./menu/menu.component";
+import NotificationHandler from "./notification/notificationHandler.component";
 import PoiList from "./search/poiList.component";
 import { articlesRoute, poisRoute } from "./search/tabSearchRoutes.component";
 import StepIcon from "./timeline/stepIcon.component";
@@ -41,6 +42,7 @@ export {
   LegalNotice,
   Links,
   Menu,
+  NotificationHandler,
   PoiList,
   poisRoute,
   SearchByPostalCode,

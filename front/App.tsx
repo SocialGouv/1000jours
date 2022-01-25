@@ -1,38 +1,22 @@
 import { ApolloProvider } from "@apollo/client";
-import type { Subscription } from "@unimodules/core";
 import Constants from "expo-constants";
 import * as Font from "expo-font";
-import * as Notifications from "expo-notifications";
 import { StatusBar } from "expo-status-bar";
 import { MatomoProvider, useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { AppStateStatus } from "react-native";
 import { AppState } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import IcomoonFont from "./src/assets/icomoon/icomoon.ttf";
 import { initLocales } from "./src/config/calendar-config";
-import { Labels, StorageKeysConstants } from "./src/constants";
+import { StorageKeysConstants } from "./src/constants";
 import { useCachedResources, useColorScheme } from "./src/hooks";
 import Navigation from "./src/navigation/navigation.component";
 import { apolloService } from "./src/services";
-import {
-  initMonitoring,
-  NotificationUtils,
-  StorageUtils,
-  TrackerUtils,
-} from "./src/utils";
-
-Notifications.setNotificationHandler({
-  // eslint-disable-next-line @typescript-eslint/require-await
-  handleNotification: async () => ({
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-    shouldShowAlert: false,
-  }),
-});
+import { initMonitoring, StorageUtils, TrackerUtils } from "./src/utils";
 
 const client = apolloService.getApolloClient();
 
@@ -49,11 +33,6 @@ const MainAppContainer: FC = () => {
 
   // Load Custom Fonts (Icomoon)
   const [fontsLoaded, setFontsLoaded] = useState(false);
-
-  const [notification, setNotification] =
-    useState<Notifications.Notification | null>(null);
-  const notificationListener = useRef<Subscription>();
-  const responseListener = useRef<Subscription>();
 
   const updateAppActiveCounter = async () => {
     const appActiveCounterStr = await StorageUtils.getStringValue(
@@ -118,34 +97,8 @@ const MainAppContainer: FC = () => {
     // Permet de détecter lorsque l'app change d'état ('active' | 'background' | 'inactive' | 'unknown' | 'extension')
     AppState.addEventListener("change", handleAppStateChange);
 
-    // Notifications
-    void NotificationUtils.registerForPushNotificationsAsync();
-    // Se déclenche lorsque l'on reçoit une notification et que l'app est ouverte
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((newNotification) => {
-        setNotification(newNotification);
-      });
-    // Se déclenche lorsque l'on clique sur la notification native
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        const notificationType =
-          response.notification.request.content.data.type ?? "";
-        trackScreenView(
-          `${TrackerUtils.TrackingEvent.NOTIFICATION} (${notificationType}) - ${Labels.notification.openTheApp}`
-        );
-        setNotification(response.notification);
-      });
-
     return () => {
       AppState.removeEventListener("change", handleAppStateChange);
-
-      if (notificationListener.current)
-        Notifications.removeNotificationSubscription(
-          notificationListener.current
-        );
-
-      if (responseListener.current)
-        Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
 
@@ -155,11 +108,7 @@ const MainAppContainer: FC = () => {
     return (
       <ApolloProvider client={client}>
         <SafeAreaProvider>
-          <Navigation
-            colorScheme={colorScheme}
-            notification={notification}
-            setNotification={setNotification}
-          />
+          <Navigation colorScheme={colorScheme} />
           <StatusBar />
         </SafeAreaProvider>
       </ApolloProvider>
