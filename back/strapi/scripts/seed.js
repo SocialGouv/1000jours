@@ -13,6 +13,7 @@ const models = [
   "evenement",
   "article",
   "questionnaire-epds",
+  "cartographie-types"
 ];
 
 let strapi;
