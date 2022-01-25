@@ -65,7 +65,7 @@ const ShareButton: React.FC<Props> = ({
         });
       }
     } catch (error: unknown) {
-      console.log(error);
+      console.error(error);
     }
   };
 
