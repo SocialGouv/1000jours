@@ -1,4 +1,3 @@
-import type { Action } from "matomo-tracker-react-native";
 import { MatomoProvider, useMatomo } from "matomo-tracker-react-native";
 import type { FC, ReactElement } from "react";
 import { useEffect } from "react";
@@ -21,33 +20,8 @@ export const TrackerProvider: FC<TrackerProviderProps> = ({ appContainer }) => {
 export const TrackerAppStart: FC = () => {
   const { trackAppStart } = useMatomo();
   useEffect(() => {
-    trackAppStart();
+    void trackAppStart({});
   }, []);
-
-  return null;
-};
-
-interface TrackScreenViewComponentProps {
-  screenName: string;
-  launchTracking: boolean;
-}
-
-export const TrackScreenViewComponent: FC<TrackScreenViewComponentProps> = ({
-  screenName,
-  launchTracking,
-}) => {
-  const { trackScreenView } = useMatomo();
-
-  const trackScreen = (name: string) => {
-    const param: Action = { name };
-    trackScreenView(param);
-  };
-
-  useEffect(() => {
-    if (launchTracking) {
-      trackScreen(screenName);
-    }
-  }, [launchTracking]);
 
   return null;
 };

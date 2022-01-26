@@ -13,8 +13,8 @@ import IcomoonFont from "./src/assets/icomoon/icomoon.ttf";
 import {
   setNotificationHandler,
   TrackerAppStart,
+  TrackerHandler,
   TrackerProvider,
-  TrackScreenViewComponent,
 } from "./src/components";
 import { initLocales } from "./src/config/calendar-config";
 import { StorageKeysConstants } from "./src/constants";
@@ -111,9 +111,8 @@ const MainAppContainer: FC = () => {
     return (
       <ApolloProvider client={client}>
         <TrackerAppStart />
-        <TrackScreenViewComponent
+        <TrackerHandler
           screenName={`${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${appCounter}`}
-          launchTracking
         />
         <SafeAreaProvider>
           <Navigation colorScheme={colorScheme} />
