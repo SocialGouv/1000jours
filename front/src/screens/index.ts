@@ -1,3 +1,4 @@
+import TrackerProvider from "../components/tracker/trackerProvider.component";
 import TabAroundMeScreen from "./aroundMe_old/tabAroundMeScreen.component";
 import ArticleDetail from "./articles/articleDetail.component";
 import ListArticles from "./articles/listArticles.component";
@@ -30,4 +31,5 @@ export {
   TabEpdsScreen,
   TabHomeScreen,
   TabSearchScreen,
+  TrackerProvider,
 };
