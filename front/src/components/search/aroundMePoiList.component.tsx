@@ -1,25 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import type { Poi } from "@socialgouv/nos1000jours-lib";
+import type { FC } from "react";
 import * as React from "react";
-import { useEffect, useState } from "react";
-import type { NativeScrollEvent } from "react-native";
-import { StyleSheet, TouchableOpacity } from "react-native";
-import {
-  ScrollView,
-  TouchableOpacity as TouchableOpacityAndroid,
-} from "react-native-gesture-handler";
+import { useState } from "react";
+import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
-import { Card } from "react-native-paper";
 
-import { AroundMeConstants, Labels } from "../../constants";
-import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
+import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import SharedCartoData from "../../utils/sharedCartoData.class";
-import AddressDetails from "../aroundMe/addressDetails.component";
 import AroundMeFilter from "../aroundMe/aroundMeFilter.component";
 import FetchPois from "../aroundMe/fetchPois.component";
+import PoiList from "../aroundMe/poiList.component";
 import {
   CommonText,
   CustomButton,
@@ -33,56 +27,32 @@ interface Props {
   region: Region;
 }
 
-const PoiList: React.FC<Props> = ({ region }) => {
+const AroundMePoiList: FC<Props> = ({ region }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [poisArray, setPoisArray] = useState<Poi[]>([]);
   const [currentRegion, setCurrentRegion] = useState(region);
-  const [currentEndIndex, setCurrentEndIndex] = useState(
-    AroundMeConstants.PAGINATION_NUMBER_ADDRESSES_LIST
-  );
-  const [poisToDisplay, setPoisToDisplay] = useState<Poi[]>(
-    poisArray.slice(0, currentEndIndex)
-  );
   const [showFilter, setShowFilter] = useState(false);
-
   const [trigger, setTrigger] = useState(false);
-
-  useEffect(() => {
-    setCurrentEndIndex(AroundMeConstants.PAGINATION_NUMBER_ADDRESSES_LIST);
-    setPoisToDisplay(
-      poisArray.slice(0, AroundMeConstants.PAGINATION_NUMBER_ADDRESSES_LIST)
-    );
-  }, [poisArray]);
-
-  const handleScroll = ({
-    layoutMeasurement,
-    contentOffset,
-    contentSize,
-  }: NativeScrollEvent) => {
-    const thresholdBottom = 20;
-
-    if (
-      layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - thresholdBottom
-    ) {
-      const newEndIndex = currentEndIndex + currentEndIndex;
-      setPoisToDisplay(
-        poisToDisplay.concat(poisArray.slice(currentEndIndex, newEndIndex))
-      );
-      setCurrentEndIndex(newEndIndex);
-    }
-  };
-
-  const renderCard = (poi: Poi) => (
-    <Card style={styles.card}>
-      <AddressDetails details={poi} />
-    </Card>
-  );
 
   const handlePois = (pois: Poi[]) => {
     setPoisArray(pois);
     setIsLoading(false);
   };
+
+  const navigateToMap = (poiIndex: number) => {
+    SharedCartoData.fetchedPois = poisArray;
+    SharedCartoData.region = currentRegion;
+    SharedCartoData.selectedPoiIndex = poiIndex;
+
+    // TODO Warning à cause du fait qu'on passe une fonction en paramètre, à modifier pendant le refactoring de la navigation
+    RootNavigation.navigate("aroundMeMap", {
+      updatePoiList: () => {
+        setPoisArray(SharedCartoData.fetchedPois);
+        setCurrentRegion(SharedCartoData.region);
+      },
+    });
+  };
+
   return (
     <View style={styles.slidingUpPanelView}>
       <FetchPois
@@ -113,49 +83,7 @@ const PoiList: React.FC<Props> = ({ region }) => {
           }}
         />
       </View>
-      <ScrollView
-        onScroll={({ nativeEvent }) => {
-          handleScroll(nativeEvent);
-        }}
-      >
-        {poisToDisplay.map((poi, poiIndex) =>
-          PLATFORM_IS_IOS ? (
-            <TouchableOpacity
-              key={poiIndex}
-              onPress={() => {
-                SharedCartoData.fetchedPois = poisToDisplay;
-                SharedCartoData.region = currentRegion;
-                SharedCartoData.selectedPoiIndex = poiIndex;
-                void RootNavigation.navigate("aroundMeMap", {
-                  updatePoiList: () => {
-                    setPoisArray(SharedCartoData.fetchedPois);
-                    setCurrentRegion(SharedCartoData.region);
-                  },
-                });
-              }}
-            >
-              {renderCard(poi)}
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacityAndroid
-              key={poiIndex}
-              onPress={() => {
-                SharedCartoData.fetchedPois = poisToDisplay;
-                SharedCartoData.region = currentRegion;
-                SharedCartoData.selectedPoiIndex = poiIndex;
-                void RootNavigation.navigate("aroundMeMap", {
-                  updatePoiList: () => {
-                    setPoisArray(SharedCartoData.fetchedPois);
-                    setCurrentRegion(SharedCartoData.region);
-                  },
-                });
-              }}
-            >
-              {renderCard(poi)}
-            </TouchableOpacityAndroid>
-          )
-        )}
-      </ScrollView>
+      <PoiList poisArray={poisArray} onPoiPress={navigateToMap} />
       <AroundMeFilter
         visible={showFilter}
         hideModal={(filterWasSaved: boolean) => {
@@ -178,11 +106,6 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
     marginHorizontal: Margins.default,
     marginVertical: Margins.smaller,
-  },
-  card: {
-    borderBottomColor: Colors.cardGrey,
-    borderBottomWidth: 1,
-    margin: Margins.smaller,
   },
   filterView: {
     backgroundColor: "transparent",
@@ -218,4 +141,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PoiList;
+export default AroundMePoiList;

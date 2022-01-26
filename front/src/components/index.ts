@@ -3,6 +3,7 @@ import AroundMeFilter from "./aroundMe/aroundMeFilter.component";
 import CustomMapMarker from "./aroundMe/customMapMarker.component";
 import FetchPois from "./aroundMe/fetchPois.component";
 import FetchPoisCoords from "./aroundMe/fetchPoisCoords.component";
+import PoiList from "./aroundMe/poiList.component";
 import SearchByPostalCode from "./aroundMe/searchByPostalCode.component";
 import SlidingUpPanelAddressesList from "./aroundMe/slidingUpPanelAddressesList.component";
 import SubmitNewFilter from "./aroundMe/submitNewFilter.component";
@@ -16,18 +17,28 @@ import TextHtml from "./article/textHtml.component";
 import Thematics from "./article/thematics.component";
 import Title from "./article/title.component";
 import Events from "./calendar/events.component";
+import LinksHandler from "./links/linksHandler.component";
 import ConditionsOfUse from "./menu/conditionsOfUse.component";
 import LegalNotice from "./menu/legalNotice.component";
 import Menu from "./menu/menu.component";
-import PoiList from "./search/poiList.component";
+import NotificationHandler, {
+  setNotificationHandler,
+} from "./notification/notificationHandler.component";
+import AroundMePoiList from "./search/aroundMePoiList.component";
 import { articlesRoute, poisRoute } from "./search/tabSearchRoutes.component";
 import StepIcon from "./timeline/stepIcon.component";
 import TimelineStep from "./timeline/timelineStep.component";
 import TimelineStepLibrary from "./timeline/timelineStepLibrary.component";
+import TrackerHandler from "./tracker/trackerHandler.component";
+import {
+  TrackerAppStart,
+  TrackerProvider,
+} from "./tracker/trackerInit.component";
 
 export {
   AddressDetails,
   AroundMeFilter,
+  AroundMePoiList,
   articlesRoute,
   ConditionsOfUse,
   CustomMapMarker,
@@ -40,10 +51,13 @@ export {
   InShort,
   LegalNotice,
   Links,
+  LinksHandler,
   Menu,
+  NotificationHandler,
   PoiList,
   poisRoute,
   SearchByPostalCode,
+  setNotificationHandler,
   SlidingUpPanelAddressesList,
   StepIcon,
   SubmitNewFilter,
@@ -53,4 +67,7 @@ export {
   TimelineStep,
   TimelineStepLibrary,
   Title,
+  TrackerAppStart,
+  TrackerHandler,
+  TrackerProvider,
 };

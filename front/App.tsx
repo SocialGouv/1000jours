@@ -1,40 +1,30 @@
 import { ApolloProvider } from "@apollo/client";
-import type { Subscription } from "@unimodules/core";
 import Constants from "expo-constants";
 import * as Font from "expo-font";
-import * as Linking from "expo-linking";
-import * as Notifications from "expo-notifications";
 import { StatusBar } from "expo-status-bar";
-import { MatomoProvider, useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { AppStateStatus } from "react-native";
 import { AppState } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import IcomoonFont from "./src/assets/icomoon/icomoon.ttf";
+import {
+  LinksHandler,
+  setNotificationHandler,
+  TrackerAppStart,
+  TrackerHandler,
+  TrackerProvider,
+} from "./src/components";
 import { initLocales } from "./src/config/calendar-config";
-import { Labels, Links, StorageKeysConstants } from "./src/constants";
+import { StorageKeysConstants } from "./src/constants";
 import { useCachedResources, useColorScheme } from "./src/hooks";
 import Navigation from "./src/navigation/navigation.component";
 import { apolloService } from "./src/services";
-import {
-  initMonitoring,
-  NotificationUtils,
-  RootNavigation,
-  StorageUtils,
-  TrackerUtils,
-} from "./src/utils";
+import { initMonitoring, StorageUtils, TrackerUtils } from "./src/utils";
 
-Notifications.setNotificationHandler({
-  // eslint-disable-next-line @typescript-eslint/require-await
-  handleNotification: async () => ({
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-    shouldShowAlert: false,
-  }),
-});
+setNotificationHandler();
 
 const client = apolloService.getApolloClient();
 
@@ -45,17 +35,12 @@ initMonitoring();
 const customFonts = { IcoMoon: IcomoonFont };
 
 const MainAppContainer: FC = () => {
-  const { trackAppStart, trackScreenView } = useMatomo();
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
+  const [appCounter, setAppCounter] = useState(0);
 
   // Load Custom Fonts (Icomoon)
   const [fontsLoaded, setFontsLoaded] = useState(false);
-
-  const [notification, setNotification] =
-    useState<Notifications.Notification | null>(null);
-  const notificationListener = useRef<Subscription>();
-  const responseListener = useRef<Subscription>();
 
   const updateAppActiveCounter = async () => {
     const appActiveCounterStr = await StorageUtils.getStringValue(
@@ -69,9 +54,7 @@ const MainAppContainer: FC = () => {
       StorageKeysConstants.appActiveCounter,
       newAppActiveCounter.toString()
     );
-    trackScreenView(
-      `${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${newAppActiveCounter}`
-    );
+    setAppCounter(newAppActiveCounter);
   };
 
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
@@ -104,22 +87,7 @@ const MainAppContainer: FC = () => {
     }
   };
 
-  const redirectDeepLink = (url: string) => {
-    const { path, queryParams } = Linking.parse(url);
-    if (path === Linking.parse(Links.deepLinkUrl).path) {
-      void RootNavigation.navigate(queryParams.page as string, {
-        id: queryParams.id,
-      });
-    }
-  };
-
-  const handleOpenURL = ({ url }: { url: string }) => {
-    if (url) redirectDeepLink(url);
-  };
-
   useEffect(() => {
-    trackAppStart();
-
     Font.loadAsync(customFonts)
       .then(() => {
         setFontsLoaded(true);
@@ -133,51 +101,8 @@ const MainAppContainer: FC = () => {
     // Permet de détecter lorsque l'app change d'état ('active' | 'background' | 'inactive' | 'unknown' | 'extension')
     AppState.addEventListener("change", handleAppStateChange);
 
-    // Notifications
-    void NotificationUtils.registerForPushNotificationsAsync();
-    // Se déclenche lorsque l'on reçoit une notification et que l'app est ouverte
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((newNotification) => {
-        setNotification(newNotification);
-      });
-    // Se déclenche lorsque l'on clique sur la notification native
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        const notificationType =
-          response.notification.request.content.data.type ?? "";
-        trackScreenView(
-          `${TrackerUtils.TrackingEvent.NOTIFICATION} (${notificationType}) - ${Labels.notification.openTheApp}`
-        );
-        setNotification(response.notification);
-      });
-
-    // Permet de récupérer l'url qui a déclenché l'ouverture de l'app lorsque celle-ci est déjà ouverte.
-    Linking.addEventListener("url", handleOpenURL);
-
-    // Permet de récupérer l'url qui a déclenché l'ouverture de l'app lorsque celle-ci n'est pas déjà ouverte
-    Linking.getInitialURL()
-      .then((url) => {
-        if (url) {
-          setTimeout(() => {
-            redirectDeepLink(url);
-          }, 2000);
-        }
-      })
-      .catch((err) => {
-        console.error("An error occurred", err);
-      });
-
     return () => {
       AppState.removeEventListener("change", handleAppStateChange);
-      Linking.removeEventListener("url", handleOpenURL);
-
-      if (notificationListener.current)
-        Notifications.removeNotificationSubscription(
-          notificationListener.current
-        );
-
-      if (responseListener.current)
-        Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
 
@@ -186,12 +111,13 @@ const MainAppContainer: FC = () => {
   } else {
     return (
       <ApolloProvider client={client}>
+        <TrackerAppStart />
+        <LinksHandler />
+        <TrackerHandler
+          screenName={`${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${appCounter}`}
+        />
         <SafeAreaProvider>
-          <Navigation
-            colorScheme={colorScheme}
-            notification={notification}
-            setNotification={setNotification}
-          />
+          <Navigation colorScheme={colorScheme} />
           <StatusBar />
         </SafeAreaProvider>
       </ApolloProvider>
@@ -200,11 +126,7 @@ const MainAppContainer: FC = () => {
 };
 
 const App: FC = () => {
-  return (
-    <MatomoProvider instance={TrackerUtils.matomoInstance}>
-      <MainAppContainer />
-    </MatomoProvider>
-  );
+  return <TrackerProvider appContainer={<MainAppContainer />} />;
 };
 
 export default App;

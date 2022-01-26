@@ -9,12 +9,16 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 
 import LogoMinistere from "../assets/images/Logo ministere.svg";
 import AppLogo from "../assets/images/logo.svg";
-import { ConditionsOfUse, LegalNotice, Menu } from "../components";
+import {
+  ConditionsOfUse,
+  LegalNotice,
+  Menu,
+  NotificationHandler,
+} from "../components";
 import {
   Backdrop,
   Icomoon,
   IcomoonIcons,
-  NotificationModal,
   Text,
   View,
 } from "../components/baseComponents";
@@ -29,18 +33,12 @@ import LinkingConfiguration from "./LinkingConfiguration";
 
 interface NavigationProps {
   colorScheme: ColorSchemeName;
-  notification: Notifications.Notification | null;
-  setNotification: (
-    value: React.SetStateAction<Notifications.Notification | null>
-  ) => void;
 }
 
-const Navigation: FC<NavigationProps> = ({
-  colorScheme,
-  notification,
-  setNotification,
-}) => {
+const Navigation: FC<NavigationProps> = ({ colorScheme }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const [notification, setNotification] =
+    useState<Notifications.Notification | null>(null);
 
   return (
     <NavigationContainer
@@ -60,14 +58,7 @@ const Navigation: FC<NavigationProps> = ({
         setShowMenu={setShowMenu}
         navigation={navigationRef}
       />
-      {notification ? (
-        <NotificationModal
-          notification={notification}
-          onDismiss={() => {
-            setNotification(null);
-          }}
-        />
-      ) : null}
+      <NotificationHandler />
     </NavigationContainer>
   );
 };

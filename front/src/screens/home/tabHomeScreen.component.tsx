@@ -2,7 +2,6 @@ import { useLazyQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import _, { range } from "lodash";
-import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
@@ -10,7 +9,7 @@ import type { LayoutChangeEvent } from "react-native";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { TimelineStep } from "../../components";
+import { TimelineStep, TrackerHandler } from "../../components";
 import {
   ErrorMessage,
   Loader,
@@ -35,7 +34,6 @@ interface Props {
 }
 
 const TabHomeScreen: FC<Props> = ({ navigation }) => {
-  const { trackScreenView } = useMatomo();
 
   const ALL_STEPS = gql`
     query GetAllSteps {
@@ -110,7 +108,6 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   };
 
   useEffect(() => {
-    trackScreenView(TrackerUtils.TrackingEvent.HOME);
     // Permet de forcer le refresh de la page lorsque l'on arrive dessus
     const unsubscribe = navigation.addListener("focus", () => {
       void init();
@@ -142,6 +139,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 
   return (
     <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>
+      <TrackerHandler screenName={TrackerUtils.TrackingEvent.HOME} />
       <TitleH1
         title={Labels.timeline.title}
         description={Labels.timeline.description}

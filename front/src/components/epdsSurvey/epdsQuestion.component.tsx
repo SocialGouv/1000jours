@@ -1,5 +1,5 @@
-import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
+import { useState } from "react";
 import {
   AccessibilityInfo,
   Dimensions,
@@ -12,6 +12,7 @@ import { Labels } from "../../constants";
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import { TrackerUtils } from "../../utils";
+import { TrackerHandler } from "..";
 import { Checkbox, CommonText, View } from "../baseComponents";
 
 interface Props {
@@ -27,7 +28,7 @@ const EpdsQuestion: React.FC<Props> = ({
   updatePressedAnswer,
   nextButtonState,
 }) => {
-  const { trackScreenView } = useMatomo();
+  const [trackerAction, setTrackerAction] = useState("");
 
   const numberLabel = `${Labels.accessibility.epds.question} ${questionAndAnswers.questionNumber} ${Labels.accessibility.epds.onTotalQuestion} ${totalNumberOfQuestions}`;
   const questionNumberRef = React.useRef<Text>(null);
@@ -49,6 +50,7 @@ const EpdsQuestion: React.FC<Props> = ({
 
   return (
     <View style={[styles.swipeView, styles.justifyContentCenter]}>
+      <TrackerHandler actionName={trackerAction} />
       <View style={[styles.swipeViewMargin, styles.paddingRight]}>
         <View style={{ alignItems: "baseline", flexDirection: "row" }}>
           <Text
@@ -72,7 +74,7 @@ const EpdsQuestion: React.FC<Props> = ({
               checked={answer.isChecked}
               onPress={() => {
                 updatePressedAnswer(answer);
-                trackScreenView(
+                setTrackerAction(
                   `${TrackerUtils.TrackingEvent.EPDS} - question n°${questionAndAnswers.questionNumber} - case cochée`
                 );
               }}

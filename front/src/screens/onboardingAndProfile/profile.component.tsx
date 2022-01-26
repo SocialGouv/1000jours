@@ -3,7 +3,6 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { format } from "date-fns";
 import _, { filter } from "lodash";
-import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -18,6 +17,7 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import AppLogo from "../../assets/images/logo.svg";
+import { TrackerHandler } from "../../components";
 import {
   CommonText,
   CustomButton,
@@ -49,7 +49,6 @@ interface Props {
 
 const Profile: FC<Props> = ({ navigation }) => {
   const imageProfile = require("../../assets/images/profile.png");
-  const { trackScreenView } = useMatomo();
   const defaultUserContext: UserContext = {
     childBirthday: null,
     situations: [
@@ -108,9 +107,9 @@ const Profile: FC<Props> = ({ navigation }) => {
   );
   const [datePickerIsReady, setDatePickerIsReady] = useState(false);
   const [positionOfScroll, setPositionOfScroll] = useState(0);
+  const [trackerAction, setTrackerAction] = useState<string>("");
 
   useEffect(() => {
-    trackScreenView(TrackerUtils.TrackingEvent.PROFILE);
     const initDataWithStorageValue = async () => {
       const userSituationsStored = (await StorageUtils.getObjectValue(
         StorageKeysConstants.userSituationsKey
@@ -181,9 +180,7 @@ const Profile: FC<Props> = ({ navigation }) => {
 
     // Envoie la situation choisie sur Matomo
     if (situationChecked) {
-      trackScreenView(
-        `${TrackerUtils.TrackingEvent.PROFILE} - ${situationChecked.label}`
-      );
+      setTrackerAction(situationChecked.label);
     }
 
     void cancelScheduleNextStepNotification();
@@ -200,6 +197,10 @@ const Profile: FC<Props> = ({ navigation }) => {
 
   return (
     <View style={[styles.mainContainer]}>
+      <TrackerHandler
+        screenName={TrackerUtils.TrackingEvent.PROFILE}
+        actionName={trackerAction}
+      />
       <KeyboardAvoidingView
         behavior={PlatformConstants.PLATFORM_IS_IOS ? "padding" : undefined}
         style={{ flex: 1 }}
@@ -312,9 +313,7 @@ const Profile: FC<Props> = ({ navigation }) => {
                   />
                 }
                 action={() => {
-                  trackScreenView(
-                    `${TrackerUtils.TrackingEvent.PROFILE} - ${Labels.buttons.pass}`
-                  );
+                  setTrackerAction(Labels.buttons.pass);
                   navigateToRoot();
                 }}
               />
