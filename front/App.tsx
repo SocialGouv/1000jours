@@ -2,7 +2,6 @@ import { ApolloProvider } from "@apollo/client";
 import Constants from "expo-constants";
 import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
-import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -11,11 +10,12 @@ import { AppState } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import IcomoonFont from "./src/assets/icomoon/icomoon.ttf";
-import { setNotificationHandler } from "./src/components/notification/notificationHandler.component";
 import {
+  setNotificationHandler,
   TrackerAppStart,
   TrackerProvider,
-} from "./src/components/tracker/tracker.component";
+  TrackScreenViewComponent,
+} from "./src/components";
 import { initLocales } from "./src/config/calendar-config";
 import { StorageKeysConstants } from "./src/constants";
 import { useCachedResources, useColorScheme } from "./src/hooks";
@@ -34,9 +34,9 @@ initMonitoring();
 const customFonts = { IcoMoon: IcomoonFont };
 
 const MainAppContainer: FC = () => {
-  const { trackScreenView } = useMatomo();
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
+  const [appCounter, setAppCounter] = useState(0);
 
   // Load Custom Fonts (Icomoon)
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -53,9 +53,7 @@ const MainAppContainer: FC = () => {
       StorageKeysConstants.appActiveCounter,
       newAppActiveCounter.toString()
     );
-    trackScreenView(
-      `${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${newAppActiveCounter}`
-    );
+    setAppCounter(newAppActiveCounter);
   };
 
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
@@ -113,6 +111,10 @@ const MainAppContainer: FC = () => {
     return (
       <ApolloProvider client={client}>
         <TrackerAppStart />
+        <TrackScreenViewComponent
+          screenName={`${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${appCounter}`}
+          launchTracking
+        />
         <SafeAreaProvider>
           <Navigation colorScheme={colorScheme} />
           <StatusBar />

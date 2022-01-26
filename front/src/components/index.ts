@@ -1,3 +1,8 @@
+import {
+  TrackerAppStart,
+  TrackerProvider,
+  TrackScreenViewComponent,
+} from "../components/tracker/tracker.component";
 import AddressDetails from "./aroundMe/addressDetails.component";
 import AroundMeFilter from "./aroundMe/aroundMeFilter.component";
 import CustomMapMarker from "./aroundMe/customMapMarker.component";
@@ -20,7 +25,9 @@ import Events from "./calendar/events.component";
 import ConditionsOfUse from "./menu/conditionsOfUse.component";
 import LegalNotice from "./menu/legalNotice.component";
 import Menu from "./menu/menu.component";
-import NotificationHandler from "./notification/notificationHandler.component";
+import NotificationHandler, {
+  setNotificationHandler,
+} from "./notification/notificationHandler.component";
 import AroundMePoiList from "./search/aroundMePoiList.component";
 import { articlesRoute, poisRoute } from "./search/tabSearchRoutes.component";
 import StepIcon from "./timeline/stepIcon.component";
@@ -48,6 +55,7 @@ export {
   PoiList,
   poisRoute,
   SearchByPostalCode,
+  setNotificationHandler,
   SlidingUpPanelAddressesList,
   StepIcon,
   SubmitNewFilter,
@@ -57,4 +65,7 @@ export {
   TimelineStep,
   TimelineStepLibrary,
   Title,
+  TrackerAppStart,
+  TrackerProvider,
+  TrackScreenViewComponent,
 };
