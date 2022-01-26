@@ -12,7 +12,10 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import IcomoonFont from "./src/assets/icomoon/icomoon.ttf";
 import { setNotificationHandler } from "./src/components/notification/notificationHandler.component";
-import TrackerProvider from "./src/components/tracker/trackerProvider.component";
+import {
+  TrackerAppStart,
+  TrackerProvider,
+} from "./src/components/tracker/tracker.component";
 import { initLocales } from "./src/config/calendar-config";
 import { StorageKeysConstants } from "./src/constants";
 import { useCachedResources, useColorScheme } from "./src/hooks";
@@ -31,7 +34,7 @@ initMonitoring();
 const customFonts = { IcoMoon: IcomoonFont };
 
 const MainAppContainer: FC = () => {
-  const { trackAppStart, trackScreenView } = useMatomo();
+  const { trackScreenView } = useMatomo();
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
@@ -50,7 +53,7 @@ const MainAppContainer: FC = () => {
       StorageKeysConstants.appActiveCounter,
       newAppActiveCounter.toString()
     );
-    void trackScreenView(
+    trackScreenView(
       `${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${newAppActiveCounter}`
     );
   };
@@ -86,8 +89,6 @@ const MainAppContainer: FC = () => {
   };
 
   useEffect(() => {
-    void trackAppStart();
-
     Font.loadAsync(customFonts)
       .then(() => {
         setFontsLoaded(true);
@@ -111,6 +112,7 @@ const MainAppContainer: FC = () => {
   } else {
     return (
       <ApolloProvider client={client}>
+        <TrackerAppStart />
         <SafeAreaProvider>
           <Navigation colorScheme={colorScheme} />
           <StatusBar />
