@@ -4,13 +4,13 @@ import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import _ from "lodash";
 import { useMatomo } from "matomo-tracker-react-native";
-import type { FC } from "react";
+import { FC, useState } from "react";
 import * as React from "react";
 import { useEffect } from "react";
 import { AccessibilityInfo, ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-import { Filters } from "../../components";
+import { Filters, TrackerHandler } from "../../components";
 import ArticleCard from "../../components/article/articleCard.component";
 import {
   BackButton,
@@ -42,17 +42,11 @@ peut-être que ça devrait être au back, lorsqu'il retourne les articles, de di
 const ETAPE_ENFANT_3_PREMIERS_MOIS = 6;
 
 const ListArticles: FC<Props> = ({ navigation, route }) => {
-  const { trackScreenView } = useMatomo();
   const screenTitle = route.params.step.nom;
   const description = route.params.step.description;
   const stepIsFirstThreeMonths =
     route.params.step.id == ETAPE_ENFANT_3_PREMIERS_MOIS;
-
-  useEffect(() => {
-    trackScreenView(
-      `${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`
-    );
-  }, []);
+  const [trackerAction, setTrackerAction] = useState("");
 
   const [articles, setArticles] = React.useState<Article[]>([]);
   const [filteredArticles, setFilteredArticles] = React.useState<Article[]>([]);
@@ -99,7 +93,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
 
   const sendFiltersTracker = (filters: ArticleFilter[]) => {
     filters.forEach((filter) => {
-      trackScreenView(
+      setTrackerAction(
         `${TrackerUtils.TrackingEvent.FILTER_ARTICLES} - ${filter.thematique.nom}`
       );
     });
@@ -155,6 +149,10 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
 
   return (
     <ScrollView style={styles.scrollView}>
+      <TrackerHandler
+        screenName={`${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`}
+        actionName={trackerAction}
+      />
       <View style={styles.topContainer}>
         <View style={[styles.flexStart]}>
           <BackButton
