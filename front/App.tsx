@@ -1,7 +1,6 @@
 import { ApolloProvider } from "@apollo/client";
 import Constants from "expo-constants";
 import * as Font from "expo-font";
-import * as Linking from "expo-linking";
 import { StatusBar } from "expo-status-bar";
 import type { FC } from "react";
 import * as React from "react";
@@ -12,22 +11,18 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import IcomoonFont from "./src/assets/icomoon/icomoon.ttf";
 import {
+  LinksHandler,
   setNotificationHandler,
   TrackerAppStart,
   TrackerHandler,
   TrackerProvider,
 } from "./src/components";
 import { initLocales } from "./src/config/calendar-config";
-import { Links, StorageKeysConstants } from "./src/constants";
+import { StorageKeysConstants } from "./src/constants";
 import { useCachedResources, useColorScheme } from "./src/hooks";
 import Navigation from "./src/navigation/navigation.component";
 import { apolloService } from "./src/services";
-import {
-  initMonitoring,
-  RootNavigation,
-  StorageUtils,
-  TrackerUtils,
-} from "./src/utils";
+import { initMonitoring, StorageUtils, TrackerUtils } from "./src/utils";
 
 setNotificationHandler();
 
@@ -92,19 +87,6 @@ const MainAppContainer: FC = () => {
     }
   };
 
-  const redirectDeepLink = (url: string) => {
-    const { path, queryParams } = Linking.parse(url);
-    if (path === Linking.parse(Links.deepLinkUrl).path) {
-      RootNavigation.navigate(queryParams.page as string, {
-        id: queryParams.id,
-      });
-    }
-  };
-
-  const handleOpenURL = ({ url }: { url: string }) => {
-    if (url) redirectDeepLink(url);
-  };
-
   useEffect(() => {
     Font.loadAsync(customFonts)
       .then(() => {
@@ -119,22 +101,8 @@ const MainAppContainer: FC = () => {
     // Permet de détecter lorsque l'app change d'état ('active' | 'background' | 'inactive' | 'unknown' | 'extension')
     AppState.addEventListener("change", handleAppStateChange);
 
-    // Permet de récupérer l'url qui a déclenché l'ouverture de l'app lorsque celle-ci n'est pas déjà ouverte
-    Linking.getInitialURL()
-      .then((url) => {
-        if (url) {
-          setTimeout(() => {
-            redirectDeepLink(url);
-          }, 2000);
-        }
-      })
-      .catch((err) => {
-        console.error("An error occurred", err);
-      });
-
     return () => {
       AppState.removeEventListener("change", handleAppStateChange);
-      Linking.removeEventListener("url", handleOpenURL);
     };
   }, []);
 
@@ -144,6 +112,7 @@ const MainAppContainer: FC = () => {
     return (
       <ApolloProvider client={client}>
         <TrackerAppStart />
+        <LinksHandler />
         <TrackerHandler
           screenName={`${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${appCounter}`}
         />

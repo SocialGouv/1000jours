@@ -17,6 +17,7 @@ import TextHtml from "./article/textHtml.component";
 import Thematics from "./article/thematics.component";
 import Title from "./article/title.component";
 import Events from "./calendar/events.component";
+import LinksHandler from "./links/linksHandler.component";
 import ConditionsOfUse from "./menu/conditionsOfUse.component";
 import LegalNotice from "./menu/legalNotice.component";
 import Menu from "./menu/menu.component";
@@ -50,6 +51,7 @@ export {
   InShort,
   LegalNotice,
   Links,
+  LinksHandler,
   Menu,
   NotificationHandler,
   PoiList,
