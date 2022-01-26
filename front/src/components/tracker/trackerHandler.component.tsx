@@ -5,13 +5,15 @@ import { useEffect } from "react";
 interface TrackerHandlerProps {
   screenName?: string;
   actionName?: string;
+  searchKeyword?: string;
 }
 
 const TrackerHandler: FC<TrackerHandlerProps> = ({
   screenName,
   actionName,
+  searchKeyword,
 }) => {
-  const { trackScreenView, trackAction } = useMatomo();
+  const { trackScreenView, trackAction, trackSiteSearch } = useMatomo();
 
   useEffect(() => {
     if (screenName && screenName.length > 0)
@@ -26,6 +28,11 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
       void trackAction({ name: `${screenName} / ${actionName}` });
     else if (actionNameIsNotEmpty) void trackAction({ name: `${actionName}` });
   }, [actionName]);
+
+  useEffect(() => {
+    if (searchKeyword && searchKeyword.length > 0)
+      void trackSiteSearch({ keyword: searchKeyword });
+  }, [searchKeyword]);
 
   return null;
 };

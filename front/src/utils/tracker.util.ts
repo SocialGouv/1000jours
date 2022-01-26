@@ -26,4 +26,5 @@ export enum TrackingEvent {
   NOTIFICATION = "Notification",
   FILTER_CARTO = "Filtre (Carto)",
   FILTER_ARTICLES = "Filtre (Articles)",
+  RECHERCHER = "Rechercher",
 }
