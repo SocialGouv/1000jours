@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { useEffect } from "react";
 
 interface TrackerHandlerProps {
-  screenName: string;
+  screenName?: string;
   actionName?: string;
 }
 
@@ -14,12 +14,17 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
   const { trackScreenView, trackAction } = useMatomo();
 
   useEffect(() => {
-    void trackScreenView({ name: screenName });
+    if (screenName && screenName.length > 0)
+      void trackScreenView({ name: screenName });
   }, []);
 
   useEffect(() => {
-    if (actionName && actionName.length > 0)
+    const screenNameIsNotEmpty = screenName && screenName.length > 0;
+    const actionNameIsNotEmpty = actionName && actionName.length > 0;
+
+    if (screenNameIsNotEmpty && actionNameIsNotEmpty)
       void trackAction({ name: `${screenName} / ${actionName}` });
+    else if (actionNameIsNotEmpty) void trackAction({ name: `${actionName}` });
   }, [actionName]);
 
   return null;

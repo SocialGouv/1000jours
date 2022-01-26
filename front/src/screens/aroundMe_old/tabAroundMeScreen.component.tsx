@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import type { Poi } from "@socialgouv/nos1000jours-lib";
-import { useMatomo } from "matomo-tracker-react-native";
-import { FC, useEffect, useRef, useState } from "react";
+import type { FC } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import type { LayoutChangeEvent } from "react-native";
 import { Image, StyleSheet } from "react-native";
@@ -18,6 +18,7 @@ import {
   SearchByPostalCode,
   SlidingUpPanelAddressesList,
   SubmitNewFilter,
+  TrackerHandler,
 } from "../../components";
 import {
   CustomButton,
@@ -42,7 +43,6 @@ import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
 
 const TabAroundMeScreen: FC = () => {
-  const { trackScreenView } = useMatomo();
   const mapRef = useRef<MapView>();
   const [postalCodeInput, setPostalCodeInput] = useState("");
   const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
@@ -81,10 +81,11 @@ const TabAroundMeScreen: FC = () => {
   const [heightOfMapView, setHeightOfMapView] = useState(0);
   const [widthOfMapView, setWidthOfMapView] = useState(0);
 
+  const [trackerAction, setTrackerAction] = useState("");
+
   const currentUserLocatioIcon = require("../../assets/images/carto/current_location.png");
 
   useEffect(() => {
-    trackScreenView(TrackerUtils.TrackingEvent.CARTO);
     const checkIfSavedRegion = async () => {
       const savedRegion: Region | undefined = await StorageUtils.getObjectValue(
         StorageKeysConstants.cartoSavedRegion
@@ -173,7 +174,7 @@ const TabAroundMeScreen: FC = () => {
   };
 
   const onMarkerClick = (poiIndex: number) => {
-    trackScreenView(TrackerUtils.TrackingEvent.CARTO_CLICK_POI);
+    setTrackerAction(TrackerUtils.TrackingEvent.CARTO_CLICK_POI);
     if (PLATFORM_IS_IOS) {
       moveMapToCoordinates(
         poisArray[poiIndex].position_latitude,
@@ -201,6 +202,10 @@ const TabAroundMeScreen: FC = () => {
 
   return (
     <View style={styles.mainContainer}>
+      <TrackerHandler
+        screenName={TrackerUtils.TrackingEvent.CARTO}
+        actionName={trackerAction}
+      />
       <View style={{ flex: 0 }}>
         <FetchPoisCoords
           triggerSearchByGpsCoords={triggerSearchByGpsCoords}

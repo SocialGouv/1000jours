@@ -1,6 +1,6 @@
 import type { Poi } from "@socialgouv/nos1000jours-lib";
-import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
+import { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { TouchableOpacity as TouchableOpacityAndroid } from "react-native-gesture-handler";
 
@@ -32,6 +32,7 @@ import {
   SecondaryText,
   View,
 } from "../baseComponents";
+import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface AddressDetailsProps {
   details: Poi;
@@ -50,7 +51,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
   isClickedMarker,
   hideDetails,
 }) => {
-  const { trackScreenView } = useMatomo();
+  const [trackerAction, setTrackerAction] = useState("");
   const getIcon = (
     categoriePoi: AroundMeConstants.PoiCategorieEnum,
     typePoi: AroundMeConstants.PoiTypeEnum
@@ -147,6 +148,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
   const iconType = getIcon(details.categorie, details.type);
   return (
     <View style={styles.rowContainer}>
+      <TrackerHandler actionName={trackerAction} />
       <View style={styles.icon}>{iconType}</View>
       <View style={styles.addressDetails}>
         {StringUtils.stringIsNotNullNorEmpty(details.nom) && (
@@ -181,7 +183,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
           rounded={true}
           disabled={false}
           onPressIn={async () => {
-            trackScreenView(
+            setTrackerAction(
               `${TrackerUtils.TrackingEvent.CARTO} - Clic sur le bouton "M'y rendre"`
             );
             await LinkingUtils.openNavigationApp(

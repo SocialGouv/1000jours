@@ -62,7 +62,7 @@ const TabEpdsScreen: FC = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <TrackerHandler screenName={TrackerUtils.TrackingEvent.EPDS} />{" "}
+      <TrackerHandler screenName={TrackerUtils.TrackingEvent.EPDS} />
       {getViewToDisplay()}
     </View>
   );

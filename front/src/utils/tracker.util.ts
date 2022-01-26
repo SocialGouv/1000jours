@@ -3,8 +3,8 @@ import MatomoTracker from "matomo-tracker-react-native";
 
 export const matomoInstance = new MatomoTracker({
   disabled: process.env.MATOMO_ENABLED === "false",
-  siteId: process.env.MATOMO_APPLICATION_ID,
-  urlBase: process.env.MATOMO_URL,
+  siteId: Number(process.env.MATOMO_APPLICATION_ID),
+  urlBase: String(process.env.MATOMO_URL),
 });
 
 export enum TrackingEvent {

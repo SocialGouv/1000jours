@@ -1,7 +1,6 @@
 import _ from "lodash";
-import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import {
   AccessibilityInfo,
@@ -25,6 +24,7 @@ import { CommonText, SecondaryText } from "../baseComponents";
 import CustomButton from "../baseComponents/customButton.component";
 import Icomoon from "../baseComponents/icomoon.component";
 import Tags from "../baseComponents/tags.component";
+import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
   event: Event;
@@ -34,7 +34,7 @@ interface Props {
 const dotIconSize = Sizes.xxxs;
 
 const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
-  const { trackScreenView } = useMatomo();
+  const [trackerAction, setTrackerAction] = useState("");
   const elementRef = useRef<View>(null);
 
   const getEventTags = () => {
@@ -69,7 +69,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
   };
 
   const seeOnTheMap = () => {
-    trackScreenView(TrackerUtils.TrackingEvent.EVENT_SEE_THE_MAP);
+    setTrackerAction(TrackerUtils.TrackingEvent.EVENT_SEE_THE_MAP);
     updateCartoFilterStorage();
     RootNavigation.navigate("tabAroundMe", null);
   };
@@ -89,6 +89,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
 
   return (
     <View style={styles.eventCard} key={event.id}>
+      <TrackerHandler actionName={trackerAction} />
       <ListItem
         pad={0}
         containerStyle={styles.listItemContainer}

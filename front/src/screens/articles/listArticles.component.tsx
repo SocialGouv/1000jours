@@ -3,10 +3,9 @@ import { gql } from "@apollo/client/core";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import _ from "lodash";
-import { useMatomo } from "matomo-tracker-react-native";
-import { FC, useState } from "react";
+import type { FC } from "react";
+import { useEffect, useState } from "react";
 import * as React from "react";
-import { useEffect } from "react";
 import { AccessibilityInfo, ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 

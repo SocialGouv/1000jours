@@ -6,7 +6,6 @@ import type { FC } from "react";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
-import { TrackerHandler } from "../../components";
 import DidYouKnow from "../../components/article/didYouKnow.component";
 import ImageBanner from "../../components/article/imageBanner.component";
 import InShort from "../../components/article/inShort.component";
@@ -22,6 +21,7 @@ import {
   TitleH1,
   View,
 } from "../../components/baseComponents";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { FetchPoliciesConstants } from "../../constants";
 import { Paddings } from "../../styles";
 import type {

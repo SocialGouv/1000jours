@@ -1,5 +1,4 @@
 import type { Notification as ExpoNotificaiton } from "expo-notifications";
-import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -10,6 +9,7 @@ import type { NotificationStyle } from "../../types";
 import { NotificationType } from "../../utils/notification.util";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { TrackingEvent } from "../../utils/tracker.util";
+import TrackerHandler from "../tracker/trackerHandler.component";
 import CustomButton from "./customButton.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 import { SecondaryText } from "./StyledText";
@@ -35,15 +35,15 @@ notifStyles.set(NotificationType.nextStep, {
 });
 
 const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
-  const { trackScreenView } = useMatomo();
   const notificationType = notification.request.content.data
     .type as NotificationType;
 
   const [modalVisible, setModalVisible] = useState(true);
+  const [trackerAction, setTrackerAction] = useState("");
 
   const action = () => {
     const buttonTitle = notification.request.content.data.redirectTitle ?? "";
-    trackScreenView(
+    setTrackerAction(
       `${TrackingEvent.NOTIFICATION} (${notificationType}) - ${buttonTitle}`
     );
     const redirectTo = notification.request.content.data.redirectTo as string;
@@ -71,6 +71,7 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
         setModalVisible(!modalVisible);
       }}
     >
+      <TrackerHandler actionName={trackerAction} />
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <TouchableOpacity

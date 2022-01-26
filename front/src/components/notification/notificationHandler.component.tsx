@@ -1,7 +1,6 @@
 import type { Subscription } from "@unimodules/core";
 import type { Notification } from "expo-notifications";
 import * as Notifications from "expo-notifications";
-import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
@@ -9,6 +8,7 @@ import * as React from "react";
 import { Labels } from "../../constants";
 import { NotificationUtils, TrackerUtils } from "../../utils";
 import { NotificationModal } from "../baseComponents";
+import TrackerHandler from "../tracker/trackerHandler.component";
 
 // Called in App.tsx
 export const setNotificationHandler = (): void => {
@@ -26,7 +26,7 @@ const NotificationHandler: FC = () => {
   const [notification, setNotification] = useState<Notification | null>(null);
   const notificationListener = useRef<Subscription>();
   const responseListener = useRef<Subscription>();
-  const { trackScreenView } = useMatomo();
+  const [notifType, setNotiftype] = useState<unknown | undefined>(undefined);
 
   useEffect(() => {
     // Notifications
@@ -41,9 +41,8 @@ const NotificationHandler: FC = () => {
       Notifications.addNotificationResponseReceivedListener((response) => {
         const notificationType =
           response.notification.request.content.data.type ?? "";
-        trackScreenView(
-          `${TrackerUtils.TrackingEvent.NOTIFICATION} (${notificationType}) - ${Labels.notification.openTheApp}`
-        );
+
+        setNotiftype(notificationType);
         setNotification(response.notification);
       });
 
@@ -60,12 +59,19 @@ const NotificationHandler: FC = () => {
 
   return (
     notification && (
-      <NotificationModal
-        notification={notification}
-        onDismiss={() => {
-          setNotification(null);
-        }}
-      />
+      <>
+        {notifType && (
+          <TrackerHandler
+            screenName={`${TrackerUtils.TrackingEvent.NOTIFICATION} (${notifType}) - ${Labels.notification.openTheApp}`}
+          />
+        )}
+        <NotificationModal
+          notification={notification}
+          onDismiss={() => {
+            setNotification(null);
+          }}
+        />
+      </>
     )
   );
 };

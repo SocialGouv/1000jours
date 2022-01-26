@@ -2,13 +2,12 @@ import { useLazyQuery } from "@apollo/client";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { addDays, format } from "date-fns";
-import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
+import { useEffect, useState } from "react";
 import * as React from "react";
-import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 
-import { Events } from "../../components";
+import { Events, TrackerHandler } from "../../components";
 import {
   BackButton,
   ErrorMessage,
@@ -33,11 +32,9 @@ interface Props {
 }
 
 const EventDetails: FC<Props> = ({ navigation, route }) => {
-  const { trackScreenView } = useMatomo();
-
-  const [childBirthday, setChildBirthday] = React.useState("");
-  const [events, setEvents] = React.useState<Event[]>([]);
-  const [loadingEvent, setLoadingEvent] = React.useState(false);
+  const [childBirthday, setChildBirthday] = useState("");
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loadingEvent, setLoadingEvent] = useState(false);
 
   const [loadEvent, { loading, error, data }] = useLazyQuery(
     GET_EVENT_DETAILS(route.params.eventId),
@@ -55,7 +52,7 @@ const EventDetails: FC<Props> = ({ navigation, route }) => {
     if (childBirthdayStr.length > 0) {
       setChildBirthday(childBirthdayStr);
       setLoadingEvent(true);
-      if (route.params.eventId) loadEvent();
+      if (route.params.eventId) void loadEvent();
     }
   };
 
@@ -72,10 +69,6 @@ const EventDetails: FC<Props> = ({ navigation, route }) => {
       );
       eventDetails.date = date;
       setEvents([eventDetails]);
-
-      trackScreenView(
-        `${TrackerUtils.TrackingEvent.EVENT} : ${eventDetails.nom}`
-      );
       setLoadingEvent(false);
     }
   }, [loading, data]);
@@ -96,6 +89,9 @@ const EventDetails: FC<Props> = ({ navigation, route }) => {
         <ErrorMessage error={error} />
       ) : (
         <View style={styles.calendarContainer}>
+          <TrackerHandler
+            screenName={`${TrackerUtils.TrackingEvent.EVENT} : ${events[0].nom}`}
+          />
           <Events
             evenements={events}
             childBirthday={childBirthday}
