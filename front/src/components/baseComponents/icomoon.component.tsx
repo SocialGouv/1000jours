@@ -78,6 +78,8 @@ export enum IcomoonIcons {
   step4PremiersMoisActive = "step-4-premiers-mois-active",
   step4MoisA1AnActive = "step-4-mois-a-1-an-active",
   step1A2AnsActive = "step-1-a-2-ans-active",
+  tabRecherche = "tabRecherche",
+  tabRechercheActive = "tabRechercheActive",
 }
 
 const Icomoon: React.FC<Props> = ({ name, size, color }) => {
