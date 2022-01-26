@@ -24,8 +24,6 @@ const ImageBanner: FC<Props> = ({ visuel }) => {
 const styles = StyleSheet.create({
   articleImage: {
     height: 150,
-    marginBottom: 15,
-    marginTop: 15,
     width: "100%",
   },
 });
