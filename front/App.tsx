@@ -111,7 +111,7 @@ const MainAppContainer: FC = () => {
   } else {
     return (
       <ApolloProvider client={client}>
-        <TrackerAppStart />
+        {/* <TrackerAppStart /> */}
         <LinksHandler />
         {/* <TrackerHandler
           screenName={`${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${appCounter}`}
