@@ -1,5 +1,5 @@
-import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
+import { useState } from "react";
 import type { StyleProp, ViewStyle } from "react-native";
 import { Share, StyleSheet } from "react-native";
 
@@ -15,6 +15,7 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
+import { TrackerHandler } from "..";
 import CustomButton from "./customButton.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 
@@ -40,7 +41,9 @@ const ShareButton: React.FC<Props> = ({
   id,
   buttonStyle,
 }) => {
-  const { trackEvent } = useMatomo();
+  const [trackerEventName, setTrackerEventName] = useState("");
+  const [trackerEventAction, setTrackerEventAction] = useState("");
+
   const share = async () => {
     try {
       const url = `${deepLinkUrl}?page=${page}&id=${id}`;
@@ -57,12 +60,8 @@ const ShareButton: React.FC<Props> = ({
         { subject: title }
       );
       if (result.action === Share.sharedAction) {
-        trackEvent({
-          action: "Share",
-          category: "MobileApp",
-          name: `${page} : ${id}`,
-          value: 0,
-        });
+        setTrackerEventName(`${page} : ${id}`);
+        setTrackerEventAction("Share");
       }
     } catch (error: unknown) {
       console.error(error);
@@ -70,21 +69,27 @@ const ShareButton: React.FC<Props> = ({
   };
 
   return (
-    <CustomButton
-      title={buttonTitle}
-      icon={
-        <Icomoon
-          name={IcomoonIcons.partager}
-          size={Sizes.md}
-          color={Colors.primaryBlue}
-        />
-      }
-      rounded={true}
-      disabled={false}
-      action={share}
-      titleStyle={styles.buttonTitleStyle}
-      buttonStyle={[styles.defaultButtonStyle, buttonStyle]}
-    />
+    <>
+      <TrackerHandler
+        eventName={trackerEventName}
+        eventAction={trackerEventAction}
+      />
+      <CustomButton
+        title={buttonTitle}
+        icon={
+          <Icomoon
+            name={IcomoonIcons.partager}
+            size={Sizes.md}
+            color={Colors.primaryBlue}
+          />
+        }
+        rounded={true}
+        disabled={false}
+        action={share}
+        titleStyle={styles.buttonTitleStyle}
+        buttonStyle={[styles.defaultButtonStyle, buttonStyle]}
+      />
+    </>
   );
 };
 
