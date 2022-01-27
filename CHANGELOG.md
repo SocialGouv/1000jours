@@ -1,3 +1,15 @@
+# [1.91.0](https://github.com/SocialGouv/1000jours/compare/v1.90.0...v1.91.0) (2022-01-27)
+
+
+### Bug Fixes
+
+* **seed:** Corrige l'import des données et ajoute les types de POI ([#994](https://github.com/SocialGouv/1000jours/issues/994)) ([f9b398d](https://github.com/SocialGouv/1000jours/commit/f9b398d31bb38408c17051aa328000b82de4adba))
+
+
+### Features
+
+* **recherche:** ajout du lien direct articles-types de POI ([#978](https://github.com/SocialGouv/1000jours/issues/978)) ([a190b25](https://github.com/SocialGouv/1000jours/commit/a190b25022d239bfcfa43c893387c2d7300e8614))
+
 # [1.90.0](https://github.com/SocialGouv/1000jours/compare/v1.89.0...v1.90.0) (2022-01-20)
 
 
