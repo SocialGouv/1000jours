@@ -25,7 +25,7 @@ import Navigation from "./src/navigation/navigation.component";
 import { apolloService } from "./src/services";
 import { initMonitoring, StorageUtils, TrackerUtils } from "./src/utils";
 
-setNotificationHandler();
+// setNotificationHandler();
 
 const client = apolloService.getApolloClient();
 

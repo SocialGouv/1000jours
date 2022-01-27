@@ -58,7 +58,7 @@ const Navigation: FC<NavigationProps> = ({ colorScheme }) => {
         setShowMenu={setShowMenu}
         navigation={navigationRef}
       />
-      <NotificationHandler />
+      {/* <NotificationHandler /> */}
     </NavigationContainer>
   );
 };
