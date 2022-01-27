@@ -148,10 +148,10 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
 
   return (
     <ScrollView style={styles.scrollView}>
-      <TrackerHandler
+      {/* <TrackerHandler
         screenName={`${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`}
         actionName={trackerAction}
-      />
+      /> */}
       <View style={styles.topContainer}>
         <View style={[styles.flexStart]}>
           <BackButton

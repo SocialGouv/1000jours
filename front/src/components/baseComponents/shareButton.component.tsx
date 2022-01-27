@@ -70,10 +70,10 @@ const ShareButton: React.FC<Props> = ({
 
   return (
     <>
-      <TrackerHandler
+      {/* <TrackerHandler
         eventName={trackerEventName}
         eventAction={trackerEventAction}
-      />
+      /> */}
       <CustomButton
         title={buttonTitle}
         icon={

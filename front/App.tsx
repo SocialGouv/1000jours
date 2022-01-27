@@ -113,9 +113,9 @@ const MainAppContainer: FC = () => {
       <ApolloProvider client={client}>
         <TrackerAppStart />
         <LinksHandler />
-        <TrackerHandler
+        {/* <TrackerHandler
           screenName={`${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${appCounter}`}
-        />
+        /> */}
         <SafeAreaProvider>
           <Navigation colorScheme={colorScheme} />
           <StatusBar />

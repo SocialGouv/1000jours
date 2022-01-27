@@ -310,7 +310,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
 
   return (
     <>
-      <TrackerHandler actionName={trackerAction} />
+      {/* <TrackerHandler actionName={trackerAction} /> */}
       <FetchFilterData setFilterData={setFilterDataFromDb} />
       <Modal transparent={true} visible={visible} animationType="fade">
         {showModalContent && (

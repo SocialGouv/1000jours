@@ -55,9 +55,9 @@ const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
 
   return (
     <ScrollView style={styles.scrollView}>
-      <TrackerHandler
+      {/* <TrackerHandler
         screenName={`${TrackerUtils.TrackingEvent.PARENTHEQUE}`}
-      />
+      /> */}
       <View style={styles.topContainer}>
         <View style={[styles.flexStart]}>
           <BackButton

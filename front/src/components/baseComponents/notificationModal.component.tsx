@@ -71,7 +71,7 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
         setModalVisible(!modalVisible);
       }}
     >
-      <TrackerHandler actionName={trackerAction} />
+      {/* <TrackerHandler actionName={trackerAction} /> */}
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <TouchableOpacity

@@ -202,10 +202,10 @@ const TabAroundMeScreen: FC = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <TrackerHandler
+      {/* <TrackerHandler
         screenName={TrackerUtils.TrackingEvent.CARTO}
         actionName={trackerAction}
-      />
+      /> */}
       <View style={{ flex: 0 }}>
         <FetchPoisCoords
           triggerSearchByGpsCoords={triggerSearchByGpsCoords}

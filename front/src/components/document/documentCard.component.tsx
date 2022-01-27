@@ -39,7 +39,7 @@ const DocumentCard: FC<Props> = ({ document }) => {
       containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
       style={[styles.listItem, styles.borderLeftRadius]}
     >
-      <TrackerHandler actionName={trackerAction} />
+      {/* <TrackerHandler actionName={trackerAction} /> */}
       <View style={styles.documentImage}>
         <StepIconLibrary name={IcomoonIcons.stepParentheque} />
       </View>

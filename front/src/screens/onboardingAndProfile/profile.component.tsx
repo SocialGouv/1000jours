@@ -197,10 +197,10 @@ const Profile: FC<Props> = ({ navigation }) => {
 
   return (
     <View style={[styles.mainContainer]}>
-      <TrackerHandler
+      {/* <TrackerHandler
         screenName={TrackerUtils.TrackingEvent.PROFILE}
         actionName={trackerAction}
-      />
+      /> */}
       <KeyboardAvoidingView
         behavior={PlatformConstants.PLATFORM_IS_IOS ? "padding" : undefined}
         style={{ flex: 1 }}

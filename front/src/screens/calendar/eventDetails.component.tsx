@@ -89,9 +89,9 @@ const EventDetails: FC<Props> = ({ navigation, route }) => {
         <ErrorMessage error={error} />
       ) : (
         <View style={styles.calendarContainer}>
-          <TrackerHandler
+          {/* <TrackerHandler
             screenName={`${TrackerUtils.TrackingEvent.EVENT} : ${events[0].nom}`}
-          />
+          /> */}
           <Events
             evenements={events}
             childBirthday={childBirthday}

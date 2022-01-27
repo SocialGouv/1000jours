@@ -129,9 +129,9 @@ const ArticleDetail: FC<Props> = ({
 
   return (
     <ScrollView>
-      <TrackerHandler
+      {/* <TrackerHandler
         screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${result.article.titre}`}
-      />
+      /> */}
       <View style={[styles.mainContainer]}>
         <View>
           <View style={[styles.flexStart]}>
