@@ -31,7 +31,7 @@ const EpdsResultContactMamanBlues: React.FC<
 
   return (
     <View style={[styles.mainView, backgroundColor]}>
-      <TrackerHandler actionName={trackerAction} />
+      {/* <TrackerHandler actionName={trackerAction} /> */}
       <View style={[styles.rowView]}>
         <Image
           source={portraitElise}
