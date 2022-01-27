@@ -32,7 +32,7 @@ export default {
         "READ_CALENDAR",
         "WRITE_CALENDAR",
       ],
-      versionCode: 39,
+      versionCode: 38,
     },
     assetBundlePatterns: ["**/*"],
     hooks: {
@@ -51,7 +51,7 @@ export default {
     icon: "./src/assets/images/icon.png",
     ios: {
       associatedDomains: [`applinks:${process.env.DEEPLINK_DOMAIN}`],
-      buildNumber: "1.1.39",
+      buildNumber: "1.1.38",
       bundleIdentifier: "com.fabrique.millejours",
       infoPlist: {
         NSCalendarsUsageDescription:
@@ -65,14 +65,6 @@ export default {
     },
     name: "1000 jours",
     orientation: "portrait",
-    plugins: [
-      [
-        "expo-notifications",
-        {
-          icon: "./src/assets/images/notification_icon.png",
-        },
-      ],
-    ],
     scheme: "millejours",
     slug: "1000jours",
     splash: {
@@ -84,7 +76,7 @@ export default {
       fallbackToCacheTimeout: 0,
     },
     userInterfaceStyle: "light",
-    version: "1.1.39",
+    version: "1.1.38",
     web: {
       favicon: "./src/assets/images/favicon.png",
     },
