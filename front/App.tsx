@@ -2,6 +2,7 @@ import { ApolloProvider } from "@apollo/client";
 import Constants from "expo-constants";
 import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
+import { MatomoProvider } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -126,7 +127,12 @@ const MainAppContainer: FC = () => {
 };
 
 const App: FC = () => {
-  return <TrackerProvider appContainer={<MainAppContainer />} />;
+  return (
+    <MatomoProvider instance={TrackerUtils.matomoInstance}>
+      <MainAppContainer />
+    </MatomoProvider>
+  );
+  // return <TrackerProvider appContainer={<MainAppContainer />} />;
 };
 
 export default App;
