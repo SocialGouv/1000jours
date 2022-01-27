@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import type { PoiType } from "@socialgouv/nos1000jours-lib";
 import * as Location from "expo-location";
-import type { FC } from "react";
+import { FC, useEffect } from "react";
 import { useState } from "react";
 import * as React from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
@@ -46,9 +46,16 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
   const [snackBarMessage, setSnackBarMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [triggerCheckLocation, setTriggerCheckLocation] = useState(false);
-  const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] = useState(false);
+  const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] =
+    useState(false);
 
   const geolocationIcon = require("../../assets/images/carto/geolocation.png");
+
+  useEffect(() => {
+    if (region !== undefined) {
+
+    }
+  }, [region]);
 
   const showSnackBarWithMessage = (message: string) => {
     setSnackBarMessage(message);
@@ -96,9 +103,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
     setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
   };
 
-  return region ? (
-    <AroundMePoiList region={region} />
-  ) : (
+  return (
     <ScrollView style={styles.mainContainer}>
       <SearchRegion
         triggerSearchRegionByLocation={triggerCheckLocation}

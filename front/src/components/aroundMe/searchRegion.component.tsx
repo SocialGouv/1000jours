@@ -30,7 +30,6 @@ const SearchRegion: FC<Props> = ({
   const [componentIsInitialized, setComponentIsInitialized] = useState(false);
 
   const searchRegionByLocation = async () => {
-    console.log("searchRegionByLocation");
     setIsLoading(true);
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== Location.PermissionStatus.GRANTED) {
@@ -53,7 +52,6 @@ const SearchRegion: FC<Props> = ({
             accuracy: Location.Accuracy.Lowest,
           });
           locationSuccess = true;
-          // eslint-disable-next-line no-empty
         } catch (ex: unknown) {
           getPositionAttempts = getPositionAttempts + 1;
           if (
@@ -90,7 +88,6 @@ const SearchRegion: FC<Props> = ({
 
   const searchRegionByPostalCode = async () => {
     setIsLoading(true);
-    // extractPoiTypesFromArticles();
 
     if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
       setPostalCodeInvalid(true);
@@ -106,7 +103,6 @@ const SearchRegion: FC<Props> = ({
   };
 
   useEffect(() => {
-    console.log("first useEffect");
     setComponentIsInitialized(true);
   }, []);
 
