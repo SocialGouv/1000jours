@@ -32,7 +32,7 @@ import {
   SecondaryText,
   View,
 } from "../baseComponents";
-import PoiList from "./poiList.component";
+import AroundMePoiList from "./aroundMePoiList.component";
 
 interface Props {
   articles: Article[];
@@ -160,7 +160,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
   };
 
   return region ? (
-    <PoiList region={region} />
+    <AroundMePoiList region={region} />
   ) : (
     <ScrollView style={styles.mainContainer}>
       <SecondaryText style={styles.description}>

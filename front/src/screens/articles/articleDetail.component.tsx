@@ -2,7 +2,6 @@ import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
-import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
@@ -19,10 +18,13 @@ import {
   BackButton,
   ErrorMessage,
   Loader,
+  ShareButton,
+  SharePageType,
   TitleH1,
   View,
 } from "../../components/baseComponents";
-import { FetchPoliciesConstants } from "../../constants";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
+import { FetchPoliciesConstants, Labels } from "../../constants";
 import { Paddings } from "../../styles";
 import type {
   Article,
@@ -51,7 +53,6 @@ const ArticleDetail: FC<Props> = ({
   _articleStep,
   goBack,
 }) => {
-  const { trackScreenView } = useMatomo();
   const articleId = route ? route.params.id : _articleId;
   const screenTitle = route ? route.params.step?.nom : _articleStep?.nom;
   const description = route
@@ -123,14 +124,14 @@ const ArticleDetail: FC<Props> = ({
   if (error) return <ErrorMessage error={error} />;
 
   const result = data as { article: Article };
-  trackScreenView(
-    `${TrackerUtils.TrackingEvent.ARTICLE} : ${result.article.titre}`
-  );
   setInShortArray(result.article);
   setLinksArray(result.article);
 
   return (
     <ScrollView>
+      <TrackerHandler
+        screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${result.article.titre}`}
+      />
       <View style={[styles.mainContainer]}>
         <View>
           <View style={[styles.flexStart]}>
@@ -148,7 +149,19 @@ const ArticleDetail: FC<Props> = ({
           />
         </View>
         <View>
-          <ImageBanner visuel={result.article.visuel} />
+          <View style={styles.imageBannerContainer}>
+            <ImageBanner visuel={result.article.visuel} />
+            <View style={styles.flexEnd}>
+              <ShareButton
+                buttonTitle={Labels.buttons.share}
+                title={Labels.appName}
+                message={`${Labels.share.article.messageStart} "${result.article.titre}" ${Labels.share.article.messageEnd}`}
+                page={SharePageType.article}
+                id={result.article.id}
+                buttonStyle={styles.shareButton}
+              />
+            </View>
+          </View>
           <View style={styles.articleDetails}>
             <Title title={result.article.titre} />
             <Thematics items={result.article.thematiques} />
@@ -177,13 +190,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: paddingArticleContent,
     paddingTop: Paddings.light,
   },
+  flexEnd: {
+    alignSelf: "flex-end",
+    backgroundColor: "transparent",
+    bottom: Paddings.light,
+    position: "absolute",
+    right: Paddings.light,
+  },
   flexStart: {
     alignItems: "flex-start",
     flexDirection: "row",
     flexWrap: "wrap",
   },
+  imageBannerContainer: {
+    marginBottom: 15,
+    marginTop: 15,
+  },
   mainContainer: {
     padding: paddingMainContent,
+  },
+  shareButton: {
+    marginBottom: 0,
   },
 });
 

@@ -1,15 +1,15 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
-import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import { Dimensions, FlatList, ScrollView, StyleSheet } from "react-native";
 
 import FirstSlideImage from "../../assets/images/Onboarding_1.svg";
 import SecondSlideImage from "../../assets/images/Onboarding_2.svg";
 import ThirdSlideImage from "../../assets/images/Onboarding_3.svg";
+import { TrackerHandler } from "../../components";
 import {
   CommonText,
   CustomButton,
@@ -19,11 +19,11 @@ import {
   SecondaryText,
   View,
 } from "../../components/baseComponents";
+import { CustomPagination } from "../../components/onboarding/customOnboardingPagination.component";
 import { Labels, StorageKeysConstants } from "../../constants";
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
 import type { RootStackParamList } from "../../types";
 import { StorageUtils, TrackerUtils } from "../../utils";
-import { CustomPagination } from "../../components/onboarding/customOnboardingPagination.component";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -41,7 +41,6 @@ interface SlideView {
 }
 
 const Onboarding: FC<Props> = ({ navigation }) => {
-  const { trackScreenView } = useMatomo();
   const slideViews: SlideView[] = [
     {
       description: Labels.onboarding.slidesText[0].description,
@@ -62,10 +61,6 @@ const Onboarding: FC<Props> = ({ navigation }) => {
 
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
-
-  useEffect(() => {
-    trackScreenView(TrackerUtils.TrackingEvent.ONBOARDING);
-  }, []);
 
   const navigateToProfile = () => {
     void StorageUtils.storeObjectValue(
@@ -113,6 +108,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
   return (
     <View style={[styles.mainContainer, styles.flexColumn]}>
       <HeaderApp />
+      <TrackerHandler screenName={TrackerUtils.TrackingEvent.ONBOARDING} />
       <View style={styles.mainView}>
         <View style={styles.flexCenter}>
           <ScrollView>

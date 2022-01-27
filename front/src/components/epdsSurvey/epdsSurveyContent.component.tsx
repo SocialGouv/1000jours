@@ -32,6 +32,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
     useState(false);
 
   useEffect(() => {
+    let mounted = true;
     const getPreviousSurvey = async () => {
       const values: [EpdsQuestionAndAnswers[] | undefined, number | undefined] =
         await Promise.all([
@@ -44,9 +45,12 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
         ]);
 
       const previousDataSaved = Boolean(values[0]) && Boolean(values[1]);
-      setSurveyCanBeStarted(!previousDataSaved);
+      if (mounted) setSurveyCanBeStarted(!previousDataSaved);
     };
     void getPreviousSurvey();
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const getEpdsLoadPreviousSurveyReponse = async (startOver: boolean) => {

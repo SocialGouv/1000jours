@@ -9,7 +9,7 @@ import type {
 } from "react-native-tab-view";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 
-import { articlesRoute, poisRoute } from "../../components";
+import { articlesRoute, poisRoute, TrackerHandler } from "../../components";
 import {
   CustomButton,
   ErrorMessage,
@@ -28,12 +28,13 @@ import {
   Sizes,
 } from "../../styles";
 import type { Article } from "../../types";
-import { KeyboardUtils } from "../../utils";
+import { KeyboardUtils, TrackerUtils } from "../../utils";
 
 const TabSearchScreen: FC = () => {
   const [keywords, setKeywords] = useState("");
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [enteredKeyword, setEnteredKeyword] = useState("");
 
   // Tabs
   const layout = useWindowDimensions();
@@ -57,6 +58,7 @@ const TabSearchScreen: FC = () => {
 
   const onSearchByKeywords = async () => {
     setIsLoading(true);
+    setEnteredKeyword(keywords);
     KeyboardUtils.dismissKeyboard();
     await getSearchArticlesByKeywords();
   };
@@ -92,6 +94,10 @@ const TabSearchScreen: FC = () => {
   return (
     <>
       <View style={styles.mainContainer}>
+        <TrackerHandler
+          screenName={TrackerUtils.TrackingEvent.RECHERCHER}
+          searchKeyword={enteredKeyword}
+        />
         <TitleH1
           title={Labels.search.title}
           description={Labels.search.findAdaptedResponses}

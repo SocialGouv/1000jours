@@ -1,7 +1,7 @@
 import { gql, useLazyQuery } from "@apollo/client";
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import { GET_POIS_BY_GPSCOORDS } from "@socialgouv/nos1000jours-lib";
-import * as React from "react";
+import type * as React from "react";
 import { useEffect } from "react";
 import type { Region } from "react-native-maps";
 
@@ -14,14 +14,12 @@ import type { CartoFilterStorage } from "../../type";
 import { AroundMeUtils, StorageUtils } from "../../utils";
 
 interface Props {
-  children?: React.ReactNode;
   triggerSearchByGpsCoords: boolean;
   region: Region;
   setFetchedPois: (pois: Poi[]) => void;
 }
 
 const FetchPois: React.FC<Props> = ({
-  children,
   triggerSearchByGpsCoords,
   region,
   setFetchedPois,
@@ -68,7 +66,7 @@ const FetchPois: React.FC<Props> = ({
     void searchByGPSCoords();
   }, [triggerSearchByGpsCoords]);
 
-  return <>{children}</>;
+  return null;
 };
 
 export default FetchPois;

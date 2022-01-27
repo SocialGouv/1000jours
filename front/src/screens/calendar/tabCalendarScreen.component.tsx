@@ -4,13 +4,13 @@ import { addDays, format } from "date-fns";
 import * as Calendar from "expo-calendar";
 import * as Localization from "expo-localization";
 import _ from "lodash";
-import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
+import { useEffect, useState } from "react";
 import * as React from "react";
-import { useEffect } from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 
 import HelpIcon from "../../assets/images/help.png";
+import { TrackerHandler } from "../../components";
 import {
   CommonText,
   CustomButton,
@@ -54,20 +54,18 @@ interface Props {
 }
 
 const TabCalendarScreen: FC<Props> = ({ navigation }) => {
-  const { trackScreenView } = useMatomo();
-  const [childBirthday, setChildBirthday] = React.useState("");
-  const [eventsCalcFromBirthday, setEventsCalcFromBirthday] =
-    React.useState("");
-  const [events, setEvents] = React.useState<Event[]>([]);
-  const [loadingEvents, setLoadingEvents] = React.useState(false);
-  const [lastSyncDate, setLastSyncDate] = React.useState<string | null>(null);
+  const [childBirthday, setChildBirthday] = useState("");
+  const [eventsCalcFromBirthday, setEventsCalcFromBirthday] = useState("");
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loadingEvents, setLoadingEvents] = useState(false);
+  const [lastSyncDate, setLastSyncDate] = useState<string | null>(null);
   const hourWhenEventStart = 8; // Commence à 8h
   const hourWhenEventEnd = 18; // Se Termine à 18h
 
-  const [showModalHelp, setShowModalHelp] = React.useState(false);
+  const [showModalHelp, setShowModalHelp] = useState(false);
+  const [trackerAction, setTrackerAction] = useState("");
 
   useEffect(() => {
-    trackScreenView(TrackerUtils.TrackingEvent.CALENDAR);
     void requestCalendarPermission();
     void getLastSyncDate();
 
@@ -141,7 +139,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   };
 
   const syncEventsWithOsCalendar = async () => {
-    trackScreenView(TrackerUtils.TrackingEvent.CALENDAR_SYNC);
+    setTrackerAction(TrackerUtils.TrackingEvent.CALENDAR_SYNC);
 
     const appCalendar = await getAppCalendar();
     if (appCalendar?.id) void Calendar.deleteCalendarAsync(appCalendar.id);
@@ -250,6 +248,10 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
 
   return (
     <View style={styles.mainContainer}>
+      <TrackerHandler
+        screenName={TrackerUtils.TrackingEvent.CALENDAR}
+        actionName={trackerAction}
+      />
       <TitleH1
         title={Labels.tabs.calendarTitle}
         description={Labels.calendar.description}
@@ -314,7 +316,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
                 title={Labels.profile.update}
                 rounded={true}
                 action={() => {
-                  RootNavigation.navigate("profile", null);
+                  void RootNavigation.navigate("profile", null);
                 }}
               />
             </View>

@@ -11,6 +11,20 @@ export default {
           apiKey: process.env.GOOGLE_MAPS_API_KEY,
         },
       },
+      intentFilters: [
+        {
+          action: "VIEW",
+          autoVerify: true,
+          category: ["DEFAULT", "BROWSABLE"],
+          data: [
+            {
+              host: process.env.DEEPLINK_DOMAIN,
+              pathPrefix: `/${process.env.DEEPLINK_PATH}`,
+              scheme: "https",
+            },
+          ],
+        },
+      ],
       package: "com.fabrique.millejours",
       permissions: [
         "ACCESS_COARSE_LOCATION",
@@ -36,6 +50,7 @@ export default {
     },
     icon: "./src/assets/images/icon.png",
     ios: {
+      associatedDomains: [`applinks:${process.env.DEEPLINK_DOMAIN}`],
       buildNumber: "1.1.39",
       bundleIdentifier: "com.fabrique.millejours",
       infoPlist: {
@@ -58,7 +73,7 @@ export default {
         },
       ],
     ],
-    scheme: "myapp",
+    scheme: "millejours",
     slug: "1000jours",
     splash: {
       backgroundColor: "#ffffff",
