@@ -23,8 +23,8 @@ import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { CartoFilterStorage } from "../../type";
 import type { Article } from "../../types";
 import { AroundMeUtils } from "../../utils";
-import SharedCartoData from "../../utils/sharedCartoData.class";
 import { storeObjectValue } from "../../utils/storage.util";
+import SearchRegion from "../aroundMe/searchRegion.component";
 import {
   CustomButton,
   CustomSnackbar,
@@ -45,6 +45,8 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [triggerCheckLocation, setTriggerCheckLocation] = useState(false);
+  const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] = useState(false);
 
   const geolocationIcon = require("../../assets/images/carto/geolocation.png");
 
@@ -84,92 +86,36 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
     }
   };
 
-  const checkLocation = async () => {
+  const checkLocation = () => {
     extractPoiTypesFromArticles();
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== Location.PermissionStatus.GRANTED) {
-      showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
-      setIsLoading(false);
-      // setSearchIsReady(true); // Si on refuse la géoloc, on peut toujours lancer une recherche (manuelle ou via CP)
-      return;
-    }
-    setIsLoading(true);
-    try {
-      let currentLocation = undefined;
-      let locationSuccess = false;
-      let getPositionAttempts = 0;
-      // Il y a un temps de latence entre le moment où on autorise la géolocalisation
-      // et le moment où le getCurrentPositionAsync() retourne une localication
-      // donc tant qu'il ne retourne rien, on le rappelle
-      while (!locationSuccess) {
-        try {
-          currentLocation = await Location.getCurrentPositionAsync({
-            accuracy: Location.Accuracy.Lowest,
-          });
-          locationSuccess = true;
-          // eslint-disable-next-line no-empty
-        } catch (ex: unknown) {
-          getPositionAttempts = getPositionAttempts + 1;
-          if (
-            // Si l'exception remontée n'est pas une erreur de service non-disponible
-            // Ou si le nombre de tentatives a été dépassé, on arrête les rappels
-            !JSON.stringify(ex).includes(
-              AroundMeConstants.ERROR_LOCATION_PROVIDER_UNAVAILABLE_MESSAGE
-            ) ||
-            getPositionAttempts > AroundMeConstants.GET_POSITION_MAX_ATTEMPTS
-          ) {
-            locationSuccess = true;
-          }
-        }
-      }
-      if (currentLocation) {
-        SharedCartoData.userLocation = {
-          latitude: currentLocation.coords.latitude,
-          longitude: currentLocation.coords.longitude,
-        };
-
-        setRegion({
-          latitude: currentLocation.coords.latitude,
-          latitudeDelta: AroundMeConstants.DEFAULT_DELTA,
-          longitude: currentLocation.coords.longitude,
-          longitudeDelta: AroundMeConstants.DEFAULT_DELTA,
-        });
-      } else setRegion(undefined);
-    } catch {
-      setRegion(undefined);
-    }
-
-    setIsLoading(false);
+    setTriggerCheckLocation(!triggerCheckLocation);
   };
 
-  const searchByPostalCode = async () => {
-    setIsLoading(true);
+  const searchByPostalCode = () => {
     extractPoiTypesFromArticles();
-
-    if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
-      setPostalCodeInvalid(true);
-      return;
-    }
-    const newRegion = await AroundMeUtils.searchRegionByPostalCode(
-      postalCodeInput
-    );
-
-    if (newRegion) setRegion(newRegion);
-    else showSnackBarWithMessage(Labels.aroundMe.postalCodeNotFound);
-    setIsLoading(false);
+    setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
   };
 
   return region ? (
     <AroundMePoiList region={region} />
   ) : (
     <ScrollView style={styles.mainContainer}>
+      <SearchRegion
+        triggerSearchRegionByLocation={triggerCheckLocation}
+        showSnackBarWithMessage={showSnackBarWithMessage}
+        setRegion={setRegion}
+        setIsLoading={setIsLoading}
+        triggerSearchRegionByPostalCode={triggerSearchByPostalCode}
+        postalCodeInput={postalCodeInput}
+        setPostalCodeInvalid={setPostalCodeInvalid}
+      />
       <SecondaryText style={styles.description}>
         {Labels.aroundMe.searchGeolocInstruction}
       </SecondaryText>
       <View style={styles.geolocationRow}>
         <TouchableOpacity
           onPress={() => {
-            void checkLocation();
+            checkLocation();
           }}
         >
           <Image source={geolocationIcon} style={styles.geolicationIconStyle} />
@@ -180,7 +126,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
           titleStyle={styles.fontButton}
           rounded={true}
           action={() => {
-            void checkLocation();
+            checkLocation();
           }}
         />
       </View>

@@ -5,6 +5,7 @@ import FetchPois from "./aroundMe/fetchPois.component";
 import FetchPoisCoords from "./aroundMe/fetchPoisCoords.component";
 import PoiList from "./aroundMe/poiList.component";
 import SearchByPostalCode from "./aroundMe/searchByPostalCode.component";
+import SearchRegion from "./aroundMe/searchRegion.component";
 import SlidingUpPanelAddressesList from "./aroundMe/slidingUpPanelAddressesList.component";
 import SubmitNewFilter from "./aroundMe/submitNewFilter.component";
 import DidYouKnow from "./article/didYouKnow.component";
@@ -57,6 +58,7 @@ export {
   PoiList,
   poisRoute,
   SearchByPostalCode,
+  SearchRegion,
   setNotificationHandler,
   SlidingUpPanelAddressesList,
   StepIcon,
