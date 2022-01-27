@@ -1,5 +1,5 @@
+import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
-import { useState } from "react";
 import * as React from "react";
 import { Linking, StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
@@ -9,7 +9,6 @@ import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Document } from "../../types";
 import { TrackerUtils } from "../../utils";
 import { reportError } from "../../utils/logging.util";
-import { TrackerHandler } from "..";
 import {
   CommonText,
   CustomButton,
@@ -30,7 +29,7 @@ function openFile(url: string) {
 }
 
 const DocumentCard: FC<Props> = ({ document }) => {
-  const [trackerAction, setTrackerAction] = useState("");
+  const { trackScreenView } = useMatomo();
 
   return (
     <ListItem
@@ -39,7 +38,6 @@ const DocumentCard: FC<Props> = ({ document }) => {
       containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
       style={[styles.listItem, styles.borderLeftRadius]}
     >
-      <TrackerHandler actionName={trackerAction} />
       <View style={styles.documentImage}>
         <StepIconLibrary name={IcomoonIcons.stepParentheque} />
       </View>
@@ -63,7 +61,7 @@ const DocumentCard: FC<Props> = ({ document }) => {
             rounded={true}
             disabled={false}
             action={() => {
-              setTrackerAction(
+              trackScreenView(
                 `${TrackerUtils.TrackingEvent.PARENTHEQUE} - Téléchargement du doc "${document.nom}"`
               );
               openFile(document.fichier.url);

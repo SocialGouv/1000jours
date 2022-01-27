@@ -3,6 +3,7 @@
 import type { RouteProp } from "@react-navigation/native";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { Poi } from "@socialgouv/nos1000jours-lib";
+import { useMatomo } from "matomo-tracker-react-native";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
@@ -16,7 +17,6 @@ import {
   CustomMapMarker,
   FetchPois,
   SubmitNewFilter,
-  TrackerHandler,
 } from "../../components";
 import {
   BackButton,
@@ -48,6 +48,7 @@ interface Props {
 }
 
 const AroundMeMap: React.FC<Props> = ({ navigation, route }) => {
+  const { trackScreenView } = useMatomo();
   const mapRef = useRef<MapView>();
   const [region, setRegion] = useState<Region>(
     SharedCartoData.region // AroundMeConstants.INITIAL_REGION
@@ -75,11 +76,11 @@ const AroundMeMap: React.FC<Props> = ({ navigation, route }) => {
   const [currentUserLocation] = useState<LatLng | null>(
     SharedCartoData.userLocation
   );
-  const [trackerAction, setTrackerAction] = useState("");
 
   const currentUserLocatioIcon = require("../../assets/images/carto/current_location.png");
 
   useEffect(() => {
+    trackScreenView(TrackerUtils.TrackingEvent.CARTO);
     setTimeout(() => {
       moveMapToCoordinates(
         poisArray[selectedPoiIndex].position_latitude,
@@ -129,7 +130,7 @@ const AroundMeMap: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const onMarkerClick = (poiIndex: number) => {
-    setTrackerAction(TrackerUtils.TrackingEvent.CARTO_CLICK_POI);
+    trackScreenView(TrackerUtils.TrackingEvent.CARTO_CLICK_POI);
     if (PLATFORM_IS_IOS) {
       moveMapToCoordinates(
         poisArray[poiIndex].position_latitude,
@@ -156,10 +157,6 @@ const AroundMeMap: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <View style={styles.mainContainer}>
-      <TrackerHandler
-        screenName={TrackerUtils.TrackingEvent.CARTO}
-        actionName={trackerAction}
-      />
       <FetchPois
         triggerSearchByGpsCoords={triggerSearchByGpsCoords}
         region={region}

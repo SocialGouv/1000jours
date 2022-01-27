@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
+import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
@@ -9,7 +10,6 @@ import portraitElise from "../../assets/images/epds/portrait_elise.jpg";
 import { Labels } from "../../constants";
 import { FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import { TrackerUtils } from "../../utils";
-import { TrackerHandler } from "..";
 import { CustomButton, SecondaryText, View } from "../baseComponents";
 import HowToBeContacted from "./beContacted/howToBeContacted.component";
 
@@ -22,8 +22,8 @@ interface EpdsResultContactMamanBluesProps {
 const EpdsResultContactMamanBlues: React.FC<
   EpdsResultContactMamanBluesProps
 > = ({ primaryColor, secondaryColor, showSnackBar }) => {
+  const { trackScreenView } = useMatomo();
   const [showBeContactedModal, setShowBeContactedModal] = useState(false);
-  const [trackerAction, setTrackerAction] = useState("");
 
   const backgroundColor = { backgroundColor: secondaryColor };
   const buttonColor = { backgroundColor: primaryColor };
@@ -31,7 +31,6 @@ const EpdsResultContactMamanBlues: React.FC<
 
   return (
     <View style={[styles.mainView, backgroundColor]}>
-      <TrackerHandler actionName={trackerAction} />
       <View style={[styles.rowView]}>
         <Image
           source={portraitElise}
@@ -52,7 +51,7 @@ const EpdsResultContactMamanBlues: React.FC<
           rounded={true}
           disabled={false}
           action={() => {
-            setTrackerAction(TrackerUtils.TrackingEvent.EPDS_BE_CONTACTED);
+            trackScreenView(TrackerUtils.TrackingEvent.EPDS_BE_CONTACTED);
             setShowBeContactedModal(true);
           }}
         />

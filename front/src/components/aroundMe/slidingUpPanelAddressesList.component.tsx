@@ -1,14 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import * as React from "react";
-import { useRef, useState } from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import type { NativeScrollEvent } from "react-native";
+import { Dimensions, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  ScrollView,
+  TouchableOpacity as TouchableOpacityAndroid,
+} from "react-native-gesture-handler";
+import { Card } from "react-native-paper";
 import BottomSheet from "reanimated-bottom-sheet";
 
-import { Labels } from "../../constants";
+import { AroundMeConstants, Labels } from "../../constants";
+import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 import { CommonText, View } from "../baseComponents";
-import PoiList from "./poiList.component";
+import AddressDetails from "./addressDetails.component";
 
 interface Props {
   poisArray: Poi[];
@@ -23,18 +30,50 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
   // 2 est le nombre d'éléments dans le tableau de snapPoints de la BottomSheet view (voir ligne 131)
   const [currentPanelSnapPointIndex, setCurrentPanelSnapPointIndex] =
     useState(2);
+  const [currentEndIndex, setCurrentEndIndex] = useState(
+    AroundMeConstants.PAGINATION_NUMBER_ADDRESSES_LIST
+  );
+  const [poisToDisplay, setPoisToDisplay] = useState<Poi[]>(
+    poisArray.slice(0, currentEndIndex)
+  );
+
+  useEffect(() => {
+    setCurrentEndIndex(AroundMeConstants.PAGINATION_NUMBER_ADDRESSES_LIST);
+    setPoisToDisplay(
+      poisArray.slice(0, AroundMeConstants.PAGINATION_NUMBER_ADDRESSES_LIST)
+    );
+  }, [poisArray]);
+
   const height = Dimensions.get("window").height;
 
-  const handlePanel = () => {
-    const nextSnapPoint = currentPanelSnapPointIndex - 1;
-    sheetRef.current?.snapTo(nextSnapPoint);
-    setCurrentPanelSnapPointIndex(nextSnapPoint === 0 ? 2 : nextSnapPoint);
+  const handleScroll = ({
+    layoutMeasurement,
+    contentOffset,
+    contentSize,
+  }: NativeScrollEvent) => {
+    const thresholdBottom = 20;
+
+    if (contentOffset.y === 0) {
+      const nextSnapPoint = currentPanelSnapPointIndex - 1;
+      sheetRef.current?.snapTo(nextSnapPoint);
+      setCurrentPanelSnapPointIndex(nextSnapPoint === 0 ? 2 : nextSnapPoint);
+    } else if (
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - thresholdBottom
+    ) {
+      const newEndIndex = currentEndIndex + currentEndIndex;
+      setPoisToDisplay(
+        poisToDisplay.concat(poisArray.slice(currentEndIndex, newEndIndex))
+      );
+      setCurrentEndIndex(newEndIndex);
+    }
   };
 
-  const goToMarkerAndMinimizeSlider = (poiIndex: number) => {
-    centerOnMarker(poiIndex);
-    sheetRef.current?.snapTo(0);
-  };
+  const renderCard = (poi: Poi) => (
+    <Card style={styles.card}>
+      <AddressDetails details={poi} />
+    </Card>
+  );
 
   const renderContent = () => {
     return (
@@ -44,11 +83,35 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
           {Labels.aroundMe.addressesListLabelStart} {poisArray.length}{" "}
           {Labels.aroundMe.addressesListLabelEnd}
         </CommonText>
-        <PoiList
-          poisArray={poisArray}
-          onPoiPress={goToMarkerAndMinimizeSlider}
-          handlePanel={handlePanel}
-        />
+        <ScrollView
+          onScroll={({ nativeEvent }) => {
+            handleScroll(nativeEvent);
+          }}
+        >
+          {poisToDisplay.map((poi, poiIndex) =>
+            PLATFORM_IS_IOS ? (
+              <TouchableOpacity
+                key={poiIndex}
+                onPress={() => {
+                  centerOnMarker(poiIndex);
+                  sheetRef.current?.snapTo(0);
+                }}
+              >
+                {renderCard(poi)}
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacityAndroid
+                key={poiIndex}
+                onPress={() => {
+                  centerOnMarker(poiIndex);
+                  sheetRef.current?.snapTo(0);
+                }}
+              >
+                {renderCard(poi)}
+              </TouchableOpacityAndroid>
+            )
+          )}
+        </ScrollView>
       </View>
     );
   };
@@ -70,6 +133,11 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
     marginHorizontal: Margins.default,
     marginVertical: Margins.smaller,
+  },
+  card: {
+    borderBottomColor: Colors.cardGrey,
+    borderBottomWidth: 1,
+    margin: Margins.smaller,
   },
   slidingUpPanelScrollView: {
     marginHorizontal: Margins.default,

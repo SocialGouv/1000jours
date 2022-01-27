@@ -3,13 +3,14 @@ import { gql } from "@apollo/client/core";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import _ from "lodash";
+import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
-import { useEffect, useState } from "react";
 import * as React from "react";
+import { useEffect } from "react";
 import { AccessibilityInfo, ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-import { Filters, TrackerHandler } from "../../components";
+import { Filters } from "../../components";
 import ArticleCard from "../../components/article/articleCard.component";
 import {
   BackButton,
@@ -41,11 +42,17 @@ peut-être que ça devrait être au back, lorsqu'il retourne les articles, de di
 const ETAPE_ENFANT_3_PREMIERS_MOIS = 6;
 
 const ListArticles: FC<Props> = ({ navigation, route }) => {
+  const { trackScreenView } = useMatomo();
   const screenTitle = route.params.step.nom;
   const description = route.params.step.description;
   const stepIsFirstThreeMonths =
     route.params.step.id == ETAPE_ENFANT_3_PREMIERS_MOIS;
-  const [trackerAction, setTrackerAction] = useState("");
+
+  useEffect(() => {
+    trackScreenView(
+      `${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`
+    );
+  }, []);
 
   const [articles, setArticles] = React.useState<Article[]>([]);
   const [filteredArticles, setFilteredArticles] = React.useState<Article[]>([]);
@@ -92,7 +99,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
 
   const sendFiltersTracker = (filters: ArticleFilter[]) => {
     filters.forEach((filter) => {
-      setTrackerAction(
+      trackScreenView(
         `${TrackerUtils.TrackingEvent.FILTER_ARTICLES} - ${filter.thematique.nom}`
       );
     });
@@ -148,10 +155,6 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
 
   return (
     <ScrollView style={styles.scrollView}>
-      <TrackerHandler
-        screenName={`${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`}
-        actionName={trackerAction}
-      />
       <View style={styles.topContainer}>
         <View style={[styles.flexStart]}>
           <BackButton

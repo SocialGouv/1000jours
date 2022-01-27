@@ -76,9 +76,7 @@ const BottomTabNavigator: FC = () => {
       getIcon: (tintColor, focused) => (
         <Icomoon
           name={
-            focused
-              ? IcomoonIcons.tabRechercheActive
-              : IcomoonIcons.tabRecherche
+            focused ? IcomoonIcons.autourDeMoiActive : IcomoonIcons.autourDeMoi
           }
           color={tintColor}
           size={iconSize}

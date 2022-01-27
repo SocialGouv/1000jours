@@ -2,13 +2,13 @@ import { useQuery } from "@apollo/client";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import _ from "lodash";
+import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-import { TrackerHandler } from "../../components";
 import {
   BackButton,
   ErrorMessage,
@@ -31,6 +31,7 @@ interface Props {
 const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
   const screenTitle = route.params.step.nom;
   const description = route.params.step.description;
+  const { trackScreenView } = useMatomo();
 
   const [documents, setDocuments] = React.useState<Document[]>([]);
   const [showDocuments, setShowDocuments] = React.useState(false);
@@ -38,6 +39,10 @@ const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
   const { loading, error, data } = useQuery(PARENTS_DOCUMENTS, {
     fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
   });
+
+  useEffect(() => {
+    trackScreenView(`${TrackerUtils.TrackingEvent.PARENTHEQUE}`);
+  }, []);
 
   useEffect(() => {
     if (!loading && data) setShowDocuments(true);
@@ -55,9 +60,6 @@ const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
 
   return (
     <ScrollView style={styles.scrollView}>
-      <TrackerHandler
-        screenName={`${TrackerUtils.TrackingEvent.PARENTHEQUE}`}
-      />
       <View style={styles.topContainer}>
         <View style={[styles.flexStart]}>
           <BackButton

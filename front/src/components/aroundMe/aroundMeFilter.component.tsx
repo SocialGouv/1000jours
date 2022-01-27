@@ -1,5 +1,6 @@
 import type { PoiType, Step } from "@socialgouv/nos1000jours-lib";
 import Constants from "expo-constants";
+import { useMatomo } from "matomo-tracker-react-native";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
@@ -31,7 +32,6 @@ import type {
   FetchedFilterFromDb,
 } from "../../type";
 import { StorageUtils, StringUtils, TrackerUtils } from "../../utils";
-import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
   visible: boolean;
@@ -39,6 +39,7 @@ interface Props {
 }
 
 const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
+  const { trackScreenView } = useMatomo();
   const [filterDataFromDb, setFilterDataFromDb] = useState<unknown>();
 
   const [fetchedFiltersFromDB, setFetchedFiltersFromDB] =
@@ -49,7 +50,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
   const [cartoFilterStorage, setCartoFilterStorage] =
     useState<CartoFilterStorage>({ etapes: [], thematiques: [], types: [] });
   const [showModalContent, setShowModalContent] = useState(false);
-  const [trackerAction, setTrackerAction] = useState("");
 
   useEffect(() => {
     if (!filterDataFromDb) return;
@@ -301,7 +301,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
   const sendFiltersTracker = (filters: string[]) => {
     if (!StringUtils.stringArrayIsNullOrEmpty(filters)) {
       filters.forEach((filter) => {
-        setTrackerAction(
+        trackScreenView(
           `${TrackerUtils.TrackingEvent.FILTER_CARTO} - ${filter}`
         );
       });
@@ -310,7 +310,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
 
   return (
     <>
-      <TrackerHandler actionName={trackerAction} />
       <FetchFilterData setFilterData={setFilterDataFromDb} />
       <Modal transparent={true} visible={visible} animationType="fade">
         {showModalContent && (

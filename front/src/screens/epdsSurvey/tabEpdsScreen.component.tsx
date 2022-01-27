@@ -1,9 +1,9 @@
+import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
-import { TrackerHandler } from "../../components";
 import { View } from "../../components/baseComponents";
 import EpdsGenderEntry from "../../components/epdsSurvey/epdsGenderEntry.component";
 import EpdsOnboarding from "../../components/epdsSurvey/epdsOnboarding.component";
@@ -18,10 +18,12 @@ import {
 } from "../../utils";
 
 const TabEpdsScreen: FC = () => {
+  const { trackScreenView } = useMatomo();
   const [onboardingIsDone, setOnboardingIsDone] = useState(false);
   const [genderIsEntered, setGenderIsEntered] = useState(false);
 
   useEffect(() => {
+    trackScreenView(TrackerUtils.TrackingEvent.EPDS);
     const getGenderFromStorage = async () => {
       const genderValue = await StorageUtils.getStringValue(
         StorageKeysConstants.epdsGenderKey
@@ -60,12 +62,7 @@ const TabEpdsScreen: FC = () => {
     else return <EpdsSurveyContent epdsSurvey={questionAndAnswers} />;
   };
 
-  return (
-    <View style={styles.mainContainer}>
-      <TrackerHandler screenName={TrackerUtils.TrackingEvent.EPDS} />
-      {getViewToDisplay()}
-    </View>
-  );
+  return <View style={styles.mainContainer}>{getViewToDisplay()}</View>;
 };
 
 const styles = StyleSheet.create({
