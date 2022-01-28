@@ -18,7 +18,6 @@ import {
   SearchByPostalCode,
   SlidingUpPanelAddressesList,
   SubmitNewFilter,
-  TrackerHandler,
 } from "../../components";
 import {
   CustomButton,
@@ -29,6 +28,7 @@ import {
   TitleH1,
   View,
 } from "../../components/baseComponents";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
   AroundMeConstants,
   Labels,

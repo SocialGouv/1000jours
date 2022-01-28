@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import { Events, TrackerHandler } from "../../components";
+import { Events } from "../../components";
 import {
   BackButton,
   ErrorMessage,
@@ -25,6 +25,7 @@ import { GET_EVENT_DETAILS } from "../../constants/databaseQueries.constants";
 import { Paddings } from "../../styles";
 import type { Event, TabCalendarParamList } from "../../types";
 import { StorageUtils, TrackerUtils } from "../../utils";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 
 interface Props {
   navigation: StackNavigationProp<TabCalendarParamList, "eventDetails">;

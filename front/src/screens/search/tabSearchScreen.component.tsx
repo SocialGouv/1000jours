@@ -9,13 +9,14 @@ import type {
 } from "react-native-tab-view";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 
-import { articlesRoute, poisRoute, TrackerHandler } from "../../components";
+import { articlesRoute, poisRoute } from "../../components";
 import {
   CustomButton,
   ErrorMessage,
   SecondaryText,
   TitleH1,
 } from "../../components/baseComponents";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels } from "../../constants";
 import { SEARCH_ARTICLES_BY_KEYWORDS } from "../../constants/databaseQueries.constants";
 import {

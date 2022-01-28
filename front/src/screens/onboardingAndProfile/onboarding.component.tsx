@@ -9,7 +9,6 @@ import { Dimensions, FlatList, ScrollView, StyleSheet } from "react-native";
 import FirstSlideImage from "../../assets/images/Onboarding_1.svg";
 import SecondSlideImage from "../../assets/images/Onboarding_2.svg";
 import ThirdSlideImage from "../../assets/images/Onboarding_3.svg";
-import { TrackerHandler } from "../../components";
 import {
   CommonText,
   CustomButton,
@@ -20,6 +19,7 @@ import {
   View,
 } from "../../components/baseComponents";
 import { CustomPagination } from "../../components/onboarding/customOnboardingPagination.component";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels, StorageKeysConstants } from "../../constants";
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
 import type { RootStackParamList } from "../../types";

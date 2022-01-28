@@ -10,7 +10,6 @@ import * as React from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 
 import HelpIcon from "../../assets/images/help.png";
-import { TrackerHandler } from "../../components";
 import {
   CommonText,
   CustomButton,
@@ -24,6 +23,7 @@ import {
   View,
 } from "../../components/baseComponents";
 import Events from "../../components/calendar/events.component";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
   FetchPoliciesConstants,
   Formats,

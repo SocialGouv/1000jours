@@ -3,11 +3,11 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
-import { TrackerHandler } from "../../components";
 import { View } from "../../components/baseComponents";
 import EpdsGenderEntry from "../../components/epdsSurvey/epdsGenderEntry.component";
 import EpdsOnboarding from "../../components/epdsSurvey/epdsOnboarding.component";
 import EpdsSurveyContent from "../../components/epdsSurvey/epdsSurveyContent.component";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { DatabaseQueries, StorageKeysConstants } from "../../constants";
 import type { DataFetchingType, EpdsQuestionAndAnswers } from "../../type";
 import {
