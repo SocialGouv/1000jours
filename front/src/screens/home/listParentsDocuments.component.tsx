@@ -8,7 +8,6 @@ import { useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-import { TrackerHandler } from "../../components";
 import {
   BackButton,
   ErrorMessage,
@@ -17,6 +16,7 @@ import {
   View,
 } from "../../components/baseComponents";
 import DocumentCard from "../../components/document/documentCard.component";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { FetchPoliciesConstants } from "../../constants";
 import { PARENTS_DOCUMENTS } from "../../constants/databaseQueries.constants";
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";

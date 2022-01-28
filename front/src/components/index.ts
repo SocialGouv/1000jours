@@ -18,7 +18,6 @@ import TextHtml from "./article/textHtml.component";
 import Thematics from "./article/thematics.component";
 import Title from "./article/title.component";
 import Events from "./calendar/events.component";
-import LinksHandler from "./links/linksHandler.component";
 import ConditionsOfUse from "./menu/conditionsOfUse.component";
 import LegalNotice from "./menu/legalNotice.component";
 import Menu from "./menu/menu.component";
@@ -30,11 +29,6 @@ import { articlesRoute, poisRoute } from "./search/tabSearchRoutes.component";
 import StepIcon from "./timeline/stepIcon.component";
 import TimelineStep from "./timeline/timelineStep.component";
 import TimelineStepLibrary from "./timeline/timelineStepLibrary.component";
-import TrackerHandler from "./tracker/trackerHandler.component";
-import {
-  TrackerAppStart,
-  TrackerProvider,
-} from "./tracker/trackerInit.component";
 
 export {
   AddressDetails,
@@ -52,7 +46,6 @@ export {
   InShort,
   LegalNotice,
   Links,
-  LinksHandler,
   Menu,
   NotificationHandler,
   PoiList,
@@ -69,7 +62,4 @@ export {
   TimelineStep,
   TimelineStepLibrary,
   Title,
-  TrackerAppStart,
-  TrackerHandler,
-  TrackerProvider,
 };

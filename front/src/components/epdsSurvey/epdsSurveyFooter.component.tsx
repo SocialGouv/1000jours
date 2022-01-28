@@ -12,7 +12,7 @@ import {
 import { Labels } from "../../constants";
 import { Colors } from "../../styles";
 import { TrackerUtils } from "../../utils";
-import { TrackerHandler } from "..";
+import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
   swiperCurrentIndex: number;

@@ -16,7 +16,6 @@ import {
   CustomMapMarker,
   FetchPois,
   SubmitNewFilter,
-  TrackerHandler,
 } from "../../components";
 import {
   BackButton,
@@ -27,6 +26,7 @@ import {
   Loader,
   View,
 } from "../../components/baseComponents";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
   AroundMeConstants,
   Labels,
