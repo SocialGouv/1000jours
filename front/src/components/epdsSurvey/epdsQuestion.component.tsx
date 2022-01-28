@@ -50,7 +50,7 @@ const EpdsQuestion: React.FC<Props> = ({
 
   return (
     <View style={[styles.swipeView, styles.justifyContentCenter]}>
-      {/* <TrackerHandler actionName={trackerAction} /> */}
+      <TrackerHandler actionName={trackerAction} />
       <View style={[styles.swipeViewMargin, styles.paddingRight]}>
         <View style={{ alignItems: "baseline", flexDirection: "row" }}>
           <Text

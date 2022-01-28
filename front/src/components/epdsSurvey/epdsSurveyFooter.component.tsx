@@ -32,7 +32,7 @@ const EpdsSurveyFooter: React.FC<Props> = ({
   const [trackerAction, setTrackerAction] = useState("");
   return (
     <View>
-      {/* <TrackerHandler actionName={trackerAction} /> */}
+      <TrackerHandler actionName={trackerAction} />
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonContainer}>
           {swiperCurrentIndex > 0 && (
