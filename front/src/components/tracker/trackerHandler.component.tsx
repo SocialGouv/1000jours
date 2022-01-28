@@ -3,6 +3,8 @@ import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import { useEffect } from "react";
 
+import { StringUtils } from "../../utils";
+
 interface TrackerHandlerProps {
   screenName?: string;
   actionName?: string;
@@ -22,13 +24,15 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
     useMatomo();
 
   useEffect(() => {
-    if (screenName && screenName.length > 0)
+    if (screenName && StringUtils.stringIsNotNullNorEmpty(screenName))
       void trackScreenView({ name: screenName });
   }, []);
 
   useEffect(() => {
-    const screenNameIsNotEmpty = screenName && screenName.length > 0;
-    const actionNameIsNotEmpty = actionName && actionName.length > 0;
+    const screenNameIsNotEmpty =
+      screenName && StringUtils.stringIsNotNullNorEmpty(screenName);
+    const actionNameIsNotEmpty =
+      actionName && StringUtils.stringIsNotNullNorEmpty(actionName);
 
     if (screenNameIsNotEmpty && actionNameIsNotEmpty)
       void trackAction({ name: `${screenName} / ${actionName}` });
@@ -36,7 +40,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
   }, [actionName]);
 
   useEffect(() => {
-    if (searchKeyword && searchKeyword.length > 0)
+    if (searchKeyword && StringUtils.stringIsNotNullNorEmpty(searchKeyword))
       void trackSiteSearch({ keyword: searchKeyword });
   }, [searchKeyword]);
 

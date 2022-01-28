@@ -126,11 +126,6 @@ const MainAppContainer: FC = () => {
 };
 
 const App: FC = () => {
-  // return (
-  //   <MatomoProvider instance={TrackerUtils.matomoInstance}>
-  //     <MainAppContainer />
-  //   </MatomoProvider>
-  // );
   return <TrackerProvider appContainer={<MainAppContainer />} />;
 };
 
