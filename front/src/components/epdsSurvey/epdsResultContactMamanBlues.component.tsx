@@ -9,8 +9,8 @@ import portraitElise from "../../assets/images/epds/portrait_elise.jpg";
 import { Labels } from "../../constants";
 import { FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import { TrackerUtils } from "../../utils";
-import { TrackerHandler } from "..";
 import { CustomButton, SecondaryText, View } from "../baseComponents";
+import TrackerHandler from "../tracker/trackerHandler.component";
 import HowToBeContacted from "./beContacted/howToBeContacted.component";
 
 interface EpdsResultContactMamanBluesProps {

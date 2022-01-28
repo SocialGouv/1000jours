@@ -15,7 +15,7 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
-import { TrackerHandler } from "..";
+import TrackerHandler from "../tracker/trackerHandler.component";
 import CustomButton from "./customButton.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 

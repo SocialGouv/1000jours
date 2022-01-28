@@ -9,7 +9,7 @@ import * as React from "react";
 import { AccessibilityInfo, ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-import { Filters, TrackerHandler } from "../../components";
+import { Filters } from "../../components";
 import ArticleCard from "../../components/article/articleCard.component";
 import {
   BackButton,
@@ -31,6 +31,7 @@ import type {
   Thematique,
 } from "../../types";
 import { TrackerUtils } from "../../utils";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;

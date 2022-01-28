@@ -9,7 +9,7 @@ import type { LayoutChangeEvent } from "react-native";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { TimelineStep, TrackerHandler } from "../../components";
+import { TimelineStep } from "../../components";
 import {
   ErrorMessage,
   Loader,
@@ -28,6 +28,7 @@ import {
 } from "../../utils/notification.util";
 import { getCurrentStepId } from "../../utils/step.util";
 import { stringIsNotNullNorEmpty } from "../../utils/strings.util";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;

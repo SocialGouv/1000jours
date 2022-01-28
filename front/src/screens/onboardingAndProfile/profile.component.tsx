@@ -17,7 +17,6 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import AppLogo from "../../assets/images/logo.svg";
-import { TrackerHandler } from "../../components";
 import {
   CommonText,
   CustomButton,
@@ -27,6 +26,7 @@ import {
   SecondaryText,
   View,
 } from "../../components/baseComponents";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
   Formats,
   Labels,

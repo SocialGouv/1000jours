@@ -9,7 +9,6 @@ import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Document } from "../../types";
 import { TrackerUtils } from "../../utils";
 import { reportError } from "../../utils/logging.util";
-import { TrackerHandler } from "..";
 import {
   CommonText,
   CustomButton,
@@ -18,6 +17,7 @@ import {
   View,
 } from "../baseComponents";
 import StepIconLibrary from "../timeline/stepIconLibrary.component";
+import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
   document: Document;

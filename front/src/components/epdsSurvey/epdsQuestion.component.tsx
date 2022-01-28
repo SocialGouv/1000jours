@@ -12,8 +12,8 @@ import { Labels } from "../../constants";
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import { TrackerUtils } from "../../utils";
-import { TrackerHandler } from "..";
 import { Checkbox, CommonText, View } from "../baseComponents";
+import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
   questionAndAnswers: EpdsQuestionAndAnswers;

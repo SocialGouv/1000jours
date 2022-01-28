@@ -10,13 +10,13 @@ import { AppState } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import IcomoonFont from "./src/assets/icomoon/icomoon.ttf";
+import LinksHandler from "./src/components/links/linksHandler.component";
+import { setNotificationHandler } from "./src/components/notification/notificationHandler.component";
+import TrackerHandler from "./src/components/tracker/trackerHandler.component";
 import {
-  LinksHandler,
-  setNotificationHandler,
   TrackerAppStart,
-  TrackerHandler,
   TrackerProvider,
-} from "./src/components";
+} from "./src/components/tracker/trackerInit.component";
 import { initLocales } from "./src/config/calendar-config";
 import { StorageKeysConstants } from "./src/constants";
 import { useCachedResources, useColorScheme } from "./src/hooks";

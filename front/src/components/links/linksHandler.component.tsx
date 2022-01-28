@@ -9,7 +9,7 @@ const LinksHandler: FC = () => {
   const redirectDeepLink = (url: string) => {
     const { path, queryParams } = Linking.parse(url);
     if (path === Linking.parse(Links.deepLinkUrl).path) {
-      RootNavigation.navigate(queryParams.page as string, {
+      void RootNavigation.navigate(queryParams.page as string, {
         id: queryParams.id,
       });
     }
