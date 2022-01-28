@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
-import type { PoiType } from "@socialgouv/nos1000jours-lib";
-import * as Location from "expo-location";
-import { FC, useEffect } from "react";
+import type { Poi, PoiType } from "@socialgouv/nos1000jours-lib";
+import type { FC } from "react";
 import { useState } from "react";
 import * as React from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
@@ -13,26 +12,27 @@ import { HelperText } from "react-native-paper";
 import {
   AroundMeConstants,
   Labels,
-  StorageKeysConstants,
+  StorageKeysConstants
 } from "../../constants";
 import {
   PLATFORM_IS_IOS,
-  SCREEN_WIDTH,
+  SCREEN_WIDTH
 } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { CartoFilterStorage } from "../../type";
 import type { Article } from "../../types";
-import { AroundMeUtils } from "../../utils";
+import { RootNavigation } from "../../utils";
+import SharedCartoData from "../../utils/sharedCartoData.class";
 import { storeObjectValue } from "../../utils/storage.util";
+import FetchPois from "../aroundMe/fetchPois.component";
 import SearchRegion from "../aroundMe/searchRegion.component";
 import {
   CustomButton,
   CustomSnackbar,
   Loader,
   SecondaryText,
-  View,
+  View
 } from "../baseComponents";
-import AroundMePoiList from "./aroundMePoiList.component";
 
 interface Props {
   articles: Article[];
@@ -41,21 +41,16 @@ interface Props {
 const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
   const [postalCodeInput, setPostalCodeInput] = useState("");
   const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
-  const [region, setRegion] = useState<Region | undefined>(); // AroundMeConstants.INITIAL_REGION
+  const [region, setRegion] = useState<Region | undefined>();
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [triggerCheckLocation, setTriggerCheckLocation] = useState(false);
   const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] =
     useState(false);
+  const [triggerFetchPois, setTriggerFetchPois] = useState(false);
 
   const geolocationIcon = require("../../assets/images/carto/geolocation.png");
-
-  useEffect(() => {
-    if (region !== undefined) {
-
-    }
-  }, [region]);
 
   const showSnackBarWithMessage = (message: string) => {
     setSnackBarMessage(message);
@@ -84,7 +79,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
       const cartoFilterStorage: CartoFilterStorage = {
         etapes: [],
         thematiques: [],
-        types: finalCartographieTypes.map((type) => type.nom),
+        types: finalCartographieTypes.map((type) => type.nom)
       };
       void storeObjectValue(
         StorageKeysConstants.cartoFilterKey,
@@ -103,16 +98,34 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
     setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
   };
 
+  const handlePois = (pois: Poi[]) => {
+    SharedCartoData.fetchedPois = pois;
+    if (region) SharedCartoData.region = region;
+    SharedCartoData.selectedPoiIndex = -1;
+    setIsLoading(false);
+
+    void RootNavigation.navigate("aroundMeMapAndList", undefined);
+  };
+
   return (
     <ScrollView style={styles.mainContainer}>
       <SearchRegion
         triggerSearchRegionByLocation={triggerCheckLocation}
         showSnackBarWithMessage={showSnackBarWithMessage}
-        setRegion={setRegion}
+        setRegion={(newRegion: Region | undefined) => {
+          setRegion(newRegion);
+          setTriggerFetchPois(!triggerFetchPois);
+        }}
         setIsLoading={setIsLoading}
         triggerSearchRegionByPostalCode={triggerSearchByPostalCode}
         postalCodeInput={postalCodeInput}
         setPostalCodeInvalid={setPostalCodeInvalid}
+      />
+
+      <FetchPois
+        triggerSearchByGpsCoords={triggerFetchPois}
+        region={region}
+        setFetchedPois={handlePois}
       />
       <SecondaryText style={styles.description}>
         {Labels.aroundMe.searchGeolocInstruction}
@@ -142,7 +155,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
         <TextInput
           style={[
             styles.postalCodeInput,
-            PLATFORM_IS_IOS && styles.widthForIos,
+            PLATFORM_IS_IOS && styles.widthForIos
           ]}
           onChangeText={onPostalCodeChanged}
           value={postalCodeInput}
@@ -184,45 +197,45 @@ const styles = StyleSheet.create({
     fontSize: Sizes.xs,
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.md,
-    marginVertical: Margins.default,
+    marginVertical: Margins.default
   },
   fontButton: {
-    fontSize: Sizes.xs,
+    fontSize: Sizes.xs
   },
   geolicationButtonStyle: {
-    marginHorizontal: Margins.default,
+    marginHorizontal: Margins.default
   },
   geolicationIconStyle: {
     height: Margins.largest,
     marginLeft: Margins.default,
-    width: Margins.largest,
+    width: Margins.largest
   },
   geolocationRow: {
     flexDirection: "row",
-    marginVertical: Margins.default,
+    marginVertical: Margins.default
   },
   mainContainer: {
     flex: 1,
     paddingHorizontal: Paddings.default,
-    paddingTop: Paddings.default,
+    paddingTop: Paddings.default
   },
   postalCodeInput: {
     backgroundColor: Colors.cardGrey,
     borderColor: Colors.primaryBlue,
     borderWidth: 1,
-    paddingHorizontal: Paddings.smaller,
+    paddingHorizontal: Paddings.smaller
   },
   postalCodeRow: {
     flexDirection: "row",
     paddingLeft: Margins.default,
-    paddingVertical: Paddings.smaller,
+    paddingVertical: Paddings.smaller
   },
   searchByPostalCodeButton: {
-    marginHorizontal: Margins.smaller,
+    marginHorizontal: Margins.smaller
   },
   widthForIos: {
-    width: SCREEN_WIDTH / 2.2,
-  },
+    width: SCREEN_WIDTH / 2.2
+  }
 });
 
 export default TabAroundMeInstruction;

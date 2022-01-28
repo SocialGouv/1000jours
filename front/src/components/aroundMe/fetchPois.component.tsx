@@ -2,7 +2,7 @@ import { gql, useLazyQuery } from "@apollo/client";
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import { GET_POIS_BY_GPSCOORDS } from "@socialgouv/nos1000jours-lib";
 import type * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { Region } from "react-native-maps";
 
 import {
@@ -15,15 +15,19 @@ import { AroundMeUtils, StorageUtils } from "../../utils";
 
 interface Props {
   triggerSearchByGpsCoords: boolean;
-  region: Region;
+  region?: Region;
   setFetchedPois: (pois: Poi[]) => void;
+  launchFetchAtInit?: boolean;
 }
 
 const FetchPois: React.FC<Props> = ({
   triggerSearchByGpsCoords,
   region,
   setFetchedPois,
+  launchFetchAtInit,
 }) => {
+  const [componentIsInitialized, setComponentIsInitialized] = useState(false);
+
   const [getPoisByGpsCoords] = useLazyQuery(gql(GET_POIS_BY_GPSCOORDS), {
     fetchPolicy: FetchPoliciesConstants.NETWORK_ONLY,
     notifyOnNetworkStatusChange: true,
@@ -36,6 +40,7 @@ const FetchPois: React.FC<Props> = ({
   });
 
   const searchByGPSCoords = async () => {
+    if (!region) return;
     const topLeftPoint = AroundMeUtils.getLatLngPoint(
       region,
       AroundMeConstants.LatLngPointType.topLeft
@@ -63,7 +68,11 @@ const FetchPois: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    void searchByGPSCoords();
+    setComponentIsInitialized(true);
+  }, []);
+
+  useEffect(() => {
+    if (componentIsInitialized || launchFetchAtInit) void searchByGPSCoords();
   }, [triggerSearchByGpsCoords]);
 
   return null;

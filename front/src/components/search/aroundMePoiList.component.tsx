@@ -45,12 +45,12 @@ const AroundMePoiList: FC<Props> = ({ region }) => {
     SharedCartoData.selectedPoiIndex = poiIndex;
 
     // TODO Warning à cause du fait qu'on passe une fonction en paramètre, à modifier pendant le refactoring de la navigation
-    RootNavigation.navigate("aroundMeMap", {
-      updatePoiList: () => {
-        setPoisArray(SharedCartoData.fetchedPois);
-        setCurrentRegion(SharedCartoData.region);
-      },
-    });
+    // void RootNavigation.navigate("aroundMeMapAndList", {
+    //   updatePoiList: () => {
+    //     setPoisArray(SharedCartoData.fetchedPois);
+    //     setCurrentRegion(SharedCartoData.region);
+    //   },
+    // });
   };
 
   return (
@@ -59,6 +59,7 @@ const AroundMePoiList: FC<Props> = ({ region }) => {
         triggerSearchByGpsCoords={trigger}
         region={region}
         setFetchedPois={handlePois}
+        launchFetchAtInit
       />
       <View style={styles.swipeIndicator} />
       <CommonText style={styles.addressesListLabel}>
@@ -105,30 +106,30 @@ const styles = StyleSheet.create({
     fontSize: Sizes.xs,
     fontWeight: FontWeight.bold,
     marginHorizontal: Margins.default,
-    marginVertical: Margins.smaller,
+    marginVertical: Margins.smaller
   },
   filterView: {
     backgroundColor: "transparent",
     flexDirection: "row",
-    margin: Margins.smaller,
+    margin: Margins.smaller
   },
   relaunchSearchButton: {
     backgroundColor: Colors.white,
     borderColor: Colors.primaryBlue,
     borderWidth: 1,
-    marginHorizontal: Margins.smallest,
+    marginHorizontal: Margins.smallest
   },
   relaunchSearchButtonText: {
     color: Colors.primaryBlue,
-    fontSize: Sizes.xxs,
+    fontSize: Sizes.xxs
   },
   slidingUpPanelScrollView: {
-    marginHorizontal: Margins.default,
+    marginHorizontal: Margins.default
   },
   slidingUpPanelView: {
     borderTopEndRadius: Sizes.xxxl,
     borderTopStartRadius: Sizes.xxxl,
-    height: "100%",
+    height: "100%"
   },
   swipeIndicator: {
     alignSelf: "center",
@@ -137,8 +138,8 @@ const styles = StyleSheet.create({
     height: Sizes.xxxxxxs,
     marginBottom: Margins.smaller,
     marginTop: Margins.default,
-    width: Sizes.xxxl,
-  },
+    width: Sizes.xxxl
+  }
 });
 
 export default AroundMePoiList;

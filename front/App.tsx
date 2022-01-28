@@ -25,11 +25,10 @@ import { apolloService } from "./src/services";
 import { initMonitoring, StorageUtils, TrackerUtils } from "./src/utils";
 
 setNotificationHandler();
-
-const client = apolloService.getApolloClient();
-
 initLocales();
 initMonitoring();
+
+const client = apolloService.getApolloClient();
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const customFonts = { IcoMoon: IcomoonFont };

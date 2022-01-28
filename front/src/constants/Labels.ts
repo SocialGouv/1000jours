@@ -46,6 +46,8 @@ export default {
     addressesListLabelStart: "Il y a",
     chooseFilter:
       "Veuillez choisir un au moins un élément dans le filtre afin de lancer la recherche",
+    displayListButton: "Afficher en liste",
+    displayMapButton: "Afficher sur la carte",
     filter: {
       healthProfessional: "Professionnels de santé",
       steps: "Étapes du parcours 1000 jours",

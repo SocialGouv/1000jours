@@ -43,7 +43,7 @@ export type TabAroundMeParamList = {
 
 export type TabSearchParamList = {
   tabSearchScreen: undefined;
-  aroundMeMap: { updatePoiList: () => void };
+  aroundMeMapAndList: { updatePoiList: () => void };
 };
 
 export type UserSituation = {
