@@ -28,10 +28,6 @@ import { articlesRoute, poisRoute } from "./search/tabSearchRoutes.component";
 import StepIcon from "./timeline/stepIcon.component";
 import TimelineStep from "./timeline/timelineStep.component";
 import TimelineStepLibrary from "./timeline/timelineStepLibrary.component";
-import {
-  TrackerAppStart,
-  TrackerProvider,
-} from "./tracker/trackerInit.component";
 
 export {
   AddressDetails,
@@ -64,6 +60,4 @@ export {
   TimelineStep,
   TimelineStepLibrary,
   Title,
-  TrackerAppStart,
-  TrackerProvider,
 };

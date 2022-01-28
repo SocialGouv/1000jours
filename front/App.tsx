@@ -2,7 +2,6 @@ import { ApolloProvider } from "@apollo/client";
 import Constants from "expo-constants";
 import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
-import { MatomoProvider } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -11,13 +10,13 @@ import { AppState } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import IcomoonFont from "./src/assets/icomoon/icomoon.ttf";
-import {
-  TrackerAppStart,
-  TrackerProvider,
-} from "./src/components";
 import LinksHandler from "./src/components/links/linksHandler.component";
 import { setNotificationHandler } from "./src/components/notification/notificationHandler.component";
 import TrackerHandler from "./src/components/tracker/trackerHandler.component";
+import {
+  TrackerAppStart,
+  TrackerProvider,
+} from "./src/components/tracker/trackerInit.component";
 import { initLocales } from "./src/config/calendar-config";
 import { StorageKeysConstants } from "./src/constants";
 import { useCachedResources, useColorScheme } from "./src/hooks";
@@ -112,7 +111,7 @@ const MainAppContainer: FC = () => {
   } else {
     return (
       <ApolloProvider client={client}>
-        {/* <TrackerAppStart /> */}
+        <TrackerAppStart />
         <LinksHandler />
         <TrackerHandler
           screenName={`${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${appCounter}`}
@@ -127,12 +126,12 @@ const MainAppContainer: FC = () => {
 };
 
 const App: FC = () => {
-  return (
-    <MatomoProvider instance={TrackerUtils.matomoInstance}>
-      <MainAppContainer />
-    </MatomoProvider>
-  );
-  // return <TrackerProvider appContainer={<MainAppContainer />} />;
+  // return (
+  //   <MatomoProvider instance={TrackerUtils.matomoInstance}>
+  //     <MainAppContainer />
+  //   </MatomoProvider>
+  // );
+  return <TrackerProvider appContainer={<MainAppContainer />} />;
 };
 
 export default App;
