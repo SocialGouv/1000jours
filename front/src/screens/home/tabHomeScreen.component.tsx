@@ -139,7 +139,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 
   return (
     <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>
-      {/* <TrackerHandler screenName={TrackerUtils.TrackingEvent.HOME} /> */}
+      <TrackerHandler screenName={TrackerUtils.TrackingEvent.HOME} />
       <TitleH1
         title={Labels.timeline.title}
         description={Labels.timeline.description}

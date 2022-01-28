@@ -91,7 +91,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
 
   return (
     <View style={styles.eventCard} key={event.id}>
-      {/* <TrackerHandler actionName={trackerAction} /> */}
+      <TrackerHandler actionName={trackerAction} />
       <ListItem
         pad={0}
         containerStyle={styles.listItemContainer}

@@ -156,10 +156,10 @@ const AroundMeMap: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <View style={styles.mainContainer}>
-      {/* <TrackerHandler
+      <TrackerHandler
         screenName={TrackerUtils.TrackingEvent.CARTO}
         actionName={trackerAction}
-      /> */}
+      />
       <FetchPois
         triggerSearchByGpsCoords={triggerSearchByGpsCoords}
         region={region}

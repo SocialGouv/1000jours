@@ -248,10 +248,10 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
 
   return (
     <View style={styles.mainContainer}>
-      {/* <TrackerHandler
+      <TrackerHandler
         screenName={TrackerUtils.TrackingEvent.CALENDAR}
         actionName={trackerAction}
-      /> */}
+      />
       <TitleH1
         title={Labels.tabs.calendarTitle}
         description={Labels.calendar.description}

@@ -148,7 +148,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
   const iconType = getIcon(details.categorie, details.type);
   return (
     <View style={styles.rowContainer}>
-      {/* <TrackerHandler actionName={trackerAction} /> */}
+      <TrackerHandler actionName={trackerAction} />
       <View style={styles.icon}>{iconType}</View>
       <View style={styles.addressDetails}>
         {StringUtils.stringIsNotNullNorEmpty(details.nom) && (

@@ -108,7 +108,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
   return (
     <View style={[styles.mainContainer, styles.flexColumn]}>
       <HeaderApp />
-      {/* <TrackerHandler screenName={TrackerUtils.TrackingEvent.ONBOARDING} /> */}
+      <TrackerHandler screenName={TrackerUtils.TrackingEvent.ONBOARDING} />
       <View style={styles.mainView}>
         <View style={styles.flexCenter}>
           <ScrollView>

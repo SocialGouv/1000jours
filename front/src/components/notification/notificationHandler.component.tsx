@@ -60,11 +60,11 @@ const NotificationHandler: FC = () => {
   return (
     notification && (
       <>
-        {/* {notifType && (
+        {notifType && (
           <TrackerHandler
             screenName={`${TrackerUtils.TrackingEvent.NOTIFICATION} (${notifType}) - ${Labels.notification.openTheApp}`}
           />
-        )} */}
+        )}
         <NotificationModal
           notification={notification}
           onDismiss={() => {

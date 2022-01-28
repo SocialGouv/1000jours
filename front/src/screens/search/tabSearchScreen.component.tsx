@@ -94,10 +94,10 @@ const TabSearchScreen: FC = () => {
   return (
     <>
       <View style={styles.mainContainer}>
-        {/* <TrackerHandler
+        <TrackerHandler
           screenName={TrackerUtils.TrackingEvent.RECHERCHER}
           searchKeyword={enteredKeyword}
-        /> */}
+        />
         <TitleH1
           title={Labels.search.title}
           description={Labels.search.findAdaptedResponses}
