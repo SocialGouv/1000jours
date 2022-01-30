@@ -1,5 +1,6 @@
 import AddressDetails from "./aroundMe/addressDetails.component";
 import AroundMeFilter from "./aroundMe/aroundMeFilter.component";
+import AroundMeMap from "./aroundMe/aroundMeMap.component";
 import CustomMapMarker from "./aroundMe/customMapMarker.component";
 import FetchPois from "./aroundMe/fetchPois.component";
 import FetchPoisCoords from "./aroundMe/fetchPoisCoords.component";
@@ -33,6 +34,7 @@ import TimelineStepLibrary from "./timeline/timelineStepLibrary.component";
 export {
   AddressDetails,
   AroundMeFilter,
+  AroundMeMap,
   AroundMePoiList,
   articlesRoute,
   ConditionsOfUse,

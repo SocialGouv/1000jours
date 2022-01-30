@@ -12,6 +12,7 @@ import BulbIcon from "../../assets/images/carto/bulb.svg";
 import {
   AddressDetails,
   AroundMeFilter,
+  AroundMeMap,
   AroundMePoiList,
   CustomMapMarker,
   FetchPois,
@@ -149,161 +150,15 @@ const AroundMeMapAndList: React.FC<Props> = ({ navigation }) => {
   };
 
   return displayMap ? (
-    <View style={styles.mainContainer}>
-      <TrackerHandler
-        screenName={TrackerUtils.TrackingEvent.CARTO}
-        actionName={trackerAction}
-      />
-      <FetchPois
-        triggerSearchByGpsCoords={triggerSearchByGpsCoords}
-        region={region}
-        setFetchedPois={handleFetchedPois}
-      />
-      <View style={styles.flexStart}>
-        <BackButton
-          action={() => {
-            navigation.goBack();
-          }}
-        />
-      </View>
-      <View style={styles.map}>
-        <MapView
-          minZoomLevel={AroundMeConstants.MAPVIEW_MIN_ZOOM_LEVEL}
-          ref={setMapViewRef}
-          provider={PROVIDER_DEFAULT}
-          style={styles.map}
-          initialRegion={region}
-          onRegionChangeComplete={onRegionChangeComplete}
-        >
-          {poisArray.map((poi, poiIndex) => (
-            <View key={poiIndex}>
-              <CustomMapMarker
-                coordinates={{
-                  latitude: Number(poi.position_latitude),
-                  longitude: Number(poi.position_longitude),
-                }}
-                poiIndex={poiIndex}
-                poiCategorie={poi.categorie}
-                selectedPoiIndex={selectedPoiIndex}
-                onMarkerClick={(index: number) => {
-                  onMarkerClick(index);
-                }}
-              />
-            </View>
-          ))}
-          {currentUserLocation && (
-            <Marker
-              coordinate={{
-                latitude: currentUserLocation.latitude,
-                longitude: currentUserLocation.longitude,
-              }}
-            >
-              <Image
-                source={currentUserLocatioIcon}
-                style={styles.currentLocationMarker}
-              />
-            </Marker>
-          )}
-        </MapView>
-        <View style={styles.headerButtonsView}>
-          <CustomButton
-            buttonStyle={styles.headerButton}
-            title={Labels.listArticles.filters}
-            titleStyle={styles.headerButtonTitle}
-            rounded={true}
-            icon={
-              <Icomoon
-                name={IcomoonIcons.filtrer}
-                size={Sizes.sm}
-                color={Colors.primaryBlue}
-              />
-            }
-            action={() => {
-              setShowFilter(true);
-            }}
-          />
-          <CustomButton
-            buttonStyle={styles.submitNewFilterButton}
-            title=""
-            rounded={true}
-            icon={<BulbIcon />}
-            action={() => {
-              setShowSubmitNewFilterModal(true);
-            }}
-          />
-          <View style={styles.headerButtonsRightPartView}>
-            <CustomButton
-              buttonStyle={styles.headerButton}
-              title={Labels.aroundMe.displayListButton}
-              titleStyle={styles.headerButtonTitle}
-              rounded={true}
-              action={() => {
-                setDisplayMap(!displayMap);
-              }}
-            />
-            {showRelaunchResearchButton && (
-              <CustomButton
-                buttonStyle={[styles.headerButton, styles.buttonMarginTop]}
-                title={Labels.aroundMe.relaunchSearch}
-                titleStyle={styles.headerButtonTitle}
-                rounded={true}
-                action={() => {
-                  KeyboardUtils.dismissKeyboard();
-                  setIsLoading(true);
-                  setShowRelaunchResearchButton(false);
-                  setShowAddressDetails(false);
-                  setSelectedPoiIndex(-1);
-                  setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
-                }}
-              />
-            )}
-          </View>
-        </View>
-        <CustomSnackbar
-          duration={AroundMeConstants.SNACKBAR_DURATION}
-          visible={showSnackBar}
-          isOnTop={true}
-          backgroundColor={Colors.aroundMeSnackbar.background}
-          onDismiss={onSnackBarDismiss}
-          textColor={Colors.aroundMeSnackbar.text}
-          text={snackBarMessage}
-        />
-      </View>
-      {showAddressDetails && addressDetails && (
-        <View
-          style={[
-            styles.addressDetails,
-            styles.addressDetailsSmallMarginBottom,
-          ]}
-        >
-          <AddressDetails
-            details={addressDetails}
-            isClickedMarker={true}
-            hideDetails={() => {
-              setSelectedPoiIndex(-1);
-              setShowAddressDetails(false);
-            }}
-          />
-        </View>
-      )}
-      <AroundMeFilter
-        visible={showFilter}
-        hideModal={(filterWasSaved: boolean) => {
-          setShowFilter(false);
-          if (filterWasSaved) {
-            if (PLATFORM_IS_ANDROID) setIsLoading(true);
-            setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
-          }
-        }}
-      />
-      <SubmitNewFilter
-        visible={showSubmitNewFilterModal}
-        hideModal={() => {
-          setShowSubmitNewFilterModal(false);
-        }}
-      />
-      {isLoading && <Loader />}
-    </View>
+    <AroundMeMap
+      region={region}
+      poiArray={poisArray}
+      selectedPoiIndex={selectedPoiIndex}
+      userLocation={currentUserLocation}
+      updateRegion={setRegion}
+      updatePoiArray={setPoisArray}
+      updateSelectedPoiIndex={setSelectedPoiIndex}
+    />
   ) : (
     <AroundMePoiList region={region} />
   );
