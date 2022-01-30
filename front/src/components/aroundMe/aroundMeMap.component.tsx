@@ -1,39 +1,27 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import type { Poi } from "@socialgouv/nos1000jours-lib";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import type { LatLng, Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
-import BulbIcon from "../../assets/images/carto/bulb.svg";
 import {
   AroundMeConstants,
   Labels,
   StorageKeysConstants,
 } from "../../constants";
-import {
-  PLATFORM_IS_ANDROID,
-  PLATFORM_IS_IOS,
-} from "../../constants/platform.constants";
+import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
 import {
   AddressDetails,
-  AroundMeFilter,
+  AroundMeMapHeader,
   CustomMapMarker,
   FetchPois,
-  SubmitNewFilter,
 } from "..";
-import {
-  CustomButton,
-  CustomSnackbar,
-  Icomoon,
-  IcomoonIcons,
-  Loader,
-  View,
-} from "../baseComponents";
+import { CustomSnackbar, Loader, View } from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
@@ -44,6 +32,7 @@ interface Props {
   updateRegion: (region: Region) => void;
   updatePoiArray: (poiArray: Poi[]) => void;
   updateSelectedPoiIndex: (selectedPoiIndex: number) => void;
+  displayList: () => void;
 }
 
 const AroundMeMap: React.FC<Props> = ({
@@ -54,6 +43,7 @@ const AroundMeMap: React.FC<Props> = ({
   updateRegion,
   updatePoiArray,
   updateSelectedPoiIndex,
+  displayList,
 }) => {
   const mapRef = useRef<MapView>();
 
@@ -67,16 +57,23 @@ const AroundMeMap: React.FC<Props> = ({
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
 
-  // Filter and "submit new filter" modals
-  const [showFilter, setShowFilter] = useState(false);
-  const [showSubmitNewFilterModal, setShowSubmitNewFilterModal] =
-    useState(false);
-
   const [isLoading, setIsLoading] = useState(false);
   const [trackerAction, setTrackerAction] = useState("");
-  const [displayMap, setDisplayMap] = useState(true);
   const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] =
     useState(false);
+
+  useEffect(() => {
+    if (selectedPoiIndex !== -1) {
+      setTimeout(() => {
+        moveMapToCoordinates(
+          poiArray[selectedPoiIndex].position_latitude,
+          poiArray[selectedPoiIndex].position_longitude
+        );
+        setAddressDetails(poiArray[selectedPoiIndex]);
+        setShowAddressDetails(true);
+      }, 500);
+    }
+  }, [selectedPoiIndex]);
 
   const currentUserLocatioIcon = require("../../assets/images/carto/current_location.png");
 
@@ -188,60 +185,6 @@ const AroundMeMap: React.FC<Props> = ({
             </Marker>
           )}
         </MapView>
-        <View style={styles.headerButtonsView}>
-          <CustomButton
-            buttonStyle={styles.headerButton}
-            title={Labels.listArticles.filters}
-            titleStyle={styles.headerButtonTitle}
-            rounded={true}
-            icon={
-              <Icomoon
-                name={IcomoonIcons.filtrer}
-                size={Sizes.sm}
-                color={Colors.primaryBlue}
-              />
-            }
-            action={() => {
-              setShowFilter(true);
-            }}
-          />
-          <CustomButton
-            buttonStyle={styles.submitNewFilterButton}
-            title=""
-            rounded={true}
-            icon={<BulbIcon />}
-            action={() => {
-              setShowSubmitNewFilterModal(true);
-            }}
-          />
-          <View style={styles.headerButtonsRightPartView}>
-            <CustomButton
-              buttonStyle={styles.headerButton}
-              title={Labels.aroundMe.displayListButton}
-              titleStyle={styles.headerButtonTitle}
-              rounded={true}
-              action={() => {
-                setDisplayMap(!displayMap);
-              }}
-            />
-            {showRelaunchResearchButton && (
-              <CustomButton
-                buttonStyle={[styles.headerButton, styles.buttonMarginTop]}
-                title={Labels.aroundMe.relaunchSearch}
-                titleStyle={styles.headerButtonTitle}
-                rounded={true}
-                action={() => {
-                  KeyboardUtils.dismissKeyboard();
-                  setIsLoading(true);
-                  setShowRelaunchResearchButton(false);
-                  setShowAddressDetails(false);
-                  updateSelectedPoiIndex(-1);
-                  setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
-                }}
-              />
-            )}
-          </View>
-        </View>
         <CustomSnackbar
           duration={AroundMeConstants.SNACKBAR_DURATION}
           visible={showSnackBar}
@@ -252,6 +195,23 @@ const AroundMeMap: React.FC<Props> = ({
           text={snackBarMessage}
         />
       </View>
+      <AroundMeMapHeader
+        headerStyle={styles.headerButtonsMapView}
+        displayMap
+        setDisplayMap={() => {
+          displayList();
+        }}
+        relaunchSearch={() => {
+          KeyboardUtils.dismissKeyboard();
+          setIsLoading(true);
+          setShowRelaunchResearchButton(false);
+          setShowAddressDetails(false);
+          updateSelectedPoiIndex(-1);
+          setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+        }}
+        showRelaunchResearchButton={showRelaunchResearchButton}
+        setIsLoading={setIsLoading}
+      />
       {showAddressDetails && addressDetails && (
         <View
           style={[
@@ -269,22 +229,6 @@ const AroundMeMap: React.FC<Props> = ({
           />
         </View>
       )}
-      <AroundMeFilter
-        visible={showFilter}
-        hideModal={(filterWasSaved: boolean) => {
-          setShowFilter(false);
-          if (filterWasSaved) {
-            if (PLATFORM_IS_ANDROID) setIsLoading(true);
-            setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
-          }
-        }}
-      />
-      <SubmitNewFilter
-        visible={showSubmitNewFilterModal}
-        hideModal={() => {
-          setShowSubmitNewFilterModal(false);
-        }}
-      />
       {isLoading && <Loader />}
     </View>
   );
@@ -355,14 +299,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: Margins.smaller,
   },
-  headerButtonsRightPartView: {
-    alignItems: "flex-end",
-    backgroundColor: "transparent",
-    justifyContent: "flex-end",
-    position: "absolute",
-    right: 0,
-  },
-  headerButtonsView: {
+  headerButtonsMapView: {
     backgroundColor: "transparent",
     flexDirection: "row",
     height: "15%",
@@ -371,6 +308,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 0,
+  },
+  headerButtonsRightPartView: {
+    alignItems: "flex-end",
+    backgroundColor: "transparent",
+    justifyContent: "flex-end",
+    position: "absolute",
+    right: 0,
   },
   instruction: {
     color: Colors.commonText,

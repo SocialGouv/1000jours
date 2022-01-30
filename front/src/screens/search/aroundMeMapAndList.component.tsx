@@ -6,13 +6,15 @@ import { useRef, useState } from "react";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import type { LatLng, Region } from "react-native-maps";
-import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
+import type MapView from "react-native-maps";
+import { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import BulbIcon from "../../assets/images/carto/bulb.svg";
 import {
   AddressDetails,
   AroundMeFilter,
   AroundMeMap,
+  AroundMeMapHeader,
   AroundMePoiList,
   CustomMapMarker,
   FetchPois,
@@ -158,10 +160,57 @@ const AroundMeMapAndList: React.FC<Props> = ({ navigation }) => {
       updateRegion={setRegion}
       updatePoiArray={setPoisArray}
       updateSelectedPoiIndex={setSelectedPoiIndex}
+      displayList={() => {
+        setDisplayMap(false);
+      }}
     />
   ) : (
-    <AroundMePoiList region={region} />
+    <AroundMePoiList
+      region={region}
+      poiArray={poisArray}
+      displayMap={() => {
+        setDisplayMap(true);
+      }}
+      updatePoiArray={setPoisArray}
+      updateSelectedPoiIndex={setSelectedPoiIndex}
+    />
   );
+
+  // return (
+  //   <View>
+  //     {/* <View style={styles.flexStart}>
+  //       <BackButton
+  //         action={() => {
+  //           navigation.goBack();
+  //         }}
+  //       />
+  //     </View> */}
+  //     {displayMap ? (
+  //       <AroundMeMap
+  //         region={region}
+  //         poiArray={poisArray}
+  //         selectedPoiIndex={selectedPoiIndex}
+  //         userLocation={currentUserLocation}
+  //         updateRegion={setRegion}
+  //         updatePoiArray={setPoisArray}
+  //         updateSelectedPoiIndex={setSelectedPoiIndex}
+  //         displayList={() => {
+  //           setDisplayMap(false);
+  //         }}
+  //       />
+  //     ) : (
+  //       <AroundMePoiList
+  //         region={region}
+  //         poiArray={poisArray}
+  //         displayMap={() => {
+  //           setDisplayMap(true);
+  //         }}
+  //         updatePoiArray={setPoisArray}
+  //         updateSelectedPoiIndex={setSelectedPoiIndex}
+  //       />
+  //     )}
+  //   </View>
+  // );
 };
 
 const styles = StyleSheet.create({
@@ -205,8 +254,6 @@ const styles = StyleSheet.create({
   },
   flexStart: {
     alignItems: "flex-start",
-    flexDirection: "row",
-    flexWrap: "wrap",
     margin: Margins.smaller,
   },
   fontButton: {
@@ -234,6 +281,16 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     flexDirection: "row",
     margin: Margins.smaller,
+  },
+  headerButtonsMapView: {
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    height: "15%",
+    left: 0,
+    margin: Margins.smaller,
+    position: "absolute",
+    right: 0,
+    top: 0,
   },
   headerButtonsRightPartView: {
     alignItems: "flex-end",
