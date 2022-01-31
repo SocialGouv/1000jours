@@ -29,5 +29,5 @@ export {
   TabCalendarScreen,
   TabEpdsScreen,
   TabHomeScreen,
-  TabSearchScreen
+  TabSearchScreen,
 };

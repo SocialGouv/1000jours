@@ -1,6 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import type * as Notifications from "expo-notifications";
 import type { FC } from "react";
 import { useState } from "react";
 import * as React from "react";
@@ -33,8 +32,6 @@ interface NavigationProps {
 
 const Navigation: FC<NavigationProps> = ({ colorScheme }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [notification, setNotification] =
-    useState<Notifications.Notification | null>(null);
 
   return (
     <NavigationContainer

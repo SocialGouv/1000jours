@@ -41,7 +41,7 @@ const BottomTabNavigator: FC = () => {
         />
       ),
       name: "tabHome",
-      title: Labels.tabs.homeTitle
+      title: Labels.tabs.homeTitle,
     },
     {
       component: TabCalendarNavigator,

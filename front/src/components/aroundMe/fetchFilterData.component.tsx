@@ -18,7 +18,7 @@ const FetchFilterData: React.FC<Props> = ({ setFilterData }) => {
   });
 
   useEffect(() => {
-    getFilterData();
+    void getFilterData();
   }, []);
 
   return null;

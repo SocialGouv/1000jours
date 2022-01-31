@@ -15,6 +15,7 @@ import {
   TitleH1,
   View,
 } from "../../components/baseComponents";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
   FetchPoliciesConstants,
   Formats,
@@ -25,7 +26,6 @@ import { GET_EVENT_DETAILS } from "../../constants/databaseQueries.constants";
 import { Paddings } from "../../styles";
 import type { Event, TabCalendarParamList } from "../../types";
 import { StorageUtils, TrackerUtils } from "../../utils";
-import TrackerHandler from "../../components/tracker/trackerHandler.component";
 
 interface Props {
   navigation: StackNavigationProp<TabCalendarParamList, "eventDetails">;

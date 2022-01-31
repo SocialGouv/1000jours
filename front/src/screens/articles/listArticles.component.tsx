@@ -21,6 +21,7 @@ import {
   TitleH1,
   View,
 } from "../../components/baseComponents";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { FetchPoliciesConstants, Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
@@ -31,7 +32,6 @@ import type {
   Thematique,
 } from "../../types";
 import { TrackerUtils } from "../../utils";
-import TrackerHandler from "../../components/tracker/trackerHandler.component";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;
