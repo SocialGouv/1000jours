@@ -12,11 +12,11 @@ import { HelperText } from "react-native-paper";
 import {
   AroundMeConstants,
   Labels,
-  StorageKeysConstants
+  StorageKeysConstants,
 } from "../../constants";
 import {
   PLATFORM_IS_IOS,
-  SCREEN_WIDTH
+  SCREEN_WIDTH,
 } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { CartoFilterStorage } from "../../type";
@@ -31,7 +31,7 @@ import {
   CustomSnackbar,
   Loader,
   SecondaryText,
-  View
+  View,
 } from "../baseComponents";
 
 interface Props {
@@ -79,7 +79,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
       const cartoFilterStorage: CartoFilterStorage = {
         etapes: [],
         thematiques: [],
-        types: finalCartographieTypes.map((type) => type.nom)
+        types: finalCartographieTypes.map((type) => type.nom),
       };
       void storeObjectValue(
         StorageKeysConstants.cartoFilterKey,
@@ -155,7 +155,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
         <TextInput
           style={[
             styles.postalCodeInput,
-            PLATFORM_IS_IOS && styles.widthForIos
+            PLATFORM_IS_IOS && styles.widthForIos,
           ]}
           onChangeText={onPostalCodeChanged}
           value={postalCodeInput}
@@ -197,45 +197,45 @@ const styles = StyleSheet.create({
     fontSize: Sizes.xs,
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.md,
-    marginVertical: Margins.default
+    marginVertical: Margins.default,
   },
   fontButton: {
-    fontSize: Sizes.xs
+    fontSize: Sizes.xs,
   },
   geolicationButtonStyle: {
-    marginHorizontal: Margins.default
+    marginHorizontal: Margins.default,
   },
   geolicationIconStyle: {
     height: Margins.largest,
     marginLeft: Margins.default,
-    width: Margins.largest
+    width: Margins.largest,
   },
   geolocationRow: {
     flexDirection: "row",
-    marginVertical: Margins.default
+    marginVertical: Margins.default,
   },
   mainContainer: {
     flex: 1,
     paddingHorizontal: Paddings.default,
-    paddingTop: Paddings.default
+    paddingTop: Paddings.default,
   },
   postalCodeInput: {
     backgroundColor: Colors.cardGrey,
     borderColor: Colors.primaryBlue,
     borderWidth: 1,
-    paddingHorizontal: Paddings.smaller
+    paddingHorizontal: Paddings.smaller,
   },
   postalCodeRow: {
     flexDirection: "row",
     paddingLeft: Margins.default,
-    paddingVertical: Paddings.smaller
+    paddingVertical: Paddings.smaller,
   },
   searchByPostalCodeButton: {
-    marginHorizontal: Margins.smaller
+    marginHorizontal: Margins.smaller,
   },
   widthForIos: {
-    width: SCREEN_WIDTH / 2.2
-  }
+    width: SCREEN_WIDTH / 2.2,
+  },
 });
 
 export default TabAroundMeInstruction;

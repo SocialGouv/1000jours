@@ -1,7 +1,8 @@
 import type { FC } from "react";
 import { useState } from "react";
 import * as React from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import type { StyleProp, ViewStyle } from "react-native";
+import { StyleSheet } from "react-native";
 
 import BulbIcon from "../../assets/images/carto/bulb.svg";
 import { Labels } from "../../constants";

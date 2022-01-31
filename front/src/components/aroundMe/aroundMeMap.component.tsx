@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-require-imports */
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
@@ -13,7 +13,7 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
-import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
+import { Colors, Margins } from "../../styles";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
 import {
   AddressDetails,
@@ -75,7 +75,8 @@ const AroundMeMap: React.FC<Props> = ({
     }
   }, [selectedPoiIndex]);
 
-  const currentUserLocatioIcon = require("../../assets/images/carto/current_location.png");
+  const locationIcon = "../../assets/images/carto/current_location.png";
+  const currentUserLocationIcon = require(locationIcon);
 
   const setMapViewRef = (ref: MapView) => {
     mapRef.current = ref;
@@ -179,7 +180,7 @@ const AroundMeMap: React.FC<Props> = ({
               }}
             >
               <Image
-                source={currentUserLocatioIcon}
+                source={currentUserLocationIcon}
                 style={styles.currentLocationMarker}
               />
             </Marker>
@@ -245,59 +246,9 @@ const styles = StyleSheet.create({
   addressDetailsSmallMarginBottom: {
     marginBottom: Margins.smaller,
   },
-  addressesListLabel: {
-    color: Colors.primaryBlue,
-    fontSize: Sizes.xs,
-    fontWeight: FontWeight.bold,
-    marginHorizontal: Margins.default,
-    marginVertical: Margins.smaller,
-  },
-  backButton: { width: "40%" },
-  buttonFlexEnd: {
-    position: "absolute",
-    right: 0,
-    top: 0,
-  },
-  buttonMarginTop: {
-    marginTop: Margins.smaller,
-  },
-  card: {
-    backgroundColor: Colors.cardGrey,
-    borderWidth: 1,
-    margin: Margins.smaller,
-  },
-  columnView: {
-    flexDirection: "column",
-  },
   currentLocationMarker: {
     height: Margins.default,
     width: Margins.default,
-  },
-  fontButton: {
-    fontSize: Sizes.xxs,
-  },
-  googleMapMarkerNotSelected: {
-    height: Margins.largest,
-    resizeMode: "contain",
-  },
-  googleMapMarkerSelected: {
-    height: Margins.evenMoreLargest,
-    resizeMode: "contain",
-  },
-  headerButton: {
-    backgroundColor: Colors.white,
-    borderColor: Colors.primaryBlue,
-    borderWidth: 1,
-    marginHorizontal: Margins.smallest,
-  },
-  headerButtonTitle: {
-    color: Colors.primaryBlue,
-    fontSize: Sizes.xxs,
-  },
-  headerButtonsInListView: {
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    margin: Margins.smaller,
   },
   headerButtonsMapView: {
     backgroundColor: "transparent",
@@ -309,46 +260,11 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
   },
-  headerButtonsRightPartView: {
-    alignItems: "flex-end",
-    backgroundColor: "transparent",
-    justifyContent: "flex-end",
-    position: "absolute",
-    right: 0,
-  },
-  instruction: {
-    color: Colors.commonText,
-    fontSize: Sizes.xs,
-    lineHeight: Sizes.mmd,
-    paddingHorizontal: Paddings.smallest,
-  },
   mainContainer: {
     flex: 1,
   },
   map: {
     flex: 1,
-  },
-  markerView: {
-    alignItems: "center",
-    backgroundColor: "transparent",
-    height: Margins.evenMoreLargest,
-    justifyContent: "flex-end",
-    width: Margins.evenMoreLargest,
-  },
-  submitNewFilterButton: {
-    backgroundColor: Colors.white,
-    borderColor: Colors.primaryBlue,
-    borderWidth: 1,
-  },
-  title: {
-    color: Colors.primaryBlueDark,
-    fontSize: Sizes.sm,
-    fontWeight: FontWeight.bold,
-    paddingHorizontal: Paddings.smallest,
-    textTransform: "uppercase",
-  },
-  topContainer: {
-    paddingHorizontal: Paddings.default,
   },
 });
 
