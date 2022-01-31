@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import type { FC, ReactElement } from "react";
 import * as React from "react";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -7,13 +7,15 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import ArticleCard from "../../components/article/articleCard.component";
 import { SecondaryTextItalic } from "../../components/baseComponents";
-import { Labels } from "../../constants";
 import ArticleDetail from "../../screens/articles/articleDetail.component";
 import { Margins, Paddings } from "../../styles";
 import type { Article, Step } from "../../types";
 import TabAroundMeInstruction from "./tabAroundMeInstruction.component";
 
-export const articlesRoute = (articles: Article[]): ReactElement => {
+export const articlesRoute = (
+  updatedText: string,
+  articles: Article[]
+): ReactElement => {
   const [showArticle, setShowArticle] = useState(false);
   const [currentArticleId, setCurrentArticleId] = useState(0);
   const [currentArticleStep, setCurrentArticleStep] = useState<
@@ -23,7 +25,7 @@ export const articlesRoute = (articles: Article[]): ReactElement => {
   if (articles.length <= 0) {
     return (
       <View style={styles.center}>
-        <SecondaryTextItalic>{Labels.search.writeKeyword}</SecondaryTextItalic>
+        <SecondaryTextItalic>{updatedText}</SecondaryTextItalic>
       </View>
     );
   }
@@ -42,7 +44,7 @@ export const articlesRoute = (articles: Article[]): ReactElement => {
         <Animatable.View
           key={index}
           animation="fadeInUp"
-          duration={1000}
+          duration={500}
           delay={0}
         >
           <ArticleCard
@@ -60,12 +62,15 @@ export const articlesRoute = (articles: Article[]): ReactElement => {
   );
 };
 
-export const poisRoute = (articles: Article[]): ReactElement =>
+export const poisRoute = (
+  updatedText: string,
+  articles: Article[]
+): ReactElement =>
   articles.length > 0 ? (
     <TabAroundMeInstruction articles={articles} />
   ) : (
     <View style={styles.center}>
-      <SecondaryTextItalic>{Labels.search.writeKeyword}</SecondaryTextItalic>
+      <SecondaryTextItalic>{updatedText}</SecondaryTextItalic>
     </View>
   );
 

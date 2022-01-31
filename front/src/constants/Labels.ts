@@ -535,7 +535,8 @@ export default {
     articles: "Articles",
     findAdaptedResponses:
       "Trouver des réponses à vos questions, vos problèmes, et sollicitez de l'aide auprès de professionnels adaptés autour de chez vous.",
-    noArticleFound: "Aucun article ne correspond à votre recherche",
+    loading: "Chargement...",
+    noArticleFound: "Aucun résultat ne correspond à votre recherche",
     title: "Que recherchez-vous ?",
     validButton: "Rechercher",
     writeKeyword:

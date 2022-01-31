@@ -15,14 +15,12 @@ import {
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import { Colors, Margins } from "../../styles";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
-import {
-  AddressDetails,
-  AroundMeMapHeader,
-  CustomMapMarker,
-  FetchPois,
-} from "..";
 import { CustomSnackbar, Loader, View } from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
+import AddressDetails from "./addressDetails.component";
+import AroundMeMapHeader from "./aroundMeMapHeader.component";
+import CustomMapMarker from "./customMapMarker.component";
+import FetchPois from "./fetchPois.component";
 
 interface Props {
   region: Region;
