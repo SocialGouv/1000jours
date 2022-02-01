@@ -79,7 +79,7 @@ const AroundMeMapHeader: FC<Props> = ({
               <Icomoon
                 name={
                   displayMap
-                    ? IcomoonIcons.autourDeMoi
+                    ? IcomoonIcons.afficherListe
                     : IcomoonIcons.autourDeMoi
                 }
                 size={Sizes.sm}
@@ -96,6 +96,13 @@ const AroundMeMapHeader: FC<Props> = ({
               title={Labels.aroundMe.relaunchSearch}
               titleStyle={styles.headerButtonTitle}
               rounded={true}
+              icon={
+                <Icomoon
+                  name={IcomoonIcons.relancerRecherche}
+                  size={Sizes.sm}
+                  color={Colors.primaryBlue}
+                />
+              }
               action={() => {
                 relaunchSearch();
               }}
