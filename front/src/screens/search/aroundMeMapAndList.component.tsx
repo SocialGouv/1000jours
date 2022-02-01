@@ -1,3 +1,4 @@
+import type { RouteProp } from "@react-navigation/native";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import { useState } from "react";
@@ -9,26 +10,23 @@ import { AroundMeMap, AroundMePoiList } from "../../components";
 import { BackButton, View } from "../../components/baseComponents";
 import { Margins } from "../../styles";
 import type { TabSearchParamList } from "../../types";
-import SharedCartoData from "../../utils/sharedCartoData.class";
 
 interface Props {
+  route: RouteProp<
+    {
+      params: { region: Region; poisArray: Poi[]; userLocation?: LatLng };
+    },
+    "params"
+  >;
   navigation: StackNavigationProp<TabSearchParamList>;
-  // route: RouteProp<{ params: { updatePoiList: () => void } }, "params">;
 }
 
-const AroundMeMapAndList: React.FC<Props> = ({ navigation }) => {
-  // Data from SharedCartoData
-  const [region, setRegion] = useState<Region>(
-    SharedCartoData.region // AroundMeConstants.INITIAL_REGION
-  );
-  const [poisArray, setPoisArray] = useState<Poi[]>(
-    SharedCartoData.fetchedPois
-  );
-  const [selectedPoiIndex, setSelectedPoiIndex] = useState(
-    SharedCartoData.selectedPoiIndex
-  );
-  const [currentUserLocation] = useState<LatLng | null>(
-    SharedCartoData.userLocation
+const AroundMeMapAndList: React.FC<Props> = ({ navigation, route }) => {
+  const [region, setRegion] = useState<Region>(route.params.region);
+  const [poisArray, setPoisArray] = useState<Poi[]>(route.params.poisArray);
+  const [selectedPoiIndex, setSelectedPoiIndex] = useState(-1);
+  const [currentUserLocation] = useState<LatLng | undefined>(
+    route.params.userLocation
   );
 
   const [displayMap, setDisplayMap] = useState(true);

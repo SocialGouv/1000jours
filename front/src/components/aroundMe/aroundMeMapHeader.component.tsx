@@ -17,6 +17,7 @@ interface Props {
   displayMap: boolean;
   setDisplayMap: (displayMap: boolean) => void;
   relaunchSearch: () => void;
+  showDisplayListButton?: boolean;
   showRelaunchResearchButton: boolean;
   setIsLoading: (isLoading: boolean) => void;
 }
@@ -26,6 +27,7 @@ const AroundMeMapHeader: FC<Props> = ({
   displayMap,
   setDisplayMap,
   relaunchSearch,
+  showDisplayListButton,
   showRelaunchResearchButton,
   setIsLoading,
 }) => {
@@ -72,6 +74,18 @@ const AroundMeMapHeader: FC<Props> = ({
             }
             titleStyle={styles.headerButtonTitle}
             rounded={true}
+            disabled={displayMap ? !showDisplayListButton : false}
+            icon={
+              <Icomoon
+                name={
+                  displayMap
+                    ? IcomoonIcons.autourDeMoi
+                    : IcomoonIcons.autourDeMoi
+                }
+                size={Sizes.sm}
+                color={Colors.primaryBlue}
+              />
+            }
             action={() => {
               setDisplayMap(!displayMap);
             }}

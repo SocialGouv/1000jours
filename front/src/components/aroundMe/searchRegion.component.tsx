@@ -1,16 +1,15 @@
 import * as Location from "expo-location";
 import type { FC } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import type { Region } from "react-native-maps";
+import { useEffect, useState } from "react";
+import type { LatLng, Region } from "react-native-maps";
 
 import { AroundMeConstants, Labels } from "../../constants";
 import { AroundMeUtils } from "../../utils";
-import SharedCartoData from "../../utils/sharedCartoData.class";
 
 interface Props {
   triggerSearchRegionByLocation: boolean;
   setRegion: (region: Region | undefined) => void;
+  setUserLocation: (userLocation: LatLng | undefined) => void;
   showSnackBarWithMessage: (message: string) => void;
   setIsLoading: (value: boolean) => void;
   triggerSearchRegionByPostalCode: boolean;
@@ -21,6 +20,7 @@ interface Props {
 const SearchRegion: FC<Props> = ({
   triggerSearchRegionByLocation,
   setRegion,
+  setUserLocation,
   showSnackBarWithMessage,
   setIsLoading,
   triggerSearchRegionByPostalCode,
@@ -35,10 +35,8 @@ const SearchRegion: FC<Props> = ({
     if (status !== Location.PermissionStatus.GRANTED) {
       showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
       setIsLoading(false);
-      // setSearchIsReady(true); // Si on refuse la géoloc, on peut toujours lancer une recherche (manuelle ou via CP)
       return;
     }
-
     try {
       let currentLocation = undefined;
       let locationSuccess = false;
@@ -67,19 +65,22 @@ const SearchRegion: FC<Props> = ({
         }
       }
       if (currentLocation) {
-        SharedCartoData.userLocation = {
+        setUserLocation({
           latitude: currentLocation.coords.latitude,
           longitude: currentLocation.coords.longitude,
-        };
-
+        });
         setRegion({
           latitude: currentLocation.coords.latitude,
           latitudeDelta: AroundMeConstants.DEFAULT_DELTA,
           longitude: currentLocation.coords.longitude,
           longitudeDelta: AroundMeConstants.DEFAULT_DELTA,
         });
-      } else setRegion(undefined);
+      } else {
+        setUserLocation(undefined);
+        setRegion(undefined);
+      }
     } catch {
+      setUserLocation(undefined);
       setRegion(undefined);
     }
 

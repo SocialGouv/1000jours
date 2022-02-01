@@ -26,7 +26,7 @@ interface Props {
   region: Region;
   poiArray: Poi[];
   selectedPoiIndex: number;
-  userLocation: LatLng | null;
+  userLocation?: LatLng;
   updateRegion: (region: Region) => void;
   updatePoiArray: (poiArray: Poi[]) => void;
   updateSelectedPoiIndex: (selectedPoiIndex: number) => void;
@@ -60,6 +60,8 @@ const AroundMeMap: React.FC<Props> = ({
   const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] =
     useState(false);
 
+  const [showDisplayListButton, setShowDisplayListButton] = useState(true);
+
   useEffect(() => {
     if (selectedPoiIndex !== -1) {
       setTimeout(() => {
@@ -85,6 +87,7 @@ const AroundMeMap: React.FC<Props> = ({
       showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
     }
 
+    setShowDisplayListButton(pois.length > 0);
     updatePoiArray(pois);
     setShowAddressDetails(false);
     setIsLoading(false);
@@ -184,6 +187,24 @@ const AroundMeMap: React.FC<Props> = ({
             </Marker>
           )}
         </MapView>
+        <AroundMeMapHeader
+          headerStyle={styles.headerButtonsMapView}
+          displayMap
+          setDisplayMap={() => {
+            displayList();
+          }}
+          relaunchSearch={() => {
+            KeyboardUtils.dismissKeyboard();
+            setIsLoading(true);
+            setShowRelaunchResearchButton(false);
+            setShowAddressDetails(false);
+            updateSelectedPoiIndex(-1);
+            setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+          }}
+          showRelaunchResearchButton={showRelaunchResearchButton}
+          setIsLoading={setIsLoading}
+          showDisplayListButton={showDisplayListButton}
+        />
         <CustomSnackbar
           duration={AroundMeConstants.SNACKBAR_DURATION}
           visible={showSnackBar}
@@ -194,23 +215,6 @@ const AroundMeMap: React.FC<Props> = ({
           text={snackBarMessage}
         />
       </View>
-      <AroundMeMapHeader
-        headerStyle={styles.headerButtonsMapView}
-        displayMap
-        setDisplayMap={() => {
-          displayList();
-        }}
-        relaunchSearch={() => {
-          KeyboardUtils.dismissKeyboard();
-          setIsLoading(true);
-          setShowRelaunchResearchButton(false);
-          setShowAddressDetails(false);
-          updateSelectedPoiIndex(-1);
-          setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
-        }}
-        showRelaunchResearchButton={showRelaunchResearchButton}
-        setIsLoading={setIsLoading}
-      />
       {showAddressDetails && addressDetails && (
         <View
           style={[

@@ -6,7 +6,7 @@ import { useState } from "react";
 import * as React from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import type { Region } from "react-native-maps";
+import type { LatLng, Region } from "react-native-maps";
 import { HelperText } from "react-native-paper";
 
 import { AroundMeConstants, Labels } from "../../constants";
@@ -16,7 +16,6 @@ import {
 } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import { RootNavigation } from "../../utils";
-import SharedCartoData from "../../utils/sharedCartoData.class";
 import FetchPois from "../aroundMe/fetchPois.component";
 import SearchRegion from "../aroundMe/searchRegion.component";
 import {
@@ -30,7 +29,8 @@ import {
 const TabAroundMeInstruction: FC = () => {
   const [postalCodeInput, setPostalCodeInput] = useState("");
   const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
-  const [region, setRegion] = useState<Region | undefined>();
+  const [region, setRegion] = useState<Region>();
+  const [userLocation, setUserLocation] = useState<LatLng | undefined>();
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -62,12 +62,14 @@ const TabAroundMeInstruction: FC = () => {
   };
 
   const handlePois = (pois: Poi[]) => {
-    SharedCartoData.fetchedPois = pois;
-    if (region) SharedCartoData.region = region;
-    SharedCartoData.selectedPoiIndex = -1;
-    setIsLoading(false);
-
-    void RootNavigation.navigate("aroundMeMapAndList", undefined);
+    if (pois.length === 0)
+      showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
+    else if (region)
+      void RootNavigation.navigate("aroundMeMapAndList", {
+        poisArray: pois,
+        region,
+        userLocation,
+      });
   };
 
   return (
@@ -76,13 +78,17 @@ const TabAroundMeInstruction: FC = () => {
         triggerSearchRegionByLocation={triggerCheckLocation}
         showSnackBarWithMessage={showSnackBarWithMessage}
         setRegion={(newRegion: Region | undefined) => {
-          setRegion(newRegion);
-          setTriggerFetchPois(!triggerFetchPois);
+          if (newRegion) {
+            setRegion(newRegion);
+            setTriggerFetchPois(!triggerFetchPois);
+          } else
+            showSnackBarWithMessage(Labels.aroundMe.regionCouldNotBeDefined);
         }}
         setIsLoading={setIsLoading}
         triggerSearchRegionByPostalCode={triggerSearchByPostalCode}
         postalCodeInput={postalCodeInput}
         setPostalCodeInvalid={setPostalCodeInvalid}
+        setUserLocation={setUserLocation}
       />
 
       <FetchPois
