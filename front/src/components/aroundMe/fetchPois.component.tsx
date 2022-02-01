@@ -17,14 +17,12 @@ interface Props {
   triggerSearchByGpsCoords: boolean;
   region?: Region;
   setFetchedPois: (pois: Poi[]) => void;
-  launchFetchAtInit?: boolean;
 }
 
 const FetchPois: React.FC<Props> = ({
   triggerSearchByGpsCoords,
   region,
   setFetchedPois,
-  launchFetchAtInit,
 }) => {
   const [componentIsInitialized, setComponentIsInitialized] = useState(false);
 
@@ -72,7 +70,7 @@ const FetchPois: React.FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    if (componentIsInitialized || launchFetchAtInit) void searchByGPSCoords();
+    if (componentIsInitialized) void searchByGPSCoords();
   }, [triggerSearchByGpsCoords]);
 
   return null;

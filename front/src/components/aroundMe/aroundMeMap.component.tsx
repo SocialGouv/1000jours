@@ -167,9 +167,7 @@ const AroundMeMap: React.FC<Props> = ({
                 poiIndex={poiIndex}
                 poiCategorie={poi.categorie}
                 selectedPoiIndex={selectedPoiIndex}
-                onMarkerClick={(index: number) => {
-                  onMarkerClick(index);
-                }}
+                onMarkerClick={onMarkerClick}
               />
             </View>
           ))}
