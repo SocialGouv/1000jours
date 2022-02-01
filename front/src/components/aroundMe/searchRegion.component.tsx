@@ -11,7 +11,6 @@ interface Props {
   setRegion: (region: Region | undefined) => void;
   setUserLocation: (userLocation: LatLng | undefined) => void;
   showSnackBarWithMessage: (message: string) => void;
-  setIsLoading: (value: boolean) => void;
   triggerSearchRegionByPostalCode: boolean;
   postalCodeInput: string;
   setPostalCodeInvalid: (value: boolean) => void;
@@ -22,7 +21,6 @@ const SearchRegion: FC<Props> = ({
   setRegion,
   setUserLocation,
   showSnackBarWithMessage,
-  setIsLoading,
   triggerSearchRegionByPostalCode,
   postalCodeInput,
   setPostalCodeInvalid,
@@ -30,11 +28,9 @@ const SearchRegion: FC<Props> = ({
   const [componentIsInitialized, setComponentIsInitialized] = useState(false);
 
   const searchRegionByLocation = async () => {
-    setIsLoading(true);
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== Location.PermissionStatus.GRANTED) {
       showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
-      setIsLoading(false);
       return;
     }
     try {
@@ -83,12 +79,9 @@ const SearchRegion: FC<Props> = ({
       setUserLocation(undefined);
       setRegion(undefined);
     }
-
-    setIsLoading(false);
   };
 
   const searchRegionByPostalCode = async () => {
-    setIsLoading(true);
 
     if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
       setPostalCodeInvalid(true);
@@ -100,7 +93,6 @@ const SearchRegion: FC<Props> = ({
 
     if (newRegion) setRegion(newRegion);
     else showSnackBarWithMessage(Labels.aroundMe.postalCodeNotFound);
-    setIsLoading(false);
   };
 
   useEffect(() => {

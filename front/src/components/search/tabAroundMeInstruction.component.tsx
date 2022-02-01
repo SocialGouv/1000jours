@@ -70,21 +70,26 @@ const TabAroundMeInstruction: FC = () => {
         region,
         userLocation,
       });
+    setIsLoading(false);
   };
 
   return (
     <ScrollView style={styles.mainContainer}>
       <SearchRegion
         triggerSearchRegionByLocation={triggerCheckLocation}
-        showSnackBarWithMessage={showSnackBarWithMessage}
+        showSnackBarWithMessage={(message: string) => {
+          setIsLoading(false);
+          showSnackBarWithMessage(message);
+        }}
         setRegion={(newRegion: Region | undefined) => {
           if (newRegion) {
             setRegion(newRegion);
             setTriggerFetchPois(!triggerFetchPois);
-          } else
+          } else {
+            setIsLoading(false);
             showSnackBarWithMessage(Labels.aroundMe.regionCouldNotBeDefined);
+          }
         }}
-        setIsLoading={setIsLoading}
         triggerSearchRegionByPostalCode={triggerSearchByPostalCode}
         postalCodeInput={postalCodeInput}
         setPostalCodeInvalid={setPostalCodeInvalid}
