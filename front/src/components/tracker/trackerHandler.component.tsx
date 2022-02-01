@@ -3,12 +3,13 @@ import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import { useEffect } from "react";
 
+import type { TrackerSearch } from "../../type";
 import { StringUtils } from "../../utils";
 
 interface TrackerHandlerProps {
   screenName?: string;
   actionName?: string;
-  searchKeyword?: string;
+  searchObject?: TrackerSearch;
   eventName?: string;
   eventAction?: string;
 }
@@ -16,7 +17,7 @@ interface TrackerHandlerProps {
 const TrackerHandler: FC<TrackerHandlerProps> = ({
   screenName,
   actionName,
-  searchKeyword,
+  searchObject,
   eventName,
   eventAction,
 }) => {
@@ -40,9 +41,15 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
   }, [actionName]);
 
   useEffect(() => {
-    if (searchKeyword && StringUtils.stringIsNotNullNorEmpty(searchKeyword))
-      void trackSiteSearch({ keyword: searchKeyword });
-  }, [searchKeyword]);
+    if (
+      searchObject?.keyword &&
+      StringUtils.stringIsNotNullNorEmpty(searchObject.keyword) &&
+      searchObject.category &&
+      StringUtils.stringIsNotNullNorEmpty(searchObject.category)
+    ) {
+      void trackSiteSearch(searchObject);
+    }
+  }, [searchObject]);
 
   useEffect(() => {
     const eventCategory = "MobileApp";

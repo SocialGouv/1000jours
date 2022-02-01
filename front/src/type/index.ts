@@ -19,6 +19,7 @@ import {
   IntroductionText,
   QuestionnaireEpdsFromDB,
 } from "./epdsSurvey.types";
+import { TrackerSearch } from "./tabSearch.types";
 
 export {
   BeContactedColors,
@@ -38,4 +39,5 @@ export {
   FetchedFilterFromDb,
   IntroductionText,
   QuestionnaireEpdsFromDB,
+  TrackerSearch,
 };

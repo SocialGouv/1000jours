@@ -27,6 +27,7 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
+import type { TrackerSearch } from "../../type";
 import type { Article } from "../../types";
 import { KeyboardUtils, StringUtils, TrackerUtils } from "../../utils";
 import { stringIsNotNullNorEmpty } from "../../utils/strings.util";
@@ -35,7 +36,9 @@ const TabSearchScreen: FC = () => {
   const [keywords, setKeywords] = useState("");
   const [articles, setArticles] = useState<Article[]>([]);
   const [updatedText, setUpdatedText] = useState(Labels.search.writeKeyword);
-  const [enteredKeyword, setEnteredKeyword] = useState("");
+  const [trackerSearchObject, setTrackerSearchObject] =
+    useState<TrackerSearch>();
+  const trackerSearchCategory = "Onglet Rechercher";
 
   // Tabs
   const layout = useWindowDimensions();
@@ -62,6 +65,11 @@ const TabSearchScreen: FC = () => {
         const results = (data as { articles: Article[] }).articles;
         setArticles(results);
         if (results.length === 0) setUpdatedText(Labels.search.noArticleFound);
+        setTrackerSearchObject({
+          category: trackerSearchCategory,
+          count: results.length,
+          keyword: keywords,
+        });
       },
     }
   );
@@ -70,7 +78,6 @@ const TabSearchScreen: FC = () => {
     setUpdatedText(Labels.search.loading);
     KeyboardUtils.dismissKeyboard();
     if (stringIsNotNullNorEmpty(keywords)) {
-      setEnteredKeyword(keywords);
       const variables = {
         keywords,
       };
@@ -100,7 +107,7 @@ const TabSearchScreen: FC = () => {
       <View style={styles.mainContainer}>
         <TrackerHandler
           screenName={TrackerUtils.TrackingEvent.RECHERCHER}
-          searchKeyword={enteredKeyword}
+          searchObject={trackerSearchObject}
         />
         <TitleH1
           title={Labels.search.title}
