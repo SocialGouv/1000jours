@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
-import type { Poi, PoiType } from "@socialgouv/nos1000jours-lib";
+import type { Poi } from "@socialgouv/nos1000jours-lib";
 import type { FC } from "react";
 import { useState } from "react";
 import * as React from "react";
@@ -9,21 +9,14 @@ import { ScrollView } from "react-native-gesture-handler";
 import type { Region } from "react-native-maps";
 import { HelperText } from "react-native-paper";
 
-import {
-  AroundMeConstants,
-  Labels,
-  StorageKeysConstants,
-} from "../../constants";
+import { AroundMeConstants, Labels } from "../../constants";
 import {
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
-import type { CartoFilterStorage } from "../../type";
-import type { Article } from "../../types";
 import { RootNavigation } from "../../utils";
 import SharedCartoData from "../../utils/sharedCartoData.class";
-import { storeObjectValue } from "../../utils/storage.util";
 import FetchPois from "../aroundMe/fetchPois.component";
 import SearchRegion from "../aroundMe/searchRegion.component";
 import {
@@ -34,11 +27,7 @@ import {
   View,
 } from "../baseComponents";
 
-interface Props {
-  articles: Article[];
-}
-
-const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
+const TabAroundMeInstruction: FC = () => {
   const [postalCodeInput, setPostalCodeInput] = useState("");
   const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
   const [region, setRegion] = useState<Region | undefined>();
@@ -62,39 +51,13 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
     setPostalCodeInvalid(false);
   };
 
-  const extractPoiTypesFromArticles = () => {
-    const finalCartographieTypes: PoiType[] = [];
-    articles.forEach((article) => {
-      if (!article.cartographie_pois_types) return;
-      const filteredTypes = article.cartographie_pois_types.filter(
-        (type) =>
-          !finalCartographieTypes.some(
-            (finalType) => finalType.nom === type.nom
-          )
-      );
-      finalCartographieTypes.push(...filteredTypes);
-    });
-
-    if (finalCartographieTypes.length > 0) {
-      const cartoFilterStorage: CartoFilterStorage = {
-        etapes: [],
-        thematiques: [],
-        types: finalCartographieTypes.map((type) => type.nom),
-      };
-      void storeObjectValue(
-        StorageKeysConstants.cartoFilterKey,
-        cartoFilterStorage
-      );
-    }
-  };
-
   const checkLocation = () => {
-    extractPoiTypesFromArticles();
+    setIsLoading(true);
     setTriggerCheckLocation(!triggerCheckLocation);
   };
 
   const searchByPostalCode = () => {
-    extractPoiTypesFromArticles();
+    setIsLoading(true);
     setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
   };
 

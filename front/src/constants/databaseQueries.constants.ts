@@ -215,10 +215,6 @@ export const SEARCH_ARTICLES_BY_KEYWORDS = `
           height
           width
         }
-        thematiques {
-          nom
-          id
-        }
         cartographie_pois_types {
           nom
         }

@@ -533,6 +533,8 @@ export default {
   search: {
     aroundMe: "Autour de moi",
     articles: "Articles",
+    cantLaunchAroundMeSearch:
+      "Votre recherche ne peut pas vous apporter d'aide personnalisée, veuillez saisir un autre mot-clé",
     findAdaptedResponses:
       "Trouver des réponses à vos questions, vos problèmes, et sollicitez de l'aide auprès de professionnels adaptés autour de chez vous.",
     loading: "Chargement...",
