@@ -19,6 +19,7 @@ import {
   IntroductionText,
   QuestionnaireEpdsFromDB,
 } from "./epdsSurvey.types";
+import { TrackerEvent } from "./event.types";
 import { TrackerSearch } from "./tabSearch.types";
 
 export {
@@ -39,5 +40,6 @@ export {
   FetchedFilterFromDb,
   IntroductionText,
   QuestionnaireEpdsFromDB,
+  TrackerEvent,
   TrackerSearch,
 };
