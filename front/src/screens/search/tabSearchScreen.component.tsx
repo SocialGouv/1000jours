@@ -2,7 +2,13 @@ import { gql, useLazyQuery } from "@apollo/client";
 import type { FC } from "react";
 import { useState } from "react";
 import * as React from "react";
-import { StyleSheet, TextInput, useWindowDimensions, View } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import type {
   NavigationState,
   SceneRendererProps,
@@ -12,6 +18,8 @@ import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { articlesRoute, poisRoute } from "../../components";
 import {
   CustomButton,
+  Icomoon,
+  IcomoonIcons,
   SecondaryText,
   TitleH1,
 } from "../../components/baseComponents";
@@ -115,21 +123,37 @@ const TabSearchScreen: FC = () => {
           showDescription={articles.length === 0}
           animated={false}
         />
-        <View style={articles.length === 0 && styles.searchBloc}>
+        <View style={articles.length === 0 && styles.searchView}>
           <SecondaryText>{Labels.search.yourSearch}</SecondaryText>
-          <TextInput
-            style={styles.searchInput}
-            onChangeText={(text: string) => {
-              setKeywords(text);
-              if (!StringUtils.stringIsNotNullNorEmpty(text)) {
-                setUpdatedText(Labels.search.writeKeyword);
+          <View style={styles.textInputView}>
+            <TextInput
+              style={styles.searchTextInput}
+              onChangeText={(text: string) => {
+                setKeywords(text);
+                if (!StringUtils.stringIsNotNullNorEmpty(text)) {
+                  setUpdatedText(Labels.search.writeKeyword);
+                  setArticles([]);
+                }
+              }}
+              placeholder={Labels.search.writeKeywordPlaceholder}
+              value={keywords}
+              clearButtonMode="always"
+            />
+            <TouchableOpacity
+              style={styles.clearButton}
+              onPress={() => {
+                setKeywords("");
                 setArticles([]);
-              }
-            }}
-            placeholder={Labels.search.writeKeywordPlaceholder}
-            value={keywords}
-          />
-
+                setUpdatedText(Labels.search.writeKeyword);
+              }}
+            >
+              <Icomoon
+                name={IcomoonIcons.fermer}
+                size={Sizes.xs}
+                color={Colors.primaryBlue}
+              />
+            </TouchableOpacity>
+          </View>
           <View style={styles.center}>
             <CustomButton
               titleStyle={styles.fontButton}
@@ -161,6 +185,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginVertical: Margins.default,
   },
+  clearButton: {
+    bottom: 0,
+    justifyContent: "center",
+    marginRight: Margins.smaller,
+    position: "absolute",
+    right: 0,
+    top: 0,
+  },
   fontButton: {
     fontSize: Sizes.sm,
   },
@@ -173,20 +205,23 @@ const styles = StyleSheet.create({
     paddingRight: Paddings.default,
     paddingTop: Paddings.default,
   },
-  searchBloc: {
-    paddingTop: Paddings.default,
-  },
-  searchInput: {
-    borderColor: Colors.primaryBlue,
-    borderWidth: 1,
+  searchTextInput: {
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
-    marginVertical: Margins.smaller,
-    paddingHorizontal: Paddings.light,
-    paddingVertical: Paddings.smallest,
+    paddingLeft: Margins.smaller,
+    width: "90%",
+  },
+  searchView: {
+    paddingTop: Paddings.default,
   },
   tabBarLabel: {
     color: Colors.primaryBlueDark,
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
+  },
+  textInputView: {
+    borderColor: Colors.primaryBlue,
+    borderWidth: 1,
+    flexDirection: "row",
+    paddingVertical: Paddings.smallest,
   },
   whiteBackground: {
     backgroundColor: Colors.white,
