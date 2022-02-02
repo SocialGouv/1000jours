@@ -100,6 +100,9 @@ const TabAroundMeInstruction: FC = () => {
         triggerSearchByGpsCoords={triggerFetchPois}
         region={region}
         setFetchedPois={handlePois}
+        chooseFilterMessage={() => {
+          return;
+        }}
       />
       <SecondaryText style={styles.description}>
         {Labels.aroundMe.searchGeolocInstruction}

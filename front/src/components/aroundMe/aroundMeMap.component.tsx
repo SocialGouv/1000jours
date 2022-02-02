@@ -147,6 +147,15 @@ const AroundMeMap: React.FC<Props> = ({
         triggerSearchByGpsCoords={triggerSearchByGpsCoords}
         region={region}
         setFetchedPois={handleFetchedPois}
+        chooseFilterMessage={() => {
+          setTimeout(
+            () => {
+              setIsLoading(false);
+            },
+            PLATFORM_IS_IOS ? 500 : 0
+          );
+          showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
+        }}
       />
       <View style={styles.map}>
         <MapView

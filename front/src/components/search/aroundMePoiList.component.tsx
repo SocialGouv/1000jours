@@ -5,12 +5,13 @@ import { useState } from "react";
 import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
 
-import { Labels } from "../../constants";
+import { AroundMeConstants, Labels } from "../../constants";
+import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 import AroundMeMapHeader from "../aroundMe/aroundMeMapHeader.component";
 import FetchPois from "../aroundMe/fetchPois.component";
 import PoiList from "../aroundMe/poiList.component";
-import { CommonText, Loader, View } from "../baseComponents";
+import { CommonText, CustomSnackbar, Loader, View } from "../baseComponents";
 
 interface Props {
   region: Region;
@@ -31,6 +32,10 @@ const AroundMePoiList: FC<Props> = ({
   const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] =
     useState(false);
 
+  // Snackbar
+  const [showSnackBar, setShowSnackBar] = useState(false);
+  const [snackBarMessage, setSnackBarMessage] = useState("");
+
   const handlePois = (pois: Poi[]) => {
     updatePoiArray(pois);
     setIsLoading(false);
@@ -41,12 +46,30 @@ const AroundMePoiList: FC<Props> = ({
     displayMap();
   };
 
+  const showSnackBarWithMessage = (message: string) => {
+    setSnackBarMessage(message);
+    setShowSnackBar(true);
+  };
+
+  const onSnackBarDismiss = () => {
+    setShowSnackBar(false);
+  };
+
   return (
     <View style={styles.slidingUpPanelView}>
       <FetchPois
         triggerSearchByGpsCoords={triggerSearchByGpsCoords}
         region={region}
         setFetchedPois={handlePois}
+        chooseFilterMessage={() => {
+          setTimeout(
+            () => {
+              setIsLoading(false);
+            },
+            PLATFORM_IS_IOS ? 500 : 0
+          );
+          showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
+        }}
       />
       <AroundMeMapHeader
         headerStyle={styles.headerButtonsMapView}
@@ -67,6 +90,15 @@ const AroundMePoiList: FC<Props> = ({
         {Labels.aroundMe.addressesListLabelEnd}
       </CommonText>
       <PoiList poisArray={poiArray} onPoiPress={navigateToMap} />
+      <CustomSnackbar
+        duration={AroundMeConstants.SNACKBAR_DURATION}
+        visible={showSnackBar}
+        isOnTop={true}
+        backgroundColor={Colors.aroundMeSnackbar.background}
+        onDismiss={onSnackBarDismiss}
+        textColor={Colors.aroundMeSnackbar.text}
+        text={snackBarMessage}
+      />
       {isLoading && <Loader />}
     </View>
   );

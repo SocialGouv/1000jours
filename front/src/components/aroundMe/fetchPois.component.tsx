@@ -11,18 +11,20 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import type { CartoFilterStorage } from "../../type";
-import { AroundMeUtils, StorageUtils } from "../../utils";
+import { AroundMeUtils, StorageUtils, StringUtils } from "../../utils";
 
 interface Props {
   triggerSearchByGpsCoords: boolean;
   region?: Region;
   setFetchedPois: (pois: Poi[]) => void;
+  chooseFilterMessage: () => void;
 }
 
 const FetchPois: React.FC<Props> = ({
   triggerSearchByGpsCoords,
   region,
   setFetchedPois,
+  chooseFilterMessage,
 }) => {
   const [componentIsInitialized, setComponentIsInitialized] = useState(false);
 
@@ -51,14 +53,23 @@ const FetchPois: React.FC<Props> = ({
     const savedFilters: CartoFilterStorage | undefined =
       await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
 
+    if (
+      !savedFilters ||
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      (savedFilters && StringUtils.stringArrayIsNullOrEmpty(savedFilters.types))
+    ) {
+      chooseFilterMessage();
+      return;
+    }
+
     const variables = {
-      etapes: savedFilters?.etapes ? savedFilters.etapes : [],
+      etapes: savedFilters.etapes,
       lat1: topLeftPoint.latitude,
       lat2: bottomRightPoint.latitude,
       long1: topLeftPoint.longitude,
       long2: bottomRightPoint.longitude,
       // thematiques: savedFilters?.thematiques ? savedFilters.thematiques : [],
-      types: savedFilters?.types ? savedFilters.types : [],
+      types: savedFilters.types,
     };
     void getPoisByGpsCoords({
       variables,
