@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_traduction_labels",
+  "info": {
+    "name": "Label",
+    "icon": "book-open",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "texte": {
+      "type": "text"
+    }
+  }
+}
