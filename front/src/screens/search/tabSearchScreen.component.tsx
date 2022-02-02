@@ -115,7 +115,7 @@ const TabSearchScreen: FC = () => {
           showDescription={articles.length === 0}
           animated={false}
         />
-        <View style={styles.searchBloc}>
+        <View style={articles.length === 0 && styles.searchBloc}>
           <SecondaryText>{Labels.search.yourSearch}</SecondaryText>
           <TextInput
             style={styles.searchInput}
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     paddingVertical: Paddings.smallest,
   },
   tabBarLabel: {
-    color: Colors.primaryBlue,
+    color: Colors.primaryBlueDark,
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
   },
   whiteBackground: {
