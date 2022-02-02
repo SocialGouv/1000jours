@@ -6,6 +6,7 @@ import CustomButton from "./customButton.component";
 import CustomNumberOfChildrenPicker from "./customNumberOfChildrenPicker.component";
 import CustomPostalCodeTextInput from "./customPostalCodeTextInput.component";
 import CustomSnackbar from "./customSnackbar.component";
+import CustomTextInput from "./customTextInput.component";
 import Datepicker from "./datePicker.component";
 import ErrorMessage from "./errorMessage.component";
 import HeaderApp from "./headerApp.component";
@@ -31,6 +32,7 @@ export {
   CustomNumberOfChildrenPicker,
   CustomPostalCodeTextInput,
   CustomSnackbar,
+  CustomTextInput,
   Datepicker,
   ErrorMessage,
   HeaderApp,

@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   backButton: { width: "40%" },
   flexStart: {
     alignItems: "flex-start",
+    marginLeft: Margins.default,
     marginTop: Margins.smaller,
   },
   mainContainer: {

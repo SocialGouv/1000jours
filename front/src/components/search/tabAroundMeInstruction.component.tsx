@@ -184,7 +184,6 @@ const styles = StyleSheet.create({
   },
   geolicationIconStyle: {
     height: Margins.largest,
-    marginLeft: Margins.default,
     width: Margins.largest,
   },
   geolocationRow: {
@@ -204,7 +203,6 @@ const styles = StyleSheet.create({
   },
   postalCodeRow: {
     flexDirection: "row",
-    paddingLeft: Margins.default,
     paddingVertical: Paddings.smaller,
   },
   searchByPostalCodeButton: {

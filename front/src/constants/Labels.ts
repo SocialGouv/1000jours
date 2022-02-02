@@ -537,13 +537,13 @@ export default {
     cantLaunchAroundMeSearch:
       "Votre recherche ne peut pas vous apporter d'aide personnalisée, veuillez saisir un autre mot-clé",
     findAdaptedResponses:
-      "Trouver des réponses à vos questions, vos problèmes, et sollicitez de l'aide auprès de professionnels adaptés autour de chez vous.",
+      "Trouvez des réponses à vos questions, vos problèmes, et sollicitez de l'aide auprès de professionnels adaptés autour de chez vous.",
     loading: "Chargement...",
     noArticleFound: "Aucun résultat ne correspond à votre recherche",
     title: "Que recherchez-vous ?",
     validButton: "Rechercher",
     writeKeyword:
-      "Veuillez saisir votre mot-clé dans la barre de recherche pour afficher les résultats",
+      "Veuillez saisir votre mot-clé dans la barre de recherche pour afficher les résultats.",
     writeKeywordPlaceholder: "Saisissez ici votre mot-clé",
     yourSearch: "Votre recherche :",
   },
@@ -560,7 +560,7 @@ export default {
   tabs: {
     calendarTitle: "Calendrier",
     favoritesTitle: "Favoris",
-    helpTitle: "Rechercher",
+    helpTitle: "Recherche",
     homeTitle: "Accueil",
     testEpds: "Post-partum",
   },

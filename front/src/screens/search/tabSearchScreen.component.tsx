@@ -2,7 +2,7 @@ import { gql, useLazyQuery } from "@apollo/client";
 import type { FC } from "react";
 import { useState } from "react";
 import * as React from "react";
-import { StyleSheet, TextInput, useWindowDimensions, View } from "react-native";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
 import type {
   NavigationState,
   SceneRendererProps,
@@ -12,6 +12,7 @@ import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { articlesRoute, poisRoute } from "../../components";
 import {
   CustomButton,
+  CustomTextInput,
   SecondaryText,
   TitleH1,
 } from "../../components/baseComponents";
@@ -115,10 +116,10 @@ const TabSearchScreen: FC = () => {
           showDescription={articles.length === 0}
           animated={false}
         />
-        <View style={styles.searchBloc}>
+        <View style={articles.length === 0 && styles.searchView}>
           <SecondaryText>{Labels.search.yourSearch}</SecondaryText>
-          <TextInput
-            style={styles.searchInput}
+          <CustomTextInput
+            textInputValue={keywords}
             onChangeText={(text: string) => {
               setKeywords(text);
               if (!StringUtils.stringIsNotNullNorEmpty(text)) {
@@ -126,10 +127,12 @@ const TabSearchScreen: FC = () => {
                 setArticles([]);
               }
             }}
-            placeholder={Labels.search.writeKeywordPlaceholder}
-            value={keywords}
+            onClearPress={() => {
+              setKeywords("");
+              setArticles([]);
+              setUpdatedText(Labels.search.writeKeyword);
+            }}
           />
-
           <View style={styles.center}>
             <CustomButton
               titleStyle={styles.fontButton}
@@ -173,19 +176,11 @@ const styles = StyleSheet.create({
     paddingRight: Paddings.default,
     paddingTop: Paddings.default,
   },
-  searchBloc: {
+  searchView: {
     paddingTop: Paddings.default,
   },
-  searchInput: {
-    borderColor: Colors.primaryBlue,
-    borderWidth: 1,
-    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
-    marginVertical: Margins.smaller,
-    paddingHorizontal: Paddings.light,
-    paddingVertical: Paddings.smallest,
-  },
   tabBarLabel: {
-    color: Colors.primaryBlue,
+    color: Colors.primaryBlueDark,
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
   },
   whiteBackground: {
