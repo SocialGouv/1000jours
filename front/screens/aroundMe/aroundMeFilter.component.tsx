@@ -53,6 +53,9 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
   const [cartoFilterStorage, setCartoFilterStorage] =
     useState<CartoFilterStorage>({ etapes: [], thematiques: [], types: [] });
   const [showModalContent, setShowModalContent] = useState(false);
+  const [savedcartoFilterStorage, setSavedCartoFilterStorage] = useState<
+    CartoFilterStorage | undefined
+  >();
 
   useEffect(() => {
     if (!filterDataFromDb) return;
@@ -73,6 +76,8 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     const getSavedFilter = async () => {
       const savedFilters: CartoFilterStorage =
         await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
+
+      setSavedCartoFilterStorage(savedFilters);
 
       if (fetchedFiltersFromDB) {
         fetchedFiltersFromDB.professionnels.forEach(
@@ -301,6 +306,18 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     ));
   };
 
+  const arraysHaveSameLengthAndContainSameValues = (
+    firstArray: string[],
+    secondArray: string[]
+  ) => {
+    return (
+      firstArray.length === secondArray.length &&
+      firstArray.every((firstArrayElement) =>
+        secondArray.includes(firstArrayElement)
+      )
+    );
+  };
+
   const sendFiltersTracker = (filters: string[]) => {
     if (!StringUtils.stringArrayIsNullOrEmpty(filters)) {
       filters.forEach((filter) => {
@@ -384,12 +401,39 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                       sendFiltersTracker(cartoFilterStorage.etapes);
                       sendFiltersTracker(cartoFilterStorage.types);
                       sendFiltersTracker(cartoFilterStorage.thematiques);
+
+                      const noSavedFilterButNewFilter =
+                        !savedcartoFilterStorage &&
+                        (cartoFilterStorage.etapes.length > 0 ||
+                          cartoFilterStorage.types.length > 0 ||
+                          cartoFilterStorage.thematiques.length > 0);
+
+                      const savedCartoFilterAndNewFiltersAreTheSame =
+                        savedcartoFilterStorage !== undefined &&
+                        arraysHaveSameLengthAndContainSameValues(
+                          savedcartoFilterStorage.etapes,
+                          cartoFilterStorage.etapes
+                        ) &&
+                        arraysHaveSameLengthAndContainSameValues(
+                          savedcartoFilterStorage.types,
+                          cartoFilterStorage.types
+                        ) &&
+                        arraysHaveSameLengthAndContainSameValues(
+                          savedcartoFilterStorage.thematiques,
+                          cartoFilterStorage.thematiques
+                        );
+
+                      const noDifference =
+                        noSavedFilterButNewFilter ||
+                        savedCartoFilterAndNewFiltersAreTheSame;
+
                       setCartoFilterStorage({
                         etapes: [],
                         thematiques: [],
                         types: [],
                       });
-                      hideModal(true);
+
+                      hideModal(!noDifference);
                     }}
                   />
                 </View>
