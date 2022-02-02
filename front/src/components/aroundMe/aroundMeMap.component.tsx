@@ -133,7 +133,7 @@ const AroundMeMap: React.FC<Props> = ({
     };
     mapRef.current?.animateCamera(
       { center: markerCoordinates },
-      { duration: 500 }
+      { duration: AroundMeConstants.ANIMATE_CAMERA_DURATION }
     );
   };
 
