@@ -53,9 +53,8 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
   const [cartoFilterStorage, setCartoFilterStorage] =
     useState<CartoFilterStorage>({ etapes: [], thematiques: [], types: [] });
   const [showModalContent, setShowModalContent] = useState(false);
-  const [savedcartoFilterStorage, setSavedCartoFilterStorage] = useState<
-    CartoFilterStorage | undefined
-  >();
+  const [savedcartoFilterStorage, setSavedCartoFilterStorage] =
+    useState<CartoFilterStorage>({ etapes: [], thematiques: [], types: [] });
 
   useEffect(() => {
     if (!filterDataFromDb) return;
@@ -74,10 +73,10 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
 
     setShowModalContent(false);
     const getSavedFilter = async () => {
-      const savedFilters: CartoFilterStorage =
+      const savedFilters: CartoFilterStorage | null =
         await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
 
-      setSavedCartoFilterStorage(savedFilters);
+      if (savedFilters) setSavedCartoFilterStorage(savedFilters);
 
       if (fetchedFiltersFromDB) {
         fetchedFiltersFromDB.professionnels.forEach(
@@ -403,29 +402,24 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                       sendFiltersTracker(cartoFilterStorage.thematiques);
 
                       const noSavedFilterButNewFilter =
-                        !savedcartoFilterStorage &&
+                        savedcartoFilterStorage.etapes.length === 0 &&
+                        savedcartoFilterStorage.types.length === 0 &&
                         (cartoFilterStorage.etapes.length > 0 ||
-                          cartoFilterStorage.types.length > 0 ||
-                          cartoFilterStorage.thematiques.length > 0);
+                          cartoFilterStorage.types.length > 0);
 
-                      const savedCartoFilterAndNewFiltersAreTheSame =
-                        savedcartoFilterStorage !== undefined &&
-                        arraysHaveSameLengthAndContainSameValues(
+                      const savedFilterAndNewFiltersAreDifferent =
+                        !arraysHaveSameLengthAndContainSameValues(
                           savedcartoFilterStorage.etapes,
                           cartoFilterStorage.etapes
-                        ) &&
-                        arraysHaveSameLengthAndContainSameValues(
+                        ) ||
+                        !arraysHaveSameLengthAndContainSameValues(
                           savedcartoFilterStorage.types,
                           cartoFilterStorage.types
-                        ) &&
-                        arraysHaveSameLengthAndContainSameValues(
-                          savedcartoFilterStorage.thematiques,
-                          cartoFilterStorage.thematiques
                         );
 
-                      const noDifference =
+                      const differenceBetweenSavedAndNew =
                         noSavedFilterButNewFilter ||
-                        savedCartoFilterAndNewFiltersAreTheSame;
+                        savedFilterAndNewFiltersAreDifferent;
 
                       setCartoFilterStorage({
                         etapes: [],
@@ -433,7 +427,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                         types: [],
                       });
 
-                      hideModal(!noDifference);
+                      hideModal(differenceBetweenSavedAndNew);
                     }}
                   />
                 </View>

@@ -8,6 +8,7 @@ import type { Region } from "react-native-maps";
 import {
   AroundMeConstants,
   FetchPoliciesConstants,
+  Labels,
   StorageKeysConstants,
 } from "../../constants";
 import type { CartoFilterStorage } from "../../type";
@@ -23,6 +24,7 @@ interface Props {
   searchIsReady: boolean;
   setIsLoading: (value: boolean) => void;
   locationPermissionIsGranted: boolean;
+  showSnackBarMessage: (message: string) => void;
 }
 
 const FetchPoisCoords: React.FC<Props> = ({
@@ -34,6 +36,7 @@ const FetchPoisCoords: React.FC<Props> = ({
   searchIsReady,
   setIsLoading,
   locationPermissionIsGranted,
+  showSnackBarMessage,
 }) => {
   const [getPoisByGpsCoords] = useLazyQuery(gql(GET_POIS_BY_GPSCOORDS), {
     fetchPolicy: FetchPoliciesConstants.NO_CACHE,
@@ -92,6 +95,10 @@ const FetchPoisCoords: React.FC<Props> = ({
     getPoisByGpsCoords({
       variables,
     });
+    setTimeout(() => {
+      setIsLoading(false);
+      showSnackBarMessage(Labels.aroundMe.searchWasNotSuccessful);
+    }, 10000);
   };
 
   useEffect(() => {

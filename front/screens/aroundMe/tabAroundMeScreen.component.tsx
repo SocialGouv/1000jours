@@ -221,6 +221,7 @@ const TabAroundMeScreen: React.FC = () => {
           searchIsReady={searchIsReady}
           setIsLoading={setIsLoading}
           locationPermissionIsGranted={locationPermissionIsGranted}
+          showSnackBarMessage={showSnackBarWithMessage}
         />
         <View style={styles.topContainer}>
           <TitleH1

@@ -76,6 +76,7 @@ export default {
     },
     postalCodeInputPlaceholder: "Écrivez ici le code postal",
     postalCodeInvalid: "Le code postal que vous avez saisi n'est pas valide",
+    searchWasNotSuccessful: "La recherche n'a pas aboutie, veuillez réessayer plus tard",
     postalCodeNotFound: "Le code postal que vous recherchez n'a pas été trouvé",
     relaunchSearch: "Relancer la recherche",
     searchButton: "Rechercher",
