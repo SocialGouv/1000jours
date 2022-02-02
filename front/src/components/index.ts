@@ -1,10 +1,13 @@
 import AddressDetails from "./aroundMe/addressDetails.component";
 import AroundMeFilter from "./aroundMe/aroundMeFilter.component";
+import AroundMeMap from "./aroundMe/aroundMeMap.component";
+import AroundMeMapHeader from "./aroundMe/aroundMeMapHeader.component";
 import CustomMapMarker from "./aroundMe/customMapMarker.component";
 import FetchPois from "./aroundMe/fetchPois.component";
 import FetchPoisCoords from "./aroundMe/fetchPoisCoords.component";
 import PoiList from "./aroundMe/poiList.component";
 import SearchByPostalCode from "./aroundMe/searchByPostalCode.component";
+import SearchRegion from "./aroundMe/searchRegion.component";
 import SlidingUpPanelAddressesList from "./aroundMe/slidingUpPanelAddressesList.component";
 import SubmitNewFilter from "./aroundMe/submitNewFilter.component";
 import DidYouKnow from "./article/didYouKnow.component";
@@ -32,6 +35,8 @@ import TimelineStepLibrary from "./timeline/timelineStepLibrary.component";
 export {
   AddressDetails,
   AroundMeFilter,
+  AroundMeMap,
+  AroundMeMapHeader,
   AroundMePoiList,
   articlesRoute,
   ConditionsOfUse,
@@ -50,6 +55,7 @@ export {
   PoiList,
   poisRoute,
   SearchByPostalCode,
+  SearchRegion,
   setNotificationHandler,
   SlidingUpPanelAddressesList,
   StepIcon,

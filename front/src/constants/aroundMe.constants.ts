@@ -65,6 +65,7 @@ export enum CartoFilterEnum {
 }
 
 export const MAPVIEW_MIN_ZOOM_LEVEL = 13;
+export const ANIMATE_CAMERA_DURATION = 500;
 
 export const ERROR_LOCATION_PROVIDER_UNAVAILABLE_MESSAGE =
   "Location provider is unavailable. Make sure that location services are enabled.";

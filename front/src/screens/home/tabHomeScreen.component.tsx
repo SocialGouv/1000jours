@@ -17,6 +17,7 @@ import {
   View,
 } from "../../components/baseComponents";
 import ParenthequeItem from "../../components/home/parenthequeItem.component";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { FetchPoliciesConstants, StorageKeysConstants } from "../../constants";
 import Labels from "../../constants/Labels";
 import { Colors, Paddings, Sizes } from "../../styles";
@@ -28,14 +29,12 @@ import {
 } from "../../utils/notification.util";
 import { getCurrentStepId } from "../../utils/step.util";
 import { stringIsNotNullNorEmpty } from "../../utils/strings.util";
-import TrackerHandler from "../../components/tracker/trackerHandler.component";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;
 }
 
 const TabHomeScreen: FC<Props> = ({ navigation }) => {
-
   const ALL_STEPS = gql`
     query GetAllSteps {
       etapes(sort: "id") {

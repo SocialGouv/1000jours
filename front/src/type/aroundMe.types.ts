@@ -18,5 +18,5 @@ export interface FetchedFilterFromDb {
 export interface CartoFilterStorage {
   types: string[];
   etapes: string[];
-  thematiques: string[];
+  // thematiques: string[];
 }

@@ -4,9 +4,9 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
-import { CommonText } from "../baseComponents";
 import { Labels } from "../../constants";
 import { Colors, Margins, Sizes } from "../../styles";
+import { CommonText } from "../baseComponents";
 
 interface OnboardingPaginationProps {
   currentIndex: number;

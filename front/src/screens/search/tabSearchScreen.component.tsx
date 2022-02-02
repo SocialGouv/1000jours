@@ -1,7 +1,7 @@
-import { useLazyQuery } from "@apollo/client";
+import { gql, useLazyQuery } from "@apollo/client";
 import type { FC } from "react";
+import { useState } from "react";
 import * as React from "react";
-import { useEffect, useState } from "react";
 import { StyleSheet, TextInput, useWindowDimensions, View } from "react-native";
 import type {
   NavigationState,
@@ -12,12 +12,11 @@ import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { articlesRoute, poisRoute } from "../../components";
 import {
   CustomButton,
-  ErrorMessage,
   SecondaryText,
   TitleH1,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { Labels } from "../../constants";
+import { FetchPoliciesConstants, Labels } from "../../constants";
 import { SEARCH_ARTICLES_BY_KEYWORDS } from "../../constants/databaseQueries.constants";
 import {
   Colors,
@@ -28,14 +27,18 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
+import type { TrackerSearch } from "../../type";
 import type { Article } from "../../types";
-import { KeyboardUtils, TrackerUtils } from "../../utils";
+import { KeyboardUtils, StringUtils, TrackerUtils } from "../../utils";
+import { stringIsNotNullNorEmpty } from "../../utils/strings.util";
 
 const TabSearchScreen: FC = () => {
   const [keywords, setKeywords] = useState("");
   const [articles, setArticles] = useState<Article[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [enteredKeyword, setEnteredKeyword] = useState("");
+  const [updatedText, setUpdatedText] = useState(Labels.search.writeKeyword);
+  const [trackerSearchObject, setTrackerSearchObject] =
+    useState<TrackerSearch>();
+  const trackerSearchCategory = "Onglet Rechercher";
 
   // Tabs
   const layout = useWindowDimensions();
@@ -53,27 +56,34 @@ const TabSearchScreen: FC = () => {
     },
   ]);
 
-  const [getSearchArticlesByKeywords, { loading, error, data }] = useLazyQuery(
-    SEARCH_ARTICLES_BY_KEYWORDS(keywords)
+  const [getSearchArticlesByKeywords] = useLazyQuery(
+    gql(SEARCH_ARTICLES_BY_KEYWORDS),
+    {
+      fetchPolicy: FetchPoliciesConstants.NO_CACHE,
+      notifyOnNetworkStatusChange: true,
+      onCompleted: (data) => {
+        const results = (data as { articles: Article[] }).articles;
+        setArticles(results);
+        if (results.length === 0) setUpdatedText(Labels.search.noArticleFound);
+        setTrackerSearchObject({
+          category: trackerSearchCategory,
+          count: results.length,
+          keyword: keywords,
+        });
+      },
+    }
   );
 
   const onSearchByKeywords = async () => {
-    setIsLoading(true);
-    setEnteredKeyword(keywords);
+    setUpdatedText(Labels.search.loading);
     KeyboardUtils.dismissKeyboard();
-    await getSearchArticlesByKeywords();
-  };
-
-  useEffect(() => {
-    if (!loading && data) {
-      const results = (data as { articles: Article[] }).articles;
-      setArticles(results);
+    if (stringIsNotNullNorEmpty(keywords)) {
+      const variables = {
+        keywords,
+      };
+      await getSearchArticlesByKeywords({ variables });
     }
-
-    setIsLoading(false);
-  }, [loading, data]);
-
-  if (error) return <ErrorMessage error={error} />;
+  };
 
   const renderTabBar = (
     props: SceneRendererProps & {
@@ -97,7 +107,7 @@ const TabSearchScreen: FC = () => {
       <View style={styles.mainContainer}>
         <TrackerHandler
           screenName={TrackerUtils.TrackingEvent.RECHERCHER}
-          searchKeyword={enteredKeyword}
+          searchObject={trackerSearchObject}
         />
         <TitleH1
           title={Labels.search.title}
@@ -109,7 +119,13 @@ const TabSearchScreen: FC = () => {
           <SecondaryText>{Labels.search.yourSearch}</SecondaryText>
           <TextInput
             style={styles.searchInput}
-            onChangeText={setKeywords}
+            onChangeText={(text: string) => {
+              setKeywords(text);
+              if (!StringUtils.stringIsNotNullNorEmpty(text)) {
+                setUpdatedText(Labels.search.writeKeyword);
+                setArticles([]);
+              }
+            }}
             placeholder={Labels.search.writeKeywordPlaceholder}
             value={keywords}
           />
@@ -128,8 +144,8 @@ const TabSearchScreen: FC = () => {
         renderTabBar={renderTabBar}
         navigationState={{ index, routes }}
         renderScene={SceneMap({
-          articlesSearchResult: () => articlesRoute(articles),
-          poisSearchResult: () => poisRoute(articles),
+          articlesSearchResult: () => articlesRoute(updatedText, articles),
+          poisSearchResult: () => poisRoute(updatedText, articles),
         })}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}

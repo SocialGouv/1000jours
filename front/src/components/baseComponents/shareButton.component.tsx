@@ -15,6 +15,7 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
+import type { TrackerEvent } from "../../type";
 import TrackerHandler from "../tracker/trackerHandler.component";
 import CustomButton from "./customButton.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
@@ -41,8 +42,7 @@ const ShareButton: React.FC<Props> = ({
   id,
   buttonStyle,
 }) => {
-  const [trackerEventName, setTrackerEventName] = useState("");
-  const [trackerEventAction, setTrackerEventAction] = useState("");
+  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
 
   const share = async () => {
     try {
@@ -60,8 +60,7 @@ const ShareButton: React.FC<Props> = ({
         { subject: title }
       );
       if (result.action === Share.sharedAction) {
-        setTrackerEventName(`${page} : ${id}`);
-        setTrackerEventAction("Share");
+        setTrackerEventObject({ action: "Share", name: `${page} : ${id}` });
       }
     } catch (error: unknown) {
       console.error(error);
@@ -70,10 +69,7 @@ const ShareButton: React.FC<Props> = ({
 
   return (
     <>
-      <TrackerHandler
-        eventName={trackerEventName}
-        eventAction={trackerEventAction}
-      />
+      <TrackerHandler eventObject={trackerEventObject} />
       <CustomButton
         title={buttonTitle}
         icon={

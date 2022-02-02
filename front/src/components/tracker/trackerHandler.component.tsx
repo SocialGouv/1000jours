@@ -3,22 +3,21 @@ import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import { useEffect } from "react";
 
+import type { TrackerEvent, TrackerSearch } from "../../type";
 import { StringUtils } from "../../utils";
 
 interface TrackerHandlerProps {
   screenName?: string;
   actionName?: string;
-  searchKeyword?: string;
-  eventName?: string;
-  eventAction?: string;
+  searchObject?: TrackerSearch;
+  eventObject?: TrackerEvent;
 }
 
 const TrackerHandler: FC<TrackerHandlerProps> = ({
   screenName,
   actionName,
-  searchKeyword,
-  eventName,
-  eventAction,
+  searchObject,
+  eventObject,
 }) => {
   const { trackScreenView, trackAction, trackSiteSearch, trackEvent } =
     useMatomo();
@@ -40,27 +39,35 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
   }, [actionName]);
 
   useEffect(() => {
-    if (searchKeyword && StringUtils.stringIsNotNullNorEmpty(searchKeyword))
-      void trackSiteSearch({ keyword: searchKeyword });
-  }, [searchKeyword]);
+    if (
+      searchObject?.keyword &&
+      StringUtils.stringIsNotNullNorEmpty(searchObject.keyword) &&
+      searchObject.category &&
+      StringUtils.stringIsNotNullNorEmpty(searchObject.category)
+    ) {
+      void trackSiteSearch(searchObject);
+    }
+  }, [searchObject]);
 
   useEffect(() => {
     const eventCategory = "MobileApp";
     const eventValue = 0;
 
-    const eventNameIsNotEmpty = eventName && eventName.length > 0;
-    const eventActionIsNotEmpty = eventAction && eventAction.length > 0;
+    const eventNameIsNotEmpty =
+      eventObject?.name && eventObject.name.length > 0;
+    const eventActionIsNotEmpty =
+      eventObject?.action && eventObject.action.length > 0;
 
     if (eventNameIsNotEmpty && eventActionIsNotEmpty) {
       const event: Event = {
-        action: eventAction,
+        action: eventObject.action,
         category: eventCategory,
-        name: eventName,
+        name: eventObject.name,
         value: eventValue,
       };
       void trackEvent(event);
     }
-  }, [eventName, eventAction]);
+  }, [eventObject]);
 
   return null;
 };

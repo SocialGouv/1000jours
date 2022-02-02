@@ -1,3 +1,4 @@
+import type { PoiType } from "@socialgouv/nos1000jours-lib";
 import type { ReactElement } from "react";
 import * as React from "react";
 import { useState } from "react";
@@ -7,13 +8,18 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import ArticleCard from "../../components/article/articleCard.component";
 import { SecondaryTextItalic } from "../../components/baseComponents";
-import { Labels } from "../../constants";
+import { Labels, StorageKeysConstants } from "../../constants";
 import ArticleDetail from "../../screens/articles/articleDetail.component";
 import { Margins, Paddings } from "../../styles";
+import type { CartoFilterStorage } from "../../type";
 import type { Article, Step } from "../../types";
+import { storeObjectValue } from "../../utils/storage.util";
 import TabAroundMeInstruction from "./tabAroundMeInstruction.component";
 
-export const articlesRoute = (articles: Article[]): ReactElement => {
+export const articlesRoute = (
+  updatedText: string,
+  articles: Article[]
+): ReactElement => {
   const [showArticle, setShowArticle] = useState(false);
   const [currentArticleId, setCurrentArticleId] = useState(0);
   const [currentArticleStep, setCurrentArticleStep] = useState<
@@ -23,7 +29,7 @@ export const articlesRoute = (articles: Article[]): ReactElement => {
   if (articles.length <= 0) {
     return (
       <View style={styles.center}>
-        <SecondaryTextItalic>{Labels.search.writeKeyword}</SecondaryTextItalic>
+        <SecondaryTextItalic>{updatedText}</SecondaryTextItalic>
       </View>
     );
   }
@@ -42,7 +48,7 @@ export const articlesRoute = (articles: Article[]): ReactElement => {
         <Animatable.View
           key={index}
           animation="fadeInUp"
-          duration={1000}
+          duration={500}
           delay={0}
         >
           <ArticleCard
@@ -60,14 +66,53 @@ export const articlesRoute = (articles: Article[]): ReactElement => {
   );
 };
 
-export const poisRoute = (articles: Article[]): ReactElement =>
-  articles.length > 0 ? (
-    <TabAroundMeInstruction articles={articles} />
+export const poisRoute = (
+  updatedText: string,
+  articles: Article[]
+): ReactElement => {
+  let searchCanBeLaunched = true;
+  if (articles.length > 0) {
+    const types = extractedPoiTypesFromArticles(articles);
+    if (types.length === 0) {
+      searchCanBeLaunched = false;
+      updatedText = Labels.search.cantLaunchAroundMeSearch;
+    }
+  }
+
+  return articles.length > 0 && searchCanBeLaunched ? (
+    <TabAroundMeInstruction />
   ) : (
     <View style={styles.center}>
-      <SecondaryTextItalic>{Labels.search.writeKeyword}</SecondaryTextItalic>
+      <SecondaryTextItalic>{updatedText}</SecondaryTextItalic>
     </View>
   );
+};
+
+const extractedPoiTypesFromArticles = (articles: Article[]) => {
+  const finalCartographieTypes: PoiType[] = [];
+  articles.forEach((article) => {
+    if (!article.cartographie_pois_types) return;
+    const filteredTypes = article.cartographie_pois_types.filter(
+      (type) =>
+        !finalCartographieTypes.some((finalType) => finalType.nom === type.nom)
+    );
+    finalCartographieTypes.push(...filteredTypes);
+  });
+
+  if (finalCartographieTypes.length > 0) {
+    const cartoFilterStorage: CartoFilterStorage = {
+      etapes: [],
+      // thematiques: [],
+      types: finalCartographieTypes.map((type) => type.nom),
+    };
+    void storeObjectValue(
+      StorageKeysConstants.cartoFilterKey,
+      cartoFilterStorage
+    );
+  }
+
+  return finalCartographieTypes;
+};
 
 const styles = StyleSheet.create({
   center: {

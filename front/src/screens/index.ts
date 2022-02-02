@@ -11,11 +11,11 @@ import LoadingScreen from "./loading/loading.component";
 import NotFoundScreen from "./notFound/notFound.component";
 import Onboarding from "./onboardingAndProfile/onboarding.component";
 import Profile from "./onboardingAndProfile/profile.component";
-import AroundMeMap from "./search/aroundMeMap.component";
+import AroundMeMapAndList from "./search/aroundMeMapAndList.component";
 import TabSearchScreen from "./search/tabSearchScreen.component";
 
 export {
-  AroundMeMap,
+  AroundMeMapAndList,
   ArticleDetail,
   EpdsResult,
   EventDetails,

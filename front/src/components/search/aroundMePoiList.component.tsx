@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import type { FC } from "react";
 import * as React from "react";
@@ -7,92 +5,99 @@ import { useState } from "react";
 import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
 
-import { Labels } from "../../constants";
+import { AroundMeConstants, Labels } from "../../constants";
+import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
-import * as RootNavigation from "../../utils/rootNavigation.util";
-import SharedCartoData from "../../utils/sharedCartoData.class";
-import AroundMeFilter from "../aroundMe/aroundMeFilter.component";
+import AroundMeMapHeader from "../aroundMe/aroundMeMapHeader.component";
 import FetchPois from "../aroundMe/fetchPois.component";
 import PoiList from "../aroundMe/poiList.component";
-import {
-  CommonText,
-  CustomButton,
-  Icomoon,
-  IcomoonIcons,
-  Loader,
-  View,
-} from "../baseComponents";
+import { CommonText, CustomSnackbar, Loader, View } from "../baseComponents";
 
 interface Props {
   region: Region;
+  poiArray: Poi[];
+  displayMap: () => void;
+  updatePoiArray: (poiArray: Poi[]) => void;
+  updateSelectedPoiIndex: (selectedPoiIndex: number) => void;
 }
 
-const AroundMePoiList: FC<Props> = ({ region }) => {
+const AroundMePoiList: FC<Props> = ({
+  region,
+  poiArray,
+  displayMap,
+  updatePoiArray,
+  updateSelectedPoiIndex,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [poisArray, setPoisArray] = useState<Poi[]>([]);
-  const [currentRegion, setCurrentRegion] = useState(region);
-  const [showFilter, setShowFilter] = useState(false);
-  const [trigger, setTrigger] = useState(false);
+  const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] =
+    useState(false);
+
+  // Snackbar
+  const [showSnackBar, setShowSnackBar] = useState(false);
+  const [snackBarMessage, setSnackBarMessage] = useState("");
 
   const handlePois = (pois: Poi[]) => {
-    setPoisArray(pois);
+    updatePoiArray(pois);
     setIsLoading(false);
   };
 
   const navigateToMap = (poiIndex: number) => {
-    SharedCartoData.fetchedPois = poisArray;
-    SharedCartoData.region = currentRegion;
-    SharedCartoData.selectedPoiIndex = poiIndex;
+    updateSelectedPoiIndex(poiIndex);
+    displayMap();
+  };
 
-    // TODO Warning à cause du fait qu'on passe une fonction en paramètre, à modifier pendant le refactoring de la navigation
-    RootNavigation.navigate("aroundMeMap", {
-      updatePoiList: () => {
-        setPoisArray(SharedCartoData.fetchedPois);
-        setCurrentRegion(SharedCartoData.region);
-      },
-    });
+  const showSnackBarWithMessage = (message: string) => {
+    setSnackBarMessage(message);
+    setShowSnackBar(true);
+  };
+
+  const onSnackBarDismiss = () => {
+    setShowSnackBar(false);
   };
 
   return (
     <View style={styles.slidingUpPanelView}>
       <FetchPois
-        triggerSearchByGpsCoords={trigger}
+        triggerSearchByGpsCoords={triggerSearchByGpsCoords}
         region={region}
         setFetchedPois={handlePois}
+        chooseFilterMessage={() => {
+          setTimeout(
+            () => {
+              setIsLoading(false);
+            },
+            PLATFORM_IS_IOS ? 500 : 0
+          );
+          showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
+        }}
+      />
+      <AroundMeMapHeader
+        headerStyle={styles.headerButtonsMapView}
+        displayMap={false}
+        setDisplayMap={() => {
+          displayMap();
+        }}
+        relaunchSearch={() => {
+          setIsLoading(true);
+          setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+        }}
+        showRelaunchResearchButton={false}
+        setIsLoading={setIsLoading}
       />
       <View style={styles.swipeIndicator} />
       <CommonText style={styles.addressesListLabel}>
-        {Labels.aroundMe.addressesListLabelStart} {poisArray.length}{" "}
+        {Labels.aroundMe.addressesListLabelStart} {poiArray.length}{" "}
         {Labels.aroundMe.addressesListLabelEnd}
       </CommonText>
-      <View style={styles.filterView}>
-        <CustomButton
-          buttonStyle={styles.relaunchSearchButton}
-          title={Labels.listArticles.filters}
-          titleStyle={styles.relaunchSearchButtonText}
-          rounded={true}
-          icon={
-            <Icomoon
-              name={IcomoonIcons.filtrer}
-              size={Sizes.sm}
-              color={Colors.primaryBlue}
-            />
-          }
-          action={() => {
-            setShowFilter(true);
-          }}
-        />
-      </View>
-      <PoiList poisArray={poisArray} onPoiPress={navigateToMap} />
-      <AroundMeFilter
-        visible={showFilter}
-        hideModal={(filterWasSaved: boolean) => {
-          setShowFilter(false);
-          if (filterWasSaved) {
-            setIsLoading(true);
-            setTrigger(!trigger);
-          }
-        }}
+      <PoiList poisArray={poiArray} onPoiPress={navigateToMap} />
+      <CustomSnackbar
+        duration={AroundMeConstants.SNACKBAR_DURATION}
+        visible={showSnackBar}
+        isOnTop={true}
+        backgroundColor={Colors.aroundMeSnackbar.background}
+        onDismiss={onSnackBarDismiss}
+        textColor={Colors.aroundMeSnackbar.text}
+        text={snackBarMessage}
       />
       {isLoading && <Loader />}
     </View>
@@ -109,6 +114,10 @@ const styles = StyleSheet.create({
   },
   filterView: {
     backgroundColor: "transparent",
+    flexDirection: "row",
+    margin: Margins.smaller,
+  },
+  headerButtonsMapView: {
     flexDirection: "row",
     margin: Margins.smaller,
   },

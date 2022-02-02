@@ -46,6 +46,8 @@ export default {
     addressesListLabelStart: "Il y a",
     chooseFilter:
       "Veuillez choisir un au moins un élément dans le filtre afin de lancer la recherche",
+    displayListButton: "Afficher en liste",
+    displayMapButton: "Afficher sur la carte",
     filter: {
       healthProfessional: "Professionnels de santé",
       steps: "Étapes du parcours 1000 jours",
@@ -77,6 +79,7 @@ export default {
     postalCodeInputPlaceholder: "Écrivez ici le code postal",
     postalCodeInvalid: "Le code postal que vous avez saisi n'est pas valide",
     postalCodeNotFound: "Le code postal que vous recherchez n'a pas été trouvé",
+    regionCouldNotBeDefined: "La région n'a pas pu être définie",
     relaunchSearch: "Relancer la recherche",
     searchButton: "Valider",
     searchGeolocInstruction:
@@ -531,9 +534,12 @@ export default {
   search: {
     aroundMe: "Autour de moi",
     articles: "Articles",
+    cantLaunchAroundMeSearch:
+      "Votre recherche ne peut pas vous apporter d'aide personnalisée, veuillez saisir un autre mot-clé",
     findAdaptedResponses:
       "Trouver des réponses à vos questions, vos problèmes, et sollicitez de l'aide auprès de professionnels adaptés autour de chez vous.",
-    noArticleFound: "Aucun article ne correspond à votre recherche",
+    loading: "Chargement...",
+    noArticleFound: "Aucun résultat ne correspond à votre recherche",
     title: "Que recherchez-vous ?",
     validButton: "Rechercher",
     writeKeyword:

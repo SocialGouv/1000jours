@@ -4,12 +4,12 @@ import type { FC } from "react";
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
-import { TimelineStepLibrary } from "..";
-import { View } from "../baseComponents";
 import { FetchPoliciesConstants, Labels } from "../../constants";
 import { PARENTS_DOCUMENTS } from "../../constants/databaseQueries.constants";
 import { Colors, Sizes } from "../../styles";
 import type { Step, TabHomeParamList } from "../../types";
+import { TimelineStepLibrary } from "..";
+import { View } from "../baseComponents";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;

@@ -10,13 +10,13 @@ import {
 } from "react-native";
 import { HelperText } from "react-native-paper";
 
-import { Datepicker, SecondaryText } from "../../../components";
 import { Formats, Labels, StorageKeysConstants } from "../../../constants";
 import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
 import { Colors, Margins, Paddings, Sizes } from "../../../styles";
 import type { BeContactedData } from "../../../type";
 import { StorageUtils, StringUtils } from "../../../utils";
 import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
+import { Datepicker, SecondaryText } from "../../baseComponents";
 
 interface Props {
   byEmail: boolean;

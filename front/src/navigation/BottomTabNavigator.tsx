@@ -6,7 +6,7 @@ import * as React from "react";
 import { Icomoon, IcomoonIcons } from "../components/baseComponents";
 import Labels from "../constants/Labels";
 import {
-  AroundMeMap,
+  AroundMeMapAndList,
   ArticleDetail,
   EventDetails,
   ListArticles,
@@ -168,7 +168,10 @@ const TabSearchNavigator: FC = () => (
       component={TabSearchScreen}
       options={{}}
     />
-    <TabSearchStack.Screen name="aroundMeMap" component={AroundMeMap} />
+    <TabSearchStack.Screen
+      name="aroundMeMapAndList"
+      component={AroundMeMapAndList}
+    />
   </TabSearchStack.Navigator>
 );
 
