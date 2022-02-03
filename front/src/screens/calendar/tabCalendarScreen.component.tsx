@@ -258,7 +258,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
         animated={false}
       />
       {loadingEvents ? (
-        <Loader />
+        <Loader backdrop={false} />
       ) : error ? (
         <ErrorMessage error={error} />
       ) : (
