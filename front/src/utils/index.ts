@@ -9,6 +9,7 @@ import * as LoggingUtils from "./logging.util";
 import { initMonitoring, reportError } from "./logging.util";
 import * as NotificationUtils from "./notification.util";
 import * as RootNavigation from "./rootNavigation.util";
+import * as StepUtils from "./step.util";
 import * as StorageUtils from "./storage.util";
 import * as StringUtils from "./strings.util";
 import { getAppTheme } from "./theme.util";
@@ -30,6 +31,7 @@ export {
   NotificationUtils,
   reportError,
   RootNavigation,
+  StepUtils,
   StorageUtils,
   StringUtils,
   TrackerUtils,

@@ -20,6 +20,7 @@ import TextHtml from "./article/textHtml.component";
 import Thematics from "./article/thematics.component";
 import Title from "./article/title.component";
 import Events from "./calendar/events.component";
+import ParenthequeItem from "./home/parenthequeItem.component";
 import ConditionsOfUse from "./menu/conditionsOfUse.component";
 import LegalNotice from "./menu/legalNotice.component";
 import Menu from "./menu/menu.component";
@@ -52,6 +53,7 @@ export {
   Links,
   Menu,
   NotificationHandler,
+  ParenthequeItem,
   PoiList,
   poisRoute,
   SearchByPostalCode,

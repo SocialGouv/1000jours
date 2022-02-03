@@ -1,6 +1,19 @@
 import type { DocumentNode } from "@apollo/client/core";
 import { gql } from "@apollo/client/core";
 
+export const HOME_GET_ALL_STEPS = `
+  query GetAllSteps {
+    etapes(sort: "id") {
+      id
+      nom
+      ordre
+      description
+      debut
+      fin
+    }
+  }
+`;
+
 export const QUESTIONNAIRE_EPDS = gql`
   query QuestionsReponses {
     questionnaireEpds(sort: "ordre") {
