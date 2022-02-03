@@ -1,4 +1,3 @@
-import type { NavigationContainerRef } from "@react-navigation/native";
 import Constants from "expo-constants";
 import * as React from "react";
 import { Dimensions, Linking, Modal, StyleSheet } from "react-native";
@@ -9,6 +8,7 @@ import BottomSheet from "reanimated-bottom-sheet";
 import { Labels, PlatformConstants } from "../../constants";
 import { emailContact } from "../../constants/email.constants";
 import { reviewTypeForm } from "../../constants/links.constants";
+import { stepParentheque } from "../../constants/steps.constants";
 import {
   Colors,
   FontNames,
@@ -18,7 +18,8 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
-import type { MenuItem, RootStackParamList } from "../../types";
+import type { MenuItem } from "../../types";
+import { RootNavigation } from "../../utils";
 import { Icomoon, IcomoonIcons, View } from "../baseComponents";
 import Accessibility from "./accessibility.component";
 import ConditionsOfUse from "./conditionsOfUse.component";
@@ -27,10 +28,9 @@ import LegalNotice from "./legalNotice.component";
 interface Props {
   showMenu: boolean;
   setShowMenu: (showMenu: boolean) => void;
-  navigation: NavigationContainerRef<RootStackParamList> | null;
 }
 
-const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
+const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
   const [showLegalNotice, setShowLegalNotice] = React.useState(false);
   const [showConditionsOfUse, setShowConditionsOfUse] = React.useState(false);
   const [showAccessibility, setShowAccessibility] = React.useState(false);
@@ -46,9 +46,18 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu, navigation }) => {
     {
       icon: IcomoonIcons.profil,
       onPress: () => {
-        navigation?.navigate("profile");
+        void RootNavigation.navigate("profile", null);
       },
       title: Labels.menu.myProfil,
+    },
+    {
+      icon: IcomoonIcons.stepParentheque,
+      onPress: () => {
+        void RootNavigation.navigate("listParentsDocuments", {
+          step: stepParentheque,
+        });
+      },
+      title: Labels.timeline.library.nom,
     },
     {
       icon: IcomoonIcons.email,
