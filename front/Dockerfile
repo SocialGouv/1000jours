@@ -18,7 +18,7 @@ COPY . .
 
 RUN yarn expo build:web
 
-FROM ghcr.io/socialgouv/docker/nginx4spa:6.58.3
+FROM ghcr.io/socialgouv/docker/nginx4spa:6.70.0
 
 COPY --from=builder /app/web-build /usr/share/nginx/html
 
