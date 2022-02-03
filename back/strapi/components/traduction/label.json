@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_traduction_labels",
+  "info": {
+    "name": "Label",
+    "icon": "book-medical"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "texte": {
+      "type": "text"
+    }
+  }
+}
