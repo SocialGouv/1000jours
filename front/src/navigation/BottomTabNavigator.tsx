@@ -146,6 +146,10 @@ const TabCalendarNavigator: FC = () => (
     />
     <TabCalendarStack.Screen name="eventDetails" component={EventDetails} />
     <TabCalendarStack.Screen name="article" component={ArticleDetail} />
+    <TabHomeStack.Screen
+      name="listParentsDocuments"
+      component={ListParentsDocuments}
+    />
   </TabCalendarStack.Navigator>
 );
 
@@ -156,6 +160,10 @@ const TabEpdsNavigator: FC = () => (
       name="tabEpdsScreen"
       component={TabEpdsScreen}
       options={{}}
+    />
+    <TabHomeStack.Screen
+      name="listParentsDocuments"
+      component={ListParentsDocuments}
     />
   </TabEpdsStack.Navigator>
 );
@@ -171,6 +179,10 @@ const TabSearchNavigator: FC = () => (
     <TabSearchStack.Screen
       name="aroundMeMapAndList"
       component={AroundMeMapAndList}
+    />
+    <TabHomeStack.Screen
+      name="listParentsDocuments"
+      component={ListParentsDocuments}
     />
   </TabSearchStack.Navigator>
 );

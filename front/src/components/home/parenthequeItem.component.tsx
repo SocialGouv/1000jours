@@ -4,10 +4,13 @@ import type { FC } from "react";
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
-import { FetchPoliciesConstants, Labels } from "../../constants";
-import { PARENTS_DOCUMENTS } from "../../constants/databaseQueries.constants";
+import {
+  DatabaseQueries,
+  FetchPoliciesConstants,
+  Steps,
+} from "../../constants";
 import { Colors, Sizes } from "../../styles";
-import type { Step, TabHomeParamList } from "../../types";
+import type { TabHomeParamList } from "../../types";
 import { TimelineStepLibrary } from "..";
 import { View } from "../baseComponents";
 
@@ -24,7 +27,7 @@ const ParenthequeItem: FC<Props> = ({ navigation }) => {
       error: errorParentheque,
       data: dataParentheque,
     },
-  ] = useLazyQuery(PARENTS_DOCUMENTS, {
+  ] = useLazyQuery(DatabaseQueries.PARENTS_DOCUMENTS, {
     fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
   });
 
@@ -39,16 +42,6 @@ const ParenthequeItem: FC<Props> = ({ navigation }) => {
       setCounterDocument(results.length);
     }
   }, [loadingParentheque, dataParentheque, errorParentheque]);
-
-  const stepParentheque: Step = {
-    active: null,
-    debut: null,
-    description: Labels.timeline.library.description,
-    fin: null,
-    id: "0",
-    nom: Labels.timeline.library.nom,
-    ordre: 0,
-  };
 
   if (counterDocument > 0)
     return (
@@ -67,7 +60,7 @@ const ParenthequeItem: FC<Props> = ({ navigation }) => {
             ]}
           />
         </View>
-        {[stepParentheque].map((step, index) => (
+        {[Steps.stepParentheque].map((step, index) => (
           <TimelineStepLibrary
             order={step.ordre}
             name={step.nom}
