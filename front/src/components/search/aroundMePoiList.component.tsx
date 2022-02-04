@@ -79,6 +79,7 @@ const AroundMePoiList: FC<Props> = ({
         }}
         relaunchSearch={() => {
           setIsLoading(true);
+          updateSelectedPoiIndex(-1);
           setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
         }}
         showRelaunchResearchButton={false}
