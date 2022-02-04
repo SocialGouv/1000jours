@@ -30,6 +30,11 @@
       "plugin": "upload",
       "required": true,
       "pluginOptions": {}
+    },
+    "sens_lecture_droite_vers_gauche": {
+      "type": "boolean",
+      "default": false,
+      "required": true
     }
   }
 }

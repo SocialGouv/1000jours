@@ -1,5 +1,5 @@
 import type { Step } from "../types";
-import { Labels } from ".";
+import Labels from "./Labels";
 
 export const stepParentheque: Step = {
   active: null,
