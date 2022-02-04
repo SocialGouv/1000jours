@@ -31,9 +31,9 @@
       "required": true,
       "pluginOptions": {}
     },
-    "sens_lecture_gauche_vers_droite": {
+    "sens_lecture_droite_vers_gauche": {
       "type": "boolean",
-      "default": true,
+      "default": false,
       "required": true
     }
   }
