@@ -29,7 +29,7 @@ const TitleH1: React.FC<Props> = ({
       <SecondaryText style={styles.title} accessibilityRole="header">
         {title}
       </SecondaryText>
-      {showDescription && description && (
+      {(showDescription === undefined || showDescription) && description && (
         <SecondaryText style={styles.description}>{description}</SecondaryText>
       )}
     </Animatable.View>

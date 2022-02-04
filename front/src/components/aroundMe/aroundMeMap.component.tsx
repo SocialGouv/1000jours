@@ -12,7 +12,10 @@ import {
   Labels,
   StorageKeysConstants,
 } from "../../constants";
-import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
+import {
+  PLATFORM_IS_IOS,
+  SCREEN_HEIGHT,
+} from "../../constants/platform.constants";
 import { Colors, Margins } from "../../styles";
 import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
 import { CustomSnackbar, Loader, View } from "../baseComponents";
@@ -30,7 +33,11 @@ interface Props {
   updateRegion: (region: Region) => void;
   updatePoiArray: (poiArray: Poi[]) => void;
   updateSelectedPoiIndex: (selectedPoiIndex: number) => void;
-  displayList: () => void;
+  displayList?: () => void;
+  triggerMoveMapRegion?: boolean;
+  triggerMoveMapUserLocation?: boolean;
+  showBottomPanel?: (showPanel: boolean) => void;
+  isFromSimpleCarto?: boolean;
 }
 
 const AroundMeMap: React.FC<Props> = ({
@@ -42,6 +49,10 @@ const AroundMeMap: React.FC<Props> = ({
   updatePoiArray,
   updateSelectedPoiIndex,
   displayList,
+  triggerMoveMapRegion,
+  triggerMoveMapUserLocation,
+  showBottomPanel,
+  isFromSimpleCarto,
 }) => {
   const mapRef = useRef<MapView>();
 
@@ -61,6 +72,28 @@ const AroundMeMap: React.FC<Props> = ({
     useState(false);
 
   const [showDisplayListButton, setShowDisplayListButton] = useState(true);
+  const [moveToRegionBecauseOfPCResearch, setMoveToRegionBecauseOfPCResearch] =
+    useState(false);
+
+  useEffect(() => {
+    if (
+      isFromSimpleCarto &&
+      triggerMoveMapUserLocation != undefined &&
+      userLocation
+    ) {
+      setShowAddressDetails(false);
+      setMoveToRegionBecauseOfPCResearch(true);
+      moveMapToCoordinates(userLocation.latitude, userLocation.longitude);
+    }
+  }, [triggerMoveMapUserLocation]);
+
+  useEffect(() => {
+    if (isFromSimpleCarto && triggerMoveMapRegion != undefined) {
+      setShowAddressDetails(false);
+      setMoveToRegionBecauseOfPCResearch(true);
+      mapRef.current?.animateToRegion(region);
+    }
+  }, [triggerMoveMapRegion]);
 
   useEffect(() => {
     if (selectedPoiIndex !== -1) {
@@ -91,6 +124,7 @@ const AroundMeMap: React.FC<Props> = ({
     updatePoiArray(pois);
     setShowAddressDetails(false);
     setIsLoading(false);
+    if (showBottomPanel) showBottomPanel(true);
   };
 
   const onRegionChangeComplete = (newRegion: Region) => {
@@ -99,6 +133,20 @@ const AroundMeMap: React.FC<Props> = ({
       newRegion
     );
     updateRegion(newRegion);
+
+    if (moveToRegionBecauseOfPCResearch) {
+      setIsLoading(true);
+      setMoveToRegionBecauseOfPCResearch(false);
+      /* sur iOS, cette fonction est appelée juste avant que la carte ait terminé de se déplacer,
+       du coup on se retrouve avec des mauvaises adresses qui ne s'affichent pas sur la bonne zone,
+       donc on est obligé de mettre un petit timeout */
+      setTimeout(
+        () => {
+          setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+        },
+        PLATFORM_IS_IOS ? 1000 : 0
+      );
+    }
     setShowSnackBar(false);
     setShowRelaunchResearchButton(true);
   };
@@ -198,7 +246,7 @@ const AroundMeMap: React.FC<Props> = ({
           headerStyle={styles.headerButtonsMapView}
           displayMap
           setDisplayMap={() => {
-            displayList();
+            if (displayList) displayList();
           }}
           relaunchSearch={() => {
             KeyboardUtils.dismissKeyboard();
@@ -206,11 +254,13 @@ const AroundMeMap: React.FC<Props> = ({
             setShowRelaunchResearchButton(false);
             setShowAddressDetails(false);
             updateSelectedPoiIndex(-1);
+            if (showBottomPanel) showBottomPanel(false);
             setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
           }}
           showRelaunchResearchButton={showRelaunchResearchButton}
           setIsLoading={setIsLoading}
           showDisplayListButton={showDisplayListButton}
+          hideDisplayListButton={isFromSimpleCarto}
         />
         <CustomSnackbar
           duration={AroundMeConstants.SNACKBAR_DURATION}
@@ -226,7 +276,9 @@ const AroundMeMap: React.FC<Props> = ({
         <View
           style={[
             styles.addressDetails,
-            styles.addressDetailsSmallMarginBottom,
+            poiArray.length > 1 && isFromSimpleCarto
+              ? styles.addressDetailsBigMarginBottom
+              : styles.addressDetailsSmallMarginBottom,
           ]}
         >
           <AddressDetails
@@ -251,6 +303,9 @@ const styles = StyleSheet.create({
     marginHorizontal: Margins.smaller,
     position: "absolute",
     right: 0,
+  },
+  addressDetailsBigMarginBottom: {
+    marginBottom: SCREEN_HEIGHT / 9,
   },
   addressDetailsSmallMarginBottom: {
     marginBottom: Margins.smaller,

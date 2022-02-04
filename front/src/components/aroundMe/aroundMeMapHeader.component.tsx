@@ -20,6 +20,7 @@ interface Props {
   showDisplayListButton?: boolean;
   showRelaunchResearchButton: boolean;
   setIsLoading: (isLoading: boolean) => void;
+  hideDisplayListButton?: boolean;
 }
 
 const AroundMeMapHeader: FC<Props> = ({
@@ -30,6 +31,7 @@ const AroundMeMapHeader: FC<Props> = ({
   showDisplayListButton,
   showRelaunchResearchButton,
   setIsLoading,
+  hideDisplayListButton,
 }) => {
   // Filter and "submit new filter" modals
   const [showFilter, setShowFilter] = useState(false);
@@ -65,34 +67,39 @@ const AroundMeMapHeader: FC<Props> = ({
           }}
         />
         <View style={styles.headerButtonsRightPartView}>
-          <CustomButton
-            buttonStyle={styles.headerButton}
-            title={
-              displayMap
-                ? Labels.aroundMe.displayListButton
-                : Labels.aroundMe.displayMapButton
-            }
-            titleStyle={styles.headerButtonTitle}
-            rounded={true}
-            disabled={displayMap ? !showDisplayListButton : false}
-            icon={
-              <Icomoon
-                name={
-                  displayMap
-                    ? IcomoonIcons.afficherListe
-                    : IcomoonIcons.autourDeMoi
-                }
-                size={Sizes.sm}
-                color={Colors.primaryBlue}
-              />
-            }
-            action={() => {
-              setDisplayMap(!displayMap);
-            }}
-          />
+          {!hideDisplayListButton && (
+            <CustomButton
+              buttonStyle={styles.headerButton}
+              title={
+                displayMap
+                  ? Labels.aroundMe.displayListButton
+                  : Labels.aroundMe.displayMapButton
+              }
+              titleStyle={styles.headerButtonTitle}
+              rounded={true}
+              disabled={displayMap ? !showDisplayListButton : false}
+              icon={
+                <Icomoon
+                  name={
+                    displayMap
+                      ? IcomoonIcons.afficherListe
+                      : IcomoonIcons.autourDeMoi
+                  }
+                  size={Sizes.sm}
+                  color={Colors.primaryBlue}
+                />
+              }
+              action={() => {
+                setDisplayMap(!displayMap);
+              }}
+            />
+          )}
           {showRelaunchResearchButton && (
             <CustomButton
-              buttonStyle={[styles.headerButton, styles.buttonMarginTop]}
+              buttonStyle={[
+                styles.headerButton,
+                !hideDisplayListButton && styles.buttonMarginTop,
+              ]}
               title={Labels.aroundMe.relaunchSearch}
               titleStyle={styles.headerButtonTitle}
               rounded={true}

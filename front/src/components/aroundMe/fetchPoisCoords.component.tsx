@@ -37,7 +37,8 @@ const FetchPoisCoords: React.FC<Props> = ({
   showSnackBarMessage,
 }) => {
   const [getPoisByGpsCoords] = useLazyQuery(gql(GET_POIS_BY_GPSCOORDS), {
-    fetchPolicy: FetchPoliciesConstants.NO_CACHE,
+    fetchPolicy: FetchPoliciesConstants.NETWORK_ONLY,
+    notifyOnNetworkStatusChange: true,
     onCompleted: (data) => {
       const { searchPois } = data as {
         searchPois: Poi[];
