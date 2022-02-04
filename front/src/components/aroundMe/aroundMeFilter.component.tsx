@@ -47,9 +47,10 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     { title: string; filters: CartoFilter[] }[]
   >([]);
   const [cartoFilterStorage, setCartoFilterStorage] =
-    useState<CartoFilterStorage>({ etapes: [], types: [] });
-  // useState<CartoFilterStorage>({ etapes: [], thematiques: [], types: [] });
+    useState<CartoFilterStorage>({ etapes: [], thematiques: [], types: [] });
   const [showModalContent, setShowModalContent] = useState(false);
+  const [savedcartoFilterStorage, setSavedCartoFilterStorage] =
+    useState<CartoFilterStorage>({ etapes: [], thematiques: [], types: [] });
   const [trackerAction, setTrackerAction] = useState("");
 
   useEffect(() => {
@@ -69,8 +70,10 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
 
     setShowModalContent(false);
     const getSavedFilter = async () => {
-      const savedFilters: CartoFilterStorage =
+      const savedFilters: CartoFilterStorage | null =
         await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
+
+      if (savedFilters) setSavedCartoFilterStorage(savedFilters);
 
       if (fetchedFiltersFromDB) {
         fetchedFiltersFromDB.professionnels.forEach(
@@ -299,6 +302,18 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     ));
   };
 
+  const arraysHaveSameLengthAndContainSameValues = (
+    firstArray: string[],
+    secondArray: string[]
+  ) => {
+    return (
+      firstArray.length === secondArray.length &&
+      firstArray.every((firstArrayElement) =>
+        secondArray.includes(firstArrayElement)
+      )
+    );
+  };
+
   const sendFiltersTracker = (filters: string[]) => {
     if (!StringUtils.stringArrayIsNullOrEmpty(filters)) {
       filters.forEach((filter) => {
@@ -323,7 +338,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                 onPress={() => {
                   setCartoFilterStorage({
                     etapes: [],
-                    // thematiques: [],
+                    thematiques: [],
                     types: [],
                   });
                   hideModal(false);
@@ -362,7 +377,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                     action={() => {
                       setCartoFilterStorage({
                         etapes: [],
-                        // thematiques: [],
+                        thematiques: [],
                         types: [],
                       });
                       hideModal(false);
@@ -382,13 +397,35 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                       );
                       sendFiltersTracker(cartoFilterStorage.etapes);
                       sendFiltersTracker(cartoFilterStorage.types);
-                      // sendFiltersTracker(cartoFilterStorage.thematiques);
+                      sendFiltersTracker(cartoFilterStorage.thematiques);
+
+                      const noSavedFilterButNewFilter =
+                        savedcartoFilterStorage.etapes.length === 0 &&
+                        savedcartoFilterStorage.types.length === 0 &&
+                        (cartoFilterStorage.etapes.length > 0 ||
+                          cartoFilterStorage.types.length > 0);
+
+                      const savedFilterAndNewFiltersAreDifferent =
+                        !arraysHaveSameLengthAndContainSameValues(
+                          savedcartoFilterStorage.etapes,
+                          cartoFilterStorage.etapes
+                        ) ||
+                        !arraysHaveSameLengthAndContainSameValues(
+                          savedcartoFilterStorage.types,
+                          cartoFilterStorage.types
+                        );
+
+                      const differenceBetweenSavedAndNew =
+                        noSavedFilterButNewFilter ||
+                        savedFilterAndNewFiltersAreDifferent;
+
                       setCartoFilterStorage({
                         etapes: [],
-                        // thematiques: [],
+                        thematiques: [],
                         types: [],
                       });
-                      hideModal(true);
+
+                      hideModal(differenceBetweenSavedAndNew);
                     }}
                   />
                 </View>

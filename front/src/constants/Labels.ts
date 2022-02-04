@@ -85,6 +85,8 @@ export default {
     searchGeolocInstruction:
       "Afin de vous apporter une aide personnalisée, veuillez renseigner votre localisation :",
     searchPostalCodeInstruction: "Ou renseignez votre code postal :",
+    searchWasNotSuccessful:
+      "La recherche n'a pas aboutie, veuillez réessayer plus tard",
     submitNewFilter: {
       aboutYou: {
         numberOfChildren: "Nombre d'enfants",

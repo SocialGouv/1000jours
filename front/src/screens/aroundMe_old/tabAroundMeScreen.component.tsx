@@ -224,6 +224,7 @@ const TabAroundMeScreen: FC = () => {
           searchIsReady={searchIsReady}
           setIsLoading={setIsLoading}
           locationPermissionIsGranted={locationPermissionIsGranted}
+          showSnackBarMessage={showSnackBarWithMessage}
         />
         <View style={styles.topContainer}>
           <TitleH1
