@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "labels_epds_traductions",
+  "info": {
+    "name": "Labels EPDS traductions",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "langue": {
+      "model": "locale"
+    },
+    "labels": {
+      "type": "component",
+      "repeatable": true,
+      "component": "traduction.label"
+    }
+  }
+}

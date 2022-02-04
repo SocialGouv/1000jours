@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/labels-epds-traductions",
+      "handler": "labels-epds-traductions.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/labels-epds-traductions/count",
+      "handler": "labels-epds-traductions.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/labels-epds-traductions/:id",
+      "handler": "labels-epds-traductions.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/labels-epds-traductions",
+      "handler": "labels-epds-traductions.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/labels-epds-traductions/:id",
+      "handler": "labels-epds-traductions.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/labels-epds-traductions/:id",
+      "handler": "labels-epds-traductions.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
