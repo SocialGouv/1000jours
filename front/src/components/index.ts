@@ -4,7 +4,6 @@ import AroundMeMap from "./aroundMe/aroundMeMap.component";
 import AroundMeMapHeader from "./aroundMe/aroundMeMapHeader.component";
 import CustomMapMarker from "./aroundMe/customMapMarker.component";
 import FetchPois from "./aroundMe/fetchPois.component";
-import FetchPoisCoords from "./aroundMe/fetchPoisCoords.component";
 import PoiList from "./aroundMe/poiList.component";
 import SearchByPostalCode from "./aroundMe/searchByPostalCode.component";
 import SearchRegion from "./aroundMe/searchRegion.component";
@@ -44,7 +43,6 @@ export {
   DidYouKnow,
   Events,
   FetchPois,
-  FetchPoisCoords,
   Filters,
   ImageBanner,
   InShort,

@@ -63,12 +63,11 @@ const FetchPois: React.FC<Props> = ({
     }
 
     const variables = {
-      etapes: savedFilters.etapes,
       lat1: topLeftPoint.latitude,
       lat2: bottomRightPoint.latitude,
       long1: topLeftPoint.longitude,
       long2: bottomRightPoint.longitude,
-      // thematiques: savedFilters?.thematiques ? savedFilters.thematiques : [],
+      thematiques: savedFilters.thematiques,
       types: savedFilters.types,
     };
     void getPoisByGpsCoords({

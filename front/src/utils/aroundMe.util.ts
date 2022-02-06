@@ -1,25 +1,6 @@
 import type { LatLng, Region } from "react-native-maps";
 
-import { AroundMeConstants, StorageKeysConstants } from "../constants";
-import type { CartoFilterStorage } from "../type";
-import type { Step } from "../types";
-import { getObjectValue, storeObjectValue } from "./storage.util";
-
-export const saveCurrentEtapeForCartoFilter = async (
-  currentEtape: Step | undefined
-): Promise<void> => {
-  const isFirstLaunch = await getObjectValue(
-    StorageKeysConstants.isFirstLaunchKey
-  );
-  if (isFirstLaunch && currentEtape) {
-    const savedFilters: CartoFilterStorage = await getObjectValue(
-      StorageKeysConstants.cartoFilterKey
-    );
-    savedFilters.etapes = [currentEtape.nom];
-    await storeObjectValue(StorageKeysConstants.cartoFilterKey, savedFilters);
-  }
-};
-
+import { AroundMeConstants } from "../constants";
 export const searchRegionByPostalCode = async (
   postalCodeInput: string
 ): Promise<Region | undefined> => {

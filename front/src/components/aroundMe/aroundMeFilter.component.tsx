@@ -47,22 +47,18 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     { title: string; filters: CartoFilter[] }[]
   >([]);
   const [cartoFilterStorage, setCartoFilterStorage] =
-    useState<CartoFilterStorage>({ etapes: [], thematiques: [], types: [] });
+    useState<CartoFilterStorage>({ thematiques: [], types: [] });
   const [showModalContent, setShowModalContent] = useState(false);
   const [savedcartoFilterStorage, setSavedCartoFilterStorage] =
-    useState<CartoFilterStorage>({ etapes: [], thematiques: [], types: [] });
+    useState<CartoFilterStorage>({ thematiques: [], types: [] });
   const [trackerAction, setTrackerAction] = useState("");
 
   useEffect(() => {
     if (!filterDataFromDb) return;
-    const extractFilterDataAndCheckSavedFilters = () => {
-      const { cartographieTypes, etapes } = filterDataFromDb as {
-        cartographieTypes: PoiType[];
-        etapes: Step[];
-      };
-      extractFilterData(cartographieTypes, etapes);
+    const { cartographieTypes } = filterDataFromDb as {
+      cartographieTypes: PoiType[];
     };
-    extractFilterDataAndCheckSavedFilters();
+    extractFilterData(cartographieTypes);
   }, [filterDataFromDb]);
 
   useEffect(() => {
@@ -82,9 +78,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
         fetchedFiltersFromDB.structures.forEach(
           (filter) => (filter.active = false)
         );
-        fetchedFiltersFromDB.etapes.forEach(
-          (filter) => (filter.active = false)
-        );
         if (
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           savedFilters &&
@@ -98,17 +91,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
           fetchedFiltersFromDB.structures = checkSavedFiltersInFetchedFilters(
             savedFilters.types,
             fetchedFiltersFromDB.structures
-          );
-        }
-
-        if (
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          savedFilters &&
-          !StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes)
-        ) {
-          fetchedFiltersFromDB.etapes = checkSavedFiltersInFetchedFilters(
-            savedFilters.etapes,
-            fetchedFiltersFromDB.etapes
           );
         }
 
@@ -132,10 +114,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
           filters: fetchedFiltersFromDB.professionnels,
           title: Labels.aroundMe.filter.healthProfessional,
         },
-        // {
-        //   filters: fetchedFiltersFromDB.etapes,
-        //   title: Labels.aroundMe.filter.steps,
-        // },
       ]);
     }
   };
@@ -149,7 +127,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
 
       if (cartoFilter.filterType === AroundMeConstants.CartoFilterEnum.type)
         cartoFilterStorage.types.push(cartoFilter.name);
-      else cartoFilterStorage.etapes.push(cartoFilter.name);
 
       setCartoFilterStorage(cartoFilterStorage);
     });
@@ -157,14 +134,8 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     return cartoFilters;
   };
 
-  const extractFilterData = (
-    poiTypesToFilter: PoiType[],
-    stepToFilter: Step[]
-  ) => {
+  const extractFilterData = (poiTypesToFilter: PoiType[]) => {
     setFetchedFiltersFromDB({
-      etapes: stepToFilter.map((step) =>
-        convertToCartoFilter(step, AroundMeConstants.CartoFilterEnum.etape)
-      ),
       professionnels: filterToPoiCategorie(
         poiTypesToFilter,
         AroundMeConstants.PoiCategorieEnum.professionnel
@@ -194,31 +165,16 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     filter: PoiType | Step,
     filterType: AroundMeConstants.CartoFilterEnum
   ): CartoFilter => {
-    const cartoFilter = {
+    return {
       active: false,
       filterType: filterType,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       name: filter.nom,
     };
-
-    if (filterType === AroundMeConstants.CartoFilterEnum.etape) {
-      return {
-        ...cartoFilter,
-        associatedTypes: (filter as Step).cartographie_types.map(
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          (type) => type.nom
-        ),
-      };
-    }
-
-    return cartoFilter;
   };
 
   const updateQueryFilter = (filter: CartoFilter) => {
-    let tempQueryFilter =
-      filter.filterType === AroundMeConstants.CartoFilterEnum.type
-        ? cartoFilterStorage.types
-        : cartoFilterStorage.etapes;
+    let tempQueryFilter = cartoFilterStorage.types;
     if (!tempQueryFilter.includes(filter.name))
       tempQueryFilter.push(filter.name);
     else {
@@ -227,52 +183,8 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
       );
     }
 
-    if (filter.filterType === AroundMeConstants.CartoFilterEnum.type)
-      cartoFilterStorage.types = tempQueryFilter;
-    else cartoFilterStorage.etapes = tempQueryFilter;
+    cartoFilterStorage.types = tempQueryFilter;
     setCartoFilterStorage(cartoFilterStorage);
-
-    if (
-      filter.filterType === AroundMeConstants.CartoFilterEnum.etape &&
-      filter.associatedTypes &&
-      filter.associatedTypes.length > 0
-    ) {
-      setDisplayedCartoFilters([
-        updateDisplayedFilters(displayedCartoFilters[0], filter),
-        updateDisplayedFilters(displayedCartoFilters[1], filter),
-        updateDisplayedFilters(displayedCartoFilters[2], filter),
-      ]);
-    }
-  };
-
-  const updateDisplayedFilters = (
-    _displayedFiltersElement: { title: string; filters: CartoFilter[] },
-    stepFilter: CartoFilter
-  ) => {
-    const stepIsActive = cartoFilterStorage.etapes.includes(stepFilter.name);
-
-    return {
-      filters: _displayedFiltersElement.filters.map((cartoFilter) => {
-        if (stepFilter.associatedTypes?.includes(cartoFilter.name)) {
-          cartoFilter.active = stepIsActive;
-        }
-
-        if (
-          cartoFilter.active &&
-          !cartoFilterStorage.types.includes(cartoFilter.name)
-        )
-          cartoFilterStorage.types.push(cartoFilter.name);
-        else {
-          cartoFilterStorage.types = cartoFilterStorage.types.filter(
-            (element) => element !== cartoFilter.name
-          );
-        }
-        setCartoFilterStorage(cartoFilterStorage);
-
-        return cartoFilter;
-      }),
-      title: _displayedFiltersElement.title,
-    };
   };
 
   const renderSection = (section: {
@@ -337,7 +249,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                 style={styles.closeModalView}
                 onPress={() => {
                   setCartoFilterStorage({
-                    etapes: [],
                     thematiques: [],
                     types: [],
                   });
@@ -376,7 +287,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                     }
                     action={() => {
                       setCartoFilterStorage({
-                        etapes: [],
                         thematiques: [],
                         types: [],
                       });
@@ -395,21 +305,14 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                         StorageKeysConstants.cartoFilterKey,
                         cartoFilterStorage
                       );
-                      sendFiltersTracker(cartoFilterStorage.etapes);
                       sendFiltersTracker(cartoFilterStorage.types);
                       sendFiltersTracker(cartoFilterStorage.thematiques);
 
                       const noSavedFilterButNewFilter =
-                        savedcartoFilterStorage.etapes.length === 0 &&
                         savedcartoFilterStorage.types.length === 0 &&
-                        (cartoFilterStorage.etapes.length > 0 ||
-                          cartoFilterStorage.types.length > 0);
+                        cartoFilterStorage.types.length > 0;
 
                       const savedFilterAndNewFiltersAreDifferent =
-                        !arraysHaveSameLengthAndContainSameValues(
-                          savedcartoFilterStorage.etapes,
-                          cartoFilterStorage.etapes
-                        ) ||
                         !arraysHaveSameLengthAndContainSameValues(
                           savedcartoFilterStorage.types,
                           cartoFilterStorage.types
@@ -420,7 +323,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                         savedFilterAndNewFiltersAreDifferent;
 
                       setCartoFilterStorage({
-                        etapes: [],
                         thematiques: [],
                         types: [],
                       });
