@@ -24,8 +24,7 @@ import {
   Labels,
   StorageKeysConstants,
 } from "../../constants";
-import { SCREEN_HEIGHT } from "../../constants/platform.constants";
-import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
+import { Colors, Margins, Paddings, Sizes } from "../../styles";
 import { StorageUtils, TrackerUtils } from "../../utils";
 
 const AroundMeScreen: FC = () => {
@@ -133,9 +132,6 @@ const AroundMeScreen: FC = () => {
         triggerMoveMapUserLocation={triggerMoveMapUserLocation}
         showBottomPanel={setShowAddressesList}
         isFromSimpleCarto
-        // displayList={() => {
-        //   setDisplayMap(false);
-        // }}
       />
       <CustomSnackbar
         duration={AroundMeConstants.SNACKBAR_DURATION}

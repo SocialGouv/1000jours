@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-require-imports */
 import type { Poi } from "@socialgouv/nos1000jours-lib";
+import type { FC } from "react";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
@@ -34,13 +35,16 @@ interface Props {
   updatePoiArray: (poiArray: Poi[]) => void;
   updateSelectedPoiIndex: (selectedPoiIndex: number) => void;
   displayList?: () => void;
+}
+
+interface ExtendedPropsForSimpleMap extends Props {
   triggerMoveMapRegion?: boolean;
   triggerMoveMapUserLocation?: boolean;
   showBottomPanel?: (showPanel: boolean) => void;
   isFromSimpleCarto?: boolean;
 }
 
-const AroundMeMap: React.FC<Props> = ({
+const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
   region,
   poiArray,
   selectedPoiIndex,

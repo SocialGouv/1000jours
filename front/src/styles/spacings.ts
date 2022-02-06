@@ -11,7 +11,7 @@ export const Margins = {
   largest: scaleNormalize(36),
   evenMoreLargest: scaleNormalize(50),
   step: scaleNormalize(60),
-  simpleCartoSnackbarMargin: scaleNormalize(90),
+  simpleCartoSnackbarMargin: scaleNormalize(110),
 };
 
 export const Paddings = {
