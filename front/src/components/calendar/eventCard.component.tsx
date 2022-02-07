@@ -126,15 +126,17 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
 
       {isExpanded && (
         <View style={styles.eventDetailsContainer}>
-          <View style={styles.linkCarto} ref={elementRef} accessible={true}>
-            <CustomButton
-              rounded={true}
-              title={Labels.event.seeOnTheMap}
-              titleStyle={styles.buttonTitle}
-              buttonStyle={{ alignSelf: "center" }}
-              action={seeOnTheMap}
-            />
-          </View>
+          {event.thematique && (
+            <View style={styles.linkCarto} ref={elementRef} accessible={true}>
+              <CustomButton
+                rounded={true}
+                title={Labels.event.seeOnTheMap}
+                titleStyle={styles.buttonTitle}
+                buttonStyle={{ alignSelf: "center" }}
+                action={seeOnTheMap}
+              />
+            </View>
+          )}
           <ShareButton
             buttonTitle={Labels.buttons.share}
             title={Labels.appName}

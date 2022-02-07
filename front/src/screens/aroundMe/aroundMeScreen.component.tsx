@@ -75,11 +75,11 @@ const AroundMeScreen: FC = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <TrackerHandler
-        screenName={TrackerUtils.TrackingEvent.CARTO}
-        actionName={trackerAction}
-      />
-      <View style={{ flex: 0 }}>
+      <View style={styles.flex0}>
+        <TrackerHandler
+          screenName={TrackerUtils.TrackingEvent.CARTO}
+          actionName={trackerAction}
+        />
         <View style={styles.topContainer}>
           <TitleH1
             title={Labels.aroundMe.title}
@@ -120,39 +120,41 @@ const AroundMeScreen: FC = () => {
           setLocationPermissionIsGranted={setLocationPermissionIsGranted}
         />
       </View>
-      <AroundMeMap
-        region={region}
-        poiArray={poisArray}
-        selectedPoiIndex={selectedPoiIndex}
-        userLocation={currentUserLocation}
-        updateRegion={setRegion}
-        updatePoiArray={setPoisArray}
-        updateSelectedPoiIndex={setSelectedPoiIndex}
-        triggerMoveMapRegion={triggerMoveMapRegion}
-        triggerMoveMapUserLocation={triggerMoveMapUserLocation}
-        showBottomPanel={setShowAddressesList}
-        isFromSimpleCarto
-      />
-      <CustomSnackbar
-        duration={AroundMeConstants.SNACKBAR_DURATION}
-        visible={showSnackBar}
-        isOnTop
-        marginTopValue={Margins.simpleCartoSnackbarMargin}
-        backgroundColor={Colors.aroundMeSnackbar.background}
-        onDismiss={onSnackBarDismiss}
-        textColor={Colors.aroundMeSnackbar.text}
-        text={snackBarMessage}
-      />
-      {showAddressesList &&
-        poisArray.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
-          <SlidingUpPanelAddressesList
-            poisArray={poisArray}
-            centerOnMarker={(poiIndex: number) => {
-              setSelectedPoiIndex(poiIndex);
-            }}
-          />
-        )}
-      {isLoading && <Loader />}
+      <View style={styles.mainContainer}>
+        <AroundMeMap
+          region={region}
+          poiArray={poisArray}
+          selectedPoiIndex={selectedPoiIndex}
+          userLocation={currentUserLocation}
+          updateRegion={setRegion}
+          updatePoiArray={setPoisArray}
+          updateSelectedPoiIndex={setSelectedPoiIndex}
+          triggerMoveMapRegion={triggerMoveMapRegion}
+          triggerMoveMapUserLocation={triggerMoveMapUserLocation}
+          showBottomPanel={setShowAddressesList}
+          isFromSimpleCarto
+        />
+        <CustomSnackbar
+          duration={AroundMeConstants.SNACKBAR_DURATION}
+          visible={showSnackBar}
+          isOnTop
+          marginTopValue={Margins.simpleCartoSnackbarMargin}
+          backgroundColor={Colors.aroundMeSnackbar.background}
+          onDismiss={onSnackBarDismiss}
+          textColor={Colors.aroundMeSnackbar.text}
+          text={snackBarMessage}
+        />
+        {showAddressesList &&
+          poisArray.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
+            <SlidingUpPanelAddressesList
+              poisArray={poisArray}
+              centerOnMarker={(poiIndex: number) => {
+                setSelectedPoiIndex(poiIndex);
+              }}
+            />
+          )}
+        {isLoading && <Loader />}
+      </View>
     </View>
   );
 };
@@ -160,6 +162,9 @@ const AroundMeScreen: FC = () => {
 const styles = StyleSheet.create({
   columnView: {
     flexDirection: "column",
+  },
+  flex0: {
+    flex: 0,
   },
   fontButton: {
     fontSize: Sizes.xxs,
