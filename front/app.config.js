@@ -4,13 +4,27 @@ export default {
     android: {
       adaptiveIcon: {
         backgroundColor: "#FFFFFF",
-        foregroundImage: "./assets/images/adaptive-icon.png",
+        foregroundImage: "./src/assets/images/adaptive-icon.png",
       },
       config: {
         googleMaps: {
           apiKey: process.env.GOOGLE_MAPS_API_KEY,
         },
       },
+      intentFilters: [
+        {
+          action: "VIEW",
+          autoVerify: true,
+          category: ["DEFAULT", "BROWSABLE"],
+          data: [
+            {
+              host: process.env.DEEPLINK_DOMAIN,
+              pathPrefix: `/${process.env.DEEPLINK_PATH}`,
+              scheme: "https",
+            },
+          ],
+        },
+      ],
       package: "com.fabrique.millejours",
       permissions: [
         "ACCESS_COARSE_LOCATION",
@@ -18,7 +32,7 @@ export default {
         "READ_CALENDAR",
         "WRITE_CALENDAR",
       ],
-      versionCode: 37,
+      versionCode: 39,
     },
     assetBundlePatterns: ["**/*"],
     hooks: {
@@ -34,9 +48,10 @@ export default {
         },
       ],
     },
-    icon: "./assets/images/icon.png",
+    icon: "./src/assets/images/icon.png",
     ios: {
-      buildNumber: "1.1.37",
+      associatedDomains: [`applinks:${process.env.DEEPLINK_DOMAIN}`],
+      buildNumber: "1.1.39",
       bundleIdentifier: "com.fabrique.millejours",
       infoPlist: {
         NSCalendarsUsageDescription:
@@ -50,20 +65,28 @@ export default {
     },
     name: "1000 jours",
     orientation: "portrait",
-    scheme: "myapp",
+    plugins: [
+      [
+        "expo-notifications",
+        {
+          icon: "./src/assets/images/notification_icon.png",
+        },
+      ],
+    ],
+    scheme: "millejours",
     slug: "1000jours",
     splash: {
       backgroundColor: "#ffffff",
-      image: "./assets/images/splash.png",
+      image: "./src/assets/images/splash.png",
       resizeMode: "contain",
     },
     updates: {
       fallbackToCacheTimeout: 0,
     },
     userInterfaceStyle: "light",
-    version: "1.1.37",
+    version: "1.1.39",
     web: {
-      favicon: "./assets/images/favicon.png",
+      favicon: "./src/assets/images/favicon.png",
     },
   },
 };
