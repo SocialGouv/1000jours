@@ -47,8 +47,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     { title: string; filters: CartoFilter[] }[]
   >([]);
   const [cartoFilterStorage, setCartoFilterStorage] =
-    useState<CartoFilterStorage>({ etapes: [], types: [] });
-  // useState<CartoFilterStorage>({ etapes: [], thematiques: [], types: [] });
+    useState<CartoFilterStorage>({ etapes: [], thematiques: [], types: [] });
   const [showModalContent, setShowModalContent] = useState(false);
   const [trackerAction, setTrackerAction] = useState("");
 
@@ -323,7 +322,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                 onPress={() => {
                   setCartoFilterStorage({
                     etapes: [],
-                    // thematiques: [],
+                    thematiques: [],
                     types: [],
                   });
                   hideModal(false);
@@ -362,7 +361,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                     action={() => {
                       setCartoFilterStorage({
                         etapes: [],
-                        // thematiques: [],
+                        thematiques: [],
                         types: [],
                       });
                       hideModal(false);
@@ -385,7 +384,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                       // sendFiltersTracker(cartoFilterStorage.thematiques);
                       setCartoFilterStorage({
                         etapes: [],
-                        // thematiques: [],
+                        thematiques: [],
                         types: [],
                       });
                       hideModal(true);

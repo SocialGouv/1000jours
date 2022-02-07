@@ -23,25 +23,31 @@ export const saveCurrentEtapeForCartoFilter = async (
 export const searchRegionByPostalCode = async (
   postalCodeInput: string
 ): Promise<Region | undefined> => {
-  const response = await fetch(
-    AroundMeConstants.getApiUrlWithParam(postalCodeInput) as RequestInfo
-  );
-  const json = await response.json();
+  try {
+    const response = await fetch(
+      AroundMeConstants.getApiUrlWithParam(postalCodeInput) as RequestInfo
+    );
 
-  let newRegion = undefined;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  if (json.features[0]?.geometry.coordinates) {
+    const json = await response.json();
+
+    let newRegion = undefined;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    const coordinates: string[] = json.features[0].geometry.coordinates;
-    newRegion = {
-      latitude: Number(coordinates[1]),
-      latitudeDelta: AroundMeConstants.DEFAULT_DELTA,
-      longitude: Number(coordinates[0]),
-      longitudeDelta: AroundMeConstants.DEFAULT_DELTA,
-    };
-  }
+    if (json.features[0]?.geometry.coordinates) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      const coordinates: string[] = json.features[0].geometry.coordinates;
+      newRegion = {
+        latitude: Number(coordinates[1]),
+        latitudeDelta: AroundMeConstants.DEFAULT_DELTA,
+        longitude: Number(coordinates[0]),
+        longitudeDelta: AroundMeConstants.DEFAULT_DELTA,
+      };
+    }
 
-  return newRegion;
+    return newRegion;
+  } catch (error: unknown) {
+    console.log(error);
+    return undefined;
+  }
 };
 
 export const getLatLngPoint = (

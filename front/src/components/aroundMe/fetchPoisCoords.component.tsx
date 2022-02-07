@@ -72,7 +72,8 @@ const FetchPoisCoords: React.FC<Props> = ({
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (savedFilters &&
           StringUtils.stringArrayIsNullOrEmpty(savedFilters.types) &&
-          StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes)))
+          StringUtils.stringArrayIsNullOrEmpty(savedFilters.etapes) &&
+          StringUtils.stringArrayIsNullOrEmpty(savedFilters.thematiques)))
     ) {
       chooseFilterMessage();
       return;
