@@ -60,8 +60,8 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
 
   const updateCartoFilterStorage = () => {
     const cartoFilterStorage: CartoFilterStorage = {
-      etapes: _.map(event.etapes, "nom"),
-      // thematiques: event.thematique?.nom ? [event.thematique.nom] : [],
+      etapes: [],
+      thematiques: event.thematique?.nom ? [event.thematique.nom] : [],
       types: [],
     };
     void StorageUtils.storeObjectValue(
@@ -73,7 +73,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
   const seeOnTheMap = () => {
     setTrackerAction(TrackerUtils.TrackingEvent.EVENT_SEE_THE_MAP);
     updateCartoFilterStorage();
-    void RootNavigation.navigate("tabAroundMe", null);
+    void RootNavigation.navigate("aroundMeScreen", null);
   };
 
   const setAccessibilityFocus = () => {

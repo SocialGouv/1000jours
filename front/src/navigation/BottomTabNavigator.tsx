@@ -11,6 +11,7 @@ import {
   EventDetails,
   ListArticles,
   ListParentsDocuments,
+  TabAroundMeScreen,
   TabCalendarScreen,
   TabEpdsScreen,
   TabHomeScreen,
@@ -149,6 +150,11 @@ const TabCalendarNavigator: FC = () => (
     <TabHomeStack.Screen
       name="listParentsDocuments"
       component={ListParentsDocuments}
+    />
+    <TabCalendarStack.Screen
+      name="aroundMeScreen"
+      component={TabAroundMeScreen}
+      options={{}}
     />
   </TabCalendarStack.Navigator>
 );

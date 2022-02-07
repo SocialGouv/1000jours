@@ -32,6 +32,7 @@ export type TabCalendarParamList = {
   tabCalendarScreen: undefined;
   eventDetails: { eventId: string };
   article: { id: number; step?: Step };
+  aroundMeScreen: undefined;
 };
 
 export type TabEpdsParamList = {
