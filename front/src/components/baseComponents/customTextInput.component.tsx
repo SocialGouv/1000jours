@@ -3,6 +3,7 @@ import * as React from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 
 import { Labels } from "../../constants";
+import { PLATFORM_IS_ANDROID } from "../../constants/platform.constants";
 import {
   Colors,
   FontNames,
@@ -25,10 +26,10 @@ const CustomTextInput: FC<Props> = ({
   onChangeText,
   onClearPress,
 }) => {
-  return (
+  return PLATFORM_IS_ANDROID ? (
     <View style={styles.mainContainer}>
       <TextInput
-        style={styles.textInputView}
+        style={[styles.textInputView, styles.textInputWidth]}
         onChangeText={onChangeText}
         placeholder={Labels.search.writeKeywordPlaceholder}
         value={textInputValue}
@@ -42,6 +43,14 @@ const CustomTextInput: FC<Props> = ({
         />
       </TouchableOpacity>
     </View>
+  ) : (
+    <TextInput
+      style={[styles.mainContainer, styles.textInputView]}
+      onChangeText={onChangeText}
+      placeholder={Labels.search.writeKeywordPlaceholder}
+      value={textInputValue}
+      clearButtonMode="always"
+    />
   );
 };
 
@@ -63,6 +72,8 @@ const styles = StyleSheet.create({
   textInputView: {
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
     paddingLeft: Margins.smaller,
+  },
+  textInputWidth: {
     width: "90%",
   },
 });
