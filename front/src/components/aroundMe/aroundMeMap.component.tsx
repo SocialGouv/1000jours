@@ -4,6 +4,7 @@ import type { Poi } from "@socialgouv/nos1000jours-lib";
 import type { FC } from "react";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
+import type { LayoutChangeEvent } from "react-native";
 import { Image, StyleSheet } from "react-native";
 import type { LatLng, Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
@@ -78,6 +79,8 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
   const [showDisplayListButton, setShowDisplayListButton] = useState(true);
   const [moveToRegionBecauseOfPCResearch, setMoveToRegionBecauseOfPCResearch] =
     useState(false);
+  const [heightOfMapView, setHeightOfMapView] = useState(0);
+  const [widthOfMapView, setWidthOfMapView] = useState(0);
 
   useEffect(() => {
     if (
@@ -209,12 +212,18 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
           showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
         }}
       />
-      <View style={styles.map}>
+      <View
+        style={styles.map}
+        onLayout={(event: LayoutChangeEvent) => {
+          setHeightOfMapView(Math.round(event.nativeEvent.layout.height));
+          setWidthOfMapView(Math.round(event.nativeEvent.layout.width));
+        }}
+      >
         <MapView
           minZoomLevel={AroundMeConstants.MAPVIEW_MIN_ZOOM_LEVEL}
           ref={setMapViewRef}
           provider={PROVIDER_DEFAULT}
-          style={styles.map}
+          style={{ height: heightOfMapView, width: widthOfMapView }}
           initialRegion={region}
           onRegionChangeComplete={onRegionChangeComplete}
         >
