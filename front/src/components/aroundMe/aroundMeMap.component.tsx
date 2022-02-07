@@ -3,6 +3,7 @@
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
+import type { LayoutChangeEvent } from "react-native";
 import { Image, StyleSheet } from "react-native";
 import type { LatLng, Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
@@ -61,6 +62,9 @@ const AroundMeMap: React.FC<Props> = ({
     useState(false);
 
   const [showDisplayListButton, setShowDisplayListButton] = useState(true);
+
+  const [heightOfMapView, setHeightOfMapView] = useState(0);
+  const [widthOfMapView, setWidthOfMapView] = useState(0);
 
   useEffect(() => {
     if (selectedPoiIndex !== -1) {
@@ -143,26 +147,38 @@ const AroundMeMap: React.FC<Props> = ({
         screenName={TrackerUtils.TrackingEvent.CARTO}
         actionName={trackerAction}
       />
-      <FetchPois
-        triggerSearchByGpsCoords={triggerSearchByGpsCoords}
-        region={region}
-        setFetchedPois={handleFetchedPois}
-        chooseFilterMessage={() => {
-          setTimeout(
-            () => {
-              setIsLoading(false);
-            },
-            PLATFORM_IS_IOS ? 500 : 0
-          );
-          showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
+      <View style={{ flex: 0 }}>
+        <FetchPois
+          triggerSearchByGpsCoords={triggerSearchByGpsCoords}
+          region={region}
+          setFetchedPois={handleFetchedPois}
+          chooseFilterMessage={() => {
+            setTimeout(
+              () => {
+                setIsLoading(false);
+              },
+              PLATFORM_IS_IOS ? 500 : 0
+            );
+            showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
+          }}
+        />
+      </View>
+      <View
+        style={styles.map}
+        onLayout={(event: LayoutChangeEvent) => {
+          setHeightOfMapView(Math.round(event.nativeEvent.layout.height));
+          setWidthOfMapView(Math.round(event.nativeEvent.layout.width));
         }}
-      />
-      <View style={styles.map}>
+      >
         <MapView
           minZoomLevel={AroundMeConstants.MAPVIEW_MIN_ZOOM_LEVEL}
           ref={setMapViewRef}
           provider={PROVIDER_DEFAULT}
-          style={styles.map}
+          style={
+            PLATFORM_IS_IOS
+              ? { height: heightOfMapView, width: widthOfMapView }
+              : styles.map
+          }
           initialRegion={region}
           onRegionChangeComplete={onRegionChangeComplete}
         >
