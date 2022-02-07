@@ -1,3 +1,34 @@
+# [1.92.0](https://github.com/SocialGouv/1000jours/compare/v1.91.0...v1.92.0) (2022-02-07)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le crash ios sur la carto ([#1036](https://github.com/SocialGouv/1000jours/issues/1036)) ([8147b2b](https://github.com/SocialGouv/1000jours/commit/8147b2bd5fafbd73259655a01bb89d7bc68f566e))
+* **recherche:** reset selectedIndex ([#1028](https://github.com/SocialGouv/1000jours/issues/1028)) ([8ac65dc](https://github.com/SocialGouv/1000jours/commit/8ac65dc57304b9df390a66b09b37080c487cccbc))
+* 🐛 Corrige un problème de freeze du loader (Notification) ([#1027](https://github.com/SocialGouv/1000jours/issues/1027)) ([536d23e](https://github.com/SocialGouv/1000jours/commit/536d23eec4da683c7eb5136ac3e939301afdc4b2)), closes [#1008](https://github.com/SocialGouv/1000jours/issues/1008)
+* **heap:** fix heap memory error ([#1004](https://github.com/SocialGouv/1000jours/issues/1004)) ([a561d33](https://github.com/SocialGouv/1000jours/commit/a561d33e3f9ac461f4f89bc7611de0fc6b357f95))
+* 🐛 Ajoute l'icone pour les notification android ([#1002](https://github.com/SocialGouv/1000jours/issues/1002)) ([9707d5e](https://github.com/SocialGouv/1000jours/commit/9707d5ea79733cbd47f3352c1b984b01bd9f488a)), closes [#967](https://github.com/SocialGouv/1000jours/issues/967)
+* **seed:** Corrige l'import des données et ajoute les types de POI ([#994](https://github.com/SocialGouv/1000jours/issues/994)) ([ba69306](https://github.com/SocialGouv/1000jours/commit/ba6930632e5d7bd0c390b328bc8458e7b31fe6ce))
+* add assets in src folder ([#981](https://github.com/SocialGouv/1000jours/issues/981)) ([587bb90](https://github.com/SocialGouv/1000jours/commit/587bb906aaf988cec102d1a5d73a53abf56f3024))
+* IcomoonFont ([#982](https://github.com/SocialGouv/1000jours/issues/982)) ([55fd282](https://github.com/SocialGouv/1000jours/commit/55fd2823ece19f81ce1a6728c3f9c6540424f214))
+
+
+### Features
+
+* **carto:** reuse old cartography ([#1035](https://github.com/SocialGouv/1000jours/issues/1035)) ([b2aafde](https://github.com/SocialGouv/1000jours/commit/b2aafde75fb39d7e4d2cc362ba2cd24d8c6ed329))
+* **epds:** ajout de la source pour le widget ([#973](https://github.com/SocialGouv/1000jours/issues/973)) ([e0f0a6f](https://github.com/SocialGouv/1000jours/commit/e0f0a6f9067f61590d219cc4c93f266a14f66447))
+* **epds:** traduction labels ([#1026](https://github.com/SocialGouv/1000jours/issues/1026)) ([c73ba56](https://github.com/SocialGouv/1000jours/commit/c73ba56d30b457d337ff859425af66aaea71cd7c))
+* 🎸 Ajoute le lien vers la parentheque dans le menu ([#1025](https://github.com/SocialGouv/1000jours/issues/1025)) ([4eee69d](https://github.com/SocialGouv/1000jours/commit/4eee69d35679db81f37825a41a03920f0858c8e9)), closes [#959](https://github.com/SocialGouv/1000jours/issues/959)
+* **lib:** delete library from main project ([#975](https://github.com/SocialGouv/1000jours/issues/975)) ([9a713d8](https://github.com/SocialGouv/1000jours/commit/9a713d8d64f12817a8eabf1af65375b49a5f0cf5))
+* **recherche:** ajout du lien direct articles-types de POI ([#978](https://github.com/SocialGouv/1000jours/issues/978)) ([a483fb8](https://github.com/SocialGouv/1000jours/commit/a483fb84a35bf9bf43138e32c5d1a34f3bfb2825))
+* **recherche:** continue Recherche US + refactoring ([#992](https://github.com/SocialGouv/1000jours/issues/992)) ([324617f](https://github.com/SocialGouv/1000jours/commit/324617fd360b78138f6a04099bafaa35ab58714b))
+* **recherche:** end Recherche and continue refactoring ([#996](https://github.com/SocialGouv/1000jours/issues/996)) ([8018a0e](https://github.com/SocialGouv/1000jours/commit/8018a0e5f67e9334351f575d5447ce98e1600ebc))
+* **recherche:** rearrange screens and refactor ([#1000](https://github.com/SocialGouv/1000jours/issues/1000)) ([edd1698](https://github.com/SocialGouv/1000jours/commit/edd1698a0424c68d3ae99608a4adfa71c7e16793))
+* **recherche:** recherche articles ([#807](https://github.com/SocialGouv/1000jours/issues/807)) ([032587b](https://github.com/SocialGouv/1000jours/commit/032587b0c8998f6cac02f22ea9656ca300383b19))
+* **recherche:** retours design ([#1021](https://github.com/SocialGouv/1000jours/issues/1021)) ([59e1402](https://github.com/SocialGouv/1000jours/commit/59e140211502f2c0075474c96b4192827d6b0400))
+* **share:** use trackerHandler ([#1003](https://github.com/SocialGouv/1000jours/issues/1003)) ([631f1a4](https://github.com/SocialGouv/1000jours/commit/631f1a44d377505fb1b80e5e15dd23deac8ce65a))
+* 🎸 Ajoute le partage d'articles et d'événements  ([#995](https://github.com/SocialGouv/1000jours/issues/995)) ([479971d](https://github.com/SocialGouv/1000jours/commit/479971db8275e17f961e46682839b4aaa0a796b8)), closes [#956](https://github.com/SocialGouv/1000jours/issues/956) [#957](https://github.com/SocialGouv/1000jours/issues/957)
+
 # [1.91.0](https://github.com/SocialGouv/1000jours/compare/v1.90.0...v1.91.0) (2022-01-27)
 
 
