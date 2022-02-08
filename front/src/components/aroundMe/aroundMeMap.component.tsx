@@ -198,20 +198,22 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
         screenName={TrackerUtils.TrackingEvent.CARTO}
         actionName={trackerAction}
       />
-      <FetchPois
-        triggerSearchByGpsCoords={triggerSearchByGpsCoords}
-        region={region}
-        setFetchedPois={handleFetchedPois}
-        chooseFilterMessage={() => {
-          setTimeout(
-            () => {
-              setIsLoading(false);
-            },
-            PLATFORM_IS_IOS ? 500 : 0
-          );
-          showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
-        }}
-      />
+      <View style={{ flex: 0 }}>
+        <FetchPois
+          triggerSearchByGpsCoords={triggerSearchByGpsCoords}
+          region={region}
+          setFetchedPois={handleFetchedPois}
+          chooseFilterMessage={() => {
+            setTimeout(
+              () => {
+                setIsLoading(false);
+              },
+              PLATFORM_IS_IOS ? 500 : 0
+            );
+            showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
+          }}
+        />
+      </View>
       <View
         style={styles.map}
         onLayout={(event: LayoutChangeEvent) => {
@@ -223,7 +225,11 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
           minZoomLevel={AroundMeConstants.MAPVIEW_MIN_ZOOM_LEVEL}
           ref={setMapViewRef}
           provider={PROVIDER_DEFAULT}
-          style={{ height: heightOfMapView, width: widthOfMapView }}
+          style={
+            PLATFORM_IS_IOS
+              ? { height: heightOfMapView, width: widthOfMapView }
+              : styles.map
+          }
           initialRegion={region}
           onRegionChangeComplete={onRegionChangeComplete}
         >
