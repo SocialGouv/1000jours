@@ -14,7 +14,7 @@ import type { TabSearchParamList } from "../../types";
 interface Props {
   route: RouteProp<
     {
-      params: { region: Region; poisArray: Poi[]; userLocation?: LatLng };
+      params: { coordinates: LatLng; displayUserLocation: boolean };
     },
     "params"
   >;
@@ -22,14 +22,17 @@ interface Props {
 }
 
 const AroundMeMapAndList: React.FC<Props> = ({ navigation, route }) => {
-  const [region, setRegion] = useState<Region>(route.params.region);
-  const [poisArray, setPoisArray] = useState<Poi[]>(route.params.poisArray);
-  const [selectedPoiIndex, setSelectedPoiIndex] = useState(-1);
-  const [currentUserLocation] = useState<LatLng | undefined>(
-    route.params.userLocation
+  // La Region sera définie grâce au AroundMeMap pour s'adapter à la taille de l'écran
+  const [region, setRegion] = useState<Region | undefined>();
+  const [coordinates, setCoordinates] = useState<LatLng | undefined>(
+    route.params.coordinates
   );
-
+  const [poisArray, setPoisArray] = useState<Poi[]>([]);
+  const [selectedPoiIndex, setSelectedPoiIndex] = useState(-1);
   const [displayMap, setDisplayMap] = useState(true);
+  const [userLocation] = useState(
+    route.params.displayUserLocation ? coordinates : undefined
+  );
 
   return (
     <View style={styles.mainContainer}>
@@ -43,10 +46,14 @@ const AroundMeMapAndList: React.FC<Props> = ({ navigation, route }) => {
       {displayMap ? (
         <AroundMeMap
           region={region}
+          coordinates={coordinates}
           poiArray={poisArray}
           selectedPoiIndex={selectedPoiIndex}
-          userLocation={currentUserLocation}
+          userLocation={userLocation}
           updateRegion={setRegion}
+          resetCoordinates={() => {
+            setCoordinates(undefined);
+          }}
           updatePoiArray={setPoisArray}
           updateSelectedPoiIndex={setSelectedPoiIndex}
           displayList={() => {
@@ -54,15 +61,17 @@ const AroundMeMapAndList: React.FC<Props> = ({ navigation, route }) => {
           }}
         />
       ) : (
-        <AroundMePoiList
-          region={region}
-          poiArray={poisArray}
-          displayMap={() => {
-            setDisplayMap(true);
-          }}
-          updatePoiArray={setPoisArray}
-          updateSelectedPoiIndex={setSelectedPoiIndex}
-        />
+        region && (
+          <AroundMePoiList
+            region={region}
+            poiArray={poisArray}
+            displayMap={() => {
+              setDisplayMap(true);
+            }}
+            updatePoiArray={setPoisArray}
+            updateSelectedPoiIndex={setSelectedPoiIndex}
+          />
+        )
       )}
     </View>
   );

@@ -28,11 +28,13 @@ import CustomMapMarker from "./customMapMarker.component";
 import FetchPois from "./fetchPois.component";
 
 interface Props {
-  region: Region;
+  region?: Region;
+  coordinates?: LatLng;
   poiArray: Poi[];
   selectedPoiIndex: number;
   userLocation?: LatLng;
   updateRegion: (region: Region) => void;
+  resetCoordinates?: () => void;
   updatePoiArray: (poiArray: Poi[]) => void;
   updateSelectedPoiIndex: (selectedPoiIndex: number) => void;
   displayList?: () => void;
@@ -47,10 +49,12 @@ interface ExtendedPropsForSimpleMap extends Props {
 
 const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
   region,
+  coordinates,
   poiArray,
   selectedPoiIndex,
   userLocation,
   updateRegion,
+  resetCoordinates,
   updatePoiArray,
   updateSelectedPoiIndex,
   displayList,
@@ -77,10 +81,22 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
     useState(false);
 
   const [showDisplayListButton, setShowDisplayListButton] = useState(true);
-  const [moveToRegionBecauseOfPCResearch, setMoveToRegionBecauseOfPCResearch] =
-    useState(false);
+  const [
+    triggerSearchAfterRegionChangeComplete,
+    setTriggerSearchAfterRegionChangeComplete,
+  ] = useState(false);
   const [heightOfMapView, setHeightOfMapView] = useState(0);
   const [widthOfMapView, setWidthOfMapView] = useState(0);
+
+  useEffect(() => {
+    if (coordinates) {
+      // Une fois qu'on a placé la carto la première fois après la Recherche, on reset les coordinates car ils ne seront plus utilisés
+      // et cela évite de redéclencher ce useEffect
+      if (resetCoordinates) resetCoordinates();
+      setTriggerSearchAfterRegionChangeComplete(true);
+      moveMapToCoordinates(coordinates.latitude, coordinates.longitude);
+    }
+  }, [coordinates]);
 
   useEffect(() => {
     if (
@@ -89,15 +105,15 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
       userLocation
     ) {
       setShowAddressDetails(false);
-      setMoveToRegionBecauseOfPCResearch(true);
+      setTriggerSearchAfterRegionChangeComplete(true);
       moveMapToCoordinates(userLocation.latitude, userLocation.longitude);
     }
   }, [triggerMoveMapUserLocation]);
 
   useEffect(() => {
-    if (isFromSimpleCarto && triggerMoveMapRegion != undefined) {
+    if (isFromSimpleCarto && region && triggerMoveMapRegion != undefined) {
       setShowAddressDetails(false);
-      setMoveToRegionBecauseOfPCResearch(true);
+      setTriggerSearchAfterRegionChangeComplete(true);
       mapRef.current?.animateToRegion(region);
     }
   }, [triggerMoveMapRegion]);
@@ -105,6 +121,7 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
   useEffect(() => {
     if (selectedPoiIndex !== -1) {
       setTimeout(() => {
+        setTriggerSearchAfterRegionChangeComplete(false);
         moveMapToCoordinates(
           poiArray[selectedPoiIndex].position_latitude,
           poiArray[selectedPoiIndex].position_longitude
@@ -141,9 +158,9 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
     );
     updateRegion(newRegion);
 
-    if (moveToRegionBecauseOfPCResearch) {
+    if (triggerSearchAfterRegionChangeComplete) {
       setIsLoading(true);
-      setMoveToRegionBecauseOfPCResearch(false);
+      setTriggerSearchAfterRegionChangeComplete(false);
       /* sur iOS, cette fonction est appelée juste avant que la carte ait terminé de se déplacer,
        du coup on se retrouve avec des mauvaises adresses qui ne s'affichent pas sur la bonne zone,
        donc on est obligé de mettre un petit timeout */
@@ -223,6 +240,7 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
       >
         <MapView
           minZoomLevel={AroundMeConstants.MAPVIEW_MIN_ZOOM_LEVEL}
+          maxZoomLevel={15}
           ref={setMapViewRef}
           provider={PROVIDER_DEFAULT}
           style={

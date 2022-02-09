@@ -46,9 +46,10 @@ export type TabAroundMeParamList = {
 export type TabSearchParamList = {
   tabSearchScreen: undefined;
   aroundMeMapAndList: {
-    region: Region;
-    poisArray: Poi[];
-    userLocation: LatLng | undefined;
+    // region: Region;
+    // poisArray: Poi[];
+    coordinates: LatLng;
+    displayUserLocation: boolean;
   };
 };
 

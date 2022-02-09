@@ -6,7 +6,7 @@ import CustomMapMarker from "./aroundMe/customMapMarker.component";
 import FetchPois from "./aroundMe/fetchPois.component";
 import PoiList from "./aroundMe/poiList.component";
 import SearchByPostalCode from "./aroundMe/searchByPostalCode.component";
-import SearchRegion from "./aroundMe/searchRegion.component";
+import SearchUserLocationOrPostalCodeCoords from "./aroundMe/searchUserLocationOrPostalCodeCoords.component";
 import SlidingUpPanelAddressesList from "./aroundMe/slidingUpPanelAddressesList.component";
 import SubmitNewFilter from "./aroundMe/submitNewFilter.component";
 import DidYouKnow from "./article/didYouKnow.component";
@@ -53,7 +53,7 @@ export {
   PoiList,
   poisRoute,
   SearchByPostalCode,
-  SearchRegion,
+  SearchUserLocationOrPostalCodeCoords,
   setNotificationHandler,
   SlidingUpPanelAddressesList,
   StepIcon,

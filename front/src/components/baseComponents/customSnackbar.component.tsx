@@ -28,10 +28,14 @@ const CustomSnackbar: React.FC<Props> = ({
   text,
 }) => {
   useEffect(() => {
+    let mounted = true;
     if (!visible) return;
     setTimeout(() => {
-      onDismiss();
+      if (mounted) onDismiss();
     }, duration);
+    return () => {
+      mounted = false;
+    };
   }, [visible]);
 
   const snackbarStyle = {

@@ -1,9 +1,10 @@
 import type { LatLng, Region } from "react-native-maps";
 
 import { AroundMeConstants } from "../constants";
-export const searchRegionByPostalCode = async (
+
+export const getPostalCodeCoords = async (
   postalCodeInput: string
-): Promise<Region | undefined> => {
+): Promise<LatLng | undefined> => {
   try {
     const response = await fetch(
       AroundMeConstants.getApiUrlWithParam(postalCodeInput) as RequestInfo
@@ -11,20 +12,18 @@ export const searchRegionByPostalCode = async (
 
     const json = await response.json();
 
-    let newRegion = undefined;
+    let newCoords = undefined;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (json.features[0]?.geometry.coordinates) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       const coordinates: string[] = json.features[0].geometry.coordinates;
-      newRegion = {
+      newCoords = {
         latitude: Number(coordinates[1]),
-        latitudeDelta: AroundMeConstants.DEFAULT_DELTA,
         longitude: Number(coordinates[0]),
-        longitudeDelta: AroundMeConstants.DEFAULT_DELTA,
       };
     }
 
-    return newRegion;
+    return newCoords;
   } catch (error: unknown) {
     console.log(error);
     return undefined;

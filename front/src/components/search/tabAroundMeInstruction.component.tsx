@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
-import type { Poi } from "@socialgouv/nos1000jours-lib";
 import type { FC } from "react";
 import { useState } from "react";
 import * as React from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import type { LatLng, Region } from "react-native-maps";
+import type { LatLng } from "react-native-maps";
 import { HelperText } from "react-native-paper";
 
 import { AroundMeConstants, Labels } from "../../constants";
@@ -16,8 +15,7 @@ import {
 } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import { RootNavigation } from "../../utils";
-import FetchPois from "../aroundMe/fetchPois.component";
-import SearchRegion from "../aroundMe/searchRegion.component";
+import SearchUserLocationOrPostalCodeCoords from "../aroundMe/searchUserLocationOrPostalCodeCoords.component";
 import {
   CustomButton,
   CustomSnackbar,
@@ -29,15 +27,13 @@ import {
 const TabAroundMeInstruction: FC = () => {
   const [postalCodeInput, setPostalCodeInput] = useState("");
   const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
-  const [region, setRegion] = useState<Region>();
-  const [userLocation, setUserLocation] = useState<LatLng | undefined>();
+  const [searchIsByPostalCode, setSearchIsByPostalCode] = useState(false);
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [triggerCheckLocation, setTriggerCheckLocation] = useState(false);
   const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] =
     useState(false);
-  const [triggerFetchPois, setTriggerFetchPois] = useState(false);
 
   const geolocationIcon = require("../../assets/images/carto/geolocation.png");
 
@@ -52,56 +48,46 @@ const TabAroundMeInstruction: FC = () => {
   };
 
   const checkLocation = () => {
+    setSearchIsByPostalCode(false);
     setIsLoading(true);
     setTriggerCheckLocation(!triggerCheckLocation);
   };
 
   const searchByPostalCode = () => {
+    setSearchIsByPostalCode(true);
     setIsLoading(true);
     setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
   };
 
-  const handlePois = (pois: Poi[]) => {
-    if (pois.length === 0)
-      showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
-    else if (region)
-      void RootNavigation.navigate("aroundMeMapAndList", {
-        poisArray: pois,
-        region,
-        userLocation,
-      });
-    setIsLoading(false);
+  const goToAroundMeMapAndListScreen = (coordinates: LatLng) => {
+    void RootNavigation.navigate("aroundMeMapAndList", {
+      coordinates,
+      displayUserLocation: !searchIsByPostalCode,
+    });
+  };
+
+  const handleGetCoordinates = (newCoordinates: LatLng | undefined) => {
+    if (PLATFORM_IS_IOS) setIsLoading(false);
+    if (newCoordinates) goToAroundMeMapAndListScreen(newCoordinates);
+    else
+      showSnackBarWithMessage(
+        searchIsByPostalCode
+          ? Labels.aroundMe.postalCodeNotFound
+          : Labels.aroundMe.geolocationRetrievingError
+      );
   };
 
   return (
     <ScrollView style={styles.mainContainer}>
-      <SearchRegion
-        triggerSearchRegionByLocation={triggerCheckLocation}
-        showSnackBarWithMessage={(message: string) => {
-          setIsLoading(false);
-          showSnackBarWithMessage(message);
-        }}
-        setRegion={(newRegion: Region | undefined) => {
-          if (newRegion) {
-            setRegion(newRegion);
-            setTriggerFetchPois(!triggerFetchPois);
-          } else {
-            setIsLoading(false);
-            showSnackBarWithMessage(Labels.aroundMe.regionCouldNotBeDefined);
-          }
-        }}
-        triggerSearchRegionByPostalCode={triggerSearchByPostalCode}
+      <SearchUserLocationOrPostalCodeCoords
+        triggerGetUserLocation={triggerCheckLocation}
+        triggerGetPostalCodeCoords={triggerSearchByPostalCode}
         postalCodeInput={postalCodeInput}
         setPostalCodeInvalid={setPostalCodeInvalid}
-        setUserLocation={setUserLocation}
-      />
-
-      <FetchPois
-        triggerSearchByGpsCoords={triggerFetchPois}
-        region={region}
-        setFetchedPois={handlePois}
-        chooseFilterMessage={() => {
-          return;
+        setCoordinates={handleGetCoordinates}
+        allowGeolocationMessage={() => {
+          setIsLoading(false);
+          showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
         }}
       />
       <SecondaryText style={styles.description}>

@@ -137,18 +137,21 @@ const SearchByPostalCode: React.FC<Props> = ({
       setIsLoading(false);
       return;
     }
-    const newRegion = await AroundMeUtils.searchRegionByPostalCode(
+    const newPostalCodeCoords = await AroundMeUtils.getPostalCodeCoords(
       postalCodeInput
     );
 
-    if (newRegion) {
+    if (newPostalCodeCoords) {
       const newDelta = await AroundMeUtils.adaptZoomAccordingToRegion(
-        newRegion.latitude,
-        newRegion.longitude
+        newPostalCodeCoords.latitude,
+        newPostalCodeCoords.longitude
       );
-      newRegion.latitudeDelta = newDelta;
-      newRegion.longitudeDelta = newDelta;
-      setAndGoToNewRegion(newRegion);
+      setAndGoToNewRegion({
+        latitude: newPostalCodeCoords.latitude,
+        latitudeDelta: newDelta,
+        longitude: newPostalCodeCoords.longitude,
+        longitudeDelta: newDelta,
+      });
     } else {
       showSnackBarWithMessage(Labels.aroundMe.postalCodeNotFound);
     }
