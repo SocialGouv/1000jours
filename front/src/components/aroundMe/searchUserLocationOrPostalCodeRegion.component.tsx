@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import type { LatLng, Region } from "react-native-maps";
+import type { LatLng } from "react-native-maps";
 import { HelperText } from "react-native-paper";
 
 import { AroundMeConstants, Labels } from "../../constants";
@@ -20,38 +20,35 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
-import { AroundMeUtils, KeyboardUtils } from "../../utils";
+import { KeyboardUtils } from "../../utils";
 import { CustomButton, View } from "../baseComponents";
 import SearchUserLocationOrPostalCodeCoords from "./searchUserLocationOrPostalCodeCoords.component";
 
 interface Props {
-  postalCodeInput: string;
-  setPostalCodeInput: (value: string) => void;
-  postalCodeInvalid: boolean;
-  setPostalCodeInvalid: (value: boolean) => void;
+  setCoordinatesAndUserLocation: (
+    coordinates: LatLng,
+    displayUL: boolean
+  ) => void;
   hideSnackBar: () => void;
-  setAndGoToNewRegion: (region: Region) => void;
   showSnackBarWithMessage: (message: string) => void;
   setIsLoading: (value: boolean) => void;
-  updateUserLocation: (region: Region | undefined) => void;
 }
 
 const SearchUserLocationOrPostalCodeRegion: React.FC<Props> = ({
-  postalCodeInput,
-  setPostalCodeInput,
-  postalCodeInvalid,
-  setPostalCodeInvalid,
+  setCoordinatesAndUserLocation,
   hideSnackBar,
-  setAndGoToNewRegion,
   showSnackBarWithMessage,
   setIsLoading,
-  updateUserLocation,
 }) => {
+  const [postalCodeInput, setPostalCodeInput] = useState("");
+  const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
   const [searchIsByPostalCode, setSearchIsByPostalCode] = useState(false);
   const [triggerCheckLocation, setTriggerCheckLocation] = useState(false);
   const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] =
     useState(false);
   const [showAllowGeolocSnackBar, setShowAllowGeolocSnackBar] = useState(false);
+
+  const geolocationIcon = require("../../assets/images/carto/geolocation.png");
 
   useEffect(() => {
     checkLocation(false);
@@ -69,8 +66,6 @@ const SearchUserLocationOrPostalCodeRegion: React.FC<Props> = ({
     setPostalCodeInvalid(false);
   };
 
-  const geolocationIcon = require("../../assets/images/carto/geolocation.png");
-
   const onSearchByPostalCodeButtonClick = () => {
     setIsLoading(true);
     KeyboardUtils.dismissKeyboard();
@@ -84,21 +79,10 @@ const SearchUserLocationOrPostalCodeRegion: React.FC<Props> = ({
     setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
   };
 
-  const handleGetCoordinates = async (newCoordinates: LatLng | undefined) => {
+  const handleGetCoordinates = (newCoordinates: LatLng | undefined) => {
     setIsLoading(false);
     if (newCoordinates) {
-      const newDelta = await AroundMeUtils.adaptZoomAccordingToRegion(
-        newCoordinates.latitude,
-        newCoordinates.longitude
-      );
-      const newRegion = {
-        latitude: newCoordinates.latitude,
-        latitudeDelta: newDelta,
-        longitude: newCoordinates.longitude,
-        longitudeDelta: newDelta,
-      };
-      if (searchIsByPostalCode) setAndGoToNewRegion(newRegion);
-      else updateUserLocation(newRegion);
+      setCoordinatesAndUserLocation(newCoordinates, !searchIsByPostalCode);
     } else
       showSnackBarWithMessage(
         searchIsByPostalCode
@@ -145,7 +129,6 @@ const SearchUserLocationOrPostalCodeRegion: React.FC<Props> = ({
           <TouchableOpacity
             onPress={() => {
               checkLocation(true);
-              // void checkLocation(true);
             }}
           >
             <Image

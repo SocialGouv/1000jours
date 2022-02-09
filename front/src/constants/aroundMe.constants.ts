@@ -13,11 +13,9 @@ export const DELTA_HIGH = 0.01;
 export const DELTA_MIDDLE = 0.02;
 export const DELTA_LOW = 0.03;
 
-export const INITIAL_REGION = {
+export const INITIAL_COORDINATES = {
   latitude: COORDINATE_PARIS.latitude,
-  latitudeDelta: DEFAULT_DELTA,
   longitude: COORDINATE_PARIS.longitude,
-  longitudeDelta: DEFAULT_DELTA,
 };
 
 export const POSTAL_CODE_MAX_LENGTH = 5;

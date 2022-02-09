@@ -9,7 +9,7 @@ export const epdsQuestionAndAnswersKey = "@epdsQuestionAndAnswersKey";
 export const epdsQuestionIndexKey = "@epdsQuestionIndexKey";
 export const epdsSurveyCounterKey = "@epdsSurveyCounterKey";
 export const cartoFilterKey = "@cartoFilterKey";
-export const cartoSavedRegion = "@cartoSavedRegion";
+export const cartoSavedCoordinates = "@cartoSavedCoordinates";
 export const cartoIsFirstLaunch = "@cartoIsFirstLaunch";
 export const notifIdNextStep = "@notifIdNextStep";
 export const notifIdsEvents = "@notifIdsEvents";
@@ -29,7 +29,7 @@ export const allStorageKeys = [
   epdsQuestionAndAnswersKey,
   epdsQuestionIndexKey,
   cartoFilterKey,
-  cartoSavedRegion,
+  cartoSavedCoordinates,
   cartoIsFirstLaunch,
   notifIdNextStep,
   notifIdsEvents,

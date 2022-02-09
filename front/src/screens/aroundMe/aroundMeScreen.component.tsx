@@ -28,10 +28,8 @@ import { Colors, Paddings, Sizes } from "../../styles";
 import { StorageUtils, TrackerUtils } from "../../utils";
 
 const AroundMeScreen: FC = () => {
-  const [postalCodeInput, setPostalCodeInput] = useState("");
-  const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
-  const [region, setRegion] = useState<Region>(
-    AroundMeConstants.INITIAL_REGION
+  const [coordinates, setCoordinates] = useState<LatLng | undefined>(
+    AroundMeConstants.INITIAL_COORDINATES
   );
   const [poisArray, setPoisArray] = useState<Poi[]>([]);
   const [selectedPoiIndex, setSelectedPoiIndex] = useState(-1);
@@ -44,22 +42,22 @@ const AroundMeScreen: FC = () => {
   >();
 
   const [trackerAction, setTrackerAction] = useState("");
-  const [triggerMoveMapRegion, setTriggerMoveMapRegion] = useState(false);
-  const [triggerMoveMapUserLocation, setTriggerMoveMapUserLocation] =
+  const [triggerMoveMapCoordinates, setTriggerMoveMapCoordinates] =
     useState(false);
 
   const SNACKBAR_MARGIN_TOP_VALUE = "2%";
 
   useEffect(() => {
-    const checkIfSavedRegion = async () => {
-      const savedRegion: Region | undefined = await StorageUtils.getObjectValue(
-        StorageKeysConstants.cartoSavedRegion
-      );
-      if (!savedRegion) return;
-      setRegion(savedRegion);
-      setTriggerMoveMapRegion(!triggerMoveMapRegion);
+    const checkIfSavedCoordinates = async () => {
+      const savedCoordinates: LatLng | undefined =
+        await StorageUtils.getObjectValue(
+          StorageKeysConstants.cartoSavedCoordinates
+        );
+      if (!savedCoordinates) return;
+      setCoordinates(savedCoordinates);
+      setTriggerMoveMapCoordinates(!triggerMoveMapCoordinates);
     };
-    void checkIfSavedRegion();
+    void checkIfSavedCoordinates();
   }, []);
 
   const showSnackBarWithMessage = (message: string) => {
@@ -86,47 +84,31 @@ const AroundMeScreen: FC = () => {
           />
         </View>
         <SearchUserLocationOrPostalCodeRegion
-          postalCodeInput={postalCodeInput}
-          setPostalCodeInput={setPostalCodeInput}
-          postalCodeInvalid={postalCodeInvalid}
-          setPostalCodeInvalid={setPostalCodeInvalid}
+          setCoordinatesAndUserLocation={(
+            newCoordinates: LatLng,
+            displayUL: boolean
+          ) => {
+            setCoordinates(newCoordinates);
+            setCurrentUserLocation(displayUL ? newCoordinates : undefined);
+            setShowAddressesList(false);
+            setSelectedPoiIndex(-1);
+          }}
           hideSnackBar={() => {
             setShowSnackBar(false);
           }}
-          setAndGoToNewRegion={(newRegion: Region) => {
-            setShowAddressesList(false);
-            setRegion(newRegion);
-            setTriggerMoveMapRegion(!triggerMoveMapRegion);
-            setSelectedPoiIndex(-1);
-          }}
           showSnackBarWithMessage={showSnackBarWithMessage}
           setIsLoading={setIsLoading}
-          updateUserLocation={(newRegion: Region | undefined) => {
-            if (newRegion) {
-              setSelectedPoiIndex(-1);
-              setCurrentUserLocation({
-                latitude: newRegion.latitude,
-                longitude: newRegion.longitude,
-              });
-              setRegion(newRegion);
-              setTriggerMoveMapRegion(!triggerMoveMapRegion);
-              setShowAddressesList(false);
-            }
-            setTriggerMoveMapUserLocation(!triggerMoveMapUserLocation);
-          }}
         />
       </View>
       <View style={styles.mainContainer}>
         <AroundMeMap
-          region={region}
+          coordinates={coordinates}
           poiArray={poisArray}
           selectedPoiIndex={selectedPoiIndex}
           userLocation={currentUserLocation}
-          updateRegion={setRegion}
           updatePoiArray={setPoisArray}
           updateSelectedPoiIndex={setSelectedPoiIndex}
-          triggerMoveMapRegion={triggerMoveMapRegion}
-          triggerMoveMapUserLocation={triggerMoveMapUserLocation}
+          triggerMoveMapCoordinates={triggerMoveMapCoordinates}
           showBottomPanel={setShowAddressesList}
           isFromSimpleCarto
         />

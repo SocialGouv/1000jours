@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import type { LayoutChangeEvent } from "react-native";
 import { Image, StyleSheet } from "react-native";
-import type { LatLng, Region } from "react-native-maps";
+import type { Camera, LatLng, Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import {
@@ -33,7 +33,7 @@ interface Props {
   poiArray: Poi[];
   selectedPoiIndex: number;
   userLocation?: LatLng;
-  updateRegion: (region: Region) => void;
+  updateRegion?: (region: Region) => void;
   resetCoordinates?: () => void;
   updatePoiArray: (poiArray: Poi[]) => void;
   updateSelectedPoiIndex: (selectedPoiIndex: number) => void;
@@ -41,8 +41,7 @@ interface Props {
 }
 
 interface ExtendedPropsForSimpleMap extends Props {
-  triggerMoveMapRegion?: boolean;
-  triggerMoveMapUserLocation?: boolean;
+  triggerMoveMapCoordinates?: boolean;
   showBottomPanel?: (showPanel: boolean) => void;
   isFromSimpleCarto?: boolean;
 }
@@ -58,12 +57,12 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
   updatePoiArray,
   updateSelectedPoiIndex,
   displayList,
-  triggerMoveMapRegion,
-  triggerMoveMapUserLocation,
+  triggerMoveMapCoordinates,
   showBottomPanel,
   isFromSimpleCarto,
 }) => {
   const mapRef = useRef<MapView>();
+  const [currentRegion, setCurrentRegion] = useState<Region | undefined>();
 
   // Popup for address details
   const [showAddressDetails, setShowAddressDetails] = useState(false);
@@ -101,22 +100,15 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
   useEffect(() => {
     if (
       isFromSimpleCarto &&
-      triggerMoveMapUserLocation != undefined &&
-      userLocation
+      coordinates &&
+      triggerMoveMapCoordinates != undefined
     ) {
+      setIsLoading(false);
       setShowAddressDetails(false);
       setTriggerSearchAfterRegionChangeComplete(true);
-      moveMapToCoordinates(userLocation.latitude, userLocation.longitude);
+      moveMapToCoordinates(coordinates.latitude, coordinates.longitude);
     }
-  }, [triggerMoveMapUserLocation]);
-
-  useEffect(() => {
-    if (isFromSimpleCarto && region && triggerMoveMapRegion != undefined) {
-      setShowAddressDetails(false);
-      setTriggerSearchAfterRegionChangeComplete(true);
-      mapRef.current?.animateToRegion(region);
-    }
-  }, [triggerMoveMapRegion]);
+  }, [triggerMoveMapCoordinates]);
 
   useEffect(() => {
     if (selectedPoiIndex !== -1) {
@@ -153,10 +145,11 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
 
   const onRegionChangeComplete = (newRegion: Region) => {
     void StorageUtils.storeObjectValue(
-      StorageKeysConstants.cartoSavedRegion,
-      newRegion
+      StorageKeysConstants.cartoSavedCoordinates,
+      { latitude: newRegion.latitude, longitude: newRegion.longitude }
     );
-    updateRegion(newRegion);
+    setCurrentRegion(newRegion);
+    if (updateRegion) updateRegion(newRegion);
 
     if (triggerSearchAfterRegionChangeComplete) {
       setIsLoading(true);
@@ -203,10 +196,15 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
       latitude,
       longitude,
     };
-    mapRef.current?.animateCamera(
-      { center: markerCoordinates },
-      { duration: AroundMeConstants.ANIMATE_CAMERA_DURATION }
-    );
+    mapRef.current?.getCamera().then((camera: Camera) => {
+      // console.log(JSON.stringify(camera));
+      if (PLATFORM_IS_IOS) camera.altitude = 3000;
+      else camera.zoom = 5;
+      camera.center = markerCoordinates;
+      mapRef.current?.animateCamera(camera, {
+        duration: AroundMeConstants.ANIMATE_CAMERA_DURATION,
+      });
+    });
   };
 
   return (
@@ -218,7 +216,7 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
       <View style={{ flex: 0 }}>
         <FetchPois
           triggerSearchByGpsCoords={triggerSearchByGpsCoords}
-          region={region}
+          region={currentRegion}
           setFetchedPois={handleFetchedPois}
           chooseFilterMessage={() => {
             setTimeout(
