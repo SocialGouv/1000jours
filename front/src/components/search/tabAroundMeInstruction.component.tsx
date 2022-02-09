@@ -14,7 +14,7 @@ import {
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
-import { RootNavigation } from "../../utils";
+import { AroundMeUtils, RootNavigation } from "../../utils";
 import SearchUserLocationOrPostalCodeCoords from "../aroundMe/searchUserLocationOrPostalCodeCoords.component";
 import {
   CustomButton,
@@ -59,17 +59,26 @@ const TabAroundMeInstruction: FC = () => {
     setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
   };
 
-  const goToAroundMeMapAndListScreen = (coordinates: LatLng) => {
+  const goToAroundMeMapAndListScreen = (
+    coordinates: LatLng,
+    zoomOrAltitude: number
+  ) => {
     void RootNavigation.navigate("aroundMeMapAndList", {
       coordinates,
       displayUserLocation: !searchIsByPostalCode,
+      zoomOrAltitude,
     });
   };
 
-  const handleGetCoordinates = (newCoordinates: LatLng | undefined) => {
+  const handleGetCoordinates = async (newCoordinates: LatLng | undefined) => {
     if (PLATFORM_IS_IOS) setIsLoading(false);
-    if (newCoordinates) goToAroundMeMapAndListScreen(newCoordinates);
-    else
+    if (newCoordinates) {
+      const zoomOrAltitude = await AroundMeUtils.adaptZoomAccordingToRegion(
+        newCoordinates.latitude,
+        newCoordinates.longitude
+      );
+      goToAroundMeMapAndListScreen(newCoordinates, zoomOrAltitude);
+    } else
       showSnackBarWithMessage(
         searchIsByPostalCode
           ? Labels.aroundMe.postalCodeNotFound

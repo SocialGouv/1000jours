@@ -1,6 +1,7 @@
 import type { LatLng, Region } from "react-native-maps";
 
 import { AroundMeConstants } from "../constants";
+import { PLATFORM_IS_IOS } from "../constants/platform.constants";
 
 export const getPostalCodeCoords = async (
   postalCodeInput: string
@@ -67,12 +68,20 @@ export const adaptZoomAccordingToRegion = async (
   if (json[0].population) {
     const population = json[0].population;
     if (population > AroundMeConstants.POPULATION_STEP_TWO_MILLION)
-      return AroundMeConstants.DELTA_HIGH;
+      return PLATFORM_IS_IOS
+        ? AroundMeConstants.ALTITUDE_HIGH
+        : AroundMeConstants.ZOOM_HIGH;
     if (population > AroundMeConstants.POPULATION_STEP_EIGHT_HUNDRED_THOUSAND)
-      return AroundMeConstants.DELTA_MIDDLE;
+      return PLATFORM_IS_IOS
+        ? AroundMeConstants.ALTITUDE_MIDDLE
+        : AroundMeConstants.ZOOM_MIDDLE;
     if (population > AroundMeConstants.POPULATION_STEP_THREE_HUNDRED_THOUSAND)
-      return AroundMeConstants.DELTA_LOW;
+      return PLATFORM_IS_IOS
+        ? AroundMeConstants.ALTITUDE_LOW
+        : AroundMeConstants.ZOOM_LOW;
   }
 
-  return AroundMeConstants.DEFAULT_DELTA;
+  return PLATFORM_IS_IOS
+    ? AroundMeConstants.ALTITUDE_DEFAULT
+    : AroundMeConstants.ZOOM_DEFAULT;
 };

@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import type { LayoutChangeEvent } from "react-native";
 import { Image, StyleSheet } from "react-native";
-import type { Camera, LatLng, Region } from "react-native-maps";
+import type { LatLng, Region } from "react-native-maps";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 import {
@@ -30,6 +30,7 @@ import FetchPois from "./fetchPois.component";
 interface Props {
   region?: Region;
   coordinates?: LatLng;
+  zoomOrAltitude: number;
   poiArray: Poi[];
   selectedPoiIndex: number;
   userLocation?: LatLng;
@@ -49,6 +50,7 @@ interface ExtendedPropsForSimpleMap extends Props {
 const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
   region,
   coordinates,
+  zoomOrAltitude,
   poiArray,
   selectedPoiIndex,
   userLocation,
@@ -95,7 +97,7 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
       setTriggerSearchAfterRegionChangeComplete(true);
       moveMapToCoordinates(coordinates.latitude, coordinates.longitude);
     }
-  }, [coordinates]);
+  }, [coordinates, zoomOrAltitude]);
 
   useEffect(() => {
     if (
@@ -196,15 +198,16 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
       latitude,
       longitude,
     };
-    mapRef.current?.getCamera().then((camera: Camera) => {
-      // console.log(JSON.stringify(camera));
-      if (PLATFORM_IS_IOS) camera.altitude = 3000;
-      else camera.zoom = 5;
-      camera.center = markerCoordinates;
-      mapRef.current?.animateCamera(camera, {
-        duration: AroundMeConstants.ANIMATE_CAMERA_DURATION,
-      });
-    });
+    mapRef.current?.animateCamera(
+      {
+        /* iOS utilise le paramètre altitude
+        et Android le paramètre zoom */
+        altitude: zoomOrAltitude,
+        center: markerCoordinates,
+        zoom: zoomOrAltitude,
+      },
+      { duration: AroundMeConstants.ANIMATE_CAMERA_DURATION }
+    );
   };
 
   return (

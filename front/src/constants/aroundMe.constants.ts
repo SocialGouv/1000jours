@@ -8,10 +8,15 @@ export const POPULATION_STEP_TWO_MILLION = 2000000;
 export const POPULATION_STEP_EIGHT_HUNDRED_THOUSAND = 800000;
 export const POPULATION_STEP_THREE_HUNDRED_THOUSAND = 300000;
 
-export const DEFAULT_DELTA = 0.1;
-export const DELTA_HIGH = 0.01;
-export const DELTA_MIDDLE = 0.02;
-export const DELTA_LOW = 0.03;
+export const ZOOM_HIGH = 14;
+export const ZOOM_MIDDLE = 13;
+export const ZOOM_LOW = 12;
+export const ZOOM_DEFAULT = 12;
+
+export const ALTITUDE_HIGH = 14000;
+export const ALTITUDE_MIDDLE = 18000;
+export const ALTITUDE_LOW = 20000;
+export const ALTITUDE_DEFAULT = 20000;
 
 export const INITIAL_COORDINATES = {
   latitude: COORDINATE_PARIS.latitude,
@@ -62,7 +67,7 @@ export enum CartoFilterEnum {
   etape = "etape",
 }
 
-export const MAPVIEW_MIN_ZOOM_LEVEL = 13;
+export const MAPVIEW_MIN_ZOOM_LEVEL = 11;
 export const ANIMATE_CAMERA_DURATION = 500;
 
 export const ERROR_LOCATION_PROVIDER_UNAVAILABLE_MESSAGE =

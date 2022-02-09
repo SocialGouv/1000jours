@@ -24,14 +24,20 @@ import {
   Labels,
   StorageKeysConstants,
 } from "../../constants";
+import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import { Colors, Paddings, Sizes } from "../../styles";
-import { StorageUtils, TrackerUtils } from "../../utils";
+import { AroundMeUtils, StorageUtils, TrackerUtils } from "../../utils";
 
 const AroundMeScreen: FC = () => {
   const [coordinates, setCoordinates] = useState<LatLng | undefined>(
     AroundMeConstants.INITIAL_COORDINATES
   );
   const [poisArray, setPoisArray] = useState<Poi[]>([]);
+  const [zoomOrAltitude, setZoomOrAltitude] = useState(
+    PLATFORM_IS_IOS
+      ? AroundMeConstants.ALTITUDE_DEFAULT
+      : AroundMeConstants.ZOOM_DEFAULT
+  );
   const [selectedPoiIndex, setSelectedPoiIndex] = useState(-1);
   const [showAddressesList, setShowAddressesList] = useState(false);
   const [showSnackBar, setShowSnackBar] = useState(false);
@@ -84,12 +90,18 @@ const AroundMeScreen: FC = () => {
           />
         </View>
         <AroundMeScreenHeader
-          setCoordinatesAndUserLocation={(
+          setCoordinatesAndUserLocation={async (
             newCoordinates: LatLng,
             displayUL: boolean
           ) => {
-            setCoordinates(newCoordinates);
+            const _zoomOrAltitude =
+              await AroundMeUtils.adaptZoomAccordingToRegion(
+                newCoordinates.latitude,
+                newCoordinates.longitude
+              );
+            setZoomOrAltitude(_zoomOrAltitude);
             setCurrentUserLocation(displayUL ? newCoordinates : undefined);
+            setCoordinates(newCoordinates);
             setShowAddressesList(false);
             setSelectedPoiIndex(-1);
           }}
@@ -104,6 +116,7 @@ const AroundMeScreen: FC = () => {
         <AroundMeMap
           coordinates={coordinates}
           poiArray={poisArray}
+          zoomOrAltitude={zoomOrAltitude}
           selectedPoiIndex={selectedPoiIndex}
           userLocation={currentUserLocation}
           updatePoiArray={setPoisArray}

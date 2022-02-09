@@ -14,7 +14,11 @@ import type { TabSearchParamList } from "../../types";
 interface Props {
   route: RouteProp<
     {
-      params: { coordinates: LatLng; displayUserLocation: boolean };
+      params: {
+        coordinates: LatLng;
+        displayUserLocation: boolean;
+        zoomOrAltitude: number;
+      };
     },
     "params"
   >;
@@ -47,6 +51,7 @@ const AroundMeMapAndList: React.FC<Props> = ({ navigation, route }) => {
         <AroundMeMap
           region={region}
           coordinates={coordinates}
+          zoomOrAltitude={route.params.zoomOrAltitude}
           poiArray={poisArray}
           selectedPoiIndex={selectedPoiIndex}
           userLocation={userLocation}
