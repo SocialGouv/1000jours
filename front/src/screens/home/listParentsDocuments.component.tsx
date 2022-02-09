@@ -87,7 +87,7 @@ const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
           ))}
         </View>
       ) : (
-        <Loader />
+        <Loader backdrop={false} />
       )}
     </ScrollView>
   );
