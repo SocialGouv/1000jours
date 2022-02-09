@@ -5,11 +5,11 @@ import type { FC } from "react";
 import { useEffect, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import type { LatLng, Region } from "react-native-maps";
+import type { LatLng } from "react-native-maps";
 
 import {
   AroundMeMap,
-  SearchUserLocationOrPostalCodeRegion,
+  AroundMeScreenHeader,
   SlidingUpPanelAddressesList,
 } from "../../components";
 import {
@@ -83,7 +83,7 @@ const AroundMeScreen: FC = () => {
             animated={false}
           />
         </View>
-        <SearchUserLocationOrPostalCodeRegion
+        <AroundMeScreenHeader
           setCoordinatesAndUserLocation={(
             newCoordinates: LatLng,
             displayUL: boolean

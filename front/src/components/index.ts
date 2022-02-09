@@ -2,11 +2,11 @@ import AddressDetails from "./aroundMe/addressDetails.component";
 import AroundMeFilter from "./aroundMe/aroundMeFilter.component";
 import AroundMeMap from "./aroundMe/aroundMeMap.component";
 import AroundMeMapHeader from "./aroundMe/aroundMeMapHeader.component";
+import AroundMeScreenHeader from "./aroundMe/aroundMeScreenHeader.component";
 import CustomMapMarker from "./aroundMe/customMapMarker.component";
 import FetchPois from "./aroundMe/fetchPois.component";
 import PoiList from "./aroundMe/poiList.component";
 import SearchUserLocationOrPostalCodeCoords from "./aroundMe/searchUserLocationOrPostalCodeCoords.component";
-import SearchUserLocationOrPostalCodeRegion from "./aroundMe/searchUserLocationOrPostalCodeRegion.component";
 import SlidingUpPanelAddressesList from "./aroundMe/slidingUpPanelAddressesList.component";
 import SubmitNewFilter from "./aroundMe/submitNewFilter.component";
 import DidYouKnow from "./article/didYouKnow.component";
@@ -37,6 +37,7 @@ export {
   AroundMeMap,
   AroundMeMapHeader,
   AroundMePoiList,
+  AroundMeScreenHeader,
   articlesRoute,
   ConditionsOfUse,
   CustomMapMarker,
@@ -53,7 +54,6 @@ export {
   PoiList,
   poisRoute,
   SearchUserLocationOrPostalCodeCoords,
-  SearchUserLocationOrPostalCodeRegion,
   setNotificationHandler,
   SlidingUpPanelAddressesList,
   StepIcon,

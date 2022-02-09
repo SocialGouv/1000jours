@@ -34,7 +34,7 @@ interface Props {
   setIsLoading: (value: boolean) => void;
 }
 
-const SearchUserLocationOrPostalCodeRegion: React.FC<Props> = ({
+const AroundMeScreenHeader: React.FC<Props> = ({
   setCoordinatesAndUserLocation,
   hideSnackBar,
   showSnackBarWithMessage,
@@ -185,4 +185,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchUserLocationOrPostalCodeRegion;
+export default AroundMeScreenHeader;
