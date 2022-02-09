@@ -24,7 +24,7 @@ import {
   Labels,
   StorageKeysConstants,
 } from "../../constants";
-import { Colors, Margins, Paddings, Sizes } from "../../styles";
+import { Colors, Paddings, Sizes } from "../../styles";
 import { StorageUtils, TrackerUtils } from "../../utils";
 
 const AroundMeScreen: FC = () => {
@@ -51,6 +51,8 @@ const AroundMeScreen: FC = () => {
   const [triggerMoveMapRegion, setTriggerMoveMapRegion] = useState(false);
   const [triggerMoveMapUserLocation, setTriggerMoveMapUserLocation] =
     useState(false);
+
+  const SNACKBAR_MARGIN_TOP_VALUE = "2%";
 
   useEffect(() => {
     const checkIfSavedRegion = async () => {
@@ -138,7 +140,7 @@ const AroundMeScreen: FC = () => {
           duration={AroundMeConstants.SNACKBAR_DURATION}
           visible={showSnackBar}
           isOnTop
-          marginTopValue={Margins.simpleCartoSnackbarMargin}
+          marginTopValue={SNACKBAR_MARGIN_TOP_VALUE}
           backgroundColor={Colors.aroundMeSnackbar.background}
           onDismiss={onSnackBarDismiss}
           textColor={Colors.aroundMeSnackbar.text}

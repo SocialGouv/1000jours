@@ -240,7 +240,6 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
       >
         <MapView
           minZoomLevel={AroundMeConstants.MAPVIEW_MIN_ZOOM_LEVEL}
-          maxZoomLevel={15}
           ref={setMapViewRef}
           provider={PROVIDER_DEFAULT}
           style={

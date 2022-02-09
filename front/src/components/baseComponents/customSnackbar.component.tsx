@@ -10,7 +10,7 @@ interface Props {
   duration: number;
   visible: boolean;
   isOnTop?: boolean;
-  marginTopValue?: number;
+  marginTopValue?: string;
   backgroundColor?: string;
   onDismiss: () => void;
   textColor?: string;
