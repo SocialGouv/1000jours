@@ -9,7 +9,7 @@ import type { LatLng, Region } from "react-native-maps";
 
 import {
   AroundMeMap,
-  SearchByPostalCode,
+  SearchUserLocationOrPostalCodeRegion,
   SlidingUpPanelAddressesList,
 } from "../../components";
 import {
@@ -42,10 +42,6 @@ const AroundMeScreen: FC = () => {
   const [currentUserLocation, setCurrentUserLocation] = useState<
     LatLng | undefined
   >();
-  //TODO Voir si ça peut être supprimé
-  const [searchIsReady, setSearchIsReady] = useState(false);
-  const [locationPermissionIsGranted, setLocationPermissionIsGranted] =
-    useState(false);
 
   const [trackerAction, setTrackerAction] = useState("");
   const [triggerMoveMapRegion, setTriggerMoveMapRegion] = useState(false);
@@ -89,7 +85,7 @@ const AroundMeScreen: FC = () => {
             animated={false}
           />
         </View>
-        <SearchByPostalCode
+        <SearchUserLocationOrPostalCodeRegion
           postalCodeInput={postalCodeInput}
           setPostalCodeInput={setPostalCodeInput}
           postalCodeInvalid={postalCodeInvalid}
@@ -118,8 +114,6 @@ const AroundMeScreen: FC = () => {
             }
             setTriggerMoveMapUserLocation(!triggerMoveMapUserLocation);
           }}
-          setSearchIsReady={setSearchIsReady}
-          setLocationPermissionIsGranted={setLocationPermissionIsGranted}
         />
       </View>
       <View style={styles.mainContainer}>

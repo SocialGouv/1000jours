@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
-import * as Location from "expo-location";
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import type { Region } from "react-native-maps";
+import type { LatLng, Region } from "react-native-maps";
 import { HelperText } from "react-native-paper";
 
 import { AroundMeConstants, Labels } from "../../constants";
@@ -23,6 +22,7 @@ import {
 } from "../../styles";
 import { AroundMeUtils, KeyboardUtils } from "../../utils";
 import { CustomButton, View } from "../baseComponents";
+import SearchUserLocationOrPostalCodeCoords from "./searchUserLocationOrPostalCodeCoords.component";
 
 interface Props {
   postalCodeInput: string;
@@ -34,11 +34,9 @@ interface Props {
   showSnackBarWithMessage: (message: string) => void;
   setIsLoading: (value: boolean) => void;
   updateUserLocation: (region: Region | undefined) => void;
-  setSearchIsReady: (value: boolean) => void;
-  setLocationPermissionIsGranted: (value: boolean) => void;
 }
 
-const SearchByPostalCode: React.FC<Props> = ({
+const SearchUserLocationOrPostalCodeRegion: React.FC<Props> = ({
   postalCodeInput,
   setPostalCodeInput,
   postalCodeInvalid,
@@ -48,73 +46,22 @@ const SearchByPostalCode: React.FC<Props> = ({
   showSnackBarWithMessage,
   setIsLoading,
   updateUserLocation,
-  setSearchIsReady,
-  setLocationPermissionIsGranted,
 }) => {
+  const [searchIsByPostalCode, setSearchIsByPostalCode] = useState(false);
+  const [triggerCheckLocation, setTriggerCheckLocation] = useState(false);
+  const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] =
+    useState(false);
+  const [showAllowGeolocSnackBar, setShowAllowGeolocSnackBar] = useState(false);
+
   useEffect(() => {
-    setSearchIsReady(false);
-    void checkLocation(false);
+    checkLocation(false);
   }, []);
 
-  const checkLocation = async (showAllowGeolocSnackBar: boolean) => {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== Location.PermissionStatus.GRANTED) {
-      if (showAllowGeolocSnackBar)
-        showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
-      setIsLoading(false);
-      setSearchIsReady(true); // Si on refuse la géoloc, on peut toujours lancer une recherche (manuelle ou via CP)
-      return;
-    }
-
-    setLocationPermissionIsGranted(true);
+  const checkLocation = (showAllowGeolocSB: boolean) => {
+    setShowAllowGeolocSnackBar(showAllowGeolocSB);
+    setSearchIsByPostalCode(false);
     setIsLoading(true);
-    try {
-      let currentLocation = undefined;
-      let locationSuccess = false;
-      let getPositionAttempts = 0;
-      // Il y a un temps de latence entre le moment où on autorise la géolocalisation
-      // et le moment où le getCurrentPositionAsync() retourne une localication
-      // donc tant qu'il ne retourne rien, on le rappelle
-      while (!locationSuccess) {
-        try {
-          currentLocation = await Location.getCurrentPositionAsync({
-            accuracy: Location.Accuracy.Lowest,
-          });
-          locationSuccess = true;
-          // eslint-disable-next-line no-empty
-        } catch (ex: unknown) {
-          getPositionAttempts = getPositionAttempts + 1;
-          if (
-            // Si l'exception remontée n'est pas une erreur de service non-disponible
-            // Ou si le nombre de tentatives a été dépassé, on arrête les rappels
-            !JSON.stringify(ex).includes(
-              AroundMeConstants.ERROR_LOCATION_PROVIDER_UNAVAILABLE_MESSAGE
-            ) ||
-            getPositionAttempts > AroundMeConstants.GET_POSITION_MAX_ATTEMPTS
-          ) {
-            locationSuccess = true;
-          }
-        }
-      }
-      if (currentLocation) {
-        const newDelta = await AroundMeUtils.adaptZoomAccordingToRegion(
-          currentLocation.coords.latitude,
-          currentLocation.coords.longitude
-        );
-
-        updateUserLocation({
-          latitude: currentLocation.coords.latitude,
-          latitudeDelta: newDelta,
-          longitude: currentLocation.coords.longitude,
-          longitudeDelta: newDelta,
-        });
-      } else updateUserLocation(undefined);
-    } catch {
-      updateUserLocation(undefined);
-    }
-
-    setIsLoading(false);
-    setSearchIsReady(true);
+    setTriggerCheckLocation(!triggerCheckLocation);
   };
 
   const onPostalCodeChanged = (newPostalCode: string) => {
@@ -124,42 +71,56 @@ const SearchByPostalCode: React.FC<Props> = ({
 
   const geolocationIcon = require("../../assets/images/carto/geolocation.png");
 
-  const onSearchByPostalCodeButtonClick = async () => {
+  const onSearchByPostalCodeButtonClick = () => {
     setIsLoading(true);
     KeyboardUtils.dismissKeyboard();
     hideSnackBar();
-    await searchByPostalCodeAndGoToNewRegion();
+    searchByPostalCode();
   };
 
-  const searchByPostalCodeAndGoToNewRegion = async () => {
-    if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
-      setPostalCodeInvalid(true);
-      setIsLoading(false);
-      return;
-    }
-    const newPostalCodeCoords = await AroundMeUtils.getPostalCodeCoords(
-      postalCodeInput
-    );
+  const searchByPostalCode = () => {
+    setSearchIsByPostalCode(true);
+    setIsLoading(true);
+    setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
+  };
 
-    if (newPostalCodeCoords) {
-      const newDelta = await AroundMeUtils.adaptZoomAccordingToRegion(
-        newPostalCodeCoords.latitude,
-        newPostalCodeCoords.longitude
-      );
-      setAndGoToNewRegion({
-        latitude: newPostalCodeCoords.latitude,
-        latitudeDelta: newDelta,
-        longitude: newPostalCodeCoords.longitude,
-        longitudeDelta: newDelta,
-      });
-    } else {
-      showSnackBarWithMessage(Labels.aroundMe.postalCodeNotFound);
-    }
+  const handleGetCoordinates = async (newCoordinates: LatLng | undefined) => {
     setIsLoading(false);
+    if (newCoordinates) {
+      const newDelta = await AroundMeUtils.adaptZoomAccordingToRegion(
+        newCoordinates.latitude,
+        newCoordinates.longitude
+      );
+      const newRegion = {
+        latitude: newCoordinates.latitude,
+        latitudeDelta: newDelta,
+        longitude: newCoordinates.longitude,
+        longitudeDelta: newDelta,
+      };
+      if (searchIsByPostalCode) setAndGoToNewRegion(newRegion);
+      else updateUserLocation(newRegion);
+    } else
+      showSnackBarWithMessage(
+        searchIsByPostalCode
+          ? Labels.aroundMe.postalCodeNotFound
+          : Labels.aroundMe.geolocationRetrievingError
+      );
   };
 
   return (
     <View>
+      <SearchUserLocationOrPostalCodeCoords
+        triggerGetUserLocation={triggerCheckLocation}
+        triggerGetPostalCodeCoords={triggerSearchByPostalCode}
+        postalCodeInput={postalCodeInput}
+        setPostalCodeInvalid={setPostalCodeInvalid}
+        setCoordinates={handleGetCoordinates}
+        allowGeolocationMessage={() => {
+          setIsLoading(false);
+          if (showAllowGeolocSnackBar)
+            showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
+        }}
+      />
       <View style={styles.postalCodeRow}>
         <TextInput
           style={[
@@ -183,7 +144,8 @@ const SearchByPostalCode: React.FC<Props> = ({
         <View style={styles.geolicationIconView}>
           <TouchableOpacity
             onPress={() => {
-              void checkLocation(true);
+              checkLocation(true);
+              // void checkLocation(true);
             }}
           >
             <Image
@@ -240,4 +202,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchByPostalCode;
+export default SearchUserLocationOrPostalCodeRegion;
