@@ -17,6 +17,7 @@ export const eventsCalcFromBirthday = "@eventsCalcFromBirthday";
 export const forceToScheduleEventsNotif = "@forceToScheduleEventsNotif";
 export const osCalendarId = "@osCalendarId";
 export const osCalendarSyncDate = "@osCalendarSyncDate";
+export const scrollToEventId = "@scrollToEventId";
 
 export const allStorageKeys = [
   appActiveCounter,
@@ -37,6 +38,7 @@ export const allStorageKeys = [
   forceToScheduleEventsNotif,
   osCalendarId,
   osCalendarSyncDate,
+  scrollToEventId,
 ];
 
 export const epdsSurveyKeys = [epdsQuestionAndAnswersKey, epdsQuestionIndexKey];

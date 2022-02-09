@@ -65,9 +65,12 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const [showModalHelp, setShowModalHelp] = useState(false);
   const [trackerAction, setTrackerAction] = useState("");
 
+  const [scrollToEventId, setScrollToEventId] = useState("");
+
   useEffect(() => {
     void requestCalendarPermission();
     void getLastSyncDate();
+    void getScrollToEventId();
 
     // Permet de forcer le refresh de la page lorsque l'on arrive dessus
     const unsubscribe = navigation.addListener("focus", () => {
@@ -76,6 +79,13 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     // Retourne "unsubscribe" pour que l'événement soit supprimé lors du "démontage" (fix memory leak)
     return unsubscribe;
   }, []);
+
+  const getScrollToEventId = async () => {
+    const eventId = await StorageUtils.getStringValue(
+      StorageKeysConstants.scrollToEventId
+    );
+    if (eventId) setScrollToEventId(eventId);
+  };
 
   const getLastSyncDate = async () => {
     const calendarSyncDate = await StorageUtils.getStringValue(
@@ -305,6 +315,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
                 evenements={events}
                 childBirthday={childBirthday}
                 showEventDetails={false}
+                scrollToEventId={scrollToEventId}
               />
             </>
           ) : (
