@@ -90,27 +90,22 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
   const [widthOfMapView, setWidthOfMapView] = useState(0);
 
   useEffect(() => {
-    if (coordinates) {
-      // Une fois qu'on a placé la carto la première fois après la Recherche, on reset les coordinates car ils ne seront plus utilisés
-      // et cela évite de redéclencher ce useEffect
-      if (resetCoordinates) resetCoordinates();
-      setTriggerSearchAfterRegionChangeComplete(true);
-      moveMapToCoordinates(coordinates.latitude, coordinates.longitude);
-    }
-  }, [coordinates, zoomOrAltitude]);
-
-  useEffect(() => {
     if (
-      isFromSimpleCarto &&
-      coordinates &&
-      triggerMoveMapCoordinates != undefined
+      (isFromSimpleCarto &&
+        coordinates &&
+        triggerMoveMapCoordinates != undefined) ||
+      coordinates
     ) {
       setIsLoading(false);
       setShowAddressDetails(false);
       setTriggerSearchAfterRegionChangeComplete(true);
       moveMapToCoordinates(coordinates.latitude, coordinates.longitude);
+
+      // Une fois qu'on a placé la carto la première fois après la Recherche, on reset les coordinates car ils ne seront plus utilisés
+      // et cela évite de redéclencher ce useEffect
+      if (resetCoordinates) resetCoordinates();
     }
-  }, [triggerMoveMapCoordinates]);
+  }, [coordinates, triggerMoveMapCoordinates]);
 
   useEffect(() => {
     if (selectedPoiIndex !== -1) {
