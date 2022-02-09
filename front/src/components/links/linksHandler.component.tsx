@@ -14,7 +14,7 @@ const LinksHandler: FC = () => {
   const redirectDeepLink = async (url: string) => {
     const { path, queryParams } = Linking.parse(url);
     if (path === Linking.parse(Links.deepLinkUrl).path) {
-      // TODO à améliorer
+      // TODO: à améliorer
       // Sauvegarde du scrollToEventId car les params ne sont pas pris en compte lors de cette redirection
       // Il est possible de les prendre en compte mais il y un soucis pour reset les params de la route.
       // Lorsque l'on clique sur le tabCalendar c'est le bottomTab qui gère la navigation et conserve les params de la route...
@@ -39,7 +39,7 @@ const LinksHandler: FC = () => {
     Linking.getInitialURL()
       .then((url) => {
         if (url) {
-          // TODO à améliorer
+          // TODO: à améliorer
           // Ce setTimeout permet de laisser le 1er écran à se charger avant de faire la redirection.
           // Sans : Celà peut causer un crash ou un blocage sur la redirection.
           setTimeout(() => {
