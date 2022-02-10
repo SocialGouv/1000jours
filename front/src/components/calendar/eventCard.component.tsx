@@ -60,8 +60,8 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
 
   const updateCartoFilterStorage = () => {
     const cartoFilterStorage: CartoFilterStorage = {
-      thematiques: event.thematique?.nom ? [event.thematique.nom] : [],
-      types: [],
+      thematiques: [],
+      types: event.typesPoi ? _.map(event.typesPoi, "nom") : [],
     };
     void StorageUtils.storeObjectValue(
       StorageKeysConstants.cartoFilterKey,
@@ -126,7 +126,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
 
       {isExpanded && (
         <View style={styles.eventDetailsContainer}>
-          {event.thematique && (
+          {event.typesPoi?.length && (
             <View style={styles.linkCarto} ref={elementRef} accessible={true}>
               <CustomButton
                 rounded={true}
