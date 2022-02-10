@@ -7,7 +7,7 @@ import { StyleSheet } from "react-native";
 import BulbIcon from "../../assets/images/carto/bulb.svg";
 import { Labels } from "../../constants";
 import { PLATFORM_IS_ANDROID } from "../../constants/platform.constants";
-import { Colors, Margins, Sizes } from "../../styles";
+import { Colors, Margins, Paddings, Sizes } from "../../styles";
 import { CustomButton, Icomoon, IcomoonIcons, View } from "../baseComponents";
 import AroundMeFilter from "./aroundMeFilter.component";
 import SubmitNewFilter from "./submitNewFilter.component";
@@ -58,7 +58,7 @@ const AroundMeMapHeader: FC<Props> = ({
           }}
         />
         <CustomButton
-          buttonStyle={styles.submitNewFilterButton}
+          buttonStyle={styles.headerButton}
           title=""
           rounded={true}
           icon={<BulbIcon />}
@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.primaryBlue,
     borderWidth: 1,
     marginHorizontal: Margins.smallest,
+    paddingHorizontal: Paddings.default,
   },
   headerButtonTitle: {
     color: Colors.primaryBlue,
@@ -167,11 +168,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 0,
-  },
-  submitNewFilterButton: {
-    backgroundColor: Colors.white,
-    borderColor: Colors.primaryBlue,
-    borderWidth: 1,
   },
 });
 
