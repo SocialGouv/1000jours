@@ -10,6 +10,7 @@ interface Props {
   duration: number;
   visible: boolean;
   isOnTop?: boolean;
+  marginTopValue?: string;
   backgroundColor?: string;
   onDismiss: () => void;
   textColor?: string;
@@ -20,16 +21,21 @@ const CustomSnackbar: React.FC<Props> = ({
   duration,
   visible,
   isOnTop,
+  marginTopValue,
   backgroundColor,
   onDismiss,
   textColor,
   text,
 }) => {
   useEffect(() => {
+    let mounted = true;
     if (!visible) return;
     setTimeout(() => {
-      onDismiss();
+      if (mounted) onDismiss();
     }, duration);
+    return () => {
+      mounted = false;
+    };
   }, [visible]);
 
   const snackbarStyle = {
@@ -39,6 +45,8 @@ const CustomSnackbar: React.FC<Props> = ({
     color: textColor ?? Colors.dark.text,
   };
 
+  const marginTop = { marginTop: marginTopValue };
+
   return (
     <>
       {visible && (
@@ -46,7 +54,9 @@ const CustomSnackbar: React.FC<Props> = ({
           animation="fadeIn"
           duration={200}
           style={[
-            isOnTop ? styles.snackbarViewTop : styles.snackbarViewBottom,
+            isOnTop
+              ? [styles.snackbarViewTop, marginTop]
+              : styles.snackbarViewBottom,
             styles.snackbarView,
             snackbarStyle,
           ]}

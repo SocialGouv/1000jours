@@ -46,9 +46,8 @@ export type TabAroundMeParamList = {
 export type TabSearchParamList = {
   tabSearchScreen: undefined;
   aroundMeMapAndList: {
-    region: Region;
-    poisArray: Poi[];
-    userLocation: LatLng | undefined;
+    coordinates: LatLng;
+    displayUserLocation: boolean;
   };
 };
 
@@ -102,6 +101,7 @@ export type Event = {
   etapes?: Step[];
   articles?: Article[];
   isClosestEvent?: boolean;
+  typesPoi?: PoiType[];
 };
 export type AgendaItems<TEvent> = Record<string, TEvent[]>;
 

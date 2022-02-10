@@ -56,19 +56,20 @@ const FetchPois: React.FC<Props> = ({
     if (
       !savedFilters ||
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      (savedFilters && StringUtils.stringArrayIsNullOrEmpty(savedFilters.types))
+      (savedFilters &&
+        StringUtils.stringArrayIsNullOrEmpty(savedFilters.types) &&
+        StringUtils.stringArrayIsNullOrEmpty(savedFilters.thematiques))
     ) {
       chooseFilterMessage();
       return;
     }
 
     const variables = {
-      etapes: savedFilters.etapes,
       lat1: topLeftPoint.latitude,
       lat2: bottomRightPoint.latitude,
       long1: topLeftPoint.longitude,
       long2: bottomRightPoint.longitude,
-      // thematiques: savedFilters?.thematiques ? savedFilters.thematiques : [],
+      thematiques: savedFilters.thematiques,
       types: savedFilters.types,
     };
     void getPoisByGpsCoords({

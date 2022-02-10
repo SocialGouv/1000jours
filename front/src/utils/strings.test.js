@@ -19,6 +19,31 @@ describe("Strings utils", () => {
     expect(StringUtils.stringArrayIsNullOrEmpty(simpleStringArray)).toBe(false);
   });
 
+  it("Arrays have same or different length and contain same or different values", () => {
+    const firstArray = ["Car", "Boat", "Bus", "Plane"];
+    const secondArray = ["Car", "Plane", "Bus", "Boat"];
+    const thirdArray = ["Car", "Boat"];
+    const fourthArray = ["A", "B", "C", "D"];
+    expect(
+      StringUtils.arraysHaveSameLengthAndContainSameValues(
+        firstArray,
+        secondArray
+      )
+    ).toBe(true); //Same length and same values as firstArray
+    expect(
+      StringUtils.arraysHaveSameLengthAndContainSameValues(
+        firstArray,
+        thirdArray
+      )
+    ).toBe(false); // Different length
+    expect(
+      StringUtils.arraysHaveSameLengthAndContainSameValues(
+        firstArray,
+        fourthArray
+      )
+    ).toBe(false); // Same length but different values
+  });
+
   it(`Email is valid or invalid`, () => {
     const validEmail = "user@toto.fr";
     const invalidEmail = "user@toto";

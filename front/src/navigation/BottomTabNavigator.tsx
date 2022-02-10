@@ -7,11 +7,11 @@ import { Icomoon, IcomoonIcons } from "../components/baseComponents";
 import Labels from "../constants/Labels";
 import {
   AroundMeMapAndList,
+  AroundMeScreen,
   ArticleDetail,
   EventDetails,
   ListArticles,
   ListParentsDocuments,
-  TabAroundMeScreen,
   TabCalendarScreen,
   TabEpdsScreen,
   TabHomeScreen,
@@ -151,11 +151,7 @@ const TabCalendarNavigator: FC = () => (
       name="listParentsDocuments"
       component={ListParentsDocuments}
     />
-    <TabCalendarStack.Screen
-      name="aroundMeScreen"
-      component={TabAroundMeScreen}
-      options={{}}
-    />
+    <TabCalendarStack.Screen name="aroundMeScreen" component={AroundMeScreen} />
   </TabCalendarStack.Navigator>
 );
 

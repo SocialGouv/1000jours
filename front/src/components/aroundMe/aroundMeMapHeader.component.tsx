@@ -7,7 +7,7 @@ import { StyleSheet } from "react-native";
 import BulbIcon from "../../assets/images/carto/bulb.svg";
 import { Labels } from "../../constants";
 import { PLATFORM_IS_ANDROID } from "../../constants/platform.constants";
-import { Colors, Margins, Sizes } from "../../styles";
+import { Colors, Margins, Paddings, Sizes } from "../../styles";
 import { CustomButton, Icomoon, IcomoonIcons, View } from "../baseComponents";
 import AroundMeFilter from "./aroundMeFilter.component";
 import SubmitNewFilter from "./submitNewFilter.component";
@@ -20,6 +20,7 @@ interface Props {
   showDisplayListButton?: boolean;
   showRelaunchResearchButton: boolean;
   setIsLoading: (isLoading: boolean) => void;
+  hideDisplayListButton?: boolean;
 }
 
 const AroundMeMapHeader: FC<Props> = ({
@@ -30,6 +31,7 @@ const AroundMeMapHeader: FC<Props> = ({
   showDisplayListButton,
   showRelaunchResearchButton,
   setIsLoading,
+  hideDisplayListButton,
 }) => {
   // Filter and "submit new filter" modals
   const [showFilter, setShowFilter] = useState(false);
@@ -56,7 +58,7 @@ const AroundMeMapHeader: FC<Props> = ({
           }}
         />
         <CustomButton
-          buttonStyle={styles.submitNewFilterButton}
+          buttonStyle={styles.headerButton}
           title=""
           rounded={true}
           icon={<BulbIcon />}
@@ -65,34 +67,39 @@ const AroundMeMapHeader: FC<Props> = ({
           }}
         />
         <View style={styles.headerButtonsRightPartView}>
-          <CustomButton
-            buttonStyle={styles.headerButton}
-            title={
-              displayMap
-                ? Labels.aroundMe.displayListButton
-                : Labels.aroundMe.displayMapButton
-            }
-            titleStyle={styles.headerButtonTitle}
-            rounded={true}
-            disabled={displayMap ? !showDisplayListButton : false}
-            icon={
-              <Icomoon
-                name={
-                  displayMap
-                    ? IcomoonIcons.afficherListe
-                    : IcomoonIcons.autourDeMoi
-                }
-                size={Sizes.sm}
-                color={Colors.primaryBlue}
-              />
-            }
-            action={() => {
-              setDisplayMap(!displayMap);
-            }}
-          />
+          {!hideDisplayListButton && (
+            <CustomButton
+              buttonStyle={styles.headerButton}
+              title={
+                displayMap
+                  ? Labels.aroundMe.displayListButton
+                  : Labels.aroundMe.displayMapButton
+              }
+              titleStyle={styles.headerButtonTitle}
+              rounded={true}
+              disabled={displayMap ? !showDisplayListButton : false}
+              icon={
+                <Icomoon
+                  name={
+                    displayMap
+                      ? IcomoonIcons.afficherListe
+                      : IcomoonIcons.autourDeMoi
+                  }
+                  size={Sizes.sm}
+                  color={Colors.primaryBlue}
+                />
+              }
+              action={() => {
+                setDisplayMap(!displayMap);
+              }}
+            />
+          )}
           {showRelaunchResearchButton && (
             <CustomButton
-              buttonStyle={[styles.headerButton, styles.buttonMarginTop]}
+              buttonStyle={[
+                styles.headerButton,
+                !hideDisplayListButton && styles.buttonMarginTop,
+              ]}
               title={Labels.aroundMe.relaunchSearch}
               titleStyle={styles.headerButtonTitle}
               rounded={true}
@@ -139,6 +146,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.primaryBlue,
     borderWidth: 1,
     marginHorizontal: Margins.smallest,
+    paddingHorizontal: Paddings.default,
   },
   headerButtonTitle: {
     color: Colors.primaryBlue,
@@ -160,11 +168,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 0,
-  },
-  submitNewFilterButton: {
-    backgroundColor: Colors.white,
-    borderColor: Colors.primaryBlue,
-    borderWidth: 1,
   },
 });
 

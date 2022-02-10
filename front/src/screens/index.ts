@@ -1,4 +1,4 @@
-import TabAroundMeScreen from "./aroundMe_old/tabAroundMeScreen.component";
+import AroundMeScreen from "./aroundMe/aroundMeScreen.component";
 import ArticleDetail from "./articles/articleDetail.component";
 import ListArticles from "./articles/listArticles.component";
 import EventDetails from "./calendar/eventDetails.component";
@@ -16,6 +16,7 @@ import TabSearchScreen from "./search/tabSearchScreen.component";
 
 export {
   AroundMeMapAndList,
+  AroundMeScreen,
   ArticleDetail,
   EpdsResult,
   EventDetails,
@@ -25,7 +26,6 @@ export {
   NotFoundScreen,
   Onboarding,
   Profile,
-  TabAroundMeScreen,
   TabCalendarScreen,
   TabEpdsScreen,
   TabHomeScreen,
