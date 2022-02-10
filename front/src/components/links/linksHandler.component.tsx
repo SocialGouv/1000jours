@@ -35,6 +35,9 @@ const LinksHandler: FC = () => {
   };
 
   useEffect(() => {
+    // Permet de récupérer l'url qui a déclenché l'ouverture de l'app lorsque celle-ci est déjà ouverte.
+    Linking.addEventListener("url", handleOpenURL);
+
     // Permet de récupérer l'url qui a déclenché l'ouverture de l'app lorsque celle-ci n'est pas déjà ouverte
     Linking.getInitialURL()
       .then((url) => {
