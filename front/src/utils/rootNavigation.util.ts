@@ -13,24 +13,35 @@ export const navigate = async (name: string, params: any): Promise<void> => {
     }
   }
 
+  // Information : Pour naviguer vers une page depuis n'importe où
+  // Il faut passer par les screens du Stack.Navigator, ensuite passer par les BottomTab.Navigator puis par les BottomTab.Screen.
+  // Ex : root > tabCalendar > tabCalendarScreen
+
   let screen = name;
   switch (name) {
     case "article":
-      screen = "tabHome";
+      screen = "root";
       params = {
-        params,
-        screen: name,
+        params: {
+          params: params,
+          screen: "article",
+        },
+        screen: "tabHome",
       };
       break;
     case "event":
-      screen = "tabCalendar";
+      screen = "root";
       params = {
-        params,
-        screen: name,
+        params: {
+          params: params,
+          screen: "tabCalendarScreen",
+        },
+        screen: "tabCalendar",
       };
       break;
     default:
       break;
   }
+
   navigationRef.navigate(screen, params);
 };
