@@ -126,7 +126,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
 
       {isExpanded && (
         <View style={styles.eventDetailsContainer}>
-          {event.typesPoi?.length && (
+          {event.typesPoi && event.typesPoi.length > 0 && (
             <View style={styles.linkCarto} ref={elementRef} accessible={true}>
               <CustomButton
                 rounded={true}
