@@ -10,6 +10,18 @@ export const stringArrayIsNullOrEmpty = (
   return str === null || str === undefined || str.length === 0;
 };
 
+export const arraysHaveSameLengthAndContainSameValues = (
+  firstArray: string[],
+  secondArray: string[]
+): boolean => {
+  return (
+    firstArray.length === secondArray.length &&
+    firstArray.every((firstArrayElement) =>
+      secondArray.includes(firstArrayElement)
+    )
+  );
+};
+
 export const validateEmail = (inputText: string): boolean => {
   const mailformat = /^[\w-.]+@([\w-]+\.)+[\w-]+$/;
   return mailformat.test(inputText);

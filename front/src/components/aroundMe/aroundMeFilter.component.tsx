@@ -214,18 +214,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     ));
   };
 
-  const arraysHaveSameLengthAndContainSameValues = (
-    firstArray: string[],
-    secondArray: string[]
-  ) => {
-    return (
-      firstArray.length === secondArray.length &&
-      firstArray.every((firstArrayElement) =>
-        secondArray.includes(firstArrayElement)
-      )
-    );
-  };
-
   const sendFiltersTracker = (filters: string[]) => {
     if (!StringUtils.stringArrayIsNullOrEmpty(filters)) {
       filters.forEach((filter) => {
@@ -313,7 +301,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                         cartoFilterStorage.types.length > 0;
 
                       const savedFilterAndNewFiltersAreDifferent =
-                        !arraysHaveSameLengthAndContainSameValues(
+                        !StringUtils.arraysHaveSameLengthAndContainSameValues(
                           savedcartoFilterStorage.types,
                           cartoFilterStorage.types
                         );
