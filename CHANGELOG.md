@@ -1,3 +1,16 @@
+# [1.93.0](https://github.com/SocialGouv/1000jours/compare/v1.92.0...v1.93.0) (2022-02-10)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la redirection via les deepLinks ([#1040](https://github.com/SocialGouv/1000jours/issues/1040)) ([89d5521](https://github.com/SocialGouv/1000jours/commit/89d5521c1ce17160710d3c064a729778d81ce54e)), closes [#956](https://github.com/SocialGouv/1000jours/issues/956) [#957](https://github.com/SocialGouv/1000jours/issues/957)
+* 🐛 Corrige le problème de freeze du loader (parenthèque) ([#1041](https://github.com/SocialGouv/1000jours/issues/1041)) ([7b1d443](https://github.com/SocialGouv/1000jours/commit/7b1d443970e90e332ede66da84c125a540cd085a)), closes [#1008](https://github.com/SocialGouv/1000jours/issues/1008)
+
+
+### Features
+
+* **carto:** reuse main carto for events ([#1031](https://github.com/SocialGouv/1000jours/issues/1031)) ([6941779](https://github.com/SocialGouv/1000jours/commit/6941779c83bcdfac758523734c07bf3a0c8fb35f))
+
 # [1.92.0](https://github.com/SocialGouv/1000jours/compare/v1.91.0...v1.92.0) (2022-02-07)
 
 
