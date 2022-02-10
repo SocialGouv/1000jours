@@ -101,8 +101,7 @@ const extractedPoiTypesFromArticles = (articles: Article[]) => {
 
   if (finalCartographieTypes.length > 0) {
     const cartoFilterStorage: CartoFilterStorage = {
-      etapes: [],
-      // thematiques: [],
+      thematiques: [],
       types: finalCartographieTypes.map((type) => type.nom),
     };
     void storeObjectValue(
