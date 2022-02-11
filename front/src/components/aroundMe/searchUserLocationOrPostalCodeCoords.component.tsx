@@ -10,7 +10,7 @@ interface Props {
   triggerGetUserLocation: boolean;
   triggerGetPostalCodeCoords: boolean;
   postalCodeInput: string;
-  setPostalCodeInvalid: (value: boolean) => void;
+  postalCodeIsInvalid: () => void;
   setCoordinates: (coordinates: LatLng | undefined) => void;
   allowGeolocationMessage: () => void;
 }
@@ -19,7 +19,7 @@ const SearchUserLocationOrPostalCodeCoords: FC<Props> = ({
   triggerGetUserLocation,
   triggerGetPostalCodeCoords,
   postalCodeInput,
-  setPostalCodeInvalid,
+  postalCodeIsInvalid,
   setCoordinates,
   allowGeolocationMessage,
 }) => {
@@ -73,8 +73,11 @@ const SearchUserLocationOrPostalCodeCoords: FC<Props> = ({
   };
 
   const searchRegionByPostalCode = async () => {
-    if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
-      setPostalCodeInvalid(true);
+    if (
+      postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH ||
+      isNaN(Number(postalCodeInput))
+    ) {
+      postalCodeIsInvalid();
       return;
     }
     const postalCodeCoords = await AroundMeUtils.getPostalCodeCoords(

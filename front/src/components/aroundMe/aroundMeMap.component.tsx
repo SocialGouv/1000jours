@@ -19,7 +19,12 @@ import {
   SCREEN_HEIGHT,
 } from "../../constants/platform.constants";
 import { Colors, Margins } from "../../styles";
-import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
+import {
+  AroundMeUtils,
+  KeyboardUtils,
+  StorageUtils,
+  TrackerUtils,
+} from "../../utils";
 import { CustomSnackbar, Loader, View } from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
 import AddressDetails from "./addressDetails.component";
@@ -151,15 +156,9 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
     if (triggerSearchAfterRegionChangeComplete) {
       setIsLoading(true);
       setTriggerSearchAfterRegionChangeComplete(false);
-      /* sur iOS, cette fonction est appelée juste avant que la carte ait terminé de se déplacer,
-       du coup on se retrouve avec des mauvaises adresses qui ne s'affichent pas sur la bonne zone,
-       donc on est obligé de mettre un petit timeout */
-      setTimeout(
-        () => {
-          setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
-        },
-        PLATFORM_IS_IOS ? 1000 : 0
-      );
+      AroundMeUtils.triggerFunctionAfterTimeout(() => {
+        setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+      });
     }
     setShowSnackBar(false);
     setShowRelaunchResearchButton(true);
@@ -211,7 +210,7 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
         screenName={TrackerUtils.TrackingEvent.CARTO}
         actionName={trackerAction}
       />
-      <View style={{ flex: 0 }}>
+      <View style={styles.fetchPois}>
         <FetchPois
           triggerSearchByGpsCoords={triggerSearchByGpsCoords}
           region={currentRegion}
@@ -282,12 +281,14 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
           }}
           relaunchSearch={() => {
             KeyboardUtils.dismissKeyboard();
-            setIsLoading(true);
             setShowRelaunchResearchButton(false);
             setShowAddressDetails(false);
             updateSelectedPoiIndex(-1);
             if (showBottomPanel) showBottomPanel(false);
-            setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+            if (currentRegion) {
+              setIsLoading(true);
+              setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+            }
           }}
           showRelaunchResearchButton={showRelaunchResearchButton}
           setIsLoading={setIsLoading}
@@ -345,6 +346,9 @@ const styles = StyleSheet.create({
   currentLocationMarker: {
     height: Margins.default,
     width: Margins.default,
+  },
+  fetchPois: {
+    flex: 0,
   },
   headerButtonsMapView: {
     backgroundColor: "transparent",

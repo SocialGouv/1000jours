@@ -79,6 +79,11 @@ const AroundMeScreenHeader: React.FC<Props> = ({
     setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
   };
 
+  const onPostalCodeInvalid = () => {
+    setPostalCodeInvalid(true);
+    setIsLoading(false);
+  };
+
   const handleGetCoordinates = (newCoordinates: LatLng | undefined) => {
     setIsLoading(false);
     if (newCoordinates) {
@@ -97,7 +102,7 @@ const AroundMeScreenHeader: React.FC<Props> = ({
         triggerGetUserLocation={triggerCheckLocation}
         triggerGetPostalCodeCoords={triggerSearchByPostalCode}
         postalCodeInput={postalCodeInput}
-        setPostalCodeInvalid={setPostalCodeInvalid}
+        postalCodeIsInvalid={onPostalCodeInvalid}
         setCoordinates={handleGetCoordinates}
         allowGeolocationMessage={() => {
           setIsLoading(false);
@@ -122,7 +127,10 @@ const AroundMeScreenHeader: React.FC<Props> = ({
           title={Labels.aroundMe.searchButton}
           titleStyle={styles.fontButton}
           rounded={true}
-          disabled={postalCodeInvalid}
+          disabled={
+            postalCodeInvalid ||
+            postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH
+          }
           action={onSearchByPostalCodeButtonClick}
         />
         <View style={styles.geolicationIconView}>
