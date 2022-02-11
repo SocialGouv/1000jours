@@ -1,36 +1,34 @@
 import * as Location from "expo-location";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
-import type { LatLng, Region } from "react-native-maps";
+import type { LatLng } from "react-native-maps";
 
-import { AroundMeConstants, Labels } from "../../constants";
+import { AroundMeConstants } from "../../constants";
 import { AroundMeUtils } from "../../utils";
 
 interface Props {
-  triggerSearchRegionByLocation: boolean;
-  setRegion: (region: Region | undefined) => void;
-  setUserLocation: (userLocation: LatLng | undefined) => void;
-  showSnackBarWithMessage: (message: string) => void;
-  triggerSearchRegionByPostalCode: boolean;
+  triggerGetUserLocation: boolean;
+  triggerGetPostalCodeCoords: boolean;
   postalCodeInput: string;
-  setPostalCodeInvalid: (value: boolean) => void;
+  postalCodeIsInvalid: () => void;
+  setCoordinates: (coordinates: LatLng | undefined) => void;
+  allowGeolocationMessage: () => void;
 }
 
-const SearchRegion: FC<Props> = ({
-  triggerSearchRegionByLocation,
-  setRegion,
-  setUserLocation,
-  showSnackBarWithMessage,
-  triggerSearchRegionByPostalCode,
+const SearchUserLocationOrPostalCodeCoords: FC<Props> = ({
+  triggerGetUserLocation,
+  triggerGetPostalCodeCoords,
   postalCodeInput,
-  setPostalCodeInvalid,
+  postalCodeIsInvalid,
+  setCoordinates,
+  allowGeolocationMessage,
 }) => {
   const [componentIsInitialized, setComponentIsInitialized] = useState(false);
 
-  const searchRegionByLocation = async () => {
+  const getUserLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== Location.PermissionStatus.GRANTED) {
-      showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
+      allowGeolocationMessage();
       return;
     }
     try {
@@ -61,38 +59,32 @@ const SearchRegion: FC<Props> = ({
         }
       }
       if (currentLocation) {
-        setUserLocation({
+        const locationLatLng = {
           latitude: currentLocation.coords.latitude,
           longitude: currentLocation.coords.longitude,
-        });
-        setRegion({
-          latitude: currentLocation.coords.latitude,
-          latitudeDelta: AroundMeConstants.DEFAULT_DELTA,
-          longitude: currentLocation.coords.longitude,
-          longitudeDelta: AroundMeConstants.DEFAULT_DELTA,
-        });
+        };
+        setCoordinates(locationLatLng);
       } else {
-        setUserLocation(undefined);
-        setRegion(undefined);
+        setCoordinates(undefined);
       }
     } catch {
-      setUserLocation(undefined);
-      setRegion(undefined);
+      setCoordinates(undefined);
     }
   };
 
   const searchRegionByPostalCode = async () => {
-
-    if (postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH) {
-      setPostalCodeInvalid(true);
+    if (
+      postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH ||
+      isNaN(Number(postalCodeInput))
+    ) {
+      postalCodeIsInvalid();
       return;
     }
-    const newRegion = await AroundMeUtils.searchRegionByPostalCode(
+    const postalCodeCoords = await AroundMeUtils.getPostalCodeCoords(
       postalCodeInput
     );
 
-    if (newRegion) setRegion(newRegion);
-    else showSnackBarWithMessage(Labels.aroundMe.postalCodeNotFound);
+    setCoordinates(postalCodeCoords);
   };
 
   useEffect(() => {
@@ -100,14 +92,14 @@ const SearchRegion: FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    if (componentIsInitialized) void searchRegionByLocation();
-  }, [triggerSearchRegionByLocation]);
+    if (componentIsInitialized) void getUserLocation();
+  }, [triggerGetUserLocation]);
 
   useEffect(() => {
     if (componentIsInitialized) void searchRegionByPostalCode();
-  }, [triggerSearchRegionByPostalCode]);
+  }, [triggerGetPostalCodeCoords]);
 
   return null;
 };
 
-export default SearchRegion;
+export default SearchUserLocationOrPostalCodeCoords;

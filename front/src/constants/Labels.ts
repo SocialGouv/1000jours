@@ -55,6 +55,8 @@ export default {
       thematics: "Thématiques",
       title: "Filtrer",
     },
+    geolocationRetrievingError:
+      "Erreur lors de la récupération de la géolocalisation",
     goThere: "M'y rendre",
     instruction: "Renseignez le code postal de votre recherche.",
     noAddressFound: "Aucune adresse n'a été trouvée dans cette zone",
@@ -79,12 +81,13 @@ export default {
     postalCodeInputPlaceholder: "Écrivez ici le code postal",
     postalCodeInvalid: "Le code postal que vous avez saisi n'est pas valide",
     postalCodeNotFound: "Le code postal que vous recherchez n'a pas été trouvé",
-    regionCouldNotBeDefined: "La région n'a pas pu être définie",
     relaunchSearch: "Relancer la recherche",
     searchButton: "Valider",
     searchGeolocInstruction:
       "Afin de vous apporter une aide personnalisée, veuillez renseigner votre localisation :",
     searchPostalCodeInstruction: "Ou renseignez votre code postal :",
+    searchWasNotSuccessful:
+      "La recherche n'a pas aboutie, veuillez réessayer plus tard",
     submitNewFilter: {
       aboutYou: {
         numberOfChildren: "Nombre d'enfants",

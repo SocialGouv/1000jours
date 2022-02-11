@@ -60,9 +60,8 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
 
   const updateCartoFilterStorage = () => {
     const cartoFilterStorage: CartoFilterStorage = {
-      etapes: _.map(event.etapes, "nom"),
-      // thematiques: event.thematique?.nom ? [event.thematique.nom] : [],
-      types: [],
+      thematiques: [],
+      types: event.typesPoi ? _.map(event.typesPoi, "nom") : [],
     };
     void StorageUtils.storeObjectValue(
       StorageKeysConstants.cartoFilterKey,
@@ -73,7 +72,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
   const seeOnTheMap = () => {
     setTrackerAction(TrackerUtils.TrackingEvent.EVENT_SEE_THE_MAP);
     updateCartoFilterStorage();
-    void RootNavigation.navigate("tabAroundMe", null);
+    void RootNavigation.navigate("aroundMeScreen", null);
   };
 
   const setAccessibilityFocus = () => {
@@ -127,15 +126,17 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
 
       {isExpanded && (
         <View style={styles.eventDetailsContainer}>
-          <View style={styles.linkCarto} ref={elementRef} accessible={true}>
-            <CustomButton
-              rounded={true}
-              title={Labels.event.seeOnTheMap}
-              titleStyle={styles.buttonTitle}
-              buttonStyle={{ alignSelf: "center" }}
-              action={seeOnTheMap}
-            />
-          </View>
+          {event.typesPoi && event.typesPoi.length > 0 && (
+            <View style={styles.linkCarto} ref={elementRef} accessible={true}>
+              <CustomButton
+                rounded={true}
+                title={Labels.event.seeOnTheMap}
+                titleStyle={styles.buttonTitle}
+                buttonStyle={{ alignSelf: "center" }}
+                action={seeOnTheMap}
+              />
+            </View>
+          )}
           <ShareButton
             buttonTitle={Labels.buttons.share}
             title={Labels.appName}

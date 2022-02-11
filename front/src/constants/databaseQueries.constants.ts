@@ -112,6 +112,11 @@ export const ALL_EVENTS = gql`
         id
         nom
       }
+      typesPoi: types_poi {
+        id
+        nom
+        categorie
+      }
       articles {
         id
         titre

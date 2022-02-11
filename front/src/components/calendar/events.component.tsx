@@ -8,9 +8,10 @@ import * as React from "react";
 import type { LayoutChangeEvent } from "react-native";
 import { ScrollView, StyleSheet, View } from "react-native";
 
-import { Formats, Labels } from "../../constants";
+import { Formats, Labels, StorageKeysConstants } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Event } from "../../types";
+import { StorageUtils } from "../../utils";
 import { CommonText } from "../baseComponents";
 import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
 import EventCard from "./eventCard.component";
@@ -19,9 +20,10 @@ interface Props {
   evenements: Event[];
   childBirthday: string;
   showEventDetails: boolean;
+  scrollToEventId?: string;
 }
 const dotIconSize = Sizes.xxxs;
-const Events: FC<Props> = ({ evenements, childBirthday }) => {
+const Events: FC<Props> = ({ evenements, childBirthday, scrollToEventId }) => {
   let closestEventHasBeenFound = false;
   const [eventIdPressed, setEventIdPressed] = React.useState<string | null>(
     null
@@ -71,8 +73,17 @@ const Events: FC<Props> = ({ evenements, childBirthday }) => {
         posY = layoutEvent.nativeEvent.layout.y;
       }
     } else {
-      if (event.isClosestEvent) {
+      if (scrollToEventId && event.id.toString() === scrollToEventId) {
+        setEventIdPressed(event.id.toString());
         posY = layoutEvent.nativeEvent.layout.y;
+        void StorageUtils.storeStringValue(
+          StorageKeysConstants.scrollToEventId,
+          ""
+        );
+      } else {
+        if (event.isClosestEvent) {
+          posY = layoutEvent.nativeEvent.layout.y;
+        }
       }
     }
 

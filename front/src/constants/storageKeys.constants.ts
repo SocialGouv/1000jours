@@ -9,7 +9,7 @@ export const epdsQuestionAndAnswersKey = "@epdsQuestionAndAnswersKey";
 export const epdsQuestionIndexKey = "@epdsQuestionIndexKey";
 export const epdsSurveyCounterKey = "@epdsSurveyCounterKey";
 export const cartoFilterKey = "@cartoFilterKey";
-export const cartoSavedRegion = "@cartoSavedRegion";
+export const cartoSavedCoordinates = "@cartoSavedCoordinates";
 export const cartoIsFirstLaunch = "@cartoIsFirstLaunch";
 export const notifIdNextStep = "@notifIdNextStep";
 export const notifIdsEvents = "@notifIdsEvents";
@@ -17,6 +17,7 @@ export const eventsCalcFromBirthday = "@eventsCalcFromBirthday";
 export const forceToScheduleEventsNotif = "@forceToScheduleEventsNotif";
 export const osCalendarId = "@osCalendarId";
 export const osCalendarSyncDate = "@osCalendarSyncDate";
+export const scrollToEventId = "@scrollToEventId";
 
 export const allStorageKeys = [
   appActiveCounter,
@@ -29,7 +30,7 @@ export const allStorageKeys = [
   epdsQuestionAndAnswersKey,
   epdsQuestionIndexKey,
   cartoFilterKey,
-  cartoSavedRegion,
+  cartoSavedCoordinates,
   cartoIsFirstLaunch,
   notifIdNextStep,
   notifIdsEvents,
@@ -37,6 +38,7 @@ export const allStorageKeys = [
   forceToScheduleEventsNotif,
   osCalendarId,
   osCalendarSyncDate,
+  scrollToEventId,
 ];
 
 export const epdsSurveyKeys = [epdsQuestionAndAnswersKey, epdsQuestionIndexKey];

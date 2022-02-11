@@ -20,7 +20,6 @@ import { ApolloClientLazyQuery } from "../../services/apolloClient.component";
 import { Colors, Paddings, Sizes } from "../../styles";
 import type { Step, TabHomeParamList, UserSituation } from "../../types";
 import {
-  AroundMeUtils,
   NotificationUtils,
   StepUtils,
   StorageUtils,
@@ -111,10 +110,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 
     if (currentStepId) {
       const currentStep = _.find(etapes, { id: currentStepId });
-      if (currentStep) {
-        checkIfCurrentStepHasChanged(currentStep, etapes);
-        void AroundMeUtils.saveCurrentEtapeForCartoFilter(currentStep);
-      }
+      if (currentStep) checkIfCurrentStepHasChanged(currentStep, etapes);
     }
   };
 
