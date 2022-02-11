@@ -1,3 +1,10 @@
+## [1.93.1](https://github.com/SocialGouv/1000jours/compare/v1.93.0...v1.93.1) (2022-02-11)
+
+
+### Bug Fixes
+
+* **carto:** use timeout function after map update ([#1043](https://github.com/SocialGouv/1000jours/issues/1043)) ([72a2930](https://github.com/SocialGouv/1000jours/commit/72a29303f858cf338d7dea183d1ef18a831661b4))
+
 # [1.93.0](https://github.com/SocialGouv/1000jours/compare/v1.92.0...v1.93.0) (2022-02-10)
 
 
