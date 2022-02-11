@@ -14,7 +14,8 @@ import {
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
-import { AroundMeUtils, RootNavigation } from "../../utils";
+import type { Article } from "../../types";
+import { AroundMeUtils, RootNavigation, SearchUtils } from "../../utils";
 import SearchUserLocationOrPostalCodeCoords from "../aroundMe/searchUserLocationOrPostalCodeCoords.component";
 import {
   CustomButton,
@@ -24,7 +25,10 @@ import {
   View,
 } from "../baseComponents";
 
-const TabAroundMeInstruction: FC = () => {
+interface Props {
+  articles: Article[];
+}
+const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
   const [postalCodeInput, setPostalCodeInput] = useState("");
   const [postalCodeInvalid, setPostalCodeInvalid] = useState(false);
   const [searchIsByPostalCode, setSearchIsByPostalCode] = useState(false);
@@ -71,12 +75,16 @@ const TabAroundMeInstruction: FC = () => {
   };
 
   const handleGetCoordinates = async (newCoordinates: LatLng | undefined) => {
+    /* Si, à partir d'aroundMeMapAndList, on revient sur la Recherche, le filtre doit être remis à jour  */
+    SearchUtils.extractedPoiTypesFromArticles(articles);
+
     if (PLATFORM_IS_IOS) setIsLoading(false);
     if (newCoordinates) {
-      const zoomOrAltitude = await AroundMeUtils.adaptZoomAccordingToRegion(
-        newCoordinates.latitude,
-        newCoordinates.longitude
-      );
+      const zoomOrAltitude =
+        await AroundMeUtils.adaptZoomAccordingToCoordinates(
+          newCoordinates.latitude,
+          newCoordinates.longitude
+        );
       goToAroundMeMapAndListScreen(newCoordinates, zoomOrAltitude);
     } else
       showSnackBarWithMessage(

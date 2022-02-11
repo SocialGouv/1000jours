@@ -57,7 +57,7 @@ export const getLatLngPoint = (
   }
 };
 
-export const adaptZoomAccordingToRegion = async (
+export const adaptZoomAccordingToCoordinates = async (
   lat: number,
   long: number
 ): Promise<number> => {

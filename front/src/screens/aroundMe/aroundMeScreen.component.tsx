@@ -98,7 +98,7 @@ const AroundMeScreen: FC = () => {
             displayUL: boolean
           ) => {
             const _zoomOrAltitude =
-              await AroundMeUtils.adaptZoomAccordingToRegion(
+              await AroundMeUtils.adaptZoomAccordingToCoordinates(
                 newCoordinates.latitude,
                 newCoordinates.longitude
               );

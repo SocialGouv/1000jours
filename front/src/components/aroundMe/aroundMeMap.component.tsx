@@ -210,7 +210,7 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
         screenName={TrackerUtils.TrackingEvent.CARTO}
         actionName={trackerAction}
       />
-      <View style={{ flex: 0 }}>
+      <View style={styles.fetchPois}>
         <FetchPois
           triggerSearchByGpsCoords={triggerSearchByGpsCoords}
           region={currentRegion}
@@ -281,12 +281,14 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
           }}
           relaunchSearch={() => {
             KeyboardUtils.dismissKeyboard();
-            setIsLoading(true);
             setShowRelaunchResearchButton(false);
             setShowAddressDetails(false);
             updateSelectedPoiIndex(-1);
             if (showBottomPanel) showBottomPanel(false);
-            setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+            if (currentRegion) {
+              setIsLoading(true);
+              setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+            }
           }}
           showRelaunchResearchButton={showRelaunchResearchButton}
           setIsLoading={setIsLoading}
@@ -344,6 +346,9 @@ const styles = StyleSheet.create({
   currentLocationMarker: {
     height: Margins.default,
     width: Margins.default,
+  },
+  fetchPois: {
+    flex: 0,
   },
   headerButtonsMapView: {
     backgroundColor: "transparent",
