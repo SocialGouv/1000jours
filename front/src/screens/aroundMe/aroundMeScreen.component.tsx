@@ -61,7 +61,10 @@ const AroundMeScreen: FC = () => {
         );
       if (!savedCoordinates) return;
       setCoordinates(savedCoordinates);
-      setTriggerMoveMapCoordinates(!triggerMoveMapCoordinates);
+
+      AroundMeUtils.triggerFunctionAfterTimeout(() => {
+        setTriggerMoveMapCoordinates(!triggerMoveMapCoordinates);
+      });
     };
     void checkIfSavedCoordinates();
   }, []);

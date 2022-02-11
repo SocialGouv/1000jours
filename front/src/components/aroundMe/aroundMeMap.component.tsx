@@ -19,7 +19,12 @@ import {
   SCREEN_HEIGHT,
 } from "../../constants/platform.constants";
 import { Colors, Margins } from "../../styles";
-import { KeyboardUtils, StorageUtils, TrackerUtils } from "../../utils";
+import {
+  AroundMeUtils,
+  KeyboardUtils,
+  StorageUtils,
+  TrackerUtils,
+} from "../../utils";
 import { CustomSnackbar, Loader, View } from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
 import AddressDetails from "./addressDetails.component";
@@ -151,15 +156,9 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
     if (triggerSearchAfterRegionChangeComplete) {
       setIsLoading(true);
       setTriggerSearchAfterRegionChangeComplete(false);
-      /* sur iOS, cette fonction est appelée juste avant que la carte ait terminé de se déplacer,
-       du coup on se retrouve avec des mauvaises adresses qui ne s'affichent pas sur la bonne zone,
-       donc on est obligé de mettre un petit timeout */
-      setTimeout(
-        () => {
-          setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
-        },
-        PLATFORM_IS_IOS ? 1000 : 0
-      );
+      AroundMeUtils.triggerFunctionAfterTimeout(() => {
+        setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+      });
     }
     setShowSnackBar(false);
     setShowRelaunchResearchButton(true);
