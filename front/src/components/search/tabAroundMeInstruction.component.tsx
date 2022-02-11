@@ -74,6 +74,11 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
     });
   };
 
+  const onPostalCodeInvalid = () => {
+    setPostalCodeInvalid(true);
+    setIsLoading(false);
+  };
+
   const handleGetCoordinates = async (newCoordinates: LatLng | undefined) => {
     /* Si, à partir d'aroundMeMapAndList, on revient sur la Recherche, le filtre doit être remis à jour  */
     SearchUtils.extractedPoiTypesFromArticles(articles);
@@ -100,7 +105,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
         triggerGetUserLocation={triggerCheckLocation}
         triggerGetPostalCodeCoords={triggerSearchByPostalCode}
         postalCodeInput={postalCodeInput}
-        setPostalCodeInvalid={setPostalCodeInvalid}
+        postalCodeIsInvalid={onPostalCodeInvalid}
         setCoordinates={handleGetCoordinates}
         allowGeolocationMessage={() => {
           setIsLoading(false);
@@ -148,7 +153,10 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
           title={Labels.aroundMe.searchButton}
           titleStyle={styles.fontButton}
           rounded={true}
-          disabled={postalCodeInvalid}
+          disabled={
+            postalCodeInvalid ||
+            postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH
+          }
           action={searchByPostalCode}
         />
       </View>
