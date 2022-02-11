@@ -57,7 +57,7 @@ export const getLatLngPoint = (
   }
 };
 
-export const adaptZoomAccordingToRegion = async (
+export const adaptZoomAccordingToCoordinates = async (
   lat: number,
   long: number
 ): Promise<number> => {
@@ -84,4 +84,18 @@ export const adaptZoomAccordingToRegion = async (
   return PLATFORM_IS_IOS
     ? AroundMeConstants.ALTITUDE_DEFAULT
     : AroundMeConstants.ZOOM_DEFAULT;
+};
+
+/* Sur la carto sur iOS, certains triggers avant même que la carte soit à jour, on se retrouve
+  donc avec des comportements innatendus (des mauvaises adresses qui ne s'affichent pas sur la bonne zone
+  ou la mapView qui se met mal à jour), il faut donc déclencher ces triggers avec un petit timeout */
+export const triggerFunctionAfterTimeout = (
+  functionToTrigger: () => void
+): void => {
+  setTimeout(
+    () => {
+      functionToTrigger();
+    },
+    PLATFORM_IS_IOS ? 1000 : 0
+  );
 };

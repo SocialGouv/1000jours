@@ -61,7 +61,10 @@ const AroundMeScreen: FC = () => {
         );
       if (!savedCoordinates) return;
       setCoordinates(savedCoordinates);
-      setTriggerMoveMapCoordinates(!triggerMoveMapCoordinates);
+
+      AroundMeUtils.triggerFunctionAfterTimeout(() => {
+        setTriggerMoveMapCoordinates(!triggerMoveMapCoordinates);
+      });
     };
     void checkIfSavedCoordinates();
   }, []);
@@ -95,7 +98,7 @@ const AroundMeScreen: FC = () => {
             displayUL: boolean
           ) => {
             const _zoomOrAltitude =
-              await AroundMeUtils.adaptZoomAccordingToRegion(
+              await AroundMeUtils.adaptZoomAccordingToCoordinates(
                 newCoordinates.latitude,
                 newCoordinates.longitude
               );
