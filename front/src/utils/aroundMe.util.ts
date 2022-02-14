@@ -65,7 +65,7 @@ export const adaptZoomAccordingToCoordinates = async (
     AroundMeConstants.getApiGouvUrlForPopulation(lat, long) as RequestInfo
   );
   const json = await response.json();
-  if (json[0].population) {
+  if (json?.[0]?.population) {
     const population = json[0].population;
     if (population > AroundMeConstants.POPULATION_STEP_TWO_MILLION)
       return PLATFORM_IS_IOS
@@ -96,6 +96,6 @@ export const triggerFunctionAfterTimeout = (
     () => {
       functionToTrigger();
     },
-    PLATFORM_IS_IOS ? 1000 : 0
+    PLATFORM_IS_IOS ? 1000 : 500
   );
 };

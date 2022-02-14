@@ -154,8 +154,9 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
     if (updateRegion) updateRegion(newRegion);
 
     if (triggerSearchAfterRegionChangeComplete) {
-      setIsLoading(true);
       setTriggerSearchAfterRegionChangeComplete(false);
+
+      setIsLoading(true);
       AroundMeUtils.triggerFunctionAfterTimeout(() => {
         setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
       });
@@ -243,6 +244,7 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
               : styles.map
           }
           initialRegion={region}
+          region={currentRegion}
           onRegionChangeComplete={onRegionChangeComplete}
         >
           {poiArray.map((poi, poiIndex) => (
