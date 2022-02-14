@@ -28,13 +28,21 @@ const NotificationHandler: FC = () => {
   const responseListener = useRef<Subscription>();
   const [notifType, setNotiftype] = useState<unknown | undefined>(undefined);
 
+  const showNotificationModal = (notif: Notification) => {
+    // Ajoute un setTimeout pour éviter que l'application freeze
+    // lorsque l'on ouvre l'app depuis une notification
+    setTimeout(() => {
+      setNotification(notif);
+    }, 1000);
+  };
+
   useEffect(() => {
     // Notifications
     void NotificationUtils.registerForPushNotificationsAsync();
     // Se déclenche lorsque l'on reçoit une notification et que l'app est ouverte
     notificationListener.current =
       Notifications.addNotificationReceivedListener((newNotification) => {
-        setNotification(newNotification);
+        showNotificationModal(newNotification);
       });
     // Se déclenche lorsque l'on clique sur la notification native
     responseListener.current =
@@ -43,7 +51,7 @@ const NotificationHandler: FC = () => {
           response.notification.request.content.data.type ?? "";
 
         setNotiftype(notificationType);
-        setNotification(response.notification);
+        showNotificationModal(response.notification);
       });
 
     return () => {
