@@ -99,3 +99,49 @@ export const triggerFunctionAfterTimeout = (
     PLATFORM_IS_IOS ? 1000 : 500
   );
 };
+
+// TODO: Delete after carto refacto
+export const searchRegionByPostalCode = async (
+  postalCodeInput: string
+): Promise<Region | undefined> => {
+  const response = await fetch(
+    AroundMeConstants.getApiUrlWithParam(postalCodeInput) as RequestInfo
+  );
+  const json = await response.json();
+
+  let newRegion = undefined;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  if (json.features[0]?.geometry.coordinates) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const coordinates: string[] = json.features[0].geometry.coordinates;
+    newRegion = {
+      latitude: Number(coordinates[1]),
+      latitudeDelta: AroundMeConstants.DEFAULT_DELTA,
+      longitude: Number(coordinates[0]),
+      longitudeDelta: AroundMeConstants.DEFAULT_DELTA,
+    };
+  }
+
+  return newRegion;
+};
+
+export const adaptZoomAccordingToRegion = async (
+  lat: number,
+  long: number
+): Promise<number> => {
+  const response = await fetch(
+    AroundMeConstants.getApiGouvUrlForPopulation(lat, long) as RequestInfo
+  );
+  const json = await response.json();
+  if (json[0].population) {
+    const population = json[0].population;
+    if (population > AroundMeConstants.POPULATION_STEP_TWO_MILLION)
+      return AroundMeConstants.DELTA_HIGH;
+    if (population > AroundMeConstants.POPULATION_STEP_EIGHT_HUNDRED_THOUSAND)
+      return AroundMeConstants.DELTA_MIDDLE;
+    if (population > AroundMeConstants.POPULATION_STEP_THREE_HUNDRED_THOUSAND)
+      return AroundMeConstants.DELTA_LOW;
+  }
+
+  return AroundMeConstants.DEFAULT_DELTA;
+};

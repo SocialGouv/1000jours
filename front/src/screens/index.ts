@@ -1,4 +1,5 @@
 import AroundMeScreen from "./aroundMe/aroundMeScreen.component";
+import AroundMeScreenNotRefactored from "./aroundMe/aroundMeScreenNotRefactored.component";
 import ArticleDetail from "./articles/articleDetail.component";
 import ListArticles from "./articles/listArticles.component";
 import EventDetails from "./calendar/eventDetails.component";
@@ -17,6 +18,7 @@ import TabSearchScreen from "./search/tabSearchScreen.component";
 export {
   AroundMeMapAndList,
   AroundMeScreen,
+  AroundMeScreenNotRefactored,
   ArticleDetail,
   EpdsResult,
   EventDetails,

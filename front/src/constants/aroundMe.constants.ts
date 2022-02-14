@@ -74,3 +74,16 @@ export const ERROR_LOCATION_PROVIDER_UNAVAILABLE_MESSAGE =
   "Location provider is unavailable. Make sure that location services are enabled.";
 
 export const GET_POSITION_MAX_ATTEMPTS = 100;
+
+// TODO: Delete after carto refacto
+export const DEFAULT_DELTA = 0.1;
+export const DELTA_HIGH = 0.01;
+export const DELTA_MIDDLE = 0.02;
+export const DELTA_LOW = 0.03;
+
+export const INITIAL_REGION = {
+  latitude: COORDINATE_PARIS.latitude,
+  latitudeDelta: DEFAULT_DELTA,
+  longitude: COORDINATE_PARIS.longitude,
+  longitudeDelta: DEFAULT_DELTA,
+};

@@ -19,7 +19,11 @@ export const osCalendarId = "@osCalendarId";
 export const osCalendarSyncDate = "@osCalendarSyncDate";
 export const scrollToEventId = "@scrollToEventId";
 
+// TODO: Delete after carto refacto
+export const cartoSavedRegion = "@cartoSavedRegion";
+
 export const allStorageKeys = [
+  cartoSavedRegion,
   appActiveCounter,
   isFirstLaunchKey,
   lastVersionLaunchKey,
