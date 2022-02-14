@@ -59,8 +59,7 @@ const AroundMeScreen: FC = () => {
         await StorageUtils.getObjectValue(
           StorageKeysConstants.cartoSavedCoordinates
         );
-      if (!savedCoordinates) return;
-      setCoordinates(savedCoordinates);
+      if (savedCoordinates) setCoordinates(savedCoordinates);
 
       AroundMeUtils.triggerFunctionAfterTimeout(() => {
         setTriggerMoveMapCoordinates(!triggerMoveMapCoordinates);
