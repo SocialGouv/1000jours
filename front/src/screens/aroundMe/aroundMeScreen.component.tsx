@@ -47,6 +47,7 @@ const AroundMeScreen: FC = () => {
     LatLng | undefined
   >();
 
+  const [showMap, setShowMap] = useState(false);
   const [trackerAction, setTrackerAction] = useState("");
   const [triggerMoveMapCoordinates, setTriggerMoveMapCoordinates] =
     useState(false);
@@ -55,12 +56,14 @@ const AroundMeScreen: FC = () => {
 
   useEffect(() => {
     const checkIfSavedCoordinates = async () => {
+      setIsLoading(true);
       const savedCoordinates: LatLng | undefined =
         await StorageUtils.getObjectValue(
           StorageKeysConstants.cartoSavedCoordinates
         );
-      if (!savedCoordinates) return;
-      setCoordinates(savedCoordinates);
+      if (savedCoordinates) setCoordinates(savedCoordinates);
+      setIsLoading(false);
+      setShowMap(true);
 
       AroundMeUtils.triggerFunctionAfterTimeout(() => {
         setTriggerMoveMapCoordinates(!triggerMoveMapCoordinates);
@@ -79,77 +82,79 @@ const AroundMeScreen: FC = () => {
   };
 
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.flex0}>
-        <TrackerHandler
-          screenName={TrackerUtils.TrackingEvent.CARTO}
-          actionName={trackerAction}
-        />
-        <View style={styles.topContainer}>
-          <TitleH1
-            title={Labels.aroundMe.title}
-            description={Labels.aroundMe.instruction}
-            animated={false}
+    showMap && (
+      <View style={styles.mainContainer}>
+        <View style={styles.flex0}>
+          <TrackerHandler
+            screenName={TrackerUtils.TrackingEvent.CARTO}
+            actionName={trackerAction}
+          />
+          <View style={styles.topContainer}>
+            <TitleH1
+              title={Labels.aroundMe.title}
+              description={Labels.aroundMe.instruction}
+              animated={false}
+            />
+          </View>
+          <AroundMeScreenHeader
+            setCoordinatesAndUserLocation={async (
+              newCoordinates: LatLng,
+              displayUL: boolean
+            ) => {
+              const _zoomOrAltitude =
+                await AroundMeUtils.adaptZoomAccordingToCoordinates(
+                  newCoordinates.latitude,
+                  newCoordinates.longitude
+                );
+              setZoomOrAltitude(_zoomOrAltitude);
+              setCurrentUserLocation(displayUL ? newCoordinates : undefined);
+              setCoordinates(newCoordinates);
+              setShowAddressesList(false);
+              setSelectedPoiIndex(-1);
+            }}
+            hideSnackBar={() => {
+              setShowSnackBar(false);
+            }}
+            showSnackBarWithMessage={showSnackBarWithMessage}
+            setIsLoading={setIsLoading}
           />
         </View>
-        <AroundMeScreenHeader
-          setCoordinatesAndUserLocation={async (
-            newCoordinates: LatLng,
-            displayUL: boolean
-          ) => {
-            const _zoomOrAltitude =
-              await AroundMeUtils.adaptZoomAccordingToCoordinates(
-                newCoordinates.latitude,
-                newCoordinates.longitude
-              );
-            setZoomOrAltitude(_zoomOrAltitude);
-            setCurrentUserLocation(displayUL ? newCoordinates : undefined);
-            setCoordinates(newCoordinates);
-            setShowAddressesList(false);
-            setSelectedPoiIndex(-1);
-          }}
-          hideSnackBar={() => {
-            setShowSnackBar(false);
-          }}
-          showSnackBarWithMessage={showSnackBarWithMessage}
-          setIsLoading={setIsLoading}
-        />
+        <View style={styles.mainContainer}>
+          <AroundMeMap
+            coordinates={coordinates}
+            poiArray={poisArray}
+            zoomOrAltitude={zoomOrAltitude}
+            selectedPoiIndex={selectedPoiIndex}
+            userLocation={currentUserLocation}
+            updatePoiArray={setPoisArray}
+            updateSelectedPoiIndex={setSelectedPoiIndex}
+            triggerMoveMapCoordinates={triggerMoveMapCoordinates}
+            showBottomPanel={setShowAddressesList}
+            isFromSimpleCarto
+          />
+          <CustomSnackbar
+            duration={AroundMeConstants.SNACKBAR_DURATION}
+            visible={showSnackBar}
+            isOnTop
+            marginTopValue={SNACKBAR_MARGIN_TOP_VALUE}
+            backgroundColor={Colors.aroundMeSnackbar.background}
+            onDismiss={onSnackBarDismiss}
+            textColor={Colors.aroundMeSnackbar.text}
+            text={snackBarMessage}
+          />
+          {showAddressesList &&
+            poisArray.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
+              <SlidingUpPanelAddressesList
+                poisArray={poisArray}
+                centerOnMarker={(poiIndex: number) => {
+                  setSelectedPoiIndex(poiIndex);
+                }}
+              />
+            )}
+          {isLoading && <Loader />}
+        </View>
       </View>
-      <View style={styles.mainContainer}>
-        <AroundMeMap
-          coordinates={coordinates}
-          poiArray={poisArray}
-          zoomOrAltitude={zoomOrAltitude}
-          selectedPoiIndex={selectedPoiIndex}
-          userLocation={currentUserLocation}
-          updatePoiArray={setPoisArray}
-          updateSelectedPoiIndex={setSelectedPoiIndex}
-          triggerMoveMapCoordinates={triggerMoveMapCoordinates}
-          showBottomPanel={setShowAddressesList}
-          isFromSimpleCarto
-        />
-        <CustomSnackbar
-          duration={AroundMeConstants.SNACKBAR_DURATION}
-          visible={showSnackBar}
-          isOnTop
-          marginTopValue={SNACKBAR_MARGIN_TOP_VALUE}
-          backgroundColor={Colors.aroundMeSnackbar.background}
-          onDismiss={onSnackBarDismiss}
-          textColor={Colors.aroundMeSnackbar.text}
-          text={snackBarMessage}
-        />
-        {showAddressesList &&
-          poisArray.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
-            <SlidingUpPanelAddressesList
-              poisArray={poisArray}
-              centerOnMarker={(poiIndex: number) => {
-                setSelectedPoiIndex(poiIndex);
-              }}
-            />
-          )}
-        {isLoading && <Loader />}
-      </View>
-    </View>
+    )
   );
 };
 
