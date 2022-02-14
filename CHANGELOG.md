@@ -1,3 +1,12 @@
+## [1.93.2](https://github.com/SocialGouv/1000jours/compare/v1.93.1...v1.93.2) (2022-02-14)
+
+
+### Bug Fixes
+
+* 🐛 Corrige un freeze lorsque l'app s'ouvre via une notif ([#1048](https://github.com/SocialGouv/1000jours/issues/1048)) ([09d2c4c](https://github.com/SocialGouv/1000jours/commit/09d2c4c90bb1272af725d4835c1db1d8feed3e86))
+* **carto:** don't return if not savedCoordinates ([#1047](https://github.com/SocialGouv/1000jours/issues/1047)) ([5fbd604](https://github.com/SocialGouv/1000jours/commit/5fbd60403dc9930152a71dee15eedd70a3e170d6))
+* 🐛 Corrige les deeplinks lorsque l'app est déjà ouverte ([#1045](https://github.com/SocialGouv/1000jours/issues/1045)) ([67b2d92](https://github.com/SocialGouv/1000jours/commit/67b2d927de943f43414db20b3db3aa8b5293ff49))
+
 ## [1.93.1](https://github.com/SocialGouv/1000jours/compare/v1.93.0...v1.93.1) (2022-02-11)
 
 
