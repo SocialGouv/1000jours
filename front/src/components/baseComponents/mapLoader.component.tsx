@@ -22,7 +22,7 @@ const MapLoader: FC<Props> = ({ onTouchEnd }) => {
 
 const styles = StyleSheet.create({
   indicator: {
-    backgroundColor: "transparent",
+    backgroundColor: Colors.mapLoaderBackground,
     bottom: 0,
     left: 0,
     position: "absolute",
