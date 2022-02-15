@@ -101,79 +101,85 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
 
   return (
     <ScrollView style={styles.mainContainer}>
-      <SearchUserLocationOrPostalCodeCoords
-        triggerGetUserLocation={triggerCheckLocation}
-        triggerGetPostalCodeCoords={triggerSearchByPostalCode}
-        postalCodeInput={postalCodeInput}
-        postalCodeIsInvalid={onPostalCodeInvalid}
-        setCoordinates={handleGetCoordinates}
-        allowGeolocationMessage={() => {
-          setIsLoading(false);
-          showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
-        }}
-      />
-      <SecondaryText style={styles.description}>
-        {Labels.aroundMe.searchGeolocInstruction}
-      </SecondaryText>
-      <View style={styles.geolocationRow}>
-        <TouchableOpacity
-          onPress={() => {
-            checkLocation();
-          }}
-        >
-          <Image source={geolocationIcon} style={styles.geolicationIconStyle} />
-        </TouchableOpacity>
-        <CustomButton
-          buttonStyle={styles.geolicationButtonStyle}
-          title={Labels.aroundMe.useMyGeolocation}
-          titleStyle={styles.fontButton}
-          rounded={true}
-          action={() => {
-            checkLocation();
+      <View style={styles.paddingDefault}>
+        <SearchUserLocationOrPostalCodeCoords
+          triggerGetUserLocation={triggerCheckLocation}
+          triggerGetPostalCodeCoords={triggerSearchByPostalCode}
+          postalCodeInput={postalCodeInput}
+          postalCodeIsInvalid={onPostalCodeInvalid}
+          setCoordinates={handleGetCoordinates}
+          allowGeolocationMessage={() => {
+            setIsLoading(false);
+            showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
           }}
         />
-      </View>
-      <SecondaryText style={styles.description}>
-        {Labels.aroundMe.searchPostalCodeInstruction}
-      </SecondaryText>
-      <View style={styles.postalCodeRow}>
-        <TextInput
-          style={[
-            styles.postalCodeInput,
-            PLATFORM_IS_IOS && styles.widthForIos,
-          ]}
-          onChangeText={onPostalCodeChanged}
-          value={postalCodeInput}
-          placeholder={Labels.aroundMe.postalCodeInputPlaceholder}
-          keyboardType="number-pad"
-          maxLength={AroundMeConstants.POSTAL_CODE_MAX_LENGTH}
+        <SecondaryText style={styles.description}>
+          {Labels.aroundMe.searchGeolocInstruction}
+        </SecondaryText>
+        <View style={styles.geolocationRow}>
+          <TouchableOpacity
+            onPress={() => {
+              checkLocation();
+            }}
+          >
+            <Image
+              source={geolocationIcon}
+              style={styles.geolicationIconStyle}
+            />
+          </TouchableOpacity>
+          <CustomButton
+            buttonStyle={styles.geolicationButtonStyle}
+            title={Labels.aroundMe.useMyGeolocation}
+            titleStyle={styles.fontButton}
+            rounded={true}
+            action={() => {
+              checkLocation();
+            }}
+          />
+        </View>
+        <SecondaryText style={styles.description}>
+          {Labels.aroundMe.searchPostalCodeInstruction}
+        </SecondaryText>
+        <View style={styles.postalCodeRow}>
+          <TextInput
+            style={[
+              styles.postalCodeInput,
+              PLATFORM_IS_IOS && styles.widthForIos,
+            ]}
+            onChangeText={onPostalCodeChanged}
+            value={postalCodeInput}
+            placeholder={Labels.aroundMe.postalCodeInputPlaceholder}
+            keyboardType="number-pad"
+            maxLength={AroundMeConstants.POSTAL_CODE_MAX_LENGTH}
+          />
+          <CustomButton
+            buttonStyle={styles.searchByPostalCodeButton}
+            title={Labels.aroundMe.searchButton}
+            titleStyle={styles.fontButton}
+            rounded={true}
+            disabled={
+              postalCodeInvalid ||
+              postalCodeInput.length !==
+                AroundMeConstants.POSTAL_CODE_MAX_LENGTH
+            }
+            action={searchByPostalCode}
+          />
+        </View>
+        <HelperText type="error" visible={postalCodeInvalid}>
+          {Labels.aroundMe.postalCodeInvalid}
+        </HelperText>
+        <CustomSnackbar
+          duration={AroundMeConstants.SNACKBAR_DURATION}
+          visible={showSnackBar}
+          isOnTop
+          backgroundColor={Colors.aroundMeSnackbar.background}
+          onDismiss={() => {
+            setShowSnackBar(false);
+          }}
+          textColor={Colors.aroundMeSnackbar.text}
+          text={snackBarMessage}
         />
-        <CustomButton
-          buttonStyle={styles.searchByPostalCodeButton}
-          title={Labels.aroundMe.searchButton}
-          titleStyle={styles.fontButton}
-          rounded={true}
-          disabled={
-            postalCodeInvalid ||
-            postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH
-          }
-          action={searchByPostalCode}
-        />
       </View>
-      <HelperText type="error" visible={postalCodeInvalid}>
-        {Labels.aroundMe.postalCodeInvalid}
-      </HelperText>
-      <CustomSnackbar
-        duration={AroundMeConstants.SNACKBAR_DURATION}
-        visible={showSnackBar}
-        isOnTop
-        backgroundColor={Colors.aroundMeSnackbar.background}
-        onDismiss={() => {
-          setShowSnackBar(false);
-        }}
-        textColor={Colors.aroundMeSnackbar.text}
-        text={snackBarMessage}
-      />
       {isLoading && <MapLoader />}
     </ScrollView>
   );
@@ -203,8 +209,9 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    paddingHorizontal: Paddings.default,
-    paddingTop: Paddings.default,
+  },
+  paddingDefault: {
+    padding: Paddings.default,
   },
   postalCodeInput: {
     backgroundColor: Colors.cardGrey,
