@@ -12,6 +12,7 @@ import ErrorMessage from "./errorMessage.component";
 import HeaderApp from "./headerApp.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 import Loader from "./loader.component";
+import MapLoader from "./mapLoader.component";
 import ModalHelp from "./modalHelp.component";
 import NotificationModal from "./notificationModal.component";
 import ShareButton, { SharePageType } from "./shareButton.component";
@@ -39,6 +40,7 @@ export {
   Icomoon,
   IcomoonIcons,
   Loader,
+  MapLoader,
   ModalHelp,
   NotificationModal,
   SecondaryText,
