@@ -1,7 +1,6 @@
 import * as AccessibilityUtils from "./accessibility.util";
 import * as AroundMeUtils from "./aroundMe.util";
 import * as AssestUtils from "./asset.util";
-import * as DataFetchingUtils from "./dataFetching.util";
 import * as EpdsSurveyUtils from "./epdsSurvey.util";
 import * as KeyboardUtils from "./keyboard.util";
 import * as LinkingUtils from "./linking.util";
@@ -21,7 +20,6 @@ export {
   AccessibilityUtils,
   AroundMeUtils,
   AssestUtils,
-  DataFetchingUtils,
   EpdsSurveyUtils,
   getAppTheme,
   getVisuelFormat,

@@ -78,7 +78,7 @@ export const ARTICLE_DETAILS_WITH_ID = (articleId: number): string => `
     }
   `;
 
-export const QUESTIONNAIRE_EPDS = gql`
+export const EPDS_SURVEY = `
   query QuestionsReponses {
     questionnaireEpds(sort: "ordre") {
       ordre
