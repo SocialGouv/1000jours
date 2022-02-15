@@ -14,6 +14,30 @@ export const HOME_GET_ALL_STEPS = `
   }
 `;
 
+export const LIST_ARTICLES_WITH_STEP = (stepId: number): string => `
+query GetStepArticles {
+  articles(sort: "ordre", where: {
+    etapes: { id: ${stepId} }
+  })
+  {
+    id
+    titre
+    resume
+    visuel {
+      id
+      hash
+      url
+      height
+      width
+    }
+    thematiques {
+      nom
+      id
+    }
+  }
+}
+`;
+
 export const QUESTIONNAIRE_EPDS = gql`
   query QuestionsReponses {
     questionnaireEpds(sort: "ordre") {

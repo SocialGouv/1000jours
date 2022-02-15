@@ -16,7 +16,7 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import Labels from "../../constants/Labels";
-import { ApolloClientLazyQuery } from "../../services/apolloClient.component";
+import { ApolloClientLazyQuery } from "../../services";
 import { Colors, Paddings, Sizes } from "../../styles";
 import type { Step, TabHomeParamList, UserSituation } from "../../types";
 import {

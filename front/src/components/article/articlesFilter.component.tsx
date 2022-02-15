@@ -30,7 +30,7 @@ interface Props {
   applyFilters: (filters: ArticleFilter[]) => void;
 }
 
-const Filters: FC<Props> = ({ articles, applyFilters }) => {
+const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
   const getFilters = (articlesToFilter: Article[]) => {
     return _.chain(articlesToFilter)
       .flatMap(({ thematiques }) => {
@@ -294,4 +294,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Filters;
+export default ArticlesFilter;

@@ -1,5 +1,3 @@
-import { useQuery } from "@apollo/client";
-import { gql } from "@apollo/client/core";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import _ from "lodash";
@@ -9,20 +7,19 @@ import * as React from "react";
 import { AccessibilityInfo, ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-import { Filters } from "../../components";
-import ArticleCard from "../../components/article/articleCard.component";
+import { ArticleCard, ArticlesFilter } from "../../components";
 import {
   BackButton,
   CommonText,
   CustomButton,
-  ErrorMessage,
   Loader,
   SecondaryText,
   TitleH1,
   View,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { FetchPoliciesConstants, Labels } from "../../constants";
+import { DatabaseQueries, Labels } from "../../constants";
+import { ApolloClient } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
   Article,
@@ -48,33 +45,24 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     route.params.step.id == ETAPE_ENFANT_3_PREMIERS_MOIS;
   const [trackerAction, setTrackerAction] = useState("");
 
-  const [articles, setArticles] = React.useState<Article[]>([]);
-  const [filteredArticles, setFilteredArticles] = React.useState<Article[]>([]);
-  const [showArticles, setShowArticles] = React.useState(false);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
+  const [showArticles, setShowArticles] = useState(false);
 
-  const STEP_ARTICLES = gql`
-    query GetStepArticles {
-      articles(sort: "ordre", where: {
-        etapes: { id: ${route.params.step.id} }
-      })
-      {
-        id
-        titre
-        resume
-        visuel {
-          id
-          hash
-          url
-          height
-          width
-        }
-        thematiques {
-          nom
-          id
-        }
-      }
-    }
-  `;
+  useEffect(() => {
+    const articlesToShow = _.filter(articles, (article) => !article.hide);
+    setFilteredArticles(articlesToShow);
+    setShowArticles(true);
+    if (articlesToShow.length > 0)
+      AccessibilityInfo.announceForAccessibility(
+        articleToReadAccessibilityLabel()
+      );
+  }, [articles]);
+
+  const handleResults = (data: unknown) => {
+    const results = (data as { articles: Article[] }).articles;
+    setArticles(results);
+  };
 
   const navigateToSurvey = () => {
     navigation.navigate("epdsSurvey");
@@ -116,42 +104,18 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     setArticles(result);
   };
 
-  const { loading, error, data } = useQuery(STEP_ARTICLES, {
-    fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
-  });
-
   const articleToReadAccessibilityLabel = () =>
     `${filteredArticles.length} ${Labels.accessibility.articleToRead}`;
-
-  useEffect(() => {
-    if (!loading && data) {
-      const articlesToShow = _.filter(articles, (article) => !article.hide);
-      setFilteredArticles(articlesToShow);
-      setShowArticles(true);
-    }
-  }, [articles]);
-
-  useEffect(() => {
-    if (filteredArticles.length > 0)
-      AccessibilityInfo.announceForAccessibility(
-        articleToReadAccessibilityLabel()
-      );
-  }, [filteredArticles]);
-
-  useEffect(() => {
-    if (!loading && data) {
-      const results = (data as { articles: Article[] }).articles;
-      setArticles(results);
-    }
-  }, [loading, data]);
-
-  if (error) return <ErrorMessage error={error} />;
 
   return (
     <ScrollView style={styles.scrollView}>
       <TrackerHandler
         screenName={`${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`}
         actionName={trackerAction}
+      />
+      <ApolloClient
+        query={DatabaseQueries.LIST_ARTICLES_WITH_STEP(route.params.step.id)}
+        updateFetchedData={handleResults}
       />
       <View style={styles.topContainer}>
         <View style={[styles.flexStart]}>
@@ -185,9 +149,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
           />
         </View>
       )}
-
-      <Filters articles={articles} applyFilters={applyFilters} />
-
+      <ArticlesFilter articles={articles} applyFilters={applyFilters} />
       {showArticles ? (
         <View style={styles.listContainer}>
           <SecondaryText

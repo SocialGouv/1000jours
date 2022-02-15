@@ -8,7 +8,8 @@ import type { FC } from "react";
 import { useEffect, useState } from "react";
 import * as React from "react";
 
-import { ErrorMessage, Loader } from "../components/baseComponents";
+import { ErrorMessage, Loader } from "../../components/baseComponents";
+import { FetchPoliciesConstants } from "../../constants";
 
 interface Props {
   query: string;
@@ -49,7 +50,7 @@ export const ApolloClientLazyQuery: FC<PropsLazy> = ({
   const [fetchData, { loading, error, data, called, refetch }] = useLazyQuery(
     gql(query),
     {
-      fetchPolicy,
+      fetchPolicy: fetchPolicy ?? FetchPoliciesConstants.NETWORK_ONLY,
       onCompleted: () => {
         updateFetchedData(data);
       },
