@@ -1,3 +1,10 @@
+## [1.93.3](https://github.com/SocialGouv/1000jours/compare/v1.93.2...v1.93.3) (2022-02-15)
+
+
+### Bug Fixes
+
+* **carto:** use another loader for carto ([#1052](https://github.com/SocialGouv/1000jours/issues/1052)) ([fae82ba](https://github.com/SocialGouv/1000jours/commit/fae82ba019e0537e10607d699432a6fd303f7ce8))
+
 ## [1.93.2](https://github.com/SocialGouv/1000jours/compare/v1.93.1...v1.93.2) (2022-02-14)
 
 
