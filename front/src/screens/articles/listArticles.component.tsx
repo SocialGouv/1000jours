@@ -18,7 +18,7 @@ import {
   View,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { DatabaseQueries, Labels } from "../../constants";
+import { DatabaseQueries, FetchPoliciesConstants, Labels } from "../../constants";
 import { ApolloClient } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
@@ -115,6 +115,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
       />
       <ApolloClient
         query={DatabaseQueries.LIST_ARTICLES_WITH_STEP(route.params.step.id)}
+        fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
         updateFetchedData={handleResults}
       />
       <View style={styles.topContainer}>

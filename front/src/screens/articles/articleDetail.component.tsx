@@ -1,30 +1,34 @@
-import { useQuery } from "@apollo/client";
-import { gql } from "@apollo/client/core";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
+import { useState } from "react";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
-import DidYouKnow from "../../components/article/didYouKnow.component";
-import ImageBanner from "../../components/article/imageBanner.component";
-import InShort from "../../components/article/inShort.component";
-import Links from "../../components/article/links.component";
-import SubTitle from "../../components/article/subTitle.component";
-import TextHtml from "../../components/article/textHtml.component";
-import Thematics from "../../components/article/thematics.component";
-import Title from "../../components/article/title.component";
+import {
+  DidYouKnow,
+  ImageBanner,
+  InShort,
+  Links,
+  SubTitle,
+  TextHtml,
+  Thematics,
+  Title,
+} from "../../components";
 import {
   BackButton,
-  ErrorMessage,
-  Loader,
   ShareButton,
   SharePageType,
   TitleH1,
   View,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { FetchPoliciesConstants, Labels } from "../../constants";
+import {
+  DatabaseQueries,
+  FetchPoliciesConstants,
+  Labels,
+} from "../../constants";
+import { ApolloClient } from "../../services";
 import { Paddings } from "../../styles";
 import type {
   Article,
@@ -60,49 +64,7 @@ const ArticleDetail: FC<Props> = ({
     : _articleStep?.description;
   let inShortArray: ArticleInShortItem[] = [];
   let linksArray: ArticleLink[] = [];
-
-  const ARTICLE_DETAIL = gql`
-    query GetArticleDetail {
-      article(id: ${articleId}) {
-        id
-        titre
-        resume
-        texteTitre1: texte_1_titre
-        texte1: texte_1
-        texteTitre2: texte_2_titre
-        texte2: texte_2
-        leSaviezVous: le_saviez_vous
-        enbrefTexte1: enbref_1_texte
-        enbrefTexte2: enbref_2_texte
-        enbrefTexte3: enbref_3_texte
-        enbrefIcone1: enbref_1_icone
-        enbrefIcone2: enbref_2_icone
-        enbrefIcone3: enbref_3_icone
-        lienTitre1: lien_1_titre
-        lienTitre2: lien_2_titre
-        lienTitre3: lien_3_titre
-        lienTitre4: lien_4_titre
-        lienUrl1: lien_1_url
-        lienUrl2: lien_2_url
-        lienUrl3: lien_3_url
-        lienUrl4: lien_4_url
-        visuel {
-          id
-          hash
-          url
-          height
-          width
-        }
-        thematiques {
-          nom
-          id
-        }
-      }
-    }
-  `;
-  const { loading, error, data } = useQuery(ARTICLE_DETAIL, {
-    fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
-  });
+  const [currentArticle, setCurrentArticle] = useState<Article | undefined>();
 
   const setInShortArray = (article: Article) => {
     inShortArray = [
@@ -120,68 +82,79 @@ const ArticleDetail: FC<Props> = ({
     ];
   };
 
-  if (loading) return <Loader />;
-  if (error) return <ErrorMessage error={error} />;
-
-  const result = data as { article: Article };
-  setInShortArray(result.article);
-  setLinksArray(result.article);
+  const handleResults = (data: unknown) => {
+    const result = (data as { article: Article }).article;
+    setInShortArray(result);
+    setLinksArray(result);
+    setCurrentArticle(result);
+  };
 
   return (
-    <ScrollView>
-      <TrackerHandler
-        screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${result.article.titre}`}
-      />
-      <View style={[styles.mainContainer]}>
-        <View>
-          <View style={[styles.flexStart]}>
-            <BackButton
-              action={() => {
-                if (goBack) goBack();
-                else navigation?.goBack();
-              }}
-            />
-          </View>
-          <TitleH1
-            title={screenTitle}
-            description={description}
-            animated={true}
+    <>
+      {articleId && (
+        <ApolloClient
+          query={DatabaseQueries.ARTICLE_DETAILS_WITH_ID(articleId)}
+          fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
+          updateFetchedData={handleResults}
+        />
+      )}
+      {currentArticle && (
+        <ScrollView>
+          <TrackerHandler
+            screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${currentArticle.titre}`}
           />
-        </View>
-        <View>
-          <View style={styles.imageBannerContainer}>
-            <ImageBanner visuel={result.article.visuel} />
-            <View style={styles.flexEnd}>
-              <ShareButton
-                buttonTitle={Labels.buttons.share}
-                title={Labels.appName}
-                message={`${Labels.share.article.messageStart} "${result.article.titre}" ${Labels.share.article.messageEnd}`}
-                page={SharePageType.article}
-                id={result.article.id}
-                buttonStyle={styles.shareButton}
+          <View style={[styles.mainContainer]}>
+            <View>
+              <View style={[styles.flexStart]}>
+                <BackButton
+                  action={() => {
+                    if (goBack) goBack();
+                    else navigation?.goBack();
+                  }}
+                />
+              </View>
+              <TitleH1
+                title={screenTitle}
+                description={description}
+                animated={true}
               />
             </View>
+            <View>
+              <View style={styles.imageBannerContainer}>
+                <ImageBanner visuel={currentArticle.visuel} />
+                <View style={styles.flexEnd}>
+                  <ShareButton
+                    buttonTitle={Labels.buttons.share}
+                    title={Labels.appName}
+                    message={`${Labels.share.article.messageStart} "${currentArticle.titre}" ${Labels.share.article.messageEnd}`}
+                    page={SharePageType.article}
+                    id={currentArticle.id}
+                    buttonStyle={styles.shareButton}
+                  />
+                </View>
+              </View>
+              <View style={styles.articleDetails}>
+                <Title title={currentArticle.titre} />
+                <Thematics items={currentArticle.thematiques} />
+                <SubTitle title={currentArticle.texteTitre1} />
+                <TextHtml
+                  html={currentArticle.texte1}
+                  offsetTotal={paddingMainContent + paddingArticleContent}
+                />
+                <DidYouKnow description={currentArticle.leSaviezVous} />
+                <SubTitle title={currentArticle.texteTitre2} />
+                <TextHtml
+                  html={currentArticle.texte2}
+                  offsetTotal={paddingMainContent + paddingArticleContent}
+                />
+                <InShort inShortArray={inShortArray} />
+                <Links linksArray={linksArray} />
+              </View>
+            </View>
           </View>
-          <View style={styles.articleDetails}>
-            <Title title={result.article.titre} />
-            <Thematics items={result.article.thematiques} />
-            <SubTitle title={result.article.texteTitre1} />
-            <TextHtml
-              html={result.article.texte1}
-              offsetTotal={paddingMainContent + paddingArticleContent}
-            />
-            <DidYouKnow description={result.article.leSaviezVous} />
-            <SubTitle title={result.article.texteTitre2} />
-            <TextHtml
-              html={result.article.texte2}
-              offsetTotal={paddingMainContent + paddingArticleContent}
-            />
-            <InShort inShortArray={inShortArray} />
-            <Links linksArray={linksArray} />
-          </View>
-        </View>
-      </View>
-    </ScrollView>
+        </ScrollView>
+      )}
+    </>
   );
 };
 
