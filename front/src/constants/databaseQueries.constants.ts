@@ -1,7 +1,84 @@
 import type { DocumentNode } from "@apollo/client/core";
 import { gql } from "@apollo/client/core";
 
-export const QUESTIONNAIRE_EPDS = gql`
+export const HOME_GET_ALL_STEPS = `
+  query GetAllSteps {
+    etapes(sort: "id") {
+      id
+      nom
+      ordre
+      description
+      debut
+      fin
+    }
+  }
+`;
+
+export const LIST_ARTICLES_WITH_STEP = (stepId: number): string => `
+query GetStepArticles {
+  articles(sort: "ordre", where: {
+    etapes: { id: ${stepId} }
+  })
+  {
+    id
+    titre
+    resume
+    visuel {
+      id
+      hash
+      url
+      height
+      width
+    }
+    thematiques {
+      nom
+      id
+    }
+  }
+}
+`;
+
+export const ARTICLE_DETAILS_WITH_ID = (articleId: number): string => `
+    query GetArticleDetail {
+      article(id: ${articleId}) {
+        id
+        titre
+        resume
+        texteTitre1: texte_1_titre
+        texte1: texte_1
+        texteTitre2: texte_2_titre
+        texte2: texte_2
+        leSaviezVous: le_saviez_vous
+        enbrefTexte1: enbref_1_texte
+        enbrefTexte2: enbref_2_texte
+        enbrefTexte3: enbref_3_texte
+        enbrefIcone1: enbref_1_icone
+        enbrefIcone2: enbref_2_icone
+        enbrefIcone3: enbref_3_icone
+        lienTitre1: lien_1_titre
+        lienTitre2: lien_2_titre
+        lienTitre3: lien_3_titre
+        lienTitre4: lien_4_titre
+        lienUrl1: lien_1_url
+        lienUrl2: lien_2_url
+        lienUrl3: lien_3_url
+        lienUrl4: lien_4_url
+        visuel {
+          id
+          hash
+          url
+          height
+          width
+        }
+        thematiques {
+          nom
+          id
+        }
+      }
+    }
+  `;
+
+export const EPDS_SURVEY = `
   query QuestionsReponses {
     questionnaireEpds(sort: "ordre") {
       ordre
