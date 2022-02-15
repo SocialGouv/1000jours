@@ -20,7 +20,7 @@ import SearchUserLocationOrPostalCodeCoords from "../aroundMe/searchUserLocation
 import {
   CustomButton,
   CustomSnackbar,
-  Loader,
+  MapLoader,
   SecondaryText,
   View,
 } from "../baseComponents";
@@ -174,7 +174,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
         textColor={Colors.aroundMeSnackbar.text}
         text={snackBarMessage}
       />
-      {isLoading && <Loader />}
+      {isLoading && <MapLoader />}
     </ScrollView>
   );
 };

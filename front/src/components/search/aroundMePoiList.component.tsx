@@ -11,7 +11,7 @@ import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 import AroundMeMapHeader from "../aroundMe/aroundMeMapHeader.component";
 import FetchPois from "../aroundMe/fetchPois.component";
 import PoiList from "../aroundMe/poiList.component";
-import { CommonText, CustomSnackbar, Loader, View } from "../baseComponents";
+import { CommonText, CustomSnackbar, MapLoader, View } from "../baseComponents";
 
 interface Props {
   region: Region;
@@ -100,7 +100,7 @@ const AroundMePoiList: FC<Props> = ({
         textColor={Colors.aroundMeSnackbar.text}
         text={snackBarMessage}
       />
-      {isLoading && <Loader />}
+      {isLoading && <MapLoader />}
     </View>
   );
 };
