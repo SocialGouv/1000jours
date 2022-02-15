@@ -25,7 +25,7 @@ import {
   StorageUtils,
   TrackerUtils,
 } from "../../utils";
-import { CustomSnackbar, Loader, View } from "../baseComponents";
+import { CustomSnackbar, MapLoader, View } from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
 import AddressDetails from "./addressDetails.component";
 import AroundMeMapHeader from "./aroundMeMapHeader.component";
@@ -326,7 +326,13 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
           />
         </View>
       )}
-      {isLoading && <Loader />}
+      {isLoading && (
+        <MapLoader
+          onTouchEnd={() => {
+            setIsLoading(false);
+          }}
+        />
+      )}
     </View>
   );
 };
