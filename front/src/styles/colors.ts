@@ -49,6 +49,7 @@ const Colors = {
     paginationDefault: "#26366E",
     paginationActive: "#74C09F",
   },
+  mapLoaderBackground: "#00000030",
 };
 
 export default Colors;

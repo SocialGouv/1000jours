@@ -14,7 +14,7 @@ import {
 } from "../../components";
 import {
   CustomSnackbar,
-  Loader,
+  MapLoader,
   TitleH1,
   View,
 } from "../../components/baseComponents";
@@ -151,7 +151,13 @@ const AroundMeScreen: FC = () => {
                 }}
               />
             )}
-          {isLoading && <Loader />}
+          {isLoading && (
+            <MapLoader
+              onTouchEnd={() => {
+                setIsLoading(false);
+              }}
+            />
+          )}
         </View>
       </View>
     )
