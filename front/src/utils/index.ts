@@ -1,7 +1,6 @@
 import * as AccessibilityUtils from "./accessibility.util";
 import * as AroundMeUtils from "./aroundMe.util";
 import * as AssestUtils from "./asset.util";
-import * as DataFetchingUtils from "./dataFetching.util";
 import * as EpdsSurveyUtils from "./epdsSurvey.util";
 import * as KeyboardUtils from "./keyboard.util";
 import * as LinkingUtils from "./linking.util";
@@ -10,6 +9,7 @@ import { initMonitoring, reportError } from "./logging.util";
 import * as NotificationUtils from "./notification.util";
 import * as RootNavigation from "./rootNavigation.util";
 import * as SearchUtils from "./search.util";
+import * as StepUtils from "./step.util";
 import * as StorageUtils from "./storage.util";
 import * as StringUtils from "./strings.util";
 import { getAppTheme } from "./theme.util";
@@ -20,7 +20,6 @@ export {
   AccessibilityUtils,
   AroundMeUtils,
   AssestUtils,
-  DataFetchingUtils,
   EpdsSurveyUtils,
   getAppTheme,
   getVisuelFormat,
@@ -32,6 +31,7 @@ export {
   reportError,
   RootNavigation,
   SearchUtils,
+  StepUtils,
   StorageUtils,
   StringUtils,
   TrackerUtils,

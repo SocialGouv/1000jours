@@ -1,5 +1,5 @@
 import ExpoFastImage from "expo-fast-image";
-import type { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
@@ -25,8 +25,8 @@ const ArticleCard: FC<Props> = ({
   setStepAndArticleId,
 }) => {
   // Permet de forcer le composant ExpoFastImage à être actualisé
-  const [showImage, setShowImage] = React.useState(false);
-  React.useEffect(() => {
+  const [showImage, setShowImage] = useState(false);
+  useEffect(() => {
     let mounted = true;
     setTimeout(() => {
       if (mounted) setShowImage(Boolean(article.visuel?.id));

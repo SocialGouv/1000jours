@@ -11,8 +11,8 @@ import {
 } from "../../constants";
 import { Colors, Sizes } from "../../styles";
 import type { TabHomeParamList } from "../../types";
-import { TimelineStepLibrary } from "..";
 import { View } from "../baseComponents";
+import TimelineStepLibrary from "../timeline/timelineStepLibrary.component";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;

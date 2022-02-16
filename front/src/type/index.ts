@@ -3,7 +3,6 @@ import {
   CartoFilterStorage,
   FetchedFilterFromDb,
 } from "./aroundMe.types";
-import { DataFetchingType } from "./dataFetching.types";
 import {
   BeContactedColors,
   BeContactedData,
@@ -27,7 +26,6 @@ export {
   BeContactedData,
   CartoFilter,
   CartoFilterStorage,
-  DataFetchingType,
   EpdsAnswer,
   EpdsGenders,
   EpdsGenderType,

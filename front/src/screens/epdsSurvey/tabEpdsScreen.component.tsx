@@ -3,23 +3,28 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
-import { View } from "../../components/baseComponents";
-import EpdsGenderEntry from "../../components/epdsSurvey/epdsGenderEntry.component";
-import EpdsOnboarding from "../../components/epdsSurvey/epdsOnboarding.component";
-import EpdsSurveyContent from "../../components/epdsSurvey/epdsSurveyContent.component";
-import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { DatabaseQueries, StorageKeysConstants } from "../../constants";
-import type { DataFetchingType, EpdsQuestionAndAnswers } from "../../type";
 import {
-  DataFetchingUtils,
-  EpdsSurveyUtils,
-  StorageUtils,
-  TrackerUtils,
-} from "../../utils";
+  EpdsGenderEntry,
+  EpdsOnboarding,
+  EpdsSurveyContent,
+} from "../../components";
+import { View } from "../../components/baseComponents";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
+import {
+  DatabaseQueries,
+  FetchPoliciesConstants,
+  StorageKeysConstants,
+} from "../../constants";
+import { ApolloClient } from "../../services";
+import type { EpdsQuestionAndAnswers } from "../../type";
+import { EpdsSurveyUtils, StorageUtils, TrackerUtils } from "../../utils";
 
 const TabEpdsScreen: FC = () => {
   const [onboardingIsDone, setOnboardingIsDone] = useState(false);
   const [genderIsEntered, setGenderIsEntered] = useState(false);
+  const [questionAndAnswers, setQuestionAndAnswers] = useState<
+    EpdsQuestionAndAnswers[]
+  >([]);
 
   useEffect(() => {
     const getGenderFromStorage = async () => {
@@ -31,16 +36,9 @@ const TabEpdsScreen: FC = () => {
     void getGenderFromStorage();
   }, []);
 
-  const fetchedData: DataFetchingType = DataFetchingUtils.fetchData(
-    DatabaseQueries.QUESTIONNAIRE_EPDS
-  );
-
-  if (!fetchedData.isFetched && fetchedData.loadingOrErrorComponent) {
-    return fetchedData.loadingOrErrorComponent;
-  }
-
-  const questionAndAnswers: EpdsQuestionAndAnswers[] =
-    EpdsSurveyUtils.getQuestionsAndAnswersFromData(fetchedData.response);
+  const handleResults = (data: unknown) => {
+    setQuestionAndAnswers(EpdsSurveyUtils.getQuestionsAndAnswersFromData(data));
+  };
 
   const goToEpdsSurvey = () => {
     setGenderIsEntered(true);
@@ -63,6 +61,11 @@ const TabEpdsScreen: FC = () => {
   return (
     <View style={styles.mainContainer}>
       <TrackerHandler screenName={TrackerUtils.TrackingEvent.EPDS} />
+      <ApolloClient
+        query={DatabaseQueries.EPDS_SURVEY}
+        fetchPolicy={FetchPoliciesConstants.NO_CACHE}
+        updateFetchedData={handleResults}
+      />
       {getViewToDisplay()}
     </View>
   );
