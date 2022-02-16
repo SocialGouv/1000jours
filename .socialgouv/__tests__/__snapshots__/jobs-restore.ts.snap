@@ -7,11 +7,13 @@ kind: Job
 metadata:
   name: copy-db-0123456
   annotations:
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: master-dev42
-    app.gitlab.com/env.name: master-dev42
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/1000jours
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
     kapp.k14s.io/update-strategy: skip
-  namespace: 1000jours-85-master-dev42
+  namespace: env-1000jours-mybranch-3s2aqr
 spec:
   backoffLimit: 0
   template:
@@ -55,7 +57,7 @@ spec:
             - name: TO_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: azure-pg-user-master
+                  name: azure-pg-user-mybranch
                   key: DATABASE_URL
           envFrom: []
           image: postgres:11
@@ -91,16 +93,18 @@ stringData:
   PGUSER: user_develop@les1000joursdevserver.postgres.database.azure.com
 metadata:
   annotations:
-    app.gitlab.com/app: socialgouv-1000jours
-    app.gitlab.com/env: master-dev42
-    app.gitlab.com/env.name: master-dev42
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/1000jours
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
   labels:
-    application: master-dev42-1000jours
-    component: master-dev42-1000jours
+    application: 1000jours
+    component: 1000jours
     owner: 1000jours
     team: 1000jours
     cert: wildcard
   name: azure-pg-user-develop
-  namespace: 1000jours-85-master-dev42
+  namespace: env-1000jours-mybranch-3s2aqr
 "
 `;
