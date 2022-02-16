@@ -17,7 +17,7 @@ interface Props {
   updateFetchedData: (data: unknown) => void;
 }
 
-export const ApolloQuery: FC<Props> = ({
+export const GraphQlQuery: FC<Props> = ({
   query,
   fetchPolicy,
   updateFetchedData,
@@ -39,7 +39,7 @@ interface PropsLazy extends Props {
   variables?: QueryLazyOptions<OperationVariables>;
 }
 
-export const ApolloLazyQuery: FC<PropsLazy> = ({
+export const GraphQlLazyQuery: FC<PropsLazy> = ({
   query,
   fetchPolicy,
   updateFetchedData,

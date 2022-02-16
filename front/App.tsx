@@ -21,14 +21,14 @@ import { initLocales } from "./src/config/calendar-config";
 import { StorageKeysConstants } from "./src/constants";
 import { useCachedResources, useColorScheme } from "./src/hooks";
 import Navigation from "./src/navigation/navigation.component";
-import { apolloService } from "./src/services";
+import { getGraphQlClient } from "./src/services";
 import { initMonitoring, StorageUtils, TrackerUtils } from "./src/utils";
 
 setNotificationHandler();
 initLocales();
 initMonitoring();
 
-const client = apolloService.getApolloClient();
+const client = getGraphQlClient();
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const customFonts = { IcoMoon: IcomoonFont };

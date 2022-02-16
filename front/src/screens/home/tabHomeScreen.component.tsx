@@ -16,7 +16,7 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import Labels from "../../constants/Labels";
-import { ApolloLazyQuery } from "../../services";
+import { GraphQlLazyQuery } from "../../services";
 import { Colors, Paddings, Sizes } from "../../styles";
 import type { Step, TabHomeParamList, UserSituation } from "../../types";
 import {
@@ -124,7 +124,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   return (
     <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>
       <TrackerHandler screenName={TrackerUtils.TrackingEvent.HOME} />
-      <ApolloLazyQuery
+      <GraphQlLazyQuery
         query={DatabaseQueries.HOME_GET_ALL_STEPS}
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
         updateFetchedData={handleResults}

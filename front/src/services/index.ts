@@ -1,4 +1,7 @@
-import * as apolloService from "./apollo/apollo.service";
-import { ApolloLazyQuery, ApolloQuery } from "./apollo/apolloQueries.component";
+import { getGraphQlClient } from "./graphQl/graphQlClient.service";
+import {
+  GraphQlLazyQuery,
+  GraphQlQuery,
+} from "./graphQl/graphQlQueries.component";
 
-export { ApolloLazyQuery, ApolloQuery, apolloService };
+export { getGraphQlClient, GraphQlLazyQuery, GraphQlQuery };
