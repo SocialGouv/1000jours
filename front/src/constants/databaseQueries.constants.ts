@@ -95,7 +95,7 @@ export const EPDS_SURVEY = `
   }
 `;
 
-export const EPDS_ADD_RESPONSE = gql`
+export const EPDS_ADD_RESPONSE = `
   mutation (
     $genre: ENUM_REPONSESEPDS_GENRE!
     $compteur: Int!

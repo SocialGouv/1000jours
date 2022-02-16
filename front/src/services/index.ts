@@ -1,7 +1,17 @@
-import { getGraphQlClient } from "./graphQl/graphQlClient.service";
+import {
+  getGraphQlClient,
+  getGraphQlClientNoCache,
+} from "./graphQl/graphQlClient.service";
+import { GraphQlMutation } from "./graphQl/graphQlMutation.component";
 import {
   GraphQlLazyQuery,
   GraphQlQuery,
 } from "./graphQl/graphQlQueries.component";
 
-export { getGraphQlClient, GraphQlLazyQuery, GraphQlQuery };
+export {
+  getGraphQlClient,
+  getGraphQlClientNoCache,
+  GraphQlLazyQuery,
+  GraphQlMutation,
+  GraphQlQuery,
+};

@@ -1,8 +1,4 @@
-import type {
-  OperationVariables,
-  QueryLazyOptions,
-  WatchQueryFetchPolicy,
-} from "@apollo/client";
+import type { WatchQueryFetchPolicy } from "@apollo/client";
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
@@ -36,7 +32,6 @@ export const GraphQlQuery: FC<Props> = ({
 
 interface PropsLazy extends Props {
   triggerLaunchQuery: boolean;
-  variables?: QueryLazyOptions<OperationVariables>;
 }
 
 export const GraphQlLazyQuery: FC<PropsLazy> = ({
@@ -44,7 +39,6 @@ export const GraphQlLazyQuery: FC<PropsLazy> = ({
   fetchPolicy,
   updateFetchedData,
   triggerLaunchQuery,
-  variables,
 }) => {
   const [componentIsInitialized, setComponentIsInitialized] = useState(false);
   const [fetchData, { loading, error, data, called, refetch }] = useLazyQuery(
@@ -54,7 +48,6 @@ export const GraphQlLazyQuery: FC<PropsLazy> = ({
       onCompleted: () => {
         updateFetchedData(data);
       },
-      variables,
     }
   );
 
