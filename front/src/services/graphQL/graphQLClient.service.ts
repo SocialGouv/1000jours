@@ -24,5 +24,5 @@ export const getGraphQlClient = (): ApolloClient<NormalizedCacheObject> => {
 
 export const getGraphQlClientNoCache =
   (): ApolloClient<NormalizedCacheObject> => {
-    return new ApolloClient(getGraphQlClientOptions(true));
+    return new ApolloClient(getGraphQLClientOptions(true));
   };
