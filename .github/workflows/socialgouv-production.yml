@@ -51,6 +51,7 @@ jobs:
         productionNamespace: "les1000jours"
         rancherId: ${{ secrets.RANCHER_PROJECT_ID }}
         socialgouvBaseDomain: ${{ secrets.SOCIALGOUV_BASE_DOMAIN }}
+        pgUserSecretPrefix: pg-user
 
     - name: Use autodevops deployment
       uses: SocialGouv/actions/autodevops-deploy@v1
