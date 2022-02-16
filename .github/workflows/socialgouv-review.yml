@@ -52,12 +52,12 @@ jobs:
   ## GENERATE KUBERNETES MANIFESTS
   ##############################################################################
   manifests:
-    name: Generate k8s manifests
+    name: Generate autodevops manifests
     runs-on: ubuntu-latest
     steps:
 
     - name: Use autodevops manifests generation
-      uses: SocialGouv/actions/k8s-manifests@v1
+      uses: SocialGouv/actions/autodevops-manifests@v1
       with:
         environment: "dev"
         rancherId: ${{ secrets.RANCHER_PROJECT_ID }}
