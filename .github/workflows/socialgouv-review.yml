@@ -25,6 +25,7 @@ jobs:
       with:
         kubeconfig: ${{ secrets.KUBECONFIG }}
         rancherId: ${{ secrets.RANCHER_PROJECT_ID }}
+        projectName: les1000jours
 
   ##############################################################################
   ## BUILD AND REGISTER STRAPI IMAGE
