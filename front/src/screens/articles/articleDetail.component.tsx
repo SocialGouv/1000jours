@@ -28,7 +28,7 @@ import {
   FetchPoliciesConstants,
   Labels,
 } from "../../constants";
-import { ApolloClient } from "../../services";
+import { ApolloQuery } from "../../services";
 import { Paddings } from "../../styles";
 import type {
   Article,
@@ -92,7 +92,7 @@ const ArticleDetail: FC<Props> = ({
   return (
     <>
       {articleId && (
-        <ApolloClient
+        <ApolloQuery
           query={DatabaseQueries.ARTICLE_DETAILS_WITH_ID(articleId)}
           fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
           updateFetchedData={handleResults}

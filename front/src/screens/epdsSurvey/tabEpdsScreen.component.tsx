@@ -15,7 +15,7 @@ import {
   FetchPoliciesConstants,
   StorageKeysConstants,
 } from "../../constants";
-import { ApolloClient } from "../../services";
+import { ApolloQuery } from "../../services";
 import type { EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, StorageUtils, TrackerUtils } from "../../utils";
 
@@ -61,7 +61,7 @@ const TabEpdsScreen: FC = () => {
   return (
     <View style={styles.mainContainer}>
       <TrackerHandler screenName={TrackerUtils.TrackingEvent.EPDS} />
-      <ApolloClient
+      <ApolloQuery
         query={DatabaseQueries.EPDS_SURVEY}
         fetchPolicy={FetchPoliciesConstants.NO_CACHE}
         updateFetchedData={handleResults}

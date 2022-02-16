@@ -1,7 +1,4 @@
 import * as apolloService from "./apollo/apollo.service";
-import {
-  ApolloClient,
-  ApolloClientLazyQuery,
-} from "./apollo/apolloClient.component";
+import { ApolloLazyQuery, ApolloQuery } from "./apollo/apolloQueries.component";
 
-export { ApolloClient, ApolloClientLazyQuery, apolloService };
+export { ApolloLazyQuery, ApolloQuery, apolloService };
