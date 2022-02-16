@@ -1,3 +1,10 @@
+## [1.93.4](https://github.com/SocialGouv/1000jours/compare/v1.93.3...v1.93.4) (2022-02-16)
+
+
+### Bug Fixes
+
+* 🐛 fix de la carto avec la geoloc sur iOS ([#1054](https://github.com/SocialGouv/1000jours/issues/1054)) ([b38cd5f](https://github.com/SocialGouv/1000jours/commit/b38cd5ff4a338e64b6697b56c857f3f2c47f764c))
+
 ## [1.93.3](https://github.com/SocialGouv/1000jours/compare/v1.93.2...v1.93.3) (2022-02-15)
 
 
