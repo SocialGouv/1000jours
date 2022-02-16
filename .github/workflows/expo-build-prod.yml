@@ -22,6 +22,7 @@ jobs:
       DEEPLINK_DOMAIN: 1000jours.fabrique.social.gouv.fr
       DEEPLINK_PATH: app-millejours
       NODE_OPTIONS: --max_old_space_size=8192
+      EPDS_WIDGET_URL: https://nos1000jours-blues-epds-widget.fabrique.social.gouv.fr
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -54,6 +55,7 @@ jobs:
       DEEPLINK_DOMAIN: 1000jours.fabrique.social.gouv.fr
       DEEPLINK_PATH: app-millejours
       NODE_OPTIONS: --max_old_space_size=8192
+      EPDS_WIDGET_URL: https://nos1000jours-blues-epds-widget.fabrique.social.gouv.fr
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
