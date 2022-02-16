@@ -8,7 +8,7 @@ const cache = new InMemoryCache();
 const headers = { "content-type": "application/json" };
 const uri = `${process.env.API_URL}/graphql`;
 
-const getGraphQlClientOptions = (
+const getGraphQLClientOptions = (
   withNoCacheUri: boolean
 ): ApolloClientOptions<NormalizedCacheObject> => {
   return {
@@ -19,7 +19,7 @@ const getGraphQlClientOptions = (
 };
 
 export const getGraphQlClient = (): ApolloClient<NormalizedCacheObject> => {
-  return new ApolloClient(getGraphQlClientOptions(false));
+  return new ApolloClient(getGraphQLClientOptions(false));
 };
 
 export const getGraphQlClientNoCache =

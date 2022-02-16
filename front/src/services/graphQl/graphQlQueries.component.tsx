@@ -13,7 +13,7 @@ interface Props {
   updateFetchedData: (data: unknown) => void;
 }
 
-export const GraphQlQuery: FC<Props> = ({
+export const GraphQLQuery: FC<Props> = ({
   query,
   fetchPolicy,
   updateFetchedData,
@@ -34,7 +34,7 @@ interface PropsLazy extends Props {
   triggerLaunchQuery: boolean;
 }
 
-export const GraphQlLazyQuery: FC<PropsLazy> = ({
+export const GraphQLLazyQuery: FC<PropsLazy> = ({
   query,
   fetchPolicy,
   updateFetchedData,

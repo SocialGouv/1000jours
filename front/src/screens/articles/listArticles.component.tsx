@@ -23,7 +23,7 @@ import {
   FetchPoliciesConstants,
   Labels,
 } from "../../constants";
-import { GraphQlQuery } from "../../services";
+import { GraphQLQuery } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
   Article,
@@ -117,7 +117,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
         screenName={`${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`}
         actionName={trackerAction}
       />
-      <GraphQlQuery
+      <GraphQLQuery
         query={DatabaseQueries.LIST_ARTICLES_WITH_STEP(route.params.step.id)}
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
         updateFetchedData={handleResults}

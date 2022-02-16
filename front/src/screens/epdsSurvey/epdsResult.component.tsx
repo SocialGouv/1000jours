@@ -25,7 +25,7 @@ import {
   Labels,
   StorageKeysConstants,
 } from "../../constants";
-import { GraphQlMutation } from "../../services";
+import { GraphQLMutation } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, NotificationUtils, StorageUtils } from "../../utils";
@@ -122,7 +122,7 @@ const EpdsResult: FC<Props> = ({
 
   return (
     <>
-      <GraphQlMutation
+      <GraphQLMutation
         query={DatabaseQueries.EPDS_ADD_RESPONSE}
         variables={queryVariables}
         triggerLaunchMutation={triggerLaunchQuery}
