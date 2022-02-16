@@ -3,7 +3,7 @@ import { gql, useMutation } from "@apollo/client";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
 
-import { getGraphQlClientNoCache } from "./graphQLClient.service";
+import { getGraphQLClientNoCache } from "./graphQLClient.service";
 
 interface Props {
   query: string;
@@ -21,7 +21,7 @@ export const GraphQLMutation: FC<Props> = ({
   const [componentIsInitialized, setComponentIsInitialized] = useState(false);
   const queryVariables: OperationVariables = { variables };
   const [launchMutation, { data }] = useMutation(gql(query), {
-    client: getGraphQlClientNoCache(),
+    client: getGraphQLClientNoCache(),
     onCompleted: () => {
       if (onCompleted) onCompleted(data);
     },

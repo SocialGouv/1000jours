@@ -18,11 +18,11 @@ const getGraphQLClientOptions = (
   };
 };
 
-export const getGraphQlClient = (): ApolloClient<NormalizedCacheObject> => {
+export const getGraphQLClient = (): ApolloClient<NormalizedCacheObject> => {
   return new ApolloClient(getGraphQLClientOptions(false));
 };
 
-export const getGraphQlClientNoCache =
+export const getGraphQLClientNoCache =
   (): ApolloClient<NormalizedCacheObject> => {
     return new ApolloClient(getGraphQLClientOptions(true));
   };
