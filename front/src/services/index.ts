@@ -1,12 +1,12 @@
 import {
   getGraphQlClient,
   getGraphQlClientNoCache,
-} from "./graphQL/graphQLClient.service";
-import { GraphQLMutation } from "./graphQL/graphQLMutation.component";
+} from "./graphQL/agraphQLClient.service";
+import { GraphQLMutation } from "./graphQL/agraphQLMutation.component";
 import {
   GraphQLLazyQuery,
   GraphQLQuery,
-} from "./graphQL/graphQLQueries.component";
+} from "./graphQL/agraphQLQueries.component";
 
 export {
   getGraphQlClient,
