@@ -3,7 +3,7 @@ import { gql, useMutation } from "@apollo/client";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
 
-import { getGraphQlClientNoCache } from "./agraphQLClient.service";
+import { getGraphQlClientNoCache } from "./graphQLClient.service";
 
 interface Props {
   query: string;
