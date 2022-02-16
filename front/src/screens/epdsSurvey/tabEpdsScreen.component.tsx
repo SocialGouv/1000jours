@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import WebView from "react-native-webview";
 
 import {
   EpdsGenderEntry,
@@ -56,9 +57,10 @@ const TabEpdsScreen: FC = () => {
     if (!isGenderEntered)
       return <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />;
     return (
-      <EpdsSurveyContent
-        epdsSurvey={questionAndAnswers}
-        isAccessibilityModeOn={isAccessibilityModeOn}
+      <WebView
+        source={{
+          uri: `${process.env.EPDS_WIDGET_URL}/?source=1000j-application`,
+        }}
       />
     );
   };
