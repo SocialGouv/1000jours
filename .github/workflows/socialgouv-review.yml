@@ -14,6 +14,19 @@ concurrency:
 jobs:
 
   ##############################################################################
+  ## CREATE POSTGRES DATABASE
+  ##############################################################################
+  create-db:
+    name: Create postgres database
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: SocialGouv/actions/autodevops-create-db@v1
+      with:
+        kubeconfig: ${{ secrets.KUBECONFIG }}
+        rancherId: ${{ secrets.RANCHER_PROJECT_ID }}
+
+  ##############################################################################
   ## BUILD AND REGISTER STRAPI IMAGE
   ##############################################################################
   register:
@@ -46,6 +59,9 @@ jobs:
       uses: SocialGouv/actions/k8s-manifests@v1
       with:
         environment: "dev"
+        rancherId: ${{ secrets.RANCHER_PROJECT_ID }}
+        socialgouvBaseDomain: ${{ secrets.SOCIALGOUV_BASE_DOMAIN }}
+        pgUserSecretPrefix: pg-user
 
   ##############################################################################
   ## DEPLOY APPLICATION OVER KUBERNETES

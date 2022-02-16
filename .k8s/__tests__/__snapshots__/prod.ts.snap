@@ -8,6 +8,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/tags/v1.2.3
     app.github.com/repo: socialgouv/1000jours
@@ -31,6 +32,7 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/tags/v1.2.3
         app.github.com/repo: socialgouv/1000jours
@@ -112,6 +114,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/tags/v1.2.3
     app.github.com/repo: socialgouv/1000jours
@@ -136,6 +139,7 @@ metadata:
     kubernetes.io/tls-acme: 'true'
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/tags/v1.2.3
     app.github.com/repo: socialgouv/1000jours
@@ -295,65 +299,13 @@ spec:
   policyTypes:
     - Ingress
 ---
-apiVersion: bitnami.com/v1alpha1
-kind: SealedSecret
-metadata:
-  annotations:
-    app.github.com/job: '5678'
-    app.github.com/ref: refs/tags/v1.2.3
-    app.github.com/repo: socialgouv/1000jours
-    app.github.com/run: '1234'
-    app.github.com/sha: '0123456'
-  name: azure-pg-user
-  namespace: les1000jours
-  labels:
-    application: les1000jours
-    component: les1000jours
-    owner: les1000jours
-    team: les1000jours
-spec:
-  encryptedData:
-    DATABASE_URL: >-
-      AgCLBuKVWm7E3oEjDPIWjnKBxrNbwRlhoVXmjl4CzmPKwticWh0Is7A9WoD/oSHdfjQb9KHdqmWoMCdS5996LoHxVm02SEuo5eMdGk6geJQj9jvEkNT4XeJEiKXWUIaYXUfGUlBAnaHHCsOrUK+j0I8ymqVV39DFptPUfNArPbcUVYWthbM7RFqP/HrWokko00ggYAkNCGLv5FnqHnCbMQhSoAB7KSpWvbtnhTJPTSA9W4IkMtM/Wm16hgx+bBeOiLwrFdgKu8MTyYN/cuM6DAY1c9Bpb5eyV2xxUIOBXKyjjq7w66vm54rMUqtwkO0gMVjgNajB7To93bUPMOiiGc+lzuNnboSvq0kNGiBHnvU+CNDNLe5iCTEze5XsL/RgTP6uu/FuUFNO3JaJGVk9FGHtjMwGOM4IPRcd11o2B7sJeafzt1K0Bmahv4Ckbwz1PVYJ34uvQkitQbd2PEnRWnqKLVIs103GN8s4PN/56oFwK/RG75+LY3j1yw+AFrOGZ4ifxmWPBqqpeUoL9cG66R0Kb5RMxfF7x6BXLgwCy52rzz+/pZcK5PjCJE5Q/2kk8lVP5zJvyIJuhPAzlRzqyTMcJ3rr2AbgpSnewLm+xJj7CLniIJPMlTtG0rxUpDMoAfVSS1LUNt2t7FZIre194hbTcl1UjCPWJYAI3oBxLV1JFxDRkqBFlq6o+nq1ussCr2FF6P/PYyJ9Z7xfkGDQyXvrjCURCLZGIja4lnHJN2PpqBUX1OkGpXwaO8TueI31aw799Hb7ZL1sJSL0B9RWXYAsZjX0sqRgzgLExbd3r0j1aLNJ/iRVxsrlrgsz8brbCnD58uaUNLu0cfOLJGrV+6AlD9D9PqASCgvrnTTPiAaaLFlWKbGE
-    DB_URI: >-
-      AgCLBuKVWm7E3oEjDPIWjnKBxrNbwRlhoVXmjl4CzmPKwticWh0Is7A9WoD/oSHdfjQb9KHdqmWoMCdS5996LoHxVm02SEuo5eMdGk6geJQj9jvEkNT4XeJEiKXWUIaYXUfGUlBAnaHHCsOrUK+j0I8ymqVV39DFptPUfNArPbcUVYWthbM7RFqP/HrWokko00ggYAkNCGLv5FnqHnCbMQhSoAB7KSpWvbtnhTJPTSA9W4IkMtM/Wm16hgx+bBeOiLwrFdgKu8MTyYN/cuM6DAY1c9Bpb5eyV2xxUIOBXKyjjq7w66vm54rMUqtwkO0gMVjgNajB7To93bUPMOiiGc+lzuNnboSvq0kNGiBHnvU+CNDNLe5iCTEze5XsL/RgTP6uu/FuUFNO3JaJGVk9FGHtjMwGOM4IPRcd11o2B7sJeafzt1K0Bmahv4Ckbwz1PVYJ34uvQkitQbd2PEnRWnqKLVIs103GN8s4PN/56oFwK/RG75+LY3j1yw+AFrOGZ4ifxmWPBqqpeUoL9cG66R0Kb5RMxfF7x6BXLgwCy52rzz+/pZcK5PjCJE5Q/2kk8lVP5zJvyIJuhPAzlRzqyTMcJ3rr2AbgpSnewLm+xJj7CLniIJPMlTtG0rxUpDMoAfVSS1LUNt2t7FZIre194hbTcl1UjCPWJYAI3oBxLV1JFxDRkqBFlq6o+nq1ussCr2FF6P/PYyJ9Z7xfkGDQyXvrjCURCLZGIja4lnHJN2PpqBUX1OkGpXwaO8TueI31aw799Hb7ZL1sJSL0B9RWXYAsZjX0sqRgzgLExbd3r0j1aLNJ/iRVxsrlrgsz8brbCnD58uaUNLu0cfOLJGrV+6AlD9D9PqASCgvrnTTPiAaaLFlWKbGE
-    HASURA_GRAPHQL_DATABASE_URL: >-
-      AgCLBuKVWm7E3oEjDPIWjnKBxrNbwRlhoVXmjl4CzmPKwticWh0Is7A9WoD/oSHdfjQb9KHdqmWoMCdS5996LoHxVm02SEuo5eMdGk6geJQj9jvEkNT4XeJEiKXWUIaYXUfGUlBAnaHHCsOrUK+j0I8ymqVV39DFptPUfNArPbcUVYWthbM7RFqP/HrWokko00ggYAkNCGLv5FnqHnCbMQhSoAB7KSpWvbtnhTJPTSA9W4IkMtM/Wm16hgx+bBeOiLwrFdgKu8MTyYN/cuM6DAY1c9Bpb5eyV2xxUIOBXKyjjq7w66vm54rMUqtwkO0gMVjgNajB7To93bUPMOiiGc+lzuNnboSvq0kNGiBHnvU+CNDNLe5iCTEze5XsL/RgTP6uu/FuUFNO3JaJGVk9FGHtjMwGOM4IPRcd11o2B7sJeafzt1K0Bmahv4Ckbwz1PVYJ34uvQkitQbd2PEnRWnqKLVIs103GN8s4PN/56oFwK/RG75+LY3j1yw+AFrOGZ4ifxmWPBqqpeUoL9cG66R0Kb5RMxfF7x6BXLgwCy52rzz+/pZcK5PjCJE5Q/2kk8lVP5zJvyIJuhPAzlRzqyTMcJ3rr2AbgpSnewLm+xJj7CLniIJPMlTtG0rxUpDMoAfVSS1LUNt2t7FZIre194hbTcl1UjCPWJYAI3oBxLV1JFxDRkqBFlq6o+nq1ussCr2FF6P/PYyJ9Z7xfkGDQyXvrjCURCLZGIja4lnHJN2PpqBUX1OkGpXwaO8TueI31aw799Hb7ZL1sJSL0B9RWXYAsZjX0sqRgzgLExbd3r0j1aLNJ/iRVxsrlrgsz8brbCnD58uaUNLu0cfOLJGrV+6AlD9D9PqASCgvrnTTPiAaaLFlWKbGE
-    PGDATABASE: >-
-      AgBzXWipb5edaBGji6fs++Mvnm45bYm55It7Cb8pwW2A7cj3iBWAv7pLLS2nV5RF7o6zo3SpFAjDx+hC1vBV7gdsWXncQLUGQmUyZw5mDu+mwtJ6S4mPDOp1IvJbiBJyRnUBY0MsDUENlDmRre89gftF3XPKOzZks0rmv5rF98WDRpFc11qCRyoLXkICnf78TYyd+lK4z/loBY48jqKofy9CaThogckCd7STRPfAfz/UWV1wM4qfXnhIJDOuLmI+ncIdCcjgaDTmFcxMpJXHB9iawQedBfj4Ya5dTH6TrP+VF9Jyymp+YCUXDFYQrUYbGSbXYwXwfscneDnKvynbxcbt375lBJavA0qXf677rDUIrdY9UBkgaKx6q+zMAZqo2bG20fB0OtrPVIHhKoDic51vPsc3bIfChsl5bP+DVGEorp8nf7WYfsdnTv4Cgw2KtD2G0O6q3aD+wYfV690eexceUVHWUh/trQWbde8HsTI7Auw4gX6KpIvptAWF7EXVN6/h+E3L1OuvroPPLweOSakeZ+wiVxjP9gHM4XkrXgU8FFKtsghwJB9E0G0vOlQHg+3dvDszyt//5eCSmjvhXHdgCB9zO1rE+6g4t8xZLqERm4i6adwxbE1LVJqzZ9GDNz5XfuXkiwd9Rcy2YqvTnkoait4LwmSMCASzY2iYy4K+PqhvDkcpWQN1XUUFK7gJTsFsJ71g
-    PGHOST: >-
-      AgCevr85oh41Uj0LOhxQdkmMcu0zuai5Q+XxAre84F6zUM2n5m01hZ3hO9z8E5evM0RRaOUYY+I3TdpDPvTJdUvsG8nuwvzsa0wdQGyTgwx6xn9IpJGQdQT+/KD1/VbQmbmGXH6tSYhW2FwAVGZBzp9j1g3gZ6pARRH16fi8XTijzWsRmFEdzSUxTHy8BeiLqQAs73EMGxFxxqu2TkYjgakz/nFOHkad5uowzMcgLyiW7ynV4Od5dg1VMGHUJ4wcPGBQ4fQvZmvxx05Z2eZRLrCMf0JHbsHsfEo0BeJFKaWLK5WgwT1cIMj+LtTjioj6kqS0KVeyI0f/cxmGaeOqmkO59BZP+4+mhkLwEJM5hjHDzGoA3eELsiZe6vzPu+lZAzrf3yT6ahrcgvY5W1pLbJ50BtbFFose70GLQEZPQ/Sbo7A4hIdxKOTjiT9MiErq+HAFXwLBxZMUGtyR++jnrbRCcz/oHtpeK1UWv7QAzZKG+JjqjpArzMwZbFMPwE6HQ30WQK2aclCW4Oh3OvPoTp+SX4kSe1QKEGHVktIi/4ku0rd3qiFciOTWByndhrk6+lSHBf7/dyLorSg7bfdqTAg9KQh5QqCzjGgIy9ZhkgSvmymmc3qVGHd8yrMfPss5EIEgbwhFI/VlRQmgBIfD9fKr0/j/21yA3+gmmfCMSVyErfHV6Pzf22WXKcLNYFtW9zQE/NsdlFPjt24D9q8ibMGIRjwVeg8TkbjDO/rqfaloHWSrTe+YG7mZjPIIcA==
-    PGPASSWORD: >-
-      AgBidpGexiXrVMJ4nh83n40JB9A1908HvKBedx+FnoMJO4Z0X+fvJBGtr2a9eTND+q0q/q9q4OtnnjmOqHx3ACRuUazUu1PWEKSI9mn+BNn2Hy8kqyuWsMGvIhFGN1UI7c1tsj0y26HfdBoHRh6uXy1sUI/Y+7X2D2PmTLsw4AbWYnu61R7gxEw3lYZ4JNChq15FM/OATd5Kk5aVWtEPRLAEk1zrgE3dDAH+e9ekPIGcUGUqI6kLC6ED2B/L9fwBomr7ayiY1ngY976FTR4/4V28Dz16lZGfxlGCTA9mBWED7vzKYxESJNQYP9avAbBEZp5cHzCaqzw+o9ZjXtBl7nxV8HPH2J9RW/DNSQDf70rLyBuMxDMTSanHuJJeNVPIJub5snCBTfMli+BIo2jlIWZ2Ona1HJAINTUvjZbJHaqnvFHAzh31UzIM0+XdSKBr5QYtoRG+7v8Tlwg9AGsLRXl5k3xIigEYtIiQ6qbmG/etj7HumHpaPrgE9paQaITVfcEDb5zJBPL50aCj7HF6RWqYcSECfmQnjyRwQZMgMmtA0HOcYZEKM/g7Db2QrqUXGyfgq22sDvwWmuOhWSztVbAWl8W7+RYZzb3e9NKFayiuXIevwl9Jd6u9lYYRC0W7GAaEq0N0zAD5D/9/gHwz47s5ejccsXoTxoDFLjIE2xo/sHQJk0qBZOus6GLnojT1lEBTlbXStOeEff8rm/WBeO8fBMCGSj02CS5VMqqQo4k=
-    PGRST_DB_URI: >-
-      AgCLBuKVWm7E3oEjDPIWjnKBxrNbwRlhoVXmjl4CzmPKwticWh0Is7A9WoD/oSHdfjQb9KHdqmWoMCdS5996LoHxVm02SEuo5eMdGk6geJQj9jvEkNT4XeJEiKXWUIaYXUfGUlBAnaHHCsOrUK+j0I8ymqVV39DFptPUfNArPbcUVYWthbM7RFqP/HrWokko00ggYAkNCGLv5FnqHnCbMQhSoAB7KSpWvbtnhTJPTSA9W4IkMtM/Wm16hgx+bBeOiLwrFdgKu8MTyYN/cuM6DAY1c9Bpb5eyV2xxUIOBXKyjjq7w66vm54rMUqtwkO0gMVjgNajB7To93bUPMOiiGc+lzuNnboSvq0kNGiBHnvU+CNDNLe5iCTEze5XsL/RgTP6uu/FuUFNO3JaJGVk9FGHtjMwGOM4IPRcd11o2B7sJeafzt1K0Bmahv4Ckbwz1PVYJ34uvQkitQbd2PEnRWnqKLVIs103GN8s4PN/56oFwK/RG75+LY3j1yw+AFrOGZ4ifxmWPBqqpeUoL9cG66R0Kb5RMxfF7x6BXLgwCy52rzz+/pZcK5PjCJE5Q/2kk8lVP5zJvyIJuhPAzlRzqyTMcJ3rr2AbgpSnewLm+xJj7CLniIJPMlTtG0rxUpDMoAfVSS1LUNt2t7FZIre194hbTcl1UjCPWJYAI3oBxLV1JFxDRkqBFlq6o+nq1ussCr2FF6P/PYyJ9Z7xfkGDQyXvrjCURCLZGIja4lnHJN2PpqBUX1OkGpXwaO8TueI31aw799Hb7ZL1sJSL0B9RWXYAsZjX0sqRgzgLExbd3r0j1aLNJ/iRVxsrlrgsz8brbCnD58uaUNLu0cfOLJGrV+6AlD9D9PqASCgvrnTTPiAaaLFlWKbGE
-    PGSSLMODE: >-
-      AgBMCJRfJtV2TMDmiy/o00e5Bt1n1KzISqsXXwZgLSvdDGVqiVpfhKr1E4VkykxZefc1Zdq4X3ZUP6+xhbXEWYsuNhMDMP18RJutFlBb6jLaN/6cUtkG4Ve0VhpGdNJRfzBXLjsUVgpsoDB5R+jK5lJR+C4t9HupLLGN2zRI5ZaJDqGADSdM9gMw3aZGNJDgRX80u8cPvSMUSYoHKFOKdeR6/DSQWA5+prh0nv3Yjc6ILUZ5x+A0D80FBWXozc8kDGFiYPnSoTjT7Cq+7B/Yq0t7pL0xjZeB2nK2GclqARpBC0Jiu8Nf9kd15pePRTM+23JF3A9xVwYF9f98RoGhVyt7zQtypHOSBPPEXqztltZHM2R1R1xAvCaFMGqMJXuFTSi0DDYHt+WM/KeXYpQQLY7xZOCGOp5zMVkM0/2myoOfV3Lxrl1SWFh55AtbuLWSVPMkMMgIOhliW8+yflkxgPtoH1DxfUPmhKL4VHxjfx/s2OIMbeHMze7RUB6+dmklyHrtgCvsml/WfJbz0kHiFmwdQwIvUFT6oVvETWajcrFIeiJaCzZRrM3YH7J+OJjPA/Y26hX00IxmdkZzAOeueUgDiAvq2Y1Nuh60Ne8Kt7Zf4DkN8isYmciOHEzRcno/F1L29vGCWompCq0utb8VnTBKjE5ZDZKNDAhMEYuJrnRZBkLDmqkAAQSX0T/7xMtvclkfc6ZLlq0k
-    PGUSER: >-
-      AgB+2Zfsc2dLxzH8KtuxgFfXS6jqwHWEJ7K2Oz+ZA8fRpqQIndNPx4VqfgKAx6kuO/GPvj9F7j3F4vinLKc1Ms7eiDLCv5ht0eZFJpsJ5IpXdCKOobhLtH/kF8JTgp9MeXZajC6q3bdfs5agFkGQKS+AusOp8WPet5Cev72RdgaG0JP9sAAg7Ect4wRfbSpugycC2bVLgRSkjsHOYohWEEC7r83W87cT61IjjlMKt4L3gSeAvbdaDMXFcT296AP9waZyYIbVqiM7Gpw0urfBCuEL1xdbz/5Smwt1GBszdwzrdg2gcLAvon+TwAInzn9Ms68cxH0LLt3dKjAHt8btXLrsSjkoXpdMVGUi+HvdPircrn1wufqou6MpnpG6bSQwNE4zEN0qf9XJOjEAygkCqO8pIFYS2uwycorCrsw8erG+F6lrNm1g8S51ULQs8S7ojIgqdpmNoajx6dLiHKDsKERcY95pYK1qIlDx0J8J18JKmMsbmBb/BgGESLIP1tNVFhXYgO1Ng6+pYgYwSvcMv90X3C10Mh3WBYPxRcP5NDoYhmb4wmHOquWHXqodm/k+JbbgL3+5CqU/Za2+5hvDaxvUhOMiJH6VL9aEY0f9LA5+ptXcm9rUkBSD2gi5SB06lrcHwtzuCHJgFrfrR5Wg2+53cPQ92DRNrEOsYYUXtXyUZU4c06/Vv2p0wnf41UX7N1pkqpD/FsAi9ZZfLJGSKQcEeZhdcV4=
-  template:
-    metadata:
-      annotations:
-        app.github.com/job: '5678'
-        app.github.com/ref: refs/tags/v1.2.3
-        app.github.com/repo: socialgouv/1000jours
-        app.github.com/run: '1234'
-        app.github.com/sha: '0123456'
-      name: azure-pg-user
-      namespace: les1000jours
-      labels:
-        application: les1000jours
-        component: les1000jours
-        owner: les1000jours
-        team: les1000jours
-    type: Opaque
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/tags/v1.2.3
     app.github.com/repo: socialgouv/1000jours
@@ -377,6 +329,7 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/tags/v1.2.3
         app.github.com/repo: socialgouv/1000jours
@@ -473,6 +426,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/tags/v1.2.3
     app.github.com/repo: socialgouv/1000jours
@@ -504,6 +458,7 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/tags/v1.2.3
         app.github.com/repo: socialgouv/1000jours
@@ -526,6 +481,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/tags/v1.2.3
     app.github.com/repo: socialgouv/1000jours
@@ -556,6 +512,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/tags/v1.2.3
     app.github.com/repo: socialgouv/1000jours

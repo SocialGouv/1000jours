@@ -59,6 +59,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/1000jours
@@ -83,6 +84,7 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/heads/mybranch
         app.github.com/repo: socialgouv/1000jours
@@ -166,6 +168,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/1000jours
@@ -188,6 +191,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/1000jours
@@ -323,95 +327,13 @@ spec:
   policyTypes:
     - Ingress
 ---
-apiVersion: batch/v1
-kind: Job
-spec:
-  backoffLimit: 5
-  template:
-    spec:
-      containers:
-        - command:
-            - create-db-user
-          env:
-            - name: NEW_DB_NAME
-              value: autodevops_mybranch
-            - name: NEW_USER
-              value: user_mybranch
-            - name: NEW_PASSWORD
-              value: password_mybranch
-            - name: NEW_DB_EXTENSIONS
-              value: hstore pgcrypto citext uuid-ossp
-          envFrom:
-            - secretRef:
-                name: azure-pg-admin-user
-          image: ghcr.io/socialgouv/docker/azure-db:6.56.1
-          imagePullPolicy: IfNotPresent
-          name: create-db-user
-          resources:
-            limits:
-              cpu: 300m
-              memory: 256Mi
-            requests:
-              cpu: 100m
-              memory: 64Mi
-      restartPolicy: Never
-  ttlSecondsAfterFinished: 86400
-metadata:
-  annotations:
-    kapp.k14s.io/update-strategy: skip
-    app.github.com/job: '5678'
-    app.github.com/ref: refs/heads/mybranch
-    app.github.com/repo: socialgouv/1000jours
-    app.github.com/run: '1234'
-    app.github.com/sha: '0123456'
-  labels:
-    application: 1000jours
-    component: 1000jours
-    owner: 1000jours
-    team: 1000jours
-    cert: wildcard
-  name: create-db-job-mybranch
-  namespace: env-1000jours-mybranch-3s2aqr
----
-apiVersion: v1
-kind: Secret
-stringData:
-  DATABASE_URL: >-
-    postgresql://user_mybranch%40les1000joursdevserver.postgres.database.azure.com:password_mybranch@les1000joursdevserver.postgres.database.azure.com/autodevops_mybranch?sslmode=require
-  DB_URI: >-
-    postgresql://user_mybranch%40les1000joursdevserver.postgres.database.azure.com:password_mybranch@les1000joursdevserver.postgres.database.azure.com/autodevops_mybranch?sslmode=require
-  HASURA_GRAPHQL_DATABASE_URL: >-
-    postgresql://user_mybranch%40les1000joursdevserver.postgres.database.azure.com:password_mybranch@les1000joursdevserver.postgres.database.azure.com/autodevops_mybranch?sslmode=require
-  PGDATABASE: autodevops_mybranch
-  PGHOST: les1000joursdevserver.postgres.database.azure.com
-  PGPASSWORD: password_mybranch
-  PGRST_DB_URI: >-
-    postgresql://user_mybranch%40les1000joursdevserver.postgres.database.azure.com:password_mybranch@les1000joursdevserver.postgres.database.azure.com/autodevops_mybranch?sslmode=require
-  PGSSLMODE: require
-  PGUSER: user_mybranch@les1000joursdevserver.postgres.database.azure.com
-metadata:
-  annotations:
-    kapp.k14s.io/update-strategy: skip
-    app.github.com/job: '5678'
-    app.github.com/ref: refs/heads/mybranch
-    app.github.com/repo: socialgouv/1000jours
-    app.github.com/run: '1234'
-    app.github.com/sha: '0123456'
-  labels:
-    application: 1000jours
-    component: 1000jours
-    owner: 1000jours
-    team: 1000jours
-    cert: wildcard
-  name: azure-pg-user-mybranch
-  namespace: env-1000jours-mybranch-3s2aqr
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/1000jours
@@ -436,6 +358,7 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/heads/mybranch
         app.github.com/repo: socialgouv/1000jours
@@ -534,6 +457,7 @@ metadata:
     sealedsecrets.bitnami.com/cluster-wide: 'true'
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/1000jours
@@ -567,6 +491,7 @@ spec:
         sealedsecrets.bitnami.com/cluster-wide: 'true'
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/heads/mybranch
         app.github.com/repo: socialgouv/1000jours
@@ -588,6 +513,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/1000jours
@@ -603,6 +529,7 @@ metadata:
 data:
   STRAPI_LOG_LEVEL: debug
   NODE_ENV: production
+  SENTRY_DSN: https://d622675092bb449481c8016cab8ffd08@sentry.fabrique.social.gouv.fr/62
   RESOURCES_URL: >-
     https://nos1000jours-web-pro-develop.dev.fabrique.social.gouv.fr/annexes/ressources-parents
 ---
@@ -620,6 +547,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/1000jours
@@ -634,30 +562,5 @@ spec:
   selector:
     app: strapi
   type: ClusterIP
----
-apiVersion: bitnami.com/v1alpha1
-kind: SealedSecret
-metadata:
-  annotations:
-    sealedsecrets.bitnami.com/cluster-wide: 'true'
-  name: azure-pg-admin-user
-spec:
-  encryptedData:
-    PGPASSWORD: >-
-      AgBEzQbWYEesBdPoDVc5xqwR2lKDzITCOHSmVIfOt+QOTSAaQYoKxlxcWe7FY9GVI60UFyEMbGTkn5pGdxI/siq3rRsON19LopYYVnLpr6JbCsXU1pM+n1ITu85q7Xg1qk7y4TqygctLyVdABKDRtq+aJaZUHxvGi12fUaGXSnu+sT9nicfUUoF3rC6oZvzT2MK6Nj/l1GIEfltWukLV8Xupmmk2mMx9n3RylGEjaCn2HAqEKJH3NAxj9QI6EXSUXl3hJyCw7n6CYohQpGXkGpCW7dI75E0q0CtEc7zguv5hjnkW46d/2/vIZMQQdo+gBzbKcWlHAoM8/3par2ivDDL+FmkwOqRJkr4ALuXPhlOE0pWutishoIQiu3lnjxCeuxmXBlx15lQ84laDLTQJxwUF3tF46B6LM11q12s3Bem/Z+6os9Gc0pvv+4h5Ag+fXwIkbvlN1auPZ6n86GKjeEeJIueYN0uYI113ufPJm+a5+wKv6ppkL8qOc83sHV9NhfAJVbfsTwCFzDL1OIQJwCF3825RT5JFotvfR/ku72XTlYgrXggA7v8nqCJk67Maur9viVfC49zqmlXqsiyfDnwwM2iA3AXRK0HhMkF/30dh6Mineh38LV2nfTprpXcy12N6/GFTjKSUL4sNvQCTG4cIrlKNdGhcQZXoo7Co3nk30h32P3ntVjAd2RM/QKurOrDWXtpysFPDj0meh3Ap35E=
-    PGHOST: >-
-      AgBcZGJavouNYNlQBfCuNxIRK8N/z8Bv33XGGBqeSNkmIFwT31aAavVGzUPcMLwmS5txNKFaQ+67ZYnUa72oSUCFNMbhLoXVslyPGfI1Xm9JwB8bCHyglgkyHxo+arQ6VAVdSe7rOUix5P5wIqYQStGXuUXkoUDb4hcUxIEzQGBWeA8p84vrGq07a/6U8NWZ/spZH5P/E6/RcuP0CkByKFBIfbFvLQnADCOlQitGRw8+ZF1Pav+SH8Dsh/C8ZyKvdsMRJXRf6gIZKTv/Pm9+BgqsqNMNLFvJvLJdpmjH4C3QICCLQpg4QMBVF6gcbsOwLvm/w05WOLSwStc2JRsaBep97gfuk8RrXsgzGmezTKYAQqKzvli6gioSooFbyXm0dEy81vTUCAKfxyjS7VyeYEWwBXJxdcwCnPT8dezAMqo4G6P54h+mr6wPyjlXZWO1CW/b4qE5Fi9phXc4CNhXwIP2BU5fuhiN+TrbABC1IHna0X2U/4hKouSn6Drr+HKEORqWoToZyqjAwGpWlERWbX6SLi7bU3D+M7w0FoscxfzllHADIyqgOZE2YQvTTPZxFPZj02xDTpLAFIhihR+j1QuCIhYLWzun4JODjQ2RmTAHkTxn4ynuYeg40aKRgxrHeFc2um0VJI7LxTWQE/xB10UaIdVmGvlqymSfveN8LAgobVY5rg/GiMmg6Pc1V0C1lcq6foHJn2nTYpAnjgAnIVoodFVYWgayD8N/TDokNC9fWDLGK/cv7OyfIkmGjOGY5KUh
-    DATABASE_URL: >-
-      AgCp5u81vWW4PhbgCq7/B/stGmu5Ns6cI/g+8eWEptiAqv668aEV2AgQKYr514JRQLU7yqIQQiKYPZ4eMgW7A3WxiGpenlKbRr6XI588wpZeIqZfHTvKFdPgkGepwgQYPbwTwOF1h9pcH4Dl/RLI7XrWd/06nh8xlwrV8F4hvtME5LYHdp1nc1KwM4oBhQB9fhy8ecCW9ZAdc5v59b8JtqCMvW6mJZOsNyjEGQPhS1X+a0EOMXB8G0M/x0ENo84Frv0msZ0kuTB5JSkItTyXttJZtSk6hxbJLvqUkZ/U76bJbEZwCl/ZGMgjXvZb0anJfMay7WjBbPmXrQeP8+cU1E3jRfx5/Oypjrn4cC3q+IoM1+1SG+qqQ4NjRnpSdpfqQccFwYUjjOP/09FFA1c55t1ts1uprTkb82/aOAt21cto/CjXLw0lqv3Aq2veEBS26xjvzF2YDOMGzEbn7ll9wDqSr1SWijLYmLRwBoBF6st8hrESybMae1dfpBK75Qpqma8xxBMiNk5dE+L7gJn5iNpakqGV5SKnH0ZgylGNd7bC8GsdQXJNae2D/YIkNR3GTf6SOK+gGraZ7ATtZubby8rBjRX7uVH6coQPPql1RbKaZzoPqYxGGycB8fUHJJntNX+vnsLmsxY/rR11A2nAYzQREkDzy6yCJzj0miVW1YBJ1Nn4eqng0MN0ET4LKT3krGFmbLJtICKUQg7SGI+ZsHa37SrzUcACK7mXc2ZXo18LHa2PykrC1PqySkezYqutWsKzVrz6n5BNQWtHCtfn6BKA1zYeITntkE+wGVQ2H8mQ1EUt5NCVQ6nZT86B6yhnm3vM015KaNZRmALk/00ZjgwoPbNlhVj0mugvr9Pj
-    PGSSLMODE: >-
-      AgC8QkzoWc4NycqebnzOHgYLYsZRSScA5AWCxI5m41LaZ9ncqhHLvXjeUYTzi51fnZUJX86Sq1R5pBoni8s08bCo/X2pN3ea27/Wciz/FZBagBYdn8qFqBz1MBUJjBeUE+L1eBnoUc9PLlANO7MkB+qx6qhqlc9PVh3n9MIspUK0gZf0ysuAgC3mJjrzvrdoRrkmJGY05DDguvoS31d8QweO51QVuMYif2E3do5oMzJpesuEcYKPKL0t+f5pWrnFh6wwFl3C9irghjm34YjP7d/ttbK3wM3oGUk+CYURJenJFF1y/0zk0UoecNPg32rGeOM+JKtcCeFKJFVjqY5I7QjXYl7XG3hzqlw20Woi0eK1cn4YYbOJgYP/lUx8RRP0CXP06vsvsbPoIwOk5vIqJ8PeZZ2KdHL9DsbwqopM+H+TH/EFg2cgMYixFPTgSxxY5mlAR4pPjN5T06ofP5drtZqRvVxVV5nEvNsESJQbEWu5aZeKVGGl0bAFFcygKC8kkmv4ooJAcANCvAvrJENLsFcs7uitqRVc4E0R2WasXL+36UgI5e3mrFhzMoIzlFt8flgEBRUcebNRJ3dmHvdAmhiMen/+41fF02W48vkImAQEgj90BCV+PXruLM1hVKTP48ygitJCl+yRRUZVRlk7Xqx8vq/PxA5MNfxZd+j6wQgPRWGF4A0v0I8tA1jJoP/4fiHf+x+kDsVR
-    PGUSER: >-
-      AgAKdMIvqqwTZ6y7u7ygXtANJBG10Klg3m6wN8FcdtMzLhMpAJW1p3cXGAFFT9VW+QZ8HX+aKl1Kpc2v3B2Rm8ORrYO3B1DbGJ90+EYMoU9tOLnlZ3Adj8tgbMJYZDFwn/1zVho6DM9ROjjxo+DGsWXp52amonwmlJCanq+KzZNg0tR4udk+mJ+F1kSpxOL1+gL+GpBsK+57TWwPfXcfdUlmVE7gRx4NUqi+lSk1bpzu5XEsf3vDmsTL6/jrxzbTi0+K7qfdjigjm+3aT2Q9hPme71cmK03a9Wo3XFhNVFVIXYv3gBeUspm2aYz8tK+XpxH+ONw4SZ6yE+MRtG7ed5+ZgjV8TeEU6jwANbtz+NNxrfqVSOH6pj2mt4OqxmmxusEONvMj0PQSNfa44NbrTJSbnzsGddWM33djye/Kx1+em3gN7Ak/FQ4TD/ti0YMtcLX91F974cfHqNhlx0r6ucFwtET4TbQS7AJl0D/2yCldkngavPSUJ8JLKiM0OW0mxPiyIi2c2h54JC54I+qRmPDJm9WlwglmricJ9YKDBi98gBwfYIJMYaoPEH9+9Sr5O0oZhMhfZqFCgeo7Ossbk4PcVCAXgDPeGj6Szp6RFH1fY3GhEjFmCxt8TfeUlks2MBaZYqn0i6nldkLTynNT9/7lQvzJ1VlEOWlcuk8VbnUOZ99at/aT7//y++83ktlwzc5L4Yywx0bHyaKc444jIFu9natuZdtoUSnsHTWlTq6Z67S2zdE9ycA=
-  template:
-    metadata:
-      annotations:
-        sealedsecrets.bitnami.com/cluster-wide: 'true'
-      name: azure-pg-admin-user
-    type: Opaque
 "
 `;
