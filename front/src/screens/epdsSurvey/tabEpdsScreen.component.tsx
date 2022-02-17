@@ -11,7 +11,7 @@ import {
 import { View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
-  DatabaseQueries,
+  EpdsDbQueries,
   FetchPoliciesConstants,
   StorageKeysConstants,
 } from "../../constants";
@@ -62,7 +62,7 @@ const TabEpdsScreen: FC = () => {
     <View style={styles.mainContainer}>
       <TrackerHandler screenName={TrackerUtils.TrackingEvent.EPDS} />
       <GraphQLQuery
-        query={DatabaseQueries.EPDS_SURVEY}
+        query={EpdsDbQueries.EPDS_SURVEY}
         fetchPolicy={FetchPoliciesConstants.NO_CACHE}
         updateFetchedData={handleResults}
       />

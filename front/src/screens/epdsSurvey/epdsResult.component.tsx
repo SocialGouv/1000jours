@@ -20,8 +20,8 @@ import EpdsResultContactMamanBlues from "../../components/epdsSurvey/epdsResultC
 import EpdsResultInformation from "../../components/epdsSurvey/epdsResultInformation/epdsResultInformation.component";
 import {
   AroundMeConstants,
-  DatabaseQueries,
   EpdsConstants,
+  EpdsDbQueries,
   Labels,
   StorageKeysConstants,
 } from "../../constants";
@@ -123,7 +123,7 @@ const EpdsResult: FC<Props> = ({
   return (
     <>
       <GraphQLMutation
-        query={DatabaseQueries.EPDS_ADD_RESPONSE}
+        query={EpdsDbQueries.EPDS_ADD_RESPONSE}
         variables={queryVariables}
         triggerLaunchMutation={triggerLaunchQuery}
       />
