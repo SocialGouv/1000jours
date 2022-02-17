@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   buttonStyle: {
-    marginHorizontal: Margins.default,
+    marginHorizontal: Margins.smallest,
+    marginVertical: Margins.default,
   },
   buttonsContainer: {
     flexDirection: "row",
@@ -67,10 +68,10 @@ const styles = StyleSheet.create({
     color: Colors.commonText,
     fontSize: Sizes.sm,
     fontWeight: FontWeight.medium,
-    padding: Paddings.default,
   },
   mainContainer: {
     flex: 1,
+    padding: Paddings.default,
   },
   titleButtonStyle: {
     fontSize: Sizes.xs,
