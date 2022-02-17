@@ -32,6 +32,7 @@ export const GraphQLQuery: FC<Props> = ({
 
 interface PropsLazy extends Props {
   triggerLaunchQuery: boolean;
+  noLoaderBackdrop?: boolean;
 }
 
 export const GraphQLLazyQuery: FC<PropsLazy> = ({
@@ -39,6 +40,7 @@ export const GraphQLLazyQuery: FC<PropsLazy> = ({
   fetchPolicy,
   updateFetchedData,
   triggerLaunchQuery,
+  noLoaderBackdrop,
 }) => {
   const [componentIsInitialized, setComponentIsInitialized] = useState(false);
   const [fetchData, { loading, error, data, called, refetch }] = useLazyQuery(
@@ -63,7 +65,9 @@ export const GraphQLLazyQuery: FC<PropsLazy> = ({
     }
   }, [triggerLaunchQuery]);
 
-  if (loading) return <Loader />;
+  const loaderBackdrop = !(noLoaderBackdrop !== undefined && noLoaderBackdrop);
+
+  if (loading) return <Loader backdrop={loaderBackdrop} />;
   if (error) return <ErrorMessage error={error} />;
   return null;
 };

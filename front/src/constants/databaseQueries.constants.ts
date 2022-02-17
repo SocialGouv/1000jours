@@ -42,36 +42,6 @@ export const ALL_EVENTS = gql`
   }
 `;
 
-export const GET_EVENT_ARTICLES = (
-  whereCondition: string,
-  limit: number
-): DocumentNode => {
-  return gql`
-  query GetArticles($etapeIds: [ID], $thematiqueId: ID) {
-    articles(
-      sort: "ordre"
-      where: { ${whereCondition} }
-      limit: ${limit}
-    ) {
-      id
-      titre
-      resume
-      visuel {
-        id
-        hash
-        url
-        height
-        width
-      }
-      thematiques {
-        nom
-        id
-      }
-    }
-  }
-`;
-};
-
 export const GET_EVENT_DETAILS = (eventId: string): DocumentNode => {
   return gql`
     query GetEventDetails {
