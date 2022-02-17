@@ -108,7 +108,7 @@ const BottomTabNavigator: FC = () => {
             tabBarAllowFontScaling: false,
             tabBarIcon: ({ color, focused }) => tabItem.getIcon(color, focused),
             title: tabItem.title,
-            unmountOnBlur: true,
+            unmountOnBlur: tabItem.name === "tabEpds",
           }}
         />
       ))}
@@ -157,7 +157,7 @@ const TabCalendarNavigator: FC = () => (
 
 const TabEpdsStack = createStackNavigator<TabEpdsParamList>();
 const TabEpdsNavigator: FC = () => (
-  <TabEpdsStack.Navigator screenOptions={{ headerShown: false }}>
+  <TabEpdsStack.Navigator screenOptions={{ headerShown: false }} la>
     <TabEpdsStack.Screen
       name="tabEpdsScreen"
       component={TabEpdsScreen}
