@@ -18,11 +18,7 @@ import {
   View,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import {
-  DatabaseQueries,
-  FetchPoliciesConstants,
-  Labels,
-} from "../../constants";
+import { FetchPoliciesConstants, HomeDbQueries, Labels } from "../../constants";
 import { GraphQLQuery } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
@@ -118,7 +114,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
         actionName={trackerAction}
       />
       <GraphQLQuery
-        query={DatabaseQueries.LIST_ARTICLES_WITH_STEP(route.params.step.id)}
+        query={HomeDbQueries.LIST_ARTICLES_WITH_STEP(route.params.step.id)}
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
         updateFetchedData={handleResults}
       />

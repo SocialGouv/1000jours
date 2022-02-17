@@ -23,11 +23,7 @@ import {
   View,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import {
-  DatabaseQueries,
-  FetchPoliciesConstants,
-  Labels,
-} from "../../constants";
+import { FetchPoliciesConstants, HomeDbQueries, Labels } from "../../constants";
 import { GraphQLQuery } from "../../services";
 import { Paddings } from "../../styles";
 import type {
@@ -93,7 +89,7 @@ const ArticleDetail: FC<Props> = ({
     <>
       {articleId && (
         <GraphQLQuery
-          query={DatabaseQueries.ARTICLE_DETAILS_WITH_ID(articleId)}
+          query={HomeDbQueries.ARTICLE_DETAILS_WITH_ID(articleId)}
           fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
           updateFetchedData={handleResults}
         />

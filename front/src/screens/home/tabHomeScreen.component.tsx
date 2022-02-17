@@ -11,8 +11,8 @@ import { ParenthequeItem, TimelineStep } from "../../components";
 import { TitleH1, View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
-  DatabaseQueries,
   FetchPoliciesConstants,
+  HomeDbQueries,
   StorageKeysConstants,
 } from "../../constants";
 import Labels from "../../constants/Labels";
@@ -125,7 +125,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>
       <TrackerHandler screenName={TrackerUtils.TrackingEvent.HOME} />
       <GraphQLLazyQuery
-        query={DatabaseQueries.HOME_GET_ALL_STEPS}
+        query={HomeDbQueries.HOME_GET_ALL_STEPS}
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
         updateFetchedData={handleResults}
         triggerLaunchQuery={triggerGetSteps}

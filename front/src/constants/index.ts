@@ -1,5 +1,6 @@
 import * as AroundMeConstants from "./aroundMe.constants";
 import * as DatabaseQueries from "./databaseQueries.constants";
+import * as HomeDbQueries from "./databaseQueries/homeDbQueries.constants";
 import * as EpdsConstants from "./epdsConstants.constants";
 import * as FetchPoliciesConstants from "./fetchPolicies.constants";
 import Formats from "./formats";
@@ -16,6 +17,7 @@ export {
   EpdsConstants,
   FetchPoliciesConstants,
   Formats,
+  HomeDbQueries,
   Labels,
   Links,
   Locales,
