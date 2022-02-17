@@ -140,6 +140,7 @@ export default {
   calendar: {
     description:
       "Grâce à la date de naissance que vous avez saisie, accédez à votre calendrier personnalisé et suivez chaque étape du parcours 1000 jours.",
+    importantEvent: "Événement essentiel",
     lastSyncDate: "Dernière synchro :",
     listOfEvents: "Liste des événements",
     noChildBirthday: "Aucune date de naissance",

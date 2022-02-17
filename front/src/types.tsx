@@ -97,6 +97,7 @@ export type Event = {
   description?: string;
   debut: number;
   fin: number;
+  important?: boolean;
   thematique?: Thematique;
   etapes?: Step[];
   articles?: Article[];
