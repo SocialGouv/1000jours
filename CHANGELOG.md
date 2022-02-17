@@ -1,3 +1,15 @@
+# [1.94.0](https://github.com/SocialGouv/1000jours/compare/v1.93.4...v1.94.0) (2022-02-17)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le bouton retour (historique de navigation) ([#1061](https://github.com/SocialGouv/1000jours/issues/1061)) ([47376a6](https://github.com/SocialGouv/1000jours/commit/47376a60a2538a956b52e8b8d88f3712f271cdd5)), closes [#1060](https://github.com/SocialGouv/1000jours/issues/1060)
+
+
+### Features
+
+* 🎸 Ajoute la notion d'événements importants ([#1058](https://github.com/SocialGouv/1000jours/issues/1058)) ([10611c1](https://github.com/SocialGouv/1000jours/commit/10611c1f94f02b08808cb405ca08b12e50eef93c)), closes [#958](https://github.com/SocialGouv/1000jours/issues/958)
+
 ## [1.93.4](https://github.com/SocialGouv/1000jours/compare/v1.93.3...v1.93.4) (2022-02-16)
 
 
