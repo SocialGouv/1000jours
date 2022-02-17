@@ -1,4 +1,3 @@
-import { useLazyQuery } from "@apollo/client";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { addDays, format } from "date-fns";
@@ -8,21 +7,16 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import { Events } from "../../components";
-import {
-  BackButton,
-  ErrorMessage,
-  Loader,
-  TitleH1,
-  View,
-} from "../../components/baseComponents";
+import { BackButton, TitleH1, View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
+  CalendarDbQueries,
   FetchPoliciesConstants,
   Formats,
   Labels,
   StorageKeysConstants,
 } from "../../constants";
-import { GET_EVENT_DETAILS } from "../../constants/databaseQueries.constants";
+import { GraphQLLazyQuery } from "../../services";
 import { Paddings } from "../../styles";
 import type { Event, TabCalendarParamList } from "../../types";
 import { StorageUtils, TrackerUtils } from "../../utils";
@@ -36,13 +30,7 @@ const EventDetails: FC<Props> = ({ navigation, route }) => {
   const [childBirthday, setChildBirthday] = useState("");
   const [events, setEvents] = useState<Event[]>([]);
   const [loadingEvent, setLoadingEvent] = useState(false);
-
-  const [loadEvent, { loading, error, data }] = useLazyQuery(
-    GET_EVENT_DETAILS(route.params.eventId),
-    {
-      fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
-    }
-  );
+  const [triggerLoadEvent, setTriggerLoadEvent] = useState(false);
 
   const init = async () => {
     const childBirthdayStr =
@@ -53,7 +41,7 @@ const EventDetails: FC<Props> = ({ navigation, route }) => {
     if (childBirthdayStr.length > 0) {
       setChildBirthday(childBirthdayStr);
       setLoadingEvent(true);
-      if (route.params.eventId) void loadEvent();
+      if (route.params.eventId) setTriggerLoadEvent(!triggerLoadEvent);
     }
   };
 
@@ -61,18 +49,16 @@ const EventDetails: FC<Props> = ({ navigation, route }) => {
     void init();
   }, []);
 
-  useEffect(() => {
-    if (!loading && data) {
-      const eventDetails = (data as { evenement: Event }).evenement;
-      const date = format(
-        addDays(new Date(childBirthday), eventDetails.debut),
-        Formats.dateISO
-      );
-      eventDetails.date = date;
-      setEvents([eventDetails]);
-      setLoadingEvent(false);
-    }
-  }, [loading, data]);
+  const handleResults = (data: unknown) => {
+    const eventDetails = (data as { evenement: Event }).evenement;
+    const date = format(
+      addDays(new Date(childBirthday), eventDetails.debut),
+      Formats.dateISO
+    );
+    eventDetails.date = date;
+    setEvents([eventDetails]);
+    setLoadingEvent(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -84,11 +70,14 @@ const EventDetails: FC<Props> = ({ navigation, route }) => {
         />
       </View>
       <TitleH1 title={Labels.event.title} animated={false} />
-      {loadingEvent ? (
-        <Loader />
-      ) : error ? (
-        <ErrorMessage error={error} />
-      ) : (
+      <GraphQLLazyQuery
+        query={CalendarDbQueries.GET_EVENT_DETAILS(route.params.eventId)}
+        fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
+        updateFetchedData={handleResults}
+        triggerLaunchQuery={triggerLoadEvent}
+        noLoaderBackdrop
+      />
+      {!loadingEvent && (
         <View style={styles.calendarContainer}>
           <TrackerHandler
             screenName={`${TrackerUtils.TrackingEvent.EVENT} : ${events[0].nom}`}
