@@ -157,7 +157,7 @@ const TabCalendarNavigator: FC = () => (
 
 const TabEpdsStack = createStackNavigator<TabEpdsParamList>();
 const TabEpdsNavigator: FC = () => (
-  <TabEpdsStack.Navigator screenOptions={{ headerShown: false }} la>
+  <TabEpdsStack.Navigator screenOptions={{ headerShown: false }}>
     <TabEpdsStack.Screen
       name="tabEpdsScreen"
       component={TabEpdsScreen}
