@@ -19,13 +19,14 @@ const ExpandableButton: React.FC<Props> = ({
   buttonColor,
 }) => {
   const [expandButton, setExpandButton] = useState(false);
+  const backgroundColor = { backgroundColor: buttonColor };
 
   return (
     <>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           accessibilityLabel={expandedText}
-          style={[styles.buttonStyle, { backgroundColor: buttonColor }]}
+          style={[styles.buttonStyle, backgroundColor]}
           onPress={() => {
             setExpandButton(!expandButton);
           }}
@@ -38,7 +39,7 @@ const ExpandableButton: React.FC<Props> = ({
           animation="fadeInLeft"
           duration={1000}
           delay={0}
-          style={[styles.moreInfoContainer, { backgroundColor: buttonColor }]}
+          style={[styles.moreInfoContainer, backgroundColor]}
         >
           <SecondaryText style={styles.moreInfo}>{expandedText}</SecondaryText>
         </Animatable.View>

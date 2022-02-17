@@ -19,14 +19,17 @@ import type { Event, Tag } from "../../types";
 import { RootNavigation, StorageUtils, TrackerUtils } from "../../utils";
 import { getThematiqueIcon } from "../../utils/thematique.util";
 import ArticleCard from "../article/articleCard.component";
-import { CommonText, SecondaryText } from "../baseComponents";
-import CustomButton from "../baseComponents/customButton.component";
-import ExpandableButton from "../baseComponents/expandableButton.component";
-import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
-import ShareButton, {
+import {
+  CommonText,
+  CustomButton,
+  ExpandableButton,
+  Icomoon,
+  IcomoonIcons,
+  SecondaryText,
+  ShareButton,
   SharePageType,
-} from "../baseComponents/shareButton.component";
-import Tags from "../baseComponents/tags.component";
+  Tags,
+} from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
