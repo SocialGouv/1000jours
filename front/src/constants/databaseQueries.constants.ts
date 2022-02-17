@@ -168,7 +168,6 @@ export const ALL_EVENTS = gql`
       description
       debut
       fin
-      important
       thematique {
         id
         nom
