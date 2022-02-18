@@ -132,18 +132,6 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     else return false;
   };
 
-  // const [sendContactInformation] = useMutation(
-  //   EpdsDbQueries.EPDS_CONTACT_INFORMATION,
-  //   {
-  //     onCompleted: () => {
-  //       setShowLoader(false);
-  //     },
-  //     onError: (err) => {
-  //       console.log(err);
-  //     },
-  //   }
-  // );
-
   const updateItemSelected = (
     list: ContactType[],
     itemSelected: ContactType
@@ -313,18 +301,6 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
         telephone: dataForm.phoneNumber,
       });
       setTriggerSendContactInformation(!triggerSendContactInformation);
-
-      // await sendContactInformation({
-      //   variables: {
-      //     email: dataForm.email,
-      //     horaires: horaires,
-      //     moyen: contactType.find((item) => item.isChecked)?.id,
-      //     naissanceDernierEnfant: dateAsString,
-      //     nombreEnfants: dataForm.numberOfChildren,
-      //     prenom: dataForm.firstName,
-      //     telephone: dataForm.phoneNumber,
-      //   },
-      // });
     }
   };
 
