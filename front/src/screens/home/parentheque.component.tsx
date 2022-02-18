@@ -23,12 +23,12 @@ import { TrackerUtils } from "../../utils";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;
-  route: RouteProp<{ params: { documents?: Document[] } }, "params">;
+  route: RouteProp<{ params?: { documents?: Document[] } }, "params">;
 }
 
 const Parentheque: FC<Props> = ({ navigation, route }) => {
   const documentsFromParam =
-    route.params.documents && sortDocuments(route.params.documents);
+    route.params?.documents && sortDocuments(route.params.documents);
 
   const [documents, setDocuments] = useState<Document[]>(
     documentsFromParam ?? []
