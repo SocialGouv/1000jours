@@ -91,7 +91,7 @@ const ArticleDetail: FC<Props> = ({
         <GraphQLQuery
           query={HomeDbQueries.ARTICLE_DETAILS_WITH_ID(articleId)}
           fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-          updateFetchedData={handleResults}
+          getFetchedData={handleResults}
         />
       )}
       {currentArticle && (

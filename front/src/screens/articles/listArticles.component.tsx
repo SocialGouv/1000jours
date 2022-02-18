@@ -116,7 +116,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
       <GraphQLQuery
         query={HomeDbQueries.LIST_ARTICLES_WITH_STEP(route.params.step.id)}
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-        updateFetchedData={handleResults}
+        getFetchedData={handleResults}
       />
       <View style={styles.topContainer}>
         <View style={[styles.flexStart]}>

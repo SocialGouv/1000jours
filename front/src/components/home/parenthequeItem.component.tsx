@@ -33,7 +33,7 @@ const ParenthequeItem: FC<Props> = ({ navigation }) => {
       <GraphQLQuery
         query={HomeDbQueries.PARENTS_DOCUMENTS}
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-        updateFetchedData={handleResults}
+        getFetchedData={handleResults}
       />
       {documents.length > 0 && (
         <>

@@ -127,7 +127,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
       <GraphQLLazyQuery
         query={HomeDbQueries.HOME_GET_ALL_STEPS}
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-        updateFetchedData={handleResults}
+        getFetchedData={handleResults}
         triggerLaunchQuery={triggerGetSteps}
       />
       {_etapes.length > 0 && (

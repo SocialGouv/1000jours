@@ -86,7 +86,7 @@ const FetchPois: React.FC<Props> = ({
       query={GET_POIS_BY_GPSCOORDS}
       fetchPolicy={FetchPoliciesConstants.NETWORK_ONLY}
       notifyOnNetworkStatusChange
-      updateFetchedData={handleResults}
+      getFetchedData={handleResults}
       triggerLaunchQuery={triggerGetPois}
       variables={queryVariables}
       noLoader

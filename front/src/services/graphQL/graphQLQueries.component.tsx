@@ -10,7 +10,7 @@ import { FetchPoliciesConstants } from "../../constants";
 interface Props {
   query: string;
   fetchPolicy?: WatchQueryFetchPolicy;
-  updateFetchedData: (data: unknown) => void;
+  getFetchedData: (data: unknown) => void;
   notifyOnNetworkStatusChange?: boolean;
   noLoader?: boolean;
   noLoaderBackdrop?: boolean;
@@ -19,7 +19,7 @@ interface Props {
 export const GraphQLQuery: FC<Props> = ({
   query,
   fetchPolicy,
-  updateFetchedData,
+  getFetchedData,
   notifyOnNetworkStatusChange,
   noLoader,
   noLoaderBackdrop,
@@ -28,7 +28,7 @@ export const GraphQLQuery: FC<Props> = ({
     fetchPolicy: fetchPolicy ?? FetchPoliciesConstants.NETWORK_ONLY,
     notifyOnNetworkStatusChange,
     onCompleted: () => {
-      updateFetchedData(data);
+      getFetchedData(data);
     },
   });
 
@@ -48,7 +48,7 @@ interface PropsLazy extends Props {
 export const GraphQLLazyQuery: FC<PropsLazy> = ({
   query,
   fetchPolicy,
-  updateFetchedData,
+  getFetchedData,
   notifyOnNetworkStatusChange,
   triggerLaunchQuery,
   variables,
@@ -62,7 +62,7 @@ export const GraphQLLazyQuery: FC<PropsLazy> = ({
       fetchPolicy: fetchPolicy ?? FetchPoliciesConstants.NETWORK_ONLY,
       notifyOnNetworkStatusChange,
       onCompleted: () => {
-        updateFetchedData(data);
+        getFetchedData(data);
       },
     }
   );

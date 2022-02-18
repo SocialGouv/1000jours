@@ -115,7 +115,7 @@ const TabSearchScreen: FC = () => {
           query={SearchQueries.SEARCH_ARTICLES_BY_KEYWORDS}
           fetchPolicy={FetchPoliciesConstants.NO_CACHE}
           notifyOnNetworkStatusChange
-          updateFetchedData={handleResults}
+          getFetchedData={handleResults}
           triggerLaunchQuery={triggerGetArticles}
           variables={queryVariables}
           noLoader

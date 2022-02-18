@@ -232,7 +232,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
       <GraphQLQuery
         query={AROUNDME_FILTER_DATA}
         fetchPolicy={FetchPoliciesConstants.NO_CACHE}
-        updateFetchedData={setFilterDataFromDb}
+        getFetchedData={setFilterDataFromDb}
       />
       <Modal transparent={true} visible={visible} animationType="fade">
         {showModalContent && (

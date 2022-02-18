@@ -73,7 +73,7 @@ const EventDetails: FC<Props> = ({ navigation, route }) => {
       <GraphQLLazyQuery
         query={CalendarDbQueries.GET_EVENT_DETAILS(route.params.eventId)}
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-        updateFetchedData={handleResults}
+        getFetchedData={handleResults}
         triggerLaunchQuery={triggerLoadEvent}
         noLoaderBackdrop
       />

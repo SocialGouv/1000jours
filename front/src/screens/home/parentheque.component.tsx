@@ -8,12 +8,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
 import { DocumentCard } from "../../components";
-import {
-  BackButton,
-  Loader,
-  TitleH1,
-  View,
-} from "../../components/baseComponents";
+import { BackButton, TitleH1, View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { FetchPoliciesConstants, HomeDbQueries, Labels } from "../../constants";
 import { GraphQLLazyQuery } from "../../services";
@@ -69,7 +64,7 @@ const Parentheque: FC<Props> = ({ navigation, route }) => {
       <GraphQLLazyQuery
         query={HomeDbQueries.PARENTS_DOCUMENTS}
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-        updateFetchedData={handleResults}
+        getFetchedData={handleResults}
         triggerLaunchQuery={triggerGetDocuments}
         noLoaderBackdrop
       />

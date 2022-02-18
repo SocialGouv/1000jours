@@ -64,7 +64,7 @@ const TabEpdsScreen: FC = () => {
       <GraphQLQuery
         query={EpdsDbQueries.EPDS_SURVEY}
         fetchPolicy={FetchPoliciesConstants.NO_CACHE}
-        updateFetchedData={handleResults}
+        getFetchedData={handleResults}
       />
       {getViewToDisplay()}
     </View>

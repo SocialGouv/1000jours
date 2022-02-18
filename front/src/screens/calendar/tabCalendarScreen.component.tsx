@@ -267,7 +267,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
       <GraphQLLazyQuery
         query={CalendarDbQueries.ALL_EVENTS}
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-        updateFetchedData={handleResults}
+        getFetchedData={handleResults}
         triggerLaunchQuery={triggerGetAllEvents}
         noLoaderBackdrop
       />
