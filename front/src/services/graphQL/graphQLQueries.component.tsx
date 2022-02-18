@@ -4,9 +4,8 @@ import type { FC } from "react";
 import { useEffect, useState } from "react";
 import * as React from "react";
 
-import { ErrorMessage } from "../../components/baseComponents";
+import { ErrorMessage, GraphQLLoader } from "../../components/baseComponents";
 import { FetchPoliciesConstants } from "../../constants";
-import { GraphQLLoader } from "..";
 
 interface Props {
   query: string;
@@ -74,11 +73,13 @@ export const GraphQLLazyQuery: FC<PropsLazy> = ({
 
   useEffect(() => {
     if (componentIsInitialized) {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (called) void refetch();
-      else {
+      if (variables) {
         const queryVariables: OperationVariables = { variables };
         void fetchData(queryVariables);
+      } else {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (called) void refetch();
+        else void fetchData();
       }
     }
   }, [triggerLaunchQuery]);
