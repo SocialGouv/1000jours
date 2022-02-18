@@ -1,4 +1,5 @@
 import type { PoiType, Step } from "@socialgouv/nos1000jours-lib";
+import { AROUNDME_FILTER_DATA } from "@socialgouv/nos1000jours-lib";
 import Constants from "expo-constants";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -10,7 +11,6 @@ import {
   View,
 } from "react-native";
 
-import FetchFilterData from "../../components/aroundMe/fetchFilterData.component";
 import {
   CommonText,
   CustomButton,
@@ -21,9 +21,11 @@ import {
 import Chip from "../../components/baseComponents/chip.component";
 import {
   AroundMeConstants,
+  FetchPoliciesConstants,
   Labels,
   StorageKeysConstants,
 } from "../../constants";
+import { GraphQLQuery } from "../../services";
 import { Colors, Margins, Paddings, Sizes } from "../../styles";
 import type {
   CartoFilter,
@@ -227,7 +229,11 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
   return (
     <>
       <TrackerHandler actionName={trackerAction} />
-      <FetchFilterData setFilterData={setFilterDataFromDb} />
+      <GraphQLQuery
+        query={AROUNDME_FILTER_DATA}
+        fetchPolicy={FetchPoliciesConstants.NO_CACHE}
+        updateFetchedData={setFilterDataFromDb}
+      />
       <Modal transparent={true} visible={visible} animationType="fade">
         {showModalContent && (
           <View style={styles.behindOfModal}>
