@@ -3,6 +3,7 @@ import {
   getGraphQLClientNoCache,
 } from "./graphQL/graphQLClient.service";
 import { GraphQLMutation } from "./graphQL/graphQLMutation.component";
+import GraphQLProvider from "./graphQL/graphQLProvider.component";
 import {
   GraphQLLazyQuery,
   GraphQLQuery,
@@ -13,5 +14,6 @@ export {
   getGraphQLClientNoCache,
   GraphQLLazyQuery,
   GraphQLMutation,
+  GraphQLProvider,
   GraphQLQuery,
 };
