@@ -5,7 +5,7 @@ import EventDetails from "./calendar/eventDetails.component";
 import TabCalendarScreen from "./calendar/tabCalendarScreen.component";
 import EpdsResult from "./epdsSurvey/epdsResult.component";
 import TabEpdsScreen from "./epdsSurvey/tabEpdsScreen.component";
-import ListParentsDocuments from "./home/listParentsDocuments.component";
+import Parentheque from "./home/parentheque.component";
 import TabHomeScreen from "./home/tabHomeScreen.component";
 import LoadingScreen from "./loading/loading.component";
 import NotFoundScreen from "./notFound/notFound.component";
@@ -21,10 +21,10 @@ export {
   EpdsResult,
   EventDetails,
   ListArticles,
-  ListParentsDocuments,
   LoadingScreen,
   NotFoundScreen,
   Onboarding,
+  Parentheque,
   Profile,
   TabCalendarScreen,
   TabEpdsScreen,

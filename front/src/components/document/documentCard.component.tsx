@@ -16,7 +16,7 @@ import {
   SecondaryText,
   View,
 } from "../baseComponents";
-import StepIconLibrary from "../timeline/stepIconLibrary.component";
+import StepIcon from "../timeline/stepIcon.component";
 import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
@@ -41,7 +41,11 @@ const DocumentCard: FC<Props> = ({ document }) => {
     >
       <TrackerHandler actionName={trackerAction} />
       <View style={styles.documentImage}>
-        <StepIconLibrary name={IcomoonIcons.stepParentheque} />
+        <StepIcon
+          name={IcomoonIcons.stepParentheque}
+          active={false}
+          isParentheque
+        />
       </View>
       <ListItem.Content style={styles.documentContent}>
         <ListItem.Title style={styles.documentTitleContainer}>

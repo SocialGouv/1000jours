@@ -3,28 +3,24 @@ import type { FC } from "react";
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 
-import {
-  FetchPoliciesConstants,
-  HomeDbQueries,
-  StepsConstants,
-} from "../../constants";
+import { FetchPoliciesConstants, HomeDbQueries, Labels } from "../../constants";
 import { GraphQLQuery } from "../../services";
 import { Colors, Sizes } from "../../styles";
-import type { TabHomeParamList } from "../../types";
+import type { Document, TabHomeParamList } from "../../types";
 import { View } from "../baseComponents";
-import TimelineStepLibrary from "../timeline/timelineStepLibrary.component";
+import TimelineStep from "../timeline/timelineStep.component";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;
 }
 
 const ParenthequeItem: FC<Props> = ({ navigation }) => {
-  const [counterDocument, setCounterDocument] = useState(0);
+  const [documents, setDocuments] = useState<Document[]>([]);
 
   const handleResults = (data: unknown) => {
     const results = (data as { parenthequeDocuments: Document[] })
       .parenthequeDocuments;
-    setCounterDocument(results.length);
+    setDocuments(results);
   };
 
   return (
@@ -39,26 +35,28 @@ const ParenthequeItem: FC<Props> = ({ navigation }) => {
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
         updateFetchedData={handleResults}
       />
-      {counterDocument > 0 && (
+      {documents.length > 0 && (
         <>
-          <View style={[styles.timelineContainer]}>
-            <View
-              style={[
-                styles.timelineBlock,
-                styles.timelineLibraryBlock,
-                styles.timelineBlockLeft,
-              ]}
-            />
-          </View>
-          <TimelineStepLibrary
-            order={StepsConstants.stepParentheque.ordre}
-            name={StepsConstants.stepParentheque.nom}
-            key={0}
+          <View
+            style={[
+              styles.timelineContainer,
+              styles.timelineBlock,
+              styles.timelineLibraryBlock,
+              styles.timelineBlockLeft,
+            ]}
+          />
+          <TimelineStep
+            order={0}
+            name={Labels.timeline.library.nom}
+            index={-1}
+            active={false}
+            isTheLast={false}
             onPress={() => {
-              navigation.navigate("listParentsDocuments", {
-                step: StepsConstants.stepParentheque,
+              navigation.navigate("parentheque", {
+                documents,
               });
             }}
+            isParentheque
           />
         </>
       )}

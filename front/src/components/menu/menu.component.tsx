@@ -8,7 +8,6 @@ import BottomSheet from "reanimated-bottom-sheet";
 import { Labels, PlatformConstants } from "../../constants";
 import { emailContact } from "../../constants/email.constants";
 import { reviewTypeForm } from "../../constants/links.constants";
-import { stepParentheque } from "../../constants/steps.constants";
 import {
   Colors,
   FontNames,
@@ -53,9 +52,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
     {
       icon: IcomoonIcons.stepParentheque,
       onPress: () => {
-        void RootNavigation.navigate("listParentsDocuments", {
-          step: stepParentheque,
-        });
+        void RootNavigation.navigate("parentheque", undefined);
       },
       title: Labels.timeline.library.nom,
     },

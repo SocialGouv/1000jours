@@ -1,6 +1,6 @@
-import type { Poi, PoiType } from "@socialgouv/nos1000jours-lib";
+import type { PoiType } from "@socialgouv/nos1000jours-lib";
 import type { FC, ReactNode } from "react";
-import type { LatLng, Region } from "react-native-maps";
+import type { LatLng } from "react-native-maps";
 
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 export type RootStackParamList = {
@@ -23,7 +23,7 @@ export type BottomTabParamList = {
 export type TabHomeParamList = {
   tabHomeScreen: undefined;
   listArticles: { step: Step };
-  listParentsDocuments: { step: Step };
+  parentheque: { documents?: Document[] };
   article: { id: number; step?: Step };
   epdsSurvey: undefined;
 };

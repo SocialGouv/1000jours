@@ -11,7 +11,6 @@ import Labels from "./Labels";
 import * as Links from "./links.constants";
 import Locales from "./localizations";
 import * as PlatformConstants from "./platform.constants";
-import * as StepsConstants from "./steps.constants";
 import * as StorageKeysConstants from "./storageKeys.constants";
 
 export {
@@ -28,6 +27,5 @@ export {
   Locales,
   PlatformConstants,
   SearchConstants,
-  StepsConstants,
   StorageKeysConstants,
 };
