@@ -19,7 +19,7 @@ export const GraphQLQuery: FC<Props> = ({
   updateFetchedData,
 }) => {
   const { loading, error, data } = useQuery(gql(query), {
-    fetchPolicy,
+    fetchPolicy: fetchPolicy ?? FetchPoliciesConstants.NETWORK_ONLY,
     onCompleted: () => {
       updateFetchedData(data);
     },

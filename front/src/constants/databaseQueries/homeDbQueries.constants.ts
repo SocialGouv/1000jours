@@ -11,6 +11,20 @@ export const HOME_GET_ALL_STEPS = `
   }
 `;
 
+export const PARENTS_DOCUMENTS = `
+  query GetParenthequeDocuments {
+    parenthequeDocuments(sort: "ordre") {
+      id
+      nom
+      description
+      ordre
+      fichier {
+        url
+      }
+    }
+  }
+`;
+
 export const LIST_ARTICLES_WITH_STEP = (stepId: number): string => `
 query GetStepArticles {
   articles(sort: "ordre", where: {

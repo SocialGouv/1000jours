@@ -1,14 +1,10 @@
-import { useLazyQuery } from "@apollo/client";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 
-import {
-  DatabaseQueries,
-  FetchPoliciesConstants,
-  Steps,
-} from "../../constants";
+import { FetchPoliciesConstants, HomeDbQueries, Steps } from "../../constants";
+import { GraphQLQuery } from "../../services";
 import { Colors, Sizes } from "../../styles";
 import type { TabHomeParamList } from "../../types";
 import { View } from "../baseComponents";
@@ -20,58 +16,12 @@ interface Props {
 
 const ParenthequeItem: FC<Props> = ({ navigation }) => {
   const [counterDocument, setCounterDocument] = useState(0);
-  const [
-    loadParentheque,
-    {
-      loading: loadingParentheque,
-      error: errorParentheque,
-      data: dataParentheque,
-    },
-  ] = useLazyQuery(DatabaseQueries.PARENTS_DOCUMENTS, {
-    fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
-  });
 
-  useEffect(() => {
-    void loadParentheque();
-  }, []);
-
-  useEffect(() => {
-    if (!loadingParentheque && dataParentheque) {
-      const results = (dataParentheque as { parenthequeDocuments: Document[] })
-        .parenthequeDocuments;
-      setCounterDocument(results.length);
-    }
-  }, [loadingParentheque, dataParentheque, errorParentheque]);
-
-  if (counterDocument > 0)
-    return (
-      <View
-        style={[
-          styles.timelineStepContainer,
-          styles.timelineStepLibraryContainer,
-        ]}
-      >
-        <View style={[styles.timelineContainer]}>
-          <View
-            style={[
-              styles.timelineBlock,
-              styles.timelineLibraryBlock,
-              styles.timelineBlockLeft,
-            ]}
-          />
-        </View>
-        {[Steps.stepParentheque].map((step, index) => (
-          <TimelineStepLibrary
-            order={step.ordre}
-            name={step.nom}
-            key={index}
-            onPress={() => {
-              navigation.navigate("listParentsDocuments", { step });
-            }}
-          />
-        ))}
-      </View>
-    );
+  const handleResults = (data: unknown) => {
+    const results = (data as { parenthequeDocuments: Document[] })
+      .parenthequeDocuments;
+    setCounterDocument(results.length);
+  };
 
   return (
     <View
@@ -79,7 +29,36 @@ const ParenthequeItem: FC<Props> = ({ navigation }) => {
         styles.timelineStepContainer,
         styles.timelineStepLibraryContainer,
       ]}
-    />
+    >
+      <GraphQLQuery
+        query={HomeDbQueries.PARENTS_DOCUMENTS}
+        fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
+        updateFetchedData={handleResults}
+      />
+      {counterDocument > 0 && (
+        <>
+          <View style={[styles.timelineContainer]}>
+            <View
+              style={[
+                styles.timelineBlock,
+                styles.timelineLibraryBlock,
+                styles.timelineBlockLeft,
+              ]}
+            />
+          </View>
+          {[Steps.stepParentheque].map((step, index) => (
+            <TimelineStepLibrary
+              order={step.ordre}
+              name={step.nom}
+              key={index}
+              onPress={() => {
+                navigation.navigate("listParentsDocuments", { step });
+              }}
+            />
+          ))}
+        </>
+      )}
+    </View>
   );
 };
 
@@ -100,14 +79,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: Sizes.timelineBlock / 2,
     marginLeft: Sizes.step / 4,
     marginRight: Sizes.step,
-  },
-  timelineBlockRight: {
-    borderBottomRightRadius: Sizes.timelineBlock / 2,
-    borderLeftWidth: 0,
-    borderRightWidth: 1,
-    borderTopRightRadius: Sizes.timelineBlock / 2,
-    marginLeft: Sizes.step,
-    marginRight: Sizes.step / 4,
   },
   timelineContainer: {
     flex: 1,
