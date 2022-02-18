@@ -71,8 +71,9 @@ const Parentheque: FC<Props> = ({ navigation, route }) => {
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
         updateFetchedData={handleResults}
         triggerLaunchQuery={triggerGetDocuments}
+        noLoaderBackdrop
       />
-      {documents.length > 0 ? (
+      {documents.length > 0 && (
         <View style={styles.listContainer}>
           {documents.map((document, index) => (
             <Animatable.View
@@ -85,8 +86,6 @@ const Parentheque: FC<Props> = ({ navigation, route }) => {
             </Animatable.View>
           ))}
         </View>
-      ) : (
-        <Loader backdrop={false} />
       )}
     </ScrollView>
   );

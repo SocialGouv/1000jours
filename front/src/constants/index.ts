@@ -1,9 +1,8 @@
 import * as AroundMeConstants from "./aroundMe.constants";
-import * as DatabaseQueries from "./databaseQueries.constants";
 import * as CalendarDbQueries from "./databaseQueries/calendarDbQueries.constants";
 import * as EpdsDbQueries from "./databaseQueries/epdsDbQueries.constants";
 import * as HomeDbQueries from "./databaseQueries/homeDbQueries.constants";
-import * as SearchConstants from "./databaseQueries/searchQueries.constants";
+import * as SearchQueries from "./databaseQueries/searchQueries.constants";
 import * as EpdsConstants from "./epdsConstants.constants";
 import * as FetchPoliciesConstants from "./fetchPolicies.constants";
 import Formats from "./formats";
@@ -16,7 +15,6 @@ import * as StorageKeysConstants from "./storageKeys.constants";
 export {
   AroundMeConstants,
   CalendarDbQueries,
-  DatabaseQueries,
   EpdsConstants,
   EpdsDbQueries,
   FetchPoliciesConstants,
@@ -26,6 +24,6 @@ export {
   Links,
   Locales,
   PlatformConstants,
-  SearchConstants,
+  SearchQueries,
   StorageKeysConstants,
 };
