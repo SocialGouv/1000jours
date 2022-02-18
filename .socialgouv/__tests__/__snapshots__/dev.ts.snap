@@ -306,27 +306,6 @@ data:
       }
     }
 ---
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: netpol-env-1000jours-mybranch-3s2aqr
-  namespace: env-1000jours-mybranch-3s2aqr
-spec:
-  ingress:
-    - from:
-        - podSelector: {}
-    - from:
-        - namespaceSelector:
-            matchLabels:
-              network-policy/source: ingress-controller
-    - from:
-        - namespaceSelector:
-            matchLabels:
-              network-policy/source: monitoring
-  podSelector: {}
-  policyTypes:
-    - Ingress
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
