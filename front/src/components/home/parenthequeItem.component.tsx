@@ -3,7 +3,11 @@ import type { FC } from "react";
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 
-import { FetchPoliciesConstants, HomeDbQueries, Steps } from "../../constants";
+import {
+  FetchPoliciesConstants,
+  HomeDbQueries,
+  StepsConstants,
+} from "../../constants";
 import { GraphQLQuery } from "../../services";
 import { Colors, Sizes } from "../../styles";
 import type { TabHomeParamList } from "../../types";
@@ -46,16 +50,16 @@ const ParenthequeItem: FC<Props> = ({ navigation }) => {
               ]}
             />
           </View>
-          {[Steps.stepParentheque].map((step, index) => (
-            <TimelineStepLibrary
-              order={step.ordre}
-              name={step.nom}
-              key={index}
-              onPress={() => {
-                navigation.navigate("listParentsDocuments", { step });
-              }}
-            />
-          ))}
+          <TimelineStepLibrary
+            order={StepsConstants.stepParentheque.ordre}
+            name={StepsConstants.stepParentheque.nom}
+            key={0}
+            onPress={() => {
+              navigation.navigate("listParentsDocuments", {
+                step: StepsConstants.stepParentheque,
+              });
+            }}
+          />
         </>
       )}
     </View>
