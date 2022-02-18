@@ -9,6 +9,7 @@ import CustomSnackbar from "./customSnackbar.component";
 import CustomTextInput from "./customTextInput.component";
 import Datepicker from "./datePicker.component";
 import ErrorMessage from "./errorMessage.component";
+import ExpandableButton from "./expandableButton.component";
 import { GraphQLLoader } from "./graphQLLoader.component";
 import HeaderApp from "./headerApp.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
@@ -37,6 +38,7 @@ export {
   CustomTextInput,
   Datepicker,
   ErrorMessage,
+  ExpandableButton,
   GraphQLLoader,
   HeaderApp,
   Icomoon,

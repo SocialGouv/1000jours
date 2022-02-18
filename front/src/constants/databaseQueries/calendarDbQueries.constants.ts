@@ -6,6 +6,7 @@ export const ALL_EVENTS = `
       description
       debut
       fin
+      important
       thematique {
         id
         nom

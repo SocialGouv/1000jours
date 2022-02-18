@@ -19,13 +19,17 @@ import type { Event, Tag } from "../../types";
 import { RootNavigation, StorageUtils, TrackerUtils } from "../../utils";
 import { getThematiqueIcon } from "../../utils/thematique.util";
 import ArticleCard from "../article/articleCard.component";
-import { CommonText, SecondaryText } from "../baseComponents";
-import CustomButton from "../baseComponents/customButton.component";
-import Icomoon from "../baseComponents/icomoon.component";
-import ShareButton, {
+import {
+  CommonText,
+  CustomButton,
+  ExpandableButton,
+  Icomoon,
+  IcomoonIcons,
+  SecondaryText,
+  ShareButton,
   SharePageType,
-} from "../baseComponents/shareButton.component";
-import Tags from "../baseComponents/tags.component";
+  Tags,
+} from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
@@ -89,76 +93,90 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
   }, [isExpanded]);
 
   return (
-    <View style={styles.eventCard} key={event.id}>
-      <TrackerHandler actionName={trackerAction} />
-      <ListItem
-        pad={0}
-        containerStyle={styles.listItemContainer}
-        onPress={() => {
-          onPressed(event.id.toString());
-        }}
-        accessibilityHint={Labels.accessibility.tapForMoreInfo}
-        accessibilityLabel={`${Labels.accessibility.eventCard.title} : ${event.nom}. ${Labels.accessibility.eventCard.description} : ${event.description}`}
-      >
-        <View style={styles.eventContainer}>
-          <View style={styles.eventIconContainer}>
-            <ImageBackground
-              source={BgImage}
-              imageStyle={styles.eventTypeIcon}
-              style={styles.eventTypeBackground}
-            >
-              <Icomoon
-                name={getThematiqueIcon(event.thematique)}
-                size={Sizes.xxxl}
-                color={Colors.primaryBlue}
-              />
-            </ImageBackground>
-          </View>
-          <View style={styles.eventContentContainer}>
-            <CommonText style={styles.eventTitle}>{event.nom}</CommonText>
-            <Tags tags={getEventTags()}></Tags>
-            <SecondaryText style={styles.eventDescription}>
-              {event.description}
-            </SecondaryText>
-          </View>
-        </View>
-      </ListItem>
-
-      {isExpanded && (
-        <View style={styles.eventDetailsContainer}>
-          {event.typesPoi && event.typesPoi.length > 0 && (
-            <View style={styles.linkCarto} ref={elementRef} accessible={true}>
-              <CustomButton
-                rounded={true}
-                title={Labels.event.seeOnTheMap}
-                titleStyle={styles.buttonTitle}
-                buttonStyle={{ alignSelf: "center" }}
-                action={seeOnTheMap}
-              />
-            </View>
-          )}
-          <ShareButton
-            buttonTitle={Labels.buttons.share}
-            title={Labels.appName}
-            message={`${Labels.share.event.messageStart} "${event.nom}" ${Labels.share.event.messageEnd}`}
-            page={SharePageType.event}
-            id={event.id}
-          />
-
-          {event.articles && event.articles.length > 0 && (
-            <View style={styles.listArticles}>
-              <CommonText style={styles.listArticlesTitle}>
-                {Labels.event.matchingArticles} :
-              </CommonText>
-              {event.articles.map((article, index) => (
-                <View key={index}>
-                  <ArticleCard article={article} />
-                </View>
-              ))}
-            </View>
-          )}
-        </View>
+    <View style={styles.eventCardContainer}>
+      {event.important && (
+        <ExpandableButton
+          expandedText={Labels.calendar.importantEvent}
+          icon={
+            <Icomoon
+              name={IcomoonIcons.important}
+              size={Sizes.sm}
+              color={Colors.white}
+            />
+          }
+          buttonColor={Colors.secondaryGreenDark}
+        />
       )}
+      <View style={styles.eventCard} key={event.id}>
+        <TrackerHandler actionName={trackerAction} />
+        <ListItem
+          pad={0}
+          containerStyle={styles.listItemContainer}
+          onPress={() => {
+            onPressed(event.id.toString());
+          }}
+          accessibilityHint={Labels.accessibility.tapForMoreInfo}
+          accessibilityLabel={`${Labels.accessibility.eventCard.title} : ${event.nom}. ${Labels.accessibility.eventCard.description} : ${event.description}`}
+        >
+          <View style={styles.eventContainer}>
+            <View style={styles.eventIconContainer}>
+              <ImageBackground
+                source={BgImage}
+                imageStyle={styles.eventTypeIcon}
+                style={styles.eventTypeBackground}
+              >
+                <Icomoon
+                  name={getThematiqueIcon(event.thematique)}
+                  size={Sizes.xxxl}
+                  color={Colors.primaryBlue}
+                />
+              </ImageBackground>
+            </View>
+            <View style={styles.eventContentContainer}>
+              <CommonText style={styles.eventTitle}>{event.nom}</CommonText>
+              <Tags tags={getEventTags()}></Tags>
+              <SecondaryText style={styles.eventDescription}>
+                {event.description}
+              </SecondaryText>
+            </View>
+          </View>
+        </ListItem>
+        {isExpanded && (
+          <View style={styles.eventDetailsContainer}>
+            {event.typesPoi && event.typesPoi.length > 0 && (
+              <View style={styles.linkCarto} ref={elementRef} accessible={true}>
+                <CustomButton
+                  rounded={true}
+                  title={Labels.event.seeOnTheMap}
+                  titleStyle={styles.buttonTitle}
+                  buttonStyle={{ alignSelf: "center" }}
+                  action={seeOnTheMap}
+                />
+              </View>
+            )}
+            <ShareButton
+              buttonTitle={Labels.buttons.share}
+              title={Labels.appName}
+              message={`${Labels.share.event.messageStart} "${event.nom}" ${Labels.share.event.messageEnd}`}
+              page={SharePageType.event}
+              id={event.id}
+            />
+
+            {event.articles && event.articles.length > 0 && (
+              <View style={styles.listArticles}>
+                <CommonText style={styles.listArticlesTitle}>
+                  {Labels.event.matchingArticles} :
+                </CommonText>
+                {event.articles.map((article, index) => (
+                  <View key={index}>
+                    <ArticleCard article={article} />
+                  </View>
+                ))}
+              </View>
+            )}
+          </View>
+        )}
+      </View>
     </View>
   );
 };
@@ -191,6 +209,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 0,
     marginStart: Margins.default,
+    paddingTop: Paddings.smaller,
+    position: "relative",
+  },
+  eventCardContainer: {
+    paddingTop: Paddings.default,
+    position: "relative",
   },
   eventContainer: {
     flex: 1,

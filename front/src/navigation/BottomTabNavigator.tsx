@@ -108,7 +108,7 @@ const BottomTabNavigator: FC = () => {
             tabBarAllowFontScaling: false,
             tabBarIcon: ({ color, focused }) => tabItem.getIcon(color, focused),
             title: tabItem.title,
-            unmountOnBlur: true,
+            unmountOnBlur: tabItem.name === "tabEpds",
           }}
         />
       ))}
