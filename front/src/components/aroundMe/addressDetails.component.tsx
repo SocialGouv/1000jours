@@ -1,6 +1,6 @@
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import * as React from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { TouchableOpacity as TouchableOpacityAndroid } from "react-native-gesture-handler";
 
@@ -108,30 +108,30 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
     return PLATFORM_IS_IOS ? (
       <TouchableOpacity
         style={[styles.rowView, styles.marginRight]}
-        onPress={async () => getLinkingFunction(contactType, contactLabel)}
+        onPress={getLinkingFunction(contactType, contactLabel)}
       >
         {renderContactLink(contactType, contactLabel)}
       </TouchableOpacity>
     ) : (
       <TouchableOpacityAndroid
         style={[styles.rowView, styles.marginRight]}
-        onPress={async () => getLinkingFunction(contactType, contactLabel)}
+        onPress={getLinkingFunction(contactType, contactLabel)}
       >
         {renderContactLink(contactType, contactLabel)}
       </TouchableOpacityAndroid>
     );
   };
 
-  const getLinkingFunction = async (
-    contactType: ContactType,
-    contactLabel?: string
-  ) => {
-    if (contactType === ContactType.telephone)
-      return LinkingUtils.callContact(contactLabel);
-    else if (contactType === ContactType.courriel)
-      return LinkingUtils.sendEmail(contactLabel);
-    else return LinkingUtils.openWebsite(contactLabel);
-  };
+  const getLinkingFunction = useCallback(
+    (contactType: ContactType, contactLabel?: string) => async () => {
+      if (contactType === ContactType.telephone)
+        return LinkingUtils.callContact(contactLabel);
+      else if (contactType === ContactType.courriel)
+        return LinkingUtils.sendEmail(contactLabel);
+      else return LinkingUtils.openWebsite(contactLabel);
+    },
+    []
+  );
 
   const renderContactLink = (
     contactType: ContactType,
@@ -146,6 +146,21 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
   };
 
   const iconType = getIcon(details.categorie, details.type);
+
+  const onOpenNavigationButtonPressed = useCallback(async () => {
+    setTrackerAction(
+      `${TrackerUtils.TrackingEvent.CARTO} - Clic sur le bouton "M'y rendre"`
+    );
+    await LinkingUtils.openNavigationApp(
+      details.position_latitude,
+      details.position_longitude
+    );
+  }, [details.position_latitude, details.position_longitude]);
+
+  const onClickedMarkerPressed = useCallback(() => {
+    hideDetails?.();
+  }, [hideDetails]);
+
   return (
     <View style={styles.rowContainer}>
       <TrackerHandler actionName={trackerAction} />
@@ -182,23 +197,13 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
           titleStyle={styles.fontButton}
           rounded={true}
           disabled={false}
-          onPressIn={async () => {
-            setTrackerAction(
-              `${TrackerUtils.TrackingEvent.CARTO} - Clic sur le bouton "M'y rendre"`
-            );
-            await LinkingUtils.openNavigationApp(
-              details.position_latitude,
-              details.position_longitude
-            );
-          }}
+          onPressIn={onOpenNavigationButtonPressed}
         />
       </View>
       {isClickedMarker && (
         <TouchableOpacity
           style={styles.closeModalView}
-          onPress={() => {
-            hideDetails?.();
-          }}
+          onPress={onClickedMarkerPressed}
         >
           <Icomoon
             name={IcomoonIcons.fermer}

@@ -18,7 +18,7 @@ import {
 } from "../components/baseComponents";
 import NotificationHandler from "../components/notification/notificationHandler.component";
 import { Labels } from "../constants";
-import { LoadingScreen, NotFoundScreen, Onboarding, Profile } from "../screens";
+import { LoadingScreen, Onboarding, Profile } from "../screens";
 import { Colors, Paddings, Sizes } from "../styles";
 import type { RootStackParamList } from "../types";
 import { getAppTheme } from "../utils";
@@ -99,11 +99,6 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => (
         headerTitle: () => <AppLogo height={Sizes.xxxl} width={Sizes.xxxl} />,
         headerTitleAlign: "center",
       }}
-    />
-    <Stack.Screen
-      name="notFound"
-      component={NotFoundScreen}
-      options={{ title: "Oops!" }}
     />
   </Stack.Navigator>
 );

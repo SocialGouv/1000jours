@@ -82,6 +82,7 @@ export const GraphQLLazyQuery: FC<PropsLazy> = ({
         else void fetchData();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [triggerLaunchQuery]);
 
   if (loading)
