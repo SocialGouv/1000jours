@@ -1,7 +1,20 @@
 {
-  "extends": ["@socialgouv/eslint-config-typescript"],
+  "extends": ["@socialgouv/eslint-config-typescript", "@socialgouv/eslint-config-react"],
+  "parser": "@typescript-eslint/parser",
   "rules": {
     "@typescript-eslint/no-use-before-define": "off",
-    "@typescript-eslint/no-duplicate-imports": "off"
+    "@typescript-eslint/no-duplicate-imports": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-no-bind": [
+      2,
+      {
+          "ignoreDOMComponents": false,
+          "ignoreRefs": false,
+          "allowArrowFunctions": false,
+          "allowFunctions": false,
+          "allowBind": false
+      }
+  ]
   }
 }
