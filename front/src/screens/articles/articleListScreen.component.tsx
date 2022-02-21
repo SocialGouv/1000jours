@@ -2,7 +2,7 @@ import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import _ from "lodash";
 import type { FC } from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { AccessibilityInfo, ScrollView, StyleSheet } from "react-native";
 
@@ -56,16 +56,24 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
       AccessibilityInfo.announceForAccessibility(
         articleToReadAccessibilityLabel()
       );
-  }, [articles]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [articles, filteredArticles.length]);
 
-  const handleResults = (data: unknown) => {
+  const articleToReadAccessibilityLabel = () =>
+    `${filteredArticles.length} ${Labels.accessibility.articleToRead}`;
+
+  const handleResults = useCallback((data: unknown) => {
     const results = (data as { articles: Article[] }).articles;
     setArticles(results);
-  };
+  }, []);
 
-  const navigateToSurvey = () => {
+  const navigateToSurvey = useCallback(() => {
     navigation.navigate("epdsSurvey");
-  };
+  }, [navigation]);
+
+  const onGoBack = useCallback(() => {
+    navigation.goBack();
+  }, [navigation]);
 
   const matchWithFilters = (article: Article, filters: ArticleFilter[]) => {
     let isMatching = false;
@@ -86,25 +94,25 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
     });
   };
 
-  const applyFilters = (filters: ArticleFilter[]) => {
-    const activeFilters = _.filter(filters, { active: true });
-    sendFiltersTracker(activeFilters);
-    const result = articles.map((article) => {
-      let hide = false;
-      if (activeFilters.length > 0)
-        hide = !matchWithFilters(article, activeFilters);
+  const applyFilters = useCallback(
+    (filters: ArticleFilter[]) => {
+      const activeFilters = _.filter(filters, { active: true });
+      sendFiltersTracker(activeFilters);
+      const result = articles.map((article) => {
+        let hide = false;
+        if (activeFilters.length > 0)
+          hide = !matchWithFilters(article, activeFilters);
 
-      return {
-        ...article,
-        hide: hide,
-      };
-    });
+        return {
+          ...article,
+          hide: hide,
+        };
+      });
 
-    setArticles(result);
-  };
-
-  const articleToReadAccessibilityLabel = () =>
-    `${filteredArticles.length} ${Labels.accessibility.articleToRead}`;
+      setArticles(result);
+    },
+    [articles]
+  );
 
   return (
     <ScrollView style={styles.scrollView}>
@@ -119,11 +127,7 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
       />
       <View style={styles.topContainer}>
         <View style={[styles.flexStart]}>
-          <BackButton
-            action={() => {
-              navigation.goBack();
-            }}
-          />
+          <BackButton action={onGoBack} />
         </View>
         <TitleH1
           title={screenTitle}
