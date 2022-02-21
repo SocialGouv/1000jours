@@ -11,12 +11,12 @@ import { ParenthequeItem, TimelineStep } from "../../components";
 import { TitleH1, View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
-  DatabaseQueries,
   FetchPoliciesConstants,
+  HomeDbQueries,
   StorageKeysConstants,
 } from "../../constants";
 import Labels from "../../constants/Labels";
-import { ApolloClientLazyQuery } from "../../services";
+import { GraphQLLazyQuery } from "../../services";
 import { Colors, Paddings, Sizes } from "../../styles";
 import type { Step, TabHomeParamList, UserSituation } from "../../types";
 import {
@@ -124,10 +124,10 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   return (
     <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>
       <TrackerHandler screenName={TrackerUtils.TrackingEvent.HOME} />
-      <ApolloClientLazyQuery
-        query={DatabaseQueries.HOME_GET_ALL_STEPS}
+      <GraphQLLazyQuery
+        query={HomeDbQueries.HOME_GET_ALL_STEPS}
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-        updateFetchedData={handleResults}
+        getFetchedData={handleResults}
         triggerLaunchQuery={triggerGetSteps}
       />
       {_etapes.length > 0 && (

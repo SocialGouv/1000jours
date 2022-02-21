@@ -23,12 +23,8 @@ import {
   View,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import {
-  DatabaseQueries,
-  FetchPoliciesConstants,
-  Labels,
-} from "../../constants";
-import { ApolloClient } from "../../services";
+import { FetchPoliciesConstants, HomeDbQueries, Labels } from "../../constants";
+import { GraphQLQuery } from "../../services";
 import { Paddings } from "../../styles";
 import type {
   Article,
@@ -92,10 +88,10 @@ const ArticleDetail: FC<Props> = ({
   return (
     <>
       {articleId && (
-        <ApolloClient
-          query={DatabaseQueries.ARTICLE_DETAILS_WITH_ID(articleId)}
+        <GraphQLQuery
+          query={HomeDbQueries.ARTICLE_DETAILS_WITH_ID(articleId)}
           fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-          updateFetchedData={handleResults}
+          getFetchedData={handleResults}
         />
       )}
       {currentArticle && (

@@ -7,13 +7,20 @@ import Icomoon from "../baseComponents/icomoon.component";
 interface Props {
   name: string;
   active: boolean;
+  isParentheque?: boolean;
 }
 
-const StepIcon: FC<Props> = ({ name, active }) => (
+const StepIcon: FC<Props> = ({ name, active, isParentheque }) => (
   <Icomoon
     name={name}
-    color={active ? Colors.white : Colors.primaryYellow}
-    size={Sizes.xxxxxl}
+    color={
+      isParentheque
+        ? Colors.primaryBlue
+        : active
+        ? Colors.white
+        : Colors.primaryYellow
+    }
+    size={isParentheque ? Sizes.xxxxl : Sizes.xxxxxl}
   />
 );
 

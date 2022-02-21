@@ -1,4 +1,3 @@
-import { useMutation } from "@apollo/client";
 import { format } from "date-fns";
 import Constants from "expo-constants";
 import * as React from "react";
@@ -34,7 +33,8 @@ import {
   SecondaryText,
   TitleH1,
 } from "../../../components/baseComponents";
-import { DatabaseQueries, Formats, Labels } from "../../../constants";
+import { EpdsDbQueries, Formats, Labels } from "../../../constants";
+import { GraphQLMutation } from "../../../services";
 import { Colors, Margins, Paddings, Sizes } from "../../../styles";
 import type { BeContactedData } from "../../../type";
 import { StringUtils } from "../../../utils";
@@ -67,6 +67,9 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const [isValidForm, setValidForm] = useState(false);
   const [dataForm, setDataForm] = useState<BeContactedData>();
   const [showLoader, setShowLoader] = useState(false);
+  const [queryVariables, setQueryVariables] = useState<unknown>();
+  const [triggerSendContactInformation, setTriggerSendContactInformation] =
+    useState(false);
 
   const defaultContactTypes: ContactType[] = [
     {
@@ -128,18 +131,6 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     if (contactType.find((item) => item.id == "email")?.isChecked) return true;
     else return false;
   };
-
-  const [sendContactInformation] = useMutation(
-    DatabaseQueries.EPDS_CONTACT_INFORMATION,
-    {
-      onCompleted: () => {
-        setShowLoader(false);
-      },
-      onError: (err) => {
-        console.log(err);
-      },
-    }
-  );
 
   const updateItemSelected = (
     list: ContactType[],
@@ -284,7 +275,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     );
   };
 
-  const onValidate = async () => {
+  const onValidate = () => {
     if (dataForm) {
       let dateAsString = "";
       if (
@@ -300,17 +291,16 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
         if (item.isChecked) horaires = `${horaires} ${item.id}`;
       });
 
-      await sendContactInformation({
-        variables: {
-          email: dataForm.email,
-          horaires: horaires,
-          moyen: contactType.find((item) => item.isChecked)?.id,
-          naissanceDernierEnfant: dateAsString,
-          nombreEnfants: dataForm.numberOfChildren,
-          prenom: dataForm.firstName,
-          telephone: dataForm.phoneNumber,
-        },
+      setQueryVariables({
+        email: dataForm.email,
+        horaires: horaires,
+        moyen: contactType.find((item) => item.isChecked)?.id,
+        naissanceDernierEnfant: dateAsString,
+        nombreEnfants: dataForm.numberOfChildren,
+        prenom: dataForm.firstName,
+        telephone: dataForm.phoneNumber,
       });
+      setTriggerSendContactInformation(!triggerSendContactInformation);
     }
   };
 
@@ -323,7 +313,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
           rounded={true}
           disabled={!enableNextButton()}
           action={() => {
-            void onValidate();
+            onValidate();
             setSwiperCurrentIndex(swiperCurrentIndex + 1);
             setShowLoader(true);
           }}
@@ -367,6 +357,14 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
 
   return (
     <Modal transparent={true} visible={visible} animationType="fade">
+      <GraphQLMutation
+        query={EpdsDbQueries.EPDS_CONTACT_INFORMATION}
+        variables={queryVariables}
+        triggerLaunchMutation={triggerSendContactInformation}
+        onCompleted={() => {
+          setShowLoader(false);
+        }}
+      />
       <View style={styles.behindOfModal}>
         <View style={styles.mainContainer}>
           <View style={styles.modalHeader}>

@@ -11,11 +11,11 @@ import {
 import { View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
-  DatabaseQueries,
+  EpdsDbQueries,
   FetchPoliciesConstants,
   StorageKeysConstants,
 } from "../../constants";
-import { ApolloClient } from "../../services";
+import { GraphQLQuery } from "../../services";
 import type { EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, StorageUtils, TrackerUtils } from "../../utils";
 
@@ -61,10 +61,10 @@ const TabEpdsScreen: FC = () => {
   return (
     <View style={styles.mainContainer}>
       <TrackerHandler screenName={TrackerUtils.TrackingEvent.EPDS} />
-      <ApolloClient
-        query={DatabaseQueries.EPDS_SURVEY}
+      <GraphQLQuery
+        query={EpdsDbQueries.EPDS_SURVEY}
         fetchPolicy={FetchPoliciesConstants.NO_CACHE}
-        updateFetchedData={handleResults}
+        getFetchedData={handleResults}
       />
       {getViewToDisplay()}
     </View>

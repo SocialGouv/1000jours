@@ -67,6 +67,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
     coordinates: LatLng,
     zoomOrAltitude: number
   ) => {
+    setIsLoading(false);
     void RootNavigation.navigate("aroundMeMapAndList", {
       coordinates,
       displayUserLocation: !searchIsByPostalCode,

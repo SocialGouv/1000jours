@@ -11,7 +11,7 @@ import {
   ArticleDetail,
   EventDetails,
   ListArticles,
-  ListParentsDocuments,
+  Parentheque,
   TabCalendarScreen,
   TabEpdsScreen,
   TabHomeScreen,
@@ -128,10 +128,7 @@ const TabHomeNavigator: FC = () => (
       options={{}}
     />
     <TabHomeStack.Screen name="listArticles" component={ListArticles} />
-    <TabHomeStack.Screen
-      name="listParentsDocuments"
-      component={ListParentsDocuments}
-    />
+    <TabHomeStack.Screen name="parentheque" component={Parentheque} />
     <TabHomeStack.Screen name="article" component={ArticleDetail} />
     <TabHomeStack.Screen name="epdsSurvey" component={TabEpdsScreen} />
   </TabHomeStack.Navigator>
@@ -147,10 +144,7 @@ const TabCalendarNavigator: FC = () => (
     />
     <TabCalendarStack.Screen name="eventDetails" component={EventDetails} />
     <TabCalendarStack.Screen name="article" component={ArticleDetail} />
-    <TabHomeStack.Screen
-      name="listParentsDocuments"
-      component={ListParentsDocuments}
-    />
+    <TabHomeStack.Screen name="parentheque" component={Parentheque} />
     <TabCalendarStack.Screen name="aroundMeScreen" component={AroundMeScreen} />
   </TabCalendarStack.Navigator>
 );
@@ -163,10 +157,7 @@ const TabEpdsNavigator: FC = () => (
       component={TabEpdsScreen}
       options={{}}
     />
-    <TabHomeStack.Screen
-      name="listParentsDocuments"
-      component={ListParentsDocuments}
-    />
+    <TabHomeStack.Screen name="parentheque" component={Parentheque} />
   </TabEpdsStack.Navigator>
 );
 
@@ -182,10 +173,7 @@ const TabSearchNavigator: FC = () => (
       name="aroundMeMapAndList"
       component={AroundMeMapAndList}
     />
-    <TabHomeStack.Screen
-      name="listParentsDocuments"
-      component={ListParentsDocuments}
-    />
+    <TabHomeStack.Screen name="parentheque" component={Parentheque} />
   </TabSearchStack.Navigator>
 );
 

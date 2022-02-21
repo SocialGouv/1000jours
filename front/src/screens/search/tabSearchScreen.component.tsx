@@ -1,4 +1,3 @@
-import { gql, useLazyQuery } from "@apollo/client";
 import type { FC } from "react";
 import { useState } from "react";
 import * as React from "react";
@@ -20,8 +19,8 @@ import {
   poisRoute,
 } from "../../components/search/tabSearchRoutes.component";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { FetchPoliciesConstants, Labels } from "../../constants";
-import { SEARCH_ARTICLES_BY_KEYWORDS } from "../../constants/databaseQueries.constants";
+import { FetchPoliciesConstants, Labels, SearchQueries } from "../../constants";
+import { GraphQLLazyQuery } from "../../services";
 import {
   Colors,
   FontNames,
@@ -42,6 +41,8 @@ const TabSearchScreen: FC = () => {
   const [updatedText, setUpdatedText] = useState(Labels.search.writeKeyword);
   const [trackerSearchObject, setTrackerSearchObject] =
     useState<TrackerSearch>();
+  const [triggerGetArticles, setTriggerGetArticles] = useState(false);
+  const [queryVariables, setQueryVariables] = useState<unknown>();
   const trackerSearchCategory = "Onglet Rechercher";
 
   // Tabs
@@ -60,33 +61,24 @@ const TabSearchScreen: FC = () => {
     },
   ]);
 
-  const [getSearchArticlesByKeywords] = useLazyQuery(
-    gql(SEARCH_ARTICLES_BY_KEYWORDS),
-    {
-      fetchPolicy: FetchPoliciesConstants.NO_CACHE,
-      notifyOnNetworkStatusChange: true,
-      onCompleted: (data) => {
-        const results = (data as { articles: Article[] }).articles;
-        setArticles(results);
-        if (results.length === 0) setUpdatedText(Labels.search.noArticleFound);
-        setTrackerSearchObject({
-          category: trackerSearchCategory,
-          count: results.length,
-          keyword: keywords,
-        });
-      },
-    }
-  );
-
-  const onSearchByKeywords = async () => {
+  const onSearchByKeywords = () => {
     setUpdatedText(Labels.search.loading);
     KeyboardUtils.dismissKeyboard();
     if (stringIsNotNullNorEmpty(keywords)) {
-      const variables = {
-        keywords,
-      };
-      await getSearchArticlesByKeywords({ variables });
+      setQueryVariables({ keywords });
+      setTriggerGetArticles(!triggerGetArticles);
     }
+  };
+
+  const handleResults = (data: unknown) => {
+    const results = (data as { articles: Article[] }).articles;
+    setArticles(results);
+    if (results.length === 0) setUpdatedText(Labels.search.noArticleFound);
+    setTrackerSearchObject({
+      category: trackerSearchCategory,
+      count: results.length,
+      keyword: keywords,
+    });
   };
 
   const renderTabBar = (
@@ -118,6 +110,15 @@ const TabSearchScreen: FC = () => {
           description={Labels.search.findAdaptedResponses}
           showDescription={articles.length === 0}
           animated={false}
+        />
+        <GraphQLLazyQuery
+          query={SearchQueries.SEARCH_ARTICLES_BY_KEYWORDS}
+          fetchPolicy={FetchPoliciesConstants.NO_CACHE}
+          notifyOnNetworkStatusChange
+          getFetchedData={handleResults}
+          triggerLaunchQuery={triggerGetArticles}
+          variables={queryVariables}
+          noLoader
         />
         <View style={articles.length === 0 && styles.searchView}>
           <SecondaryText>{Labels.search.yourSearch}</SecondaryText>

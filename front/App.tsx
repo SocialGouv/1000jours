@@ -1,4 +1,3 @@
-import { ApolloProvider } from "@apollo/client";
 import Constants from "expo-constants";
 import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
@@ -21,14 +20,12 @@ import { initLocales } from "./src/config/calendar-config";
 import { StorageKeysConstants } from "./src/constants";
 import { useCachedResources, useColorScheme } from "./src/hooks";
 import Navigation from "./src/navigation/navigation.component";
-import { apolloService } from "./src/services";
+import { GraphQLProvider } from "./src/services";
 import { initMonitoring, StorageUtils, TrackerUtils } from "./src/utils";
 
 setNotificationHandler();
 initLocales();
 initMonitoring();
-
-const client = apolloService.getApolloClient();
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const customFonts = { IcoMoon: IcomoonFont };
@@ -108,8 +105,8 @@ const MainAppContainer: FC = () => {
   if (!fontsLoaded || !isLoadingComplete) {
     return null;
   } else {
-    return (
-      <ApolloProvider client={client}>
+    const appContainer = (
+      <>
         <TrackerAppStart />
         <LinksHandler />
         <TrackerHandler
@@ -119,8 +116,9 @@ const MainAppContainer: FC = () => {
           <Navigation colorScheme={colorScheme} />
           <StatusBar />
         </SafeAreaProvider>
-      </ApolloProvider>
+      </>
     );
+    return <GraphQLProvider appContainer={appContainer} />;
   }
 };
 

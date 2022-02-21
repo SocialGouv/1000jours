@@ -1,77 +1,27 @@
-import { useLazyQuery } from "@apollo/client";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 
-import {
-  DatabaseQueries,
-  FetchPoliciesConstants,
-  Steps,
-} from "../../constants";
+import { FetchPoliciesConstants, HomeDbQueries, Labels } from "../../constants";
+import { GraphQLQuery } from "../../services";
 import { Colors, Sizes } from "../../styles";
-import type { TabHomeParamList } from "../../types";
+import type { Document, TabHomeParamList } from "../../types";
 import { View } from "../baseComponents";
-import TimelineStepLibrary from "../timeline/timelineStepLibrary.component";
+import TimelineStep from "../timeline/timelineStep.component";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;
 }
 
 const ParenthequeItem: FC<Props> = ({ navigation }) => {
-  const [counterDocument, setCounterDocument] = useState(0);
-  const [
-    loadParentheque,
-    {
-      loading: loadingParentheque,
-      error: errorParentheque,
-      data: dataParentheque,
-    },
-  ] = useLazyQuery(DatabaseQueries.PARENTS_DOCUMENTS, {
-    fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
-  });
+  const [documents, setDocuments] = useState<Document[]>([]);
 
-  useEffect(() => {
-    void loadParentheque();
-  }, []);
-
-  useEffect(() => {
-    if (!loadingParentheque && dataParentheque) {
-      const results = (dataParentheque as { parenthequeDocuments: Document[] })
-        .parenthequeDocuments;
-      setCounterDocument(results.length);
-    }
-  }, [loadingParentheque, dataParentheque, errorParentheque]);
-
-  if (counterDocument > 0)
-    return (
-      <View
-        style={[
-          styles.timelineStepContainer,
-          styles.timelineStepLibraryContainer,
-        ]}
-      >
-        <View style={[styles.timelineContainer]}>
-          <View
-            style={[
-              styles.timelineBlock,
-              styles.timelineLibraryBlock,
-              styles.timelineBlockLeft,
-            ]}
-          />
-        </View>
-        {[Steps.stepParentheque].map((step, index) => (
-          <TimelineStepLibrary
-            order={step.ordre}
-            name={step.nom}
-            key={index}
-            onPress={() => {
-              navigation.navigate("listParentsDocuments", { step });
-            }}
-          />
-        ))}
-      </View>
-    );
+  const handleResults = (data: unknown) => {
+    const results = (data as { parenthequeDocuments: Document[] })
+      .parenthequeDocuments;
+    setDocuments(results);
+  };
 
   return (
     <View
@@ -79,7 +29,38 @@ const ParenthequeItem: FC<Props> = ({ navigation }) => {
         styles.timelineStepContainer,
         styles.timelineStepLibraryContainer,
       ]}
-    />
+    >
+      <GraphQLQuery
+        query={HomeDbQueries.PARENTS_DOCUMENTS}
+        fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
+        getFetchedData={handleResults}
+      />
+      {documents.length > 0 && (
+        <>
+          <View
+            style={[
+              styles.timelineContainer,
+              styles.timelineBlock,
+              styles.timelineLibraryBlock,
+              styles.timelineBlockLeft,
+            ]}
+          />
+          <TimelineStep
+            order={0}
+            name={Labels.timeline.library.nom}
+            index={-1}
+            active={false}
+            isTheLast={false}
+            onPress={() => {
+              navigation.navigate("parentheque", {
+                documents,
+              });
+            }}
+            isParentheque
+          />
+        </>
+      )}
+    </View>
   );
 };
 
@@ -100,14 +81,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: Sizes.timelineBlock / 2,
     marginLeft: Sizes.step / 4,
     marginRight: Sizes.step,
-  },
-  timelineBlockRight: {
-    borderBottomRightRadius: Sizes.timelineBlock / 2,
-    borderLeftWidth: 0,
-    borderRightWidth: 1,
-    borderTopRightRadius: Sizes.timelineBlock / 2,
-    marginLeft: Sizes.step,
-    marginRight: Sizes.step / 4,
   },
   timelineContainer: {
     flex: 1,

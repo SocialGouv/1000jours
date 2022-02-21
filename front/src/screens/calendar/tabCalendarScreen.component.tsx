@@ -1,4 +1,3 @@
-import { useLazyQuery } from "@apollo/client";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { addDays, format } from "date-fns";
 import * as Calendar from "expo-calendar";
@@ -10,32 +9,31 @@ import * as React from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 
 import HelpIcon from "../../assets/images/help.png";
+import { Events } from "../../components";
 import {
   CommonText,
   CustomButton,
-  ErrorMessage,
   Icomoon,
   IcomoonIcons,
-  Loader,
   ModalHelp,
   SecondaryTextItalic,
   TitleH1,
   View,
 } from "../../components/baseComponents";
-import Events from "../../components/calendar/events.component";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
+  CalendarDbQueries,
   FetchPoliciesConstants,
   Formats,
   Labels,
   StorageKeysConstants,
 } from "../../constants";
-import { ALL_EVENTS } from "../../constants/databaseQueries.constants";
 import {
   ICLOUD,
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
+import { GraphQLLazyQuery } from "../../services";
 import {
   Colors,
   FontNames,
@@ -45,9 +43,13 @@ import {
   Sizes,
 } from "../../styles";
 import type { Event, TabCalendarParamList } from "../../types";
-import { NotificationUtils, StorageUtils, TrackerUtils } from "../../utils";
+import {
+  NotificationUtils,
+  StorageUtils,
+  StringUtils,
+  TrackerUtils,
+} from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
-import { stringIsNotNullNorEmpty } from "../../utils/strings.util";
 
 interface Props {
   navigation: StackNavigationProp<TabCalendarParamList, "eventDetails">;
@@ -63,6 +65,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const hourWhenEventEnd = 18; // Se Termine à 18h
 
   const [showModalHelp, setShowModalHelp] = useState(false);
+  const [triggerGetAllEvents, setTriggerGetAllEvents] = useState(false);
   const [trackerAction, setTrackerAction] = useState("");
 
   const [scrollToEventId, setScrollToEventId] = useState("");
@@ -175,10 +178,6 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     setLastSyncDate(date);
   };
 
-  const [loadEvents, { loading, error, data }] = useLazyQuery(ALL_EVENTS, {
-    fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
-  });
-
   const init = async () => {
     const childBirthdayStr =
       (await StorageUtils.getStringValue(
@@ -193,7 +192,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
 
     if (childBirthdayStr.length > 0) {
       setLoadingEvents(true);
-      void loadEvents();
+      setTriggerGetAllEvents(!triggerGetAllEvents);
     }
   };
 
@@ -207,23 +206,6 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     }));
   };
 
-  useEffect(() => {
-    if (!loading && data) {
-      const evenements = (data as { evenements: Event[] }).evenements;
-
-      void StorageUtils.storeStringValue(
-        StorageKeysConstants.eventsCalcFromBirthday,
-        childBirthday
-      )
-        .then(() => {
-          setEvents(formattedEvents(evenements));
-        })
-        .catch(() => {
-          setLoadingEvents(false);
-        });
-    }
-  }, [loading, data]);
-
   const scheduleEventsNotification = async () => {
     const notifIdsEventsStored = await StorageUtils.getObjectValue(
       StorageKeysConstants.notifIdsEvents
@@ -232,7 +214,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
       StorageKeysConstants.forceToScheduleEventsNotif
     );
     if (
-      stringIsNotNullNorEmpty(eventsCalcFromBirthday) &&
+      StringUtils.stringIsNotNullNorEmpty(eventsCalcFromBirthday) &&
       (!notifIdsEventsStored ||
         eventsCalcFromBirthday !== childBirthday ||
         forceToScheduleEventsNotif)
@@ -256,22 +238,40 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     }
   }, [events]);
 
+  const handleResults = (data: unknown) => {
+    const evenements = (data as { evenements: Event[] }).evenements;
+
+    void StorageUtils.storeStringValue(
+      StorageKeysConstants.eventsCalcFromBirthday,
+      childBirthday
+    )
+      .then(() => {
+        setEvents(formattedEvents(evenements));
+      })
+      .catch(() => {
+        setLoadingEvents(false);
+      });
+  };
+
   return (
     <View style={styles.mainContainer}>
-      <TrackerHandler
-        screenName={TrackerUtils.TrackingEvent.CALENDAR}
-        actionName={trackerAction}
-      />
       <TitleH1
         title={Labels.tabs.calendarTitle}
         description={Labels.calendar.description}
         animated={false}
       />
-      {loadingEvents ? (
-        <Loader backdrop={false} />
-      ) : error ? (
-        <ErrorMessage error={error} />
-      ) : (
+      <TrackerHandler
+        screenName={TrackerUtils.TrackingEvent.CALENDAR}
+        actionName={trackerAction}
+      />
+      <GraphQLLazyQuery
+        query={CalendarDbQueries.ALL_EVENTS}
+        fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
+        getFetchedData={handleResults}
+        triggerLaunchQuery={triggerGetAllEvents}
+        noLoaderBackdrop
+      />
+      {!loadingEvents && (
         <View style={styles.calendarContainer}>
           {childBirthday.length > 0 ? (
             <>

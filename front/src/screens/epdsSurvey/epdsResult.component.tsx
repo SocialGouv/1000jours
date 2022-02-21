@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { useMutation } from "@apollo/client/react/hooks";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -22,11 +20,12 @@ import EpdsResultContactMamanBlues from "../../components/epdsSurvey/epdsResultC
 import EpdsResultInformation from "../../components/epdsSurvey/epdsResultInformation/epdsResultInformation.component";
 import {
   AroundMeConstants,
-  DatabaseQueries,
   EpdsConstants,
+  EpdsDbQueries,
   Labels,
   StorageKeysConstants,
 } from "../../constants";
+import { GraphQLMutation } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, NotificationUtils, StorageUtils } from "../../utils";
@@ -39,12 +38,6 @@ interface Props {
   startSurveyOver: () => void;
 }
 
-const clientNoCache = new ApolloClient({
-  cache: new InMemoryCache(),
-  headers: { "content-type": "application/json" },
-  uri: `${process.env.API_URL}/graphql?nocache`,
-});
-
 const EpdsResult: FC<Props> = ({
   result,
   epdsSurvey,
@@ -52,12 +45,8 @@ const EpdsResult: FC<Props> = ({
   lastQuestionHasThreePointsAnswer,
   startSurveyOver,
 }) => {
-  const [addReponseQuery] = useMutation(DatabaseQueries.EPDS_ADD_RESPONSE, {
-    client: clientNoCache,
-    onError: (err) => {
-      console.log(err);
-    },
-  });
+  const [queryVariables, setQueryVariables] = useState<unknown>();
+  const [triggerLaunchQuery, setTriggerLaunchQuery] = useState(false);
   const [showSnackBar, setShowSnackBar] = useState(false);
 
   const labelsResultats = Labels.epdsSurvey.resultats;
@@ -76,23 +65,22 @@ const EpdsResult: FC<Props> = ({
 
       const answersScores = EpdsSurveyUtils.getEachQuestionScore(epdsSurvey);
 
-      await addReponseQuery({
-        variables: {
-          compteur: newCounter,
-          genre: genderValue,
-          reponseNum1: answersScores[0],
-          reponseNum10: answersScores[9],
-          reponseNum2: answersScores[1],
-          reponseNum3: answersScores[2],
-          reponseNum4: answersScores[3],
-          reponseNum5: answersScores[4],
-          reponseNum6: answersScores[5],
-          reponseNum7: answersScores[6],
-          reponseNum8: answersScores[7],
-          reponseNum9: answersScores[8],
-          score: result,
-        },
+      setQueryVariables({
+        compteur: newCounter,
+        genre: genderValue,
+        reponseNum1: answersScores[0],
+        reponseNum10: answersScores[9],
+        reponseNum2: answersScores[1],
+        reponseNum3: answersScores[2],
+        reponseNum4: answersScores[3],
+        reponseNum5: answersScores[4],
+        reponseNum6: answersScores[5],
+        reponseNum7: answersScores[6],
+        reponseNum8: answersScores[7],
+        reponseNum9: answersScores[8],
+        score: result,
       });
+      setTriggerLaunchQuery(!triggerLaunchQuery);
     };
 
     void saveEpdsSurveyResults();
@@ -134,6 +122,11 @@ const EpdsResult: FC<Props> = ({
 
   return (
     <>
+      <GraphQLMutation
+        query={EpdsDbQueries.EPDS_ADD_RESPONSE}
+        variables={queryVariables}
+        triggerLaunchMutation={triggerLaunchQuery}
+      />
       <ScrollView>
         <TitleH1
           title={Labels.epdsSurveyLight.titleLight}

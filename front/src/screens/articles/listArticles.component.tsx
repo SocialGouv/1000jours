@@ -18,8 +18,8 @@ import {
   View,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { DatabaseQueries, FetchPoliciesConstants, Labels } from "../../constants";
-import { ApolloClient } from "../../services";
+import { FetchPoliciesConstants, HomeDbQueries, Labels } from "../../constants";
+import { GraphQLQuery } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
   Article,
@@ -113,10 +113,10 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
         screenName={`${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`}
         actionName={trackerAction}
       />
-      <ApolloClient
-        query={DatabaseQueries.LIST_ARTICLES_WITH_STEP(route.params.step.id)}
+      <GraphQLQuery
+        query={HomeDbQueries.LIST_ARTICLES_WITH_STEP(route.params.step.id)}
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-        updateFetchedData={handleResults}
+        getFetchedData={handleResults}
       />
       <View style={styles.topContainer}>
         <View style={[styles.flexStart]}>

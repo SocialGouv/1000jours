@@ -1,57 +1,46 @@
-import { useQuery } from "@apollo/client";
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import _ from "lodash";
 import type { FC } from "react";
+import { useEffect, useState } from "react";
 import * as React from "react";
-import { useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-import {
-  BackButton,
-  ErrorMessage,
-  Loader,
-  TitleH1,
-  View,
-} from "../../components/baseComponents";
-import DocumentCard from "../../components/document/documentCard.component";
+import { DocumentCard } from "../../components";
+import { BackButton, TitleH1, View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { FetchPoliciesConstants } from "../../constants";
-import { PARENTS_DOCUMENTS } from "../../constants/databaseQueries.constants";
+import { FetchPoliciesConstants, HomeDbQueries, Labels } from "../../constants";
+import { GraphQLLazyQuery } from "../../services";
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
-import type { Document, Step, TabHomeParamList } from "../../types";
+import type { Document, TabHomeParamList } from "../../types";
 import { TrackerUtils } from "../../utils";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;
-  route: RouteProp<{ params: { step: Step } }, "params">;
+  route: RouteProp<{ params?: { documents?: Document[] } }, "params">;
 }
 
-const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
-  const screenTitle = route.params.step.nom;
-  const description = route.params.step.description;
+const Parentheque: FC<Props> = ({ navigation, route }) => {
+  const documentsFromParam =
+    route.params?.documents && sortDocuments(route.params.documents);
 
-  const [documents, setDocuments] = React.useState<Document[]>([]);
-  const [showDocuments, setShowDocuments] = React.useState(false);
-
-  const { loading, error, data } = useQuery(PARENTS_DOCUMENTS, {
-    fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
-  });
+  const [documents, setDocuments] = useState<Document[]>(
+    documentsFromParam ?? []
+  );
+  const [triggerGetDocuments, setTriggerGetDocuments] = useState(false);
 
   useEffect(() => {
-    if (!loading && data) setShowDocuments(true);
-  }, [documents]);
-
-  useEffect(() => {
-    if (!loading && data) {
-      const results = (data as { parenthequeDocuments: Document[] })
-        .parenthequeDocuments;
-      setDocuments(sortDocuments(results));
+    if (!documentsFromParam) {
+      setTriggerGetDocuments(!triggerGetDocuments);
     }
-  }, [loading, data]);
+  }, []);
 
-  if (error) return <ErrorMessage error={error} />;
+  const handleResults = (data: unknown) => {
+    const results = (data as { parenthequeDocuments: Document[] })
+      .parenthequeDocuments;
+    setDocuments(results);
+  };
 
   return (
     <ScrollView style={styles.scrollView}>
@@ -67,13 +56,19 @@ const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
           />
         </View>
         <TitleH1
-          title={screenTitle}
-          description={description}
+          title={Labels.timeline.library.nom}
+          description={Labels.timeline.library.description}
           animated={false}
         />
       </View>
-
-      {showDocuments ? (
+      <GraphQLLazyQuery
+        query={HomeDbQueries.PARENTS_DOCUMENTS}
+        fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
+        getFetchedData={handleResults}
+        triggerLaunchQuery={triggerGetDocuments}
+        noLoaderBackdrop
+      />
+      {documents.length > 0 && (
         <View style={styles.listContainer}>
           {documents.map((document, index) => (
             <Animatable.View
@@ -86,8 +81,6 @@ const ListParentsDocuments: FC<Props> = ({ navigation, route }) => {
             </Animatable.View>
           ))}
         </View>
-      ) : (
-        <Loader backdrop={false} />
       )}
     </ScrollView>
   );
@@ -102,9 +95,6 @@ const sortDocuments = (documents: Document[]) => {
 };
 
 const styles = StyleSheet.create({
-  description: {
-    color: Colors.commonText,
-  },
   flexStart: {
     alignItems: "flex-start",
     flexDirection: "row",
@@ -129,4 +119,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListParentsDocuments;
+export default Parentheque;
