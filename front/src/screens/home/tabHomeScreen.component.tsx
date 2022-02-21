@@ -1,7 +1,8 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
+// eslint-disable-next-line import/named
 import _, { range } from "lodash";
 import type { FC } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as React from "react";
 import type { LayoutChangeEvent } from "react-native";
 import { StyleSheet } from "react-native";
@@ -77,42 +78,53 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     setTriggerGetStep(!triggerGetSteps);
   };
 
-  const checkIfCurrentStepHasChanged = (currentStep: Step, etapes: Step[]) => {
-    // Force le déclenchement de la notification suite au changement d'étape
-    if (
-      StringUtils.stringIsNotNullNorEmpty(previousCurrentStepId) &&
-      previousCurrentStepId !== currentStep.id.toString()
-    ) {
-      void NotificationUtils.cancelScheduleNextStepNotification().then(() => {
-        void NotificationUtils.scheduleNextStepNotification(currentStep, true);
-        setPreviousCurrentStepId(currentStep.id.toString());
-      });
-    }
-    // Planifie la notification du prochain changement d'étape
-    else {
-      const nextStep = _.find(etapes, { ordre: currentStep.ordre + 1 });
-      if (nextStep)
-        void NotificationUtils.scheduleNextStepNotification(nextStep);
-    }
-  };
+  const handleResults = useCallback(
+    (data: unknown) => {
+      const checkIfCurrentStepHasChanged = (
+        currentStep: Step,
+        etapes: Step[]
+      ) => {
+        // Force le déclenchement de la notification suite au changement d'étape
+        if (
+          StringUtils.stringIsNotNullNorEmpty(previousCurrentStepId) &&
+          previousCurrentStepId !== currentStep.id.toString()
+        ) {
+          void NotificationUtils.cancelScheduleNextStepNotification().then(
+            () => {
+              void NotificationUtils.scheduleNextStepNotification(
+                currentStep,
+                true
+              );
+              setPreviousCurrentStepId(currentStep.id.toString());
+            }
+          );
+        }
+        // Planifie la notification du prochain changement d'étape
+        else {
+          const nextStep = _.find(etapes, { ordre: currentStep.ordre + 1 });
+          if (nextStep)
+            void NotificationUtils.scheduleNextStepNotification(nextStep);
+        }
+      };
 
-  const handleResults = (data: unknown) => {
-    const result = data as { etapes: Step[] };
-    const etapes = result.etapes.map((etape) => ({
-      ...etape,
-      // '+' permet de convertir l'id (string) en number
-      active: currentStepId === +etape.id,
-      id: +etape.id,
-    }));
-    setEtapes(etapes);
+      const result = data as { etapes: Step[] };
+      const etapes = result.etapes.map((etape) => ({
+        ...etape,
+        // '+' permet de convertir l'id (string) en number
+        active: currentStepId === +etape.id,
+        id: +etape.id,
+      }));
+      setEtapes(etapes);
 
-    setNumberOfStepsWithoutTheFirstAndLast(etapes.length - 1 - 2);
+      setNumberOfStepsWithoutTheFirstAndLast(etapes.length - 1 - 2);
 
-    if (currentStepId) {
-      const currentStep = _.find(etapes, { id: currentStepId });
-      if (currentStep) checkIfCurrentStepHasChanged(currentStep, etapes);
-    }
-  };
+      if (currentStepId) {
+        const currentStep = _.find(etapes, { id: currentStepId });
+        if (currentStep) checkIfCurrentStepHasChanged(currentStep, etapes);
+      }
+    },
+    [currentStepId, previousCurrentStepId]
+  );
 
   const scrollTo = (positionY: number) => {
     scrollViewRef.current?.scrollTo({
@@ -121,6 +133,22 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     });
   };
 
+  const onTimelineStepPress = useCallback(
+    (step: Step) => () => {
+      navigation.navigate("listArticles", { step });
+    },
+    [navigation]
+  );
+
+  const onTimelineStepLayout = useCallback(
+    (event: LayoutChangeEvent, step: Step) => {
+      if (step.active) {
+        const { layout } = event.nativeEvent;
+        scrollTo(layout.y);
+      }
+    },
+    []
+  );
   return (
     <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>
       <TrackerHandler screenName={TrackerUtils.TrackingEvent.HOME} />
@@ -167,14 +195,10 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
                 isTheLast={index === _etapes.length - 1}
                 key={index}
                 active={step.active}
-                onPress={() => {
-                  navigation.navigate("listArticles", { step });
-                }}
+                onPress={onTimelineStepPress(step)}
+                // eslint-disable-next-line react/jsx-no-bind
                 onLayout={(event: LayoutChangeEvent) => {
-                  if (step.active) {
-                    const { layout } = event.nativeEvent;
-                    scrollTo(layout.y);
-                  }
+                  onTimelineStepLayout(event, step);
                 }}
               />
             ))}
