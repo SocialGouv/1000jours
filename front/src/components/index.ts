@@ -10,6 +10,7 @@ import SearchUserLocationOrPostalCodeCoords from "./aroundMe/searchUserLocationO
 import SlidingUpPanelAddressesList from "./aroundMe/slidingUpPanelAddressesList.component";
 import SubmitNewFilter from "./aroundMe/submitNewFilter.component";
 import ArticleCard from "./article/articleCard.component";
+import ArticleList from "./article/articleList.component";
 import ArticlesFilter from "./article/articlesFilter.component";
 import DidYouKnow from "./article/didYouKnow.component";
 import ImageBanner from "./article/imageBanner.component";
@@ -43,6 +44,7 @@ export {
   AroundMePoiList,
   AroundMeScreenHeader,
   ArticleCard,
+  ArticleList,
   ArticlesFilter,
   ConditionsOfUse,
   CustomMapMarker,

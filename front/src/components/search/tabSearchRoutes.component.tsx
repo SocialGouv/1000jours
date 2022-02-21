@@ -2,16 +2,15 @@ import type { ReactElement } from "react";
 import * as React from "react";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import * as Animatable from "react-native-animatable";
 import { ScrollView } from "react-native-gesture-handler";
 
-import ArticleCard from "../../components/article/articleCard.component";
 import { SecondaryTextItalic } from "../../components/baseComponents";
 import { Labels } from "../../constants";
 import ArticleDetail from "../../screens/articles/articleDetail.component";
 import { Margins, Paddings } from "../../styles";
 import type { Article, Step } from "../../types";
 import { SearchUtils } from "../../utils";
+import ArticleList from "../article/articleList.component";
 import TabAroundMeInstruction from "./tabAroundMeInstruction.component";
 
 export const articlesRoute = (
@@ -42,24 +41,16 @@ export const articlesRoute = (
     />
   ) : (
     <ScrollView style={styles.listContainer}>
-      {articles.map((article: Article, index: number) => (
-        <Animatable.View
-          key={index}
-          animation="fadeInUp"
-          duration={500}
-          delay={0}
-        >
-          <ArticleCard
-            article={article}
-            isFromSearchScreen
-            setStepAndArticleId={(articleId, step) => {
-              setShowArticle(true);
-              setCurrentArticleId(articleId);
-              setCurrentArticleStep(step);
-            }}
-          />
-        </Animatable.View>
-      ))}
+      <ArticleList 
+        articleList={articles}
+        animationDuration={500}
+        isFromSearchScreen
+        setStepAndArticleId={(articleId, step) => {
+          setShowArticle(true);
+          setCurrentArticleId(articleId);
+          setCurrentArticleStep(step);
+        }}
+      />
     </ScrollView>
   );
 };

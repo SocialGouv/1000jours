@@ -5,9 +5,8 @@ import type { FC } from "react";
 import { useEffect, useState } from "react";
 import * as React from "react";
 import { AccessibilityInfo, ScrollView, StyleSheet } from "react-native";
-import * as Animatable from "react-native-animatable";
 
-import { ArticleCard, ArticlesFilter } from "../../components";
+import { ArticleList, ArticlesFilter } from "../../components";
 import {
   BackButton,
   CommonText,
@@ -159,16 +158,11 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
           >
             {filteredArticles.length} {Labels.articleList.articlesToRead}
           </SecondaryText>
-          {filteredArticles.map((article, index) => (
-            <Animatable.View
-              key={index}
-              animation="fadeInUp"
-              duration={1000}
-              delay={0}
-            >
-              <ArticleCard article={article} step={route.params.step} />
-            </Animatable.View>
-          ))}
+          <ArticleList
+            articleList={filteredArticles}
+            animationDuration={1000}
+            step={route.params.step}
+          />
         </View>
       ) : (
         <Loader />
