@@ -123,6 +123,11 @@ export default {
     inShortTitle: "En bref :",
     learnMoreAboutIt: "En savoir plus à ce sujet :",
   },
+  articleList: {
+    articlesToRead: "article(s) à lire",
+    filters: "Filtrer",
+    resetFilters: "Réinitialiser",
+  },
   buttons: {
     back: "Retour",
     cancel: "Annuler",
@@ -479,11 +484,6 @@ export default {
   },
   invalidDate: "La date saisie n'est pas valide.",
   invalidLink: "Ce lien n'est pas valide.",
-  listArticles: {
-    articlesToRead: "article(s) à lire",
-    filters: "Filtrer",
-    resetFilters: "Réinitialiser",
-  },
   mandatoryField: "Ce champ est obligatoire",
   menu: {
     accessibility: "Accessibilité",

@@ -135,7 +135,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 
   const onTimelineStepPress = useCallback(
     (step: Step) => () => {
-      navigation.navigate("listArticles", { step });
+      navigation.navigate("articleList", { step });
     },
     [navigation]
   );

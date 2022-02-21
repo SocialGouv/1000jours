@@ -22,7 +22,7 @@ export type BottomTabParamList = {
 
 export type TabHomeParamList = {
   tabHomeScreen: undefined;
-  listArticles: { step: Step };
+  articleList: { step: Step };
   parentheque: { documents?: Document[] };
   article: { id: number; step?: Step };
   epdsSurvey: undefined;

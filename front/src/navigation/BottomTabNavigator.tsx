@@ -9,8 +9,8 @@ import {
   AroundMeMapAndList,
   AroundMeScreen,
   ArticleDetail,
+  ArticleListScreen,
   EventDetails,
-  ListArticles,
   Parentheque,
   TabCalendarScreen,
   TabEpdsScreen,
@@ -127,7 +127,7 @@ const TabHomeNavigator: FC = () => (
       component={TabHomeScreen}
       options={{}}
     />
-    <TabHomeStack.Screen name="listArticles" component={ListArticles} />
+    <TabHomeStack.Screen name="articleList" component={ArticleListScreen} />
     <TabHomeStack.Screen name="parentheque" component={Parentheque} />
     <TabHomeStack.Screen name="article" component={ArticleDetail} />
     <TabHomeStack.Screen name="epdsSurvey" component={TabEpdsScreen} />

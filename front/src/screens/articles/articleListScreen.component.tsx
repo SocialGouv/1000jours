@@ -38,7 +38,7 @@ interface Props {
 peut-être que ça devrait être au back, lorsqu'il retourne les articles, de dire s'il faut afficher la bannière via un booléen, à discuter */
 const ETAPE_ENFANT_3_PREMIERS_MOIS = 6;
 
-const ListArticles: FC<Props> = ({ navigation, route }) => {
+const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
   const screenTitle = route.params.step.nom;
   const description = route.params.step.description;
   const stepIsFirstThreeMonths =
@@ -157,7 +157,7 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
             style={styles.headerListInfo}
             accessibilityLabel={articleToReadAccessibilityLabel()}
           >
-            {filteredArticles.length} {Labels.listArticles.articlesToRead}
+            {filteredArticles.length} {Labels.articleList.articlesToRead}
           </SecondaryText>
           {filteredArticles.map((article, index) => (
             <Animatable.View
@@ -236,4 +236,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListArticles;
+export default ArticleListScreen;

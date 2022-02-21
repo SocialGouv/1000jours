@@ -67,7 +67,7 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
 
   const numberActiveAccessibilityFilters = () => {
     const number = filters.filter((item) => item.active).length;
-    return `${Labels.listArticles.filters}. (${number} ${Labels.accessibility.articlesFilters.activeFilter})`;
+    return `${Labels.articleList.filters}. (${number} ${Labels.accessibility.articlesFilters.activeFilter})`;
   };
 
   const checkboxAccessibilityLabel = (filter: ArticleFilter) =>
@@ -87,7 +87,7 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
       <CustomButton
         buttonStyle={styles.filterButton}
         titleStyle={styles.filterButtonTitle}
-        title={`${Labels.listArticles.filters} ${numberActiveFilters()}`}
+        title={`${Labels.articleList.filters} ${numberActiveFilters()}`}
         rounded={true}
         disabled={false}
         accessibilityLabel={numberActiveAccessibilityFilters()}
@@ -115,7 +115,7 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
                 }}
               >
                 <TitleH1
-                  title={Labels.listArticles.filters}
+                  title={Labels.articleList.filters}
                   animated={false}
                   style={{ paddingTop: Paddings.larger }}
                 />
@@ -130,7 +130,7 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
               <CustomButton
                 buttonStyle={[styles.filterButton]}
                 titleStyle={styles.filterButtonTitle}
-                title={Labels.listArticles.resetFilters}
+                title={Labels.articleList.resetFilters}
                 rounded={true}
                 disabled={false}
                 icon={

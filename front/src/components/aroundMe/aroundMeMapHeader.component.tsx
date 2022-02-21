@@ -43,7 +43,7 @@ const AroundMeMapHeader: FC<Props> = ({
       <View style={headerStyle}>
         <CustomButton
           buttonStyle={styles.headerButton}
-          title={Labels.listArticles.filters}
+          title={Labels.articleList.filters}
           titleStyle={styles.headerButtonTitle}
           rounded={true}
           icon={
