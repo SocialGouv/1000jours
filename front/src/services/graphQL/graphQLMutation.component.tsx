@@ -26,7 +26,7 @@ export const GraphQLMutation: FC<Props> = ({
       if (onCompleted) onCompleted(data);
     },
     onError: (err) => {
-      console.log(err);
+      console.error(err);
     },
   });
 
