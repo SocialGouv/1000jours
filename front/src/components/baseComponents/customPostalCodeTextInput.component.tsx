@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 
 import { AroundMeConstants, Labels } from "../../constants";
@@ -13,6 +13,14 @@ interface Props {
 const CustomPostalCodeTextInput: React.FC<Props> = ({ updatePostalCode }) => {
   const [postalCode, setPostalCode] = useState("");
 
+  const onTextChanged = useCallback(
+    (text: string) => {
+      setPostalCode(text);
+      updatePostalCode(text);
+    },
+    [updatePostalCode]
+  );
+
   return (
     <View style={styles.rowView}>
       <CommonText style={styles.textStyle}>
@@ -20,10 +28,7 @@ const CustomPostalCodeTextInput: React.FC<Props> = ({ updatePostalCode }) => {
       </CommonText>
       <TextInput
         style={styles.postalCodeInput}
-        onChangeText={(text) => {
-          setPostalCode(text);
-          updatePostalCode(text);
-        }}
+        onChangeText={onTextChanged}
         value={postalCode}
         placeholder={
           Labels.aroundMe.submitNewFilter.aboutYou.postalCodePlaceholder

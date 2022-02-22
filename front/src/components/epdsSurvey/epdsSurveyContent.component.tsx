@@ -1,6 +1,6 @@
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import type { SwiperFlatList } from "react-native-swiper-flatlist";
@@ -53,60 +53,71 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
     };
   }, []);
 
-  const getEpdsLoadPreviousSurveyReponse = async (startOver: boolean) => {
-    if (startOver) {
-      await restartSurvey();
-    } else {
-      const values: [EpdsQuestionAndAnswers[], number] = await Promise.all([
-        StorageUtils.getObjectValue(
-          StorageKeysConstants.epdsQuestionAndAnswersKey
-        ),
-        StorageUtils.getObjectValue(StorageKeysConstants.epdsQuestionIndexKey),
-      ]);
+  const restartSurvey = useCallback(async () => {
+    await EpdsSurveyUtils.removeEpdsStorageItems();
+    setQuestionsAndAnswers(epdsSurvey);
+    setSwiperCurrentIndex(0);
+    setShowResult(false);
+  }, [epdsSurvey]);
 
-      setQuestionsAndAnswers(values[0]);
-      setSwiperCurrentIndex(values[1]);
-    }
-    setSurveyCanBeStarted(true);
-  };
+  const getEpdsLoadPreviousSurveyReponse = useCallback(
+    async (startOver: boolean) => {
+      if (startOver) {
+        await restartSurvey();
+      } else {
+        const values: [EpdsQuestionAndAnswers[], number] = await Promise.all([
+          StorageUtils.getObjectValue(
+            StorageKeysConstants.epdsQuestionAndAnswersKey
+          ),
+          StorageUtils.getObjectValue(
+            StorageKeysConstants.epdsQuestionIndexKey
+          ),
+        ]);
+
+        setQuestionsAndAnswers(values[0]);
+        setSwiperCurrentIndex(values[1]);
+      }
+      setSurveyCanBeStarted(true);
+    },
+    [restartSurvey]
+  );
 
   const questionIsAnswered =
     questionsAndAnswers[swiperCurrentIndex]?.isAnswered;
   const showValidateButton =
     questionIsAnswered && swiperCurrentIndex === questionsAndAnswers.length - 1;
 
-  const updatePressedAnswer = (selectedAnswer: EpdsAnswer) => {
-    const { updatedSurvey, lastQuestionHasThreePointAnswer } =
-      EpdsSurveyUtils.getUpdatedSurvey(
-        questionsAndAnswers,
-        swiperCurrentIndex,
-        selectedAnswer
-      );
-    setQuestionsAndAnswers(updatedSurvey);
-    setLastQuestionHas3PointAnswer(lastQuestionHasThreePointAnswer);
-    setScore(EpdsSurveyUtils.getUpdatedScore(updatedSurvey));
-  };
+  const updatePressedAnswer = useCallback(
+    (selectedAnswer: EpdsAnswer) => {
+      const { updatedSurvey, lastQuestionHasThreePointAnswer } =
+        EpdsSurveyUtils.getUpdatedSurvey(
+          questionsAndAnswers,
+          swiperCurrentIndex,
+          selectedAnswer
+        );
+      setQuestionsAndAnswers(updatedSurvey);
+      setLastQuestionHas3PointAnswer(lastQuestionHasThreePointAnswer);
+      setScore(EpdsSurveyUtils.getUpdatedScore(updatedSurvey));
+    },
+    [questionsAndAnswers, swiperCurrentIndex]
+  );
 
-  const saveCurrentSurvey = async (currentSwiperIndex: number) => {
-    setSwiperCurrentIndex(currentSwiperIndex);
-    await Promise.all([
-      StorageUtils.storeObjectValue(
-        StorageKeysConstants.epdsQuestionAndAnswersKey,
-        questionsAndAnswers
-      ),
-      StorageUtils.storeObjectValue(
-        StorageKeysConstants.epdsQuestionIndexKey,
-        currentSwiperIndex
-      ),
-    ]);
-  };
-
-  const restartSurvey = async () => {
-    await EpdsSurveyUtils.removeEpdsStorageItems();
-    setQuestionsAndAnswers(epdsSurvey);
-    setSwiperCurrentIndex(0);
-    setShowResult(false);
-  };
+  const saveCurrentSurvey = useCallback(
+    async (currentSwiperIndex: number) => {
+      setSwiperCurrentIndex(currentSwiperIndex);
+      await Promise.all([
+        StorageUtils.storeObjectValue(
+          StorageKeysConstants.epdsQuestionAndAnswersKey,
+          questionsAndAnswers
+        ),
+        StorageUtils.storeObjectValue(
+          StorageKeysConstants.epdsQuestionIndexKey,
+          currentSwiperIndex
+        ),
+      ]);
+    },
+    [questionsAndAnswers]
+  );
 
   const progressBarAndButtons = () => (
     <View>
@@ -135,9 +146,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
             lastQuestionHas3PointAnswer
           }
           lastQuestionHasThreePointsAnswer={lastQuestionHas3PointAnswer}
-          startSurveyOver={async () => {
-            await restartSurvey();
-          }}
+          startSurveyOver={restartSurvey}
         />
       );
     else

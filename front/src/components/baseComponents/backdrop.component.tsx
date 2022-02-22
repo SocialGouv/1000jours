@@ -10,7 +10,7 @@ interface Props {
 
 const Backdrop: React.FC<Props> = ({ isVisible, onPress }) => {
   return isVisible ? (
-    <View style={styles.backdrop} onTouchStart={onPress}></View>
+    <View style={styles.backdrop} onTouchStart={onPress} />
   ) : null;
 };
 

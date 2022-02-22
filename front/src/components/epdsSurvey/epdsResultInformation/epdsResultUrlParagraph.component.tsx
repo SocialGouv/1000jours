@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useCallback } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
@@ -33,6 +34,11 @@ const EpdsResultUrlParagraph: React.FC<EpdsResultUrlParagraphProps> = ({
     }, TIMEOUT_FOCUS);
   }
 
+  const onUrlParagraphPressed = useCallback(
+    (url: string) => async () => LinkingUtils.openWebsite(url),
+    []
+  );
+
   return (
     <View style={styles.itemBorder}>
       {paragraphTitle && paragraphTitle.length > 0 && (
@@ -43,7 +49,7 @@ const EpdsResultUrlParagraph: React.FC<EpdsResultUrlParagraphProps> = ({
       {urls.map((url, index) => (
         <TouchableOpacity
           key={index}
-          onPress={async () => LinkingUtils.openWebsite(url)}
+          onPress={onUrlParagraphPressed(url)}
           accessibilityRole="link"
         >
           <SecondaryText style={[styles.urls, styles.underline]}>

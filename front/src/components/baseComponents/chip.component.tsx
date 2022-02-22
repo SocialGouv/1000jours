@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Chip as RNChip } from "react-native-elements";
 
@@ -27,10 +27,10 @@ const Chip: React.FC<Props> = ({ id, title, selected, action }) => {
     setIsSelected(selected);
   }, [selected]);
 
-  const onPress = () => {
+  const onPress = useCallback(() => {
     action(id, !isSelected);
     setIsSelected(!isSelected);
-  };
+  }, [action, id, isSelected]);
 
   return (
     <RNChip

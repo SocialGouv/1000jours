@@ -1,7 +1,7 @@
 import TableRenderer, { tableModel } from "@native-html/table-plugin";
 import type { Asset } from "expo-asset";
 import * as React from "react";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { Modal as RNModal, SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import HTML from "react-native-render-html";
@@ -24,9 +24,6 @@ const ModalHtmlContent: React.FC<Props> = ({
   setIsVisible,
   htmlFile,
 }) => {
-  const hideModal = () => {
-    setIsVisible(false);
-  };
   const [html, setHtml] = React.useState<Asset | null>(null);
 
   useEffect(() => {
@@ -35,7 +32,7 @@ const ModalHtmlContent: React.FC<Props> = ({
         setHtml(asset);
       });
     }
-  }, []);
+  }, [htmlFile]);
 
   const buildContent = (data: Asset) => {
     const htmlProps = {
@@ -57,6 +54,10 @@ const ModalHtmlContent: React.FC<Props> = ({
       />
     );
   };
+
+  const hideModal = useCallback(() => {
+    setIsVisible(false);
+  }, [setIsVisible]);
 
   return (
     <RNModal

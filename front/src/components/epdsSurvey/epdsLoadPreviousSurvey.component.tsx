@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useCallback } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
@@ -13,6 +14,12 @@ interface EpdsLoadPreviousSurveyProps {
 const EpdsLoadPreviousSurvey: FC<EpdsLoadPreviousSurveyProps> = ({
   startSurveyOver,
 }) => {
+  const restartSurvey = useCallback(
+    (startOver: boolean) => () => {
+      startSurveyOver(startOver);
+    },
+    [startSurveyOver]
+  );
   return (
     <View style={styles.mainContainer}>
       <TitleH1 title={Labels.epdsSurvey.title} animated={false} />
@@ -27,9 +34,7 @@ const EpdsLoadPreviousSurvey: FC<EpdsLoadPreviousSurveyProps> = ({
               titleStyle={styles.titleButtonStyle}
               buttonStyle={styles.buttonStyle}
               rounded={true}
-              action={() => {
-                startSurveyOver(false);
-              }}
+              action={restartSurvey(false)}
             />
           </View>
           <View style={styles.buttonContainer}>
@@ -38,9 +43,7 @@ const EpdsLoadPreviousSurvey: FC<EpdsLoadPreviousSurveyProps> = ({
               titleStyle={styles.titleButtonStyle}
               buttonStyle={styles.buttonStyle}
               rounded={true}
-              action={() => {
-                startSurveyOver(true);
-              }}
+              action={restartSurvey(true)}
             />
           </View>
         </View>

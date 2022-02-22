@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useCallback } from "react";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import type { SwiperFlatListRefProps } from "react-native-swiper-flatlist/src/components/SwiperFlatList/SwiperFlatListProps";
 
@@ -22,14 +23,19 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
 }) => {
   const [nextButtonState, setNextButtonState] = React.useState(false);
 
+  const onSwiperIndexChanged = useCallback(
+    (item: { index: number; prevIndex: number }) => {
+      saveCurrentSurvey(item.index);
+      setNextButtonState(!nextButtonState);
+    },
+    [nextButtonState, saveCurrentSurvey]
+  );
+
   return (
     <SwiperFlatList
       ref={swiperRef}
       index={swiperCurrentIndex}
-      onChangeIndex={({ index }) => {
-        saveCurrentSurvey(index);
-        setNextButtonState(!nextButtonState);
-      }}
+      onChangeIndex={onSwiperIndexChanged}
       autoplay={false}
       disableGesture
       importantForAccessibility="no"
