@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { ImageSourcePropType } from "react-native";
 import { Image, StyleSheet } from "react-native";
 import type { LatLng } from "react-native-maps";
@@ -42,7 +42,15 @@ const CustomMapMarker: React.FC<Props> = ({
     return () => {
       clearInterval(timeout);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coordinates]);
+
+  const onMarkerPress = useCallback(
+    (index: number) => () => {
+      onMarkerClick(index);
+    },
+    [onMarkerClick]
+  );
 
   const getPinIcon = (
     poiCategory: AroundMeConstants.PoiCategorieEnum,
@@ -63,9 +71,7 @@ const CustomMapMarker: React.FC<Props> = ({
       coordinate={coordinates}
       style={styles.markerView}
       key={poiIndex}
-      onPress={() => {
-        onMarkerClick(poiIndex);
-      }}
+      onPress={onMarkerPress(poiIndex)}
     >
       <Image
         source={image}

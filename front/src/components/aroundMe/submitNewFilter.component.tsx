@@ -1,6 +1,6 @@
 import Constants from "expo-constants";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Modal,
   StyleSheet,
@@ -67,7 +67,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
       };
   };
 
-  const onValidate = () => {
+  const onValidate = useCallback(() => {
     if (!newPoisIsEmpty && !newSuggestionsIsEmpty) {
       hideModal();
       setQueryVariables({
@@ -82,7 +82,16 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
       setNewSuggestions("");
       setNewPoisIsEmpty(true);
     }
-  };
+  }, [
+    hideModal,
+    newPois,
+    newPoisIsEmpty,
+    newSuggestions,
+    newSuggestionsIsEmpty,
+    numberOfChildren,
+    postalCode,
+    triggerSendSuggestions,
+  ]);
 
   const renderSection = (
     section: {
@@ -92,6 +101,16 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
     index: number
   ) => {
     const functionAndValue = getChangeFunctionAndValue(index);
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const onTextInputChangedText = useCallback(
+      (text: string) => {
+        functionAndValue.function(text);
+        functionAndValue.setIsEmpty(text.trimEnd().length === 0);
+      },
+      [functionAndValue]
+    );
+
     return (
       <View style={styles.sectionView}>
         <GraphQLMutation
@@ -102,10 +121,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
         <CommonText style={styles.partsTitle}>{section.instruction}</CommonText>
         <TextInput
           style={styles.textInput}
-          onChangeText={(text) => {
-            functionAndValue.function(text);
-            functionAndValue.setIsEmpty(text.trimEnd().length === 0);
-          }}
+          onChangeText={onTextInputChangedText}
           value={functionAndValue.value}
           placeholder={section.placeholder}
           placeholderTextColor={Colors.primaryBlue}
@@ -124,12 +140,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
             title={Labels.aroundMe.submitNewFilter.title}
             animated={false}
           />
-          <TouchableOpacity
-            style={styles.closeModalView}
-            onPress={() => {
-              hideModal();
-            }}
-          >
+          <TouchableOpacity style={styles.closeModalView} onPress={hideModal}>
             <Icomoon
               name={IcomoonIcons.fermer}
               size={Sizes.xs}
@@ -169,9 +180,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
                     color={Colors.primaryBlue}
                   />
                 }
-                action={() => {
-                  hideModal();
-                }}
+                action={hideModal}
               />
             </View>
             <View style={styles.buttonContainer}>
@@ -180,9 +189,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
                 titleStyle={styles.buttonTitleStyle}
                 rounded={true}
                 disabled={false}
-                action={() => {
-                  onValidate();
-                }}
+                action={onValidate}
               />
             </View>
           </View>

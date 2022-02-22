@@ -1,4 +1,4 @@
-import { filter } from "lodash";
+import _ from "lodash";
 import type { FC } from "react";
 import * as React from "react";
 import { ImageBackground, StyleSheet, Text } from "react-native";
@@ -52,7 +52,7 @@ const InShort: FC<Props> = ({ inShortArray }) => {
     ),
   };
 
-  return filter(inShortArray, "text").length > 0 ? (
+  return _.filter(inShortArray, "text").length > 0 ? (
     <View style={styles.inShortContainer}>
       <View style={[styles.cardTitleContainer, styles.positionRelative]}>
         <CommonText style={[styles.inShortTitle]} accessibilityRole="header">
@@ -68,7 +68,7 @@ const InShort: FC<Props> = ({ inShortArray }) => {
       </View>
 
       <View style={styles.inShortListItemsContainer}>
-        {filter(inShortArray, "text").map((item, index) => (
+        {_.filter(inShortArray, "text").map((item, index) => (
           <ListItem key={index} containerStyle={[styles.listItemContainer]}>
             <ImageBackground
               source={BgImage}

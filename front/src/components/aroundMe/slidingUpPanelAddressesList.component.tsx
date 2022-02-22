@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import * as React from "react";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
 
@@ -25,18 +25,21 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
     useState(2);
   const height = Dimensions.get("window").height;
 
-  const handlePanel = () => {
+  const handlePanel = useCallback(() => {
     const nextSnapPoint = currentPanelSnapPointIndex - 1;
     sheetRef.current?.snapTo(nextSnapPoint);
     setCurrentPanelSnapPointIndex(nextSnapPoint === 0 ? 2 : nextSnapPoint);
-  };
+  }, [currentPanelSnapPointIndex]);
 
-  const goToMarkerAndMinimizeSlider = (poiIndex: number) => {
-    centerOnMarker(poiIndex);
-    sheetRef.current?.snapTo(0);
-  };
+  const goToMarkerAndMinimizeSlider = useCallback(
+    (poiIndex: number) => {
+      centerOnMarker(poiIndex);
+      sheetRef.current?.snapTo(0);
+    },
+    [centerOnMarker]
+  );
 
-  const renderContent = () => {
+  const renderContent = useCallback(() => {
     return (
       <View style={styles.slidingUpPanelView}>
         <View style={styles.swipeIndicator} />
@@ -51,7 +54,7 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
         />
       </View>
     );
-  };
+  }, [goToMarkerAndMinimizeSlider, handlePanel, poisArray]);
 
   return (
     <BottomSheet

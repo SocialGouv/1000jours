@@ -1,8 +1,8 @@
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import type { FC } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { useEffect, useState } from "react";
-import type { NativeScrollEvent } from "react-native";
+import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import {
   ScrollView,
@@ -36,27 +36,34 @@ const PoiList: FC<Props> = ({ poisArray, onPoiPress, handlePanel }) => {
     );
   }, [poisArray]);
 
-  const handleScroll = ({
-    layoutMeasurement,
-    contentOffset,
-    contentSize,
-  }: NativeScrollEvent) => {
-    const thresholdBottom = 20;
+  const handleScroll = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const { layoutMeasurement, contentOffset, contentSize } =
+        event.nativeEvent;
+      const thresholdBottom = 20;
 
-    if (contentOffset.y === 0 && handlePanel) handlePanel();
+      if (contentOffset.y === 0 && handlePanel) handlePanel();
 
-    if (
-      layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - thresholdBottom
-    ) {
-      const newEndIndex = currentEndIndex + currentEndIndex;
-      setPoisToDisplay(
-        poisToDisplay.concat(poisArray.slice(currentEndIndex, newEndIndex))
-      );
-      setCurrentEndIndex(newEndIndex);
-    }
-  };
+      if (
+        layoutMeasurement.height + contentOffset.y >=
+        contentSize.height - thresholdBottom
+      ) {
+        const newEndIndex = currentEndIndex + currentEndIndex;
+        setPoisToDisplay(
+          poisToDisplay.concat(poisArray.slice(currentEndIndex, newEndIndex))
+        );
+        setCurrentEndIndex(newEndIndex);
+      }
+    },
+    [currentEndIndex, handlePanel, poisArray, poisToDisplay]
+  );
 
+  const onPoiPressed = useCallback(
+    (poiIndex: number) => () => {
+      onPoiPress(poiIndex);
+    },
+    [onPoiPress]
+  );
   const renderCard = (poi: Poi) => (
     <Card style={styles.card}>
       <AddressDetails details={poi} />
@@ -64,27 +71,16 @@ const PoiList: FC<Props> = ({ poisArray, onPoiPress, handlePanel }) => {
   );
 
   return (
-    <ScrollView
-      onScroll={({ nativeEvent }) => {
-        handleScroll(nativeEvent);
-      }}
-    >
+    <ScrollView onScroll={handleScroll}>
       {poisToDisplay.map((poi, poiIndex) =>
         PLATFORM_IS_IOS ? (
-          <TouchableOpacity
-            key={poiIndex}
-            onPress={() => {
-              onPoiPress(poiIndex);
-            }}
-          >
+          <TouchableOpacity key={poiIndex} onPress={onPoiPressed(poiIndex)}>
             {renderCard(poi)}
           </TouchableOpacity>
         ) : (
           <TouchableOpacityAndroid
             key={poiIndex}
-            onPress={() => {
-              onPoiPress(poiIndex);
-            }}
+            onPress={onPoiPressed(poiIndex)}
           >
             {renderCard(poi)}
           </TouchableOpacityAndroid>

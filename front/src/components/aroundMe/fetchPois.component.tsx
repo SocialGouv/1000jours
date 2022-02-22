@@ -1,7 +1,7 @@
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import { GET_POIS_BY_GPSCOORDS } from "@socialgouv/nos1000jours-lib";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { Region } from "react-native-maps";
 
 import {
@@ -72,14 +72,18 @@ const FetchPois: React.FC<Props> = ({
 
   useEffect(() => {
     if (componentIsInitialized) void searchByGPSCoords();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [triggerSearchByGpsCoords]);
 
-  const handleResults = (data: unknown) => {
-    const { searchPois } = data as {
-      searchPois: Poi[];
-    };
-    setFetchedPois(searchPois);
-  };
+  const handleResults = useCallback(
+    (data: unknown) => {
+      const { searchPois } = data as {
+        searchPois: Poi[];
+      };
+      setFetchedPois(searchPois);
+    },
+    [setFetchedPois]
+  );
 
   return (
     <GraphQLLazyQuery
