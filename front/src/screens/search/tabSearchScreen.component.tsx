@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import * as React from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import type {
@@ -15,8 +15,8 @@ import {
   TitleH1,
 } from "../../components/baseComponents";
 import {
-  articlesRoute,
-  poisRoute,
+  ArticlesRoute,
+  PoisRoute,
 } from "../../components/search/tabSearchRoutes.component";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { FetchPoliciesConstants, Labels, SearchQueries } from "../../constants";
@@ -61,42 +61,62 @@ const TabSearchScreen: FC = () => {
     },
   ]);
 
-  const onSearchByKeywords = () => {
+  const onSearchByKeywords = useCallback(() => {
     setUpdatedText(Labels.search.loading);
     KeyboardUtils.dismissKeyboard();
     if (stringIsNotNullNorEmpty(keywords)) {
       setQueryVariables({ keywords });
       setTriggerGetArticles(!triggerGetArticles);
     }
-  };
+  }, [keywords, triggerGetArticles]);
 
-  const handleResults = (data: unknown) => {
-    const results = (data as { articles: Article[] }).articles;
-    setArticles(results);
-    if (results.length === 0) setUpdatedText(Labels.search.noArticleFound);
-    setTrackerSearchObject({
-      category: trackerSearchCategory,
-      count: results.length,
-      keyword: keywords,
-    });
-  };
-
-  const renderTabBar = (
-    props: SceneRendererProps & {
-      navigationState: NavigationState<{
-        accessible: boolean;
-        key: string;
-        title: string;
-      }>;
-    }
-  ) => (
-    <TabBar
-      {...props}
-      labelStyle={styles.tabBarLabel}
-      style={[styles.whiteBackground]}
-      indicatorStyle={styles.indicator}
-    />
+  const handleResults = useCallback(
+    (data: unknown) => {
+      const results = (data as { articles: Article[] }).articles;
+      setArticles(results);
+      if (results.length === 0) setUpdatedText(Labels.search.noArticleFound);
+      setTrackerSearchObject({
+        category: trackerSearchCategory,
+        count: results.length,
+        keyword: keywords,
+      });
+    },
+    [keywords]
   );
+
+  const renderTabBar = useCallback(
+    (
+      props: SceneRendererProps & {
+        navigationState: NavigationState<{
+          accessible: boolean;
+          key: string;
+          title: string;
+        }>;
+      }
+    ) => (
+      <TabBar
+        {...props}
+        labelStyle={styles.tabBarLabel}
+        style={[styles.whiteBackground]}
+        indicatorStyle={styles.indicator}
+      />
+    ),
+    []
+  );
+
+  const onKeywordsTextInputChanged = useCallback((text: string) => {
+    setKeywords(text);
+    if (!StringUtils.stringIsNotNullNorEmpty(text)) {
+      setUpdatedText(Labels.search.writeKeyword);
+      setArticles([]);
+    }
+  }, []);
+
+  const onClearPressed = useCallback(() => {
+    setKeywords("");
+    setArticles([]);
+    setUpdatedText(Labels.search.writeKeyword);
+  }, []);
 
   return (
     <>
@@ -124,18 +144,8 @@ const TabSearchScreen: FC = () => {
           <SecondaryText>{Labels.search.yourSearch}</SecondaryText>
           <CustomTextInput
             textInputValue={keywords}
-            onChangeText={(text: string) => {
-              setKeywords(text);
-              if (!StringUtils.stringIsNotNullNorEmpty(text)) {
-                setUpdatedText(Labels.search.writeKeyword);
-                setArticles([]);
-              }
-            }}
-            onClearPress={() => {
-              setKeywords("");
-              setArticles([]);
-              setUpdatedText(Labels.search.writeKeyword);
-            }}
+            onChangeText={onKeywordsTextInputChanged}
+            onClearPress={onClearPressed}
           />
           <View style={styles.center}>
             <CustomButton
@@ -151,8 +161,8 @@ const TabSearchScreen: FC = () => {
         renderTabBar={renderTabBar}
         navigationState={{ index, routes }}
         renderScene={SceneMap({
-          articlesSearchResult: () => articlesRoute(updatedText, articles),
-          poisSearchResult: () => poisRoute(updatedText, articles),
+          articlesSearchResult: () => ArticlesRoute(updatedText, articles),
+          poisSearchResult: () => PoisRoute(updatedText, articles),
         })}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import type { FC } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
 import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
@@ -84,7 +84,9 @@ const EpdsResult: FC<Props> = ({
     };
 
     void saveEpdsSurveyResults();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   // Delete saved storage keys for EPDS survey
   void EpdsSurveyUtils.removeEpdsStorageItems();
 
@@ -119,6 +121,10 @@ const EpdsResult: FC<Props> = ({
       result,
       lastQuestionHasThreePointsAnswer
     );
+
+  const onHideSnackBar = useCallback(() => {
+    setShowSnackBar(false);
+  }, []);
 
   return (
     <>
@@ -172,9 +178,7 @@ const EpdsResult: FC<Props> = ({
             titleStyle={styles.fontButton}
             rounded={true}
             disabled={false}
-            action={() => {
-              startSurveyOver();
-            }}
+            action={startSurveyOver}
           />
         </View>
       </ScrollView>
@@ -183,9 +187,7 @@ const EpdsResult: FC<Props> = ({
         visible={showSnackBar}
         isOnTop={false}
         backgroundColor={Colors.aroundMeSnackbar.background}
-        onDismiss={() => {
-          setShowSnackBar(false);
-        }}
+        onDismiss={onHideSnackBar}
         textColor={Colors.aroundMeSnackbar.text}
         text={Labels.epdsSurvey.beContacted.beContactedSent}
       />

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import type { FC } from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import type { LatLng } from "react-native-maps";
@@ -70,16 +70,43 @@ const AroundMeScreen: FC = () => {
       });
     };
     void checkIfSavedCoordinates();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const showSnackBarWithMessage = (message: string) => {
+  const showSnackBarWithMessage = useCallback((message: string) => {
     setSnackBarMessage(message);
     setShowSnackBar(true);
-  };
+  }, []);
 
-  const onSnackBarDismiss = () => {
+  const onSnackBarDismiss = useCallback(() => {
     setShowSnackBar(false);
-  };
+  }, []);
+
+  const onSetCoordinatesAndUserLocation = useCallback(
+    async (newCoordinates: LatLng, displayUL: boolean) => {
+      const _zoomOrAltitude =
+        await AroundMeUtils.adaptZoomAccordingToCoordinates(
+          newCoordinates.latitude,
+          newCoordinates.longitude
+        );
+      setZoomOrAltitude(_zoomOrAltitude);
+      setCurrentUserLocation(displayUL ? newCoordinates : undefined);
+      setShowAddressesList(false);
+      setSelectedPoiIndex(-1);
+      AroundMeUtils.triggerFunctionAfterTimeout(() => {
+        setCoordinates(newCoordinates);
+      });
+    },
+    []
+  );
+
+  const onHideSnackBar = useCallback(() => {
+    setShowSnackBar(false);
+  }, []);
+
+  const onMarkerPressed = useCallback((poiIndex: number) => {
+    setSelectedPoiIndex(poiIndex);
+  }, []);
 
   return showMap ? (
     <View style={styles.mainContainer}>
@@ -96,26 +123,8 @@ const AroundMeScreen: FC = () => {
           />
         </View>
         <AroundMeScreenHeader
-          setCoordinatesAndUserLocation={async (
-            newCoordinates: LatLng,
-            displayUL: boolean
-          ) => {
-            const _zoomOrAltitude =
-              await AroundMeUtils.adaptZoomAccordingToCoordinates(
-                newCoordinates.latitude,
-                newCoordinates.longitude
-              );
-            setZoomOrAltitude(_zoomOrAltitude);
-            setCurrentUserLocation(displayUL ? newCoordinates : undefined);
-            setShowAddressesList(false);
-            setSelectedPoiIndex(-1);
-            AroundMeUtils.triggerFunctionAfterTimeout(() => {
-              setCoordinates(newCoordinates);
-            });
-          }}
-          hideSnackBar={() => {
-            setShowSnackBar(false);
-          }}
+          setCoordinatesAndUserLocation={onSetCoordinatesAndUserLocation}
+          hideSnackBar={onHideSnackBar}
           showSnackBarWithMessage={showSnackBarWithMessage}
           setIsLoading={setIsLoading}
         />
@@ -147,18 +156,10 @@ const AroundMeScreen: FC = () => {
           poisArray.length > 1 && ( // Si la liste des POI n'a qu'un élément, aucune utilité d'afficher le panel puisqu'il y a la cartouche avec les détails
             <SlidingUpPanelAddressesList
               poisArray={poisArray}
-              centerOnMarker={(poiIndex: number) => {
-                setSelectedPoiIndex(poiIndex);
-              }}
+              centerOnMarker={onMarkerPressed}
             />
           )}
-        {isLoading && (
-          <MapLoader
-            onTouchEnd={() => {
-              setIsLoading(false);
-            }}
-          />
-        )}
+        {isLoading && <MapLoader onTouchEnd={onHideSnackBar} />}
       </View>
     </View>
   ) : null;

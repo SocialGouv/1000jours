@@ -62,39 +62,45 @@ const Onboarding: FC<Props> = ({ navigation }) => {
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 
-  const navigateToProfile = () => {
+  const navigateToProfile = useCallback(() => {
     void StorageUtils.storeObjectValue(
       StorageKeysConstants.isFirstLaunchKey,
       false
     );
     navigation.navigate("profile");
-  };
+  }, [navigation]);
 
-  const renderItem = ({ item, index }: { item: SlideView; index: number }) => {
-    return (
-      <View style={[styles.swipeView, styles.justifyContentCenter]} key={index}>
-        <View style={styles.slideImage}>{item.image}</View>
-        <View accessible>
-          <CommonText
-            accessibilityRole="header"
-            accessibilityLabel={`${Labels.onboarding.screenNumber}${index + 1}${
-              item.title
-            }`}
-            style={[styles.title, styles.textAlignCenter]}
-          >
-            {item.title}
-          </CommonText>
-          <SecondaryText
-            accessibilityRole="text"
-            accessibilityLabel={item.description}
-            style={[styles.description, styles.textAlignCenter]}
-          >
-            {item.description}
-          </SecondaryText>
+  const renderItem = useCallback(
+    ({ item, index }: { item: SlideView; index: number }) => {
+      return (
+        <View
+          style={[styles.swipeView, styles.justifyContentCenter]}
+          key={index}
+        >
+          <View style={styles.slideImage}>{item.image}</View>
+          <View accessible>
+            <CommonText
+              accessibilityRole="header"
+              accessibilityLabel={`${Labels.onboarding.screenNumber}${
+                index + 1
+              }${item.title}`}
+              style={[styles.title, styles.textAlignCenter]}
+            >
+              {item.title}
+            </CommonText>
+            <SecondaryText
+              accessibilityRole="text"
+              accessibilityLabel={item.description}
+              style={[styles.description, styles.textAlignCenter]}
+            >
+              {item.description}
+            </SecondaryText>
+          </View>
         </View>
-      </View>
-    );
-  };
+      );
+    },
+    []
+  );
 
   const onScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -105,6 +111,17 @@ const Onboarding: FC<Props> = ({ navigation }) => {
     []
   );
 
+  const keyExtractor = useCallback((item: SlideView) => item.title, []);
+
+  const onScrollToIndex = useCallback((index: number) => {
+    flatListRef.current?.scrollToIndex({ index });
+  }, []);
+
+  const onNextButtonPressed = useCallback(() => {
+    flatListRef.current?.scrollToIndex({
+      index: swiperCurrentIndex + 1,
+    });
+  }, [swiperCurrentIndex]);
   return (
     <View style={[styles.mainContainer, styles.flexColumn]}>
       <HeaderApp />
@@ -117,7 +134,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
               showsHorizontalScrollIndicator={false}
               data={slideViews}
               renderItem={renderItem}
-              keyExtractor={(item) => item.title}
+              keyExtractor={keyExtractor}
               horizontal={true}
               ref={flatListRef}
               onScroll={onScroll}
@@ -125,9 +142,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
             <CustomPagination
               currentIndex={swiperCurrentIndex}
               slidesNumber={slideViews.length}
-              scrollToIndex={(index: number) => {
-                flatListRef.current?.scrollToIndex({ index });
-              }}
+              scrollToIndex={onScrollToIndex}
             />
           </ScrollView>
         </View>
@@ -171,11 +186,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                     color={Colors.primaryBlue}
                   />
                 }
-                action={() => {
-                  flatListRef.current?.scrollToIndex({
-                    index: swiperCurrentIndex + 1,
-                  });
-                }}
+                action={onNextButtonPressed}
               />
             </View>
           </View>
