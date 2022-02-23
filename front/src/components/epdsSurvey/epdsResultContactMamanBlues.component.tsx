@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as React from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
 import { Image } from "react-native-elements";
 
@@ -29,6 +29,19 @@ const EpdsResultContactMamanBlues: React.FC<
   const buttonColor = { backgroundColor: primaryColor };
   const pictureBorderColor = { borderColor: primaryColor };
 
+  const onBeContactedButtonPressed = useCallback(() => {
+    setTrackerAction(TrackerUtils.TrackingEvent.EPDS_BE_CONTACTED);
+    setShowBeContactedModal(true);
+  }, []);
+
+  const onHideModal = useCallback(
+    (showSB: boolean) => {
+      setShowBeContactedModal(false);
+      showSnackBar(showSB);
+    },
+    [showSnackBar]
+  );
+
   return (
     <View style={[styles.mainView, backgroundColor]}>
       <TrackerHandler actionName={trackerAction} />
@@ -51,18 +64,12 @@ const EpdsResultContactMamanBlues: React.FC<
           titleStyle={styles.fontButton}
           rounded={true}
           disabled={false}
-          action={() => {
-            setTrackerAction(TrackerUtils.TrackingEvent.EPDS_BE_CONTACTED);
-            setShowBeContactedModal(true);
-          }}
+          action={onBeContactedButtonPressed}
         />
       </View>
       <HowToBeContacted
         visible={showBeContactedModal}
-        hideModal={(showSB: boolean) => {
-          setShowBeContactedModal(false);
-          showSnackBar(showSB);
-        }}
+        hideModal={onHideModal}
       />
     </View>
   );

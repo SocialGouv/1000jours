@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
+import { useCallback, useState } from "react";
 import * as React from "react";
-import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -13,7 +13,7 @@ import { SearchUtils } from "../../utils";
 import ArticleList from "../article/articleList.component";
 import TabAroundMeInstruction from "./tabAroundMeInstruction.component";
 
-export const articlesRoute = (
+export const ArticlesRoute = (
   updatedText: string,
   articles: Article[]
 ): ReactElement => {
@@ -22,6 +22,19 @@ export const articlesRoute = (
   const [currentArticleStep, setCurrentArticleStep] = useState<
     Step | undefined
   >();
+
+  const onBackButtonPressed = useCallback(() => {
+    setShowArticle(false);
+  }, []);
+
+  const onUpdateStepAndArticleId = useCallback(
+    (articleId: number, step: Step | undefined) => {
+      setShowArticle(true);
+      setCurrentArticleId(articleId);
+      setCurrentArticleStep(step);
+    },
+    []
+  );
 
   if (articles.length <= 0) {
     return (
@@ -35,27 +48,21 @@ export const articlesRoute = (
     <ArticleDetail
       _articleId={currentArticleId}
       _articleStep={currentArticleStep}
-      goBack={() => {
-        setShowArticle(false);
-      }}
+      goBack={onBackButtonPressed}
     />
   ) : (
     <ScrollView style={styles.listContainer}>
-      <ArticleList 
+      <ArticleList
         articleList={articles}
         animationDuration={500}
         isFromSearchScreen
-        setStepAndArticleId={(articleId, step) => {
-          setShowArticle(true);
-          setCurrentArticleId(articleId);
-          setCurrentArticleStep(step);
-        }}
+        setStepAndArticleId={onUpdateStepAndArticleId}
       />
     </ScrollView>
   );
 };
 
-export const poisRoute = (
+export const PoisRoute = (
   updatedText: string,
   articles: Article[]
 ): ReactElement => {

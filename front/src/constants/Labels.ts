@@ -584,7 +584,7 @@ export default {
     },
     title: "Choisissez l'étape que vous souhaitez approfondir",
   },
-  toAccessCickHere: "Pour y accéder, vous pouvez cliquer ici : ",
+  toAccessClickHere: "Pour y accéder, vous pouvez cliquer ici : ",
   version: "v.",
   warning: "Attention",
 };

@@ -5,6 +5,7 @@ import * as Animatable from "react-native-animatable";
 
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 import { SecondaryText } from "./StyledText";
+
 interface Props {
   title?: string;
   animated: boolean;

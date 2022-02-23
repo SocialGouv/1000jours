@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import Constants from "expo-constants";
 import * as React from "react";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
@@ -71,22 +71,25 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const [triggerSendContactInformation, setTriggerSendContactInformation] =
     useState(false);
 
-  const defaultContactTypes: ContactType[] = [
-    {
-      icon: <Sms />,
-      iconSelected: <SmsSelected />,
-      id: "sms",
-      isChecked: false,
-      text: Labels.epdsSurvey.beContacted.bySms,
-    },
-    {
-      icon: <EmailContact />,
-      iconSelected: <EmailContactSelected />,
-      id: "email",
-      isChecked: false,
-      text: Labels.epdsSurvey.beContacted.byEmail,
-    },
-  ];
+  const defaultContactTypes: ContactType[] = useMemo(() => {
+    return [
+      {
+        icon: <Sms />,
+        iconSelected: <SmsSelected />,
+        id: "sms",
+        isChecked: false,
+        text: Labels.epdsSurvey.beContacted.bySms,
+      },
+      {
+        icon: <EmailContact />,
+        iconSelected: <EmailContactSelected />,
+        id: "email",
+        isChecked: false,
+        text: Labels.epdsSurvey.beContacted.byEmail,
+      },
+    ];
+  }, []);
+
   const [contactType, setContactType] =
     useState<ContactType[]>(defaultContactTypes);
 
@@ -145,17 +148,20 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     });
   };
 
-  const updateItem = (itemSelected: ContactType) => {
-    if (isHours(itemSelected)) {
-      setContactHours(() => {
-        return updateItemSelected(contactHours, itemSelected);
-      });
-    } else {
-      setContactType(() => {
-        return updateItemSelected(defaultContactTypes, itemSelected);
-      });
-    }
-  };
+  const updateItem = useCallback(
+    (itemSelected: ContactType) => () => {
+      if (isHours(itemSelected)) {
+        setContactHours(() => {
+          return updateItemSelected(contactHours, itemSelected);
+        });
+      } else {
+        setContactType(() => {
+          return updateItemSelected(defaultContactTypes, itemSelected);
+        });
+      }
+    },
+    [contactHours, defaultContactTypes]
+  );
 
   const enableNextButton = (): boolean => {
     switch (swiperCurrentIndex) {
@@ -177,9 +183,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       <TouchableOpacity
         key={item.id}
         style={[styles.typeItem, item.isChecked ? styles.itemSelected : null]}
-        onPress={() => {
-          updateItem(item);
-        }}
+        onPress={updateItem(item)}
         accessibilityRole="checkbox"
         accessibilityState={{ checked: item.isChecked }}
       >
@@ -275,7 +279,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
     );
   };
 
-  const onValidate = () => {
+  const onValidate = useCallback(() => {
     if (dataForm) {
       let dateAsString = "";
       if (
@@ -302,9 +306,24 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       });
       setTriggerSendContactInformation(!triggerSendContactInformation);
     }
-  };
+  }, [contactHours, contactType, dataForm, triggerSendContactInformation]);
 
-  const nextOrValidationButton = (): JSX.Element => {
+  const onValidateButtonPressed = useCallback(() => {
+    onValidate();
+    setSwiperCurrentIndex(swiperCurrentIndex + 1);
+    setShowLoader(true);
+  }, [onValidate, swiperCurrentIndex]);
+
+  const onCloseButtonPressed = useCallback(() => {
+    hideModal(true);
+    setSwiperCurrentIndex(0);
+  }, [hideModal]);
+
+  const onNextButtonPressed = useCallback(() => {
+    setSwiperCurrentIndex(swiperCurrentIndex + 1);
+  }, [swiperCurrentIndex]);
+
+  const nextOrValidationButton = () => {
     if (isFormView) {
       return (
         <CustomButton
@@ -312,11 +331,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
           titleStyle={[styles.buttonTitleStyle, { textTransform: "uppercase" }]}
           rounded={true}
           disabled={!enableNextButton()}
-          action={() => {
-            onValidate();
-            setSwiperCurrentIndex(swiperCurrentIndex + 1);
-            setShowLoader(true);
-          }}
+          action={onValidateButtonPressed}
         />
       );
     } else if (isConfirmationView) {
@@ -326,10 +341,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
           titleStyle={[styles.buttonTitleStyle, { textTransform: "uppercase" }]}
           buttonStyle={{ alignSelf: "center" }}
           rounded={true}
-          action={() => {
-            hideModal(true);
-            setSwiperCurrentIndex(0);
-          }}
+          action={onCloseButtonPressed}
         />
       );
     } else {
@@ -347,13 +359,32 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
               color={Colors.primaryBlue}
             />
           }
-          action={() => {
-            setSwiperCurrentIndex(swiperCurrentIndex + 1);
-          }}
+          action={onNextButtonPressed}
         />
       );
     }
   };
+
+  const onSendInformationCompleted = useCallback(() => {
+    setShowLoader(false);
+  }, []);
+
+  const onCloseModalButtonPressed = useCallback(() => {
+    hideModal(false);
+  }, [hideModal]);
+
+  const onValidFormUpdate = useCallback((isValid: boolean) => {
+    setValidForm(isValid);
+  }, []);
+
+  const onDataFormUpdate = useCallback((data: BeContactedData) => {
+    setDataForm(data);
+  }, []);
+
+  const onPreviousButtonPressed = useCallback(() => {
+    setValidForm(false);
+    setSwiperCurrentIndex(swiperCurrentIndex - 1);
+  }, [swiperCurrentIndex]);
 
   return (
     <Modal transparent={true} visible={visible} animationType="fade">
@@ -361,9 +392,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
         query={EpdsDbQueries.EPDS_CONTACT_INFORMATION}
         variables={queryVariables}
         triggerLaunchMutation={triggerSendContactInformation}
-        onCompleted={() => {
-          setShowLoader(false);
-        }}
+        onCompleted={onSendInformationCompleted}
       />
       <View style={styles.behindOfModal}>
         <View style={styles.mainContainer}>
@@ -373,14 +402,8 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
               animated={false}
               style={{ paddingTop: Paddings.default }}
             />
-            <CloseButton
-              onPress={() => {
-                hideModal(false);
-              }}
-              clear={true}
-            />
+            <CloseButton onPress={onCloseModalButtonPressed} clear={true} />
           </View>
-
           <ScrollView style={{ paddingEnd: PADDINGS_CONTAINER }}>
             {swiperCurrentIndex == 0 ? stepTypes() : null}
             {swiperCurrentIndex == 1 ? (
@@ -388,12 +411,8 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                 <BeContactedForm
                   byEmail={isEmailSelected()}
                   bySms={isSmsSelected()}
-                  validForm={(isValid: boolean) => {
-                    setValidForm(isValid);
-                  }}
-                  setData={(data: BeContactedData) => {
-                    setDataForm(data);
-                  }}
+                  validForm={onValidFormUpdate}
+                  setData={onDataFormUpdate}
                 />
               </View>
             ) : null}
@@ -420,10 +439,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
                       color={Colors.primaryBlue}
                     />
                   }
-                  action={() => {
-                    setValidForm(false);
-                    setSwiperCurrentIndex(swiperCurrentIndex - 1);
-                  }}
+                  action={onPreviousButtonPressed}
                 />
               ) : null}
             </View>

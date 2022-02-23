@@ -2,10 +2,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { format } from "date-fns";
-import _, { filter } from "lodash";
+import _ from "lodash";
 import type { FC } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { useEffect, useState } from "react";
 import type { LayoutChangeEvent } from "react-native";
 import {
   Alert,
@@ -91,7 +91,7 @@ const Profile: FC<Props> = ({ navigation }) => {
   };
 
   const hasCheckedSituation = () => {
-    return filter(userSituations, ["isChecked", true]).length > 0;
+    return _.filter(userSituations, ["isChecked", true]).length > 0;
   };
 
   const canValidateForm = () => {
@@ -128,22 +128,26 @@ const Profile: FC<Props> = ({ navigation }) => {
 
   useEffect(() => {
     setCanValidate(canValidateForm());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [childBirthday, userSituations]);
 
-  const updateUserSituations = (userSituation: UserSituation) => {
-    setUserSituations(() => {
-      return defaultUserContext.situations.map((item) => {
-        if (item.id === userSituation.id) {
-          return { ...item, isChecked: !userSituation.isChecked };
-        } else {
-          return item;
-        }
+  const updateUserSituations = useCallback(
+    (userSituation: UserSituation) => {
+      setUserSituations(() => {
+        return defaultUserContext.situations.map((item) => {
+          if (item.id === userSituation.id) {
+            return { ...item, isChecked: !userSituation.isChecked };
+          } else {
+            return item;
+          }
+        });
       });
-    });
-  };
+    },
+    [defaultUserContext.situations]
+  );
 
   const getCheckedUserSituationsWhereChildBirthdayIsNeeded = () => {
-    return filter(userSituations, (userSituation) => {
+    return _.filter(userSituations, (userSituation) => {
       return userSituation.isChecked && userSituation.childBirthdayRequired;
     });
   };
@@ -152,11 +156,11 @@ const Profile: FC<Props> = ({ navigation }) => {
     return results.length > 0;
   };
 
-  const navigateToRoot = () => {
+  const navigateToRoot = useCallback(() => {
     navigation.navigate("root");
-  };
+  }, [navigation]);
 
-  const validateForm = async () => {
+  const validateForm = useCallback(async () => {
     const error = checkErrorOnProfile(userSituations, childBirthday);
     if (error) {
       Alert.alert(Labels.warning, error, [{ text: "OK" }]);
@@ -185,15 +189,36 @@ const Profile: FC<Props> = ({ navigation }) => {
 
     void cancelScheduleNextStepNotification();
     navigateToRoot();
-  };
+  }, [childBirthday, navigateToRoot, userSituations]);
 
   const scrollViewRef = React.useRef<ScrollView>(null);
-  const scrollTo = () => {
+  const scrollTo = useCallback(() => {
     scrollViewRef.current?.scrollTo({
       animated: true,
       y: positionOfScroll,
     });
-  };
+  }, [positionOfScroll]);
+
+  const onViewLayout = useCallback((event: LayoutChangeEvent) => {
+    const { layout } = event.nativeEvent;
+    setPositionOfScroll(layout.y + layout.height);
+  }, []);
+  const onCheckboxPressed = useCallback(
+    (situation: UserSituation) => () => {
+      updateUserSituations(situation);
+      scrollTo();
+    },
+    [scrollTo, updateUserSituations]
+  );
+
+  const onUpdatedDate = useCallback((date: Date) => {
+    setChildBirthday(format(date, Formats.dateISO));
+  }, []);
+
+  const onCloseButtonPressed = useCallback(() => {
+    setTrackerAction(Labels.buttons.pass);
+    navigateToRoot();
+  }, [navigateToRoot]);
 
   return (
     <View style={[styles.mainContainer]}>
@@ -230,12 +255,7 @@ const Profile: FC<Props> = ({ navigation }) => {
             <CommonText style={[styles.subTitle, styles.textAlignCenter]}>
               {Labels.profile.subTitle}
             </CommonText>
-            <View
-              onLayout={(event: LayoutChangeEvent) => {
-                const { layout } = event.nativeEvent;
-                setPositionOfScroll(layout.y + layout.height);
-              }}
-            >
+            <View onLayout={onViewLayout}>
               {userSituations.map((situation, index) => (
                 <View
                   key={index}
@@ -245,10 +265,7 @@ const Profile: FC<Props> = ({ navigation }) => {
                   ]}
                 >
                   <TouchableOpacity
-                    onPress={() => {
-                      updateUserSituations(situation);
-                      scrollTo();
-                    }}
+                    onPress={onCheckboxPressed(situation)}
                     disabled={situation.isChecked}
                     accessibilityRole="checkbox"
                     accessibilityState={{ checked: situation.isChecked }}
@@ -285,9 +302,7 @@ const Profile: FC<Props> = ({ navigation }) => {
                                   ? new Date(childBirthday)
                                   : undefined
                               }
-                              onChange={(date) => {
-                                setChildBirthday(format(date, Formats.dateISO));
-                              }}
+                              onChange={onUpdatedDate}
                               color={Colors.primaryYellow}
                             />
                           </View>
@@ -312,10 +327,7 @@ const Profile: FC<Props> = ({ navigation }) => {
                     color={Colors.primaryBlue}
                   />
                 }
-                action={() => {
-                  setTrackerAction(Labels.buttons.pass);
-                  navigateToRoot();
-                }}
+                action={onCloseButtonPressed}
               />
             </View>
             <View style={styles.buttonContainer}>

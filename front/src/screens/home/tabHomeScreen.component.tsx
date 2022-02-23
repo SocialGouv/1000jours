@@ -52,6 +52,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     });
     // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const init = async () => {

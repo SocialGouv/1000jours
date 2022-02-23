@@ -1,7 +1,7 @@
 import type { RouteProp } from "@react-navigation/native";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { Poi } from "@socialgouv/nos1000jours-lib";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import type { LatLng, Region } from "react-native-maps";
@@ -38,14 +38,25 @@ const AroundMeMapAndList: React.FC<Props> = ({ navigation, route }) => {
     route.params.displayUserLocation ? coordinates : undefined
   );
 
+  const onBackButtonPressed = useCallback(() => {
+    navigation.goBack();
+  }, [navigation]);
+
+  const onResetCoordinates = useCallback(() => {
+    setCoordinates(undefined);
+  }, []);
+
+  const updateDisplayMap = useCallback(
+    (display: boolean) => () => {
+      setDisplayMap(display);
+    },
+    []
+  );
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.flexStart}>
-        <BackButton
-          action={() => {
-            navigation.goBack();
-          }}
-        />
+        <BackButton action={onBackButtonPressed} />
       </View>
       {displayMap ? (
         <AroundMeMap
@@ -56,23 +67,17 @@ const AroundMeMapAndList: React.FC<Props> = ({ navigation, route }) => {
           selectedPoiIndex={selectedPoiIndex}
           userLocation={userLocation}
           updateRegion={setRegion}
-          resetCoordinates={() => {
-            setCoordinates(undefined);
-          }}
+          resetCoordinates={onResetCoordinates}
           updatePoiArray={setPoisArray}
           updateSelectedPoiIndex={setSelectedPoiIndex}
-          displayList={() => {
-            setDisplayMap(false);
-          }}
+          displayList={updateDisplayMap(false)}
         />
       ) : (
         region && (
           <AroundMePoiList
             region={region}
             poiArray={poisArray}
-            displayMap={() => {
-              setDisplayMap(true);
-            }}
+            displayMap={updateDisplayMap(true)}
             updatePoiArray={setPoisArray}
             updateSelectedPoiIndex={setSelectedPoiIndex}
           />

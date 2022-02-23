@@ -4,6 +4,7 @@ import { addDays, format, isBefore, isEqual } from "date-fns";
 import { fr } from "date-fns/locale";
 import _ from "lodash";
 import type { FC } from "react";
+import { useCallback } from "react";
 import * as React from "react";
 import type { LayoutChangeEvent } from "react-native";
 import { ScrollView, StyleSheet, View } from "react-native";
@@ -61,49 +62,63 @@ const Events: FC<Props> = ({ evenements, childBirthday, scrollToEventId }) => {
     else return format(new Date(date), Formats.dateEvent, { locale: fr });
   };
 
-  const eventCardPressed = (eventId: string) => {
-    setEventIdPressed(eventId);
-  };
+  const eventCardPressed = useCallback(
+    (eventId: string) => () => {
+      setEventIdPressed(eventId);
+    },
+    []
+  );
 
   const scrollViewRef = React.useRef<ScrollView>(null);
-  const scrollToEvent = (event: Event, layoutEvent: LayoutChangeEvent) => {
-    let posY: number | null = null;
-    if (eventIdPressed) {
-      if (eventIdPressed === event.id.toString()) {
-        posY = layoutEvent.nativeEvent.layout.y;
-      }
-    } else {
-      if (scrollToEventId && event.id.toString() === scrollToEventId) {
-        setEventIdPressed(event.id.toString());
-        posY = layoutEvent.nativeEvent.layout.y;
-        void StorageUtils.storeStringValue(
-          StorageKeysConstants.scrollToEventId,
-          ""
-        );
-      } else {
-        if (event.isClosestEvent) {
+  const scrollToEvent = useCallback(
+    (event: Event, layoutEvent: LayoutChangeEvent) => {
+      let posY: number | null = null;
+      if (eventIdPressed) {
+        if (eventIdPressed === event.id.toString()) {
           posY = layoutEvent.nativeEvent.layout.y;
         }
+      } else {
+        if (scrollToEventId && event.id.toString() === scrollToEventId) {
+          setEventIdPressed(event.id.toString());
+          posY = layoutEvent.nativeEvent.layout.y;
+          void StorageUtils.storeStringValue(
+            StorageKeysConstants.scrollToEventId,
+            ""
+          );
+        } else {
+          if (event.isClosestEvent) {
+            posY = layoutEvent.nativeEvent.layout.y;
+          }
+        }
       }
-    }
 
-    if (posY) {
-      scrollViewRef.current?.scrollTo({
-        animated: true,
-        y: posY,
-      });
-    }
-  };
+      if (posY) {
+        scrollViewRef.current?.scrollTo({
+          animated: true,
+          y: posY,
+        });
+      }
+    },
+    [eventIdPressed, scrollToEventId]
+  );
+
+  const onViewLayout = useCallback(
+    (layoutEvent: LayoutChangeEvent, date: string) => {
+      const event = formattedEvents[date][0];
+      scrollToEvent(event, layoutEvent);
+    },
+    [formattedEvents, scrollToEvent]
+  );
 
   return (
     <ScrollView style={styles.mainContainer} ref={scrollViewRef}>
-      <View style={styles.timeline}></View>
+      <View style={styles.timeline} />
       {_.keys(formattedEvents).map((date, index) => (
         <View
           key={index}
+          // eslint-disable-next-line react/jsx-no-bind
           onLayout={(layoutEvent: LayoutChangeEvent) => {
-            const event = formattedEvents[date][0];
-            scrollToEvent(event, layoutEvent);
+            onViewLayout(layoutEvent, date);
           }}
         >
           <View style={styles.dateTagContainer}>

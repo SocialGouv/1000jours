@@ -1,7 +1,7 @@
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
@@ -58,32 +58,43 @@ const ArticleDetail: FC<Props> = ({
   const description = route
     ? route.params.step?.description
     : _articleStep?.description;
-  let inShortArray: ArticleInShortItem[] = [];
-  let linksArray: ArticleLink[] = [];
+  const [inShortArray, setInShortArray] = useState<ArticleInShortItem[]>([]);
+  const [linksArray, setLinksArray] = useState<ArticleLink[]>([]);
+  // let inShortArray: ArticleInShortItem[] = [];
+  // let linksArray: ArticleLink[] = [];
   const [currentArticle, setCurrentArticle] = useState<Article | undefined>();
 
-  const setInShortArray = (article: Article) => {
-    inShortArray = [
+  const setArticleInShortArray = useCallback((article: Article) => {
+    setInShortArray([
       { icon: article.enbrefIcone1, text: article.enbrefTexte1 },
       { icon: article.enbrefIcone2, text: article.enbrefTexte2 },
       { icon: article.enbrefIcone3, text: article.enbrefTexte3 },
-    ];
-  };
-  const setLinksArray = (article: Article) => {
-    linksArray = [
+    ]);
+  }, []);
+
+  const setArticleLinksArray = useCallback((article: Article) => {
+    setLinksArray([
       { label: article.lienTitre1, url: article.lienUrl1 },
       { label: article.lienTitre2, url: article.lienUrl2 },
       { label: article.lienTitre3, url: article.lienUrl3 },
       { label: article.lienTitre4, url: article.lienUrl4 },
-    ];
-  };
+    ]);
+  }, []);
 
-  const handleResults = (data: unknown) => {
-    const result = (data as { article: Article }).article;
-    setInShortArray(result);
-    setLinksArray(result);
-    setCurrentArticle(result);
-  };
+  const handleResults = useCallback(
+    (data: unknown) => {
+      const result = (data as { article: Article }).article;
+      setArticleInShortArray(result);
+      setArticleLinksArray(result);
+      setCurrentArticle(result);
+    },
+    [setArticleInShortArray, setArticleLinksArray]
+  );
+
+  const onBackButtonPressed = useCallback(() => {
+    if (goBack) goBack();
+    else navigation?.goBack();
+  }, [goBack, navigation]);
 
   return (
     <>
@@ -102,12 +113,7 @@ const ArticleDetail: FC<Props> = ({
           <View style={[styles.mainContainer]}>
             <View>
               <View style={[styles.flexStart]}>
-                <BackButton
-                  action={() => {
-                    if (goBack) goBack();
-                    else navigation?.goBack();
-                  }}
-                />
+                <BackButton action={onBackButtonPressed} />
               </View>
               <TitleH1
                 title={screenTitle}

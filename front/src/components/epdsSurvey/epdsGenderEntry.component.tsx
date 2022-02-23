@@ -1,7 +1,7 @@
-import { range } from "lodash";
+import _ from "lodash";
 import type { FC } from "react";
+import { useCallback, useState } from "react";
 import * as React from "react";
-import { useState } from "react";
 import { StyleSheet } from "react-native";
 
 import {
@@ -22,7 +22,7 @@ interface EpdsGenderEntryProps {
 }
 
 const EpdsGenderEntry: FC<EpdsGenderEntryProps> = ({ goToEpdsSurvey }) => {
-  const gendersArray: EpdsGenderType[] = range(
+  const gendersArray: EpdsGenderType[] = _.range(
     Object.keys(EpdsGenders).length
   ).map((index) => {
     return {
@@ -40,21 +40,24 @@ const EpdsGenderEntry: FC<EpdsGenderEntryProps> = ({ goToEpdsSurvey }) => {
   const [selectedGender, setSelectedGender] = useState<string | undefined>();
   const [genderIsSelected, setGenderIsSelected] = useState(false);
 
-  const updateGendersArray = (epdsGender: EpdsGenderType) => {
-    setEpdsGenders(() => {
-      return gendersArray.map((item) => {
-        if (item.id === epdsGender.id) {
-          setSelectedGender(epdsGender.element.value);
-          setGenderIsSelected(true);
-          return { ...item, isChecked: !epdsGender.isChecked };
-        } else {
-          return item;
-        }
+  const updateGendersArray = useCallback(
+    (epdsGender: EpdsGenderType) => () => {
+      setEpdsGenders(() => {
+        return gendersArray.map((item) => {
+          if (item.id === epdsGender.id) {
+            setSelectedGender(epdsGender.element.value);
+            setGenderIsSelected(true);
+            return { ...item, isChecked: !epdsGender.isChecked };
+          } else {
+            return item;
+          }
+        });
       });
-    });
-  };
+    },
+    [gendersArray]
+  );
 
-  const onGenderSaved = async () => {
+  const onGenderSaved = useCallback(async () => {
     if (selectedGender) {
       await StorageUtils.storeStringValue(
         StorageKeysConstants.epdsGenderKey,
@@ -62,7 +65,7 @@ const EpdsGenderEntry: FC<EpdsGenderEntryProps> = ({ goToEpdsSurvey }) => {
       );
       goToEpdsSurvey();
     }
-  };
+  }, [goToEpdsSurvey, selectedGender]);
 
   return (
     <View style={styles.mainContainer}>
@@ -81,9 +84,7 @@ const EpdsGenderEntry: FC<EpdsGenderEntryProps> = ({ goToEpdsSurvey }) => {
                 title={genderElement.element.label}
                 checked={genderElement.isChecked}
                 labelSize={Sizes.xs}
-                onPress={() => {
-                  updateGendersArray(genderElement);
-                }}
+                onPress={updateGendersArray(genderElement)}
               />
             </View>
           ))}

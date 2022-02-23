@@ -93,10 +93,12 @@ const SearchUserLocationOrPostalCodeCoords: FC<Props> = ({
 
   useEffect(() => {
     if (componentIsInitialized) void getUserLocation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [triggerGetUserLocation]);
 
   useEffect(() => {
     if (componentIsInitialized) void searchRegionByPostalCode();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [triggerGetPostalCodeCoords]);
 
   return null;

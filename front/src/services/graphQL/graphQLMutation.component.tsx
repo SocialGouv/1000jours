@@ -36,6 +36,7 @@ export const GraphQLMutation: FC<Props> = ({
 
   useEffect(() => {
     if (componentIsInitialized) void launchMutation(queryVariables);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [triggerLaunchMutation]);
 
   return null;

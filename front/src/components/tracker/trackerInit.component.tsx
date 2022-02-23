@@ -21,6 +21,7 @@ export const TrackerAppStart: FC = () => {
   const { trackAppStart } = useMatomo();
   useEffect(() => {
     void trackAppStart({});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;

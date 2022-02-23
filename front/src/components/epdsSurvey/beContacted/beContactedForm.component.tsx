@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,12 +10,15 @@ import {
 } from "react-native";
 import { HelperText } from "react-native-paper";
 
-import { Formats, Labels, StorageKeysConstants } from "../../../constants";
-import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
+import {
+  AccessibiltyConstants,
+  Formats,
+  Labels,
+  StorageKeysConstants,
+} from "../../../constants";
 import { Colors, Margins, Paddings, Sizes } from "../../../styles";
 import type { BeContactedData } from "../../../type";
-import { StorageUtils, StringUtils } from "../../../utils";
-import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
+import { AccessibilityUtils, StorageUtils, StringUtils } from "../../../utils";
 import { Datepicker, SecondaryText } from "../../baseComponents";
 
 interface Props {
@@ -57,8 +60,8 @@ const BeContactedForm: React.FC<Props> = ({
     void initDataWithStorageValue();
 
     setTimeout(() => {
-      setAccessibilityFocusOnText(componentRef);
-    }, TIMEOUT_FOCUS);
+      AccessibilityUtils.setAccessibilityFocusOnText(componentRef);
+    }, AccessibiltyConstants.TIMEOUT_FOCUS);
   }, []);
 
   useEffect(() => {
@@ -74,6 +77,7 @@ const BeContactedForm: React.FC<Props> = ({
       setData(data);
       validForm(true);
     } else validForm(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstName, phoneNumber, email, numberOfChildren, childBirthDate]);
 
   const getPersonalInformationTypeLabel = (
@@ -106,25 +110,6 @@ const BeContactedForm: React.FC<Props> = ({
     }
   };
 
-  const onChangeText = (
-    informationType: PersonalInformationType,
-    textInput: string
-  ) => {
-    switch (informationType) {
-      case PersonalInformationType.firstName:
-        setFirstName(textInput);
-        break;
-      case PersonalInformationType.email:
-        setEmail(textInput);
-        checkEmailInput(textInput);
-        break;
-      case PersonalInformationType.phoneNumber:
-        setPhoneNumber(textInput);
-        checkPhoneInput(textInput);
-        break;
-    }
-  };
-
   const checkEmailInput = (text: string) => {
     if (text.trimEnd().length > 0) {
       setEmailIsValid(StringUtils.validateEmail(text.trimEnd()));
@@ -139,7 +124,7 @@ const BeContactedForm: React.FC<Props> = ({
     } else setPhoneNumberIsValid(true);
   };
 
-  const renderTextInputView = (
+  const RenderTextInputView = (
     informationType: PersonalInformationType,
     isMandatory: boolean,
     ref?: React.RefObject<View>
@@ -149,6 +134,25 @@ const BeContactedForm: React.FC<Props> = ({
     const label: string = getPersonalInformationTypeLabel(informationType);
     const placeholder: string =
       getPersonalInformationTypePlaceholder(informationType);
+
+    const onChangeText = useCallback(
+      (textInput: string) => {
+        switch (informationType) {
+          case PersonalInformationType.firstName:
+            setFirstName(textInput);
+            break;
+          case PersonalInformationType.email:
+            setEmail(textInput);
+            checkEmailInput(textInput);
+            break;
+          case PersonalInformationType.phoneNumber:
+            setPhoneNumber(textInput);
+            checkPhoneInput(textInput);
+            break;
+        }
+      },
+      [informationType]
+    );
 
     return (
       <View style={styles.textInputView}>
@@ -162,9 +166,7 @@ const BeContactedForm: React.FC<Props> = ({
           <TextInput
             keyboardType={isPhoneNumber ? "phone-pad" : "default"}
             style={styles.textInput}
-            onChangeText={(text: string) => {
-              onChangeText(informationType, text);
-            }}
+            onChangeText={onChangeText}
             placeholder={placeholder}
             placeholderTextColor={Colors.primaryBlue}
           />
@@ -194,21 +196,33 @@ const BeContactedForm: React.FC<Props> = ({
 
   const renderInputByEmail = () => (
     <>
-      {renderTextInputView(PersonalInformationType.email, byEmail)}
-      {renderTextInputView(PersonalInformationType.phoneNumber, bySms)}
+      {RenderTextInputView(PersonalInformationType.email, byEmail)}
+      {RenderTextInputView(PersonalInformationType.phoneNumber, bySms)}
     </>
   );
 
   const renderInputBySms = () => (
     <>
-      {renderTextInputView(PersonalInformationType.phoneNumber, bySms)}
-      {renderTextInputView(PersonalInformationType.email, byEmail)}
+      {RenderTextInputView(PersonalInformationType.phoneNumber, bySms)}
+      {RenderTextInputView(PersonalInformationType.email, byEmail)}
     </>
   );
 
+  const reduceNumberOfChildren = useCallback(() => {
+    setNumberOfChildren(numberOfChildren - 1);
+  }, [numberOfChildren]);
+
+  const increaseNumberOfChildren = useCallback(() => {
+    setNumberOfChildren(numberOfChildren + 1);
+  }, [numberOfChildren]);
+
+  const onDateChanged = useCallback((date: Date) => {
+    setChildBirthDate(format(date, format(date, Formats.dateISO)));
+  }, []);
+
   return (
     <View style={{ marginTop: Margins.light }}>
-      {renderTextInputView(
+      {RenderTextInputView(
         PersonalInformationType.firstName,
         false,
         componentRef
@@ -224,9 +238,7 @@ const BeContactedForm: React.FC<Props> = ({
           <TouchableOpacity
             style={styles.counterbutton}
             disabled={numberOfChildren == 0}
-            onPress={() => {
-              setNumberOfChildren(numberOfChildren - 1);
-            }}
+            onPress={reduceNumberOfChildren}
             accessibilityLabel={Labels.accessibility.beContacted.less}
             accessibilityRole="button"
             accessibilityState={{ disabled: numberOfChildren == 0 }}
@@ -246,9 +258,7 @@ const BeContactedForm: React.FC<Props> = ({
           </SecondaryText>
           <TouchableOpacity
             style={styles.counterbutton}
-            onPress={() => {
-              setNumberOfChildren(numberOfChildren + 1);
-            }}
+            onPress={increaseNumberOfChildren}
             accessibilityRole="button"
             accessibilityLabel={Labels.accessibility.beContacted.more}
           >
@@ -266,9 +276,7 @@ const BeContactedForm: React.FC<Props> = ({
             date={
               childBirthDate.length > 0 ? new Date(childBirthDate) : undefined
             }
-            onChange={(date) => {
-              setChildBirthDate(format(date, format(date, Formats.dateISO)));
-            }}
+            onChange={onDateChanged}
           />
         </View>
       )}

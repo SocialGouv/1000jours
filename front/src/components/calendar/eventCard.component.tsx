@@ -1,6 +1,6 @@
 import _ from "lodash";
 import type { FC } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as React from "react";
 import {
   AccessibilityInfo,
@@ -62,7 +62,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
     return tags;
   };
 
-  const updateCartoFilterStorage = () => {
+  const updateCartoFilterStorage = useCallback(() => {
     const cartoFilterStorage: CartoFilterStorage = {
       thematiques: [],
       types: event.typesPoi ? _.map(event.typesPoi, "nom") : [],
@@ -71,13 +71,13 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
       StorageKeysConstants.cartoFilterKey,
       cartoFilterStorage
     );
-  };
+  }, [event.typesPoi]);
 
-  const seeOnTheMap = () => {
+  const seeOnTheMap = useCallback(() => {
     setTrackerAction(TrackerUtils.TrackingEvent.EVENT_SEE_THE_MAP);
     updateCartoFilterStorage();
     void RootNavigation.navigate("aroundMeScreen", null);
-  };
+  }, [updateCartoFilterStorage]);
 
   const setAccessibilityFocus = () => {
     if (elementRef.current) {
@@ -91,6 +91,10 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
   useEffect(() => {
     if (isExpanded) setAccessibilityFocus();
   }, [isExpanded]);
+
+  const onListItemPressed = useCallback(() => {
+    onPressed(event.id.toString());
+  }, [event.id, onPressed]);
 
   return (
     <View style={styles.eventCardContainer}>
@@ -112,9 +116,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
         <ListItem
           pad={0}
           containerStyle={styles.listItemContainer}
-          onPress={() => {
-            onPressed(event.id.toString());
-          }}
+          onPress={onListItemPressed}
           accessibilityHint={Labels.accessibility.tapForMoreInfo}
           accessibilityLabel={`${Labels.accessibility.eventCard.title} : ${event.nom}. ${Labels.accessibility.eventCard.description} : ${event.description}`}
         >
@@ -134,7 +136,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
             </View>
             <View style={styles.eventContentContainer}>
               <CommonText style={styles.eventTitle}>{event.nom}</CommonText>
-              <Tags tags={getEventTags()}></Tags>
+              <Tags tags={getEventTags()} />
               <SecondaryText style={styles.eventDescription}>
                 {event.description}
               </SecondaryText>

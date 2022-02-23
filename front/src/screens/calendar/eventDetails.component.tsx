@@ -2,7 +2,7 @@ import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { addDays, format } from "date-fns";
 import type { FC } from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
@@ -47,27 +47,31 @@ const EventDetails: FC<Props> = ({ navigation, route }) => {
 
   useEffect(() => {
     void init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleResults = (data: unknown) => {
-    const eventDetails = (data as { evenement: Event }).evenement;
-    const date = format(
-      addDays(new Date(childBirthday), eventDetails.debut),
-      Formats.dateISO
-    );
-    eventDetails.date = date;
-    setEvents([eventDetails]);
-    setLoadingEvent(false);
-  };
+  const onBackButtonPressed = useCallback(() => {
+    navigation.goBack();
+  }, [navigation]);
+
+  const handleResults = useCallback(
+    (data: unknown) => {
+      const eventDetails = (data as { evenement: Event }).evenement;
+      const date = format(
+        addDays(new Date(childBirthday), eventDetails.debut),
+        Formats.dateISO
+      );
+      eventDetails.date = date;
+      setEvents([eventDetails]);
+      setLoadingEvent(false);
+    },
+    [childBirthday]
+  );
 
   return (
     <View style={styles.container}>
       <View style={[styles.flexStart]}>
-        <BackButton
-          action={() => {
-            navigation.goBack();
-          }}
-        />
+        <BackButton action={onBackButtonPressed} />
       </View>
       <TitleH1 title={Labels.event.title} animated={false} />
       <GraphQLLazyQuery

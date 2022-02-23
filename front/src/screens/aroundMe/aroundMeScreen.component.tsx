@@ -18,7 +18,6 @@ import {
   TitleH1,
   View,
 } from "../../components/baseComponents";
-import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
   AroundMeConstants,
   Labels,
@@ -26,7 +25,7 @@ import {
 } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import { Colors, Paddings, Sizes } from "../../styles";
-import { AroundMeUtils, StorageUtils, TrackerUtils } from "../../utils";
+import { AroundMeUtils, StorageUtils } from "../../utils";
 
 const AroundMeScreen: FC = () => {
   const [coordinates, setCoordinates] = useState<LatLng | undefined>(
@@ -48,7 +47,6 @@ const AroundMeScreen: FC = () => {
   >();
 
   const [showMap, setShowMap] = useState(false);
-  const [trackerAction, setTrackerAction] = useState("");
   const [triggerMoveMapCoordinates, setTriggerMoveMapCoordinates] =
     useState(false);
 
@@ -111,10 +109,6 @@ const AroundMeScreen: FC = () => {
   return showMap ? (
     <View style={styles.mainContainer}>
       <View style={styles.flex0}>
-        <TrackerHandler
-          screenName={TrackerUtils.TrackingEvent.CARTO}
-          actionName={trackerAction}
-        />
         <View style={styles.topContainer}>
           <TitleH1
             title={Labels.aroundMe.title}

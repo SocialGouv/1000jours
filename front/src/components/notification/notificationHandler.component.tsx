@@ -2,7 +2,7 @@ import type { Subscription } from "@unimodules/core";
 import type { Notification } from "expo-notifications";
 import * as Notifications from "expo-notifications";
 import type { FC } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as React from "react";
 
 import { Labels } from "../../constants";
@@ -65,6 +65,10 @@ const NotificationHandler: FC = () => {
     };
   }, []);
 
+  const onNotificationDismiss = useCallback(() => {
+    setNotification(null);
+  }, []);
+
   return (
     notification && (
       <>
@@ -75,9 +79,7 @@ const NotificationHandler: FC = () => {
         )}
         <NotificationModal
           notification={notification}
-          onDismiss={() => {
-            setNotification(null);
-          }}
+          onDismiss={onNotificationDismiss}
         />
       </>
     )
