@@ -18,6 +18,7 @@ export const forceToScheduleEventsNotif = "@forceToScheduleEventsNotif";
 export const osCalendarId = "@osCalendarId";
 export const osCalendarSyncDate = "@osCalendarSyncDate";
 export const scrollToEventId = "@scrollToEventId";
+export const articlesRead = "@articlesRead";
 
 export const allStorageKeys = [
   appActiveCounter,
@@ -39,6 +40,7 @@ export const allStorageKeys = [
   osCalendarId,
   osCalendarSyncDate,
   scrollToEventId,
+  articlesRead,
 ];
 
 export const epdsSurveyKeys = [epdsQuestionAndAnswersKey, epdsQuestionIndexKey];

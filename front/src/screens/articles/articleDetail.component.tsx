@@ -1,8 +1,13 @@
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as React from "react";
+import type {
+  LayoutChangeEvent,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+} from "react-native";
 import { ScrollView, StyleSheet } from "react-native";
 
 import {
@@ -23,7 +28,12 @@ import {
   View,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { FetchPoliciesConstants, HomeDbQueries, Labels } from "../../constants";
+import {
+  FetchPoliciesConstants,
+  HomeDbQueries,
+  Labels,
+  StorageKeysConstants,
+} from "../../constants";
 import { GraphQLQuery } from "../../services";
 import { Paddings } from "../../styles";
 import type {
@@ -34,6 +44,7 @@ import type {
   TabHomeParamList,
 } from "../../types";
 import { TrackerUtils } from "../../utils";
+import { getObjectValue, storeObjectValue } from "../../utils/storage.util";
 
 interface Props {
   route?: RouteProp<{ params: { id: number; step?: Step } }, "params">;
@@ -61,6 +72,11 @@ const ArticleDetail: FC<Props> = ({
   const [inShortArray, setInShortArray] = useState<ArticleInShortItem[]>([]);
   const [linksArray, setLinksArray] = useState<ArticleLink[]>([]);
   const [currentArticle, setCurrentArticle] = useState<Article | undefined>();
+
+  const scrollViewHeight = useRef(0);
+  const scrollContentHeight = useRef(0);
+  const articleHasBeenRead = useRef(false);
+  const MIN_RATIO_FOR_HAS_BEEN_READ = 0.25;
 
   const setArticleInShortArray = useCallback((article: Article) => {
     setInShortArray([
@@ -94,6 +110,62 @@ const ArticleDetail: FC<Props> = ({
     else navigation?.goBack();
   }, [goBack, navigation]);
 
+  const setArticleHasBeenRead = useCallback(async () => {
+    if (articleId && !articleHasBeenRead.current) {
+      articleHasBeenRead.current = true;
+      const articlesRead: number[] =
+        (await getObjectValue(StorageKeysConstants.articlesRead)) ?? [];
+      if (!articlesRead.includes(articleId)) {
+        articlesRead.push(articleId);
+        void storeObjectValue(StorageKeysConstants.articlesRead, articlesRead);
+      }
+    }
+  }, [articleId]);
+
+  const hasBeenRead = useCallback(
+    (nativeEvent: NativeScrollEvent) => {
+      // L'article est considéré comme lu à partir du moment où l'utilisateur
+      // à scroller au moins 25% de l'article
+      if (
+        nativeEvent.layoutMeasurement.height + nativeEvent.contentOffset.y >=
+        nativeEvent.contentSize.height * MIN_RATIO_FOR_HAS_BEEN_READ
+      ) {
+        void setArticleHasBeenRead();
+      }
+    },
+    [MIN_RATIO_FOR_HAS_BEEN_READ, setArticleHasBeenRead]
+  );
+
+  const onContentSizeChange = useCallback((width: number, height: number) => {
+    scrollContentHeight.current = height;
+  }, []);
+
+  const onScrollViewLayout = useCallback((event: LayoutChangeEvent) => {
+    scrollViewHeight.current = event.nativeEvent.layout.height;
+  }, []);
+
+  const onScroll = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      hasBeenRead(event.nativeEvent);
+    },
+    [hasBeenRead]
+  );
+
+  const checkScrollContentHeight = () => {
+    // Considère que l'article est lu lorsqu'il est affiché entièrement à l'écran (sans avoir besoin de scroller)
+    if (scrollContentHeight.current <= scrollViewHeight.current) {
+      void setArticleHasBeenRead();
+    }
+  };
+
+  useEffect(() => {
+    // Attend que le contenu de la scrollView soit chargé (notamment les images de l'article)
+    setTimeout(() => {
+      checkScrollContentHeight();
+    }, 3000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       {articleId && (
@@ -104,7 +176,12 @@ const ArticleDetail: FC<Props> = ({
         />
       )}
       {currentArticle && (
-        <ScrollView>
+        <ScrollView
+          onLayout={onScrollViewLayout}
+          onScroll={onScroll}
+          onContentSizeChange={onContentSizeChange}
+          scrollEventThrottle={0}
+        >
           <TrackerHandler
             screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${currentArticle.titre}`}
           />
