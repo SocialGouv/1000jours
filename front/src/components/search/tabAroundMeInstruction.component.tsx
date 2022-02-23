@@ -72,8 +72,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
         zoomOrAltitude,
       });
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [searchIsByPostalCode]
   );
 
   const onPostalCodeInvalid = useCallback(() => {

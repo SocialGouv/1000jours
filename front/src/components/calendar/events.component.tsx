@@ -62,12 +62,9 @@ const Events: FC<Props> = ({ evenements, childBirthday, scrollToEventId }) => {
     else return format(new Date(date), Formats.dateEvent, { locale: fr });
   };
 
-  const eventCardPressed = useCallback(
-    (eventId: string) => () => {
-      setEventIdPressed(eventId);
-    },
-    []
-  );
+  const eventCardPressed = useCallback((eventId: string) => {
+    setEventIdPressed(eventId);
+  }, []);
 
   const scrollViewRef = React.useRef<ScrollView>(null);
   const scrollToEvent = useCallback(
