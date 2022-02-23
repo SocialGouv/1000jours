@@ -3,6 +3,7 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import { useState } from "react";
 import * as React from "react";
+import type { LayoutChangeEvent, NativeScrollEvent } from "react-native";
 import { ScrollView, StyleSheet } from "react-native";
 
 import {
@@ -23,7 +24,12 @@ import {
   View,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { FetchPoliciesConstants, HomeDbQueries, Labels } from "../../constants";
+import {
+  FetchPoliciesConstants,
+  HomeDbQueries,
+  Labels,
+  StorageKeysConstants,
+} from "../../constants";
 import { GraphQLQuery } from "../../services";
 import { Paddings } from "../../styles";
 import type {
@@ -34,6 +40,7 @@ import type {
   TabHomeParamList,
 } from "../../types";
 import { TrackerUtils } from "../../utils";
+import { getObjectValue, storeObjectValue } from "../../utils/storage.util";
 
 interface Props {
   route?: RouteProp<{ params: { id: number; step?: Step } }, "params">;
@@ -60,6 +67,9 @@ const ArticleDetail: FC<Props> = ({
     : _articleStep?.description;
   let inShortArray: ArticleInShortItem[] = [];
   let linksArray: ArticleLink[] = [];
+  const minRatioForHasBeenRead = 0.25;
+  let articleHasBeenRead = false;
+  let articleHeight = 0;
   const [currentArticle, setCurrentArticle] = useState<Article | undefined>();
 
   const setInShortArray = (article: Article) => {
@@ -85,6 +95,29 @@ const ArticleDetail: FC<Props> = ({
     setCurrentArticle(result);
   };
 
+  const hasBeenRead = (nativeEvent: NativeScrollEvent) => {
+    // L'article est considéré comme lu à partir du moment où l'utilisateur
+    // à scroller au moins 25% de l'article
+    if (
+      nativeEvent.layoutMeasurement.height + nativeEvent.contentOffset.y >=
+      nativeEvent.contentSize.height * minRatioForHasBeenRead
+    ) {
+      void setArticleHasBeenRead();
+    }
+  };
+
+  const setArticleHasBeenRead = async () => {
+    if (articleId && !articleHasBeenRead) {
+      articleHasBeenRead = true;
+      const articlesRead: number[] =
+        (await getObjectValue(StorageKeysConstants.articlesRead)) ?? [];
+      if (!articlesRead.includes(articleId)) {
+        articlesRead.push(articleId);
+        void storeObjectValue(StorageKeysConstants.articlesRead, articlesRead);
+      }
+    }
+  };
+
   return (
     <>
       {articleId && (
@@ -95,11 +128,25 @@ const ArticleDetail: FC<Props> = ({
         />
       )}
       {currentArticle && (
-        <ScrollView>
+        <ScrollView
+          onLayout={(event: LayoutChangeEvent) => {
+            if (articleHeight <= event.nativeEvent.layout.height) {
+              void setArticleHasBeenRead();
+            }
+          }}
+          onScroll={({ nativeEvent }) => {
+            hasBeenRead(nativeEvent);
+          }}
+        >
           <TrackerHandler
             screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${currentArticle.titre}`}
           />
-          <View style={[styles.mainContainer]}>
+          <View
+            style={[styles.mainContainer]}
+            onLayout={(event: LayoutChangeEvent) => {
+              articleHeight = event.nativeEvent.layout.height;
+            }}
+          >
             <View>
               <View style={[styles.flexStart]}>
                 <BackButton
