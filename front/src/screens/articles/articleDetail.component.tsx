@@ -60,8 +60,6 @@ const ArticleDetail: FC<Props> = ({
     : _articleStep?.description;
   const [inShortArray, setInShortArray] = useState<ArticleInShortItem[]>([]);
   const [linksArray, setLinksArray] = useState<ArticleLink[]>([]);
-  // let inShortArray: ArticleInShortItem[] = [];
-  // let linksArray: ArticleLink[] = [];
   const [currentArticle, setCurrentArticle] = useState<Article | undefined>();
 
   const setArticleInShortArray = useCallback((article: Article) => {
