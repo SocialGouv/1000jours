@@ -6,8 +6,6 @@ import * as React from "react";
 import type { ColorSchemeName } from "react-native";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-import LogoMinistere from "../assets/images/Logo ministere.svg";
-import AppLogo from "../assets/images/logo.svg";
 import { ConditionsOfUse, LegalNotice, Menu } from "../components";
 import {
   Backdrop,
@@ -25,6 +23,7 @@ import { getAppTheme } from "../utils";
 import { navigationRef } from "../utils/rootNavigation.util";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
+import { BaseAssets } from "../components/assets";
 
 interface NavigationProps {
   colorScheme: ColorSchemeName;
@@ -73,7 +72,10 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => {
         options={{
           headerLeft: () => (
             <View style={[styles.headerLeft]}>
-              <LogoMinistere height={Sizes.xxxl} style={styles.logoMinistere} />
+              <BaseAssets.LogoMinistere
+                height={Sizes.xxxl}
+                style={styles.logoMinistere}
+              />
             </View>
           ),
           headerRight: () => (
@@ -97,7 +99,9 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => {
             </TouchableOpacity>
           ),
           headerShown: true,
-          headerTitle: () => <AppLogo height={Sizes.xxxl} width={Sizes.xxxl} />,
+          headerTitle: () => (
+            <BaseAssets.AppLogo height={Sizes.xxxl} width={Sizes.xxxl} />
+          ),
           headerTitleAlign: "center",
         }}
       />

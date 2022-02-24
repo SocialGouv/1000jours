@@ -16,7 +16,7 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import AppLogo from "../../assets/images/logo.svg";
+import { BaseAssets } from "../../components/assets";
 import {
   CommonText,
   CustomButton,
@@ -233,7 +233,7 @@ const Profile: FC<Props> = ({ navigation }) => {
         <View style={styles.mainView}>
           <ScrollView style={styles.mainMargins} ref={scrollViewRef}>
             <View style={styles.appLogo}>
-              <AppLogo
+              <BaseAssets.AppLogo
                 height={Sizes.logo}
                 accessible
                 accessibilityRole="image"

@@ -7,8 +7,6 @@ import { Modal, StyleSheet } from "react-native";
 import { CheckBox } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
-import CheckedIcon from "../../assets/images/checkbox_checked.svg";
-import UncheckedIcon from "../../assets/images/checkbox_unchecked.svg";
 import { Labels } from "../../constants";
 import {
   MAJOR_VERSION_IOS,
@@ -16,6 +14,7 @@ import {
 } from "../../constants/platform.constants";
 import { Colors, Margins, Paddings, Shadow, Sizes } from "../../styles";
 import type { Article, ArticleFilter } from "../../types";
+import { BaseAssets } from "../assets";
 import {
   CloseButton,
   CustomButton,
@@ -164,10 +163,16 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
                     key={index}
                     iconRight
                     uncheckedIcon={
-                      <UncheckedIcon width={Sizes.lg} height={Sizes.lg} />
+                      <BaseAssets.UncheckedIcon
+                        width={Sizes.lg}
+                        height={Sizes.lg}
+                      />
                     }
                     checkedIcon={
-                      <CheckedIcon width={Sizes.lg} height={Sizes.lg} />
+                      <BaseAssets.CheckedIcon
+                        width={Sizes.lg}
+                        height={Sizes.lg}
+                      />
                     }
                     uncheckedColor={Colors.primaryBlueDark}
                     checkedColor={Colors.primaryBlueDark}

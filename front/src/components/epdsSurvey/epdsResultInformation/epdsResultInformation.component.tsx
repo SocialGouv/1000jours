@@ -8,8 +8,6 @@ import { StyleSheet, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Card } from "react-native-paper";
 
-import ChevronDownIcon from "../../../assets/images/chevron_down.svg";
-import ChevronUpIcon from "../../../assets/images/chevron_up.svg";
 import {
   Colors,
   FontNames,
@@ -20,6 +18,7 @@ import {
   Sizes,
 } from "../../../styles";
 import type { EpdsResultInformationType } from "../../../type";
+import { EpdsAssets } from "../../assets";
 import { Icomoon, View } from "../../baseComponents";
 import EpdsResultContactParagraph from "./epdsResultContactParagraph.component";
 import EpdsResultSimpleParagraph from "./epdsResultSimpleParagraph.component";
@@ -114,9 +113,15 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
                 </Text>
                 <View style={styles.accordionIcon}>
                   {expandedAccordions[professionalIndex] ? (
-                    <ChevronUpIcon width={Sizes.xs} height={Sizes.xs} />
+                    <EpdsAssets.ChevronUpIcon
+                      width={Sizes.xs}
+                      height={Sizes.xs}
+                    />
                   ) : (
-                    <ChevronDownIcon width={Sizes.xs} height={Sizes.xs} />
+                    <EpdsAssets.ChevronDownIcon
+                      width={Sizes.xs}
+                      height={Sizes.xs}
+                    />
                   )}
                 </View>
               </View>

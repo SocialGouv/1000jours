@@ -5,10 +5,8 @@ import * as React from "react";
 import { useCallback, useRef, useState } from "react";
 import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import { Dimensions, FlatList, ScrollView, StyleSheet } from "react-native";
+import { OnBoardingAssets } from "../../components/assets";
 
-import FirstSlideImage from "../../assets/images/Onboarding_1.svg";
-import SecondSlideImage from "../../assets/images/Onboarding_2.svg";
-import ThirdSlideImage from "../../assets/images/Onboarding_3.svg";
 import {
   CommonText,
   CustomButton,
@@ -44,17 +42,17 @@ const Onboarding: FC<Props> = ({ navigation }) => {
   const slideViews: SlideView[] = [
     {
       description: Labels.onboarding.slidesText[0].description,
-      image: <FirstSlideImage />,
+      image: <OnBoardingAssets.FirstSlideImage />,
       title: Labels.onboarding.slidesText[0].title,
     },
     {
       description: Labels.onboarding.slidesText[1].description,
-      image: <SecondSlideImage />,
+      image: <OnBoardingAssets.SecondSlideImage />,
       title: Labels.onboarding.slidesText[1].title,
     },
     {
       description: Labels.onboarding.slidesText[2].description,
-      image: <ThirdSlideImage />,
+      image: <OnBoardingAssets.ThirdSlideImage />,
       title: Labels.onboarding.slidesText[2].title,
     },
   ];
