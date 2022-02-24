@@ -1,6 +1,6 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
 
 import { FetchPoliciesConstants, HomeDbQueries, Labels } from "../../constants";
@@ -17,11 +17,17 @@ interface Props {
 const ParenthequeItem: FC<Props> = ({ navigation }) => {
   const [documents, setDocuments] = useState<Document[]>([]);
 
-  const handleResults = (data: unknown) => {
+  const handleResults = useCallback((data: unknown) => {
     const results = (data as { parenthequeDocuments: Document[] })
       .parenthequeDocuments;
     setDocuments(results);
-  };
+  }, []);
+
+  const onNavigateToParenthequeButtonPressed = useCallback(() => {
+    navigation.navigate("parentheque", {
+      documents,
+    });
+  }, [documents, navigation]);
 
   return (
     <View
@@ -51,11 +57,7 @@ const ParenthequeItem: FC<Props> = ({ navigation }) => {
             index={-1}
             active={false}
             isTheLast={false}
-            onPress={() => {
-              navigation.navigate("parentheque", {
-                documents,
-              });
-            }}
+            onPress={onNavigateToParenthequeButtonPressed}
             isParentheque
           />
         </>

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import * as React from "react";
 
-import { Loader } from ".";
+import Loader from "./loader.component";
 
 interface Props {
   noLoader?: boolean;

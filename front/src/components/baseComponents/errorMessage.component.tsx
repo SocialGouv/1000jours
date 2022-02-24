@@ -65,6 +65,7 @@ const ErrorMessage: React.FC<Props> = ({ error }) => {
   useEffect(() => {
     if (error.graphQLErrors.length > 0) createAlertMessage();
     else void checkApolloApi(error);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return fetchIsComplete ? (

@@ -1,8 +1,8 @@
 import Constants from "expo-constants";
 import _ from "lodash";
 import type { FC } from "react";
+import { useCallback, useEffect } from "react";
 import * as React from "react";
-import { useEffect } from "react";
 import { Modal, StyleSheet } from "react-native";
 import { CheckBox } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
@@ -54,10 +54,12 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
 
   useEffect(() => {
     if (filters.length === 0) setFilters(getFilters(articles));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [articles]);
 
   useEffect(() => {
     if (modalVisible) setInitalFilters(_.cloneDeep(filters));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modalVisible]);
 
   const numberActiveFilters = () => {
@@ -67,27 +69,44 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
 
   const numberActiveAccessibilityFilters = () => {
     const number = filters.filter((item) => item.active).length;
-    return `${Labels.listArticles.filters}. (${number} ${Labels.accessibility.articlesFilters.activeFilter})`;
+    return `${Labels.articleList.filters}. (${number} ${Labels.accessibility.articlesFilters.activeFilter})`;
   };
 
   const checkboxAccessibilityLabel = (filter: ArticleFilter) =>
     `${filter.thematique.nom}. (${filter.nbArticles} ${Labels.accessibility.articlesFilters.availableArticles})`;
 
-  const resetFilters = () => {
-    setFilters(initalFilters);
-  };
+  const onShowModal = useCallback(() => {
+    setModalVisible(!modalVisible);
+  }, [modalVisible]);
 
-  const cancelFiltersModal = () => {
+  const resetFilters = useCallback(() => {
+    setFilters(initalFilters);
+  }, [initalFilters]);
+
+  const cancelFiltersModal = useCallback(() => {
     setModalVisible(false);
     resetFilters();
-  };
+  }, [resetFilters]);
+
+  const onCheckboxPressed = useCallback(
+    (filter: ArticleFilter) => () => {
+      filter.active = !filter.active;
+      setTriggerUpdateFilters(!triggerUpdateFilters);
+    },
+    [triggerUpdateFilters]
+  );
+
+  const onValidateFilter = useCallback(() => {
+    applyFilters(filters);
+    setModalVisible(false);
+  }, [applyFilters, filters]);
 
   return (
     <View style={styles.paddingsDefault}>
       <CustomButton
         buttonStyle={styles.filterButton}
         titleStyle={styles.filterButtonTitle}
-        title={`${Labels.listArticles.filters} ${numberActiveFilters()}`}
+        title={`${Labels.articleList.filters} ${numberActiveFilters()}`}
         rounded={true}
         disabled={false}
         accessibilityLabel={numberActiveAccessibilityFilters()}
@@ -98,11 +117,8 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
             color={Colors.primaryBlue}
           />
         }
-        action={() => {
-          setModalVisible(!modalVisible);
-        }}
+        action={onShowModal}
       />
-
       <Modal transparent={true} visible={modalVisible} animationType="fade">
         {modalVisible && (
           <View style={styles.behindOfModal}>
@@ -115,22 +131,16 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
                 }}
               >
                 <TitleH1
-                  title={Labels.listArticles.filters}
+                  title={Labels.articleList.filters}
                   animated={false}
                   style={{ paddingTop: Paddings.larger }}
                 />
-
-                <CloseButton
-                  onPress={() => {
-                    cancelFiltersModal();
-                  }}
-                  clear={true}
-                />
+                <CloseButton onPress={cancelFiltersModal} clear={true} />
               </View>
               <CustomButton
                 buttonStyle={[styles.filterButton]}
                 titleStyle={styles.filterButtonTitle}
-                title={Labels.listArticles.resetFilters}
+                title={Labels.articleList.resetFilters}
                 rounded={true}
                 disabled={false}
                 icon={
@@ -140,9 +150,7 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
                     color={Colors.primaryBlue}
                   />
                 }
-                action={() => {
-                  resetFilters();
-                }}
+                action={resetFilters}
               />
 
               <ScrollView>
@@ -166,10 +174,7 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
                     title={`${filter.thematique.nom} (${filter.nbArticles})`}
                     accessibilityLabel={checkboxAccessibilityLabel(filter)}
                     checked={filter.active}
-                    onPress={() => {
-                      filter.active = !filter.active;
-                      setTriggerUpdateFilters(!triggerUpdateFilters);
-                    }}
+                    onPress={onCheckboxPressed(filter)}
                   />
                 ))}
               </ScrollView>
@@ -188,9 +193,7 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
                         color={Colors.primaryBlue}
                       />
                     }
-                    action={() => {
-                      cancelFiltersModal();
-                    }}
+                    action={cancelFiltersModal}
                   />
                 </View>
                 <View style={styles.buttonContainer}>
@@ -199,10 +202,7 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
                     titleStyle={styles.buttonTitleStyle}
                     rounded={true}
                     disabled={false}
-                    action={() => {
-                      applyFilters(filters);
-                      setModalVisible(false);
-                    }}
+                    action={onValidateFilter}
                   />
                 </View>
               </View>

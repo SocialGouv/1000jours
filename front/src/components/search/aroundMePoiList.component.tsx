@@ -1,7 +1,7 @@
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import type { FC } from "react";
+import { useCallback, useState } from "react";
 import * as React from "react";
-import { useState } from "react";
 import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
 
@@ -36,24 +36,46 @@ const AroundMePoiList: FC<Props> = ({
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
 
-  const handlePois = (pois: Poi[]) => {
-    updatePoiArray(pois);
-    setIsLoading(false);
-  };
+  const handlePois = useCallback(
+    (pois: Poi[]) => {
+      updatePoiArray(pois);
+      setIsLoading(false);
+    },
+    [updatePoiArray]
+  );
 
-  const navigateToMap = (poiIndex: number) => {
-    updateSelectedPoiIndex(poiIndex);
-    displayMap();
-  };
+  const onChooseFilterMessage = useCallback(() => {
+    setTimeout(
+      () => {
+        setIsLoading(false);
+      },
+      PLATFORM_IS_IOS ? 500 : 0
+    );
+    showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
+  }, []);
+
+  const navigateToMap = useCallback(
+    (poiIndex: number) => {
+      updateSelectedPoiIndex(poiIndex);
+      displayMap();
+    },
+    [displayMap, updateSelectedPoiIndex]
+  );
 
   const showSnackBarWithMessage = (message: string) => {
     setSnackBarMessage(message);
     setShowSnackBar(true);
   };
 
-  const onSnackBarDismiss = () => {
+  const onSnackBarDismiss = useCallback(() => {
     setShowSnackBar(false);
-  };
+  }, []);
+
+  const onRelaunchSearchButtonPressed = useCallback(() => {
+    setIsLoading(true);
+    updateSelectedPoiIndex(-1);
+    setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+  }, [triggerSearchByGpsCoords, updateSelectedPoiIndex]);
 
   return (
     <View style={styles.slidingUpPanelView}>
@@ -61,27 +83,13 @@ const AroundMePoiList: FC<Props> = ({
         triggerSearchByGpsCoords={triggerSearchByGpsCoords}
         region={region}
         setFetchedPois={handlePois}
-        chooseFilterMessage={() => {
-          setTimeout(
-            () => {
-              setIsLoading(false);
-            },
-            PLATFORM_IS_IOS ? 500 : 0
-          );
-          showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
-        }}
+        chooseFilterMessage={onChooseFilterMessage}
       />
       <AroundMeMapHeader
         headerStyle={styles.headerButtonsMapView}
         displayMap={false}
-        setDisplayMap={() => {
-          displayMap();
-        }}
-        relaunchSearch={() => {
-          setIsLoading(true);
-          updateSelectedPoiIndex(-1);
-          setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
-        }}
+        setDisplayMap={displayMap}
+        relaunchSearch={onRelaunchSearchButtonPressed}
         showRelaunchResearchButton={false}
         setIsLoading={setIsLoading}
       />

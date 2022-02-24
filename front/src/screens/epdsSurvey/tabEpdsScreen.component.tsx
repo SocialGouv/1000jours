@@ -1,6 +1,6 @@
 import type { FC } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
 import {
@@ -36,23 +36,21 @@ const TabEpdsScreen: FC = () => {
     void getGenderFromStorage();
   }, []);
 
-  const handleResults = (data: unknown) => {
+  const handleResults = useCallback((data: unknown) => {
     setQuestionAndAnswers(EpdsSurveyUtils.getQuestionsAndAnswersFromData(data));
-  };
+  }, []);
 
-  const goToEpdsSurvey = () => {
+  const goToEpdsSurvey = useCallback(() => {
     setGenderIsEntered(true);
-  };
+  }, []);
+
+  const onBoardingIsDone = useCallback(() => {
+    setOnboardingIsDone(true);
+  }, []);
 
   const getViewToDisplay = () => {
     if (!onboardingIsDone)
-      return (
-        <EpdsOnboarding
-          onBoardingIsDone={() => {
-            setOnboardingIsDone(true);
-          }}
-        />
-      );
+      return <EpdsOnboarding onBoardingIsDone={onBoardingIsDone} />;
     else if (!genderIsEntered)
       return <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />;
     else return <EpdsSurveyContent epdsSurvey={questionAndAnswers} />;

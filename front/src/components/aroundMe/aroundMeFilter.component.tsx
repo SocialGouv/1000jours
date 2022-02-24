@@ -2,7 +2,7 @@ import type { PoiType, Step } from "@socialgouv/nos1000jours-lib";
 import { AROUNDME_FILTER_DATA } from "@socialgouv/nos1000jours-lib";
 import Constants from "expo-constants";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Modal,
   ScrollView,
@@ -61,6 +61,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
       cartographieTypes: PoiType[];
     };
     extractFilterData(cartographieTypes);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterDataFromDb]);
 
   useEffect(() => {
@@ -103,6 +104,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     };
 
     void getSavedFilter();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   const convertFetchedFiltersToDisplayedFilters = () => {
@@ -175,19 +177,22 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     };
   };
 
-  const updateQueryFilter = (filter: CartoFilter) => {
-    let tempQueryFilter = cartoFilterStorage.types;
-    if (!tempQueryFilter.includes(filter.name))
-      tempQueryFilter.push(filter.name);
-    else {
-      tempQueryFilter = tempQueryFilter.filter(
-        (element) => element !== filter.name
-      );
-    }
+  const updateQueryFilter = useCallback(
+    (filter: CartoFilter) => () => {
+      let tempQueryFilter = cartoFilterStorage.types;
+      if (!tempQueryFilter.includes(filter.name))
+        tempQueryFilter.push(filter.name);
+      else {
+        tempQueryFilter = tempQueryFilter.filter(
+          (element) => element !== filter.name
+        );
+      }
 
-    cartoFilterStorage.types = tempQueryFilter;
-    setCartoFilterStorage(cartoFilterStorage);
-  };
+      cartoFilterStorage.types = tempQueryFilter;
+      setCartoFilterStorage(cartoFilterStorage);
+    },
+    [cartoFilterStorage]
+  );
 
   const renderSection = (section: {
     title: string;
@@ -209,9 +214,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
         key={index}
         title={filter.name}
         selected={filter.active}
-        action={() => {
-          updateQueryFilter(filter);
-        }}
+        action={updateQueryFilter(filter)}
       />
     ));
   };
@@ -226,6 +229,42 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     }
   };
 
+  const onCloseModalButtonPressed = useCallback(() => {
+    setCartoFilterStorage({
+      thematiques: [],
+      types: [],
+    });
+    hideModal(false);
+  }, [hideModal]);
+
+  const onValidateButtonPressed = useCallback(() => {
+    void StorageUtils.storeObjectValue(
+      StorageKeysConstants.cartoFilterKey,
+      cartoFilterStorage
+    );
+    sendFiltersTracker(cartoFilterStorage.types);
+    sendFiltersTracker(cartoFilterStorage.thematiques);
+
+    const noSavedFilterButNewFilter =
+      savedcartoFilterStorage.types.length === 0 &&
+      cartoFilterStorage.types.length > 0;
+
+    const savedFilterAndNewFiltersAreDifferent =
+      !StringUtils.arraysHaveSameLengthAndContainSameValues(
+        savedcartoFilterStorage.types,
+        cartoFilterStorage.types
+      );
+
+    const differenceBetweenSavedAndNew =
+      noSavedFilterButNewFilter || savedFilterAndNewFiltersAreDifferent;
+
+    setCartoFilterStorage({
+      thematiques: [],
+      types: [],
+    });
+
+    hideModal(differenceBetweenSavedAndNew);
+  }, [cartoFilterStorage, hideModal, savedcartoFilterStorage.types]);
   return (
     <>
       <TrackerHandler actionName={trackerAction} />
@@ -241,13 +280,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
               <TitleH1 title={Labels.aroundMe.filter.title} animated={false} />
               <TouchableOpacity
                 style={styles.closeModalView}
-                onPress={() => {
-                  setCartoFilterStorage({
-                    thematiques: [],
-                    types: [],
-                  });
-                  hideModal(false);
-                }}
+                onPress={onCloseModalButtonPressed}
               >
                 <Icomoon
                   name={IcomoonIcons.fermer}
@@ -279,13 +312,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                         color={Colors.primaryBlue}
                       />
                     }
-                    action={() => {
-                      setCartoFilterStorage({
-                        thematiques: [],
-                        types: [],
-                      });
-                      hideModal(false);
-                    }}
+                    action={onCloseModalButtonPressed}
                   />
                 </View>
                 <View style={styles.buttonContainer}>
@@ -294,35 +321,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                     titleStyle={styles.buttonTitleStyle}
                     rounded={true}
                     disabled={false}
-                    action={() => {
-                      void StorageUtils.storeObjectValue(
-                        StorageKeysConstants.cartoFilterKey,
-                        cartoFilterStorage
-                      );
-                      sendFiltersTracker(cartoFilterStorage.types);
-                      sendFiltersTracker(cartoFilterStorage.thematiques);
-
-                      const noSavedFilterButNewFilter =
-                        savedcartoFilterStorage.types.length === 0 &&
-                        cartoFilterStorage.types.length > 0;
-
-                      const savedFilterAndNewFiltersAreDifferent =
-                        !StringUtils.arraysHaveSameLengthAndContainSameValues(
-                          savedcartoFilterStorage.types,
-                          cartoFilterStorage.types
-                        );
-
-                      const differenceBetweenSavedAndNew =
-                        noSavedFilterButNewFilter ||
-                        savedFilterAndNewFiltersAreDifferent;
-
-                      setCartoFilterStorage({
-                        thematiques: [],
-                        types: [],
-                      });
-
-                      hideModal(differenceBetweenSavedAndNew);
-                    }}
+                    action={onValidateButtonPressed}
                   />
                 </View>
               </View>

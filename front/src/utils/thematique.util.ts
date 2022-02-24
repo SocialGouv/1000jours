@@ -20,28 +20,19 @@ export const getThematiqueIcon = (
   switch (thematique.nom) {
     case Thematiques.bienEtre:
       return IcomoonIcons.calendrier;
-      break;
     case Thematiques.demarchesEtFormalitesAdm:
       return IcomoonIcons.mentionsLegales;
-      break;
     case Thematiques.handicapEnfants:
       return IcomoonIcons.bebe;
-      break;
     case Thematiques.handicapParents:
       return IcomoonIcons.parents;
-      break;
     case Thematiques.parentalite:
       return IcomoonIcons.parents;
-      break;
     case Thematiques.prendreSoinDeSonEnfant:
       return IcomoonIcons.calendrier;
-      break;
     case Thematiques.sante:
       return IcomoonIcons.proSante;
-      break;
-
     default:
       return IcomoonIcons.calendrier;
-      break;
   }
 };

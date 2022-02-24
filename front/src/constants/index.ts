@@ -1,3 +1,4 @@
+import * as AccessibiltyConstants from "./accessibility.constants";
 import * as AroundMeConstants from "./aroundMe.constants";
 import * as CalendarDbQueries from "./databaseQueries/calendarDbQueries.constants";
 import * as EpdsDbQueries from "./databaseQueries/epdsDbQueries.constants";
@@ -13,6 +14,7 @@ import * as PlatformConstants from "./platform.constants";
 import * as StorageKeysConstants from "./storageKeys.constants";
 
 export {
+  AccessibiltyConstants,
   AroundMeConstants,
   CalendarDbQueries,
   EpdsConstants,

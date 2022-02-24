@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Modal, StyleSheet } from "react-native";
 
 import { Labels } from "../../constants";
@@ -20,13 +20,14 @@ interface Props {
 const ModalHelp: React.FC<Props> = ({ icon, title, body, onDismiss }) => {
   const [modalVisible, setModalVisible] = useState(true);
 
-  const action = () => {
-    setModalVisible(false);
-  };
-
   useEffect(() => {
     if (!modalVisible) onDismiss();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modalVisible]);
+
+  const onHideModal = useCallback(() => {
+    setModalVisible(false);
+  }, []);
 
   return (
     <>
@@ -34,19 +35,12 @@ const ModalHelp: React.FC<Props> = ({ icon, title, body, onDismiss }) => {
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
+        onRequestClose={onHideModal}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <View style={styles.closeButton}>
-              <CloseButton
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-                clear={true}
-              />
+              <CloseButton onPress={onHideModal} clear={true} />
             </View>
             <View style={styles.content}>
               <View
@@ -68,7 +62,7 @@ const ModalHelp: React.FC<Props> = ({ icon, title, body, onDismiss }) => {
               <CustomButton
                 title={Labels.buttons.close}
                 rounded={false}
-                action={action}
+                action={onHideModal}
                 titleStyle={styles.buttonTitle}
                 icon={
                   <Icomoon

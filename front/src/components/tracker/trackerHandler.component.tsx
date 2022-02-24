@@ -25,6 +25,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
   useEffect(() => {
     if (screenName && StringUtils.stringIsNotNullNorEmpty(screenName))
       void trackScreenView({ name: screenName });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -36,6 +37,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
     if (screenNameIsNotEmpty && actionNameIsNotEmpty)
       void trackAction({ name: `${screenName} / ${actionName}` });
     else if (actionNameIsNotEmpty) void trackAction({ name: `${actionName}` });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionName]);
 
   useEffect(() => {
@@ -47,6 +49,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
     ) {
       void trackSiteSearch(searchObject);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchObject]);
 
   useEffect(() => {
@@ -67,6 +70,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
       };
       void trackEvent(event);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventObject]);
 
   return null;

@@ -1,5 +1,6 @@
-import { range } from "lodash";
+import _ from "lodash";
 import type { FC } from "react";
+import { useCallback } from "react";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
@@ -18,31 +19,38 @@ export const CustomPagination: FC<OnboardingPaginationProps> = ({
   currentIndex,
   slidesNumber,
   scrollToIndex,
-}) => (
-  <View style={styles.rowView}>
-    {range(slidesNumber).map((value) => (
-      <TouchableWithoutFeedback
-        key={value}
-        onPress={() => {
-          scrollToIndex(value);
-        }}
-        accessibilityLabel={`${Labels.onboarding.screenNumber}${value + 1}`}
-      >
-        <View
-          style={[
-            styles.defaultPaginationStyle,
-            value === currentIndex
-              ? styles.selectedIndex
-              : styles.notSelectedIndex,
-          ]}
-        />
-        {value === currentIndex && (
-          <CommonText style={styles.textStyle}>{value + 1}</CommonText>
-        )}
-      </TouchableWithoutFeedback>
-    ))}
-  </View>
-);
+}) => {
+  const onPaginationPressed = useCallback(
+    (index: number) => () => {
+      scrollToIndex(index);
+    },
+    [scrollToIndex]
+  );
+
+  return (
+    <View style={styles.rowView}>
+      {_.range(slidesNumber).map((value) => (
+        <TouchableWithoutFeedback
+          key={value}
+          onPress={onPaginationPressed(value)}
+          accessibilityLabel={`${Labels.onboarding.screenNumber}${value + 1}`}
+        >
+          <View
+            style={[
+              styles.defaultPaginationStyle,
+              value === currentIndex
+                ? styles.selectedIndex
+                : styles.notSelectedIndex,
+            ]}
+          />
+          {value === currentIndex && (
+            <CommonText style={styles.textStyle}>{value + 1}</CommonText>
+          )}
+        </TouchableWithoutFeedback>
+      ))}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   defaultPaginationStyle: {

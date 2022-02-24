@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
 import type SwiperFlatListRefProps from "react-native-swiper-flatlist";
 
@@ -30,6 +30,31 @@ const EpdsSurveyFooter: React.FC<Props> = ({
   setShowResult,
 }) => {
   const [trackerAction, setTrackerAction] = useState("");
+
+  const onBackButtonPressed = useCallback(() => {
+    swiperRef.current?.scrollToIndex({
+      index: swiperCurrentIndex - 1,
+    });
+  }, [swiperCurrentIndex, swiperRef]);
+
+  const onNextButtonPressed = useCallback(() => {
+    swiperRef.current?.scrollToIndex({
+      index: swiperCurrentIndex + 1,
+    });
+    setTrackerAction(
+      `${TrackerUtils.TrackingEvent.EPDS} - question n°${
+        swiperCurrentIndex + 1
+      } répondue`
+    );
+  }, [swiperCurrentIndex, swiperRef]);
+
+  const onFinishButtonPressed = useCallback(() => {
+    setShowResult(true);
+    setTrackerAction(
+      `${TrackerUtils.TrackingEvent.EPDS} - questionnaire terminé`
+    );
+  }, [setShowResult]);
+
   return (
     <View>
       <TrackerHandler actionName={trackerAction} />
@@ -47,11 +72,7 @@ const EpdsSurveyFooter: React.FC<Props> = ({
                   color={Colors.primaryBlue}
                 />
               }
-              action={() => {
-                swiperRef.current?.scrollToIndex({
-                  index: swiperCurrentIndex - 1,
-                });
-              }}
+              action={onBackButtonPressed}
             />
           )}
         </View>
@@ -62,12 +83,7 @@ const EpdsSurveyFooter: React.FC<Props> = ({
                 title={Labels.buttons.finish}
                 rounded={true}
                 disabled={false}
-                action={() => {
-                  setShowResult(true);
-                  setTrackerAction(
-                    `${TrackerUtils.TrackingEvent.EPDS} - questionnaire terminé`
-                  );
-                }}
+                action={onFinishButtonPressed}
               />
             </View>
           ) : (
@@ -83,16 +99,7 @@ const EpdsSurveyFooter: React.FC<Props> = ({
                     color={Colors.primaryBlue}
                   />
                 }
-                action={() => {
-                  swiperRef.current?.scrollToIndex({
-                    index: swiperCurrentIndex + 1,
-                  });
-                  setTrackerAction(
-                    `${TrackerUtils.TrackingEvent.EPDS} - question n°${
-                      swiperCurrentIndex + 1
-                    } répondue`
-                  );
-                }}
+                action={onNextButtonPressed}
               />
             )
           )}

@@ -52,6 +52,7 @@ const TextHtml: FC<Props> = ({ html, offsetTotal }) => {
 
   React.useEffect(() => {
     if (html) fixVideoContent(html);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [htmlContent]);
 
   return isReady ? (

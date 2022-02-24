@@ -1,5 +1,6 @@
 import Constants from "expo-constants";
 import * as React from "react";
+import { useCallback, useMemo } from "react";
 import { Dimensions, Linking, Modal, StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
 import GestureRecognizer from "react-native-swipe-gestures";
@@ -34,137 +35,149 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
   const [showConditionsOfUse, setShowConditionsOfUse] = React.useState(false);
   const [showAccessibility, setShowAccessibility] = React.useState(false);
 
-  const menuItems: MenuItem[] = [
-    {
-      icon: IcomoonIcons.modifier,
-      onPress: () => {
-        void Linking.openURL(reviewTypeForm);
+  const menuItems: MenuItem[] = useMemo(() => {
+    return [
+      {
+        icon: IcomoonIcons.modifier,
+        onPress: () => {
+          void Linking.openURL(reviewTypeForm);
+        },
+        title: Labels.menu.addReview,
       },
-      title: Labels.menu.addReview,
-    },
-    {
-      icon: IcomoonIcons.profil,
-      onPress: () => {
-        void RootNavigation.navigate("profile", null);
+      {
+        icon: IcomoonIcons.profil,
+        onPress: () => {
+          void RootNavigation.navigate("profile", null);
+        },
+        title: Labels.menu.myProfil,
       },
-      title: Labels.menu.myProfil,
-    },
-    {
-      icon: IcomoonIcons.stepParentheque,
-      onPress: () => {
-        void RootNavigation.navigate("parentheque", undefined);
+      {
+        icon: IcomoonIcons.stepParentheque,
+        onPress: () => {
+          void RootNavigation.navigate("parentheque", undefined);
+        },
+        title: Labels.timeline.library.nom,
       },
-      title: Labels.timeline.library.nom,
-    },
-    {
-      icon: IcomoonIcons.email,
-      onPress: () => {
-        void Linking.openURL(`mailto:${emailContact}`);
+      {
+        icon: IcomoonIcons.email,
+        onPress: () => {
+          void Linking.openURL(`mailto:${emailContact}`);
+        },
+        title: Labels.menu.contactUs,
       },
-      title: Labels.menu.contactUs,
-    },
-    {
-      icon: IcomoonIcons.mentionsLegales,
-      onPress: () => {
-        setShowLegalNotice(true);
+      {
+        icon: IcomoonIcons.mentionsLegales,
+        onPress: () => {
+          setShowLegalNotice(true);
+        },
+        title: Labels.menu.legalNotice,
       },
-      title: Labels.menu.legalNotice,
-    },
-    {
-      icon: IcomoonIcons.politiquesConfidentialite,
-      onPress: () => {
-        setShowConditionsOfUse(true);
+      {
+        icon: IcomoonIcons.politiquesConfidentialite,
+        onPress: () => {
+          setShowConditionsOfUse(true);
+        },
+        title: Labels.menu.conditionsOfUse,
       },
-      title: Labels.menu.conditionsOfUse,
-    },
-    {
-      icon: IcomoonIcons.mentionsLegales,
-      onPress: () => {
-        setShowAccessibility(true);
+      {
+        icon: IcomoonIcons.mentionsLegales,
+        onPress: () => {
+          setShowAccessibility(true);
+        },
+        title: Labels.menu.accessibility,
       },
-      title: Labels.menu.accessibility,
-    },
-  ];
+    ];
+  }, []);
 
-  const renderContent = () => (
-    <GestureRecognizer
-      style={{ flex: 1 }}
-      onSwipeUp={() => {
-        setShowMenu(true);
-      }}
-      onSwipeDown={() => {
-        setShowMenu(false);
-      }}
-    >
-      <Modal animationType="slide" transparent={true} visible={showMenu}>
-        <View style={styles.modalView}>
-          <View
-            style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
-            accessibilityRole="button"
-            accessible
-            accessibilityLabel={Labels.accessibility.closeMenu}
-            onTouchEnd={() => {
-              setShowMenu(false);
-            }}
-          >
-            <View style={styles.swipeIndicator}></View>
-          </View>
-          <View>
-            <ListItem bottomDivider>
-              <ListItem.Content>
-                <ListItem.Title style={styles.title} accessibilityRole="header">
-                  {Labels.menu.title}
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-            {menuItems.map((menuItem, index) => (
-              <ListItem
-                key={index}
-                onPress={() => {
-                  setShowMenu(false);
-                  // Sur iOS, sans le "setTimeout" la modal n'apparaît pas, il faut attendre la fermeture du menu.
-                  setTimeout(
-                    menuItem.onPress,
-                    PlatformConstants.PLATFORM_IS_IOS ? 200 : 0
-                  );
-                }}
-                accessibilityRole="button"
-                accessibilityLabel={menuItem.title}
-                bottomDivider
-              >
-                <View style={styles.menuItemIcon}>
-                  <Icomoon
-                    name={menuItem.icon}
-                    size={Sizes.xl}
-                    color={Colors.primaryBlueDark}
-                  />
-                </View>
+  const updateShowMenu = useCallback(
+    (showM: boolean) => () => {
+      setShowMenu(showM);
+    },
+    [setShowMenu]
+  );
+
+  const onListItemPressed = useCallback(
+    (menuItem: MenuItem) => () => {
+      setShowMenu(false);
+      // Sur iOS, sans le "setTimeout" la modal n'apparaît pas, il faut attendre la fermeture du menu.
+      setTimeout(menuItem.onPress, PlatformConstants.PLATFORM_IS_IOS ? 200 : 0);
+    },
+    [setShowMenu]
+  );
+
+  const renderContent = useCallback(
+    () => (
+      <GestureRecognizer
+        style={{ flex: 1 }}
+        onSwipeUp={updateShowMenu(true)}
+        onSwipeDown={updateShowMenu(false)}
+      >
+        <Modal animationType="slide" transparent={true} visible={showMenu}>
+          <View style={styles.modalView}>
+            <View
+              style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
+              accessibilityRole="button"
+              accessible
+              accessibilityLabel={Labels.accessibility.closeMenu}
+              onTouchEnd={updateShowMenu(false)}
+            >
+              <View style={styles.swipeIndicator} />
+            </View>
+            <View>
+              <ListItem bottomDivider>
                 <ListItem.Content>
                   <ListItem.Title
-                    style={styles.menuItemTitle}
-                    allowFontScaling={false}
+                    style={styles.title}
+                    accessibilityRole="header"
                   >
-                    {menuItem.title}
+                    {Labels.menu.title}
                   </ListItem.Title>
                 </ListItem.Content>
               </ListItem>
-            ))}
-            {/* App Version */}
-            <ListItem>
-              <ListItem.Content>
-                <ListItem.Title
-                  style={styles.version}
-                  accessibilityLabel={`${Labels.accessibility.version}${Constants.manifest.version}`}
+              {menuItems.map((menuItem, index) => (
+                <ListItem
+                  key={index}
+                  onPress={onListItemPressed(menuItem)}
+                  accessibilityRole="button"
+                  accessibilityLabel={menuItem.title}
+                  bottomDivider
                 >
-                  {`${Labels.version}${Constants.manifest.version}`}
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
+                  <View style={styles.menuItemIcon}>
+                    <Icomoon
+                      name={menuItem.icon}
+                      size={Sizes.xl}
+                      color={Colors.primaryBlueDark}
+                    />
+                  </View>
+                  <ListItem.Content>
+                    <ListItem.Title
+                      style={styles.menuItemTitle}
+                      allowFontScaling={false}
+                    >
+                      {menuItem.title}
+                    </ListItem.Title>
+                  </ListItem.Content>
+                </ListItem>
+              ))}
+              {/* App Version */}
+              <ListItem>
+                <ListItem.Content>
+                  <ListItem.Title
+                    style={styles.version}
+                    accessibilityLabel={`${Labels.accessibility.version}${Constants.manifest.version}`}
+                  >
+                    {`${Labels.version}${Constants.manifest.version}`}
+                  </ListItem.Title>
+                </ListItem.Content>
+              </ListItem>
+            </View>
           </View>
-        </View>
-      </Modal>
-    </GestureRecognizer>
+        </Modal>
+      </GestureRecognizer>
+    ),
+    [menuItems, onListItemPressed, showMenu, updateShowMenu]
   );
+
   const sheetRef = React.useRef<BottomSheet>(null);
 
   const height = Dimensions.get("window").height;
@@ -178,9 +191,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       snapPoints={snapPoints}
       borderRadius={Sizes.xl}
       renderContent={renderContent}
-      onCloseEnd={() => {
-        setShowMenu(false);
-      }}
+      onCloseEnd={updateShowMenu(false)}
       enabledContentTapInteraction={false}
     />
   ) : showLegalNotice ? (

@@ -2,7 +2,7 @@ import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import _ from "lodash";
 import type { FC } from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
@@ -34,13 +34,18 @@ const Parentheque: FC<Props> = ({ navigation, route }) => {
     if (!documentsFromParam) {
       setTriggerGetDocuments(!triggerGetDocuments);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleResults = (data: unknown) => {
+  const onBackButtonPressed = useCallback(() => {
+    navigation.goBack();
+  }, [navigation]);
+
+  const handleResults = useCallback((data: unknown) => {
     const results = (data as { parenthequeDocuments: Document[] })
       .parenthequeDocuments;
     setDocuments(results);
-  };
+  }, []);
 
   return (
     <ScrollView style={styles.scrollView}>
@@ -49,11 +54,7 @@ const Parentheque: FC<Props> = ({ navigation, route }) => {
       />
       <View style={styles.topContainer}>
         <View style={[styles.flexStart]}>
-          <BackButton
-            action={() => {
-              navigation.goBack();
-            }}
-          />
+          <BackButton action={onBackButtonPressed} />
         </View>
         <TitleH1
           title={Labels.timeline.library.nom}

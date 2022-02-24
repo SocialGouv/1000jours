@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useCallback } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import { Labels } from "../../../constants";
@@ -34,6 +35,19 @@ const EpdsResultSimpleParagraph: React.FC<EpdsResultSimpleParagraphProps> = ({
     }, TIMEOUT_FOCUS);
   }
 
+  const onPdfUrlButtonPressed = useCallback(
+    (pdfUrl: string) => async () => LinkingUtils.openWebsite(pdfUrl),
+    []
+  );
+
+  const onContactButtonPressed = useCallback(
+    async () =>
+      LinkingUtils.sendEmail(
+        Labels.epdsSurvey.mailContact,
+        Labels.epdsSurvey.mailSubject
+      ),
+    []
+  );
   return (
     <View style={styles.itemBorder}>
       {paragraph.title && (
@@ -52,7 +66,7 @@ const EpdsResultSimpleParagraph: React.FC<EpdsResultSimpleParagraphProps> = ({
       )}
       {paragraph.pdfUrl && (
         <TouchableOpacity
-          onPress={async () => LinkingUtils.openWebsite(paragraph.pdfUrl)}
+          onPress={onPdfUrlButtonPressed(paragraph.pdfUrl)}
           accessibilityRole="link"
         >
           <SecondaryText style={[styles.pdfUrl, styles.underline]}>
@@ -67,12 +81,7 @@ const EpdsResultSimpleParagraph: React.FC<EpdsResultSimpleParagraphProps> = ({
             titleStyle={styles.fontButton}
             rounded={true}
             disabled={false}
-            action={async () =>
-              LinkingUtils.sendEmail(
-                Labels.epdsSurvey.mailContact,
-                Labels.epdsSurvey.mailSubject
-              )
-            }
+            action={onContactButtonPressed}
           />
         </View>
       )}

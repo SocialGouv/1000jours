@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import type { LatLng } from "react-native-maps";
 import { HelperText } from "react-native-paper";
@@ -50,51 +50,68 @@ const AroundMeScreenHeader: React.FC<Props> = ({
 
   const geolocationIcon = require("../../assets/images/carto/geolocation.png");
 
+  const checkLocation = useCallback(
+    (showAllowGeolocSB: boolean) => () => {
+      setShowAllowGeolocSnackBar(showAllowGeolocSB);
+      setSearchIsByPostalCode(false);
+      setIsLoading(true);
+      setTriggerCheckLocation(!triggerCheckLocation);
+    },
+    [setIsLoading, triggerCheckLocation]
+  );
+
   useEffect(() => {
     checkLocation(false);
-  }, []);
+  }, [checkLocation]);
 
-  const checkLocation = (showAllowGeolocSB: boolean) => {
-    setShowAllowGeolocSnackBar(showAllowGeolocSB);
-    setSearchIsByPostalCode(false);
-    setIsLoading(true);
-    setTriggerCheckLocation(!triggerCheckLocation);
-  };
-
-  const onPostalCodeChanged = (newPostalCode: string) => {
+  const onPostalCodeChanged = useCallback((newPostalCode: string) => {
     setPostalCodeInput(newPostalCode);
     setPostalCodeInvalid(false);
-  };
+  }, []);
 
-  const onSearchByPostalCodeButtonClick = () => {
+  const searchByPostalCode = useCallback(() => {
+    setSearchIsByPostalCode(true);
+    setIsLoading(true);
+    setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
+  }, [setIsLoading, triggerSearchByPostalCode]);
+
+  const onSearchByPostalCodeButtonClick = useCallback(() => {
     setIsLoading(true);
     KeyboardUtils.dismissKeyboard();
     hideSnackBar();
     searchByPostalCode();
-  };
+  }, [hideSnackBar, searchByPostalCode, setIsLoading]);
 
-  const searchByPostalCode = () => {
-    setSearchIsByPostalCode(true);
-    setIsLoading(true);
-    setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
-  };
-
-  const onPostalCodeInvalid = () => {
+  const onPostalCodeInvalid = useCallback(() => {
     setPostalCodeInvalid(true);
     setIsLoading(false);
-  };
+  }, [setIsLoading]);
 
-  const handleGetCoordinates = (newCoordinates: LatLng | undefined) => {
+  const handleGetCoordinates = useCallback(
+    (newCoordinates: LatLng | undefined) => {
+      setIsLoading(false);
+      if (newCoordinates) {
+        setCoordinatesAndUserLocation(newCoordinates, !searchIsByPostalCode);
+      } else
+        showSnackBarWithMessage(
+          searchIsByPostalCode
+            ? Labels.aroundMe.postalCodeNotFound
+            : Labels.aroundMe.geolocationRetrievingError
+        );
+    },
+    [
+      searchIsByPostalCode,
+      setCoordinatesAndUserLocation,
+      setIsLoading,
+      showSnackBarWithMessage,
+    ]
+  );
+
+  const allowGeolocationMessage = useCallback(() => {
     setIsLoading(false);
-    if (newCoordinates) {
-      setCoordinatesAndUserLocation(newCoordinates, !searchIsByPostalCode);
-    } else
-      showSnackBarWithMessage(
-        searchIsByPostalCode
-          ? Labels.aroundMe.postalCodeNotFound
-          : Labels.aroundMe.geolocationRetrievingError
-      );
-  };
+    if (showAllowGeolocSnackBar)
+      showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
+  }, [setIsLoading, showAllowGeolocSnackBar, showSnackBarWithMessage]);
 
   return (
     <View>
@@ -104,11 +121,7 @@ const AroundMeScreenHeader: React.FC<Props> = ({
         postalCodeInput={postalCodeInput}
         postalCodeIsInvalid={onPostalCodeInvalid}
         setCoordinates={handleGetCoordinates}
-        allowGeolocationMessage={() => {
-          setIsLoading(false);
-          if (showAllowGeolocSnackBar)
-            showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
-        }}
+        allowGeolocationMessage={allowGeolocationMessage}
       />
       <View style={styles.postalCodeRow}>
         <TextInput
@@ -134,11 +147,7 @@ const AroundMeScreenHeader: React.FC<Props> = ({
           action={onSearchByPostalCodeButtonClick}
         />
         <View style={styles.geolicationIconView}>
-          <TouchableOpacity
-            onPress={() => {
-              checkLocation(true);
-            }}
-          >
+          <TouchableOpacity onPress={checkLocation(true)}>
             <Image
               source={geolocationIcon}
               style={styles.geolicationIconStyle}

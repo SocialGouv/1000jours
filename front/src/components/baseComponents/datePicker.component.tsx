@@ -3,7 +3,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { addYears, format, subYears } from "date-fns";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Modal, StyleSheet, View } from "react-native";
 
 import { Formats, Labels, Locales } from "../../constants";
@@ -31,30 +31,43 @@ const Datepicker: React.FC<Props> = ({ date, onChange, color }) => {
   const [validatedDate, setValidatedDate] = useState(date);
   const [buttonLabel, setButtonLabel] = useState(buildButtonTitle(date));
 
-  const validate = (newDate: Date | undefined) => {
-    setModalVisible(false);
-    setValidatedDate(newDate);
-    if (newDate !== undefined) onChange(newDate);
-  };
-
-  const dateTimePickerChange = (newDate: Date | undefined) => {
-    if (PLATFORM_IS_IOS) {
-      setSelectedDate(newDate);
-      // Valide la date automatiquement pour les device >= iOS 14 (UX/UI très différente)
-      if (MAJOR_VERSION_IOS >= 14) validate(newDate);
-    } else {
+  const validate = useCallback(
+    (newDate: Date | undefined) => () => {
       setModalVisible(false);
-      if (newDate !== undefined) {
+      setValidatedDate(newDate);
+      if (newDate !== undefined) onChange(newDate);
+    },
+    [onChange]
+  );
+
+  const dateTimePickerChange = useCallback(
+    (newDate: Date | undefined) => {
+      if (PLATFORM_IS_IOS) {
         setSelectedDate(newDate);
-        setValidatedDate(newDate);
-        onChange(newDate);
+        // Valide la date automatiquement pour les device >= iOS 14 (UX/UI très différente)
+        if (MAJOR_VERSION_IOS >= 14) validate(newDate);
+      } else {
+        setModalVisible(false);
+        if (newDate !== undefined) {
+          setSelectedDate(newDate);
+          setValidatedDate(newDate);
+          onChange(newDate);
+        }
       }
-    }
-  };
+    },
+    [onChange, validate]
+  );
 
   useEffect(() => {
     setButtonLabel(buildButtonTitle(validatedDate));
   }, [validatedDate]);
+
+  const onDateTimePickerChanged = useCallback(
+    (event: Event, newDate?: Date) => {
+      dateTimePickerChange(newDate);
+    },
+    [dateTimePickerChange]
+  );
 
   const minDate = subYears(new Date(), 100);
   const maxDate = addYears(new Date(), 100);
@@ -68,21 +81,25 @@ const Datepicker: React.FC<Props> = ({ date, onChange, color }) => {
       minimumDate={minDate}
       maximumDate={maxDate}
       textColor={Colors.primaryBlue}
-      onChange={(event: Event, newDate?: Date) => {
-        dateTimePickerChange(newDate);
-      }}
+      onChange={onDateTimePickerChanged}
       style={styles.dateTimePicker}
     />
   );
+
+  const onShowModal = useCallback(() => {
+    setSelectedDate(validatedDate ?? new Date());
+    setModalVisible(true);
+  }, [validatedDate]);
+
+  const onCloseModal = useCallback(() => {
+    setModalVisible(false);
+  }, []);
 
   return (
     <View style={styles.centeredView}>
       <CustomButton
         rounded={false}
-        action={() => {
-          setSelectedDate(validatedDate ?? new Date());
-          setModalVisible(true);
-        }}
+        action={onShowModal}
         title={buttonLabel}
         icon={
           <Icomoon
@@ -105,9 +122,7 @@ const Datepicker: React.FC<Props> = ({ date, onChange, color }) => {
             animationType="slide"
             transparent={true}
             visible={modalVisible}
-            onRequestClose={() => {
-              setModalVisible(false);
-            }}
+            onRequestClose={onCloseModal}
           >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
@@ -120,9 +135,7 @@ const Datepicker: React.FC<Props> = ({ date, onChange, color }) => {
                       title={Labels.buttons.cancel}
                       rounded={false}
                       disabled={false}
-                      action={() => {
-                        setModalVisible(false);
-                      }}
+                      action={onCloseModal}
                     />
                   </View>
                   <View style={styles.buttonContainer}>
@@ -130,9 +143,7 @@ const Datepicker: React.FC<Props> = ({ date, onChange, color }) => {
                       title={Labels.buttons.validate}
                       rounded={false}
                       disabled={false}
-                      action={() => {
-                        validate(selectedDate);
-                      }}
+                      action={validate(selectedDate)}
                     />
                   </View>
                 </View>

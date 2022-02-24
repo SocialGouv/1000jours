@@ -101,9 +101,7 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
           titleStyle={styles.fontButton}
           rounded={true}
           disabled={false}
-          action={() => {
-            onBoardingIsDone();
-          }}
+          action={onBoardingIsDone}
         />
       </View>
     </ScrollView>

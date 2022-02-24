@@ -1,3 +1,4 @@
+import type { RefObject } from "react";
 import type { Text } from "react-native";
 import { AccessibilityInfo, findNodeHandle } from "react-native";
 
@@ -6,7 +7,7 @@ export const screenReaderIsEnabled = async (): Promise<boolean> => {
 };
 
 export const setAccessibilityFocusOnText = (
-  elementRef: React.RefObject<Text>
+  elementRef: RefObject<Text>
 ): void => {
   if (!elementRef.current) return;
   const reactTag = findNodeHandle(elementRef.current);

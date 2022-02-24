@@ -1,6 +1,6 @@
 import { LocaleConfig } from "react-native-calendars";
 
-export const initLocales = () => {
+export const initLocales = (): void => {
   LocaleConfig.locales.fr = {
     dayNames: [
       "Dimanche",

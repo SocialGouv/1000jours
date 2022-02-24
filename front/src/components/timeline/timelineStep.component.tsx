@@ -38,24 +38,51 @@ const TimelineStep: FC<TimelineStepProps> = ({
 }) => {
   const stepIcons: IconNode[] = [
     <StepIcon
+      key={0}
       name={IcomoonIcons.stepParentheque}
       active={active ?? false}
       isParentheque
     />,
-    <StepIcon name={IcomoonIcons.stepProjetParent} active={active ?? false} />,
-    <StepIcon name={IcomoonIcons.stepConception} active={active ?? false} />,
     <StepIcon
+      key={1}
+      name={IcomoonIcons.stepProjetParent}
+      active={active ?? false}
+    />,
+    <StepIcon
+      key={2}
+      name={IcomoonIcons.stepConception}
+      active={active ?? false}
+    />,
+    <StepIcon
+      key={3}
       name={IcomoonIcons.stepDebutDeGrossesse}
       active={active ?? false}
     />,
     <StepIcon
+      key={4}
       name={IcomoonIcons.stepFinDeGrossesse}
       active={active ?? false}
     />,
-    <StepIcon name={IcomoonIcons.stepAccouchement} active={active ?? false} />,
-    <StepIcon name={IcomoonIcons.step4PremiersMois} active={active ?? false} />,
-    <StepIcon name={IcomoonIcons.step4MoisA1An} active={active ?? false} />,
-    <StepIcon name={IcomoonIcons.step1A2Ans} active={active ?? false} />,
+    <StepIcon
+      key={5}
+      name={IcomoonIcons.stepAccouchement}
+      active={active ?? false}
+    />,
+    <StepIcon
+      key={6}
+      name={IcomoonIcons.step4PremiersMois}
+      active={active ?? false}
+    />,
+    <StepIcon
+      key={7}
+      name={IcomoonIcons.step4MoisA1An}
+      active={active ?? false}
+    />,
+    <StepIcon
+      key={8}
+      name={IcomoonIcons.step1A2Ans}
+      active={active ?? false}
+    />,
   ];
 
   const getStepStyles = (index: number, isLast: boolean) => {
@@ -167,9 +194,6 @@ const styles = StyleSheet.create({
   stepFirst: {
     marginBottom: Margins.step,
   },
-  stepIconButtonParentheque: {
-    borderColor: Colors.primaryBlue,
-  },
   stepIconButton: {
     backgroundColor: "white",
     borderColor: Colors.primaryYellow,
@@ -177,6 +201,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: Sizes.step,
     width: Sizes.step,
+  },
+  stepIconButtonParentheque: {
+    borderColor: Colors.primaryBlue,
   },
   stepIconContainer: {
     backgroundColor: "white",
