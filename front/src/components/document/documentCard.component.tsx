@@ -29,9 +29,9 @@ const DocumentCard: FC<Props> = ({ document }) => {
     setTrackerAction(
       `${TrackerUtils.TrackingEvent.PARENTHEQUE} - Téléchargement du doc "${document.nom}"`
     );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    void LinkingUtils.openWebsite(document.fichier.url);
-  }, [document.fichier.url, document.nom]);
+    if (document.fichier)
+      void LinkingUtils.openWebsite(document.fichier.url, true);
+  }, [document.fichier, document.nom]);
 
   return (
     <ListItem

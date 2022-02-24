@@ -193,6 +193,9 @@ export type Document = {
   url: string;
   thematique: Thematique;
   etapes?: Step[];
+  fichier?: {
+    url: string;
+  };
 };
 
 export type TableData = {
