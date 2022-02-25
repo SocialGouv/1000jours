@@ -43,8 +43,7 @@ import type {
   Step,
   TabHomeParamList,
 } from "../../types";
-import { TrackerUtils } from "../../utils";
-import { getObjectValue, storeObjectValue } from "../../utils/storage.util";
+import { StorageUtils, TrackerUtils } from "../../utils";
 
 interface Props {
   route?: RouteProp<{ params: { id: number; step?: Step } }, "params">;
@@ -114,10 +113,15 @@ const ArticleDetail: FC<Props> = ({
     if (articleId && !articleHasBeenRead.current) {
       articleHasBeenRead.current = true;
       const articlesRead: number[] =
-        (await getObjectValue(StorageKeysConstants.articlesRead)) ?? [];
+        (await StorageUtils.getObjectValue(
+          StorageKeysConstants.articlesRead
+        )) ?? [];
       if (!articlesRead.includes(articleId)) {
         articlesRead.push(articleId);
-        void storeObjectValue(StorageKeysConstants.articlesRead, articlesRead);
+        void StorageUtils.storeObjectValue(
+          StorageKeysConstants.articlesRead,
+          articlesRead
+        );
       }
     }
   }, [articleId]);
