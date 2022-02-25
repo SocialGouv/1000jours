@@ -136,6 +136,13 @@ const ArticleDetail: FC<Props> = ({
     [MIN_RATIO_FOR_HAS_BEEN_READ, setArticleHasBeenRead]
   );
 
+  const checkScrollContentHeight = () => {
+    // Considère que l'article est lu lorsqu'il est affiché entièrement à l'écran (sans avoir besoin de scroller)
+    if (scrollContentHeight.current <= scrollViewHeight.current) {
+      void setArticleHasBeenRead();
+    }
+  };
+
   const onContentSizeChange = useCallback((width: number, height: number) => {
     scrollContentHeight.current = height;
   }, []);
@@ -150,13 +157,6 @@ const ArticleDetail: FC<Props> = ({
     },
     [hasBeenRead]
   );
-
-  const checkScrollContentHeight = () => {
-    // Considère que l'article est lu lorsqu'il est affiché entièrement à l'écran (sans avoir besoin de scroller)
-    if (scrollContentHeight.current <= scrollViewHeight.current) {
-      void setArticleHasBeenRead();
-    }
-  };
 
   useEffect(() => {
     // Attend que le contenu de la scrollView soit chargé (notamment les images de l'article)
