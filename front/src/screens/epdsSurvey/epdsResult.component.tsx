@@ -5,9 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
-import IconeResultatBien from "../../assets/images/icone_resultats_bien.svg";
-import IconeResultatMoyen from "../../assets/images/icone_resultats_moyen.svg";
-import IconeResultatPasBien from "../../assets/images/icone_resultats_pasbien.svg";
+import { EpdsAssets } from "../../components/assets";
 import {
   CommonText,
   CustomButton,
@@ -95,14 +93,17 @@ const EpdsResult: FC<Props> = ({
       EpdsConstants.ResultIconValueEnum,
       React.ReactNode
     >();
-    iconsMap.set(EpdsConstants.ResultIconValueEnum.bien, <IconeResultatBien />);
+    iconsMap.set(
+      EpdsConstants.ResultIconValueEnum.bien,
+      <EpdsAssets.IconeResultatBien />
+    );
     iconsMap.set(
       EpdsConstants.ResultIconValueEnum.moyen,
-      <IconeResultatMoyen />
+      <EpdsAssets.IconeResultatMoyen />
     );
     iconsMap.set(
       EpdsConstants.ResultIconValueEnum.pasBien,
-      <IconeResultatPasBien />
+      <EpdsAssets.IconeResultatPasBien />
     );
     return iconsMap.get(icone);
   };

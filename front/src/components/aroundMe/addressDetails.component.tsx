@@ -4,19 +4,6 @@ import { useCallback, useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { TouchableOpacity as TouchableOpacityAndroid } from "react-native-gesture-handler";
 
-import CategorieProSanteIcon from "../../assets/images/carto/categorie_pro_sante.svg";
-import DetailsAddressIcon from "../../assets/images/carto/details_adresse.svg";
-import DetailsMailIcon from "../../assets/images/carto/details_mail.svg";
-import DetailsPhoneIcon from "../../assets/images/carto/details_tel.svg";
-import DetailsWebIcon from "../../assets/images/carto/details_web.svg";
-import TypeBibliothequeMediatheque from "../../assets/images/carto/type_bibliotheque_mediatheque.svg";
-import TypeDefaut from "../../assets/images/carto/type_defaut.svg";
-import TypeMairieIcon from "../../assets/images/carto/type_mairie.svg";
-import TypeMaisonNaissanceIcon from "../../assets/images/carto/type_maison_naissance.svg";
-import TypeMaterniteIcon from "../../assets/images/carto/type_maternite.svg";
-import TypePlanningFamilialIcon from "../../assets/images/carto/type_planning_familial.svg";
-import TypePmiCafCpamIcon from "../../assets/images/carto/type_pmi_caf_cpam.svg";
-import TypeSaadIcon from "../../assets/images/carto/type_saad.svg";
 import { AroundMeConstants, Labels } from "../../constants";
 import {
   PLATFORM_IS_IOS,
@@ -24,6 +11,7 @@ import {
 } from "../../constants/platform.constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import { LinkingUtils, StringUtils, TrackerUtils } from "../../utils";
+import { AddressDetailsAssets } from "../assets";
 import {
   CommonText,
   CustomButton,
@@ -59,32 +47,50 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
     const poiTypeLabels = Labels.aroundMe.poiType;
     let iconType = null;
     if (categoriePoi === AroundMeConstants.PoiCategorieEnum.professionnel) {
-      iconType = <CategorieProSanteIcon />;
+      iconType = <AddressDetailsAssets.CategorieProSanteIcon />;
     } else {
       const iconsMap = new Map<string, React.ReactNode>();
       iconsMap.set(
         poiTypeLabels.planningFamilial,
-        <TypePlanningFamilialIcon />
+        <AddressDetailsAssets.TypePlanningFamilialIcon />
       );
       iconsMap.set(
         poiTypeLabels.maisonDeNaissance,
-        <TypeMaisonNaissanceIcon />
+        <AddressDetailsAssets.TypeMaisonNaissanceIcon />
       );
-      iconsMap.set(poiTypeLabels.maternite, <TypeMaterniteIcon />);
+      iconsMap.set(
+        poiTypeLabels.maternite,
+        <AddressDetailsAssets.TypeMaterniteIcon />
+      );
 
-      iconsMap.set(poiTypeLabels.saad, <TypeSaadIcon />);
-      iconsMap.set(poiTypeLabels.pmi, <TypePmiCafCpamIcon />);
-      iconsMap.set(poiTypeLabels.caf, <TypePmiCafCpamIcon />);
-      iconsMap.set(poiTypeLabels.cpam, <TypePmiCafCpamIcon />);
-      iconsMap.set(poiTypeLabels.mairie, <TypeMairieIcon />);
+      iconsMap.set(poiTypeLabels.saad, <AddressDetailsAssets.TypeSaadIcon />);
+      iconsMap.set(
+        poiTypeLabels.pmi,
+        <AddressDetailsAssets.TypePmiCafCpamIcon />
+      );
+      iconsMap.set(
+        poiTypeLabels.caf,
+        <AddressDetailsAssets.TypePmiCafCpamIcon />
+      );
+      iconsMap.set(
+        poiTypeLabels.cpam,
+        <AddressDetailsAssets.TypePmiCafCpamIcon />
+      );
+      iconsMap.set(
+        poiTypeLabels.mairie,
+        <AddressDetailsAssets.TypeMairieIcon />
+      );
       iconsMap.set(
         poiTypeLabels.bibliothequePublique,
-        <TypeBibliothequeMediatheque />
+        <AddressDetailsAssets.TypeBibliothequeMediatheque />
       );
-      iconsMap.set(poiTypeLabels.mediatheque, <TypeBibliothequeMediatheque />);
+      iconsMap.set(
+        poiTypeLabels.mediatheque,
+        <AddressDetailsAssets.TypeBibliothequeMediatheque />
+      );
 
       iconType = iconsMap.get(typePoi);
-      if (!iconType) iconType = <TypeDefaut />;
+      if (!iconType) iconType = <AddressDetailsAssets.TypeDefaut />;
     }
     return iconType;
   };
@@ -171,7 +177,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
         )}
         <CommonText style={styles.type}>{details.type}</CommonText>
         <View style={styles.rowView}>
-          <DetailsAddressIcon />
+          <AddressDetailsAssets.DetailsAddressIcon />
           <View style={styles.columnView}>
             <SecondaryText style={styles.text}>{details.adresse}</SecondaryText>
             <SecondaryText style={styles.text}>

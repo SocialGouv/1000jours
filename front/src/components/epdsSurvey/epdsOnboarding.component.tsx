@@ -1,12 +1,9 @@
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
-import IconeAccederResultats from "../../assets/images/epds/onboarding_acceder_resultats.svg";
-import IconeRepasserTest from "../../assets/images/epds/onboarding_repasser_test.svg";
-import IconeRepondreQuestions from "../../assets/images/epds/onboarding_repondre_questions.svg";
-import IconeTrouverAide from "../../assets/images/epds/onboarding_trouver_aide.svg";
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
+import { EpdsAssets } from "../assets";
 import {
   CommonText,
   CustomButton,
@@ -22,10 +19,10 @@ interface Props {
 const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
   const getIcon = (index: number) => {
     const iconsMap = new Map<number, React.ReactNode>();
-    iconsMap.set(0, <IconeRepondreQuestions />);
-    iconsMap.set(1, <IconeAccederResultats />);
-    iconsMap.set(2, <IconeTrouverAide />);
-    iconsMap.set(3, <IconeRepasserTest />);
+    iconsMap.set(0, <EpdsAssets.IconeRepondreQuestions />);
+    iconsMap.set(1, <EpdsAssets.IconeAccederResultats />);
+    iconsMap.set(2, <EpdsAssets.IconeTrouverAide />);
+    iconsMap.set(3, <EpdsAssets.IconeRepasserTest />);
 
     return iconsMap.get(index);
   };

@@ -13,18 +13,6 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import EmailSent from "../../../assets/images/epds/email_sent.svg";
-import EmailContact from "../../../assets/images/epds/email-contact.svg";
-import EmailContactSelected from "../../../assets/images/epds/email-contact-selected.svg";
-import Sms from "../../../assets/images/epds/sms.svg";
-import SmsSent from "../../../assets/images/epds/sms_sent.svg";
-import SmsSelected from "../../../assets/images/epds/sms-selected.svg";
-import SoleilMatin from "../../../assets/images/epds/soleil-matin.svg";
-import SoleilMatinSelected from "../../../assets/images/epds/soleil-matin-selected.svg";
-import SoleilMidi from "../../../assets/images/epds/soleil-midi.svg";
-import SoleilMidiSelected from "../../../assets/images/epds/soleil-midi-selected.svg";
-import SoleilSoir from "../../../assets/images/epds/soleil-soir.svg";
-import SoleilSoirSelected from "../../../assets/images/epds/soleil-soir-selected.svg";
 import {
   CloseButton,
   CustomButton,
@@ -38,6 +26,7 @@ import { GraphQLMutation } from "../../../services";
 import { Colors, Margins, Paddings, Sizes } from "../../../styles";
 import type { BeContactedData } from "../../../type";
 import { StringUtils } from "../../../utils";
+import { BeContactedAssets } from "../../assets";
 import BeContactedForm from "./beContactedForm.component";
 
 interface Props {
@@ -74,15 +63,15 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const defaultContactTypes: ContactType[] = useMemo(() => {
     return [
       {
-        icon: <Sms />,
-        iconSelected: <SmsSelected />,
+        icon: <BeContactedAssets.Sms />,
+        iconSelected: <BeContactedAssets.SmsSelected />,
         id: "sms",
         isChecked: false,
         text: Labels.epdsSurvey.beContacted.bySms,
       },
       {
-        icon: <EmailContact />,
-        iconSelected: <EmailContactSelected />,
+        icon: <BeContactedAssets.EmailContact />,
+        iconSelected: <BeContactedAssets.EmailContactSelected />,
         id: "email",
         isChecked: false,
         text: Labels.epdsSurvey.beContacted.byEmail,
@@ -96,24 +85,24 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
   const defaultContactHours: ContactType[] = [
     {
       hours: Labels.epdsSurvey.beContacted.hours.morningDetails,
-      icon: <SoleilMatin />,
-      iconSelected: <SoleilMatinSelected />,
+      icon: <BeContactedAssets.SoleilMatin />,
+      iconSelected: <BeContactedAssets.SoleilMatinSelected />,
       id: "matin",
       isChecked: false,
       text: Labels.epdsSurvey.beContacted.hours.morning,
     },
     {
       hours: Labels.epdsSurvey.beContacted.hours.noonDetails,
-      icon: <SoleilMidi />,
-      iconSelected: <SoleilMidiSelected />,
+      icon: <BeContactedAssets.SoleilMidi />,
+      iconSelected: <BeContactedAssets.SoleilMidiSelected />,
       id: "midi",
       isChecked: false,
       text: Labels.epdsSurvey.beContacted.hours.noon,
     },
     {
       hours: Labels.epdsSurvey.beContacted.hours.eveningDetails,
-      icon: <SoleilSoir />,
-      iconSelected: <SoleilSoirSelected />,
+      icon: <BeContactedAssets.SoleilSoir />,
+      iconSelected: <BeContactedAssets.SoleilSoirSelected />,
       id: "soir",
       isChecked: false,
       text: Labels.epdsSurvey.beContacted.hours.evening,
@@ -250,7 +239,11 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
           width: width,
         }}
       >
-        {isSmsSelected() ? <SmsSent /> : <EmailSent />}
+        {isSmsSelected() ? (
+          <BeContactedAssets.SmsSent />
+        ) : (
+          <BeContactedAssets.EmailSent />
+        )}
         {showLoader ? (
           <ActivityIndicator
             size="large"

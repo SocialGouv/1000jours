@@ -4,13 +4,13 @@ import * as React from "react";
 import type { StyleProp, ViewStyle } from "react-native";
 import { StyleSheet } from "react-native";
 
-import BulbIcon from "../../assets/images/carto/bulb.svg";
 import { Labels } from "../../constants";
 import { PLATFORM_IS_ANDROID } from "../../constants/platform.constants";
 import { Colors, Margins, Paddings, Sizes } from "../../styles";
 import { CustomButton, Icomoon, IcomoonIcons, View } from "../baseComponents";
 import AroundMeFilter from "./aroundMeFilter.component";
 import SubmitNewFilter from "./submitNewFilter.component";
+import { AroundMeAssets } from "../assets";
 
 interface Props {
   headerStyle: StyleProp<ViewStyle>;
@@ -93,7 +93,7 @@ const AroundMeMapHeader: FC<Props> = ({
           buttonStyle={styles.headerButton}
           title=""
           rounded={true}
-          icon={<BulbIcon />}
+          icon={<AroundMeAssets.BulbIcon />}
           action={onSubmitNewFilterButtonPressed}
         />
         <View style={styles.headerButtonsRightPartView}>
