@@ -33,24 +33,31 @@ const customFonts = { IcoMoon: IcomoonFont };
 const MainAppContainer: FC = () => {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
-  const [appCounter, setAppCounter] = useState(0);
+  const [appCounter, setAppCounter] = useState<number | null>(null);
 
   // Load Custom Fonts (Icomoon)
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   const updateAppActiveCounter = async () => {
-    const appActiveCounterStr = await StorageUtils.getStringValue(
-      StorageKeysConstants.appActiveCounter
-    );
-    const appActiveCounter = appActiveCounterStr
-      ? Number(appActiveCounterStr)
-      : 0;
-    const newAppActiveCounter = appActiveCounter + 1;
-    void StorageUtils.storeStringValue(
-      StorageKeysConstants.appActiveCounter,
-      newAppActiveCounter.toString()
-    );
-    setAppCounter(newAppActiveCounter);
+    if (await TrackerUtils.needToTrackOpeningApp()) {
+      const appActiveCounterStr = await StorageUtils.getStringValue(
+        StorageKeysConstants.appActiveCounter
+      );
+      const appActiveCounter = appActiveCounterStr
+        ? Number(appActiveCounterStr)
+        : 0;
+
+      const newAppActiveCounter = appActiveCounter + 1;
+      void StorageUtils.storeStringValue(
+        StorageKeysConstants.appActiveCounter,
+        newAppActiveCounter.toString()
+      );
+      setAppCounter(newAppActiveCounter);
+      void StorageUtils.storeObjectValue(
+        StorageKeysConstants.appOpeningLastDate,
+        new Date()
+      );
+    }
   };
 
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
@@ -103,7 +110,7 @@ const MainAppContainer: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!fontsLoaded || !isLoadingComplete) {
+  if (!fontsLoaded || !isLoadingComplete || appCounter === null) {
     return null;
   } else {
     const appContainer = (
