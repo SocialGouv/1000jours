@@ -5,7 +5,7 @@ import MatomoTracker from "matomo-tracker-react-native";
 import { StorageKeysConstants } from "../constants";
 import { getObjectValue } from "./storage.util";
 
-export const MIN_HOURS_DELAY_TO_TRACK_NEW_OPENING = 3;
+export const MIN_HOURS_DELAY_TO_TRACK_NEW_OPENING = 6;
 
 export const matomoInstance = new MatomoTracker({
   disabled: process.env.MATOMO_ENABLED === "false",
