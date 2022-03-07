@@ -1,4 +1,5 @@
 import * as AccessibilityUtils from "./accessibility.util";
+import * as AppUtils from "./app.util";
 import * as AroundMeUtils from "./aroundMe.util";
 import * as AssestUtils from "./asset.util";
 import * as EpdsSurveyUtils from "./epdsSurvey.util";
@@ -18,6 +19,7 @@ import { getVisuelFormat, VisuelFormat } from "./visuel.util";
 
 export {
   AccessibilityUtils,
+  AppUtils,
   AroundMeUtils,
   AssestUtils,
   EpdsSurveyUtils,
