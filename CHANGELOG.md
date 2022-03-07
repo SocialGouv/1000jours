@@ -1,3 +1,10 @@
+## [1.94.2](https://github.com/SocialGouv/1000jours/compare/v1.94.1...v1.94.2) (2022-03-07)
+
+
+### Reverts
+
+* Revert "Revert "feat: 🎸 Ajoute la notion d'événements importants (#1058)"" ([8b8f45d](https://github.com/SocialGouv/1000jours/commit/8b8f45d0dc336e0f5a0ba56b425011262a0ae37c)), closes [#1058](https://github.com/SocialGouv/1000jours/issues/1058)
+
 ## [1.94.1](https://github.com/SocialGouv/1000jours/compare/v1.94.0...v1.94.1) (2022-02-17)
 
 
