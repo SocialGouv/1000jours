@@ -3,7 +3,7 @@ import { add, isBefore } from "date-fns";
 import MatomoTracker from "matomo-tracker-react-native";
 
 import { StorageKeysConstants } from "../constants";
-import { getObjectValue } from "./storage.util";
+import { getStringValue } from "./storage.util";
 
 export const MIN_HOURS_DELAY_TO_TRACK_NEW_OPENING = 6;
 
@@ -45,13 +45,10 @@ export const dateWithMinHoursDelayIsBeforeNow = (date: Date): boolean => {
 };
 
 export const needToTrackOpeningApp = async (): Promise<boolean> => {
-  const openingLastDate = await getObjectValue(
+  const openingLastDate = await getStringValue(
     StorageKeysConstants.appOpeningLastDate
   );
-  const lastOpeningDateStored = openingLastDate
-    ? (openingLastDate as Date)
-    : new Date();
-  // retourne true uniquement {MIN_HOURS_DELAY_TO_TRACK_NEW_OPENING} heures
-  // après la dernière ouverture de l'app
-  return dateWithMinHoursDelayIsBeforeNow(lastOpeningDateStored);
+  return openingLastDate
+    ? dateWithMinHoursDelayIsBeforeNow(new Date(openingLastDate))
+    : true;
 };
