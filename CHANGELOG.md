@@ -1,3 +1,19 @@
+# [1.95.0](https://github.com/SocialGouv/1000jours/compare/v1.94.2...v1.95.0) (2022-03-07)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le tracker sur l'ouverture de l'app ([#1097](https://github.com/SocialGouv/1000jours/issues/1097)) ([c053cfb](https://github.com/SocialGouv/1000jours/commit/c053cfb1add1cc07a33b5edc1127d49194122757))
+* 🐛 Modifie la constante pour tracker l'ouverture de l'app ([#1094](https://github.com/SocialGouv/1000jours/issues/1094)) ([7531d2e](https://github.com/SocialGouv/1000jours/commit/7531d2e28b0fadd4d43fa801c0bab6f2d9d0f97a))
+* **strapi:** Supprime l'import de config au démarrage ([#1080](https://github.com/SocialGouv/1000jours/issues/1080)) ([d5809e5](https://github.com/SocialGouv/1000jours/commit/d5809e52f29be0d1526a63ae6bc950605b4e0318))
+* 🐛 Publie l'apk en Tests 'Internes' au lieu de 'Ouverts' ([#1064](https://github.com/SocialGouv/1000jours/issues/1064)) ([8916851](https://github.com/SocialGouv/1000jours/commit/89168511b09fc5757d32bd56068a90fd392d28f2))
+
+
+### Features
+
+* 🎸 Enregistre en local les articles lus ([#1072](https://github.com/SocialGouv/1000jours/issues/1072)) ([b0cb2a8](https://github.com/SocialGouv/1000jours/commit/b0cb2a84fac1b50121aebfa3f3ce9076938d48e9)), closes [#1070](https://github.com/SocialGouv/1000jours/issues/1070) [#1068](https://github.com/SocialGouv/1000jours/issues/1068) [#1070](https://github.com/SocialGouv/1000jours/issues/1070)
+* 🎸 Modification du tracker d'ouverture de l'app ([#1091](https://github.com/SocialGouv/1000jours/issues/1091)) ([a4201e0](https://github.com/SocialGouv/1000jours/commit/a4201e0e7fb4c09acf37f2e1259a6628bf6916b4)), closes [#1071](https://github.com/SocialGouv/1000jours/issues/1071)
+
 ## [1.94.2](https://github.com/SocialGouv/1000jours/compare/v1.94.1...v1.94.2) (2022-03-07)
 
 
