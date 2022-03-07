@@ -1,6 +1,6 @@
 import type { FC } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
 import {
@@ -11,11 +11,11 @@ import {
 import { View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
-  DatabaseQueries,
+  EpdsDbQueries,
   FetchPoliciesConstants,
   StorageKeysConstants,
 } from "../../constants";
-import { ApolloClient } from "../../services";
+import { GraphQLQuery } from "../../services";
 import type { EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, StorageUtils, TrackerUtils } from "../../utils";
 
@@ -36,23 +36,21 @@ const TabEpdsScreen: FC = () => {
     void getGenderFromStorage();
   }, []);
 
-  const handleResults = (data: unknown) => {
+  const handleResults = useCallback((data: unknown) => {
     setQuestionAndAnswers(EpdsSurveyUtils.getQuestionsAndAnswersFromData(data));
-  };
+  }, []);
 
-  const goToEpdsSurvey = () => {
+  const goToEpdsSurvey = useCallback(() => {
     setGenderIsEntered(true);
-  };
+  }, []);
+
+  const onBoardingIsDone = useCallback(() => {
+    setOnboardingIsDone(true);
+  }, []);
 
   const getViewToDisplay = () => {
     if (!onboardingIsDone)
-      return (
-        <EpdsOnboarding
-          onBoardingIsDone={() => {
-            setOnboardingIsDone(true);
-          }}
-        />
-      );
+      return <EpdsOnboarding onBoardingIsDone={onBoardingIsDone} />;
     else if (!genderIsEntered)
       return <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />;
     else return <EpdsSurveyContent epdsSurvey={questionAndAnswers} />;
@@ -61,10 +59,10 @@ const TabEpdsScreen: FC = () => {
   return (
     <View style={styles.mainContainer}>
       <TrackerHandler screenName={TrackerUtils.TrackingEvent.EPDS} />
-      <ApolloClient
-        query={DatabaseQueries.EPDS_SURVEY}
+      <GraphQLQuery
+        query={EpdsDbQueries.EPDS_SURVEY}
         fetchPolicy={FetchPoliciesConstants.NO_CACHE}
-        updateFetchedData={handleResults}
+        getFetchedData={handleResults}
       />
       {getViewToDisplay()}
     </View>

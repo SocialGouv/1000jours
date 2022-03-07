@@ -1,7 +1,8 @@
 import { Picker, PickerIOS } from "@react-native-community/picker";
-import { range } from "lodash";
+import type { ItemValue } from "@react-native-community/picker/typings/Picker";
+import _ from "lodash";
 import * as React from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { Labels } from "../../constants";
@@ -22,6 +23,14 @@ const CustomNumberOfChildrenPicker: React.FC<Props> = ({
     INITIAL_NUMBER_OF_CHILDREN
   );
 
+  const onPickherValueChanged = useCallback(
+    (itemValue: ItemValue) => {
+      setNumberOfChildren(Number(itemValue));
+      updateNumberOfChildren(Number(itemValue));
+    },
+    [updateNumberOfChildren]
+  );
+
   return (
     <View style={styles.rowView}>
       <CommonText style={styles.textStyle}>
@@ -31,12 +40,9 @@ const CustomNumberOfChildrenPicker: React.FC<Props> = ({
         <PickerIOS
           selectedValue={numberOfChildren}
           style={styles.pickerStyle}
-          onValueChange={(itemValue) => {
-            setNumberOfChildren(Number(itemValue));
-            updateNumberOfChildren(Number(itemValue));
-          }}
+          onValueChange={onPickherValueChanged}
         >
-          {range(INITIAL_NUMBER_OF_CHILDREN, MAX_NUMBER_OF_CHILDREN).map(
+          {_.range(INITIAL_NUMBER_OF_CHILDREN, MAX_NUMBER_OF_CHILDREN).map(
             (value) => (
               <PickerIOS.Item key={value} label={String(value)} value={value} />
             )
@@ -46,12 +52,9 @@ const CustomNumberOfChildrenPicker: React.FC<Props> = ({
         <Picker
           selectedValue={numberOfChildren}
           style={styles.pickerStyle}
-          onValueChange={(itemValue) => {
-            setNumberOfChildren(Number(itemValue));
-            updateNumberOfChildren(Number(itemValue));
-          }}
+          onValueChange={onPickherValueChanged}
         >
-          {range(INITIAL_NUMBER_OF_CHILDREN, MAX_NUMBER_OF_CHILDREN).map(
+          {_.range(INITIAL_NUMBER_OF_CHILDREN, MAX_NUMBER_OF_CHILDREN).map(
             (value) => (
               <Picker.Item key={value} label={String(value)} value={value} />
             )

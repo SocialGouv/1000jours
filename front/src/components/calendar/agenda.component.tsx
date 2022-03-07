@@ -1,6 +1,7 @@
 import { addDays, format } from "date-fns";
 import _ from "lodash";
 import type { FC } from "react";
+import { useCallback } from "react";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { Agenda as RNAgenda } from "react-native-calendars";
@@ -27,25 +28,35 @@ const Agenda: FC<Props> = ({ evenements, childBirthday }) => {
     .groupBy("date")
     .value();
 
+  const onRenderItem = useCallback(
+    (item) => (
+      <View style={styles.eventContainer}>
+        <CommonText style={styles.eventTitle}>{item.nom}</CommonText>
+        <CommonText style={styles.eventDescription}>
+          {item.description}
+        </CommonText>
+      </View>
+    ),
+    []
+  );
+
+  const onRenderEmptyData = useCallback(
+    () => (
+      <View style={styles.emptyDataContainer}>
+        <CommonText style={styles.emptyDataTitle}>
+          {Labels.calendar.noEventMessage}
+        </CommonText>
+      </View>
+    ),
+    []
+  );
+
   return (
     <RNAgenda
       items={formattedEvents}
       hideKnob={false}
-      renderItem={(item) => (
-        <View style={styles.eventContainer}>
-          <CommonText style={styles.eventTitle}>{item.nom}</CommonText>
-          <CommonText style={styles.eventDescription}>
-            {item.description}
-          </CommonText>
-        </View>
-      )}
-      renderEmptyData={() => (
-        <View style={styles.emptyDataContainer}>
-          <CommonText style={styles.emptyDataTitle}>
-            {Labels.calendar.noEventMessage}
-          </CommonText>
-        </View>
-      )}
+      renderItem={onRenderItem}
+      renderEmptyData={onRenderEmptyData}
       theme={{
         agendaDayNumColor: Colors.primaryBlue,
         agendaDayTextColor: Colors.primaryBlue,

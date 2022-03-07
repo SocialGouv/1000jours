@@ -5,10 +5,8 @@ import * as React from "react";
 import { useCallback, useRef, useState } from "react";
 import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import { Dimensions, FlatList, ScrollView, StyleSheet } from "react-native";
+import { OnBoardingAssets } from "../../components/assets";
 
-import FirstSlideImage from "../../assets/images/Onboarding_1.svg";
-import SecondSlideImage from "../../assets/images/Onboarding_2.svg";
-import ThirdSlideImage from "../../assets/images/Onboarding_3.svg";
 import {
   CommonText,
   CustomButton,
@@ -44,17 +42,17 @@ const Onboarding: FC<Props> = ({ navigation }) => {
   const slideViews: SlideView[] = [
     {
       description: Labels.onboarding.slidesText[0].description,
-      image: <FirstSlideImage />,
+      image: <OnBoardingAssets.FirstSlideImage />,
       title: Labels.onboarding.slidesText[0].title,
     },
     {
       description: Labels.onboarding.slidesText[1].description,
-      image: <SecondSlideImage />,
+      image: <OnBoardingAssets.SecondSlideImage />,
       title: Labels.onboarding.slidesText[1].title,
     },
     {
       description: Labels.onboarding.slidesText[2].description,
-      image: <ThirdSlideImage />,
+      image: <OnBoardingAssets.ThirdSlideImage />,
       title: Labels.onboarding.slidesText[2].title,
     },
   ];
@@ -62,39 +60,45 @@ const Onboarding: FC<Props> = ({ navigation }) => {
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 
-  const navigateToProfile = () => {
+  const navigateToProfile = useCallback(() => {
     void StorageUtils.storeObjectValue(
       StorageKeysConstants.isFirstLaunchKey,
       false
     );
     navigation.navigate("profile");
-  };
+  }, [navigation]);
 
-  const renderItem = ({ item, index }: { item: SlideView; index: number }) => {
-    return (
-      <View style={[styles.swipeView, styles.justifyContentCenter]} key={index}>
-        <View style={styles.slideImage}>{item.image}</View>
-        <View accessible>
-          <CommonText
-            accessibilityRole="header"
-            accessibilityLabel={`${Labels.onboarding.screenNumber}${index + 1}${
-              item.title
-            }`}
-            style={[styles.title, styles.textAlignCenter]}
-          >
-            {item.title}
-          </CommonText>
-          <SecondaryText
-            accessibilityRole="text"
-            accessibilityLabel={item.description}
-            style={[styles.description, styles.textAlignCenter]}
-          >
-            {item.description}
-          </SecondaryText>
+  const renderItem = useCallback(
+    ({ item, index }: { item: SlideView; index: number }) => {
+      return (
+        <View
+          style={[styles.swipeView, styles.justifyContentCenter]}
+          key={index}
+        >
+          <View style={styles.slideImage}>{item.image}</View>
+          <View accessible>
+            <CommonText
+              accessibilityRole="header"
+              accessibilityLabel={`${Labels.onboarding.screenNumber}${
+                index + 1
+              }${item.title}`}
+              style={[styles.title, styles.textAlignCenter]}
+            >
+              {item.title}
+            </CommonText>
+            <SecondaryText
+              accessibilityRole="text"
+              accessibilityLabel={item.description}
+              style={[styles.description, styles.textAlignCenter]}
+            >
+              {item.description}
+            </SecondaryText>
+          </View>
         </View>
-      </View>
-    );
-  };
+      );
+    },
+    []
+  );
 
   const onScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -105,6 +109,17 @@ const Onboarding: FC<Props> = ({ navigation }) => {
     []
   );
 
+  const keyExtractor = useCallback((item: SlideView) => item.title, []);
+
+  const onScrollToIndex = useCallback((index: number) => {
+    flatListRef.current?.scrollToIndex({ index });
+  }, []);
+
+  const onNextButtonPressed = useCallback(() => {
+    flatListRef.current?.scrollToIndex({
+      index: swiperCurrentIndex + 1,
+    });
+  }, [swiperCurrentIndex]);
   return (
     <View style={[styles.mainContainer, styles.flexColumn]}>
       <HeaderApp />
@@ -117,7 +132,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
               showsHorizontalScrollIndicator={false}
               data={slideViews}
               renderItem={renderItem}
-              keyExtractor={(item) => item.title}
+              keyExtractor={keyExtractor}
               horizontal={true}
               ref={flatListRef}
               onScroll={onScroll}
@@ -125,9 +140,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
             <CustomPagination
               currentIndex={swiperCurrentIndex}
               slidesNumber={slideViews.length}
-              scrollToIndex={(index: number) => {
-                flatListRef.current?.scrollToIndex({ index });
-              }}
+              scrollToIndex={onScrollToIndex}
             />
           </ScrollView>
         </View>
@@ -171,11 +184,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
                     color={Colors.primaryBlue}
                   />
                 }
-                action={() => {
-                  flatListRef.current?.scrollToIndex({
-                    index: swiperCurrentIndex + 1,
-                  });
-                }}
+                action={onNextButtonPressed}
               />
             </View>
           </View>

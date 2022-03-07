@@ -57,6 +57,7 @@ const LinksHandler: FC = () => {
     return () => {
       Linking.removeEventListener("url", handleOpenURL);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;

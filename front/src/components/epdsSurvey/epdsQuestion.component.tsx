@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   AccessibilityInfo,
   Dimensions,
@@ -37,7 +37,7 @@ const EpdsQuestion: React.FC<Props> = ({
     if (questionAndAnswers.questionNumber > 1) {
       setAccessibilityFocus();
     }
-  }, [nextButtonState]);
+  }, [nextButtonState, questionAndAnswers.questionNumber]);
 
   const setAccessibilityFocus = () => {
     if (questionNumberRef.current) {
@@ -47,6 +47,16 @@ const EpdsQuestion: React.FC<Props> = ({
       }
     }
   };
+
+  const onAnswerPressed = useCallback(
+    (answer: EpdsAnswer) => () => {
+      updatePressedAnswer(answer);
+      setTrackerAction(
+        `${TrackerUtils.TrackingEvent.EPDS} - question n°${questionAndAnswers.questionNumber} - case cochée`
+      );
+    },
+    [questionAndAnswers.questionNumber, updatePressedAnswer]
+  );
 
   return (
     <View style={[styles.swipeView, styles.justifyContentCenter]}>
@@ -72,12 +82,7 @@ const EpdsQuestion: React.FC<Props> = ({
               labelSize={Sizes.xs}
               title={answer.label}
               checked={answer.isChecked}
-              onPress={() => {
-                updatePressedAnswer(answer);
-                setTrackerAction(
-                  `${TrackerUtils.TrackingEvent.EPDS} - question n°${questionAndAnswers.questionNumber} - case cochée`
-                );
-              }}
+              onPress={onAnswerPressed(answer)}
             />
           ))}
         </View>

@@ -1,14 +1,13 @@
 import type { FC } from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import * as React from "react";
-import { Linking, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
 
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Document } from "../../types";
-import { TrackerUtils } from "../../utils";
-import { reportError } from "../../utils/logging.util";
+import { LinkingUtils, TrackerUtils } from "../../utils";
 import {
   CommonText,
   CustomButton,
@@ -16,21 +15,23 @@ import {
   SecondaryText,
   View,
 } from "../baseComponents";
-import StepIconLibrary from "../timeline/stepIconLibrary.component";
+import StepIcon from "../timeline/stepIcon.component";
 import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
   document: Document;
 }
 
-function openFile(url: string) {
-  Linking.openURL(url).catch((err: unknown) => {
-    reportError(err);
-  });
-}
-
 const DocumentCard: FC<Props> = ({ document }) => {
   const [trackerAction, setTrackerAction] = useState("");
+
+  const onDownloadButtonPressed = useCallback(() => {
+    setTrackerAction(
+      `${TrackerUtils.TrackingEvent.PARENTHEQUE} - Téléchargement du doc "${document.nom}"`
+    );
+    if (document.fichier)
+      void LinkingUtils.openWebsite(document.fichier.url, true);
+  }, [document.fichier, document.nom]);
 
   return (
     <ListItem
@@ -41,7 +42,11 @@ const DocumentCard: FC<Props> = ({ document }) => {
     >
       <TrackerHandler actionName={trackerAction} />
       <View style={styles.documentImage}>
-        <StepIconLibrary name={IcomoonIcons.stepParentheque} />
+        <StepIcon
+          name={IcomoonIcons.stepParentheque}
+          active={false}
+          isParentheque
+        />
       </View>
       <ListItem.Content style={styles.documentContent}>
         <ListItem.Title style={styles.documentTitleContainer}>
@@ -62,12 +67,7 @@ const DocumentCard: FC<Props> = ({ document }) => {
             titleStyle={styles.fontButton}
             rounded={true}
             disabled={false}
-            action={() => {
-              setTrackerAction(
-                `${TrackerUtils.TrackingEvent.PARENTHEQUE} - Téléchargement du doc "${document.nom}"`
-              );
-              openFile(document.fichier.url);
-            }}
+            action={onDownloadButtonPressed}
           />
         </View>
       </ListItem.Content>

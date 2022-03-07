@@ -23,6 +23,7 @@ interface TimelineStepProps {
   isTheLast: boolean;
   onPress: () => void;
   onLayout?: (event: LayoutChangeEvent) => void;
+  isParentheque?: boolean;
 }
 
 const TimelineStep: FC<TimelineStepProps> = ({
@@ -33,28 +34,67 @@ const TimelineStep: FC<TimelineStepProps> = ({
   isTheLast,
   onPress,
   onLayout,
+  isParentheque,
 }) => {
   const stepIcons: IconNode[] = [
-    <StepIcon name={IcomoonIcons.stepProjetParent} active={active ?? false} />,
-    <StepIcon name={IcomoonIcons.stepConception} active={active ?? false} />,
     <StepIcon
+      key={0}
+      name={IcomoonIcons.stepParentheque}
+      active={active ?? false}
+      isParentheque
+    />,
+    <StepIcon
+      key={1}
+      name={IcomoonIcons.stepProjetParent}
+      active={active ?? false}
+    />,
+    <StepIcon
+      key={2}
+      name={IcomoonIcons.stepConception}
+      active={active ?? false}
+    />,
+    <StepIcon
+      key={3}
       name={IcomoonIcons.stepDebutDeGrossesse}
       active={active ?? false}
     />,
     <StepIcon
+      key={4}
       name={IcomoonIcons.stepFinDeGrossesse}
       active={active ?? false}
     />,
-    <StepIcon name={IcomoonIcons.stepAccouchement} active={active ?? false} />,
-    <StepIcon name={IcomoonIcons.step4PremiersMois} active={active ?? false} />,
-    <StepIcon name={IcomoonIcons.step4MoisA1An} active={active ?? false} />,
-    <StepIcon name={IcomoonIcons.step1A2Ans} active={active ?? false} />,
+    <StepIcon
+      key={5}
+      name={IcomoonIcons.stepAccouchement}
+      active={active ?? false}
+    />,
+    <StepIcon
+      key={6}
+      name={IcomoonIcons.step4PremiersMois}
+      active={active ?? false}
+    />,
+    <StepIcon
+      key={7}
+      name={IcomoonIcons.step4MoisA1An}
+      active={active ?? false}
+    />,
+    <StepIcon
+      key={8}
+      name={IcomoonIcons.step1A2Ans}
+      active={active ?? false}
+    />,
   ];
 
   const getStepStyles = (index: number, isLast: boolean) => {
     const initialOffset = Paddings.light;
     const verticalOffset = Paddings.stepOffset;
-    if (index === 0) {
+    if (isParentheque) {
+      return [
+        styles.step,
+        { marginTop: initialOffset - verticalOffset / 2 },
+        styles.stepRight,
+      ];
+    } else if (index === 0) {
       return [
         styles.step,
         { marginTop: initialOffset - verticalOffset / 2 },
@@ -75,7 +115,8 @@ const TimelineStep: FC<TimelineStepProps> = ({
     }
   };
   const getStepNumStyles = (index: number) => {
-    if (index === 0) return [styles.stepNum, styles.stepNumLeft];
+    if (isParentheque) return [styles.stepNum, styles.stepNumRight];
+    else if (index === 0) return [styles.stepNum, styles.stepNumLeft];
     return [
       styles.stepNum,
       index % 2 === 0 ? styles.stepNumLeft : styles.stepNumRight,
@@ -99,21 +140,26 @@ const TimelineStep: FC<TimelineStepProps> = ({
             styles.stepIconButton,
             styles.justifyContentCenter,
             active ? styles.stepActive : null,
+            isParentheque && styles.stepIconButtonParentheque,
           ]}
           onPress={onPress}
         >
-          {stepIcons[order - 1]}
+          {stepIcons[order]}
         </TouchableOpacity>
       </View>
       <View
-        style={[
-          styles.stepTitleContainer,
-          isTheLast
-            ? styles.stepLast
-            : listIndex === 0
-            ? styles.stepFirst
-            : null,
-        ]}
+        style={
+          isParentheque
+            ? styles.stepTitleParentheque
+            : [
+                styles.stepTitleContainer,
+                isTheLast
+                  ? styles.stepLast
+                  : listIndex === 0
+                  ? styles.stepFirst
+                  : null,
+              ]
+        }
       >
         <CommonText style={[styles.stepTitle]} allowFontScaling={false}>
           {name}
@@ -156,6 +202,9 @@ const styles = StyleSheet.create({
     height: Sizes.step,
     width: Sizes.step,
   },
+  stepIconButtonParentheque: {
+    borderColor: Colors.primaryBlue,
+  },
   stepIconContainer: {
     backgroundColor: "white",
   },
@@ -195,6 +244,16 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     height: sizeOfStepNum,
     justifyContent: "center",
+    paddingLeft: Paddings.default,
+    paddingRight: Paddings.light,
+    position: "relative",
+  },
+  stepTitleParentheque: {
+    alignSelf: "center",
+    backgroundColor: "transparent",
+    height: sizeOfStepNum,
+    justifyContent: "center",
+    marginBottom: Margins.step,
     paddingLeft: Paddings.default,
     paddingRight: Paddings.light,
     position: "relative",

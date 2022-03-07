@@ -30,6 +30,7 @@ const LoadingScreen: FC<LoadingScreenProps> = ({ navigation }) => {
       }
     };
     void handleFirstLaunch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -10,6 +10,7 @@ import SearchUserLocationOrPostalCodeCoords from "./aroundMe/searchUserLocationO
 import SlidingUpPanelAddressesList from "./aroundMe/slidingUpPanelAddressesList.component";
 import SubmitNewFilter from "./aroundMe/submitNewFilter.component";
 import ArticleCard from "./article/articleCard.component";
+import ArticleList from "./article/articleList.component";
 import ArticlesFilter from "./article/articlesFilter.component";
 import DidYouKnow from "./article/didYouKnow.component";
 import ImageBanner from "./article/imageBanner.component";
@@ -20,6 +21,7 @@ import TextHtml from "./article/textHtml.component";
 import Thematics from "./article/thematics.component";
 import Title from "./article/title.component";
 import Events from "./calendar/events.component";
+import DocumentCard from "./document/documentCard.component";
 import EpdsGenderEntry from "./epdsSurvey/epdsGenderEntry.component";
 import EpdsOnboarding from "./epdsSurvey/epdsOnboarding.component";
 import EpdsSurveyContent from "./epdsSurvey/epdsSurveyContent.component";
@@ -33,7 +35,6 @@ import NotificationHandler, {
 import AroundMePoiList from "./search/aroundMePoiList.component";
 import StepIcon from "./timeline/stepIcon.component";
 import TimelineStep from "./timeline/timelineStep.component";
-import TimelineStepLibrary from "./timeline/timelineStepLibrary.component";
 
 export {
   AddressDetails,
@@ -43,10 +44,12 @@ export {
   AroundMePoiList,
   AroundMeScreenHeader,
   ArticleCard,
+  ArticleList,
   ArticlesFilter,
   ConditionsOfUse,
   CustomMapMarker,
   DidYouKnow,
+  DocumentCard,
   EpdsGenderEntry,
   EpdsOnboarding,
   EpdsSurveyContent,
@@ -69,6 +72,5 @@ export {
   TextHtml,
   Thematics,
   TimelineStep,
-  TimelineStepLibrary,
   Title,
 };

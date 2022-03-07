@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import type { FC } from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import * as React from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -46,58 +46,70 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
     setShowSnackBar(true);
   };
 
-  const onPostalCodeChanged = (newPostalCode: string) => {
+  const onPostalCodeChanged = useCallback((newPostalCode: string) => {
     setPostalCodeInput(newPostalCode);
     setPostalCodeInvalid(false);
-  };
+  }, []);
 
-  const checkLocation = () => {
+  const checkLocation = useCallback(() => {
     setSearchIsByPostalCode(false);
     setIsLoading(true);
     setTriggerCheckLocation(!triggerCheckLocation);
-  };
+  }, [triggerCheckLocation]);
 
-  const searchByPostalCode = () => {
+  const searchByPostalCode = useCallback(() => {
     setSearchIsByPostalCode(true);
     setIsLoading(true);
     setTriggerSearchByPostalCode(!triggerSearchByPostalCode);
-  };
+  }, [triggerSearchByPostalCode]);
 
-  const goToAroundMeMapAndListScreen = (
-    coordinates: LatLng,
-    zoomOrAltitude: number
-  ) => {
-    void RootNavigation.navigate("aroundMeMapAndList", {
-      coordinates,
-      displayUserLocation: !searchIsByPostalCode,
-      zoomOrAltitude,
-    });
-  };
+  const goToAroundMeMapAndListScreen = useCallback(
+    (coordinates: LatLng, zoomOrAltitude: number) => {
+      setIsLoading(false);
+      void RootNavigation.navigate("aroundMeMapAndList", {
+        coordinates,
+        displayUserLocation: !searchIsByPostalCode,
+        zoomOrAltitude,
+      });
+    },
+    [searchIsByPostalCode]
+  );
 
-  const onPostalCodeInvalid = () => {
+  const onPostalCodeInvalid = useCallback(() => {
     setPostalCodeInvalid(true);
     setIsLoading(false);
-  };
+  }, []);
 
-  const handleGetCoordinates = async (newCoordinates: LatLng | undefined) => {
-    /* Si, à partir d'aroundMeMapAndList, on revient sur la Recherche, le filtre doit être remis à jour  */
-    SearchUtils.extractedPoiTypesFromArticles(articles);
+  const handleGetCoordinates = useCallback(
+    async (newCoordinates: LatLng | undefined) => {
+      /* Si, à partir d'aroundMeMapAndList, on revient sur la Recherche, le filtre doit être remis à jour  */
+      SearchUtils.extractedPoiTypesFromArticles(articles);
 
-    if (PLATFORM_IS_IOS) setIsLoading(false);
-    if (newCoordinates) {
-      const zoomOrAltitude =
-        await AroundMeUtils.adaptZoomAccordingToCoordinates(
-          newCoordinates.latitude,
-          newCoordinates.longitude
+      if (PLATFORM_IS_IOS) setIsLoading(false);
+      if (newCoordinates) {
+        const zoomOrAltitude =
+          await AroundMeUtils.adaptZoomAccordingToCoordinates(
+            newCoordinates.latitude,
+            newCoordinates.longitude
+          );
+        goToAroundMeMapAndListScreen(newCoordinates, zoomOrAltitude);
+      } else
+        showSnackBarWithMessage(
+          searchIsByPostalCode
+            ? Labels.aroundMe.postalCodeNotFound
+            : Labels.aroundMe.geolocationRetrievingError
         );
-      goToAroundMeMapAndListScreen(newCoordinates, zoomOrAltitude);
-    } else
-      showSnackBarWithMessage(
-        searchIsByPostalCode
-          ? Labels.aroundMe.postalCodeNotFound
-          : Labels.aroundMe.geolocationRetrievingError
-      );
-  };
+    },
+    [articles, goToAroundMeMapAndListScreen, searchIsByPostalCode]
+  );
+
+  const onAllowGeolocMessage = useCallback(() => {
+    setIsLoading(false);
+    showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
+  }, []);
+  const onSnackBarDismiss = useCallback(() => {
+    setShowSnackBar(false);
+  }, []);
 
   return (
     <ScrollView style={styles.mainContainer}>
@@ -108,20 +120,13 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
           postalCodeInput={postalCodeInput}
           postalCodeIsInvalid={onPostalCodeInvalid}
           setCoordinates={handleGetCoordinates}
-          allowGeolocationMessage={() => {
-            setIsLoading(false);
-            showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
-          }}
+          allowGeolocationMessage={onAllowGeolocMessage}
         />
         <SecondaryText style={styles.description}>
           {Labels.aroundMe.searchGeolocInstruction}
         </SecondaryText>
         <View style={styles.geolocationRow}>
-          <TouchableOpacity
-            onPress={() => {
-              checkLocation();
-            }}
-          >
+          <TouchableOpacity onPress={checkLocation}>
             <Image
               source={geolocationIcon}
               style={styles.geolicationIconStyle}
@@ -132,9 +137,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
             title={Labels.aroundMe.useMyGeolocation}
             titleStyle={styles.fontButton}
             rounded={true}
-            action={() => {
-              checkLocation();
-            }}
+            action={checkLocation}
           />
         </View>
         <SecondaryText style={styles.description}>
@@ -173,9 +176,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
           visible={showSnackBar}
           isOnTop
           backgroundColor={Colors.aroundMeSnackbar.background}
-          onDismiss={() => {
-            setShowSnackBar(false);
-          }}
+          onDismiss={onSnackBarDismiss}
           textColor={Colors.aroundMeSnackbar.text}
           text={snackBarMessage}
         />

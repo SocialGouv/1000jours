@@ -2,14 +2,13 @@ import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
-import LogoMinistere from "../../assets/images/Logo ministere.svg";
-import AppLogo from "../../assets/images/logo.svg";
 import { Labels } from "../../constants";
 import { Paddings, Sizes } from "../../styles";
+import { BaseAssets } from "../assets";
 
 const HeaderApp: FC = () => (
   <View>
-    <LogoMinistere
+    <BaseAssets.LogoMinistere
       height={Sizes.xxxxl}
       style={styles.logoMinistere}
       accessible
@@ -17,7 +16,7 @@ const HeaderApp: FC = () => (
       accessibilityLabel={Labels.accessibility.logoRepubliqueFr}
     />
     <View style={styles.appLogo}>
-      <AppLogo
+      <BaseAssets.AppLogo
         height={Sizes.logo}
         accessible
         accessibilityRole="image"

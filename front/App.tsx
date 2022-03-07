@@ -1,5 +1,3 @@
-import { ApolloProvider } from "@apollo/client";
-import Constants from "expo-constants";
 import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import type { FC } from "react";
@@ -21,14 +19,13 @@ import { initLocales } from "./src/config/calendar-config";
 import { StorageKeysConstants } from "./src/constants";
 import { useCachedResources, useColorScheme } from "./src/hooks";
 import Navigation from "./src/navigation/navigation.component";
-import { apolloService } from "./src/services";
+import { GraphQLProvider } from "./src/services";
 import { initMonitoring, StorageUtils, TrackerUtils } from "./src/utils";
+import { manageStorage } from "./src/utils/app.util";
 
 setNotificationHandler();
 initLocales();
 initMonitoring();
-
-const client = apolloService.getApolloClient();
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const customFonts = { IcoMoon: IcomoonFont };
@@ -36,8 +33,10 @@ const customFonts = { IcoMoon: IcomoonFont };
 const MainAppContainer: FC = () => {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
-  const [appCounter, setAppCounter] = useState(0);
-
+  const [appCounter, setAppCounter] = useState(-1);
+  const [appCounterIsLoaded, setAppCounterIsLoaded] = useState(false);
+  const [sendTracker, setSendTracker] = useState(false);
+  const [screenCanBeDisplayed, setScreenCanBeDisplayed] = useState(false);
   // Load Custom Fonts (Icomoon)
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
@@ -48,80 +47,78 @@ const MainAppContainer: FC = () => {
     const appActiveCounter = appActiveCounterStr
       ? Number(appActiveCounterStr)
       : 0;
-    const newAppActiveCounter = appActiveCounter + 1;
-    void StorageUtils.storeStringValue(
-      StorageKeysConstants.appActiveCounter,
-      newAppActiveCounter.toString()
-    );
-    setAppCounter(newAppActiveCounter);
+    setAppCounter(appActiveCounter);
+    if (await TrackerUtils.needToTrackOpeningApp()) {
+      const newAppActiveCounter = appActiveCounter + 1;
+      void StorageUtils.storeStringValue(
+        StorageKeysConstants.appActiveCounter,
+        newAppActiveCounter.toString()
+      );
+      setAppCounter(newAppActiveCounter);
+      setSendTracker(true);
+      void StorageUtils.storeStringValue(
+        StorageKeysConstants.appOpeningLastDate,
+        new Date().toISOString()
+      );
+    }
+    setAppCounterIsLoaded(true);
   };
 
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
     if (nextAppState === "active") {
       void updateAppActiveCounter();
-      void manageStorage();
-    }
-  };
-
-  const manageStorage = async () => {
-    if (process.env.CLEAR_STORAGE === "true")
-      void StorageUtils.multiRemove(StorageKeysConstants.allStorageKeys);
-
-    const lastVersionLaunch = await StorageUtils.getStringValue(
-      StorageKeysConstants.lastVersionLaunchKey
-    );
-
-    if (
-      Constants.manifest.version &&
-      lastVersionLaunch !== Constants.manifest.version
-    ) {
-      await StorageUtils.storeStringValue(
-        StorageKeysConstants.lastVersionLaunchKey,
-        Constants.manifest.version
-      );
-      await StorageUtils.storeObjectValue(
-        StorageKeysConstants.forceToScheduleEventsNotif,
-        true
-      );
     }
   };
 
   useEffect(() => {
-    Font.loadAsync(customFonts)
-      .then(() => {
-        setFontsLoaded(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const init = async () => {
+      await Font.loadAsync(customFonts)
+        .then(() => {
+          setFontsLoaded(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
-    void manageStorage();
+      await manageStorage();
+      await updateAppActiveCounter();
+    };
 
+    void init();
     // Permet de détecter lorsque l'app change d'état ('active' | 'background' | 'inactive' | 'unknown' | 'extension')
     AppState.addEventListener("change", handleAppStateChange);
 
     return () => {
       AppState.removeEventListener("change", handleAppStateChange);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!fontsLoaded || !isLoadingComplete) {
-    return null;
-  } else {
-    return (
-      <ApolloProvider client={client}>
+  useEffect(() => {
+    if (isLoadingComplete && fontsLoaded && appCounterIsLoaded)
+      setScreenCanBeDisplayed(true);
+  }, [isLoadingComplete, fontsLoaded, appCounterIsLoaded]);
+
+  const renderView = () => {
+    const appContainer = (
+      <>
         <TrackerAppStart />
         <LinksHandler />
-        <TrackerHandler
-          screenName={`${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${appCounter}`}
-        />
+        {sendTracker && (
+          <TrackerHandler
+            screenName={`${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${appCounter}`}
+          />
+        )}
         <SafeAreaProvider>
           <Navigation colorScheme={colorScheme} />
           <StatusBar />
         </SafeAreaProvider>
-      </ApolloProvider>
+      </>
     );
-  }
+    return <GraphQLProvider appContainer={appContainer} />;
+  };
+
+  return screenCanBeDisplayed ? renderView() : null;
 };
 
 const App: FC = () => {

@@ -21,11 +21,15 @@ export const sendEmail = async (
   );
 };
 export const openWebsite = async (
-  website: string | null | undefined
+  website: string | null | undefined,
+  dontChangeUrl = false
 ): Promise<void> => {
   if (!website) return;
   let completeWebsite = undefined;
-  if (!website.includes("https://") || !website.includes("http://")) {
+  if (
+    (!website.includes("https://") || !website.includes("http://")) &&
+    !dontChangeUrl
+  ) {
     const websiteWithWww = website.includes("www") ? website : `www.${website}`;
     completeWebsite =
       websiteWithWww.includes("https://") || websiteWithWww.includes("http://")

@@ -1,16 +1,16 @@
 import type { FC } from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import * as React from "react";
 import type { StyleProp, ViewStyle } from "react-native";
 import { StyleSheet } from "react-native";
 
-import BulbIcon from "../../assets/images/carto/bulb.svg";
 import { Labels } from "../../constants";
 import { PLATFORM_IS_ANDROID } from "../../constants/platform.constants";
 import { Colors, Margins, Paddings, Sizes } from "../../styles";
 import { CustomButton, Icomoon, IcomoonIcons, View } from "../baseComponents";
 import AroundMeFilter from "./aroundMeFilter.component";
 import SubmitNewFilter from "./submitNewFilter.component";
+import { AroundMeAssets } from "../assets";
 
 interface Props {
   headerStyle: StyleProp<ViewStyle>;
@@ -38,12 +38,46 @@ const AroundMeMapHeader: FC<Props> = ({
   const [showSubmitNewFilterModal, setShowSubmitNewFilterModal] =
     useState(false);
 
+  const onSubmitNewFilterButtonPressed = useCallback(() => {
+    setShowSubmitNewFilterModal(true);
+  }, []);
+
+  const onDisplayMapOrListButtonPressed = useCallback(() => {
+    setDisplayMap(!displayMap);
+  }, [displayMap, setDisplayMap]);
+
+  const onRelaunchSearchButtonPressed = useCallback(() => {
+    relaunchSearch();
+  }, [relaunchSearch]);
+
+  const onShowFilterButtonPressed = useCallback(() => {
+    setShowFilter(true);
+  }, []);
+
+  const onHideFilterButtonPressed = useCallback(
+    (filterWasSaved: boolean) => {
+      setShowFilter(false);
+      if (filterWasSaved) {
+        if (PLATFORM_IS_ANDROID) setIsLoading(true);
+        relaunchSearch();
+      }
+    },
+    [relaunchSearch, setIsLoading]
+  );
+
+  const onShowSubmitNewFilterModal = useCallback(
+    (showModal: boolean) => () => {
+      setShowSubmitNewFilterModal(showModal);
+    },
+    []
+  );
+
   return (
     <>
       <View style={headerStyle}>
         <CustomButton
           buttonStyle={styles.headerButton}
-          title={Labels.listArticles.filters}
+          title={Labels.articleList.filters}
           titleStyle={styles.headerButtonTitle}
           rounded={true}
           icon={
@@ -53,18 +87,14 @@ const AroundMeMapHeader: FC<Props> = ({
               color={Colors.primaryBlue}
             />
           }
-          action={() => {
-            setShowFilter(true);
-          }}
+          action={onShowFilterButtonPressed}
         />
         <CustomButton
           buttonStyle={styles.headerButton}
           title=""
           rounded={true}
-          icon={<BulbIcon />}
-          action={() => {
-            setShowSubmitNewFilterModal(true);
-          }}
+          icon={<AroundMeAssets.BulbIcon />}
+          action={onSubmitNewFilterButtonPressed}
         />
         <View style={styles.headerButtonsRightPartView}>
           {!hideDisplayListButton && (
@@ -89,9 +119,7 @@ const AroundMeMapHeader: FC<Props> = ({
                   color={Colors.primaryBlue}
                 />
               }
-              action={() => {
-                setDisplayMap(!displayMap);
-              }}
+              action={onDisplayMapOrListButtonPressed}
             />
           )}
           {showRelaunchResearchButton && (
@@ -110,28 +138,18 @@ const AroundMeMapHeader: FC<Props> = ({
                   color={Colors.primaryBlue}
                 />
               }
-              action={() => {
-                relaunchSearch();
-              }}
+              action={onRelaunchSearchButtonPressed}
             />
           )}
         </View>
       </View>
       <AroundMeFilter
         visible={showFilter}
-        hideModal={(filterWasSaved: boolean) => {
-          setShowFilter(false);
-          if (filterWasSaved) {
-            if (PLATFORM_IS_ANDROID) setIsLoading(true);
-            relaunchSearch();
-          }
-        }}
+        hideModal={onHideFilterButtonPressed}
       />
       <SubmitNewFilter
         visible={showSubmitNewFilterModal}
-        hideModal={() => {
-          setShowSubmitNewFilterModal(false);
-        }}
+        hideModal={onShowSubmitNewFilterModal(false)}
       />
     </>
   );

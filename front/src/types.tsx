@@ -1,6 +1,6 @@
-import type { Poi, PoiType } from "@socialgouv/nos1000jours-lib";
+import type { PoiType } from "@socialgouv/nos1000jours-lib";
 import type { FC, ReactNode } from "react";
-import type { LatLng, Region } from "react-native-maps";
+import type { LatLng } from "react-native-maps";
 
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 export type RootStackParamList = {
@@ -22,8 +22,8 @@ export type BottomTabParamList = {
 
 export type TabHomeParamList = {
   tabHomeScreen: undefined;
-  listArticles: { step: Step };
-  listParentsDocuments: { step: Step };
+  articleList: { step: Step };
+  parentheque: { documents?: Document[] };
   article: { id: number; step?: Step };
   epdsSurvey: undefined;
 };
@@ -76,7 +76,7 @@ export type UserInfos = {
 export type TabItem = {
   name: keyof BottomTabParamList;
   component: FC;
-  getIcon: (color: string, focused: boolean) => React.ReactNode;
+  getIcon: (color: string, focused: boolean) => ReactNode;
   title: string;
 };
 
@@ -193,6 +193,9 @@ export type Document = {
   url: string;
   thematique: Thematique;
   etapes?: Step[];
+  fichier?: {
+    url: string;
+  };
 };
 
 export type TableData = {

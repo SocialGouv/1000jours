@@ -2,12 +2,11 @@ import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import _ from "lodash";
 import type { FC } from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { AccessibilityInfo, ScrollView, StyleSheet } from "react-native";
-import * as Animatable from "react-native-animatable";
 
-import { ArticleCard, ArticlesFilter } from "../../components";
+import { ArticleList, ArticlesFilter } from "../../components";
 import {
   BackButton,
   CommonText,
@@ -18,8 +17,8 @@ import {
   View,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { DatabaseQueries, FetchPoliciesConstants, Labels } from "../../constants";
-import { ApolloClient } from "../../services";
+import { FetchPoliciesConstants, HomeDbQueries, Labels } from "../../constants";
+import { GraphQLQuery } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
   Article,
@@ -38,7 +37,7 @@ interface Props {
 peut-être que ça devrait être au back, lorsqu'il retourne les articles, de dire s'il faut afficher la bannière via un booléen, à discuter */
 const ETAPE_ENFANT_3_PREMIERS_MOIS = 6;
 
-const ListArticles: FC<Props> = ({ navigation, route }) => {
+const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
   const screenTitle = route.params.step.nom;
   const description = route.params.step.description;
   const stepIsFirstThreeMonths =
@@ -57,16 +56,24 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
       AccessibilityInfo.announceForAccessibility(
         articleToReadAccessibilityLabel()
       );
-  }, [articles]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [articles, filteredArticles.length]);
 
-  const handleResults = (data: unknown) => {
+  const articleToReadAccessibilityLabel = () =>
+    `${filteredArticles.length} ${Labels.accessibility.articleToRead}`;
+
+  const handleResults = useCallback((data: unknown) => {
     const results = (data as { articles: Article[] }).articles;
     setArticles(results);
-  };
+  }, []);
 
-  const navigateToSurvey = () => {
+  const navigateToSurvey = useCallback(() => {
     navigation.navigate("epdsSurvey");
-  };
+  }, [navigation]);
+
+  const onGoBack = useCallback(() => {
+    navigation.goBack();
+  }, [navigation]);
 
   const matchWithFilters = (article: Article, filters: ArticleFilter[]) => {
     let isMatching = false;
@@ -87,25 +94,25 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
     });
   };
 
-  const applyFilters = (filters: ArticleFilter[]) => {
-    const activeFilters = _.filter(filters, { active: true });
-    sendFiltersTracker(activeFilters);
-    const result = articles.map((article) => {
-      let hide = false;
-      if (activeFilters.length > 0)
-        hide = !matchWithFilters(article, activeFilters);
+  const applyFilters = useCallback(
+    (filters: ArticleFilter[]) => {
+      const activeFilters = _.filter(filters, { active: true });
+      sendFiltersTracker(activeFilters);
+      const result = articles.map((article) => {
+        let hide = false;
+        if (activeFilters.length > 0)
+          hide = !matchWithFilters(article, activeFilters);
 
-      return {
-        ...article,
-        hide: hide,
-      };
-    });
+        return {
+          ...article,
+          hide: hide,
+        };
+      });
 
-    setArticles(result);
-  };
-
-  const articleToReadAccessibilityLabel = () =>
-    `${filteredArticles.length} ${Labels.accessibility.articleToRead}`;
+      setArticles(result);
+    },
+    [articles]
+  );
 
   return (
     <ScrollView style={styles.scrollView}>
@@ -113,18 +120,14 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
         screenName={`${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`}
         actionName={trackerAction}
       />
-      <ApolloClient
-        query={DatabaseQueries.LIST_ARTICLES_WITH_STEP(route.params.step.id)}
+      <GraphQLQuery
+        query={HomeDbQueries.LIST_ARTICLES_WITH_STEP(route.params.step.id)}
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-        updateFetchedData={handleResults}
+        getFetchedData={handleResults}
       />
       <View style={styles.topContainer}>
         <View style={[styles.flexStart]}>
-          <BackButton
-            action={() => {
-              navigation.goBack();
-            }}
-          />
+          <BackButton action={onGoBack} />
         </View>
         <TitleH1
           title={screenTitle}
@@ -157,18 +160,13 @@ const ListArticles: FC<Props> = ({ navigation, route }) => {
             style={styles.headerListInfo}
             accessibilityLabel={articleToReadAccessibilityLabel()}
           >
-            {filteredArticles.length} {Labels.listArticles.articlesToRead}
+            {filteredArticles.length} {Labels.articleList.articlesToRead}
           </SecondaryText>
-          {filteredArticles.map((article, index) => (
-            <Animatable.View
-              key={index}
-              animation="fadeInUp"
-              duration={1000}
-              delay={0}
-            >
-              <ArticleCard article={article} step={route.params.step} />
-            </Animatable.View>
-          ))}
+          <ArticleList
+            articleList={filteredArticles}
+            animationDuration={1000}
+            step={route.params.step}
+          />
         </View>
       ) : (
         <Loader />
@@ -236,4 +234,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListArticles;
+export default ArticleListScreen;

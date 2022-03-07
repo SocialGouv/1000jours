@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { add, isBefore } from "date-fns";
 import MatomoTracker from "matomo-tracker-react-native";
+
+import { StorageKeysConstants } from "../constants";
+import { getStringValue } from "./storage.util";
+
+export const MIN_HOURS_DELAY_TO_TRACK_NEW_OPENING = 6;
 
 export const matomoInstance = new MatomoTracker({
   disabled: process.env.MATOMO_ENABLED === "false",
@@ -28,3 +34,21 @@ export enum TrackingEvent {
   FILTER_ARTICLES = "Filtre (Articles)",
   RECHERCHER = "Rechercher",
 }
+
+export const dateWithMinHoursDelayIsBeforeNow = (date: Date): boolean => {
+  return isBefore(
+    add(date, {
+      hours: MIN_HOURS_DELAY_TO_TRACK_NEW_OPENING,
+    }),
+    new Date()
+  );
+};
+
+export const needToTrackOpeningApp = async (): Promise<boolean> => {
+  const openingLastDate = await getStringValue(
+    StorageKeysConstants.appOpeningLastDate
+  );
+  return openingLastDate
+    ? dateWithMinHoursDelayIsBeforeNow(new Date(openingLastDate))
+    : true;
+};

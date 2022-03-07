@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import type { StyleProp, ViewStyle } from "react-native";
 import { Share, StyleSheet } from "react-native";
 
@@ -43,20 +43,21 @@ const ShareButton: React.FC<Props> = ({
   buttonStyle,
 }) => {
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
+  const messageRef = useRef(message);
 
-  const share = async () => {
+  const share = useCallback(async () => {
     try {
       const url = `${deepLinkUrl}?page=${page}&id=${id}`;
-      message += ` ${Labels.toAccessCickHere}`;
+      messageRef.current += ` ${Labels.toAccessClickHere}`;
 
       // Le paramètre url (Share) ne fonctionne que sur iOS
       // Nous le rajoutons directement dans le message sous format texte.
       if (PLATFORM_IS_ANDROID) {
-        message += url;
+        messageRef.current += url;
       }
 
       const result = await Share.share(
-        { message, title, url },
+        { message: messageRef.current, title, url },
         { subject: title }
       );
       if (result.action === Share.sharedAction) {
@@ -65,7 +66,7 @@ const ShareButton: React.FC<Props> = ({
     } catch (error: unknown) {
       console.error(error);
     }
-  };
+  }, [id, page, title]);
 
   return (
     <>

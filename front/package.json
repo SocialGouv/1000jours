@@ -15,7 +15,7 @@
     "publish-preprod": "expo publish --release-channel preprod",
     "build-prod:android": "expo build:android --release-channel prod",
     "build-prod:ios": "expo build:ios --release-channel prod",
-    "upload:android": "expo upload:android --key ./api-key-play-store.json --latest --track beta",
+    "upload:android": "expo upload:android --key ./api-key-play-store.json --latest --track internal",
     "upload:ios": "fastlane deliver --ipa app.ipa --api_key_path ./api-key-app-store.json --force true",
     "publish-prod": "yarn upload:android && yarn upload:ios"
   },
@@ -103,6 +103,7 @@
   "devDependencies": {
     "@babel/core": "~7.15.8",
     "@babel/preset-typescript": "^7.16.0",
+    "@socialgouv/eslint-config-react": "^1.104.0",
     "@socialgouv/eslint-config-typescript": "^1.88.0",
     "@testing-library/react-native": "^7.2.0",
     "@types/jest": "^26.0.24",

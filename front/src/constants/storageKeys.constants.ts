@@ -1,4 +1,5 @@
 export const appActiveCounter = "@appActiveCounter";
+export const appOpeningLastDate = "@appOpeningLastDate";
 export const isFirstLaunchKey = "@isFirstLaunch";
 export const lastVersionLaunchKey = "@lastVersionLaunchKey";
 export const currentStepId = "@currentStepId";
@@ -18,9 +19,11 @@ export const forceToScheduleEventsNotif = "@forceToScheduleEventsNotif";
 export const osCalendarId = "@osCalendarId";
 export const osCalendarSyncDate = "@osCalendarSyncDate";
 export const scrollToEventId = "@scrollToEventId";
+export const articlesRead = "@articlesRead";
 
 export const allStorageKeys = [
   appActiveCounter,
+  appOpeningLastDate,
   isFirstLaunchKey,
   lastVersionLaunchKey,
   currentStepId,
@@ -39,6 +42,7 @@ export const allStorageKeys = [
   osCalendarId,
   osCalendarSyncDate,
   scrollToEventId,
+  articlesRead,
 ];
 
 export const epdsSurveyKeys = [epdsQuestionAndAnswersKey, epdsQuestionIndexKey];

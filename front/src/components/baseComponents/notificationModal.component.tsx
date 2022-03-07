@@ -1,7 +1,7 @@
 import type { Notification as ExpoNotificaiton } from "expo-notifications";
 import type { FC } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { useEffect, useState } from "react";
 import { Modal, StyleSheet, TouchableOpacity } from "react-native";
 
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
@@ -41,7 +41,7 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
   const [modalVisible, setModalVisible] = useState(true);
   const [trackerAction, setTrackerAction] = useState("");
 
-  const action = () => {
+  const action = useCallback(() => {
     const buttonTitle = notification.request.content.data.redirectTitle ?? "";
     setTrackerAction(
       `${TrackingEvent.NOTIFICATION} (${notificationType}) - ${buttonTitle}`
@@ -56,29 +56,34 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
       else void RootNavigation.navigate(redirectTo, null);
     }
     setModalVisible(false);
-  };
+  }, [
+    notification.request.content.data.redirectFromRoot,
+    notification.request.content.data.redirectTitle,
+    notification.request.content.data.redirectTo,
+    notificationType,
+  ]);
 
   useEffect(() => {
     if (!modalVisible) onDismiss();
-  }, [modalVisible]);
+  }, [modalVisible, onDismiss]);
+
+  const onHideModalButtonPressed = useCallback(() => {
+    setModalVisible(false);
+  }, []);
 
   return (
     <Modal
       animationType="slide"
       transparent={true}
       visible={modalVisible}
-      onRequestClose={() => {
-        setModalVisible(!modalVisible);
-      }}
+      onRequestClose={onHideModalButtonPressed}
     >
       <TrackerHandler actionName={trackerAction} />
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <TouchableOpacity
             style={styles.closeButton}
-            onPress={() => {
-              setModalVisible(false);
-            }}
+            onPress={onHideModalButtonPressed}
           >
             <Icomoon
               name={IcomoonIcons.fermer}

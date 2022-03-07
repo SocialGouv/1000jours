@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
@@ -56,6 +57,7 @@ const ConditionsOfUse: FC<Props> = ({ setIsVisible }) => {
         <A
           url="https://privacy.microsoft.com/fr-fr/privacystatement"
           style={{ margin: Margins.smaller }}
+          key={0}
         >
           Déclaration de confidentialité Microsoft
         </A>,

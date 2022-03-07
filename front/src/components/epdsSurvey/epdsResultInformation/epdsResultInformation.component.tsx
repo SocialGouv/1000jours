@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { range } from "lodash";
+import _ from "lodash";
 import * as React from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Card } from "react-native-paper";
 
-import ChevronDownIcon from "../../../assets/images/chevron_down.svg";
-import ChevronUpIcon from "../../../assets/images/chevron_up.svg";
 import {
   Colors,
   FontNames,
@@ -20,6 +18,7 @@ import {
   Sizes,
 } from "../../../styles";
 import type { EpdsResultInformationType } from "../../../type";
+import { EpdsAssets } from "../../assets";
 import { Icomoon, View } from "../../baseComponents";
 import EpdsResultContactParagraph from "./epdsResultContactParagraph.component";
 import EpdsResultSimpleParagraph from "./epdsResultSimpleParagraph.component";
@@ -35,7 +34,7 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
   informationList,
 }) => {
   const [expandedAccordions, setExpandedAccordions] = useState<boolean[]>(
-    range(informationList.length).map(() => false)
+    _.range(informationList.length).map(() => false)
   );
 
   const borderColorStyle = { borderStartColor: leftBorderColor };
@@ -72,13 +71,16 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
     );
   };
 
-  const onAccordionPressed = (accIndex: number) => {
-    const tempExpandedAccordions = range(informationList.length).map(
-      () => false
-    );
-    tempExpandedAccordions[accIndex] = !expandedAccordions[accIndex];
-    setExpandedAccordions(tempExpandedAccordions);
-  };
+  const onAccordionPressed = useCallback(
+    (accIndex: number) => () => {
+      const tempExpandedAccordions = _.range(informationList.length).map(
+        () => false
+      );
+      tempExpandedAccordions[accIndex] = !expandedAccordions[accIndex];
+      setExpandedAccordions(tempExpandedAccordions);
+    },
+    [expandedAccordions, informationList.length]
+  );
 
   return (
     <>
@@ -91,9 +93,7 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
           >
             <TouchableOpacity
               style={styles.accordionView}
-              onPress={() => {
-                onAccordionPressed(professionalIndex);
-              }}
+              onPress={onAccordionPressed(professionalIndex)}
               accessibilityState={{
                 expanded: expandedAccordions[professionalIndex],
               }}
@@ -113,9 +113,15 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
                 </Text>
                 <View style={styles.accordionIcon}>
                   {expandedAccordions[professionalIndex] ? (
-                    <ChevronUpIcon width={Sizes.xs} height={Sizes.xs} />
+                    <EpdsAssets.ChevronUpIcon
+                      width={Sizes.xs}
+                      height={Sizes.xs}
+                    />
                   ) : (
-                    <ChevronDownIcon width={Sizes.xs} height={Sizes.xs} />
+                    <EpdsAssets.ChevronDownIcon
+                      width={Sizes.xs}
+                      height={Sizes.xs}
+                    />
                   )}
                 </View>
               </View>

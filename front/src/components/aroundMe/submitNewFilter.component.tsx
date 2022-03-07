@@ -1,7 +1,6 @@
-import { useMutation } from "@apollo/client/react/hooks";
 import Constants from "expo-constants";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Modal,
   StyleSheet,
@@ -20,7 +19,8 @@ import {
   IcomoonIcons,
   TitleH1,
 } from "../../components/baseComponents";
-import { DatabaseQueries, Labels } from "../../constants";
+import { Labels, SearchQueries } from "../../constants";
+import { GraphQLMutation } from "../../services";
 import {
   Colors,
   FontNames,
@@ -41,21 +41,14 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
     if (!visible) return;
   }, [visible]);
 
-  const [sendCartoSuggestions] = useMutation(
-    DatabaseQueries.CARTO_SEND_SUGGESTIONS,
-    {
-      onError: (err) => {
-        console.log(err);
-      },
-    }
-  );
-
   const [newPois, setNewPois] = useState("");
   const [newPoisIsEmpty, setNewPoisIsEmpty] = useState(true);
   const [newSuggestions, setNewSuggestions] = useState("");
   const [newSuggestionsIsEmpty, setNewSuggestionsIsEmpty] = useState(true);
   const [numberOfChildren, setNumberOfChildren] = useState(1);
   const [postalCode, setPostalCode] = useState("");
+  const [queryVariables, setQueryVariables] = useState<unknown>();
+  const [triggerSendSuggestions, setTriggerSendSuggestions] = useState(false);
   const instructionsAndPlaceholders =
     Labels.aroundMe.submitNewFilter.instructions;
 
@@ -74,23 +67,31 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
       };
   };
 
-  const onValidate = async () => {
+  const onValidate = useCallback(() => {
     if (!newPoisIsEmpty && !newSuggestionsIsEmpty) {
       hideModal();
-      await sendCartoSuggestions({
-        variables: {
-          codePostal: postalCode,
-          nombreEnfants: numberOfChildren,
-          nouveauxPois: newPois,
-          suggestionsAmeliorations: newSuggestions,
-        },
+      setQueryVariables({
+        codePostal: postalCode,
+        nombreEnfants: numberOfChildren,
+        nouveauxPois: newPois,
+        suggestionsAmeliorations: newSuggestions,
       });
+      setTriggerSendSuggestions(!triggerSendSuggestions);
       setNewPois("");
       setNewPoisIsEmpty(true);
       setNewSuggestions("");
       setNewPoisIsEmpty(true);
     }
-  };
+  }, [
+    hideModal,
+    newPois,
+    newPoisIsEmpty,
+    newSuggestions,
+    newSuggestionsIsEmpty,
+    numberOfChildren,
+    postalCode,
+    triggerSendSuggestions,
+  ]);
 
   const renderSection = (
     section: {
@@ -100,15 +101,27 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
     index: number
   ) => {
     const functionAndValue = getChangeFunctionAndValue(index);
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const onTextInputChangedText = useCallback(
+      (text: string) => {
+        functionAndValue.function(text);
+        functionAndValue.setIsEmpty(text.trimEnd().length === 0);
+      },
+      [functionAndValue]
+    );
+
     return (
       <View style={styles.sectionView}>
+        <GraphQLMutation
+          query={SearchQueries.CARTO_SEND_SUGGESTIONS}
+          variables={queryVariables}
+          triggerLaunchMutation={triggerSendSuggestions}
+        />
         <CommonText style={styles.partsTitle}>{section.instruction}</CommonText>
         <TextInput
           style={styles.textInput}
-          onChangeText={(text) => {
-            functionAndValue.function(text);
-            functionAndValue.setIsEmpty(text.trimEnd().length === 0);
-          }}
+          onChangeText={onTextInputChangedText}
           value={functionAndValue.value}
           placeholder={section.placeholder}
           placeholderTextColor={Colors.primaryBlue}
@@ -127,12 +140,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
             title={Labels.aroundMe.submitNewFilter.title}
             animated={false}
           />
-          <TouchableOpacity
-            style={styles.closeModalView}
-            onPress={() => {
-              hideModal();
-            }}
-          >
+          <TouchableOpacity style={styles.closeModalView} onPress={hideModal}>
             <Icomoon
               name={IcomoonIcons.fermer}
               size={Sizes.xs}
@@ -172,9 +180,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
                     color={Colors.primaryBlue}
                   />
                 }
-                action={() => {
-                  hideModal();
-                }}
+                action={hideModal}
               />
             </View>
             <View style={styles.buttonContainer}>
@@ -183,9 +189,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
                 titleStyle={styles.buttonTitleStyle}
                 rounded={true}
                 disabled={false}
-                action={() => {
-                  void onValidate();
-                }}
+                action={onValidate}
               />
             </View>
           </View>

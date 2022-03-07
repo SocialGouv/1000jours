@@ -2,8 +2,6 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { CheckBox as RNECheckBox } from "react-native-elements";
 
-import CheckedIcon from "../../assets/images/radio_checked.svg";
-import UncheckedIcon from "../../assets/images/radio_unchecked.svg";
 import {
   Colors,
   FontNames,

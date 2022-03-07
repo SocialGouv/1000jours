@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import type { FC } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as React from "react";
 import type { LayoutChangeEvent } from "react-native";
 import { Image, StyleSheet } from "react-native";
@@ -110,6 +110,7 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
       // et cela évite de redéclencher ce useEffect
       if (resetCoordinates) resetCoordinates();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coordinates, triggerMoveMapCoordinates]);
 
   useEffect(() => {
@@ -124,86 +125,148 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
         setShowAddressDetails(true);
       }, 500);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPoiIndex]);
 
   const locationIcon = "../../assets/images/carto/current_location.png";
   const currentUserLocationIcon = require(locationIcon);
 
-  const setMapViewRef = (ref: MapView) => {
+  const setMapViewRef = useCallback((ref: MapView) => {
     mapRef.current = ref;
-  };
+  }, []);
 
-  const handleFetchedPois = (pois: Poi[]) => {
-    if (pois.length === 0) {
-      showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
-    }
+  const handleFetchedPois = useCallback(
+    (pois: Poi[]) => {
+      if (pois.length === 0) {
+        showSnackBarWithMessage(Labels.aroundMe.noAddressFound);
+      }
 
-    setShowDisplayListButton(pois.length > 0);
-    updatePoiArray(pois);
-    setShowAddressDetails(false);
-    setIsLoading(false);
-    if (showBottomPanel) showBottomPanel(true);
-  };
+      setShowDisplayListButton(pois.length > 0);
+      updatePoiArray(pois);
+      setShowAddressDetails(false);
+      setIsLoading(false);
+      if (showBottomPanel) showBottomPanel(true);
+    },
+    [showBottomPanel, updatePoiArray]
+  );
 
-  const onRegionChangeComplete = (newRegion: Region) => {
-    void StorageUtils.storeObjectValue(
-      StorageKeysConstants.cartoSavedCoordinates,
-      { latitude: newRegion.latitude, longitude: newRegion.longitude }
+  const chooseFilterMessage = useCallback(() => {
+    setTimeout(
+      () => {
+        setIsLoading(false);
+      },
+      PLATFORM_IS_IOS ? 500 : 0
     );
-    setCurrentRegion(newRegion);
-    if (updateRegion) updateRegion(newRegion);
+    showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
+  }, []);
 
-    if (triggerSearchAfterRegionChangeComplete) {
-      setTriggerSearchAfterRegionChangeComplete(false);
+  const onViewMapLayout = useCallback((event: LayoutChangeEvent) => {
+    setHeightOfMapView(Math.round(event.nativeEvent.layout.height));
+    setWidthOfMapView(Math.round(event.nativeEvent.layout.width));
+  }, []);
 
-      setIsLoading(true);
-      AroundMeUtils.triggerFunctionAfterTimeout(() => {
-        setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
-      });
-    }
-    setShowSnackBar(false);
-    setShowRelaunchResearchButton(true);
-  };
+  const onRegionChangeComplete = useCallback(
+    (newRegion: Region) => {
+      void StorageUtils.storeObjectValue(
+        StorageKeysConstants.cartoSavedCoordinates,
+        { latitude: newRegion.latitude, longitude: newRegion.longitude }
+      );
+      setCurrentRegion(newRegion);
+      if (updateRegion) updateRegion(newRegion);
+
+      if (triggerSearchAfterRegionChangeComplete) {
+        setTriggerSearchAfterRegionChangeComplete(false);
+
+        setIsLoading(true);
+        AroundMeUtils.triggerFunctionAfterTimeout(() => {
+          setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+        });
+      }
+      setShowSnackBar(false);
+      setShowRelaunchResearchButton(true);
+    },
+    [
+      triggerSearchAfterRegionChangeComplete,
+      triggerSearchByGpsCoords,
+      updateRegion,
+    ]
+  );
 
   const showSnackBarWithMessage = (message: string) => {
     setSnackBarMessage(message);
     setShowSnackBar(true);
   };
 
-  const onSnackBarDismiss = () => {
+  const onSnackBarDismiss = useCallback(() => {
     setShowSnackBar(false);
-  };
+  }, []);
 
-  const onMarkerClick = (poiIndex: number) => {
-    setTrackerAction(TrackerUtils.TrackingEvent.CARTO_CLICK_POI);
-    if (PLATFORM_IS_IOS) {
-      moveMapToCoordinates(
-        poiArray[poiIndex].position_latitude,
-        poiArray[poiIndex].position_longitude
-      );
-    }
-
-    setAddressDetails(poiArray[poiIndex]);
-    setShowAddressDetails(true);
-    updateSelectedPoiIndex(poiIndex);
-  };
-
-  const moveMapToCoordinates = (latitude: number, longitude: number) => {
-    const markerCoordinates: LatLng = {
-      latitude,
-      longitude,
-    };
-    mapRef.current?.animateCamera(
-      {
-        /* iOS utilise le paramètre altitude
+  const moveMapToCoordinates = useCallback(
+    (latitude: number, longitude: number) => {
+      const markerCoordinates: LatLng = {
+        latitude,
+        longitude,
+      };
+      mapRef.current?.animateCamera(
+        {
+          /* iOS utilise le paramètre altitude
         et Android le paramètre zoom */
-        altitude: zoomOrAltitude,
-        center: markerCoordinates,
-        zoom: zoomOrAltitude,
-      },
-      { duration: AroundMeConstants.ANIMATE_CAMERA_DURATION }
-    );
-  };
+          altitude: zoomOrAltitude,
+          center: markerCoordinates,
+          zoom: zoomOrAltitude,
+        },
+        { duration: AroundMeConstants.ANIMATE_CAMERA_DURATION }
+      );
+    },
+    [zoomOrAltitude]
+  );
+
+  const onMarkerClick = useCallback(
+    (poiIndex: number) => {
+      setTrackerAction(TrackerUtils.TrackingEvent.CARTO_CLICK_POI);
+      if (PLATFORM_IS_IOS) {
+        moveMapToCoordinates(
+          poiArray[poiIndex].position_latitude,
+          poiArray[poiIndex].position_longitude
+        );
+      }
+
+      setAddressDetails(poiArray[poiIndex]);
+      setShowAddressDetails(true);
+      updateSelectedPoiIndex(poiIndex);
+    },
+    [moveMapToCoordinates, poiArray, updateSelectedPoiIndex]
+  );
+
+  const onDisplayMap = useCallback(() => {
+    if (displayList) displayList();
+  }, [displayList]);
+
+  const onRelaunchSearch = useCallback(() => {
+    KeyboardUtils.dismissKeyboard();
+    setShowRelaunchResearchButton(false);
+    setShowAddressDetails(false);
+    updateSelectedPoiIndex(-1);
+    if (showBottomPanel) showBottomPanel(false);
+    if (currentRegion) {
+      setIsLoading(true);
+      setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
+    }
+  }, [
+    currentRegion,
+    showBottomPanel,
+    triggerSearchByGpsCoords,
+    updateSelectedPoiIndex,
+  ]);
+
+  const onHideDetails = useCallback(() => {
+    updateSelectedPoiIndex(-1);
+    setShowAddressDetails(false);
+  }, [updateSelectedPoiIndex]);
+
+  const onMapLoaderTouchEnd = useCallback(() => {
+    setIsLoading(false);
+  }, []);
 
   return (
     <View style={styles.mainContainer}>
@@ -216,24 +279,10 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
           triggerSearchByGpsCoords={triggerSearchByGpsCoords}
           region={currentRegion}
           setFetchedPois={handleFetchedPois}
-          chooseFilterMessage={() => {
-            setTimeout(
-              () => {
-                setIsLoading(false);
-              },
-              PLATFORM_IS_IOS ? 500 : 0
-            );
-            showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
-          }}
+          chooseFilterMessage={chooseFilterMessage}
         />
       </View>
-      <View
-        style={styles.map}
-        onLayout={(event: LayoutChangeEvent) => {
-          setHeightOfMapView(Math.round(event.nativeEvent.layout.height));
-          setWidthOfMapView(Math.round(event.nativeEvent.layout.width));
-        }}
-      >
+      <View style={styles.map} onLayout={onViewMapLayout}>
         <MapView
           minZoomLevel={AroundMeConstants.MAPVIEW_MIN_ZOOM_LEVEL}
           ref={setMapViewRef}
@@ -278,20 +327,8 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
         <AroundMeMapHeader
           headerStyle={styles.headerButtonsMapView}
           displayMap
-          setDisplayMap={() => {
-            if (displayList) displayList();
-          }}
-          relaunchSearch={() => {
-            KeyboardUtils.dismissKeyboard();
-            setShowRelaunchResearchButton(false);
-            setShowAddressDetails(false);
-            updateSelectedPoiIndex(-1);
-            if (showBottomPanel) showBottomPanel(false);
-            if (currentRegion) {
-              setIsLoading(true);
-              setTriggerSearchByGpsCoords(!triggerSearchByGpsCoords);
-            }
-          }}
+          setDisplayMap={onDisplayMap}
+          relaunchSearch={onRelaunchSearch}
           showRelaunchResearchButton={showRelaunchResearchButton}
           setIsLoading={setIsLoading}
           showDisplayListButton={showDisplayListButton}
@@ -319,20 +356,11 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
           <AddressDetails
             details={addressDetails}
             isClickedMarker={true}
-            hideDetails={() => {
-              updateSelectedPoiIndex(-1);
-              setShowAddressDetails(false);
-            }}
+            hideDetails={onHideDetails}
           />
         </View>
       )}
-      {isLoading && (
-        <MapLoader
-          onTouchEnd={() => {
-            setIsLoading(false);
-          }}
-        />
-      )}
+      {isLoading && <MapLoader onTouchEnd={onMapLoaderTouchEnd} />}
     </View>
   );
 };

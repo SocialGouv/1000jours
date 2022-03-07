@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useCallback } from "react";
 import { StyleSheet, Text } from "react-native";
 
 import { Labels } from "../../../constants";
@@ -36,6 +37,13 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
       setAccessibilityFocusOnText(titleRef);
     }, TIMEOUT_FOCUS);
   }
+
+  const onCallButtonPressed = useCallback(
+    (phoneNumber: string) => async () => {
+      await LinkingUtils.callContact(phoneNumber);
+    },
+    []
+  );
 
   return (
     <View style={styles.itemBorder}>
@@ -75,9 +83,7 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
             titleStyle={styles.fontButton}
             rounded={true}
             disabled={false}
-            action={async () => {
-              await LinkingUtils.callContact(contact.phoneNumber);
-            }}
+            action={onCallButtonPressed(contact.phoneNumber)}
           />
         </View>
       ))}

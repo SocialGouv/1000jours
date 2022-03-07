@@ -1,5 +1,6 @@
 import ExpoFastImage from "expo-fast-image";
-import { FC, useEffect, useState } from "react";
+import type { FC } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
@@ -36,19 +37,21 @@ const ArticleCard: FC<Props> = ({
     };
   }, [article]);
 
+  const onItemPressed = useCallback(() => {
+    if (isFromSearchScreen && setStepAndArticleId)
+      setStepAndArticleId(article.id, step);
+    else {
+      void RootNavigation.navigate("article", {
+        id: article.id,
+        step: step,
+      });
+    }
+  }, [article.id, isFromSearchScreen, setStepAndArticleId, step]);
+
   return (
     <ListItem
       bottomDivider
-      onPress={() => {
-        if (isFromSearchScreen && setStepAndArticleId)
-          setStepAndArticleId(article.id, step);
-        else {
-          void RootNavigation.navigate("article", {
-            id: article.id,
-            step: step,
-          });
-        }
-      }}
+      onPress={onItemPressed}
       pad={0}
       containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
       style={[styles.listItem, styles.borderLeftRadius]}

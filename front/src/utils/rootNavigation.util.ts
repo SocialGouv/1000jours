@@ -3,7 +3,10 @@ import { createNavigationContainerRef } from "@react-navigation/native";
 
 export const navigationRef = createNavigationContainerRef();
 
-export const navigate = async (name: string, params: any): Promise<void> => {
+export const navigate = async (
+  name: string,
+  params: unknown
+): Promise<void> => {
   let stop = false;
   while (!stop) {
     if (navigationRef.isReady()) {
@@ -43,5 +46,5 @@ export const navigate = async (name: string, params: any): Promise<void> => {
       break;
   }
 
-  navigationRef.navigate(screen, params);
+  navigationRef.navigate(screen as never, params as never);
 };

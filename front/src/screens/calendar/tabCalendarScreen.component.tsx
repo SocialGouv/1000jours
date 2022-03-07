@@ -1,41 +1,39 @@
-import { useLazyQuery } from "@apollo/client";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { addDays, format } from "date-fns";
 import * as Calendar from "expo-calendar";
 import * as Localization from "expo-localization";
 import _ from "lodash";
 import type { FC } from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 
 import HelpIcon from "../../assets/images/help.png";
+import { Events } from "../../components";
 import {
   CommonText,
   CustomButton,
-  ErrorMessage,
   Icomoon,
   IcomoonIcons,
-  Loader,
   ModalHelp,
   SecondaryTextItalic,
   TitleH1,
   View,
 } from "../../components/baseComponents";
-import Events from "../../components/calendar/events.component";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
+  CalendarDbQueries,
   FetchPoliciesConstants,
   Formats,
   Labels,
   StorageKeysConstants,
 } from "../../constants";
-import { ALL_EVENTS } from "../../constants/databaseQueries.constants";
 import {
   ICLOUD,
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
+import { GraphQLLazyQuery } from "../../services";
 import {
   Colors,
   FontNames,
@@ -45,9 +43,13 @@ import {
   Sizes,
 } from "../../styles";
 import type { Event, TabCalendarParamList } from "../../types";
-import { NotificationUtils, StorageUtils, TrackerUtils } from "../../utils";
+import {
+  NotificationUtils,
+  StorageUtils,
+  StringUtils,
+  TrackerUtils,
+} from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
-import { stringIsNotNullNorEmpty } from "../../utils/strings.util";
 
 interface Props {
   navigation: StackNavigationProp<TabCalendarParamList, "eventDetails">;
@@ -63,9 +65,28 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const hourWhenEventEnd = 18; // Se Termine à 18h
 
   const [showModalHelp, setShowModalHelp] = useState(false);
+  const [triggerGetAllEvents, setTriggerGetAllEvents] = useState(false);
   const [trackerAction, setTrackerAction] = useState("");
 
   const [scrollToEventId, setScrollToEventId] = useState("");
+
+  const init = useCallback(async () => {
+    const childBirthdayStr =
+      (await StorageUtils.getStringValue(
+        StorageKeysConstants.userChildBirthdayKey
+      )) ?? "";
+    setChildBirthday(childBirthdayStr);
+    const eventsCalcFromBirthdayStr =
+      (await StorageUtils.getStringValue(
+        StorageKeysConstants.eventsCalcFromBirthday
+      )) ?? "";
+    setEventsCalcFromBirthday(eventsCalcFromBirthdayStr);
+
+    if (childBirthdayStr.length > 0) {
+      setLoadingEvents(true);
+      setTriggerGetAllEvents(!triggerGetAllEvents);
+    }
+  }, [triggerGetAllEvents]);
 
   useEffect(() => {
     void requestCalendarPermission();
@@ -78,7 +99,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     });
     // Retourne "unsubscribe" pour que l'événement soit supprimé lors du "démontage" (fix memory leak)
     return unsubscribe;
-  }, []);
+  }, [init, navigation]);
 
   const getScrollToEventId = async () => {
     const eventId = await StorageUtils.getStringValue(
@@ -106,7 +127,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     return sources.find((source) => source.name === ICLOUD) ?? sources[0];
   };
 
-  const createCalendar = async () => {
+  const createCalendar = useCallback(async () => {
     const defaultCalendarSource = PLATFORM_IS_IOS
       ? await calendarSourceIOS()
       : {
@@ -126,7 +147,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
       title: Labels.appName,
     });
     return newCalendarID;
-  };
+  }, []);
 
   const buildDateTimeWithTimeZone = (date: string, hour: number) => {
     const hourOffset = new Date().getTimezoneOffset() / 60;
@@ -148,7 +169,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     return calendar;
   };
 
-  const syncEventsWithOsCalendar = async () => {
+  const syncEventsWithOsCalendar = useCallback(async () => {
     setTrackerAction(TrackerUtils.TrackingEvent.CALENDAR_SYNC);
 
     const appCalendar = await getAppCalendar();
@@ -173,42 +194,55 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
       date
     );
     setLastSyncDate(date);
-  };
+  }, [createCalendar, events]);
 
-  const [loadEvents, { loading, error, data }] = useLazyQuery(ALL_EVENTS, {
-    fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
-  });
+  const formattedEvents = useCallback(
+    (eventsToFormat: Event[]): Event[] => {
+      return eventsToFormat.map((event) => ({
+        ...event,
+        date: format(
+          addDays(new Date(childBirthday), event.debut),
+          Formats.dateISO
+        ),
+      }));
+    },
+    [childBirthday]
+  );
 
-  const init = async () => {
-    const childBirthdayStr =
-      (await StorageUtils.getStringValue(
-        StorageKeysConstants.userChildBirthdayKey
-      )) ?? "";
-    setChildBirthday(childBirthdayStr);
-    const eventsCalcFromBirthdayStr =
-      (await StorageUtils.getStringValue(
-        StorageKeysConstants.eventsCalcFromBirthday
-      )) ?? "";
-    setEventsCalcFromBirthday(eventsCalcFromBirthdayStr);
+  const scheduleEventsNotification = useCallback(async () => {
+    const notifIdsEventsStored = await StorageUtils.getObjectValue(
+      StorageKeysConstants.notifIdsEvents
+    );
+    const forceToScheduleEventsNotif = await StorageUtils.getObjectValue(
+      StorageKeysConstants.forceToScheduleEventsNotif
+    );
+    if (
+      StringUtils.stringIsNotNullNorEmpty(eventsCalcFromBirthday) &&
+      (!notifIdsEventsStored ||
+        eventsCalcFromBirthday !== childBirthday ||
+        forceToScheduleEventsNotif)
+    ) {
+      await StorageUtils.storeObjectValue(
+        StorageKeysConstants.forceToScheduleEventsNotif,
+        false
+      );
 
-    if (childBirthdayStr.length > 0) {
-      setLoadingEvents(true);
-      void loadEvents();
+      // Supprime les anciennes et planifie les nouvelles notifications des événements
+      void NotificationUtils.cancelScheduleEventsNotification().then(() => {
+        NotificationUtils.scheduleEventsNotification(events);
+      });
     }
-  };
-
-  const formattedEvents = (eventsToFormat: Event[]): Event[] => {
-    return eventsToFormat.map((event) => ({
-      ...event,
-      date: format(
-        addDays(new Date(childBirthday), event.debut),
-        Formats.dateISO
-      ),
-    }));
-  };
+  }, [childBirthday, events, eventsCalcFromBirthday]);
 
   useEffect(() => {
-    if (!loading && data) {
+    setLoadingEvents(false);
+    if (events.length > 0) {
+      void scheduleEventsNotification();
+    }
+  }, [events, scheduleEventsNotification]);
+
+  const handleResults = useCallback(
+    (data: unknown) => {
       const evenements = (data as { evenements: Event[] }).evenements;
 
       void StorageUtils.storeStringValue(
@@ -221,57 +255,40 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
         .catch(() => {
           setLoadingEvents(false);
         });
-    }
-  }, [loading, data]);
+    },
+    [childBirthday, formattedEvents]
+  );
 
-  const scheduleEventsNotification = async () => {
-    const notifIdsEventsStored = await StorageUtils.getObjectValue(
-      StorageKeysConstants.notifIdsEvents
-    );
-    const forceToScheduleEventsNotif = await StorageUtils.getObjectValue(
-      StorageKeysConstants.forceToScheduleEventsNotif
-    );
-    if (
-      stringIsNotNullNorEmpty(eventsCalcFromBirthday) &&
-      (!notifIdsEventsStored ||
-        eventsCalcFromBirthday !== childBirthday ||
-        forceToScheduleEventsNotif)
-    ) {
-      await StorageUtils.storeObjectValue(
-        StorageKeysConstants.forceToScheduleEventsNotif,
-        false
-      );
+  const onShowHelpModalButtonPressed = useCallback(
+    (showModal: boolean) => () => {
+      setShowModalHelp(showModal);
+    },
+    []
+  );
 
-      // Supprimme les anciennes et planifie les nouvelles notifications des événements
-      void NotificationUtils.cancelScheduleEventsNotification().then(() => {
-        NotificationUtils.scheduleEventsNotification(events);
-      });
-    }
-  };
-
-  useEffect(() => {
-    setLoadingEvents(false);
-    if (events.length > 0) {
-      void scheduleEventsNotification();
-    }
-  }, [events]);
+  const navigateToProfile = useCallback(() => {
+    void RootNavigation.navigate("profile", null);
+  }, []);
 
   return (
     <View style={styles.mainContainer}>
-      <TrackerHandler
-        screenName={TrackerUtils.TrackingEvent.CALENDAR}
-        actionName={trackerAction}
-      />
       <TitleH1
         title={Labels.tabs.calendarTitle}
         description={Labels.calendar.description}
         animated={false}
       />
-      {loadingEvents ? (
-        <Loader backdrop={false} />
-      ) : error ? (
-        <ErrorMessage error={error} />
-      ) : (
+      <TrackerHandler
+        screenName={TrackerUtils.TrackingEvent.CALENDAR}
+        actionName={trackerAction}
+      />
+      <GraphQLLazyQuery
+        query={CalendarDbQueries.ALL_EVENTS}
+        fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
+        getFetchedData={handleResults}
+        triggerLaunchQuery={triggerGetAllEvents}
+        noLoaderBackdrop
+      />
+      {!loadingEvents && (
         <View style={styles.calendarContainer}>
           {childBirthday.length > 0 ? (
             <>
@@ -295,9 +312,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
                 </View>
                 <View style={styles.helpBtnContainer}>
                   <TouchableOpacity
-                    onPress={() => {
-                      setShowModalHelp(true);
-                    }}
+                    onPress={onShowHelpModalButtonPressed(true)}
                   >
                     <Image source={HelpIcon} style={styles.helpIconStyle} />
                   </TouchableOpacity>
@@ -326,9 +341,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
               <CustomButton
                 title={Labels.profile.update}
                 rounded={true}
-                action={() => {
-                  void RootNavigation.navigate("profile", null);
-                }}
+                action={navigateToProfile}
               />
             </View>
           )}
@@ -339,9 +352,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
           icon={IcomoonIcons.synchroniser}
           title={Labels.calendar.synchronization}
           body={Labels.calendar.synchronizationHelper}
-          onDismiss={() => {
-            setShowModalHelp(false);
-          }}
+          onDismiss={onShowHelpModalButtonPressed(false)}
         />
       )}
     </View>

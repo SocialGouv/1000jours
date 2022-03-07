@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import type { IconNode } from "react-native-elements/dist/icons/Icon";
@@ -21,15 +21,17 @@ const ExpandableButton: React.FC<Props> = ({
   const [expandButton, setExpandButton] = useState(false);
   const backgroundColor = { backgroundColor: buttonColor };
 
+  const expandButtonPressed = useCallback(() => {
+    setExpandButton(!expandButton);
+  }, [expandButton]);
+
   return (
     <>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           accessibilityLabel={expandedText}
           style={[styles.buttonStyle, backgroundColor]}
-          onPress={() => {
-            setExpandButton(!expandButton);
-          }}
+          onPress={expandButtonPressed}
         >
           {icon}
         </TouchableOpacity>
