@@ -8,10 +8,7 @@ import type { ImageSourcePropType } from "react-native";
 import { Image, ScrollView, StyleSheet } from "react-native";
 import Carousel from "react-native-snap-carousel";
 
-import IconBad from "../../assets/images/moodboard/bad.png";
-import IconGood from "../../assets/images/moodboard/good.png";
-import IconMedium from "../../assets/images/moodboard/medium.png";
-import IconVeryGood from "../../assets/images/moodboard/verygood.png";
+import { MoodboardAssets } from "../../components/assets";
 import {
   BackButton,
   CustomButton,
@@ -39,22 +36,22 @@ interface RenderItemProps {
 const MOODBOARD_ITEMS = [
   {
     color: Colors.mood.veryGood,
-    icon: IconVeryGood,
+    icon: MoodboardAssets.IconVeryGood,
     title: Labels.moodboard.mood.veryGood,
   },
   {
     color: Colors.mood.good,
-    icon: IconGood,
+    icon: MoodboardAssets.IconGood,
     title: Labels.moodboard.mood.good,
   },
   {
     color: Colors.mood.medium,
-    icon: IconMedium,
+    icon: MoodboardAssets.IconMedium,
     title: Labels.moodboard.mood.medium,
   },
   {
     color: Colors.mood.bad,
-    icon: IconBad,
+    icon: MoodboardAssets.IconBad,
     title: Labels.moodboard.mood.bad,
   },
 ];
@@ -75,7 +72,7 @@ const Moodboard: FC<Props> = ({ navigation }) => {
 
   const renderItem = useCallback(({ item }: RenderItemProps) => {
     return (
-      <View style={[styles.itemContainer]}>
+      <View style={styles.itemContainer}>
         <View
           style={[
             styles.itemViewContainer,
