@@ -50,6 +50,12 @@ const Colors = {
     paginationActive: "#74C09F",
   },
   mapLoaderBackground: "#00000030",
+  mood: {
+    bad: "#E86405",
+    medium: "#BD8C09",
+    good: "#5770BE",
+    veryGood: "#739C88",
+  },
 };
 
 export default Colors;
