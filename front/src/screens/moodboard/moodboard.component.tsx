@@ -38,22 +38,22 @@ interface RenderItemProps {
 
 const MOODBOARD_ITEMS = [
   {
-    color: "#709C8A",
+    color: Colors.mood.veryGood,
     icon: IconVeryGood,
     title: Labels.moodboard.mood.veryGood,
   },
   {
-    color: "#5670B5",
+    color: Colors.mood.good,
     icon: IconGood,
     title: Labels.moodboard.mood.good,
   },
   {
-    color: "#E9A936",
+    color: Colors.mood.medium,
     icon: IconMedium,
     title: Labels.moodboard.mood.medium,
   },
   {
-    color: "#E96121",
+    color: Colors.mood.bad,
     icon: IconBad,
     title: Labels.moodboard.mood.bad,
   },
