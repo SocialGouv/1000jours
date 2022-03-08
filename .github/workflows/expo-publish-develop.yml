@@ -46,7 +46,7 @@ jobs:
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
 
-      - uses: socialgouv/actions/autodevops-env@gary-test-env-action
+      - uses: socialgouv/actions/autodevops-env@gary-prefer-offline
         id: env
 
       - name: Yarn
