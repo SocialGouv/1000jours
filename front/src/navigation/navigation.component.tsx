@@ -17,8 +17,7 @@ import {
 } from "../components/baseComponents";
 import NotificationHandler from "../components/notification/notificationHandler.component";
 import { Labels } from "../constants";
-import { LoadingScreen, Onboarding, Profile } from "../screens";
-import Moodboard from "../screens/moodboard/moodboard.component";
+import { LoadingScreen, Moodboard, Onboarding, Profile } from "../screens";
 import { Colors, Paddings, Sizes } from "../styles";
 import type { RootStackParamList } from "../types";
 import { getAppTheme } from "../utils";
