@@ -33,6 +33,7 @@ export enum TrackingEvent {
   FILTER_CARTO = "Filtre (Carto)",
   FILTER_ARTICLES = "Filtre (Articles)",
   RECHERCHER = "Rechercher",
+  MOODBOARD = "Moodboard",
 }
 
 export const dateWithMinHoursDelayIsBeforeNow = (date: Date): boolean => {

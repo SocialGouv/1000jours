@@ -1,0 +1,238 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-var-requires */
+import type { StackNavigationProp } from "@react-navigation/stack";
+import type { FC } from "react";
+import { useCallback, useRef, useState } from "react";
+import * as React from "react";
+import type { ImageSourcePropType } from "react-native";
+import { Image, ScrollView, StyleSheet } from "react-native";
+import Carousel from "react-native-snap-carousel";
+
+import IconBad from "../../assets/images/moodboard/bad.png";
+import IconGood from "../../assets/images/moodboard/good.png";
+import IconMedium from "../../assets/images/moodboard/medium.png";
+import IconVeryGood from "../../assets/images/moodboard/verygood.png";
+import {
+  BackButton,
+  CustomButton,
+  SecondaryText,
+  TitleH1,
+  View,
+} from "../../components/baseComponents";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
+import { Labels } from "../../constants";
+import { SCREEN_WIDTH } from "../../constants/platform.constants";
+import { Colors, Margins, Paddings, Sizes } from "../../styles";
+import type { RootStackParamList } from "../../types";
+import { TrackerUtils } from "../../utils";
+
+interface MoodboardItem {
+  title: string;
+  color: string;
+  icon: ImageSourcePropType;
+}
+interface RenderItemProps {
+  item: MoodboardItem;
+  index: number;
+}
+
+const MOODBOARD_ITEMS = [
+  {
+    color: "#709C8A",
+    icon: IconVeryGood,
+    title: Labels.moodboard.mood.veryGood,
+  },
+  {
+    color: "#5670B5",
+    icon: IconGood,
+    title: Labels.moodboard.mood.good,
+  },
+  {
+    color: "#E9A936",
+    icon: IconMedium,
+    title: Labels.moodboard.mood.medium,
+  },
+  {
+    color: "#E96121",
+    icon: IconBad,
+    title: Labels.moodboard.mood.bad,
+  },
+];
+
+const ITEM_WIDTH = Math.round(SCREEN_WIDTH * 0.7);
+const ITEM_HEIGHT = Math.round((ITEM_WIDTH * 3) / MOODBOARD_ITEMS.length);
+const ICON_SIZE = Math.round(ITEM_WIDTH * 0.5);
+const firstItemIndexToShow = 1;
+
+interface Props {
+  navigation: StackNavigationProp<RootStackParamList>;
+}
+
+const Moodboard: FC<Props> = ({ navigation }) => {
+  const [activeIndex, setActiveIndex] = useState<number>(firstItemIndexToShow);
+  const [trackerAction, setTrackerAction] = useState<string>("");
+  const ref = useRef(null);
+
+  const renderItem = useCallback(({ item }: RenderItemProps) => {
+    return (
+      <View style={[styles.itemContainer]}>
+        <View
+          style={[
+            styles.itemViewContainer,
+            styles.borderRadius,
+            { borderColor: item.color },
+          ]}
+        >
+          <View style={styles.iconContainer}>
+            <Image
+              style={{ height: ICON_SIZE, width: ICON_SIZE }}
+              source={item.icon}
+            />
+          </View>
+          <View
+            style={[
+              styles.itemViewLabelContainer,
+              {
+                backgroundColor: item.color,
+              },
+            ]}
+          >
+            <SecondaryText style={styles.itemLabel}>{item.title}</SecondaryText>
+          </View>
+        </View>
+      </View>
+    );
+  }, []);
+
+  const snapToItem = useCallback((index: number) => {
+    setActiveIndex(index);
+  }, []);
+
+  const goBack = useCallback(() => {
+    setTrackerAction(Labels.buttons.cancel);
+    navigation.goBack();
+  }, [navigation]);
+
+  const validate = useCallback(() => {
+    // TODO: Enregistrer le 'Mood' choisi et la date du jour
+    setTrackerAction(MOODBOARD_ITEMS[activeIndex].title);
+    navigation.goBack();
+  }, [activeIndex, navigation]);
+
+  return (
+    <ScrollView style={styles.mainContainer}>
+      <TrackerHandler
+        screenName={TrackerUtils.TrackingEvent.MOODBOARD}
+        actionName={trackerAction}
+      />
+      <View style={styles.header}>
+        <View style={styles.flexStart}>
+          <BackButton action={goBack} />
+        </View>
+        <TitleH1
+          animated={false}
+          title={Labels.moodboard.title}
+          description={Labels.moodboard.description}
+        />
+      </View>
+      <View style={styles.questionContainer}>
+        <SecondaryText style={styles.question}>
+          {Labels.moodboard.howDoYouFeelToday}
+        </SecondaryText>
+      </View>
+      <Carousel
+        ref={ref}
+        data={MOODBOARD_ITEMS}
+        renderItem={renderItem}
+        sliderWidth={SCREEN_WIDTH}
+        itemWidth={ITEM_WIDTH}
+        containerCustomStyle={styles.carouselContainer}
+        inactiveSlideShift={0}
+        onSnapToItem={snapToItem}
+        useScrollView={true}
+        firstItem={firstItemIndexToShow}
+      />
+
+      <View style={styles.buttonContainer}>
+        <CustomButton
+          title={Labels.buttons.validate}
+          rounded={true}
+          action={validate}
+        />
+      </View>
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  borderRadius: {
+    borderRadius: Sizes.xxxs,
+  },
+  buttonContainer: {
+    alignSelf: "center",
+    paddingTop: Paddings.largest,
+  },
+  carouselContainer: {
+    marginTop: Margins.largest,
+  },
+  flexStart: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  header: {
+    padding: Paddings.default,
+    paddingTop: Paddings.largest,
+  },
+  iconContainer: {
+    flex: 5,
+    justifyContent: "center",
+  },
+  itemContainer: {
+    alignItems: "center",
+    height: ITEM_HEIGHT,
+    justifyContent: "center",
+    width: ITEM_WIDTH,
+  },
+  itemLabel: {
+    color: "white",
+    fontSize: Sizes.lg,
+  },
+  itemViewContainer: {
+    alignItems: "center",
+    backgroundColor: "white",
+    borderWidth: 2,
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    width: "90%",
+  },
+  itemViewLabelContainer: {
+    alignItems: "center",
+    borderBottomLeftRadius: Sizes.xxxxs,
+    borderBottomRightRadius: Sizes.xxxxs,
+    flex: 2,
+    justifyContent: "center",
+    width: "100%",
+  },
+  mainContainer: {
+    backgroundColor: Colors.white,
+  },
+  question: {
+    color: Colors.primaryBlue,
+    fontSize: Sizes.md,
+    paddingHorizontal: Paddings.default,
+    textAlign: "center",
+  },
+  questionContainer: {
+    alignContent: "center",
+    alignItems: "center",
+    paddingVertical: Paddings.smallest,
+  },
+  title: {
+    fontWeight: "bold",
+    paddingBottom: Paddings.smallest,
+  },
+});
+
+export default Moodboard;
