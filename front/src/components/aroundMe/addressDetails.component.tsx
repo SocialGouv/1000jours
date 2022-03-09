@@ -99,9 +99,18 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
 
   const getContactIcon = (contactType: ContactType) => {
     const iconsMap = new Map<ContactType, React.ReactNode>();
-    iconsMap.set(ContactType.telephone, <DetailsPhoneIcon />);
-    iconsMap.set(ContactType.courriel, <DetailsMailIcon />);
-    iconsMap.set(ContactType.siteInternet, <DetailsWebIcon />);
+    iconsMap.set(
+      ContactType.telephone,
+      <AddressDetailsAssets.DetailsPhoneIcon />
+    );
+    iconsMap.set(
+      ContactType.courriel,
+      <AddressDetailsAssets.DetailsMailIcon />
+    );
+    iconsMap.set(
+      ContactType.siteInternet,
+      <AddressDetailsAssets.DetailsWebIcon />
+    );
     return iconsMap.get(contactType);
   };
 
