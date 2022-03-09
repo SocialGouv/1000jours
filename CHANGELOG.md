@@ -1,3 +1,10 @@
+## [1.95.1](https://github.com/SocialGouv/1000jours/compare/v1.95.0...v1.95.1) (2022-03-09)
+
+
+### Bug Fixes
+
+* **icones:** fix des icônes mal importées ([#1105](https://github.com/SocialGouv/1000jours/issues/1105)) ([41d91bc](https://github.com/SocialGouv/1000jours/commit/41d91bcd206b07967b2d37610118bcb706914e9e))
+
 # [1.95.0](https://github.com/SocialGouv/1000jours/compare/v1.94.2...v1.95.0) (2022-03-07)
 
 
