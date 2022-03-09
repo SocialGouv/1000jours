@@ -158,6 +158,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
         getFetchedData={handleResults}
         triggerLaunchQuery={triggerGetSteps}
+        noLoaderBackdrop
       />
       {_etapes.length > 0 && (
         <>
