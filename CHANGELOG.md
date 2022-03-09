@@ -1,3 +1,10 @@
+## [1.95.2](https://github.com/SocialGouv/1000jours/compare/v1.95.1...v1.95.2) (2022-03-09)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le freeze du loader sur la home page ([#1106](https://github.com/SocialGouv/1000jours/issues/1106)) ([f1d814b](https://github.com/SocialGouv/1000jours/commit/f1d814baed4084c28a38eebeb80321accfd12b42))
+
 ## [1.95.1](https://github.com/SocialGouv/1000jours/compare/v1.95.0...v1.95.1) (2022-03-09)
 
 
