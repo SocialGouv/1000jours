@@ -11,6 +11,7 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
+import { BaseAssets } from "../assets";
 
 interface Props {
   title: string;
@@ -24,8 +25,12 @@ const Checkbox: React.FC<Props> = ({ title, checked, onPress, labelSize }) => {
   return (
     <RNECheckBox
       title={title}
-      checkedIcon={<CheckedIcon width={Sizes.xs} height={Sizes.xs} />}
-      uncheckedIcon={<UncheckedIcon width={Sizes.xs} height={Sizes.xs} />}
+      checkedIcon={
+        <BaseAssets.CheckedIcon width={Sizes.xs} height={Sizes.xs} />
+      }
+      uncheckedIcon={
+        <BaseAssets.UncheckedIcon width={Sizes.xs} height={Sizes.xs} />
+      }
       checked={checked}
       onPress={onPress}
       containerStyle={[styles.checkbox]}

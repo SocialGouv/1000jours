@@ -5,8 +5,8 @@ import * as React from "react";
 import { useCallback, useRef, useState } from "react";
 import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import { Dimensions, FlatList, ScrollView, StyleSheet } from "react-native";
-import { OnBoardingAssets } from "../../components/assets";
 
+import { OnBoardingAssets } from "../../components/assets";
 import {
   CommonText,
   CustomButton,
