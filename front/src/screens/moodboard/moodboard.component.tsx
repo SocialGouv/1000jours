@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import type { StackNavigationProp } from "@react-navigation/stack";
+import { format } from "date-fns";
 import type { FC } from "react";
 import { useCallback, useRef, useState } from "react";
 import * as React from "react";
@@ -17,11 +18,11 @@ import {
   View,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { Labels } from "../../constants";
+import { Formats, Labels, StorageKeysConstants } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { Colors, Margins, Paddings, Sizes } from "../../styles";
 import type { RootStackParamList } from "../../types";
-import { TrackerUtils } from "../../utils";
+import { StorageUtils, TrackerUtils } from "../../utils";
 
 interface MoodboardItem {
   title: string;
@@ -31,6 +32,10 @@ interface MoodboardItem {
 interface RenderItemProps {
   item: MoodboardItem;
   index: number;
+}
+interface MoodStorageItem {
+  title: string;
+  date: string;
 }
 
 const MOODBOARD_ITEMS = [
@@ -111,7 +116,7 @@ const Moodboard: FC<Props> = ({ navigation }) => {
   }, [navigation]);
 
   const validate = useCallback(() => {
-    // TODO: Enregistrer le 'Mood' choisi et la date du jour
+    void saveMood(MOODBOARD_ITEMS[activeIndex].title);
     setTrackerAction(MOODBOARD_ITEMS[activeIndex].title);
     navigation.goBack();
   }, [activeIndex, navigation]);
@@ -158,6 +163,21 @@ const Moodboard: FC<Props> = ({ navigation }) => {
         />
       </View>
     </ScrollView>
+  );
+};
+
+export const saveMood = async (mood: string): Promise<void> => {
+  const oldMoods: MoodStorageItem[] =
+    (await StorageUtils.getObjectValue(StorageKeysConstants.moodsByDate)) ?? [];
+
+  oldMoods.push({
+    date: format(new Date(), Formats.dateISO),
+    title: mood,
+  });
+
+  void StorageUtils.storeObjectValue(
+    StorageKeysConstants.moodsByDate,
+    oldMoods
   );
 };
 
