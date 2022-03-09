@@ -7,10 +7,10 @@ import { StyleSheet } from "react-native";
 import { Labels } from "../../constants";
 import { PLATFORM_IS_ANDROID } from "../../constants/platform.constants";
 import { Colors, Margins, Paddings, Sizes } from "../../styles";
+import { AroundMeAssets } from "../assets";
 import { CustomButton, Icomoon, IcomoonIcons, View } from "../baseComponents";
 import AroundMeFilter from "./aroundMeFilter.component";
 import SubmitNewFilter from "./submitNewFilter.component";
-import { AroundMeAssets } from "../assets";
 
 interface Props {
   headerStyle: StyleProp<ViewStyle>;
