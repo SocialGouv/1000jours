@@ -20,6 +20,7 @@ export const osCalendarId = "@osCalendarId";
 export const osCalendarSyncDate = "@osCalendarSyncDate";
 export const scrollToEventId = "@scrollToEventId";
 export const articlesRead = "@articlesRead";
+export const moodsByDate = "@moodsByDate";
 
 export const allStorageKeys = [
   appActiveCounter,
@@ -43,6 +44,7 @@ export const allStorageKeys = [
   osCalendarSyncDate,
   scrollToEventId,
   articlesRead,
+  moodsByDate,
 ];
 
 export const epdsSurveyKeys = [epdsQuestionAndAnswersKey, epdsQuestionIndexKey];
