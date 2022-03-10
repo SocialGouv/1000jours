@@ -17,6 +17,7 @@ import {
   TitleH1,
   View,
 } from "../../components/baseComponents";
+import MoodsCalendar from "../../components/moodboard/moodsCalendar.component";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Formats, Labels, StorageKeysConstants } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
@@ -33,12 +34,12 @@ interface RenderItemProps {
   item: MoodboardItem;
   index: number;
 }
-interface MoodStorageItem {
+export interface MoodStorageItem {
   title: string;
   date: string;
 }
 
-const MOODBOARD_ITEMS = [
+export const MOODBOARD_ITEMS = [
   {
     color: Colors.mood.veryGood,
     icon: MoodboardAssets.IconVeryGood,
@@ -162,6 +163,8 @@ const Moodboard: FC<Props> = ({ navigation }) => {
           action={validate}
         />
       </View>
+
+      <MoodsCalendar />
     </ScrollView>
   );
 };
