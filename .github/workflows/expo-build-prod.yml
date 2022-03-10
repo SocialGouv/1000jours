@@ -22,7 +22,7 @@ jobs:
       DEEPLINK_PATH: app-millejours
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
       - uses: expo/expo-github-action@v5
@@ -53,7 +53,7 @@ jobs:
       DEEPLINK_PATH: app-millejours
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
       - uses: expo/expo-github-action@v5
