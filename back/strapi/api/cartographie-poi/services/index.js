@@ -2,10 +2,12 @@
 
 const sortNumbers = (a, b) => a - b;
 
-const buildPoiQuery = ({ perimetre, types, thematiques, etapes }) => {
+const MAX_POI_RESULTS = 10;
+
+const buildPoiQuery = ({ perimetre, position, types, thematiques, etapes }) => {
   const knex = strapi.connections.default;
 
-  const poisQuery = knex("cartographie_pois")
+  const poiAdressesQuery = knex("cartographie_pois")
     .crossJoin(
       knex.raw("jsonb_array_elements(??) as adresse_elements", [
         "cartographie_adresses_json",
@@ -18,52 +20,73 @@ const buildPoiQuery = ({ perimetre, types, thematiques, etapes }) => {
       "cartographie_types.id"
     );
 
-  const lngs = [perimetre[0], perimetre[2]].sort(sortNumbers);
-  const lats = [perimetre[1], perimetre[3]].sort(sortNumbers);
+  if (perimetre && perimetre.length) {
+    const lngs = [perimetre[0], perimetre[2]].sort(sortNumbers);
+    const lats = [perimetre[1], perimetre[3]].sort(sortNumbers);
 
-  poisQuery.whereRaw(
-    `
+    poiAdressesQuery.whereRaw(
+      `
 (adresse_elements->>'geocode_position_longitude')::float > ? AND
 (adresse_elements->>'geocode_position_longitude')::float < ? AND
 (adresse_elements->>'geocode_position_latitude')::float > ? AND
 (adresse_elements->>'geocode_position_latitude')::float < ?
 `,
-    [lngs[0], lngs[1], lats[0], lats[1]]
-  );
+      [lngs[0], lngs[1], lats[0], lats[1]]
+    );
+  }
+
+  if (position && position.length) {
+    poiAdressesQuery.whereRaw(
+      `
+adresse_elements->>'geocode_position_longitude' = ? AND
+adresse_elements->>'geocode_position_latitude' = ?
+`,
+      [position[0], position[1]]
+    );
+  }
 
   if (types && types.length) {
-    poisQuery.whereIn("cartographie_types.nom", types);
+    poiAdressesQuery.whereIn("cartographie_types.nom", types);
   }
 
   if (thematiques && thematiques.length) {
-    poisQuery.join(
+    poiAdressesQuery.join(
       "cartographie_types__thematiques as ct",
       "ct.cartographie_type_id",
       "=",
       "cartographie_types.id"
     );
-    poisQuery.join("thematiques", "thematiques.id", "=", "ct.thematique_id");
-    poisQuery.whereIn("thematiques.nom", thematiques);
+    poiAdressesQuery.join(
+      "thematiques",
+      "thematiques.id",
+      "=",
+      "ct.thematique_id"
+    );
+    poiAdressesQuery.whereIn("thematiques.nom", thematiques);
   }
 
   if (etapes && etapes.length) {
-    poisQuery.join(
+    poiAdressesQuery.join(
       "cartographie_types_etapes__etapes_cartographie_types as ce",
       "ce.cartographie-type_id",
       "=",
       "cartographie_types.id"
     );
-    poisQuery.join("etapes", "etapes.id", "=", "ce.etape_id");
-    poisQuery.whereIn("etapes.nom", etapes);
+    poiAdressesQuery.join("etapes", "etapes.id", "=", "ce.etape_id");
+    poiAdressesQuery.whereIn("etapes.nom", etapes);
   }
 
-  return poisQuery;
+  return poiAdressesQuery;
 };
 
-const search = async ({ perimetre, types, thematiques, etapes }) => {
-  if (!perimetre || !perimetre.length) return [];
+const searchQuery = async (params) => {
+  if (
+    (!params.perimetre || !params.perimetre.length) &&
+    (!params.position || !params.position.length)
+  )
+    return [];
 
-  const poisQuery = buildPoiQuery({ perimetre, types, thematiques, etapes });
+  const poisQuery = buildPoiQuery(params);
 
   const knex = strapi.connections.default;
 
@@ -83,7 +106,13 @@ const search = async ({ perimetre, types, thematiques, etapes }) => {
   `)
   );
 
-  const pois = await poisQuery;
+  return poisQuery;
+};
+
+const searchPois = async (params) => {
+  const poisSearchQuery = await searchQuery(params);
+
+  const pois = await poisSearchQuery;
 
   return pois.map((poi) => {
     const {
@@ -116,10 +145,71 @@ const search = async ({ perimetre, types, thematiques, etapes }) => {
   });
 };
 
-const count = async ({ perimetre, types, thematiques, etapes }) => {
-  if (!perimetre || !perimetre.length) return [];
+const searchAdresses = async (params) => {
+  const poisSearchQuery = await searchQuery(params);
 
-  const poisQuery = buildPoiQuery({ perimetre, types, thematiques, etapes });
+  const poiAdresses = await poisSearchQuery;
+
+  const limit = params.limit !== undefined ? params.limit : MAX_POI_RESULTS;
+
+  const adressesIndex = poiAdresses.reduce((adressesIndex, poiAdresse) => {
+    const {
+      nom,
+      telephone,
+      courriel,
+      site_internet,
+      type_nom: type,
+      type_categorie: categorie,
+      adresse,
+      code_postal,
+      commune,
+      position_longitude,
+      position_latitude,
+    } = poiAdresse;
+
+    const key = `${position_longitude}${position_latitude}`;
+
+    if (!adressesIndex[key]) {
+      adressesIndex[key] = {
+        adresse,
+        code_postal,
+        commune,
+        position_longitude,
+        position_latitude,
+        count: 0,
+        pois: [],
+      };
+    }
+
+    const poi = {
+      nom,
+      type,
+      categorie,
+      telephone,
+      courriel,
+      site_internet,
+    };
+
+    if (!limit || adressesIndex[key].count < limit) {
+      adressesIndex[key].pois.push(poi);
+    }
+
+    adressesIndex[key].count += 1;
+
+    return adressesIndex;
+  }, {});
+
+  return Object.values(adressesIndex).sort((a, b) => b.count - a.count);
+};
+
+const countPois = async (params) => {
+  if (
+    (!params.perimetre || !params.perimetre.length) &&
+    (!params.position || !params.position.length)
+  )
+    return 0;
+
+  const poisQuery = buildPoiQuery(params);
 
   const knex = strapi.connections.default;
 
@@ -198,8 +288,36 @@ const suggestions = async ({
   }
 };
 
+const countAdresses = async (params) => {
+  if (
+    (!params.perimetre || !params.perimetre.length) &&
+    (!params.position || !params.position.length)
+  )
+    return 0;
+
+  const poisQuery = buildPoiQuery(params);
+
+  const knex = strapi.connections.default;
+
+  poisQuery.count(
+    knex.raw("distinct (??, ??, ??)", [
+      "adresse_elements->>'geocode_adresse' as adresse",
+      "adresse_elements->>'geocode_code_postal' as code_postal",
+      "adresse_elements->>'geocode_commune' as commune",
+    ])
+  );
+
+  poisQuery.groupBy("adresse", "code_postal", "commune");
+
+  const count = await poisQuery;
+
+  return count && count[0] && count[0].count;
+};
+
 module.exports = {
-  search,
-  count,
+  searchPois,
+  countPois,
+  searchAdresses,
+  countAdresses,
   suggestions,
 };

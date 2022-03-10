@@ -115,12 +115,12 @@ const geoStream = (adressesStream, service = "search/csv", fields) =>
   new Promise(async (resolve, reject) => {
     let updatedGeocodesCount = 0;
 
-    const stream = await geocodeRequestStream(service, adressesStream, [
-      "identifiant",
-      ...fields,
-    ]);
-
     try {
+      const stream = await geocodeRequestStream(service, adressesStream, [
+        "identifiant",
+        ...fields,
+      ]);
+
       const chain = streamChain([
         stream(),
         handleResult,

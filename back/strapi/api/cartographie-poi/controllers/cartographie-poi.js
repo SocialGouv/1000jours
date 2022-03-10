@@ -2,7 +2,14 @@
 
 const PoiService = require("../services");
 
-const searchParams = ["perimetre", "types", "thematiques", "etapes"];
+const params = [
+  "perimetre",
+  "position",
+  "types",
+  "thematiques",
+  "etapes",
+  "limit",
+];
 
 const suggestionsParams = [
   "nouveaux_pois",
@@ -22,7 +29,7 @@ const buildParams = (context, params = searchParams) =>
 
 const search = async (context) => {
   try {
-    return PoiService.search(buildParams(context));
+    return PoiService.searchPois(buildParams(context));
   } catch (e) {
     context.badRequest(e.message);
   }
@@ -30,7 +37,7 @@ const search = async (context) => {
 
 const count = async (context) => {
   try {
-    return PoiService.count(buildParams(context));
+    return PoiService.countPois(buildParams(context));
   } catch (e) {
     context.badRequest(e.message);
   }
@@ -44,4 +51,26 @@ const suggestions = async (context) => {
   }
 };
 
-module.exports = { search, count, suggestions };
+const searchAdresses = async (context) => {
+  try {
+    return PoiService.searchAdresses(buildParams(context));
+  } catch (e) {
+    context.badRequest(e.message);
+  }
+};
+
+const countAdresses = async (context) => {
+  try {
+    return PoiService.countAdresses(buildParams(context));
+  } catch (e) {
+    context.badRequest(e.message);
+  }
+};
+
+module.exports = {
+  count,
+  countAdresses,
+  search,
+  searchAdresses,
+  suggestions,
+};
