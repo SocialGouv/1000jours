@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { format } from "date-fns";
 
 import { Formats, StorageKeysConstants } from "../../constants";
+import { StorageUtils } from "../../utils";
 import * as Moodboard from "./moodboard.component";
 
 describe("Moodboard component", () => {
@@ -15,14 +16,9 @@ describe("Moodboard component", () => {
     it("setItem is called with StorageKeysConstants.moodsByDate and without old mood", async () => {
       await Moodboard.saveMood("Bien");
       const expected = [{ date: today, title: "Bien" }];
-
-      expect(AsyncStorage.getItem).toBeCalledWith(
-        StorageKeysConstants.moodsByDate
-      );
-      expect(AsyncStorage.setItem).toBeCalledWith(
-        StorageKeysConstants.moodsByDate,
-        JSON.stringify(expected)
-      );
+      await StorageUtils.getObjectValue(StorageKeysConstants.moodsByDate).then((data) => {
+        expect(data).toEqual(expected)
+      });
     });
 
     it("setItem is called with StorageKeysConstants.moodsByDate and with old mood", async () => {
@@ -37,14 +33,29 @@ describe("Moodboard component", () => {
         { date: "2022-01-01", title: "Très bien" },
         { date: today, title: "Bien" },
       ];
+      await StorageUtils.getObjectValue(StorageKeysConstants.moodsByDate).then((data) => {
+        expect(data).toEqual(expected)
+      });
+    });
 
-      expect(AsyncStorage.getItem).toBeCalledWith(
-        StorageKeysConstants.moodsByDate
-      );
-      expect(AsyncStorage.setItem).toBeCalledWith(
+    it("setItem is called with StorageKeysConstants.moodsByDate for same date", async () => {
+      const items = [
+        { date: "2022-01-01", title: "Très bien" },
+        { date: today, title: "Mal" }
+      ];
+      await AsyncStorage.setItem(
         StorageKeysConstants.moodsByDate,
-        JSON.stringify(expected)
+        JSON.stringify(items)
       );
+
+      await Moodboard.saveMood("Bien");
+      const expected = [
+        { date: "2022-01-01", title: "Très bien" },
+        { date: today, title: "Bien" },
+      ];
+      await StorageUtils.getObjectValue(StorageKeysConstants.moodsByDate).then((data) => {
+        expect(data).toEqual(expected)
+      });
     });
   });
 });

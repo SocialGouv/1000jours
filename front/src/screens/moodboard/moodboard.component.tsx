@@ -172,15 +172,18 @@ const Moodboard: FC<Props> = ({ navigation }) => {
 export const saveMood = async (mood: string): Promise<void> => {
   const oldMoods: MoodStorageItem[] =
     (await StorageUtils.getObjectValue(StorageKeysConstants.moodsByDate)) ?? [];
+  const today = format(new Date(), Formats.dateISO);
 
-  oldMoods.push({
-    date: format(new Date(), Formats.dateISO),
+  // Permet de ne pas récupérer l'humeur du jour s'il a déjà été saisi, et don ne pas avoir de doublons
+  const newMoods = oldMoods.filter((item) => item.date !== today);
+  newMoods.push({
+    date: today,
     title: mood,
   });
 
   void StorageUtils.storeObjectValue(
     StorageKeysConstants.moodsByDate,
-    oldMoods
+    newMoods
   );
 };
 
