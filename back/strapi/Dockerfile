@@ -1,4 +1,4 @@
-FROM strapi/base:14
+FROM strapi/base:14-alpine
 
 RUN apt-get update
 
