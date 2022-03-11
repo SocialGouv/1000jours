@@ -20,6 +20,6 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with:
         args: >
-          -Dsonar.organization=SocialGouv
+          -Dsonar.organization=socialgouv
           -Dsonar.projectKey=SocialGouv_1000jours
           -Dsonar.exclusions=**/schema.graphql.js
