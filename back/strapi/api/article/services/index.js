@@ -21,8 +21,6 @@ const ArticleTextFields = Object.keys(ArticleModel.attributes).filter(field =>
 );
 
 const search = async ({ query }) => {
-  const knex = strapi.connections.default;
-
   query = normalizeString(query);
 
   const articles = await strapi.query("article")

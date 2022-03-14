@@ -3,36 +3,36 @@
 const { sanitizeEntity } = require("strapi-utils");
 
 const recurseWalk = (obj, func) =>
-  Object.keys(obj).reduce((obj, key) => {
-    if (obj[key] && typeof obj[key] === "object") {
-      recurseWalk(obj[key], func);
+  Object.keys(obj).reduce((allObj, key) => {
+    if (allObj[key] && typeof allObj[key] === "object") {
+      recurseWalk(allObj[key], func);
     } else {
-      func(obj[key], key, obj);
+      func(allObj[key], key, allObj);
     }
 
-    return obj;
+    return allObj;
   }, obj);
 
 const completeUrls = (entity) => {
   const serverUrl = strapi.config.get("server.url");
 
-  return recurseWalk(entity, (value, key, entity) => {
-    if (typeof value !== "string") return entity;
+  return recurseWalk(entity, (value, key, someEntity) => {
+    if (typeof value !== "string") return someEntity;
 
-    entity[key] = value.replace(/(^|")\/uploads/g, `$1${serverUrl}/uploads`);
+    someEntity[key] = value.replace(/(^|")\/uploads/g, `$1${serverUrl}/uploads`);
 
-    return entity;
+    return someEntity;
   });
 };
 
 // sanitize first-level text fields
 const sanitizeTexts = (data) =>
-  Object.keys(data).reduce((data, key) => {
-    if (typeof data[key] === "string") {
-      data[key] = data[key].trim().replace(/(\s)+/g, "$1");
+  Object.keys(data).reduce((allData, key) => {
+    if (typeof allData[key] === "string") {
+      allData[key] = allData[key].trim().replace(/(\s)+/g, "$1");
     }
 
-    return data;
+    return allData;
   }, data);
 
 const format = (entity, modelName) => {
