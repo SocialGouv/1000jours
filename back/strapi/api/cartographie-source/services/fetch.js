@@ -13,7 +13,7 @@ const fetchUnprocessedSource = async () => {
     return null;
   }
 
-  return await strapi
+  return strapi
     .query("cartographie-source")
     .findOne({ pret_a_traiter: true });
 };
