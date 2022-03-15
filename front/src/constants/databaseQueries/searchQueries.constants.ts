@@ -1,24 +1,24 @@
-export const SEARCH_ARTICLES_BY_KEYWORDS = `
-    query SearchArticlesByKeywords($keywords: String) {
-      articles(where: { _q: $keywords }) {
+export const SEARCH_ARTICLES_BY_KEYWORDS = /* GraphQL */ `
+  query SearchArticlesByKeywords($keywords: String) {
+    articles(where: { _q: $keywords }) {
+      id
+      titre
+      resume
+      visuel {
         id
-        titre
-        resume
-        visuel {
-          id
-          hash
-          url
-          height
-          width
-        }
-        cartographie_pois_types {
-          nom
-        }
+        hash
+        url
+        height
+        width
+      }
+      cartographie_pois_types {
+        nom
       }
     }
-  `;
+  }
+`;
 
-export const CARTO_SEND_SUGGESTIONS = `
+export const CARTO_SEND_SUGGESTIONS = /* GraphQL */ `
   mutation (
     $nouveauxPois: String
     $suggestionsAmeliorations: String
