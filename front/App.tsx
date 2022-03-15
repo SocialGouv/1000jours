@@ -7,7 +7,7 @@ import type { AppStateStatus } from "react-native";
 import { AppState } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import IcomoonFont from "./src/assets/icomoon/icomoon.ttf";
+import { BaseAssets } from "./src/components/assets";
 import LinksHandler from "./src/components/links/linksHandler.component";
 import { setNotificationHandler } from "./src/components/notification/notificationHandler.component";
 import TrackerHandler from "./src/components/tracker/trackerHandler.component";
@@ -28,7 +28,7 @@ initLocales();
 initMonitoring();
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const customFonts = { IcoMoon: IcomoonFont };
+const customFonts = { IcoMoon: BaseAssets.IcomoonFont };
 
 const MainAppContainer: FC = () => {
   const isLoadingComplete = useCachedResources();
