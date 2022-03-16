@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import "react-native-get-random-values";
+
 import { add, isBefore } from "date-fns";
 import MatomoTracker from "matomo-tracker-react-native";
+import { v4 as uuidv4 } from "uuid";
 
 import { StorageKeysConstants } from "../constants";
-import { getStringValue } from "./storage.util";
+import { getStringValue, storeObjectValue } from "./storage.util";
 
 export const MIN_HOURS_DELAY_TO_TRACK_NEW_OPENING = 6;
 
@@ -35,6 +38,27 @@ export enum TrackingEvent {
   RECHERCHER = "Rechercher",
   MOODBOARD = "Moodboard",
 }
+
+interface UserInfoType {
+  userInfo: {
+    uid: string;
+  };
+}
+
+export const getOrCreateUserUuid = async (): Promise<string> => {
+  let userUuid = await getStringValue(StorageKeysConstants.userUuidKey);
+
+  if (!userUuid) {
+    userUuid = uuidv4();
+    await storeObjectValue(StorageKeysConstants.userUuidKey, userUuid);
+  }
+  return userUuid;
+};
+
+export const getUserInfoForTracker = async (): Promise<UserInfoType> => {
+  const uid = await getOrCreateUserUuid();
+  return { userInfo: { uid } };
+};
 
 export const dateWithMinHoursDelayIsBeforeNow = (date: Date): boolean => {
   return isBefore(

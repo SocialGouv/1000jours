@@ -1,3 +1,4 @@
+export const userUuidKey = "@userUuidKey";
 export const appActiveCounter = "@appActiveCounter";
 export const appOpeningLastDate = "@appOpeningLastDate";
 export const isFirstLaunchKey = "@isFirstLaunch";
@@ -23,6 +24,7 @@ export const articlesRead = "@articlesRead";
 export const moodsByDate = "@moodsByDate";
 
 export const allStorageKeys = [
+  userUuidKey,
   appActiveCounter,
   appOpeningLastDate,
   isFirstLaunchKey,

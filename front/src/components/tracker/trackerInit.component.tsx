@@ -20,7 +20,11 @@ export const TrackerProvider: FC<TrackerProviderProps> = ({ appContainer }) => {
 export const TrackerAppStart: FC = () => {
   const { trackAppStart } = useMatomo();
   useEffect(() => {
-    void trackAppStart({});
+    const launchTrackAppStart = async () => {
+      await trackAppStart(await TrackerUtils.getUserInfoForTracker());
+    };
+
+    void launchTrackAppStart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
