@@ -1,4 +1,4 @@
-export const ALL_EVENTS = `
+export const ALL_EVENTS = /* GraphQL */ `
   query GetEvents {
     evenements {
       id
@@ -40,7 +40,7 @@ export const ALL_EVENTS = `
   }
 `;
 
-export const GET_EVENT_DETAILS = (eventId: string): string =>
+export const GET_EVENT_DETAILS = (eventId: string): string /* GraphQL */ =>
   `
     query GetEventDetails {
       evenement(id: ${eventId})

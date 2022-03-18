@@ -1,6 +1,7 @@
+import type MatomoTracker from "matomo-tracker-react-native";
 import { MatomoProvider, useMatomo } from "matomo-tracker-react-native";
 import type { FC, ReactElement } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as React from "react";
 
 import { TrackerUtils } from "../../utils";
@@ -10,11 +11,20 @@ interface TrackerProviderProps {
 }
 
 export const TrackerProvider: FC<TrackerProviderProps> = ({ appContainer }) => {
-  return (
-    <MatomoProvider instance={TrackerUtils.matomoInstance}>
-      {appContainer}
-    </MatomoProvider>
-  );
+  const [matomoInstance, setMatomoInstance] = useState<
+    MatomoTracker | undefined
+  >();
+
+  useEffect(() => {
+    const getMatomoInstance = async () => {
+      setMatomoInstance(await TrackerUtils.matomoInstance());
+    };
+    void getMatomoInstance();
+  }, []);
+
+  return matomoInstance ? (
+    <MatomoProvider instance={matomoInstance}>{appContainer}</MatomoProvider>
+  ) : null;
 };
 
 export const TrackerAppStart: FC = () => {
