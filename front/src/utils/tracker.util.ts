@@ -10,11 +10,27 @@ import { getStringValue, storeObjectValue } from "./storage.util";
 
 export const MIN_HOURS_DELAY_TO_TRACK_NEW_OPENING = 6;
 
-export const matomoInstance = new MatomoTracker({
-  disabled: process.env.MATOMO_ENABLED === "false",
-  siteId: Number(process.env.MATOMO_APPLICATION_ID),
-  urlBase: String(process.env.MATOMO_URL),
-});
+export const getOrCreateUserUuid = async (): Promise<string> => {
+  let userUuid = await getStringValue(StorageKeysConstants.userUuidKey);
+
+  if (!userUuid) {
+    userUuid = uuidv4();
+    await storeObjectValue(StorageKeysConstants.userUuidKey, userUuid);
+  }
+
+  // Le getStringValue retourne la valeur avec double quotes, il faut les supprimer
+  return userUuid.replaceAll('"', "");
+};
+
+export const matomoInstance = async (): Promise<MatomoTracker> => {
+  const userId = await getOrCreateUserUuid();
+  return new MatomoTracker({
+    disabled: process.env.MATOMO_ENABLED === "false",
+    siteId: Number(process.env.MATOMO_APPLICATION_ID),
+    urlBase: String(process.env.MATOMO_URL),
+    userId,
+  });
+};
 
 export enum TrackingEvent {
   APP_ACTIVE = "Ouverture de l'app",
@@ -44,16 +60,6 @@ interface UserInfoType {
     uid: string;
   };
 }
-
-export const getOrCreateUserUuid = async (): Promise<string> => {
-  let userUuid = await getStringValue(StorageKeysConstants.userUuidKey);
-
-  if (!userUuid) {
-    userUuid = uuidv4();
-    await storeObjectValue(StorageKeysConstants.userUuidKey, userUuid);
-  }
-  return userUuid;
-};
 
 export const getUserInfoForTracker = async (): Promise<UserInfoType> => {
   const uid = await getOrCreateUserUuid();

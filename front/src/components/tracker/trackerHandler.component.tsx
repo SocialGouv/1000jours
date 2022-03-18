@@ -1,10 +1,10 @@
-import type { Action, Event } from "matomo-tracker-react-native";
+import type { Event } from "matomo-tracker-react-native";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import { useEffect } from "react";
 
 import type { TrackerEvent, TrackerSearch } from "../../type";
-import { StringUtils, TrackerUtils } from "../../utils";
+import { StringUtils } from "../../utils";
 
 interface TrackerHandlerProps {
   screenName?: string;
@@ -23,17 +23,8 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
     useMatomo();
 
   useEffect(() => {
-    if (screenName && StringUtils.stringIsNotNullNorEmpty(screenName)) {
-      const launchTrackScreenView = async () => {
-        const params: Action = {
-          name: screenName,
-          ...(await TrackerUtils.getUserInfoForTracker()),
-        };
-        await trackScreenView(params);
-      };
-
-      void launchTrackScreenView();
-    }
+    if (screenName && StringUtils.stringIsNotNullNorEmpty(screenName))
+      void trackScreenView({ name: screenName });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -43,23 +34,9 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
     const actionNameIsNotEmpty =
       actionName && StringUtils.stringIsNotNullNorEmpty(actionName);
 
-    const launchTrackAction = async () => {
-      const name = actionNameIsNotEmpty
-        ? screenNameIsNotEmpty
-          ? `${screenName} / ${actionName}`
-          : `${actionName}`
-        : "";
-
-      if (name.length > 0) {
-        const params: Action = {
-          name,
-          ...(await TrackerUtils.getUserInfoForTracker()),
-        };
-        void trackAction(params);
-      }
-    };
-
-    void launchTrackAction();
+    if (screenNameIsNotEmpty && actionNameIsNotEmpty)
+      void trackAction({ name: `${screenName} / ${actionName}` });
+    else if (actionNameIsNotEmpty) void trackAction({ name: `${actionName}` });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionName]);
 
@@ -70,15 +47,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
       searchObject.category &&
       StringUtils.stringIsNotNullNorEmpty(searchObject.category)
     ) {
-      const launchTrackSiteSearch = async () => {
-        const params = {
-          ...searchObject,
-          ...(await TrackerUtils.getUserInfoForTracker()),
-        };
-        await trackSiteSearch(params);
-      };
-
-      void launchTrackSiteSearch();
+      void trackSiteSearch(searchObject);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchObject]);
@@ -93,18 +62,13 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
       eventObject?.action && eventObject.action.length > 0;
 
     if (eventNameIsNotEmpty && eventActionIsNotEmpty) {
-      const launchTrackEvent = async () => {
-        const event: Event = {
-          action: eventObject.action,
-          category: eventCategory,
-          name: eventObject.name,
-          value: eventValue,
-          ...(await TrackerUtils.getUserInfoForTracker()),
-        };
-        await trackEvent(event);
+      const event: Event = {
+        action: eventObject.action,
+        category: eventCategory,
+        name: eventObject.name,
+        value: eventValue,
       };
-
-      void launchTrackEvent();
+      void trackEvent(event);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventObject]);
