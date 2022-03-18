@@ -55,17 +55,6 @@ export enum TrackingEvent {
   MOODBOARD = "Moodboard",
 }
 
-interface UserInfoType {
-  userInfo: {
-    uid: string;
-  };
-}
-
-export const getUserInfoForTracker = async (): Promise<UserInfoType> => {
-  const uid = await getOrCreateUserUuid();
-  return { userInfo: { uid } };
-};
-
 export const dateWithMinHoursDelayIsBeforeNow = (date: Date): boolean => {
   return isBefore(
     add(date, {
