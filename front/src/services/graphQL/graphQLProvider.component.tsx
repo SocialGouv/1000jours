@@ -4,11 +4,11 @@ import * as React from "react";
 
 import { getGraphQLClient } from "./graphQLClient.service";
 
-interface TrackerProviderProps {
+interface GraphQLProviderProps {
   appContainer: ReactElement;
 }
 
-const GraphQLProvider: FC<TrackerProviderProps> = ({ appContainer }) => {
+const GraphQLProvider: FC<GraphQLProviderProps> = ({ appContainer }) => {
   return (
     <ApolloProvider client={getGraphQLClient()}>{appContainer}</ApolloProvider>
   );
