@@ -125,9 +125,9 @@ const count = async ({ perimetre, types, thematiques, etapes }) => {
 
   poisQuery.count(knex.raw("distinct (??)", ["cartographie_pois.id"]));
 
-  const count = await poisQuery;
+  const poiCount = await poisQuery;
 
-  return count && count[0] && count[0].count;
+  return poiCount && poiCount[0] && poiCount[0].count;
 };
 
 const emailSuggestionsTemplate = (info) => ({

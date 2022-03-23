@@ -5,13 +5,10 @@
   "description": "Backoffice 1000jours",
   "scripts": {
     "develop": "strapi develop",
-    "prestart": "yarn config:restore",
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
     "lint": "eslint . --fix",
-    "config:dump": "strapi configuration:dump -p -f config/api.json",
-    "config:restore": "strapi configuration:restore -f config/api.json",
     "seed:import": "node scripts/import && node scripts/seed",
     "test": "jest"
   },
@@ -64,7 +61,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-jest": "^24.4.3",
     "jest": "^27.2.5",
-    "node-fetch": "^3.0.0",
+    "node-fetch": "^2.0.0",
     "prettier": "^2.3.2"
   }
 }

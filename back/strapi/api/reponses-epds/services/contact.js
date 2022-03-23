@@ -7,11 +7,22 @@ const emailTemplate = (info) => ({
     Une demande de contact suite à un test EPDS a été effectuée.
 
     Vous pouvez recontacter <%- prenom %> (<%- nombre_enfants %> enfant(s), dernier enfant le <%- naissance_dernier_enfant %>) :
-    - à l'adresse suivante : <%- email %>${info.telephone
-      ? ` ;
+    ${info.email ? `
+    - à l'adresse suivante : <%- email %>`
+      : ``
+    }
+    ${info.telephone ? `
     - au numéro suivant : <%- telephone %>`
       : ``
-    }.
+    }
+    ${info.moyen ? `
+    - préférence : <%- moyen %>`
+      : ``
+    } 
+    ${info.horaires ? `
+    - horaires : <%- horaires %>`
+      : ``
+    }
 
     L'équipe 1000 premiers jours.`,
   html: `<p>Bonjour,</p>
@@ -20,11 +31,22 @@ const emailTemplate = (info) => ({
 
     <p>Vous pouvez recontacter <%- prenom %> (<%- nombre_enfants %> enfant(s), dernier enfant né le <%- naissance_dernier_enfant %>) :
     <ul>
-      <li>à l'adresse suivante : <a href="mailto:<%- email %>"><%- email %></a>${info.telephone
-      ? ` ;</li>
+    ${info.email ? `
+        <li>à l'adresse suivante : <a href="mailto:<%- email %>"><%- email %></a>`
+      : ""
+    }
+    ${info.telephone ? ` </li>
       <li>au numéro suivant : <a href="tel:<%- telephone %>"><%- telephone %></a>`
       : ""
-    }.</li>
+    }
+    ${info.moyen ? ` </li>
+      <li>préférence : <%- moyen %>`
+      : ""
+    }
+    ${info.horaires ? ` </li>
+      <li>horaires : <%- horaires %>`
+      : ""
+    }</li>
     </ul>
     </p>
 
@@ -32,16 +54,16 @@ const emailTemplate = (info) => ({
 });
 
 const contact = async ({
-  email,
-  telephone,
+  email = "ND",
+  telephone = "ND",
   prenom = "ND",
   nombre_enfants = "ND",
   naissance_dernier_enfant = "ND",
+  moyen = "ND",
+  horaires = "ND"
 }) => {
   if (!process.env["MAIL_SEND_TO"])
     throw new Error("Le service mail n'est pas configuré");
-
-  if (!email) throw new Error("Au moins une adresse email est nécessaire");
 
   const info = {
     email,
@@ -49,6 +71,8 @@ const contact = async ({
     prenom,
     nombre_enfants,
     naissance_dernier_enfant,
+    moyen,
+    horaires
   };
 
   try {

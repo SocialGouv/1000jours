@@ -32,7 +32,7 @@ const formatRegles = async (data) => {
 
   // fetch POI types names from database to display in item title
   data.regles.type.forEach((regle) => {
-    const type = types.find((type) => type.id === regle.valeur);
+    const type = types.find((someType) => someType.id === regle.valeur);
     if (!type) return false;
 
     regle.identifiant = type.identifiant;
@@ -45,21 +45,21 @@ const formatRegles = async (data) => {
 
     if (!Array.isArray(keyRegles)) return reglesScript;
 
-    return keyRegles.reduce((reglesScript, regle) => {
+    return keyRegles.reduce((regles, regle) => {
       if (typeof regle.valeur === "string") regle.valeur = regle.valeur.trim();
 
-      if (!regle.valeur) return reglesScript;
+      if (!regle.valeur) return regles;
 
-      reglesScript += reglesScript ? "\n\n" : "";
-      reglesScript += `champ $\{${key}} est `;
-      reglesScript +=
+      regles += regles ? "\n\n" : "";
+      regles += `champ $\{${key}} est `;
+      regles +=
         regle.valeur[0] === '"' || key === "type"
           ? `"${regle.valeur}"`
           : `$\{${regle.valeur}}`;
 
-      if (!regle.conditions || !regle.conditions.length) return reglesScript;
+      if (!regle.conditions || !regle.conditions.length) return regles;
 
-      return regle.conditions.reduce((reglesScript, condition) => {
+      return regle.conditions.reduce((regles2, condition) => {
         condition.condition_source = condition.condition_source.trim();
 
         condition.identifiant = `si $\{${condition.condition_source}} `;
@@ -78,10 +78,10 @@ const formatRegles = async (data) => {
           condition.identifiant += "est vide";
         }
 
-        reglesScript += `\n\t${condition.identifiant}`;
+        regles2 += `\n\t${condition.identifiant}`;
 
-        return reglesScript;
-      }, reglesScript);
+        return regles2;
+      }, regles);
     }, reglesScript);
   }, "");
 };

@@ -30,7 +30,8 @@
       "type": "enumeration",
       "enum": [
         "SiteWebPro",
-        "ApplicationMobile"
+        "ApplicationMobile",
+        "SitePartenaire"
       ]
     },
     "reponse_1": {
@@ -62,6 +63,12 @@
     },
     "reponse_10": {
       "type": "integer"
+    },
+    "langue": {
+      "model": "locale"
+    },
+    "source_widget": {
+      "model": "widget-epds-sources"
     }
   }
 }

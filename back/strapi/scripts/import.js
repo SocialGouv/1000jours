@@ -16,6 +16,7 @@ const models = [
   "evenement",
   "article",
   "questionnaire-epds",
+  "cartographie-types"
 ];
 
 const main = async () => {

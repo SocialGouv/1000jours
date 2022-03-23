@@ -5,18 +5,18 @@ const { parser: jsonStreamParser } = require("stream-json/Parser");
 const StreamService = require("../../stream/services");
 
 const accumulateFieldsRecursive = (data, fields = new Set(), path = "") =>
-  Object.keys(data).reduce((fields, key) => {
+  Object.keys(data).reduce((allFields, key) => {
     const keyPath = path ? `${path}.${key}` : key;
 
     if (data[key] && Array.isArray(data[key])) {
-      fields.add(`${keyPath}[]`);
+      allFields.add(`${keyPath}[]`);
     } else if (data[key] && typeof data[key] === "object") {
-      accumulateFieldsRecursive(data[key], fields, keyPath);
+      accumulateFieldsRecursive(data[key], allFields, keyPath);
     } else {
-      fields.add(keyPath);
+      allFields.add(keyPath);
     }
 
-    return fields;
+    return allFields;
   }, fields);
 
 const getProcessors = (filePath) => [
@@ -31,7 +31,7 @@ const parseHeader = async (filePath) => {
   const columnsSet = new Set();
 
   await StreamService.streamProcessFile(filePath, [
-    ...(await getProcessors(filePath)),
+    ...(getProcessors(filePath)),
     (line) => accumulateFieldsRecursive(line, columnsSet),
   ]);
 

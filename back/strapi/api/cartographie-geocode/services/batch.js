@@ -32,12 +32,12 @@ const updateGeocodes = async (geocodes) => {
   const poisToUpdate = [];
 
   const identifiants = geocodes.reduce(
-    (identifiants, { identifiant, geocode }) => {
+    (allIdentifiants, { identifiant, geocode }) => {
       if (identifiant) {
-        identifiants.push(identifiant);
+        allIdentifiants.push(identifiant);
       }
 
-      return identifiants;
+      return allIdentifiants;
     },
     []
   );
@@ -67,8 +67,8 @@ const updateGeocodes = async (geocodes) => {
       if (!identifiant) continue;
 
       shouldUpdate = poi.cartographie_adresses_json.reduce(
-        (shouldUpdate, adresse) => {
-          if (adresse.identifiant !== identifiant) return shouldUpdate;
+        (shouldUpdate2, adresse) => {
+          if (adresse.identifiant !== identifiant) return shouldUpdate2;
 
           Object.assign(adresse, geocode);
 
@@ -121,7 +121,7 @@ const geoStream = (adressesStream, service = "search/csv", fields) =>
     ]);
 
     try {
-      const chain = streamChain([
+      streamChain([
         stream(),
         handleResult,
         new Batch({ size: BUCKET_SIZE }),
