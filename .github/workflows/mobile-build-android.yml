@@ -46,14 +46,13 @@ jobs:
         cd front/android
         ./gradlew bundleDevDebug
 
-    - name: Send APK by mail
-      uses: dawidd6/action-send-mail@v3
+    - name: Distribute app on AppCenter
+      uses: AppCenterDistribute@3
       with:
-        server_address: smtp.gmail.com
-        # Required mail server port:
-        server_port: 465
-        subject: Android app
-        to: yjacqueline@ippon.fr
-         # Required sender full name (address can be skipped):
-        from: yjacqueline@ippon.fr
-        attachments: front/android/app/build/outputs/apk/Dev/debug/app-Dev-debug.apk
+        serverEndpoint: 'AppCenter'
+        appSlug: https://appcenter.ms/orgs/1000-jours/apps/1000-jours/
+        appFile: front/android/app/build/outputs/apk/Dev/debug/app-Dev-debug.apk
+        symbolsOption: 'Android'
+        releaseNotesOption: 'input'
+        releaseNotesInput: 'Here are the release notes for this version.'
+        destinationType: 'groups'
