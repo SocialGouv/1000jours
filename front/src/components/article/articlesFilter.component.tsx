@@ -251,6 +251,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: Margins.evenMoreSmallest,
     marginLeft: Margins.evenMoreSmallest,
+    minHeight: Sizes.minButton,
     shadowColor: Colors.navigation,
     shadowOffset: {
       height: 1,
