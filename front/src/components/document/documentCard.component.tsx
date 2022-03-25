@@ -64,6 +64,7 @@ const DocumentCard: FC<Props> = ({ document }) => {
         <View style={styles.contentButton}>
           <CustomButton
             title={Labels.timeline.library.download}
+            accessibilityLabel={Labels.timeline.library.download + document.nom}
             titleStyle={styles.fontButton}
             rounded={true}
             disabled={false}
