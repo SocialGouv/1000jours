@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   solidRounded: {
     backgroundColor: Colors.primaryBlueDark,
-    borderRadius: 20,
+    borderRadius: 25,
     color: Colors.white,
   },
 });
