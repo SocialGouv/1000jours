@@ -56,9 +56,11 @@ const CustomTextInput: FC<Props> = ({
 
 const styles = StyleSheet.create({
   clearButton: {
+    alignItems: "center",
     bottom: 0,
     justifyContent: "center",
-    marginRight: Margins.smaller,
+    minHeight: Sizes.minButton,
+    minWidth: Sizes.minButton,
     position: "absolute",
     right: 0,
     top: 0,
@@ -71,6 +73,7 @@ const styles = StyleSheet.create({
   },
   textInputView: {
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
+    minHeight: Sizes.minButton,
     paddingLeft: Margins.smaller,
   },
   textInputWidth: {
