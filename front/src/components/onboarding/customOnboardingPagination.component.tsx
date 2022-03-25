@@ -34,6 +34,7 @@ export const CustomPagination: FC<OnboardingPaginationProps> = ({
           key={value}
           onPress={onPaginationPressed(value)}
           accessibilityLabel={`${Labels.onboarding.screenNumber}${value + 1}`}
+          style={{ minHeight: Sizes.minButton }}
         >
           <View
             style={[
