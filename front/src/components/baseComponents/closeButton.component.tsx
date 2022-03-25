@@ -29,8 +29,8 @@ const CloseButton: React.FC<Props> = ({ onPress, clear }) => {
 
 const styles = StyleSheet.create({
   closeModalView: {
-    minHeight: Sizes.minButton,
-    minWidth: Sizes.minButton,
+    minHeight: Sizes.accessibilityMinButton,
+    minWidth: Sizes.accessibilityMinButton,
     padding: Paddings.default,
   },
   solidRounded: {

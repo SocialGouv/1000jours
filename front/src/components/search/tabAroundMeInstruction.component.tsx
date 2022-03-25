@@ -210,8 +210,8 @@ const styles = StyleSheet.create({
   geolicationTouchableStyle: {
     alignItems: "center",
     justifyContent: "center",
-    minHeight: Sizes.minButton,
-    minWidth: Sizes.minButton,
+    minHeight: Sizes.accessibilityMinButton,
+    minWidth: Sizes.accessibilityMinButton,
   },
   geolocationRow: {
     flexDirection: "row",

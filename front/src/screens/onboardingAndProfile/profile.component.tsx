@@ -433,7 +433,7 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
   },
   itemTouchable: {
-    minHeight: Sizes.minButton,
+    minHeight: Sizes.accessibilityMinButton,
     paddingHorizontal: Paddings.default,
     paddingVertical: Paddings.default,
   },

@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     bottom: 0,
     justifyContent: "center",
-    minHeight: Sizes.minButton,
-    minWidth: Sizes.minButton,
+    minHeight: Sizes.accessibilityMinButton,
+    minWidth: Sizes.accessibilityMinButton,
     position: "absolute",
     right: 0,
     top: 0,
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   textInputView: {
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
-    minHeight: Sizes.minButton,
+    minHeight: Sizes.accessibilityMinButton,
     paddingLeft: Margins.smaller,
   },
   textInputWidth: {

@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
   checkboxItem: {
     backgroundColor: "transparent",
     borderColor: "transparent",
-    minHeight: Sizes.minButton,
+    minHeight: Sizes.accessibilityMinButton,
   },
   filterButton: {
     alignSelf: "flex-start",

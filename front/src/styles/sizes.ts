@@ -24,7 +24,7 @@ const Sizes = {
   step: scaleNormalize(80),
   timelineBlock: scaleNormalize(100),
   thumbnail: scaleNormalize(100),
-  minButton: scaleNormalize(48),
+  accessibilityMinButton: scaleNormalize(48),
 };
 
 export default Sizes;

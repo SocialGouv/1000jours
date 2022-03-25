@@ -72,8 +72,8 @@ const CustomButton: FC<Props> = ({
 
 const styles = StyleSheet.create({
   accessibilitySize: {
-    minHeight: Sizes.minButton,
-    minWidth: Sizes.minButton,
+    minHeight: Sizes.accessibilityMinButton,
+    minWidth: Sizes.accessibilityMinButton,
   },
   buttonWithIcon: {
     paddingStart: 8,
