@@ -46,13 +46,12 @@ jobs:
         cd front/android
         ./gradlew bundleDevDebug
 
-    - name: Distribute app on AppCenter
-      uses: AppCenterDistribute@3
+    - name: upload artefact to App Center
+      uses: wzieba/AppCenter-Github-Action@v1
       with:
-        serverEndpoint: 'AppCenter'
-        appSlug: https://appcenter.ms/orgs/1000-jours/apps/1000-jours/
-        appFile: front/android/app/build/outputs/apk/Dev/debug/app-Dev-debug.apk
-        symbolsOption: 'Android'
-        releaseNotesOption: 'input'
-        releaseNotesInput: 'Here are the release notes for this version.'
-        destinationType: 'groups'
+        appName: wzieba/Sample-App
+        token: ${{secrets.APP_CENTER_TOKEN}}
+        group: Testers
+        file: front/android/app/build/outputs/apk/Dev/debug/app-Dev-debug.apk
+        notifyTesters: false
+        debug: true
