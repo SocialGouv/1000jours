@@ -122,6 +122,7 @@ export default {
     },
     inShortTitle: "En bref :",
     learnMoreAboutIt: "En savoir plus à ce sujet :",
+    usefulTitle: "Cet article vous a été utile ?",
   },
   articleList: {
     articlesToRead: "article(s) à lire",
@@ -135,12 +136,14 @@ export default {
     contact: "Contacter",
     finish: "Terminer",
     next: "Suivant",
+    no: "Non",
     ok: "Ok",
     pass: "Passer",
     previous: "Précédent",
     share: "Partager",
     start: "Commencer",
     validate: "Valider",
+    yes: "Oui",
   },
   calendar: {
     description:

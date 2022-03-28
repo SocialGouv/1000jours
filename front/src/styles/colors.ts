@@ -43,6 +43,7 @@ const Colors = {
   borderGrey: "#E7E7E7",
   grey: "#878787",
   white: "#FFFFFF",
+  black: "#000",
   backdrop: "#00000080",
   transparentGrey: "rgba(52, 52, 52, 0.8)",
   onBoardingSwiperFlatList: {

@@ -83,6 +83,8 @@ export enum IcomoonIcons {
   relancerRecherche = "relancerRecherche",
   afficherListe = "afficherListe",
   important = "important",
+  annuler = "annuler",
+  valider = "valider",
 }
 
 const Icomoon: React.FC<Props> = ({ name, size, color }) => {
