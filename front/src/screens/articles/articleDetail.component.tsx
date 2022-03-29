@@ -20,6 +20,7 @@ import {
   Thematics,
   Title,
 } from "../../components";
+import UsefulArticle from "../../components/article/usefulArticle.component";
 import {
   BackButton,
   ShareButton,
@@ -217,6 +218,7 @@ const ArticleDetail: FC<Props> = ({
               <View style={styles.articleDetails}>
                 <Title title={currentArticle.titre} />
                 <Thematics items={currentArticle.thematiques} />
+                <InShort inShortArray={inShortArray} />
                 <SubTitle title={currentArticle.texteTitre1} />
                 <TextHtml
                   html={currentArticle.texte1}
@@ -228,8 +230,8 @@ const ArticleDetail: FC<Props> = ({
                   html={currentArticle.texte2}
                   offsetTotal={paddingMainContent + paddingArticleContent}
                 />
-                <InShort inShortArray={inShortArray} />
                 <Links linksArray={linksArray} />
+                <UsefulArticle articleName={currentArticle.titre} />
               </View>
             </View>
           </View>

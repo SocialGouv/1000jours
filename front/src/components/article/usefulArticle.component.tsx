@@ -1,9 +1,12 @@
 import type { FC } from "react";
 import * as React from "react";
+import { useCallback, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
+import type { TrackerEvent } from "../../type";
+import { TrackerUtils } from "../../utils";
 import {
   CustomButton,
   Icomoon,
@@ -11,14 +14,40 @@ import {
   SecondaryText,
   View,
 } from "../baseComponents";
+import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
-  idArticle: string;
+  articleName: string;
 }
 
-const UsefulArticle: FC<Props> = ({ idArticle }) => {
+const UsefulArticle: FC<Props> = ({ articleName }) => {
+  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
+  const [isUsefulArticle, setUsefulArticle] = useState<number>();
+  const [isButtonsDisabled, setButtonsDisabled] = useState<boolean>(false);
+
+  useEffect(() => {
+    // La valeur est 1 si l'article a été jugé utile, et 0 s'il ne l'a pas été
+    if (isUsefulArticle !== undefined) {
+      setTrackerEventObject({
+        action: "UsefulArticle",
+        name: `${TrackerUtils.TrackingEvent.ARTICLE} : ${articleName}`,
+        value: isUsefulArticle,
+      });
+      setButtonsDisabled(true);
+    }
+  }, [articleName, isUsefulArticle]);
+
+  const clickAndUseful = useCallback(() => {
+    setUsefulArticle(1);
+  }, []);
+
+  const clickAndNotUseful = useCallback(() => {
+    setUsefulArticle(0);
+  }, []);
+
   return (
     <View style={styles.usefulContainer}>
+      <TrackerHandler eventObject={trackerEventObject} />
       <SecondaryText style={[styles.usefulContent]}>
         {Labels.article.usefulTitle}
       </SecondaryText>
@@ -27,7 +56,10 @@ const UsefulArticle: FC<Props> = ({ idArticle }) => {
           title={Labels.buttons.yes}
           rounded={false}
           buttonStyle={styles.buttonStyle}
+          disabledStyle={styles.buttonDisabledStyle}
           titleStyle={styles.buttonTitle}
+          action={clickAndUseful}
+          disabled={isButtonsDisabled}
           icon={
             <Icomoon
               name={IcomoonIcons.valider}
@@ -41,6 +73,9 @@ const UsefulArticle: FC<Props> = ({ idArticle }) => {
           rounded={false}
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.buttonTitle}
+          disabledStyle={styles.buttonDisabledStyle}
+          action={clickAndNotUseful}
+          disabled={isButtonsDisabled}
           icon={
             <Icomoon
               name={IcomoonIcons.annuler}
@@ -55,11 +90,14 @@ const UsefulArticle: FC<Props> = ({ idArticle }) => {
 };
 
 const styles = StyleSheet.create({
-  buttonStyle: {
+  buttonDisabledStyle: {
     borderColor: Colors.borderGrey,
     borderWidth: 1,
     height: Sizes.accessibilityMinButton,
     marginHorizontal: Sizes.xxxxxs,
+  },
+  buttonStyle: {
+    backgroundColor: "transparent",
   },
   buttonTitle: {
     color: Colors.black,
