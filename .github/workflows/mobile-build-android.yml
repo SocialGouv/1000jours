@@ -49,7 +49,7 @@ jobs:
     - name: upload artefact to App Center
       uses: wzieba/AppCenter-Github-Action@v1
       with:
-        appName: 1000-jours
+        appName: "1000 jours"
         token: ${{secrets.APP_CENTER_TOKEN}}
         group: Testers
         file: android/app/build/outputs/apk/Dev/debug/app-Dev-debug.apk
