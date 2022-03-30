@@ -47,7 +47,9 @@ jobs:
         ./gradlew bundleDevDebug
     
     - name: See folder
-      run: ls -la
+      run: |
+        cd front/android/app/build/outputs/apk/Dev/debug
+        ls -la
 
     - name: upload artefact to App Center
       uses: wzieba/AppCenter-Github-Action@v1
