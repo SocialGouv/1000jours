@@ -51,19 +51,19 @@ jobs:
         ls -la
         cd front
         ls -la
-        cd front/android
+        cd android
         ls -la
-        cd front/android/app
+        cd app
         ls -la
-        cd front/android/app/build
+        cd build
         ls -la
-        cd front/android/app/build/outputs
+        cd outputs
         ls -la
-        cd front/android/app/build/outputs/apk
+        cd apk
         ls -la
-        cd front/android/app/build/outputs/apk/Dev
+        cd Dev
         ls -la
-        cd front/android/app/build/outputs/apk/Dev/debug
+        cd debug
         ls -la
 
     - name: upload artefact to App Center
