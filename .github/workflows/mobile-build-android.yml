@@ -45,6 +45,9 @@ jobs:
       run: |
         cd front/android
         ./gradlew bundleDevDebug
+    
+    - name: See folder
+      run: ls -la
 
     - name: upload artefact to App Center
       uses: wzieba/AppCenter-Github-Action@v1
@@ -52,6 +55,6 @@ jobs:
         appName: 1000-jours/1000-jours
         token: ${{secrets.APP_CENTER_TOKEN}}
         group: Testers
-        file: android/app/build/outputs/apk/Dev/debug/app-Dev-debug.apk
+        file: front/android/app/build/outputs/apk/Dev/debug/app-Dev-debug.apk
         notifyTesters: false
         debug: true
