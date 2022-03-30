@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import type { StackNavigationProp } from "@react-navigation/stack";
-import { format } from "date-fns";
 import type { FC } from "react";
 import { useCallback, useRef, useState } from "react";
 import * as React from "react";
@@ -9,7 +8,6 @@ import type { ImageSourcePropType } from "react-native";
 import { Image, ScrollView, StyleSheet } from "react-native";
 import Carousel from "react-native-snap-carousel";
 
-import { MoodboardAssets } from "../../components/assets";
 import {
   BackButton,
   CustomButton,
@@ -19,11 +17,12 @@ import {
 } from "../../components/baseComponents";
 import MoodsCalendar from "../../components/moodboard/moodsCalendar.component";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { Formats, Labels, StorageKeysConstants } from "../../constants";
+import { Labels } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { Colors, Margins, Paddings, Sizes } from "../../styles";
 import type { RootStackParamList } from "../../types";
-import { StorageUtils, TrackerUtils } from "../../utils";
+import { TrackerUtils } from "../../utils";
+import { MOODBOARD_ITEMS, saveMood } from "../../utils/moodboard.util";
 
 interface MoodboardItem {
   title: string;
@@ -34,33 +33,6 @@ interface RenderItemProps {
   item: MoodboardItem;
   index: number;
 }
-export interface MoodStorageItem {
-  title: string;
-  date: string;
-}
-
-export const MOODBOARD_ITEMS = [
-  {
-    color: Colors.mood.veryGood,
-    icon: MoodboardAssets.IconVeryGood,
-    title: Labels.moodboard.mood.veryGood,
-  },
-  {
-    color: Colors.mood.good,
-    icon: MoodboardAssets.IconGood,
-    title: Labels.moodboard.mood.good,
-  },
-  {
-    color: Colors.mood.medium,
-    icon: MoodboardAssets.IconMedium,
-    title: Labels.moodboard.mood.medium,
-  },
-  {
-    color: Colors.mood.bad,
-    icon: MoodboardAssets.IconBad,
-    title: Labels.moodboard.mood.bad,
-  },
-];
 
 const ITEM_WIDTH = Math.round(SCREEN_WIDTH * 0.7);
 const ITEM_HEIGHT = Math.round((ITEM_WIDTH * 3) / MOODBOARD_ITEMS.length);
@@ -166,24 +138,6 @@ const Moodboard: FC<Props> = ({ navigation }) => {
 
       <MoodsCalendar />
     </ScrollView>
-  );
-};
-
-export const saveMood = async (mood: string): Promise<void> => {
-  const oldMoods: MoodStorageItem[] =
-    (await StorageUtils.getObjectValue(StorageKeysConstants.moodsByDate)) ?? [];
-  const today = format(new Date(), Formats.dateISO);
-
-  // Permet de ne pas récupérer l'humeur du jour s'il a déjà été saisi, et don ne pas avoir de doublons
-  const newMoods = oldMoods.filter((item) => item.date !== today);
-  newMoods.push({
-    date: today,
-    title: mood,
-  });
-
-  void StorageUtils.storeObjectValue(
-    StorageKeysConstants.moodsByDate,
-    newMoods
   );
 };
 
