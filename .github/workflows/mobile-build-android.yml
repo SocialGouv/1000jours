@@ -48,6 +48,23 @@ jobs:
     
     - name: See folder
       run: |
+        ls- la
+        cd front
+        ls -la
+        cd front/android
+        ls -la
+        cd front/android/app
+        ls -la
+        cd front/android/app/build
+        ls -la
+        cd front/android/app/build
+        ls -la
+        cd front/android/app/build/outputs
+        ls -la
+        cd front/android/app/build/outputs/apk
+        ls -la
+        cd front/android/app/build/outputs/apk/Dev
+        ls -la
         cd front/android/app/build/outputs/apk/Dev/debug
         ls -la
 
