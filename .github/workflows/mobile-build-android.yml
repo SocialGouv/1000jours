@@ -44,7 +44,7 @@ jobs:
     - name: Build the DevDebug App
       run: |
         cd front/android
-        ./gradlew bundleDevDebug
+        ./gradlew assembleDevDebug
     
     - name: See folder
       run: |
@@ -59,9 +59,11 @@ jobs:
         ls -la
         cd outputs
         ls -la
-        cd bundle
+        cd apk
         ls -la
-        cd DevDebug
+        cd Dev
+        ls -la
+        cd debug
         ls -la
 
     - name: upload artefact to App Center
@@ -70,6 +72,6 @@ jobs:
         appName: 1000-jours/1000-jours
         token: ${{secrets.APP_CENTER_TOKEN}}
         group: Testers
-        file: front/android/app/build/outputs/bundle/DevDebug/app-Dev-debug.aab
+        file: front/android/app/build/outputs/apk/Dev/debug/app-Dev-debug.apk
         notifyTesters: false
         debug: true
