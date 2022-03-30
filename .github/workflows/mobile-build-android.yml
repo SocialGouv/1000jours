@@ -50,7 +50,7 @@ jobs:
     - name: upload artefact to App Center
       uses: wzieba/AppCenter-Github-Action@v1
       with:
-      PROD_KEY_PROPERTIES_B64: ${{ secrets.PROD_KEY_PROPERTIES_B64 }}
+        PROD_KEY_PROPERTIES_B64: ${{ secrets.PROD_KEY_PROPERTIES_B64 }}
         appName: 1000-jours/1000-jours-Android
         token: ${{ secrets.APP_CENTER_TOKEN }}
         group: "Alpha Testers"
