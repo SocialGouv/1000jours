@@ -59,11 +59,9 @@ jobs:
         ls -la
         cd outputs
         ls -la
-        cd apk
+        cd bundle
         ls -la
-        cd Dev
-        ls -la
-        cd debug
+        cd DevDebug
         ls -la
 
     - name: upload artefact to App Center
@@ -72,6 +70,6 @@ jobs:
         appName: 1000-jours/1000-jours
         token: ${{secrets.APP_CENTER_TOKEN}}
         group: Testers
-        file: front/android/app/build/outputs/apk/Dev/debug/app-Dev-debug.apk
+        file: front/android/app/build/outputs/bundle/DevDebug/app-Dev-debug.aab
         notifyTesters: false
         debug: true
