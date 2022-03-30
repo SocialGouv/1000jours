@@ -1,0 +1,35 @@
+name: Release Android dev app
+
+on:
+  push:
+    branches: develop-without-expo
+
+jobs:
+  mobile-tests-release:
+    name: Mobile Tests and Dev release
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - name: Run mobile tests
+      run: |
+          cd front
+          yarn install
+          yarn test
+
+    - name: Build the DevRelease App
+      run: |
+        cd front/android
+        ./gradlew assembleDevDebug
+
+    - name: Upload to App Center
+      uses: wzieba/AppCenter-Github-Action@v1
+      with:
+        PROD_KEY_PROPERTIES_B64: ${{ secrets.PROD_KEY_PROPERTIES_B64 }}
+        appName: 1000-jours/1000-jours-Android
+        token: ${{ secrets.APP_CENTER_TOKEN }}
+        group: "Alpha Testers"
+        file: front/android/app/build/outputs/apk/Dev/release/app-Dev-release.apk
+        notifyTesters: true
+        debug: false
