@@ -53,7 +53,7 @@ jobs:
       PROD_KEY_PROPERTIES_B64: ${{ secrets.PROD_KEY_PROPERTIES_B64 }}
         appName: 1000-jours/1000-jours
         token: ${{ secrets.APP_CENTER_TOKEN }}
-        group: Alpha Testers
+        group: "Alpha Testers"
         file: front/android/app/build/outputs/apk/Dev/debug/app-Dev-debug.apk
         notifyTesters: true
         debug: false
