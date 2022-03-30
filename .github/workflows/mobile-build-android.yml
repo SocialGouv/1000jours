@@ -13,6 +13,8 @@ jobs:
       MATOMO_APPLICATION_ID: 46
       MATOMO_ENABLED: false
       MATOMO_URL: https://matomo.fabrique.social.gouv.fr/
+      APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}
+      PROD_KEY_PROPERTIES_B64: ${{ secrets.PROD_KEY_PROPERTIES_B64 }}
     steps:
 
     - uses: actions/checkout@v2
@@ -55,5 +57,3 @@ jobs:
         file: front/android/app/build/outputs/apk/Dev/debug/app-Dev-debug.apk
         notifyTesters: false
         debug: true
-      env:
-          APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}
