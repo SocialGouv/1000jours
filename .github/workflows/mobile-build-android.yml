@@ -48,7 +48,7 @@ jobs:
     
     - name: See folder
       run: |
-        ls- la
+        ls -la
         cd front
         ls -la
         cd front/android
