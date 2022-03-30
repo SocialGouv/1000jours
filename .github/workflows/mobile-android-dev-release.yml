@@ -21,7 +21,7 @@ jobs:
     - name: Build the DevRelease App
       run: |
         cd front/android
-        ./gradlew assembleDevDebug
+        ./gradlew assembleDevRelease
 
     - name: Upload to App Center
       uses: wzieba/AppCenter-Github-Action@v1
