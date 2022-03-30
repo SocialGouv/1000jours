@@ -57,8 +57,6 @@ jobs:
         ls -la
         cd front/android/app/build
         ls -la
-        cd front/android/app/build
-        ls -la
         cd front/android/app/build/outputs
         ls -la
         cd front/android/app/build/outputs/apk
