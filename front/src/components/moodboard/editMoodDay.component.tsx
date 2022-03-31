@@ -102,7 +102,7 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
               />
               <CustomButton
                 title={Labels.buttons.validate}
-                rounded={true}
+                rounded
                 action={validateMood}
               />
             </View>
