@@ -42,7 +42,7 @@ jobs:
     - name: Install Apple Certificate
       uses: apple-actions/import-codesign-certs@v1
       with:
-        p12-filepath: "ios/cert.p12"
+        p12-filepath: "front/ios/cert.p12"
         p12-password: ${{ secrets.IOS_P12_PASSWORD }}
 
     - name: Install the provisioning profile
