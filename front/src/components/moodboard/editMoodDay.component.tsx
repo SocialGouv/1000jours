@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import type { FC } from "react";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { Image, Modal, StyleSheet, View } from "react-native";
@@ -20,7 +19,7 @@ import {
 interface Props {
   visible: boolean;
   hideModal: () => void;
-  dateISO: string;
+  dateISO?: string;
 }
 
 const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
@@ -39,9 +38,14 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
   }, [hideModal]);
 
   const validateMood = useCallback(() => {
-    void saveMood(MOODBOARD_ITEMS[selectedIndex].title, dateISO);
-    hideModal();
+    void saveMood(MOODBOARD_ITEMS[selectedIndex].title, dateISO).then(() => {
+      hideModal();
+    });
   }, [dateISO, hideModal, selectedIndex]);
+
+  const updateSelectedIndex = useCallback((value: number) => {
+    setSelectedIndex(value);
+  }, []);
 
   const moodItems = () => {
     const buttons: [] = MOODBOARD_ITEMS.map((item, index) => {
@@ -62,9 +66,7 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
         containerStyle={styles.buttonGroupContainer}
         innerBorderStyle={{ width: 0 }}
         selectedButtonStyle={styles.selectedButtonStyle}
-        onPress={(value) => {
-          setSelectedIndex(value);
-        }}
+        onPress={updateSelectedIndex}
       />
     );
   };
@@ -82,9 +84,13 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
               color={Colors.primaryBlue}
               size={30}
             />
-            <TitleH1 title="Suivi d'humeur" animated={false} />
-            <SecondaryText>
-              Comment vous sentiez-vous le {dateFR} ?
+            <TitleH1
+              title={Labels.moodboard.title}
+              animated={false}
+              style={styles.titleStyle}
+            />
+            <SecondaryText style={styles.textStyle}>
+              {Labels.moodboard.moodToDate} {dateFR} ?
             </SecondaryText>
             {moodItems()}
 
@@ -110,7 +116,6 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
 const styles = StyleSheet.create({
   buttonGroupContainer: {
     borderWidth: 0,
-    flexWrap: "wrap",
     height: 100,
     marginHorizontal: 0,
   },
@@ -167,6 +172,12 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     borderColor: Colors.primaryBlue,
     borderWidth: 3,
+  },
+  textStyle: {
+    textAlign: "center",
+  },
+  titleStyle: {
+    marginTop: Margins.default,
   },
 });
 

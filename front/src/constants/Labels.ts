@@ -505,6 +505,7 @@ export default {
       medium: "Moyen",
       veryGood: "Très bien",
     },
+    moodToDate: "Comment vous sentiez-vous le",
     title: "Suivi d'Humeur",
   },
   notification: {

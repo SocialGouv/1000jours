@@ -1,30 +1,42 @@
-import type { FC } from "react";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
+import type { DateData } from "react-native-calendars";
 import { Calendar } from "react-native-calendars";
 
 import { StorageKeysConstants } from "../../constants";
-import { Colors, Margins } from "../../styles";
+import { Colors, Margins, Sizes } from "../../styles";
 import { StorageUtils } from "../../utils";
 import type { MoodStorageItem } from "../../utils/moodboard.util";
 import { MOODBOARD_ITEMS } from "../../utils/moodboard.util";
 import EditMoodDay from "./editMoodDay.component";
+
+interface Props {}
 
 const MoodsCalendar: React.FC<Props> = () => {
   const [moods, setMoods] = useState<MoodStorageItem[]>();
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [dateToEdit, setDateToEdit] = useState<string>();
 
+  const findMoods = async () => {
+    const moodsStorage: MoodStorageItem[] =
+      (await StorageUtils.getObjectValue(StorageKeysConstants.moodsByDate)) ??
+      [];
+
+    setMoods(moodsStorage);
+  };
+
   useEffect(() => {
-    const findMoods = async () => {
-      const moodsStorage: MoodStorageItem[] =
-        (await StorageUtils.getObjectValue(StorageKeysConstants.moodsByDate)) ??
-        [];
+    void findMoods();
+  }, []);
 
-      setMoods(moodsStorage);
-    };
+  const onDayPress = useCallback((day: DateData) => {
+    setDateToEdit(day.dateString);
+    setShowEditModal(true);
+  }, []);
 
+  const hideEditModal = useCallback(() => {
+    setShowEditModal(false);
     void findMoods();
   }, []);
 
@@ -34,34 +46,12 @@ const MoodsCalendar: React.FC<Props> = () => {
         style={styles.calendarStyle}
         theme={{
           arrowColor: Colors.primaryBlue,
-          // backgroundColor: "#ffffff",
-          // calendarBackground: "#ffffff",
           dayTextColor: Colors.primaryBlue,
-          // disabledArrowColor: "#d9e1e8",
-          // dotColor: "#00adf5",
-          // indicatorColor: "blue",
           monthTextColor: Colors.primaryBlue,
-          // selectedDayBackgroundColor: "#00adf5",
-          // selectedDayTextColor: "#ffffff",
-          // selectedDotColor: "#ffffff",
-          // textDayFontFamily: "monospace",
-          //textDayFontSize: 12,
-          // textDayFontWeight: "300",
-          // textDayHeaderFontFamily: "monospace",
-          //textDayHeaderFontSize: 12,
           textDayHeaderFontWeight: "500",
-          // textDisabledColor: "#d9e1e8",
-          // textMonthFontFamily: "monospace",
-          textMonthFontSize: 14,
-          // textMonthFontWeight: "bold",
-          // textSectionTitleColor: "#b6c1cd",
-          // textSectionTitleDisabledColor: "#d9e1e8",
-          //todayTextColor: Colors.primaryBlueLight,
+          textMonthFontSize: Sizes.xs,
         }}
-        onDayPress={(day) => {
-          setDateToEdit(day.dateString);
-          setShowEditModal(true);
-        }}
+        onDayPress={onDayPress}
         // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
         monthFormat={"MMMM yyyy"}
         // If hideArrows=false and hideExtraDays=false do not swich month when tapping on greyed out
@@ -73,9 +63,7 @@ const MoodsCalendar: React.FC<Props> = () => {
 
       <EditMoodDay
         visible={showEditModal}
-        hideModal={() => {
-          setShowEditModal(false);
-        }}
+        hideModal={hideEditModal}
         dateISO={dateToEdit}
       />
     </>
