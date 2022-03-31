@@ -12,9 +12,11 @@ import EditMoodDay from "./editMoodDay.component";
 
 interface Props {}
 
+const CALENDAR_MONTH_FORMAT = "MMMM yyyy";
+
 const MoodsCalendar: React.FC<Props> = () => {
   const [moods, setMoods] = useState<MoodStorageItem[]>();
-  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [dateToEdit, setDateToEdit] = useState<string>();
 
   const findMoods = async () => {
@@ -52,7 +54,7 @@ const MoodsCalendar: React.FC<Props> = () => {
         }}
         onDayPress={onDayPress}
         // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-        monthFormat={"MMMM yyyy"}
+        monthFormat={CALENDAR_MONTH_FORMAT}
         // If hideArrows=false and hideExtraDays=false do not swich month when tapping on greyed out
         // day from another month that is visible in calendar page. Default = false
         disableMonthChange={true}

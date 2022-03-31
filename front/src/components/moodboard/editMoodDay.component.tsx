@@ -67,7 +67,7 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
         buttons={buttons}
         selectedIndex={selectedIndex}
         containerStyle={styles.buttonGroupContainer}
-        innerBorderStyle={{ width: 0 }}
+        innerBorderStyle={styles.buttonGroupBorderStyle}
         selectedButtonStyle={styles.selectedButtonStyle}
         onPress={updateSelectedIndex}
       />
@@ -79,13 +79,13 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <View style={styles.closeButton}>
-            <CloseButton onPress={hideModal} clear={true} />
+            <CloseButton onPress={hideModal} clear />
           </View>
           <View style={styles.content}>
             <Icomoon
               name={IcomoonIcons.calendrier}
               color={Colors.primaryBlue}
-              size={30}
+              size={Sizes.xxl}
             />
             <TitleH1
               title={Labels.moodboard.title}
@@ -117,9 +117,12 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
 };
 
 const styles = StyleSheet.create({
+  buttonGroupBorderStyle: {
+    width: 0,
+  },
   buttonGroupContainer: {
     borderWidth: 0,
-    height: 100,
+    height: Sizes.xxxxxxxl,
     marginHorizontal: 0,
   },
   buttonsContainer: {
