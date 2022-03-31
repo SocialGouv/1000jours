@@ -6,7 +6,7 @@ import { ButtonGroup } from "react-native-elements";
 
 import { Formats, Labels } from "../../constants";
 import { Colors, Margins, Paddings, Sizes } from "../../styles";
-import { MOODBOARD_ITEMS, saveMood } from "../../utils/moodboard.util";
+import { MoodboardUtils } from "../../utils";
 import {
   CloseButton,
   CustomButton,
@@ -38,7 +38,10 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
   }, [hideModal]);
 
   const validateMood = useCallback(() => {
-    void saveMood(MOODBOARD_ITEMS[selectedIndex].title, dateISO).then(() => {
+    void MoodboardUtils.saveMood(
+      MoodboardUtils.MOODBOARD_ITEMS[selectedIndex].title,
+      dateISO
+    ).then(() => {
       hideModal();
     });
   }, [dateISO, hideModal, selectedIndex]);
@@ -48,7 +51,7 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
   }, []);
 
   const moodItems = () => {
-    const buttons = MOODBOARD_ITEMS.map((item, index) => {
+    const buttons = MoodboardUtils.MOODBOARD_ITEMS.map((item, index) => {
       return (
         <View style={styles.itemStyle} key={index}>
           <Image style={styles.itemImageStyle} source={item.icon} />

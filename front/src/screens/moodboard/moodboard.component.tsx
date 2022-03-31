@@ -19,10 +19,9 @@ import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { Colors, Margins, Paddings, Sizes } from "../../styles";
-import type { MoodboardItem } from "../../type/moodboard.types";
+import type { MoodboardItem } from "../../type";
 import type { RootStackParamList } from "../../types";
-import { TrackerUtils } from "../../utils";
-import { MOODBOARD_ITEMS, saveMood } from "../../utils/moodboard.util";
+import { MoodboardUtils, TrackerUtils } from "../../utils";
 
 interface RenderItemProps {
   item: MoodboardItem;
@@ -30,7 +29,9 @@ interface RenderItemProps {
 }
 
 const ITEM_WIDTH = Math.round(SCREEN_WIDTH * 0.7);
-const ITEM_HEIGHT = Math.round((ITEM_WIDTH * 3) / MOODBOARD_ITEMS.length);
+const ITEM_HEIGHT = Math.round(
+  (ITEM_WIDTH * 3) / MoodboardUtils.MOODBOARD_ITEMS.length
+);
 const ICON_SIZE = Math.round(ITEM_WIDTH * 0.5);
 const firstItemIndexToShow = 1;
 
@@ -84,8 +85,10 @@ const Moodboard: FC<Props> = ({ navigation }) => {
   }, [navigation]);
 
   const validate = useCallback(() => {
-    void saveMood(MOODBOARD_ITEMS[activeIndex].title);
-    setTrackerAction(MOODBOARD_ITEMS[activeIndex].title);
+    void MoodboardUtils.saveMood(
+      MoodboardUtils.MOODBOARD_ITEMS[activeIndex].title
+    );
+    setTrackerAction(MoodboardUtils.MOODBOARD_ITEMS[activeIndex].title);
     navigation.goBack();
   }, [activeIndex, navigation]);
 
@@ -112,7 +115,7 @@ const Moodboard: FC<Props> = ({ navigation }) => {
       </View>
       <Carousel
         ref={ref}
-        data={MOODBOARD_ITEMS}
+        data={MoodboardUtils.MOODBOARD_ITEMS}
         renderItem={renderItem}
         sliderWidth={SCREEN_WIDTH}
         itemWidth={ITEM_WIDTH}
@@ -126,7 +129,7 @@ const Moodboard: FC<Props> = ({ navigation }) => {
       <View style={styles.buttonContainer}>
         <CustomButton
           title={Labels.buttons.validate}
-          rounded={true}
+          rounded
           action={validate}
         />
       </View>

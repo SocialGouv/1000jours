@@ -6,9 +6,8 @@ import { Calendar } from "react-native-calendars";
 
 import { StorageKeysConstants } from "../../constants";
 import { Colors, Margins, Sizes } from "../../styles";
-import type { MoodStorageItem } from "../../type/moodboard.types";
-import { StorageUtils } from "../../utils";
-import { MOODBOARD_ITEMS } from "../../utils/moodboard.util";
+import type { MoodStorageItem } from "../../type";
+import { MoodboardUtils, StorageUtils } from "../../utils";
 import EditMoodDay from "./editMoodDay.component";
 
 interface Props {}
@@ -76,7 +75,7 @@ export const buildMarkedDatesForCalendar = (
   const markedList = {};
 
   moods?.forEach((item) => {
-    const moodItem = MOODBOARD_ITEMS.find(
+    const moodItem = MoodboardUtils.MOODBOARD_ITEMS.find(
       (element) => element.title === item.title
     );
 

@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { MoodboardAssets } from "../components/assets";
 import { Formats, Labels, StorageKeysConstants } from "../constants";
 import { Colors } from "../styles";
-import type { MoodboardItem, MoodStorageItem } from "../type/moodboard.types";
+import type { MoodboardItem, MoodStorageItem } from "../type";
 import { StorageUtils } from ".";
 
 export const MOODBOARD_ITEMS: MoodboardItem[] = [
