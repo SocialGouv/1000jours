@@ -2,8 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { format } from "date-fns";
 
 import { Formats, StorageKeysConstants } from "../constants";
-import { StorageUtils } from ".";
-import { saveMood } from "./moodboard.util";
+import { MoodboardUtils, StorageUtils } from ".";
 
 describe("Moodboard utils", () => {
   describe("saveMood", () => {
@@ -14,7 +13,7 @@ describe("Moodboard utils", () => {
     });
 
     it("setItem is called with StorageKeysConstants.moodsByDate and without old mood", async () => {
-      await saveMood("Bien");
+      await MoodboardUtils.saveMood("Bien");
       const expected = [{ date: today, title: "Bien" }];
       await StorageUtils.getObjectValue(StorageKeysConstants.moodsByDate).then(
         (data) => {
@@ -30,7 +29,7 @@ describe("Moodboard utils", () => {
         JSON.stringify(items)
       );
 
-      await saveMood("Bien");
+      await MoodboardUtils.saveMood("Bien");
       const expected = [
         { date: "2022-01-01", title: "Très bien" },
         { date: today, title: "Bien" },
@@ -52,7 +51,7 @@ describe("Moodboard utils", () => {
         JSON.stringify(items)
       );
 
-      await saveMood("Bien");
+      await MoodboardUtils.saveMood("Bien");
       const expected = [
         { date: "2022-01-01", title: "Très bien" },
         { date: today, title: "Bien" },
@@ -71,7 +70,7 @@ describe("Moodboard utils", () => {
         JSON.stringify(items)
       );
 
-      await saveMood("Bien", "2011-01-01");
+      await MoodboardUtils.saveMood("Bien", "2011-01-01");
       const expected = [
         { date: "2022-01-01", title: "Très bien" },
         { date: "2011-01-01", title: "Bien" },

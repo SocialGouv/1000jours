@@ -1,4 +1,4 @@
-import type { MoodStorageItem } from "../../type/moodboard.types";
+import type { MoodStorageItem } from "../../type";
 import { buildMarkedDatesForCalendar } from "./moodsCalendar.component";
 
 describe("MoodCalendar component", () => {

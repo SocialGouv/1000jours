@@ -29,6 +29,8 @@ import ParenthequeItem from "./home/parenthequeItem.component";
 import ConditionsOfUse from "./menu/conditionsOfUse.component";
 import LegalNotice from "./menu/legalNotice.component";
 import Menu from "./menu/menu.component";
+import EditMoodDay from "./moodboard/editMoodDay.component";
+import MoodsCalendar from "./moodboard/moodsCalendar.component";
 import NotificationHandler, {
   setNotificationHandler,
 } from "./notification/notificationHandler.component";
@@ -50,6 +52,7 @@ export {
   CustomMapMarker,
   DidYouKnow,
   DocumentCard,
+  EditMoodDay,
   EpdsGenderEntry,
   EpdsOnboarding,
   EpdsSurveyContent,
@@ -60,6 +63,7 @@ export {
   LegalNotice,
   Links,
   Menu,
+  MoodsCalendar,
   NotificationHandler,
   ParenthequeItem,
   PoiList,

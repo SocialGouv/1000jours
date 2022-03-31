@@ -7,6 +7,7 @@ import * as React from "react";
 import { Image, ScrollView, StyleSheet } from "react-native";
 import Carousel from "react-native-snap-carousel";
 
+import { MoodsCalendar } from "../../components";
 import {
   BackButton,
   CustomButton,
@@ -14,7 +15,6 @@ import {
   TitleH1,
   View,
 } from "../../components/baseComponents";
-import MoodsCalendar from "../../components/moodboard/moodsCalendar.component";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
