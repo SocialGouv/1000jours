@@ -32,44 +32,44 @@ jobs:
           cd ios
           pod install
 
-    - name: Write p12 certificate
-      shell: bash
-      run: |
-        echo "$IOS_P12_B64" | base64 --decode > ios/cert.p12
-      env:
-        P12_B64: ${{ secrets.IOS_P12_B64 }}
+    # - name: Write p12 certificate
+    #   shell: bash
+    #   run: |
+    #     echo "$IOS_P12_B64" | base64 --decode > ios/cert.p12
+    #   env:
+    #     P12_B64: ${{ secrets.IOS_P12_B64 }}
 
-    - name: Install Apple Certificate
-      uses: apple-actions/import-codesign-certs@v1
-      with:
-        p12-filepath: "ios/cert.p12"
-        p12-password: ${{ secrets.IOS_P12_PASSWORD }}
+    # - name: Install Apple Certificate
+    #   uses: apple-actions/import-codesign-certs@v1
+    #   with:
+    #     p12-filepath: "ios/cert.p12"
+    #     p12-password: ${{ secrets.IOS_P12_PASSWORD }}
 
-    - name: Install the provisioning profile
-      env:
-        STAGING_IOS_PROVISIONING_PROFILE_B64: ${{ secrets.IOS_PROVISIONNING_PROFILE_B64 }}
-      run: |
-        PP_PATH=$RUNNER_TEMP/frfabriquesocialgouvpassemploistaging.mobileprovision
-        echo -n "$IOS_PROVISIONNING_PROFILE_B64" | base64 --decode --output $PP_PATH
-        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-        cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
-        cd ~/Library/MobileDevice/Provisioning\ Profiles
+    # - name: Install the provisioning profile
+    #   env:
+    #     STAGING_IOS_PROVISIONING_PROFILE_B64: ${{ secrets.IOS_PROVISIONNING_PROFILE_B64 }}
+    #   run: |
+    #     PP_PATH=$RUNNER_TEMP/frfabriquesocialgouvpassemploistaging.mobileprovision
+    #     echo -n "$IOS_PROVISIONNING_PROFILE_B64" | base64 --decode --output $PP_PATH
+    #     mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+    #     cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+    #     cd ~/Library/MobileDevice/Provisioning\ Profiles
 
-    - name: Build iOS application bundle
-      uses: yukiarrr/ios-build-action@v1.5.0
-      with:
-        project-path: 1000jours.xcodeproj
-        p12-key-base64: ${{ secrets.P12_KEY_BASE64 }}
-        mobileprovision-base64: ${{ secrets.IOS_PROVISIONNING_PROFILE_B64 }}
-        code-signing-identity: "iOS Distribution"
-        team-id: "1000 jours"
+    # - name: Build iOS application bundle
+    #   uses: yukiarrr/ios-build-action@v1.5.0
+    #   with:
+    #     project-path: 1000jours.xcodeproj
+    #     p12-key-base64: ${{ secrets.P12_KEY_BASE64 }}
+    #     mobileprovision-base64: ${{ secrets.IOS_PROVISIONNING_PROFILE_B64 }}
+    #     code-signing-identity: "iOS Distribution"
+    #     team-id: "1000 jours"
 
-     - name: Upload to App Center
-      uses: wzieba/AppCenter-Github-Action@v1
-      with:
-        appName: 1000-jours/1000-jours-iOS
-        token: ${{ secrets.APP_CENTER_TOKEN }}
-        group: "Alpha Testers"
-        file: ios/build-output/ios/output.ipa
-        notifyTesters: true
-        debug: false
+    #  - name: Upload to App Center
+    #   uses: wzieba/AppCenter-Github-Action@v1
+    #   with:
+    #     appName: 1000-jours/1000-jours-iOS
+    #     token: ${{ secrets.APP_CENTER_TOKEN }}
+    #     group: "Alpha Testers"
+    #     file: ios/build-output/ios/output.ipa
+    #     notifyTesters: true
+    #     debug: false
