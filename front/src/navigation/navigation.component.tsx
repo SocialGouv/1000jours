@@ -106,6 +106,7 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => {
           headerTitleAlign: "center",
         }}
       />
+      
     </Stack.Navigator>
   );
 };

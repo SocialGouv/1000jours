@@ -1,0 +1,4 @@
+storePassword=
+keyAlias=
+keyPassword=
+storeFile=../keystore/millejours.jks

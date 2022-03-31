@@ -1,0 +1,75 @@
+name: Release iOS dev app
+
+on:
+  push:
+    branches: develop-without-expo
+
+jobs:
+  ios-tests-release:
+    name: Mobile Tests and Dev release
+    runs-on: macos-11
+    env:
+      API_URL: https://backoffice-1000jours-preprod.dev.fabrique.social.gouv.fr
+      CLEAR_STORAGE: false
+      MATOMO_APPLICATION_ID: 46
+      MATOMO_ENABLED: true
+      MATOMO_URL: https://matomo.fabrique.social.gouv.fr/
+      SENTRY_DSN: https://d622675092bb449481c8016cab8ffd08@sentry.fabrique.social.gouv.fr/62
+      SENTRY_ENABLED: true
+      SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
+      GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+      DEEPLINK_DOMAIN: 1000jours.fabrique.social.gouv.fr
+      DEEPLINK_PATH: app-millejours
+    steps:
+
+    - uses: actions/checkout@v2
+
+    # - name: Run mobile tests
+    #   run: |
+    #       cd front
+    #       yarn install
+    #       yarn test
+    #       cd ios
+    #       pod install
+
+    - name: Write p12 certificate
+      shell: bash
+      run: |
+        echo "$IOS_P12_B64" | base64 --decode > front/ios/cert.p12
+      env:
+        P12_B64: ${{ secrets.IOS_P12_B64 }}
+
+    - name: Install Apple Certificate
+      uses: apple-actions/import-codesign-certs@v1
+      with:
+        p12-filepath: "front/ios/cert.p12"
+        p12-password: ${{ secrets.IOS_P12_PASSWORD }}
+
+    - name: Install the provisioning profile
+      env:
+        STAGING_IOS_PROVISIONING_PROFILE_B64: ${{ secrets.IOS_PROVISIONNING_PROFILE_B64 }}
+      run: |
+        PP_PATH=$RUNNER_TEMP/frfabriquesocialgouvpassemploistaging.mobileprovision
+        echo -n "$IOS_PROVISIONNING_PROFILE_B64" | base64 --decode --output $PP_PATH
+        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+        cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+        cd ~/Library/MobileDevice/Provisioning\ Profiles
+
+    # - name: Build iOS application bundle
+    #   uses: yukiarrr/ios-build-action@v1.5.0
+    #   with:
+    #     project-path: 1000jours.xcodeproj
+    #     p12-key-base64: ${{ secrets.P12_KEY_BASE64 }}
+    #     mobileprovision-base64: ${{ secrets.IOS_PROVISIONNING_PROFILE_B64 }}
+    #     code-signing-identity: "iOS Distribution"
+    #     team-id: "1000 jours"
+
+    #  - name: Upload to App Center
+    #   uses: wzieba/AppCenter-Github-Action@v1
+    #   with:
+    #     appName: 1000-jours/1000-jours-iOS
+    #     token: ${{ secrets.APP_CENTER_TOKEN }}
+    #     group: "Alpha Testers"
+    #     file: ios/build-output/ios/output.ipa
+    #     notifyTesters: true
+    #     debug: false

@@ -1,0 +1,50 @@
+name: Release Android dev app
+
+on:
+  workflow_dispatch:
+    name:
+      description: 'Manual workflow'
+# on:
+#   push:
+#     branches: develop-without-expo
+
+jobs:
+  android-tests-release:
+    name: Mobile Tests and Dev release
+    runs-on: ubuntu-latest
+    env:
+      API_URL: https://backoffice-1000jours-preprod.dev.fabrique.social.gouv.fr
+      CLEAR_STORAGE: false
+      MATOMO_APPLICATION_ID: 46
+      MATOMO_ENABLED: true
+      MATOMO_URL: https://matomo.fabrique.social.gouv.fr/
+      SENTRY_DSN: https://d622675092bb449481c8016cab8ffd08@sentry.fabrique.social.gouv.fr/62
+      SENTRY_ENABLED: true
+      SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
+      GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+      DEEPLINK_DOMAIN: 1000jours.fabrique.social.gouv.fr
+      DEEPLINK_PATH: app-millejours
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - name: Run mobile tests
+      run: |
+          cd front
+          yarn install
+          yarn test
+
+    - name: Build the DevRelease App
+      run: |
+        cd front/android
+        ./gradlew assembleDevRelease
+
+    - name: Upload to App Center
+      uses: wzieba/AppCenter-Github-Action@v1
+      with:
+        appName: 1000-jours/1000-jours-Android
+        token: ${{ secrets.APP_CENTER_TOKEN }}
+        group: "Alpha Testers"
+        file: front/android/app/build/outputs/apk/Dev/release/app-Dev-release.apk
+        notifyTesters: true
+        debug: false
