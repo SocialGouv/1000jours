@@ -8,6 +8,17 @@ jobs:
   mobile-tests-release:
     name: Mobile Tests and Dev release
     runs-on: ubuntu-latest
+    env:
+      CLEAR_STORAGE: false
+      MATOMO_APPLICATION_ID: 46
+      MATOMO_ENABLED: true
+      MATOMO_URL: https://matomo.fabrique.social.gouv.fr/
+      SENTRY_DSN: https://d622675092bb449481c8016cab8ffd08@sentry.fabrique.social.gouv.fr/62
+      SENTRY_ENABLED: true
+      SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
+      GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+      DEEPLINK_DOMAIN: 1000jours.fabrique.social.gouv.fr
+      DEEPLINK_PATH: app-millejours
     steps:
 
     - uses: actions/checkout@v2
