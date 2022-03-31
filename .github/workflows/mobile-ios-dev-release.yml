@@ -5,7 +5,7 @@ on:
     branches: develop-without-expo
 
 jobs:
-  mobile-tests-release:
+  ios-tests-release:
     name: Mobile Tests and Dev release
     runs-on: macos-11
     env:
