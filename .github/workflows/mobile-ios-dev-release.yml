@@ -35,6 +35,7 @@ jobs:
     - name: Write p12 certificate
       shell: bash
       run: |
+        cd front
         echo "$IOS_P12_B64" | base64 --decode > ios/cert.p12
       env:
         P12_B64: ${{ secrets.IOS_P12_B64 }}
