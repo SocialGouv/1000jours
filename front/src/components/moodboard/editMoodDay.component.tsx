@@ -48,7 +48,7 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
   }, []);
 
   const moodItems = () => {
-    const buttons: [] = MOODBOARD_ITEMS.map((item, index) => {
+    const buttons = MOODBOARD_ITEMS.map((item, index) => {
       return (
         <View style={styles.itemStyle} key={index}>
           <Image style={styles.itemImageStyle} source={item.icon} />

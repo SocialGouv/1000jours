@@ -6,8 +6,8 @@ import { Calendar } from "react-native-calendars";
 
 import { StorageKeysConstants } from "../../constants";
 import { Colors, Margins, Sizes } from "../../styles";
+import type { MoodStorageItem } from "../../type/moodboard.types";
 import { StorageUtils } from "../../utils";
-import type { MoodStorageItem } from "../../utils/moodboard.util";
 import { MOODBOARD_ITEMS } from "../../utils/moodboard.util";
 import EditMoodDay from "./editMoodDay.component";
 

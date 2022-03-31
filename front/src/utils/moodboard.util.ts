@@ -3,9 +3,10 @@ import { format } from "date-fns";
 import { MoodboardAssets } from "../components/assets";
 import { Formats, Labels, StorageKeysConstants } from "../constants";
 import { Colors } from "../styles";
+import type { MoodboardItem, MoodStorageItem } from "../type/moodboard.types";
 import { StorageUtils } from ".";
 
-export const MOODBOARD_ITEMS = [
+export const MOODBOARD_ITEMS: MoodboardItem[] = [
   {
     color: Colors.mood.veryGood,
     icon: MoodboardAssets.IconVeryGood,
@@ -27,11 +28,6 @@ export const MOODBOARD_ITEMS = [
     title: Labels.moodboard.mood.bad,
   },
 ];
-
-export interface MoodStorageItem {
-  title: string;
-  date: string;
-}
 
 export const saveMood = async (
   mood: string,

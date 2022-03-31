@@ -4,7 +4,6 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import { useCallback, useRef, useState } from "react";
 import * as React from "react";
-import type { ImageSourcePropType } from "react-native";
 import { Image, ScrollView, StyleSheet } from "react-native";
 import Carousel from "react-native-snap-carousel";
 
@@ -20,15 +19,11 @@ import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { Colors, Margins, Paddings, Sizes } from "../../styles";
+import type { MoodboardItem } from "../../type/moodboard.types";
 import type { RootStackParamList } from "../../types";
 import { TrackerUtils } from "../../utils";
 import { MOODBOARD_ITEMS, saveMood } from "../../utils/moodboard.util";
 
-interface MoodboardItem {
-  title: string;
-  color: string;
-  icon: ImageSourcePropType;
-}
 interface RenderItemProps {
   item: MoodboardItem;
   index: number;
