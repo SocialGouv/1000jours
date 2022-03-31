@@ -1,4 +1,4 @@
-name: Release Android dev app
+name: Release iOS dev app
 
 on:
   push:
