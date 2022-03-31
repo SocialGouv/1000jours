@@ -26,10 +26,9 @@ jobs:
     - name: Upload to App Center
       uses: wzieba/AppCenter-Github-Action@v1
       with:
-        PROD_KEY_PROPERTIES_B64: ${{ secrets.PROD_KEY_PROPERTIES_B64 }}
         appName: 1000-jours/1000-jours-Android
         token: ${{ secrets.APP_CENTER_TOKEN }}
-        group: "Alpha Testers; Collaborators"
+        group: "Alpha Testers"
         file: front/android/app/build/outputs/apk/Dev/release/app-Dev-release.apk
         notifyTesters: true
         debug: false
