@@ -1,8 +1,12 @@
 name: Release Android dev app
 
 on:
-  push:
-    branches: develop-without-expo
+  workflow_dispatch:
+    name:
+      description: 'Manual workflow'
+# on:
+#   push:
+#     branches: develop-without-expo
 
 jobs:
   android-tests-release:
