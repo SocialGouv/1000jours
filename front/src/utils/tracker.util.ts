@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { StorageKeysConstants } from "../constants";
 import { getStringValue, storeObjectValue } from "./storage.util";
+import { replaceAllText } from "./strings.util";
 
 export const MIN_HOURS_DELAY_TO_TRACK_NEW_OPENING = 6;
 
@@ -19,7 +20,7 @@ export const getOrCreateUserUuid = async (): Promise<string> => {
   }
 
   // Le getStringValue retourne la valeur avec double quotes, il faut les supprimer
-  return userUuid.replaceAll('"', "");
+  return replaceAllText(userUuid, '"', "");
 };
 
 export const matomoInstance = async (): Promise<MatomoTracker> => {
