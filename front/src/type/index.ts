@@ -19,6 +19,7 @@ import {
   QuestionnaireEpdsFromDB,
 } from "./epdsSurvey.types";
 import { TrackerEvent } from "./event.types";
+import { MoodboardItem, MoodStorageItem } from "./moodboard.types";
 import { TrackerSearch } from "./tabSearch.types";
 
 export {
@@ -37,6 +38,8 @@ export {
   EpdsUpdatedSurvey,
   FetchedFilterFromDb,
   IntroductionText,
+  MoodboardItem,
+  MoodStorageItem,
   QuestionnaireEpdsFromDB,
   TrackerEvent,
   TrackerSearch,
