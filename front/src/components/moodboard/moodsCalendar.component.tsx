@@ -3,9 +3,10 @@ import { useCallback, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import type { DateData } from "react-native-calendars";
 import { Calendar } from "react-native-calendars";
+import type { Theme } from "react-native-calendars/src/types";
 
 import { StorageKeysConstants } from "../../constants";
-import { Colors, Margins, Sizes } from "../../styles";
+import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 import type { MoodStorageItem } from "../../type";
 import { MoodboardUtils, StorageUtils } from "../../utils";
 import EditMoodDay from "./editMoodDay.component";
@@ -18,6 +19,14 @@ const MoodsCalendar: React.FC<Props> = () => {
   const [moods, setMoods] = useState<MoodStorageItem[]>();
   const [showEditModal, setShowEditModal] = useState(false);
   const [dateToEdit, setDateToEdit] = useState<string>();
+
+  const calenderTheme: Theme = {
+    arrowColor: Colors.primaryBlue,
+    dayTextColor: Colors.primaryBlue,
+    monthTextColor: Colors.primaryBlue,
+    textDayHeaderFontWeight: FontWeight.medium,
+    textMonthFontSize: Sizes.xs,
+  };
 
   const findMoods = async () => {
     const moodsStorage: MoodStorageItem[] =
@@ -45,13 +54,7 @@ const MoodsCalendar: React.FC<Props> = () => {
     <>
       <Calendar
         style={styles.calendarStyle}
-        theme={{
-          arrowColor: Colors.primaryBlue,
-          dayTextColor: Colors.primaryBlue,
-          monthTextColor: Colors.primaryBlue,
-          textDayHeaderFontWeight: "500",
-          textMonthFontSize: Sizes.xs,
-        }}
+        theme={calenderTheme}
         onDayPress={onDayPress}
         // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
         monthFormat={CALENDAR_MONTH_FORMAT}
