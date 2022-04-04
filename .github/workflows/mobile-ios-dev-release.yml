@@ -33,6 +33,7 @@ jobs:
       #     pod install
       #     gem install fastlane
       run: |
+          cd front
           cd ios
           pod install
           gem install fastlane
