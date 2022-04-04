@@ -37,7 +37,7 @@ jobs:
       run: |
         echo "$IOS_P12_B64" | base64 --decode > front/ios/cert.p12
       env:
-        P12_B64: ${{ secrets.IOS_P12_B64 }}
+        IOS_P12_B64: ${{ secrets.IOS_P12_B64 }}
 
     - name: Install Apple Certificate
       uses: apple-actions/import-codesign-certs@v1
