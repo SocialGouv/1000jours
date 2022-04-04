@@ -91,13 +91,13 @@ const UsefulArticle: FC<Props> = ({ articleName }) => {
 
 const styles = StyleSheet.create({
   buttonDisabledStyle: {
+    backgroundColor: "transparent",
+  },
+  buttonStyle: {
     borderColor: Colors.borderGrey,
     borderWidth: 1,
     height: Sizes.accessibilityMinButton,
     marginHorizontal: Sizes.xxxxxs,
-  },
-  buttonStyle: {
-    backgroundColor: "transparent",
   },
   buttonTitle: {
     color: Colors.black,

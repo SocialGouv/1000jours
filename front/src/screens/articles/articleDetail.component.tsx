@@ -9,6 +9,7 @@ import type {
   NativeSyntheticEvent,
 } from "react-native";
 import { ScrollView, StyleSheet } from "react-native";
+import { FAB } from "react-native-elements";
 
 import {
   DidYouKnow,
@@ -36,7 +37,7 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import { GraphQLQuery } from "../../services";
-import { Paddings } from "../../styles";
+import { Colors, Paddings } from "../../styles";
 import type {
   Article,
   ArticleInShortItem,
@@ -73,6 +74,7 @@ const ArticleDetail: FC<Props> = ({
   const [linksArray, setLinksArray] = useState<ArticleLink[]>([]);
   const [currentArticle, setCurrentArticle] = useState<Article | undefined>();
 
+  const [scrollerRef, setScrollerRef] = useState<ScrollView>();
   const scrollViewHeight = useRef(0);
   const scrollContentHeight = useRef(0);
   const articleHasBeenRead = useRef(false);
@@ -171,6 +173,14 @@ const ArticleDetail: FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const scrollTopHandler = useCallback(() => {
+    if (scrollerRef) scrollerRef.scrollTo({ x: 0, y: 0 });
+  }, [scrollerRef]);
+
+  const updateScrollerRef = useCallback((scroller: ScrollView) => {
+    setScrollerRef(scroller);
+  }, []);
+
   return (
     <>
       {articleId && (
@@ -181,61 +191,76 @@ const ArticleDetail: FC<Props> = ({
         />
       )}
       {currentArticle && (
-        <ScrollView
-          onLayout={onScrollViewLayout}
-          onScroll={onScroll}
-          onContentSizeChange={onContentSizeChange}
-          scrollEventThrottle={0}
-        >
-          <TrackerHandler
-            screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${currentArticle.titre}`}
-          />
-          <View style={[styles.mainContainer]}>
-            <View>
-              <View style={[styles.flexStart]}>
-                <BackButton action={onBackButtonPressed} />
+        <>
+          <ScrollView
+            onLayout={onScrollViewLayout}
+            onScroll={onScroll}
+            ref={updateScrollerRef}
+            onContentSizeChange={onContentSizeChange}
+            scrollEventThrottle={0}
+          >
+            <TrackerHandler
+              screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${currentArticle.titre}`}
+            />
+            <View style={[styles.mainContainer]}>
+              <View>
+                <View style={[styles.flexStart]}>
+                  <BackButton action={onBackButtonPressed} />
+                </View>
+                <TitleH1
+                  title={screenTitle}
+                  description={description}
+                  animated={true}
+                />
               </View>
-              <TitleH1
-                title={screenTitle}
-                description={description}
-                animated={true}
-              />
-            </View>
-            <View>
-              <View style={styles.imageBannerContainer}>
-                <ImageBanner visuel={currentArticle.visuel} />
-                <View style={styles.flexEnd}>
-                  <ShareButton
-                    buttonTitle={Labels.buttons.share}
-                    title={Labels.appName}
-                    message={`${Labels.share.article.messageStart} "${currentArticle.titre}" ${Labels.share.article.messageEnd}`}
-                    page={SharePageType.article}
-                    id={currentArticle.id}
-                    buttonStyle={styles.shareButton}
+              <View>
+                <View style={styles.imageBannerContainer}>
+                  <ImageBanner visuel={currentArticle.visuel} />
+                  <View style={styles.flexEnd}>
+                    <ShareButton
+                      buttonTitle={Labels.buttons.share}
+                      title={Labels.appName}
+                      message={`${Labels.share.article.messageStart} "${currentArticle.titre}" ${Labels.share.article.messageEnd}`}
+                      page={SharePageType.article}
+                      id={currentArticle.id}
+                      buttonStyle={styles.shareButton}
+                    />
+                  </View>
+                </View>
+                <View style={styles.articleDetails}>
+                  <Title title={currentArticle.titre} />
+                  <Thematics items={currentArticle.thematiques} />
+                  <InShort inShortArray={inShortArray} />
+                  <SubTitle title={currentArticle.texteTitre1} />
+                  <TextHtml
+                    html={currentArticle.texte1}
+                    offsetTotal={paddingMainContent + paddingArticleContent}
                   />
+                  <DidYouKnow description={currentArticle.leSaviezVous} />
+                  <SubTitle title={currentArticle.texteTitre2} />
+                  <TextHtml
+                    html={currentArticle.texte2}
+                    offsetTotal={paddingMainContent + paddingArticleContent}
+                  />
+                  <Links linksArray={linksArray} />
+                  <UsefulArticle articleName={currentArticle.titre} />
                 </View>
               </View>
-              <View style={styles.articleDetails}>
-                <Title title={currentArticle.titre} />
-                <Thematics items={currentArticle.thematiques} />
-                <InShort inShortArray={inShortArray} />
-                <SubTitle title={currentArticle.texteTitre1} />
-                <TextHtml
-                  html={currentArticle.texte1}
-                  offsetTotal={paddingMainContent + paddingArticleContent}
-                />
-                <DidYouKnow description={currentArticle.leSaviezVous} />
-                <SubTitle title={currentArticle.texteTitre2} />
-                <TextHtml
-                  html={currentArticle.texte2}
-                  offsetTotal={paddingMainContent + paddingArticleContent}
-                />
-                <Links linksArray={linksArray} />
-                <UsefulArticle articleName={currentArticle.titre} />
-              </View>
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+
+          <FAB
+            visible={true}
+            icon={{
+              color: Colors.primaryBlueDark,
+              name: "expand-less",
+            }}
+            size="small"
+            placement="right"
+            color={Colors.white}
+            onPress={scrollTopHandler}
+          />
+        </>
       )}
     </>
   );
