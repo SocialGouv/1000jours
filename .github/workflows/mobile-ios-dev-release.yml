@@ -23,14 +23,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Run mobile tests
-        # run: |
-        #     cd front
-        #     # yarn install
-        #     # yarn test
-        #     cd ios
-        #     pod install
-        #     gem install fastlane
+      # - name: Run mobile tests
+      #   run: |
+      #       cd front
+      #       # yarn install
+      #       # yarn test
+      #       cd ios
+      #       pod install
+      #       gem install fastlane
 
       - name: Write p12 certificate
         shell: bash
