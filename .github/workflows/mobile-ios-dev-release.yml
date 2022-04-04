@@ -21,50 +21,51 @@ jobs:
       DEEPLINK_DOMAIN: 1000jours.fabrique.social.gouv.fr
       DEEPLINK_PATH: app-millejours
     steps:
+      - uses: actions/checkout@v2
 
-    - uses: actions/checkout@v2
+      - name: Run mobile tests
+        # run: |
+        #     cd front
+        #     # yarn install
+        #     # yarn test
+        #     cd ios
+        #     pod install
+        #     gem install fastlane
 
-    - name: Run mobile tests
-      run: |
-          cd front
-          yarn install
-          yarn test
-          cd ios
-          pod install
-          gem install fastlane
+      - name: Write p12 certificate
+        shell: bash
+        env:
+          IOS_P12_B64: ${{ secrets.IOS_P12_B64 }}
+        run: |
+          echo "$IOS_P12_B64" | base64 --decode > front/ios/cert.p12
 
-    - name: Write p12 certificate
-      shell: bash
-      env:
-        IOS_P12_B64: ${{ secrets.IOS_P12_B64 }}
-      run: |
-        echo "$IOS_P12_B64" | base64 --decode > front/ios/cert.p12
+      - name: Install Apple Certificate
+        uses: apple-actions/import-codesign-certs@v1
+        with:
+          p12-filepath: "front/ios/cert.p12"
+          p12-password: ${{ secrets.IOS_P12_PASSWORD }}
 
-    - name: Install Apple Certificate
-      uses: apple-actions/import-codesign-certs@v1
-      with:
-        p12-filepath: "front/ios/cert.p12"
-        p12-password: ${{ secrets.IOS_P12_PASSWORD }}
+      - name: Install the provisioning profile
+        env:
+          STAGING_IOS_PROVISIONING_PROFILE_B64: ${{ secrets.IOS_PROVISIONNING_PROFILE_B64 }}
+        run: |
+          PP_PATH=$RUNNER_TEMP/frfabriquesocialgouv1000joursstaging.mobileprovision
+          echo -n "$IOS_PROVISIONNING_PROFILE_B64" | base64 --decode --output $PP_PATH
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+          cd ~/Library/MobileDevice/Provisioning\ Profiles
 
-    - name: Install the provisioning profile
-      env:
-        STAGING_IOS_PROVISIONING_PROFILE_B64: ${{ secrets.IOS_PROVISIONNING_PROFILE_B64 }}
-      run: |
-        PP_PATH=$RUNNER_TEMP/frfabriquesocialgouv1000joursstaging.mobileprovision
-        echo -n "$IOS_PROVISIONNING_PROFILE_B64" | base64 --decode --output $PP_PATH
-        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-        cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
-        cd ~/Library/MobileDevice/Provisioning\ Profiles
-
-    - name: Build iOS application bundle
-      uses: yukiarrr/ios-build-action@v1.5.0
-      with:
-        project-path: "front/ios/1000jours.xcodeproj"
-        p12-base64: ${{ secrets.IOS_P12_B64 }}
-        certificate-password: ${{ secrets.IOS_P12_PASSWORD }}
-        mobileprovision-base64: ${{ secrets.IOS_PROVISIONNING_PROFILE_B64 }}
-        code-signing-identity: "iPhone Distribution: Fabrique numerique des ministeres sociaux (76GBKHVK25)"
-        team-id: "76GBKHVK25"
+      - name: Build iOS application bundle
+        uses: yukiarrr/ios-build-action@v1.5.0
+        with:
+          project-path: "front/ios/1000jours.xcodeproj"
+          p12-base64: ${{ secrets.IOS_P12_B64 }}
+          certificate-password: ${{ secrets.IOS_P12_PASSWORD }}
+          mobileprovision-base64: ${{ secrets.IOS_PROVISIONNING_PROFILE_B64 }}
+          code-signing-identity: "iPhone Distribution: Fabrique numerique des ministeres sociaux (76GBKHVK25)"
+          team-id: "76GBKHVK25"
+          scheme: "1000joursDev"
+          configuration: "ReleaseDev"
 
     #  - name: Upload to App Center
     #   uses: wzieba/AppCenter-Github-Action@v1
