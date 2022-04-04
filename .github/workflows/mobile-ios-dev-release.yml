@@ -49,7 +49,7 @@ jobs:
         env:
           STAGING_IOS_PROVISIONING_PROFILE_B64: ${{ secrets.IOS_PROVISIONNING_PROFILE_B64 }}
         run: |
-          PP_PATH=$RUNNER_TEMP/frfabriquesocialgouv1000joursstaging.mobileprovision
+          PP_PATH=$RUNNER_TEMP/front/ios/frfabriquesocialgouv1000joursstaging.mobileprovision
           echo -n "$IOS_PROVISIONNING_PROFILE_B64" | base64 --decode --output $PP_PATH
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
