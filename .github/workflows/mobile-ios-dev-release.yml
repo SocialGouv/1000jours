@@ -25,8 +25,9 @@ jobs:
 
       - name: Run mobile tests
         run: |
-            cd front/ios
-            ls -la
+            cd front
+            yarn install
+            cd ios
             pod install
 
       #   run: |
