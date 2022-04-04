@@ -71,7 +71,7 @@ jobs:
           code-signing-identity: "iPhone Distribution: Fabrique numerique des ministeres sociaux (76GBKHVK25)"
           team-id: "76GBKHVK25"
           scheme: "1000joursDev"
-          configuration: "ReleaseDev"
+          configuration: "DebugDev"
 
     #  - name: Upload to App Center
     #   uses: wzieba/AppCenter-Github-Action@v1
