@@ -24,10 +24,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Run mobile tests
-        run: |
-            cd front
-            cd ios
-            pod install
+        run: cd front/ios && pod install
 
       #   run: |
       #       cd front
