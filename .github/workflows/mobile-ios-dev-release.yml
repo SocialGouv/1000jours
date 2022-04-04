@@ -59,7 +59,7 @@ jobs:
       uses: yukiarrr/ios-build-action@v1.5.0
       with:
         project-path: "front/ios/1000jours.xcodeproj"
-        p12-key-base64: ${{ secrets.P12_KEY_BASE64 }}
+        p12-base64: ${{ secrets.IOS_P12_B64 }}
         mobileprovision-base64: ${{ secrets.IOS_PROVISIONNING_PROFILE_B64 }}
         code-signing-identity: "iPhone Distribution: Fabrique numerique des ministeres sociaux (76GBKHVK25)"
         team-id: "76GBKHVK25"
