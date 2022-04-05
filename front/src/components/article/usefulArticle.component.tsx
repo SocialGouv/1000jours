@@ -37,13 +37,12 @@ const UsefulArticle: FC<Props> = ({ articleName }) => {
     }
   }, [articleName, isUsefulArticle]);
 
-  const clickAndUseful = useCallback(() => {
-    setUsefulArticle(1);
-  }, []);
-
-  const clickAndNotUseful = useCallback(() => {
-    setUsefulArticle(0);
-  }, []);
+  const setUsefulArticleForTracker = useCallback(
+    (value: number) => () => {
+      setUsefulArticle(value);
+    },
+    []
+  );
 
   return (
     <View style={styles.usefulContainer}>
@@ -58,7 +57,7 @@ const UsefulArticle: FC<Props> = ({ articleName }) => {
           buttonStyle={styles.buttonStyle}
           disabledStyle={styles.buttonDisabledStyle}
           titleStyle={styles.buttonTitle}
-          action={clickAndUseful}
+          action={setUsefulArticleForTracker(1)}
           disabled={isButtonsDisabled}
           icon={
             <Icomoon
@@ -74,7 +73,7 @@ const UsefulArticle: FC<Props> = ({ articleName }) => {
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.buttonTitle}
           disabledStyle={styles.buttonDisabledStyle}
-          action={clickAndNotUseful}
+          action={setUsefulArticleForTracker(0)}
           disabled={isButtonsDisabled}
           icon={
             <Icomoon
@@ -103,7 +102,6 @@ const styles = StyleSheet.create({
     color: Colors.black,
     fontSize: Sizes.xs,
     paddingBottom: Paddings.smallest,
-    paddingTop: 0,
   },
   buttonsBloc: {
     flexDirection: "row",
