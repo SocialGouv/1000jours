@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import * as React from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
 
 import { Labels } from "../../constants";
@@ -19,6 +19,9 @@ import TrackerHandler from "../tracker/trackerHandler.component";
 interface Props {
   articleName: string;
 }
+
+const ARTICLE_IS_USEFUL = 1;
+const ARTICLE_IS_NOT_USEFUL = 0;
 
 const UsefulArticle: FC<Props> = ({ articleName }) => {
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
@@ -49,7 +52,7 @@ const UsefulArticle: FC<Props> = ({ articleName }) => {
           buttonStyle={styles.buttonStyle}
           disabledStyle={styles.buttonDisabledStyle}
           titleStyle={styles.buttonTitle}
-          action={setUsefulArticleForTracker(1)}
+          action={setUsefulArticleForTracker(ARTICLE_IS_USEFUL)}
           disabled={isButtonsDisabled}
           icon={
             <Icomoon
@@ -65,7 +68,7 @@ const UsefulArticle: FC<Props> = ({ articleName }) => {
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.buttonTitle}
           disabledStyle={styles.buttonDisabledStyle}
-          action={setUsefulArticleForTracker(0)}
+          action={setUsefulArticleForTracker(ARTICLE_IS_NOT_USEFUL)}
           disabled={isButtonsDisabled}
           icon={
             <Icomoon
