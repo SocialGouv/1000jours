@@ -4,11 +4,16 @@ import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
   accessibility: {
+    accordions: {
+      close: "Cacher le contenu",
+      open: "Afficher le contenu",
+    },
     array: "Tableau",
     articleCard: {
       description: "Description",
       title: "Titre de l'article",
     },
+    articleGoToTop: "Retour au début de l'article",
     articleToRead: "article à lire",
     articlesFilters: {
       activeFilter: "filtre actif",
@@ -122,6 +127,7 @@ export default {
     },
     inShortTitle: "En bref :",
     learnMoreAboutIt: "En savoir plus à ce sujet :",
+    usefulTitle: "Cet article vous a été utile ?",
   },
   articleList: {
     articlesToRead: "article(s) à lire",
@@ -135,12 +141,14 @@ export default {
     contact: "Contacter",
     finish: "Terminer",
     next: "Suivant",
+    no: "Non",
     ok: "Ok",
     pass: "Passer",
     previous: "Précédent",
     share: "Partager",
     start: "Commencer",
     validate: "Valider",
+    yes: "Oui",
   },
   calendar: {
     description:

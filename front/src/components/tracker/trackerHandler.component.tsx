@@ -54,7 +54,6 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
 
   useEffect(() => {
     const eventCategory = "MobileApp";
-    const eventValue = 0;
 
     const eventNameIsNotEmpty =
       eventObject?.name && eventObject.name.length > 0;
@@ -66,7 +65,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
         action: eventObject.action,
         category: eventCategory,
         name: eventObject.name,
-        value: eventValue,
+        value: eventObject.value,
       };
       void trackEvent(event);
     }
