@@ -4,11 +4,16 @@ import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
   accessibility: {
+    accordions: {
+      close: "Cacher le contenu",
+      open: "Afficher le contenu",
+    },
     array: "Tableau",
     articleCard: {
       description: "Description",
       title: "Titre de l'article",
     },
+    articleGoToTop: "Retour au début de l'article",
     articleToRead: "article à lire",
     articlesFilters: {
       activeFilter: "filtre actif",

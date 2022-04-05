@@ -259,6 +259,7 @@ const ArticleDetail: FC<Props> = ({
             placement="right"
             color={Colors.white}
             onPress={scrollTopHandler}
+            accessibilityLabel={Labels.accessibility.articleGoToTop}
           />
         </>
       )}

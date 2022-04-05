@@ -81,6 +81,12 @@ const InShort: FC<Props> = ({ inShortArray }) => {
         <TouchableOpacity
           onPress={openAndClose}
           style={styles.arrowTouchableStyle}
+          accessibilityLabel={
+            isOpen
+              ? Labels.accessibility.accordions.close
+              : Labels.accessibility.accordions.open
+          }
+          accessibilityRole="button"
         >
           <Icomoon
             name={isOpen ? IcomoonIcons.haut : IcomoonIcons.bas}
