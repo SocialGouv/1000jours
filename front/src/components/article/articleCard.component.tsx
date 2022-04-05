@@ -28,10 +28,14 @@ const ArticleCard: FC<Props> = ({
   // Permet de forcer le composant ExpoFastImage à être actualisé
   const [showImage, setShowImage] = useState(false);
   useEffect(() => {
+    let mounted = true;
     setShowImage(false);
     setTimeout(() => {
-      setShowImage(Boolean(article.visuel?.id));
+      if (mounted) setShowImage(Boolean(article.visuel?.id));
     }, 100);
+    return () => {
+      mounted = false;
+    };
   }, [article]);
 
   const onItemPressed = useCallback(() => {
