@@ -14,6 +14,7 @@ import { CommonText, SecondaryText } from "../baseComponents";
 
 interface Props {
   article: Article;
+  articles?: Article[];
   step?: Step;
   isFromSearchScreen?: boolean;
   setStepAndArticleId?: (articleId: number, step: Step | undefined) => void;
@@ -21,6 +22,7 @@ interface Props {
 
 const ArticleCard: FC<Props> = ({
   article,
+  articles,
   step,
   isFromSearchScreen,
   setStepAndArticleId,
@@ -41,12 +43,13 @@ const ArticleCard: FC<Props> = ({
     if (isFromSearchScreen && setStepAndArticleId)
       setStepAndArticleId(article.id, step);
     else {
-      void RootNavigation.navigate("article", {
+      void RootNavigation.navigate("articleSwipe", {
+        articles: articles,
         id: article.id,
         step: step,
       });
     }
-  }, [article.id, isFromSearchScreen, setStepAndArticleId, step]);
+  }, [article.id, isFromSearchScreen, setStepAndArticleId, step, articles]);
 
   return (
     <ListItem

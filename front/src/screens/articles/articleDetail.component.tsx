@@ -52,6 +52,7 @@ interface Props {
   navigation?: StackNavigationProp<TabHomeParamList>;
   _articleId?: number;
   _articleStep?: Step | undefined;
+  isInCarousel?: boolean;
   goBack?: () => void;
 }
 
@@ -63,6 +64,7 @@ const ArticleDetail: FC<Props> = ({
   navigation,
   _articleId,
   _articleStep,
+  isInCarousel,
   goBack,
 }) => {
   const articleId = route ? route.params.id : _articleId;
@@ -202,19 +204,21 @@ const ArticleDetail: FC<Props> = ({
             <TrackerHandler
               screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${currentArticle.titre}`}
             />
-            <View style={styles.mainContainer}>
-              <View>
-                <View style={styles.flexStart}>
-                  <BackButton action={onBackButtonPressed} />
+            <View style={isInCarousel ? null : styles.mainContainer}>
+              {isInCarousel ? null : (
+                <View>
+                  <View style={styles.flexStart}>
+                    <BackButton action={onBackButtonPressed} />
+                  </View>
+                  <TitleH1
+                    title={screenTitle}
+                    description={description}
+                    animated
+                  />
                 </View>
-                <TitleH1
-                  title={screenTitle}
-                  description={description}
-                  animated
-                />
-              </View>
+              )}
               <View>
-                <View style={styles.imageBannerContainer}>
+                <View style={isInCarousel ? null : styles.imageBannerContainer}>
                   <ImageBanner visuel={currentArticle.visuel} />
                   <View style={styles.flexEnd}>
                     <ShareButton

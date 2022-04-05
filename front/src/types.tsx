@@ -24,6 +24,7 @@ export type BottomTabParamList = {
 export type TabHomeParamList = {
   tabHomeScreen: undefined;
   articleList: { step: Step };
+  articleSwipe: undefined;
   parentheque: { documents?: Document[] };
   article: { id: number; step?: Step };
   epdsSurvey: undefined;

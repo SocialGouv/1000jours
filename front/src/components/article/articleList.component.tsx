@@ -31,6 +31,7 @@ const ArticleList: FC<Props> = ({
         >
           <ArticleCard
             article={article}
+            articles={articleList}
             step={step}
             isFromSearchScreen={isFromSearchScreen}
             setStepAndArticleId={setStepAndArticleId}
