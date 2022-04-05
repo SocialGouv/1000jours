@@ -1,3 +1,23 @@
+# [1.96.0](https://github.com/SocialGouv/1000jours/compare/v1.95.2...v1.96.0) (2022-04-05)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le freeze du loader sur la home page ([#1106](https://github.com/SocialGouv/1000jours/issues/1106)) ([8e0d77b](https://github.com/SocialGouv/1000jours/commit/8e0d77bfd92911d142a809cedcbf9a088c74482c))
+* lint ([#1111](https://github.com/SocialGouv/1000jours/issues/1111)) ([d4d4fe9](https://github.com/SocialGouv/1000jours/commit/d4d4fe913f173d038d19d9d9c15532af981ca543))
+* robot Google Play console sur l'accessibilité ([#1137](https://github.com/SocialGouv/1000jours/issues/1137)) ([219338c](https://github.com/SocialGouv/1000jours/commit/219338ca670012d091571721a6055346fa4efe5c))
+* **icones:** fix des icônes mal importées ([#1105](https://github.com/SocialGouv/1000jours/issues/1105)) ([cb20964](https://github.com/SocialGouv/1000jours/commit/cb20964f23c16b7e2f083c5d5a498a0fae50ba00))
+
+
+### Features
+
+* **articles:** Permet la recherche avec ou sans diacritique ([#1109](https://github.com/SocialGouv/1000jours/issues/1109)) ([ddef44b](https://github.com/SocialGouv/1000jours/commit/ddef44b558a67f31a840797f8d01086fb28ceea2))
+* **mood:** ajout du calendrier ([#1108](https://github.com/SocialGouv/1000jours/issues/1108)) ([b4bbf7b](https://github.com/SocialGouv/1000jours/commit/b4bbf7ba4cff605edf1296c45b7832c80f451a42))
+* **mood:** enregistrement du mood ([#1107](https://github.com/SocialGouv/1000jours/issues/1107)) ([e7ab6b1](https://github.com/SocialGouv/1000jours/commit/e7ab6b10bfed157396c7392b5658914228b824a6))
+* **recherche:** trim keywords ([#1114](https://github.com/SocialGouv/1000jours/issues/1114)) ([b00d541](https://github.com/SocialGouv/1000jours/commit/b00d54194ecae8e57a1d99649d3f97a1f28676d0))
+* **stats:** mise en place d'un userUuid pour les utilisateurs uniques sur Matomo ([#1116](https://github.com/SocialGouv/1000jours/issues/1116)) ([7a29fce](https://github.com/SocialGouv/1000jours/commit/7a29fceafe710c7e9da85943ffd6afec1ea0efd2))
+* 🎸 Ajout du moodboard ([#1101](https://github.com/SocialGouv/1000jours/issues/1101)) ([8196fdf](https://github.com/SocialGouv/1000jours/commit/8196fdf525ce0ea0ba18b4ec42a2ea2f8e57919e))
+
 ## [1.95.2](https://github.com/SocialGouv/1000jours/compare/v1.95.1...v1.95.2) (2022-03-09)
 
 
