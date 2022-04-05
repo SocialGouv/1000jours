@@ -19,7 +19,7 @@ const processData = (source, data, fileType) => {
 };
 
 const transferTempTableToPois = async () => {
-  const knex = strapi.connections.default;
+  const knexInstance = strapi.connections.default;
 
   const sql = `
  (
@@ -45,8 +45,8 @@ const transferTempTableToPois = async () => {
  GROUP BY identifiant, type, nom, telephone, courriel, site_internet
 `;
 
-  await knex("cartographie_pois")
-    .insert(knex.raw(sql))
+  await knexInstance("cartographie_pois")
+    .insert(knexInstance.raw(sql))
     .onConflict("identifiant")
     .ignore();
 };
@@ -57,14 +57,14 @@ const importToTempTable = async (source) => {
   let linesCount = 0;
   let insertCount = 0;
 
-  const updateCounts = async (source) => {
+  const updateCounts = async (someSource) => {
     console.log(
-      `[cartographie-source] file process "${source.nom}" processed ${linesCount} lines, inserted ${insertCount} item(s)`
+      `[cartographie-source] file process "${someSource.nom}" processed ${linesCount} lines, inserted ${insertCount} item(s)`
     );
 
     await knex("cartographie_sources")
       .update({ lignes_insertion: insertCount, lignes_total: linesCount })
-      .where("id", source.id);
+      .where("id", someSource.id);
   };
 
   const filePath = path.join("public", source.fichier.url);
@@ -81,9 +81,7 @@ const importToTempTable = async (source) => {
     lineProcessor: async (data, fileType) => {
       linesCount += 1;
 
-      const result = processData(source, data, fileType);
-
-      return result;
+      return processData(source, data, fileType);
     },
   });
 
@@ -93,15 +91,15 @@ const importToTempTable = async (source) => {
 };
 
 const cleanTempTable = async () => {
-  const knex = strapi.connections.default;
+  const knexInstance = strapi.connections.default;
 
-  await knex.schema.dropTableIfExists("import_pois");
+  await knexInstance.schema.dropTableIfExists("import_pois");
 };
 
 const initTempTable = async () => {
-  const knex = strapi.connections.default;
+  const knexInstance = strapi.connections.default;
 
-  await knex.transaction(async (transaction) => {
+  await knexInstance.transaction(async (transaction) => {
     await transaction.schema.dropTableIfExists("import_pois");
     await transaction.raw(
       `create table import_pois as table cartographie_pois WITH NO DATA`

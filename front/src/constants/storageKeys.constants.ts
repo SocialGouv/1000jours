@@ -1,3 +1,4 @@
+export const userUuidKey = "@userUuidKey";
 export const appActiveCounter = "@appActiveCounter";
 export const appOpeningLastDate = "@appOpeningLastDate";
 export const isFirstLaunchKey = "@isFirstLaunch";
@@ -20,8 +21,10 @@ export const osCalendarId = "@osCalendarId";
 export const osCalendarSyncDate = "@osCalendarSyncDate";
 export const scrollToEventId = "@scrollToEventId";
 export const articlesRead = "@articlesRead";
+export const moodsByDate = "@moodsByDate";
 
 export const allStorageKeys = [
+  userUuidKey,
   appActiveCounter,
   appOpeningLastDate,
   isFirstLaunchKey,
@@ -43,6 +46,7 @@ export const allStorageKeys = [
   osCalendarSyncDate,
   scrollToEventId,
   articlesRead,
+  moodsByDate,
 ];
 
 export const epdsSurveyKeys = [epdsQuestionAndAnswersKey, epdsQuestionIndexKey];

@@ -11,7 +11,7 @@ const find = async (context) => {
   };
 
   if (context.query._q) {
-    articles = await strapi.query("article").search(params);
+    articles = await ArticleService.search({ query: context.query._q });
   } else {
     articles = await strapi.query("article").find(params);
   }

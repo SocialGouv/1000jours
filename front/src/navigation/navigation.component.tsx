@@ -7,6 +7,7 @@ import type { ColorSchemeName } from "react-native";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { ConditionsOfUse, LegalNotice, Menu } from "../components";
+import { BaseAssets } from "../components/assets";
 import {
   Backdrop,
   Icomoon,
@@ -16,14 +17,13 @@ import {
 } from "../components/baseComponents";
 import NotificationHandler from "../components/notification/notificationHandler.component";
 import { Labels } from "../constants";
-import { LoadingScreen, Onboarding, Profile } from "../screens";
+import { LoadingScreen, Moodboard, Onboarding, Profile } from "../screens";
 import { Colors, Paddings, Sizes } from "../styles";
 import type { RootStackParamList } from "../types";
 import { getAppTheme } from "../utils";
 import { navigationRef } from "../utils/rootNavigation.util";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
-import { BaseAssets } from "../components/assets";
 
 interface NavigationProps {
   colorScheme: ColorSchemeName;
@@ -64,6 +64,7 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => {
       <Stack.Screen name="loading" component={LoadingScreen} />
       <Stack.Screen name="onboarding" component={Onboarding} />
       <Stack.Screen name="profile" component={Profile} />
+      <Stack.Screen name="moodboard" component={Moodboard} />
       <Stack.Screen name="legalNotice" component={LegalNotice} />
       <Stack.Screen name="conditionsOfUse" component={ConditionsOfUse} />
       <Stack.Screen

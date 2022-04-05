@@ -269,6 +269,7 @@ const Profile: FC<Props> = ({ navigation }) => {
                     disabled={situation.isChecked}
                     accessibilityRole="checkbox"
                     accessibilityState={{ checked: situation.isChecked }}
+                    style={styles.itemTouchable}
                   >
                     <SecondaryText
                       style={
@@ -410,8 +411,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: Margins.smaller,
     marginVertical: Margins.light,
-    paddingHorizontal: Paddings.default,
-    paddingVertical: Paddings.default,
     shadowColor: Colors.navigation,
     shadowOffset: {
       height: 2,
@@ -432,6 +431,11 @@ const styles = StyleSheet.create({
   itemTextSelected: {
     color: Colors.white,
     fontWeight: FontWeight.bold,
+  },
+  itemTouchable: {
+    minHeight: Sizes.accessibilityMinButton,
+    paddingHorizontal: Paddings.default,
+    paddingVertical: Paddings.default,
   },
   justifyContentCenter: {
     alignItems: "center",

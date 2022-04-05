@@ -1,4 +1,4 @@
-export const EPDS_SURVEY = `
+export const EPDS_SURVEY = /* GraphQL */ `
   query QuestionsReponses {
     questionnaireEpds(sort: "ordre") {
       ordre
@@ -15,7 +15,7 @@ export const EPDS_SURVEY = `
   }
 `;
 
-export const EPDS_ADD_RESPONSE = `
+export const EPDS_ADD_RESPONSE = /* GraphQL */ `
   mutation (
     $genre: ENUM_REPONSESEPDS_GENRE!
     $compteur: Int!
@@ -58,7 +58,7 @@ export const EPDS_ADD_RESPONSE = `
   }
 `;
 
-export const EPDS_CONTACT_INFORMATION = `
+export const EPDS_CONTACT_INFORMATION = /* GraphQL */ `
   mutation (
     $email: String
     $telephone: String

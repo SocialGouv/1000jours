@@ -1,7 +1,7 @@
 import Constants from "expo-constants";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
-import { Dimensions, Linking, Modal, StyleSheet } from "react-native";
+import { Linking, Modal, ScrollView, StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
 import GestureRecognizer from "react-native-swipe-gestures";
 import BottomSheet from "reanimated-bottom-sheet";
@@ -9,6 +9,7 @@ import BottomSheet from "reanimated-bottom-sheet";
 import { Labels, PlatformConstants } from "../../constants";
 import { emailContact } from "../../constants/email.constants";
 import { reviewTypeForm } from "../../constants/links.constants";
+import { SCREEN_HEIGHT } from "../../constants/platform.constants";
 import {
   Colors,
   FontNames,
@@ -30,6 +31,8 @@ interface Props {
   setShowMenu: (showMenu: boolean) => void;
 }
 
+const MAX_HEIGHT = SCREEN_HEIGHT * 0.9;
+
 const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
   const [showLegalNotice, setShowLegalNotice] = React.useState(false);
   const [showConditionsOfUse, setShowConditionsOfUse] = React.useState(false);
@@ -50,6 +53,13 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
           void RootNavigation.navigate("profile", null);
         },
         title: Labels.menu.myProfil,
+      },
+      {
+        icon: IcomoonIcons.bebe,
+        onPress: () => {
+          void RootNavigation.navigate("moodboard", null);
+        },
+        title: Labels.menu.moodboard,
       },
       {
         icon: IcomoonIcons.stepParentheque,
@@ -107,23 +117,24 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
 
   const renderContent = useCallback(
     () => (
-      <GestureRecognizer
-        style={{ flex: 1 }}
-        onSwipeUp={updateShowMenu(true)}
-        onSwipeDown={updateShowMenu(false)}
-      >
-        <Modal animationType="slide" transparent={true} visible={showMenu}>
-          <View style={styles.modalView}>
-            <View
-              style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
-              accessibilityRole="button"
-              accessible
-              accessibilityLabel={Labels.accessibility.closeMenu}
-              onTouchEnd={updateShowMenu(false)}
+      <Modal animationType="slide" transparent={true} visible={showMenu}>
+        <View style={styles.modalView}>
+          <View style={styles.modalContent}>
+            <GestureRecognizer
+              onSwipeUp={updateShowMenu(true)}
+              onSwipeDown={updateShowMenu(false)}
             >
-              <View style={styles.swipeIndicator} />
-            </View>
-            <View>
+              <View
+                style={styles.swipeIndicatorContainer}
+                accessibilityRole="button"
+                accessible
+                accessibilityLabel={Labels.accessibility.closeMenu}
+                onTouchEnd={updateShowMenu(false)}
+              >
+                <View style={styles.swipeIndicator} />
+              </View>
+            </GestureRecognizer>
+            <ScrollView style={styles.scrollView}>
               <ListItem bottomDivider>
                 <ListItem.Content>
                   <ListItem.Title
@@ -170,19 +181,16 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
                   </ListItem.Title>
                 </ListItem.Content>
               </ListItem>
-            </View>
+            </ScrollView>
           </View>
-        </Modal>
-      </GestureRecognizer>
+        </View>
+      </Modal>
     ),
     [menuItems, onListItemPressed, showMenu, updateShowMenu]
   );
 
+  const snapPoints = [MAX_HEIGHT, MAX_HEIGHT / 1.5, 0];
   const sheetRef = React.useRef<BottomSheet>(null);
-
-  const height = Dimensions.get("window").height;
-  const snapPoint = height * 0.8;
-  const snapPoints = [snapPoint, snapPoint / 1.5, 0];
 
   return showMenu ? (
     <BottomSheet
@@ -213,11 +221,16 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlueDark,
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
   },
+  modalContent: {
+    backgroundColor: "transparent",
+    maxHeight: MAX_HEIGHT,
+  },
   modalView: {
     backgroundColor: Colors.transparentGrey,
     flex: 1,
     justifyContent: "flex-end",
   },
+  scrollView: { backgroundColor: "white" },
   swipeIndicator: {
     alignSelf: "center",
     backgroundColor: Colors.navigation,
@@ -226,6 +239,10 @@ const styles = StyleSheet.create({
     marginBottom: Margins.light,
     marginTop: Margins.larger,
     width: Sizes.xxxl,
+  },
+  swipeIndicatorContainer: {
+    borderTopLeftRadius: Sizes.mmd,
+    borderTopRightRadius: Sizes.mmd,
   },
   title: {
     color: Colors.primaryBlueDark,

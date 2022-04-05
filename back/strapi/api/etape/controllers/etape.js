@@ -8,7 +8,7 @@ const getCurrentEtapeControler = async (context) => {
   if (!infos) return context.badRequest("missing informations");
 
   try {
-    return EtapeService.getCurrent(infos);
+    return await EtapeService.getCurrent(infos);
   } catch (e) {
     context.badRequest(e.message);
   }

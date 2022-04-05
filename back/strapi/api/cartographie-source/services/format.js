@@ -63,9 +63,9 @@ const formatPoi = (source, entity) => {
 const formatPoiFromData = (source, entity, data) => {
   const reference = formatReference(source, entity, data);
 
-  const poi = formatPoi(source, entity, data);
+  const poi = formatPoi(source, entity);
 
-  const adresse = formatAdresse(source, entity, data);
+  const adresse = formatAdresse(source, entity);
   // do not save POI without adresses to database
   if (!adresse) return null;
 

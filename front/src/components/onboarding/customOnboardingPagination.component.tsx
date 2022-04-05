@@ -34,6 +34,7 @@ export const CustomPagination: FC<OnboardingPaginationProps> = ({
           key={value}
           onPress={onPaginationPressed(value)}
           accessibilityLabel={`${Labels.onboarding.screenNumber}${value + 1}`}
+          style={styles.paginationTouchableStyle}
         >
           <View
             style={[
@@ -62,6 +63,9 @@ const styles = StyleSheet.create({
   },
   notSelectedIndex: {
     backgroundColor: Colors.onBoardingSwiperFlatList.paginationDefault,
+  },
+  paginationTouchableStyle: {
+    minHeight: Sizes.accessibilityMinButton,
   },
   rowView: {
     alignSelf: "center",

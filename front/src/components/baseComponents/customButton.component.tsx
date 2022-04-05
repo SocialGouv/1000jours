@@ -50,7 +50,11 @@ const CustomButton: FC<Props> = ({
     icon={icon}
     iconRight={false}
     title={title}
-    buttonStyle={[rounded ? styles.roundedButton : null, buttonStyle]}
+    buttonStyle={[
+      rounded ? styles.roundedButton : null,
+      buttonStyle,
+      styles.accessibilitySize,
+    ]}
     titleStyle={[
       styles.font,
       rounded ? styles.roundedButtonTitle : styles.clearButtonTitle,
@@ -67,6 +71,10 @@ const CustomButton: FC<Props> = ({
 );
 
 const styles = StyleSheet.create({
+  accessibilitySize: {
+    minHeight: Sizes.accessibilityMinButton,
+    minWidth: Sizes.accessibilityMinButton,
+  },
   buttonWithIcon: {
     paddingStart: 8,
   },

@@ -25,7 +25,9 @@ export const PARENTS_DOCUMENTS = `
   }
 `;
 
-export const LIST_ARTICLES_WITH_STEP = (stepId: number): string => `
+export const LIST_ARTICLES_WITH_STEP = (
+  stepId: number
+): string => /* GraphQL */ `
 query GetStepArticles {
   articles(sort: "ordre", where: {
     etapes: { id: ${stepId} }
@@ -49,7 +51,9 @@ query GetStepArticles {
 }
 `;
 
-export const ARTICLE_DETAILS_WITH_ID = (articleId: number): string => `
+export const ARTICLE_DETAILS_WITH_ID = (
+  articleId: number
+): string => /* GraphQL */ `
     query GetArticleDetail {
       article(id: ${articleId}) {
         id

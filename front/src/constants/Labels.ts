@@ -491,8 +491,22 @@ export default {
     conditionsOfUse: "Politiques de confidentialité",
     contactUs: "Nous écrire",
     legalNotice: "Mentions légales",
+    moodboard: "Suivi d'humeur",
     myProfil: "Mon profil",
     title: "Menu",
+  },
+  moodboard: {
+    description:
+      "Texte descriptif qui explique qu’il s’agit d’un suivi de l’humeur pour aider à la prévention de la dépression, etc.",
+    howDoYouFeelToday: "Comment vous sentez vous aujourd'hui ?",
+    mood: {
+      bad: "Mal",
+      good: "Bien",
+      medium: "Moyen",
+      veryGood: "Très bien",
+    },
+    moodToDate: "Comment vous sentiez-vous le",
+    title: "Suivi d'Humeur",
   },
   notification: {
     openTheApp: "Ouverture de l'app",

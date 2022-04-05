@@ -18,12 +18,15 @@ const Sizes = {
   xxxl: scaleNormalize(36),
   xxxxl: scaleNormalize(46),
   xxxxxl: scaleNormalize(60),
+  xxxxxxl: scaleNormalize(80),
+  xxxxxxxl: scaleNormalize(100),
   big: scaleNormalize(250),
   giant: scaleNormalize(300),
   logo: scaleNormalize(70),
   step: scaleNormalize(80),
   timelineBlock: scaleNormalize(100),
   thumbnail: scaleNormalize(100),
+  accessibilityMinButton: scaleNormalize(48),
 };
 
 export default Sizes;

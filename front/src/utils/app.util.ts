@@ -1,13 +1,18 @@
 import Constants from "expo-constants";
 
 import { StorageKeysConstants } from "../constants";
-import { StorageUtils } from ".";
+import {
+  getStringValue,
+  multiRemove,
+  storeObjectValue,
+  storeStringValue,
+} from "./storage.util";
 
 export const manageStorage = async (): Promise<void> => {
   if (process.env.CLEAR_STORAGE === "true")
-    void StorageUtils.multiRemove(StorageKeysConstants.allStorageKeys);
+    void multiRemove(StorageKeysConstants.allStorageKeys);
 
-  const lastVersionLaunch = await StorageUtils.getStringValue(
+  const lastVersionLaunch = await getStringValue(
     StorageKeysConstants.lastVersionLaunchKey
   );
 
@@ -15,11 +20,11 @@ export const manageStorage = async (): Promise<void> => {
     Constants.manifest.version &&
     lastVersionLaunch !== Constants.manifest.version
   ) {
-    await StorageUtils.storeStringValue(
+    await storeStringValue(
       StorageKeysConstants.lastVersionLaunchKey,
       Constants.manifest.version
     );
-    await StorageUtils.storeObjectValue(
+    await storeObjectValue(
       StorageKeysConstants.forceToScheduleEventsNotif,
       true
     );

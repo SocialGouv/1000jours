@@ -65,7 +65,9 @@ const TabSearchScreen: FC = () => {
     setUpdatedText(Labels.search.loading);
     KeyboardUtils.dismissKeyboard();
     if (stringIsNotNullNorEmpty(keywords)) {
-      setQueryVariables({ keywords });
+      const trimedKeywords = keywords.trim();
+      setKeywords(trimedKeywords);
+      setQueryVariables({ keywords: trimedKeywords });
       setTriggerGetArticles(!triggerGetArticles);
     }
   }, [keywords, triggerGetArticles]);

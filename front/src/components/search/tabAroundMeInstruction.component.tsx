@@ -126,7 +126,10 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
           {Labels.aroundMe.searchGeolocInstruction}
         </SecondaryText>
         <View style={styles.geolocationRow}>
-          <TouchableOpacity onPress={checkLocation}>
+          <TouchableOpacity
+            onPress={checkLocation}
+            style={styles.geolicationTouchableStyle}
+          >
             <Image
               source={geolocationIcon}
               style={styles.geolicationIconStyle}
@@ -203,6 +206,12 @@ const styles = StyleSheet.create({
   geolicationIconStyle: {
     height: Margins.largest,
     width: Margins.largest,
+  },
+  geolicationTouchableStyle: {
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: Sizes.accessibilityMinButton,
+    minWidth: Sizes.accessibilityMinButton,
   },
   geolocationRow: {
     flexDirection: "row",

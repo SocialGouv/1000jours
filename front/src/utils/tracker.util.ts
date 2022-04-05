@@ -1,17 +1,37 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import "react-native-get-random-values";
+
 import { add, isBefore } from "date-fns";
 import MatomoTracker from "matomo-tracker-react-native";
+import { v4 as uuidv4 } from "uuid";
 
 import { StorageKeysConstants } from "../constants";
-import { getStringValue } from "./storage.util";
+import { getStringValue, storeObjectValue } from "./storage.util";
+import { replaceAllText } from "./strings.util";
 
 export const MIN_HOURS_DELAY_TO_TRACK_NEW_OPENING = 6;
 
-export const matomoInstance = new MatomoTracker({
-  disabled: process.env.MATOMO_ENABLED === "false",
-  siteId: Number(process.env.MATOMO_APPLICATION_ID),
-  urlBase: String(process.env.MATOMO_URL),
-});
+export const getOrCreateUserUuid = async (): Promise<string> => {
+  let userUuid = await getStringValue(StorageKeysConstants.userUuidKey);
+
+  if (!userUuid) {
+    userUuid = uuidv4();
+    await storeObjectValue(StorageKeysConstants.userUuidKey, userUuid);
+  }
+
+  // Le getStringValue retourne la valeur avec double quotes, il faut les supprimer
+  return replaceAllText(userUuid, '"', "");
+};
+
+export const matomoInstance = async (): Promise<MatomoTracker> => {
+  const userId = await getOrCreateUserUuid();
+  return new MatomoTracker({
+    disabled: process.env.MATOMO_ENABLED === "false",
+    siteId: Number(process.env.MATOMO_APPLICATION_ID),
+    urlBase: String(process.env.MATOMO_URL),
+    userId,
+  });
+};
 
 export enum TrackingEvent {
   APP_ACTIVE = "Ouverture de l'app",
@@ -33,6 +53,7 @@ export enum TrackingEvent {
   FILTER_CARTO = "Filtre (Carto)",
   FILTER_ARTICLES = "Filtre (Articles)",
   RECHERCHER = "Rechercher",
+  MOODBOARD = "Moodboard",
 }
 
 export const dateWithMinHoursDelayIsBeforeNow = (date: Date): boolean => {
