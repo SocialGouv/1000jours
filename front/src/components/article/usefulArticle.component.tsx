@@ -23,7 +23,7 @@ interface Props {
 const UsefulArticle: FC<Props> = ({ articleName }) => {
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
   const [isUsefulArticle, setUsefulArticle] = useState<number>();
-  const [isButtonsDisabled, setButtonsDisabled] = useState<boolean>(false);
+  const [isButtonsDisabled, setButtonsDisabled] = useState(false);
 
   useEffect(() => {
     // La valeur est 1 si l'article a été jugé utile, et 0 s'il ne l'a pas été
@@ -63,7 +63,7 @@ const UsefulArticle: FC<Props> = ({ articleName }) => {
           icon={
             <Icomoon
               name={IcomoonIcons.valider}
-              size={14}
+              size={Sizes.xs}
               color={Colors.secondaryGreenDark}
             />
           }
@@ -79,7 +79,7 @@ const UsefulArticle: FC<Props> = ({ articleName }) => {
           icon={
             <Icomoon
               name={IcomoonIcons.annuler}
-              size={14}
+              size={Sizes.xs}
               color={Colors.secondaryRedMiddle}
             />
           }
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   buttonTitle: {
     color: Colors.black,
     fontSize: Sizes.xs,
-    paddingBottom: 5,
+    paddingBottom: Paddings.smallest,
     paddingTop: 0,
   },
   buttonsBloc: {
@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.medium,
     lineHeight: Sizes.lg,
     paddingHorizontal: Paddings.default,
-    paddingTop: 0,
   },
 });
 export default UsefulArticle;

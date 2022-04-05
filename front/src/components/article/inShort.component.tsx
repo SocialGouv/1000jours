@@ -64,7 +64,7 @@ const InShort: FC<Props> = ({ inShortArray }) => {
     <View style={styles.inShortContainer}>
       <View style={styles.inShortHeader}>
         <View style={[styles.cardTitleContainer, styles.positionRelative]}>
-          <CommonText style={[styles.inShortTitle]} accessibilityRole="header">
+          <CommonText style={styles.inShortTitle} accessibilityRole="header">
             {Labels.article.inShortTitle}
           </CommonText>
           <Text
@@ -99,7 +99,7 @@ const InShort: FC<Props> = ({ inShortArray }) => {
       {isOpen ? (
         <View style={styles.inShortListItemsContainer}>
           {_.filter(inShortArray, "text").map((item, index) => (
-            <ListItem key={index} containerStyle={[styles.listItemContainer]}>
+            <ListItem key={index} containerStyle={styles.listItemContainer}>
               <ImageBackground
                 source={BgImage}
                 imageStyle={styles.imageBackground}
@@ -108,14 +108,14 @@ const InShort: FC<Props> = ({ inShortArray }) => {
                 <View
                   importantForAccessibility="no-hide-descendants"
                   accessible={false}
-                  accessibilityElementsHidden={true}
+                  accessibilityElementsHidden
                 >
                   {inShortIcons[item.icon]}
                 </View>
               </ImageBackground>
               <ListItem.Content>
                 <ListItem.Title>
-                  <SecondaryText style={[styles.listItemTitle]}>
+                  <SecondaryText style={styles.listItemTitle}>
                     {item.text}
                   </SecondaryText>
                 </ListItem.Title>

@@ -20,8 +20,8 @@ import {
   TextHtml,
   Thematics,
   Title,
+  UsefulArticle,
 } from "../../components";
-import UsefulArticle from "../../components/article/usefulArticle.component";
 import {
   BackButton,
   ShareButton,
@@ -37,7 +37,7 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import { GraphQLQuery } from "../../services";
-import { Colors, Paddings } from "../../styles";
+import { Colors, Margins, Paddings } from "../../styles";
 import type {
   Article,
   ArticleInShortItem,
@@ -202,15 +202,15 @@ const ArticleDetail: FC<Props> = ({
             <TrackerHandler
               screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${currentArticle.titre}`}
             />
-            <View style={[styles.mainContainer]}>
+            <View style={styles.mainContainer}>
               <View>
-                <View style={[styles.flexStart]}>
+                <View style={styles.flexStart}>
                   <BackButton action={onBackButtonPressed} />
                 </View>
                 <TitleH1
                   title={screenTitle}
                   description={description}
-                  animated={true}
+                  animated
                 />
               </View>
               <View>
@@ -250,7 +250,7 @@ const ArticleDetail: FC<Props> = ({
           </ScrollView>
 
           <FAB
-            visible={true}
+            visible
             icon={{
               color: Colors.primaryBlueDark,
               name: "expand-less",
@@ -285,8 +285,8 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   imageBannerContainer: {
-    marginBottom: 15,
-    marginTop: 15,
+    marginBottom: Margins.default,
+    marginTop: Margins.default,
   },
   mainContainer: {
     padding: paddingMainContent,
