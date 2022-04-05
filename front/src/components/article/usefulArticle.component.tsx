@@ -22,26 +22,18 @@ interface Props {
 
 const UsefulArticle: FC<Props> = ({ articleName }) => {
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
-  const [isUsefulArticle, setUsefulArticle] = useState<number>();
   const [isButtonsDisabled, setButtonsDisabled] = useState(false);
-
-  useEffect(() => {
-    // La valeur est 1 si l'article a été jugé utile, et 0 s'il ne l'a pas été
-    if (isUsefulArticle !== undefined) {
-      setTrackerEventObject({
-        action: "UsefulArticle",
-        name: `${TrackerUtils.TrackingEvent.ARTICLE} : ${articleName}`,
-        value: isUsefulArticle,
-      });
-      setButtonsDisabled(true);
-    }
-  }, [articleName, isUsefulArticle]);
 
   const setUsefulArticleForTracker = useCallback(
     (value: number) => () => {
-      setUsefulArticle(value);
+      setTrackerEventObject({
+        action: "UsefulArticle",
+        name: `${TrackerUtils.TrackingEvent.ARTICLE} : ${articleName}`,
+        value: value,
+      });
+      setButtonsDisabled(true);
     },
-    []
+    [articleName]
   );
 
   return (
