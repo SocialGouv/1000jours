@@ -30,7 +30,7 @@ const ArticleList: FC<Props> = ({
           delay={0}
         >
           <ArticleCard
-            article={article}
+            selectedArticleId={article.id}
             articles={articleList}
             step={step}
             isFromSearchScreen={isFromSearchScreen}

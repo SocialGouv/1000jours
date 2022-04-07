@@ -171,7 +171,10 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
                 </CommonText>
                 {event.articles.map((article, index) => (
                   <View key={index}>
-                    <ArticleCard article={article} />
+                    <ArticleCard
+                      selectedArticleId={article.id}
+                      articles={event.articles ?? []}
+                    />
                   </View>
                 ))}
               </View>

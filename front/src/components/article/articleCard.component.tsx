@@ -13,20 +13,22 @@ import { getVisuelFormat, RootNavigation, VisuelFormat } from "../../utils";
 import { CommonText, SecondaryText } from "../baseComponents";
 
 interface Props {
-  article: Article;
-  articles?: Article[];
+  selectedArticleId: number;
+  articles: Article[];
   step?: Step;
   isFromSearchScreen?: boolean;
   setStepAndArticleId?: (articleId: number, step: Step | undefined) => void;
 }
 
 const ArticleCard: FC<Props> = ({
-  article,
+  selectedArticleId,
   articles,
   step,
   isFromSearchScreen,
   setStepAndArticleId,
 }) => {
+  const article: Article = findArticleById(articles, selectedArticleId);
+
   // Permet de forcer le composant ExpoFastImage à être actualisé
   const [showImage, setShowImage] = useState(false);
   useEffect(() => {
@@ -88,6 +90,41 @@ const ArticleCard: FC<Props> = ({
         </ListItem.Subtitle>
       </ListItem.Content>
     </ListItem>
+  );
+};
+
+export const findArticleById = (
+  articles: Article[],
+  selectedArticleId: number
+): Article => {
+  const articleNotFound: Article = {
+    enbrefIcone1: "",
+    enbrefIcone2: "",
+    enbrefIcone3: "",
+    enbrefTexte1: "",
+    enbrefTexte2: "",
+    enbrefTexte3: "",
+    id: 0,
+    leSaviezVous: "",
+    lienTitre1: "",
+    lienTitre2: "",
+    lienTitre3: "",
+    lienTitre4: "",
+    lienUrl1: "",
+    lienUrl2: "",
+    lienUrl3: "",
+    lienUrl4: "",
+    resume: "",
+    texte1: "",
+    texte2: "",
+    texteTitre1: "",
+    texteTitre2: "",
+    thematiques: [],
+    titre: "Article introuvable",
+  };
+
+  return (
+    articles.find((item) => item.id == selectedArticleId) ?? articleNotFound
   );
 };
 
