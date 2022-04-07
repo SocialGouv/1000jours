@@ -13,6 +13,7 @@ import {
   getFontFamilyName,
   Sizes,
 } from "../../styles";
+import { StringUtils } from "../../utils";
 
 interface Props {
   html: string;
@@ -52,7 +53,8 @@ const TextHtml: FC<Props> = ({
     // Permet de corriger les liens des vidéos youtube
     content = content.replace("youtube.com/watch?v=", "youtube.com/embed/");
     // Permet de corriger la largeur du contenu trop élevée avec des puces
-    content = content.replaceAll(
+    content = StringUtils.replaceAllText(
+      content,
       `<ul>`,
       `<ul style="max-width:${screenWidth}px;">`
     );

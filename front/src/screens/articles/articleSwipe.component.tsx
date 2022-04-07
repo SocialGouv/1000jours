@@ -3,7 +3,7 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import type { Article } from "@socialgouv/nos1000jours-lib";
 import type { FC } from "react";
 import * as React from "react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef } from "react";
 import { StyleSheet } from "react-native";
 import Carousel from "react-native-snap-carousel";
 
@@ -37,11 +37,11 @@ const ITEM_WIDTH = Math.round(SCREEN_WIDTH * 0.8);
 const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
   const ref = useRef(null);
 
-  const [articles] = useState(route?.params.articles);
-  const [step] = useState(route?.params.step);
-  const [articleId] = useState(route?.params.id);
+  const articles: Article[] = route ? route.params.articles : [];
+  const step: Step | undefined = route?.params.step;
+  const articleId: number = route ? route.params.id : 0;
 
-  const firstItemIndexToShow = articles?.findIndex(
+  const firstItemIndexToShow = articles.findIndex(
     (item) => item.id == articleId
   );
 
