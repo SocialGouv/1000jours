@@ -21,9 +21,14 @@ interface Props {
    * Sinon elle aura la même largeur que l'écran "SCREEN_WIDTH"
    */
   offsetTotal?: number;
+  screenWidth?: number;
 }
 
-const TextHtml: FC<Props> = ({ html, offsetTotal }) => {
+const TextHtml: FC<Props> = ({
+  html,
+  offsetTotal,
+  screenWidth = SCREEN_WIDTH,
+}) => {
   const [htmlContent, setHtmlContent] = React.useState("");
   const [isReady, setIsReady] = React.useState(false);
 
@@ -36,7 +41,7 @@ const TextHtml: FC<Props> = ({ html, offsetTotal }) => {
   };
 
   const fixVideoContent = (content: string) => {
-    const width = offsetTotal ? SCREEN_WIDTH - offsetTotal * 2 : SCREEN_WIDTH;
+    const width = offsetTotal ? screenWidth - offsetTotal * 2 : screenWidth;
     // La balise <oembed> n'est pas supportée par la lib react-native-render-html
     // On la remplace par une iframe qui elle sera rendu dans une WebView
     content = content.replace(
@@ -46,6 +51,11 @@ const TextHtml: FC<Props> = ({ html, offsetTotal }) => {
     content = content.replace("</oembed></figure>", "</iframe>");
     // Permet de corriger les liens des vidéos youtube
     content = content.replace("youtube.com/watch?v=", "youtube.com/embed/");
+    // Permet de corriger la largeur du contenu trop élevée avec des puces
+    content = content.replaceAll(
+      `<ul>`,
+      `<ul style="max-width:${screenWidth}px;">`
+    );
     setHtmlContent(content);
     setIsReady(true);
   };
@@ -58,7 +68,7 @@ const TextHtml: FC<Props> = ({ html, offsetTotal }) => {
   return isReady ? (
     <HTML
       WebView={WebView}
-      contentWidth={SCREEN_WIDTH}
+      contentWidth={screenWidth}
       renderers={renderers}
       customHTMLElementModels={customHTMLElementModels}
       baseStyle={styles.baseStyle}

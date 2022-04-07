@@ -36,6 +36,7 @@ import {
   Labels,
   StorageKeysConstants,
 } from "../../constants";
+import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { GraphQLQuery } from "../../services";
 import { Colors, Margins, Paddings } from "../../styles";
 import type {
@@ -81,6 +82,7 @@ const ArticleDetail: FC<Props> = ({
   const scrollContentHeight = useRef(0);
   const articleHasBeenRead = useRef(false);
   const MIN_RATIO_FOR_HAS_BEEN_READ = 0.25;
+  const WIDTH_FOR_HTML = Math.round(SCREEN_WIDTH * 0.6);
 
   const setArticleInShortArray = useCallback((article: Article) => {
     setInShortArray([
@@ -239,12 +241,14 @@ const ArticleDetail: FC<Props> = ({
                   <TextHtml
                     html={currentArticle.texte1}
                     offsetTotal={paddingMainContent + paddingArticleContent}
+                    screenWidth={WIDTH_FOR_HTML}
                   />
                   <DidYouKnow description={currentArticle.leSaviezVous} />
                   <SubTitle title={currentArticle.texteTitre2} />
                   <TextHtml
                     html={currentArticle.texte2}
                     offsetTotal={paddingMainContent + paddingArticleContent}
+                    screenWidth={WIDTH_FOR_HTML}
                   />
                   <Links linksArray={linksArray} />
                   <UsefulArticle articleName={currentArticle.titre} />
