@@ -4,7 +4,7 @@ import { MoodboardAssets } from "../components/assets";
 import { Formats, Labels, StorageKeysConstants } from "../constants";
 import { Colors } from "../styles";
 import type { MoodboardItem, MoodStorageItem } from "../type";
-import { StorageUtils } from ".";
+import { getObjectValue, storeObjectValue } from "./storage.util";
 
 export const MOODBOARD_ITEMS: MoodboardItem[] = [
   {
@@ -34,7 +34,7 @@ export const saveMood = async (
   dateISO?: string
 ): Promise<void> => {
   const oldMoods: MoodStorageItem[] =
-    (await StorageUtils.getObjectValue(StorageKeysConstants.moodsByDate)) ?? [];
+    (await getObjectValue(StorageKeysConstants.moodsByDate)) ?? [];
   const today = dateISO ?? format(new Date(), Formats.dateISO);
 
   // Permet de ne pas récupérer l'humeur du jour s'il a déjà été saisi, et don ne pas avoir de doublons
@@ -44,8 +44,5 @@ export const saveMood = async (
     title: mood,
   });
 
-  void StorageUtils.storeObjectValue(
-    StorageKeysConstants.moodsByDate,
-    newMoods
-  );
+  void storeObjectValue(StorageKeysConstants.moodsByDate, newMoods);
 };
