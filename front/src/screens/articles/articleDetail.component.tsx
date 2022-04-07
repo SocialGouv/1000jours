@@ -268,6 +268,7 @@ const ArticleDetail: FC<Props> = ({
             color={Colors.white}
             onPress={scrollTopHandler}
             accessibilityLabel={Labels.accessibility.articleGoToTop}
+            style={styles.fabButton}
           />
         </>
       )}
@@ -279,6 +280,10 @@ const styles = StyleSheet.create({
   articleDetails: {
     paddingHorizontal: paddingArticleContent,
     paddingTop: Paddings.light,
+  },
+  fabButton: {
+    borderColor: Colors.borderGrey,
+    borderWidth: 2,
   },
   flexEnd: {
     alignSelf: "flex-end",
