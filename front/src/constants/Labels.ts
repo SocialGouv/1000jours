@@ -134,6 +134,9 @@ export default {
     filters: "Filtrer",
     resetFilters: "Réinitialiser",
   },
+  articleSwipe: {
+    content: "Slidez entre les articles pour lire sur les différents sujets.",
+  },
   buttons: {
     back: "Retour",
     cancel: "Annuler",

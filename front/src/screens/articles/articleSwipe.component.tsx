@@ -13,6 +13,7 @@ import {
   TitleH1,
   View,
 } from "../../components/baseComponents";
+import { Labels } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { Colors, Paddings, Sizes } from "../../styles";
 import type { Step, TabHomeParamList } from "../../types";
@@ -36,9 +37,9 @@ const ITEM_WIDTH = Math.round(SCREEN_WIDTH * 0.8);
 const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
   const ref = useRef(null);
 
-  const [articles, setArticles] = useState(route?.params.articles);
-  const [step, setStep] = useState(route?.params.step);
-  const [articleId, setArticleId] = useState(route?.params.id);
+  const [articles] = useState(route?.params.articles);
+  const [step] = useState(route?.params.step);
+  const [articleId] = useState(route?.params.id);
 
   const firstItemIndexToShow = articles?.findIndex(
     (item) => item.id == articleId
@@ -70,9 +71,7 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
           <BackButton action={onGoBack} />
         </View>
         <TitleH1 title={step?.nom} animated />
-        <SecondaryText>
-          Slidez entre les articles pour lire sur les différents sujets.
-        </SecondaryText>
+        <SecondaryText>{Labels.articleSwipe.content}</SecondaryText>
       </View>
 
       <Carousel
