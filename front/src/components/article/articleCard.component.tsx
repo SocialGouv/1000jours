@@ -120,7 +120,7 @@ export const findArticleById = (
     texteTitre1: "",
     texteTitre2: "",
     thematiques: [],
-    titre: "Article introuvable",
+    titre: Labels.article.articleNotFound,
   };
 
   return (

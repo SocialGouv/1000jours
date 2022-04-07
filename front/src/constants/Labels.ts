@@ -118,6 +118,7 @@ export default {
     useMyGeolocation: "Utiliser ma géolocalisation",
   },
   article: {
+    articleNotFound: "Article introuvable",
     didYouKnowTitle: "Le saviez-vous ?",
     firstThreeMonths: {
       buttonLabel: "Commencer",
