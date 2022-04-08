@@ -3,7 +3,7 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import type { Article } from "@socialgouv/nos1000jours-lib";
 import type { FC } from "react";
 import * as React from "react";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import Carousel from "react-native-snap-carousel";
 
@@ -13,10 +13,12 @@ import {
   TitleH1,
   View,
 } from "../../components/baseComponents";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { Colors, Paddings, Sizes } from "../../styles";
 import type { Step, TabHomeParamList } from "../../types";
+import { TrackerUtils } from "../../utils";
 import ArticleDetail from "./articleDetail.component";
 
 interface Props {
@@ -36,6 +38,8 @@ const ITEM_WIDTH = Math.round(SCREEN_WIDTH * 0.8);
 
 const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
   const ref = useRef(null);
+
+  const [trackerName, setTrackerName] = useState<string>();
 
   const articles: Article[] = route ? route.params.articles : [];
   const step: Step | undefined = route?.params.step;
@@ -60,12 +64,26 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
     [step]
   );
 
+  useEffect(() => {
+    snapToItem(firstItemIndexToShow);
+  }, []);
+
   const onGoBack = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
 
+  const snapToItem = useCallback((index: number) => {
+    setTrackerName(articles[index].titre);
+  }, []);
+
   return (
     <View style={styles.mainContainer}>
+      {trackerName && (
+        <TrackerHandler
+          screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${trackerName}`}
+        />
+      )}
+
       <View style={styles.header}>
         <View style={styles.flexStart}>
           <BackButton action={onGoBack} />
@@ -80,6 +98,7 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
         renderItem={renderItem}
         sliderWidth={SCREEN_WIDTH}
         itemWidth={ITEM_WIDTH}
+        onSnapToItem={snapToItem}
         inactiveSlideShift={0}
         useScrollView
         firstItem={firstItemIndexToShow}
