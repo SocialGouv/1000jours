@@ -1,10 +1,10 @@
 import Constants from "expo-constants";
-import type { Event } from "matomo-tracker-react-native";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import { useEffect } from "react";
 
 import type { TrackerEvent, TrackerSearch } from "../../type";
+import type { TrackerUserInfo } from "../../type/userInfo.types";
 import { StringUtils } from "../../utils";
 
 interface TrackerHandlerProps {
@@ -23,13 +23,15 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
   const { trackScreenView, trackAction, trackSiteSearch, trackEvent } =
     useMatomo();
 
+  const userInfo: TrackerUserInfo = {
+    dimension1: Constants.manifest.version ?? "", // dimension1 = AppVersion
+  };
+
   useEffect(() => {
     if (screenName && StringUtils.stringIsNotNullNorEmpty(screenName))
       void trackScreenView({
         name: screenName,
-        userInfo: {
-          dimension1: Constants.manifest.version ?? "", // dimension1 = AppVersion
-        },
+        userInfo,
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -43,9 +45,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
     if (screenNameIsNotEmpty && actionNameIsNotEmpty)
       void trackAction({
         name: `${screenName} / ${actionName}`,
-        userInfo: {
-          dimension1: Constants.manifest.version ?? "", // dimension1 = AppVersion
-        },
+        userInfo,
       });
     else if (actionNameIsNotEmpty) void trackAction({ name: `${actionName}` });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,9 +58,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
       searchObject.category &&
       StringUtils.stringIsNotNullNorEmpty(searchObject.category)
     ) {
-      searchObject.userInfo = {
-        dimension1: Constants.manifest.version ?? "", // dimension1 = AppVersion
-      };
+      searchObject.userInfo = userInfo;
       void trackSiteSearch(searchObject);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,9 +77,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
         action: eventObject.action,
         category: eventCategory,
         name: eventObject.name,
-        userInfo: {
-          dimension1: Constants.manifest.version ?? "", // dimension1 = AppVersion
-        },
+        userInfo,
         value: eventObject.value,
       };
       void trackEvent(event);
