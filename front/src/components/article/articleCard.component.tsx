@@ -27,14 +27,16 @@ const ArticleCard: FC<Props> = ({
   isFromSearchScreen,
   setStepAndArticleId,
 }) => {
-  const article: Article = findArticleById(articles, selectedArticleId);
+  const article: Article | undefined = articles.find(
+    (item) => item.id == selectedArticleId
+  );
 
   // Permet de forcer le composant ExpoFastImage à être actualisé
   const [showImage, setShowImage] = useState(false);
   useEffect(() => {
     let mounted = true;
     setTimeout(() => {
-      if (mounted) setShowImage(Boolean(article.visuel?.id));
+      if (mounted) setShowImage(Boolean(article?.visuel?.id));
     }, 100);
     return () => {
       mounted = false;
@@ -42,89 +44,60 @@ const ArticleCard: FC<Props> = ({
   }, [article]);
 
   const onItemPressed = useCallback(() => {
-    if (isFromSearchScreen && setStepAndArticleId)
+    if (isFromSearchScreen && setStepAndArticleId && article)
       setStepAndArticleId(article.id, step);
     else {
       void RootNavigation.navigate("articleSwipe", {
         articles: articles,
-        id: article.id,
+        id: article?.id,
         step: step,
       });
     }
-  }, [article.id, isFromSearchScreen, setStepAndArticleId, step, articles]);
+  }, [isFromSearchScreen, setStepAndArticleId, article, step, articles]);
 
   return (
-    <ListItem
-      bottomDivider
-      onPress={onItemPressed}
-      pad={0}
-      containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
-      style={[styles.listItem, styles.borderLeftRadius]}
-      accessibilityHint={Labels.accessibility.tapForMoreInfo}
-      accessibilityLabel={`${Labels.accessibility.articleCard.title} : ${article.titre}. ${Labels.accessibility.articleCard.description} : ${article.resume}`}
-    >
-      {showImage ? (
-        <ExpoFastImage
-          uri={getVisuelFormat(article.visuel, VisuelFormat.thumbnail)}
-          cacheKey={article.visuel?.id}
-          style={[styles.articleImage, styles.borderLeftRadius]}
-        />
-      ) : (
-        <Image
-          source={DefaultImage}
-          containerStyle={[styles.articleImage, styles.borderLeftRadius]}
-        />
+    <>
+      {article && (
+        <ListItem
+          bottomDivider
+          onPress={onItemPressed}
+          pad={0}
+          containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
+          style={[styles.listItem, styles.borderLeftRadius]}
+          accessibilityHint={Labels.accessibility.tapForMoreInfo}
+          accessibilityLabel={`${Labels.accessibility.articleCard.title} : ${article.titre}. ${Labels.accessibility.articleCard.description} : ${article.resume}`}
+        >
+          {showImage ? (
+            <ExpoFastImage
+              uri={getVisuelFormat(article.visuel, VisuelFormat.thumbnail)}
+              cacheKey={article.visuel?.id}
+              style={[styles.articleImage, styles.borderLeftRadius]}
+            />
+          ) : (
+            <Image
+              source={DefaultImage}
+              containerStyle={[styles.articleImage, styles.borderLeftRadius]}
+            />
+          )}
+          <ListItem.Content style={styles.articleContent}>
+            <ListItem.Title style={styles.articleTitleContainer}>
+              <CommonText style={styles.articleTitle}>
+                {article.titre}
+              </CommonText>
+            </ListItem.Title>
+            <ListItem.Subtitle style={styles.articleDescription}>
+              <SecondaryText
+                style={styles.articleDescriptionFont}
+                numberOfLines={3}
+                allowFontScaling={true}
+              >
+                {article.resume}
+              </SecondaryText>
+            </ListItem.Subtitle>
+          </ListItem.Content>
+        </ListItem>
       )}
-      <ListItem.Content style={styles.articleContent}>
-        <ListItem.Title style={styles.articleTitleContainer}>
-          <CommonText style={styles.articleTitle}>{article.titre}</CommonText>
-        </ListItem.Title>
-        <ListItem.Subtitle style={styles.articleDescription}>
-          <SecondaryText
-            style={styles.articleDescriptionFont}
-            numberOfLines={3}
-            allowFontScaling={true}
-          >
-            {article.resume}
-          </SecondaryText>
-        </ListItem.Subtitle>
-      </ListItem.Content>
-    </ListItem>
-  );
-};
-
-export const findArticleById = (
-  articles: Article[],
-  selectedArticleId: number
-): Article => {
-  const articleNotFound: Article = {
-    enbrefIcone1: "",
-    enbrefIcone2: "",
-    enbrefIcone3: "",
-    enbrefTexte1: "",
-    enbrefTexte2: "",
-    enbrefTexte3: "",
-    id: 0,
-    leSaviezVous: "",
-    lienTitre1: "",
-    lienTitre2: "",
-    lienTitre3: "",
-    lienTitre4: "",
-    lienUrl1: "",
-    lienUrl2: "",
-    lienUrl3: "",
-    lienUrl4: "",
-    resume: "",
-    texte1: "",
-    texte2: "",
-    texteTitre1: "",
-    texteTitre2: "",
-    thematiques: [],
-    titre: Labels.article.articleNotFound,
-  };
-
-  return (
-    articles.find((item) => item.id == selectedArticleId) ?? articleNotFound
+    </>
   );
 };
 
