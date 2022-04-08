@@ -88,7 +88,7 @@ const Moodboard: FC<Props> = ({ navigation }) => {
     void MoodboardUtils.saveMood(
       MoodboardUtils.MOODBOARD_ITEMS[activeIndex].title
     );
-    setTrackerAction(MoodboardUtils.MOODBOARD_ITEMS[activeIndex].title);
+    setTrackerAction(`${MoodboardUtils.MOODBOARD_ITEMS[activeIndex].title}`);
     navigation.goBack();
   }, [activeIndex, navigation]);
 

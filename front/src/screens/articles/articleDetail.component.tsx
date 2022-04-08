@@ -36,6 +36,7 @@ import {
   Labels,
   StorageKeysConstants,
 } from "../../constants";
+import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { GraphQLQuery } from "../../services";
 import { Colors, Margins, Paddings } from "../../styles";
 import type {
@@ -52,6 +53,7 @@ interface Props {
   navigation?: StackNavigationProp<TabHomeParamList>;
   _articleId?: number;
   _articleStep?: Step | undefined;
+  isInCarousel?: boolean;
   goBack?: () => void;
 }
 
@@ -63,6 +65,7 @@ const ArticleDetail: FC<Props> = ({
   navigation,
   _articleId,
   _articleStep,
+  isInCarousel,
   goBack,
 }) => {
   const articleId = route ? route.params.id : _articleId;
@@ -79,6 +82,7 @@ const ArticleDetail: FC<Props> = ({
   const scrollContentHeight = useRef(0);
   const articleHasBeenRead = useRef(false);
   const MIN_RATIO_FOR_HAS_BEEN_READ = 0.25;
+  const WIDTH_FOR_HTML = Math.round(SCREEN_WIDTH * 0.6);
 
   const setArticleInShortArray = useCallback((article: Article) => {
     setInShortArray([
@@ -202,19 +206,21 @@ const ArticleDetail: FC<Props> = ({
             <TrackerHandler
               screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${currentArticle.titre}`}
             />
-            <View style={styles.mainContainer}>
-              <View>
-                <View style={styles.flexStart}>
-                  <BackButton action={onBackButtonPressed} />
+            <View style={isInCarousel ? null : styles.mainContainer}>
+              {isInCarousel ? null : (
+                <View>
+                  <View style={styles.flexStart}>
+                    <BackButton action={onBackButtonPressed} />
+                  </View>
+                  <TitleH1
+                    title={screenTitle}
+                    description={description}
+                    animated
+                  />
                 </View>
-                <TitleH1
-                  title={screenTitle}
-                  description={description}
-                  animated
-                />
-              </View>
+              )}
               <View>
-                <View style={styles.imageBannerContainer}>
+                <View style={isInCarousel ? null : styles.imageBannerContainer}>
                   <ImageBanner visuel={currentArticle.visuel} />
                   <View style={styles.flexEnd}>
                     <ShareButton
@@ -235,12 +241,14 @@ const ArticleDetail: FC<Props> = ({
                   <TextHtml
                     html={currentArticle.texte1}
                     offsetTotal={paddingMainContent + paddingArticleContent}
+                    screenWidth={WIDTH_FOR_HTML}
                   />
                   <DidYouKnow description={currentArticle.leSaviezVous} />
                   <SubTitle title={currentArticle.texteTitre2} />
                   <TextHtml
                     html={currentArticle.texte2}
                     offsetTotal={paddingMainContent + paddingArticleContent}
+                    screenWidth={WIDTH_FOR_HTML}
                   />
                   <Links linksArray={linksArray} />
                   <UsefulArticle articleName={currentArticle.titre} />
@@ -260,6 +268,7 @@ const ArticleDetail: FC<Props> = ({
             color={Colors.white}
             onPress={scrollTopHandler}
             accessibilityLabel={Labels.accessibility.articleGoToTop}
+            style={styles.fabButton}
           />
         </>
       )}
@@ -271,6 +280,10 @@ const styles = StyleSheet.create({
   articleDetails: {
     paddingHorizontal: paddingArticleContent,
     paddingTop: Paddings.light,
+  },
+  fabButton: {
+    borderColor: Colors.borderGrey,
+    borderWidth: 2,
   },
   flexEnd: {
     alignSelf: "flex-end",

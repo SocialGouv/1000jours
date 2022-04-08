@@ -118,6 +118,7 @@ export default {
     useMyGeolocation: "Utiliser ma géolocalisation",
   },
   article: {
+    articleNotFound: "Article introuvable",
     didYouKnowTitle: "Le saviez-vous ?",
     firstThreeMonths: {
       buttonLabel: "Commencer",
@@ -133,6 +134,9 @@ export default {
     articlesToRead: "article(s) à lire",
     filters: "Filtrer",
     resetFilters: "Réinitialiser",
+  },
+  articleSwipe: {
+    content: "Slidez entre les articles pour lire sur les différents sujets.",
   },
   buttons: {
     back: "Retour",

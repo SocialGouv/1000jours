@@ -13,24 +13,30 @@ import { getVisuelFormat, RootNavigation, VisuelFormat } from "../../utils";
 import { CommonText, SecondaryText } from "../baseComponents";
 
 interface Props {
-  article: Article;
+  selectedArticleId: number;
+  articles: Article[];
   step?: Step;
   isFromSearchScreen?: boolean;
   setStepAndArticleId?: (articleId: number, step: Step | undefined) => void;
 }
 
 const ArticleCard: FC<Props> = ({
-  article,
+  selectedArticleId,
+  articles,
   step,
   isFromSearchScreen,
   setStepAndArticleId,
 }) => {
+  const article: Article | undefined = articles.find(
+    (item) => item.id == selectedArticleId
+  );
+
   // Permet de forcer le composant ExpoFastImage à être actualisé
   const [showImage, setShowImage] = useState(false);
   useEffect(() => {
     let mounted = true;
     setTimeout(() => {
-      if (mounted) setShowImage(Boolean(article.visuel?.id));
+      if (mounted) setShowImage(Boolean(article?.visuel?.id));
     }, 100);
     return () => {
       mounted = false;
@@ -38,53 +44,60 @@ const ArticleCard: FC<Props> = ({
   }, [article]);
 
   const onItemPressed = useCallback(() => {
-    if (isFromSearchScreen && setStepAndArticleId)
+    if (isFromSearchScreen && setStepAndArticleId && article)
       setStepAndArticleId(article.id, step);
     else {
-      void RootNavigation.navigate("article", {
-        id: article.id,
+      void RootNavigation.navigate("articleSwipe", {
+        articles: articles,
+        id: article?.id,
         step: step,
       });
     }
-  }, [article.id, isFromSearchScreen, setStepAndArticleId, step]);
+  }, [isFromSearchScreen, setStepAndArticleId, article, step, articles]);
 
   return (
-    <ListItem
-      bottomDivider
-      onPress={onItemPressed}
-      pad={0}
-      containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
-      style={[styles.listItem, styles.borderLeftRadius]}
-      accessibilityHint={Labels.accessibility.tapForMoreInfo}
-      accessibilityLabel={`${Labels.accessibility.articleCard.title} : ${article.titre}. ${Labels.accessibility.articleCard.description} : ${article.resume}`}
-    >
-      {showImage ? (
-        <ExpoFastImage
-          uri={getVisuelFormat(article.visuel, VisuelFormat.thumbnail)}
-          cacheKey={article.visuel?.id}
-          style={[styles.articleImage, styles.borderLeftRadius]}
-        />
-      ) : (
-        <Image
-          source={DefaultImage}
-          containerStyle={[styles.articleImage, styles.borderLeftRadius]}
-        />
+    <>
+      {article && (
+        <ListItem
+          bottomDivider
+          onPress={onItemPressed}
+          pad={0}
+          containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
+          style={[styles.listItem, styles.borderLeftRadius]}
+          accessibilityHint={Labels.accessibility.tapForMoreInfo}
+          accessibilityLabel={`${Labels.accessibility.articleCard.title} : ${article.titre}. ${Labels.accessibility.articleCard.description} : ${article.resume}`}
+        >
+          {showImage ? (
+            <ExpoFastImage
+              uri={getVisuelFormat(article.visuel, VisuelFormat.thumbnail)}
+              cacheKey={article.visuel?.id}
+              style={[styles.articleImage, styles.borderLeftRadius]}
+            />
+          ) : (
+            <Image
+              source={DefaultImage}
+              containerStyle={[styles.articleImage, styles.borderLeftRadius]}
+            />
+          )}
+          <ListItem.Content style={styles.articleContent}>
+            <ListItem.Title style={styles.articleTitleContainer}>
+              <CommonText style={styles.articleTitle}>
+                {article.titre}
+              </CommonText>
+            </ListItem.Title>
+            <ListItem.Subtitle style={styles.articleDescription}>
+              <SecondaryText
+                style={styles.articleDescriptionFont}
+                numberOfLines={3}
+                allowFontScaling={true}
+              >
+                {article.resume}
+              </SecondaryText>
+            </ListItem.Subtitle>
+          </ListItem.Content>
+        </ListItem>
       )}
-      <ListItem.Content style={styles.articleContent}>
-        <ListItem.Title style={styles.articleTitleContainer}>
-          <CommonText style={styles.articleTitle}>{article.titre}</CommonText>
-        </ListItem.Title>
-        <ListItem.Subtitle style={styles.articleDescription}>
-          <SecondaryText
-            style={styles.articleDescriptionFont}
-            numberOfLines={3}
-            allowFontScaling={true}
-          >
-            {article.resume}
-          </SecondaryText>
-        </ListItem.Subtitle>
-      </ListItem.Content>
-    </ListItem>
+    </>
   );
 };
 

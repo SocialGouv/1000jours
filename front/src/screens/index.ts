@@ -1,6 +1,7 @@
 import AroundMeScreen from "./aroundMe/aroundMeScreen.component";
 import ArticleDetail from "./articles/articleDetail.component";
 import ArticleListScreen from "./articles/articleListScreen.component";
+import ArticleSwipe from "./articles/articleSwipe.component";
 import EventDetails from "./calendar/eventDetails.component";
 import TabCalendarScreen from "./calendar/tabCalendarScreen.component";
 import EpdsResult from "./epdsSurvey/epdsResult.component";
@@ -19,6 +20,7 @@ export {
   AroundMeScreen,
   ArticleDetail,
   ArticleListScreen,
+  ArticleSwipe,
   EpdsResult,
   EventDetails,
   LoadingScreen,
