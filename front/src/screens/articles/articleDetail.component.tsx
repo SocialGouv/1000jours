@@ -203,9 +203,11 @@ const ArticleDetail: FC<Props> = ({
             onContentSizeChange={onContentSizeChange}
             scrollEventThrottle={0}
           >
-            <TrackerHandler
-              screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${currentArticle.titre}`}
-            />
+            {isInCarousel ? null : (
+              <TrackerHandler
+                screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${currentArticle.titre}`}
+              />
+            )}
             <View style={isInCarousel ? null : styles.mainContainer}>
               {isInCarousel ? null : (
                 <View>
