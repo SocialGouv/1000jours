@@ -26,7 +26,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
     if (screenName && StringUtils.stringIsNotNullNorEmpty(screenName))
       void trackScreenView({ name: screenName });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [screenName]);
 
   useEffect(() => {
     const screenNameIsNotEmpty =
