@@ -111,15 +111,22 @@ const Onboarding: FC<Props> = ({ navigation }) => {
 
   const keyExtractor = useCallback((item: SlideView) => item.title, []);
 
-  const onScrollToIndex = useCallback((index: number) => {
-    flatListRef.current?.scrollToIndex({ index });
-  }, []);
+  const onScrollToIndex = useCallback(
+    (index: number) => {
+      if (index >= 0 && index <= slideViews.length - 1) {
+        flatListRef.current?.scrollToIndex({ index });
+      }
+    },
+    [slideViews.length]
+  );
 
   const onNextButtonPressed = useCallback(() => {
-    flatListRef.current?.scrollToIndex({
-      index: swiperCurrentIndex + 1,
-    });
-  }, [swiperCurrentIndex]);
+    if (swiperCurrentIndex < slideViews.length - 1) {
+      flatListRef.current?.scrollToIndex({
+        index: swiperCurrentIndex + 1,
+      });
+    }
+  }, [slideViews.length, swiperCurrentIndex]);
   return (
     <View style={[styles.mainContainer, styles.flexColumn]}>
       <HeaderApp />
