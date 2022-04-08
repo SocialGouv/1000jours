@@ -1,3 +1,4 @@
+import Constants from "expo-constants";
 import type { Event } from "matomo-tracker-react-native";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
@@ -24,7 +25,12 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
 
   useEffect(() => {
     if (screenName && StringUtils.stringIsNotNullNorEmpty(screenName))
-      void trackScreenView({ name: screenName });
+      void trackScreenView({
+        name: screenName,
+        userInfo: {
+          dimension1: Constants.manifest.version ?? "", // dimension1 = AppVersion
+        },
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -35,7 +41,12 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
       actionName && StringUtils.stringIsNotNullNorEmpty(actionName);
 
     if (screenNameIsNotEmpty && actionNameIsNotEmpty)
-      void trackAction({ name: `${screenName} / ${actionName}` });
+      void trackAction({
+        name: `${screenName} / ${actionName}`,
+        userInfo: {
+          dimension1: Constants.manifest.version ?? "", // dimension1 = AppVersion
+        },
+      });
     else if (actionNameIsNotEmpty) void trackAction({ name: `${actionName}` });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionName]);
@@ -47,6 +58,9 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
       searchObject.category &&
       StringUtils.stringIsNotNullNorEmpty(searchObject.category)
     ) {
+      searchObject.userInfo = {
+        dimension1: Constants.manifest.version ?? "", // dimension1 = AppVersion
+      };
       void trackSiteSearch(searchObject);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,10 +75,13 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
       eventObject?.action && eventObject.action.length > 0;
 
     if (eventNameIsNotEmpty && eventActionIsNotEmpty) {
-      const event: Event = {
+      const event: TrackerEvent = {
         action: eventObject.action,
         category: eventCategory,
         name: eventObject.name,
+        userInfo: {
+          dimension1: Constants.manifest.version ?? "", // dimension1 = AppVersion
+        },
         value: eventObject.value,
       };
       void trackEvent(event);
