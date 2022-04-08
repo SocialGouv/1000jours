@@ -35,6 +35,7 @@ const ArticleCard: FC<Props> = ({
   const [showImage, setShowImage] = useState(false);
   useEffect(() => {
     let mounted = true;
+    setShowImage(false);
     setTimeout(() => {
       if (mounted) setShowImage(Boolean(article?.visuel?.id));
     }, 100);
