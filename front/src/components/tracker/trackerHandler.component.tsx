@@ -1,9 +1,10 @@
-import type { Event } from "matomo-tracker-react-native";
+import Constants from "expo-constants";
 import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import { useEffect } from "react";
 
 import type { TrackerEvent, TrackerSearch } from "../../type";
+import type { TrackerUserInfo } from "../../type/userInfo.types";
 import { StringUtils } from "../../utils";
 
 interface TrackerHandlerProps {
@@ -22,9 +23,16 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
   const { trackScreenView, trackAction, trackSiteSearch, trackEvent } =
     useMatomo();
 
+  const userInfo: TrackerUserInfo = {
+    dimension1: Constants.manifest.version ?? "", // dimension1 = AppVersion
+  };
+
   useEffect(() => {
     if (screenName && StringUtils.stringIsNotNullNorEmpty(screenName))
-      void trackScreenView({ name: screenName });
+      void trackScreenView({
+        name: screenName,
+        userInfo,
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -35,7 +43,10 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
       actionName && StringUtils.stringIsNotNullNorEmpty(actionName);
 
     if (screenNameIsNotEmpty && actionNameIsNotEmpty)
-      void trackAction({ name: `${screenName} / ${actionName}` });
+      void trackAction({
+        name: `${screenName} / ${actionName}`,
+        userInfo,
+      });
     else if (actionNameIsNotEmpty) void trackAction({ name: `${actionName}` });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionName]);
@@ -47,6 +58,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
       searchObject.category &&
       StringUtils.stringIsNotNullNorEmpty(searchObject.category)
     ) {
+      searchObject.userInfo = userInfo;
       void trackSiteSearch(searchObject);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,19 +66,18 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
 
   useEffect(() => {
     const eventCategory = "MobileApp";
-    const eventValue = 0;
-
     const eventNameIsNotEmpty =
       eventObject?.name && eventObject.name.length > 0;
     const eventActionIsNotEmpty =
       eventObject?.action && eventObject.action.length > 0;
 
     if (eventNameIsNotEmpty && eventActionIsNotEmpty) {
-      const event: Event = {
+      const event: TrackerEvent = {
         action: eventObject.action,
         category: eventCategory,
         name: eventObject.name,
-        value: eventValue,
+        userInfo,
+        value: eventObject.value ?? 0,
       };
       void trackEvent(event);
     }
