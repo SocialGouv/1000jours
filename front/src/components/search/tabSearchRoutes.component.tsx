@@ -51,14 +51,14 @@ export const ArticlesRoute = (
       goBack={onBackButtonPressed}
     />
   ) : (
-    <ScrollView style={styles.listContainer}>
+    <View style={styles.listContainer}>
       <ArticleList
         articleList={articles}
         animationDuration={500}
         isFromSearchScreen
         setStepAndArticleId={onUpdateStepAndArticleId}
       />
-    </ScrollView>
+    </View>
   );
 };
 

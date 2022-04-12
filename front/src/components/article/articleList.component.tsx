@@ -1,5 +1,7 @@
 import type { FC } from "react";
+import { useCallback, useRef } from "react";
 import * as React from "react";
+import { FlatList } from "react-native";
 import * as Animatable from "react-native-animatable";
 
 import type { Article, Step } from "../../types";
@@ -20,24 +22,49 @@ const ArticleList: FC<Props> = ({
   isFromSearchScreen,
   setStepAndArticleId,
 }) => {
-  return (
-    <>
-      {articleList.map((article, index) => (
+  const flatListRef = useRef<FlatList>();
+
+  const setFlatListRef = useCallback((ref: FlatList) => {
+    flatListRef.current = ref;
+  }, []);
+
+  const keyExtractor = useCallback((item: Article) => item.id.toString(), []);
+
+  const renderArticle = useCallback(
+    ({ item }: { item: Article }) => {
+      return (
         <Animatable.View
-          key={index}
           animation="fadeInUp"
           duration={animationDuration}
           delay={0}
         >
           <ArticleCard
-            selectedArticleId={article.id}
+            selectedArticleId={item.id}
             articles={articleList}
             step={step}
             isFromSearchScreen={isFromSearchScreen}
             setStepAndArticleId={setStepAndArticleId}
           />
         </Animatable.View>
-      ))}
+      );
+    },
+    [
+      animationDuration,
+      articleList,
+      isFromSearchScreen,
+      setStepAndArticleId,
+      step,
+    ]
+  );
+
+  return (
+    <>
+      <FlatList
+        ref={setFlatListRef}
+        data={articleList}
+        keyExtractor={keyExtractor}
+        renderItem={renderArticle}
+      />
     </>
   );
 };
