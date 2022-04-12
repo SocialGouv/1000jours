@@ -1,3 +1,10 @@
+## [1.96.1](https://github.com/SocialGouv/1000jours/compare/v1.96.0...v1.96.1) (2022-04-12)
+
+
+### Bug Fixes
+
+* 🐛 Ajoute le numéro de version de l'app sur Matomo ([#1155](https://github.com/SocialGouv/1000jours/issues/1155)) ([cd60f75](https://github.com/SocialGouv/1000jours/commit/cd60f753a092f5fd047154cc7b114ea21233a05d))
+
 # [1.96.0](https://github.com/SocialGouv/1000jours/compare/v1.95.2...v1.96.0) (2022-04-05)
 
 
