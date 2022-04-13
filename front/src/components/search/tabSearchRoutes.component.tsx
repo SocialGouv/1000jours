@@ -2,7 +2,6 @@ import type { ReactElement } from "react";
 import { useCallback, useState } from "react";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 
 import { SecondaryTextItalic } from "../../components/baseComponents";
 import { Labels } from "../../constants";
