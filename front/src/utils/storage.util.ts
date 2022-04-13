@@ -13,9 +13,7 @@ export const getStringValue = async (
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getObjectValue = async (
-  storageKey: string
-): Promise<string | unknown> => {
+export const getObjectValue = async (storageKey: string): Promise<any> => {
   try {
     const jsonValue = await AsyncStorage.getItem(storageKey);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return

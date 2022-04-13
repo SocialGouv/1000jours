@@ -136,7 +136,7 @@ const ArticleDetail: FC<Props> = ({
   const hasBeenRead = useCallback(
     (nativeEvent: NativeScrollEvent) => {
       // L'article est considéré comme lu à partir du moment où l'utilisateur
-      // à scroller au moins 25% de l'article
+      // a scrollé au moins 25% de l'article
       if (
         nativeEvent.layoutMeasurement.height + nativeEvent.contentOffset.y >=
         nativeEvent.contentSize.height * MIN_RATIO_FOR_HAS_BEEN_READ
