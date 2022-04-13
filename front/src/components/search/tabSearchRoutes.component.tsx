@@ -2,7 +2,6 @@ import type { ReactElement } from "react";
 import { useCallback, useState } from "react";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 
 import { SecondaryTextItalic } from "../../components/baseComponents";
 import { Labels } from "../../constants";
@@ -51,14 +50,14 @@ export const ArticlesRoute = (
       goBack={onBackButtonPressed}
     />
   ) : (
-    <ScrollView style={styles.listContainer}>
+    <View style={styles.listContainer}>
       <ArticleList
         articleList={articles}
         animationDuration={500}
         isFromSearchScreen
         setStepAndArticleId={onUpdateStepAndArticleId}
       />
-    </ScrollView>
+    </View>
   );
 };
 

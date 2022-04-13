@@ -66,6 +66,7 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
 
   useEffect(() => {
     snapToItem(firstItemIndexToShow);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onGoBack = useCallback(() => {
@@ -74,6 +75,7 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
 
   const snapToItem = useCallback((index: number) => {
     setTrackerName(articles[index].titre);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
