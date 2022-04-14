@@ -1,13 +1,9 @@
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import type {
-  LayoutChangeEvent,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-} from "react-native";
+import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import { ScrollView, StyleSheet } from "react-native";
 import { FAB } from "react-native-elements";
 
@@ -24,6 +20,7 @@ import {
 } from "../../components";
 import {
   BackButton,
+  SecondaryText,
   ShareButton,
   SharePageType,
   TitleH1,
@@ -38,7 +35,7 @@ import {
 } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { GraphQLQuery } from "../../services";
-import { Colors, Margins, Paddings } from "../../styles";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
   Article,
   ArticleInShortItem,
@@ -46,7 +43,7 @@ import type {
   Step,
   TabHomeParamList,
 } from "../../types";
-import { StorageUtils, TrackerUtils } from "../../utils";
+import { ArticleUtils, StorageUtils, TrackerUtils } from "../../utils";
 
 interface Props {
   route?: RouteProp<{ params: { id: number; step?: Step } }, "params">;
@@ -78,11 +75,19 @@ const ArticleDetail: FC<Props> = ({
   const [currentArticle, setCurrentArticle] = useState<Article | undefined>();
 
   const [scrollerRef, setScrollerRef] = useState<ScrollView>();
-  const scrollViewHeight = useRef(0);
-  const scrollContentHeight = useRef(0);
-  const articleHasBeenRead = useRef(false);
-  const MIN_RATIO_FOR_HAS_BEEN_READ = 0.25;
+  const [articleHasBeenRead, setArticleHasBeenRead] = useState(false);
+  const MIN_RATIO_FOR_HAS_BEEN_READ = 0.55;
   const WIDTH_FOR_HTML = Math.round(SCREEN_WIDTH * 0.6);
+
+  useEffect(() => {
+    const checkArticleRead = async () => {
+      if (articleId) {
+        setArticleHasBeenRead(await ArticleUtils.isArticleRead(articleId));
+      }
+    };
+
+    void checkArticleRead();
+  }, [articleId]);
 
   const setArticleInShortArray = useCallback((article: Article) => {
     setInShortArray([
@@ -116,9 +121,9 @@ const ArticleDetail: FC<Props> = ({
     else navigation?.goBack();
   }, [goBack, navigation]);
 
-  const setArticleHasBeenRead = useCallback(async () => {
-    if (articleId && !articleHasBeenRead.current) {
-      articleHasBeenRead.current = true;
+  const updateArticleHasBeenRead = useCallback(async () => {
+    if (articleId && !articleHasBeenRead) {
+      setArticleHasBeenRead(true);
       const articlesRead: number[] =
         (await StorageUtils.getObjectValue(
           StorageKeysConstants.articlesRead
@@ -131,36 +136,21 @@ const ArticleDetail: FC<Props> = ({
         );
       }
     }
-  }, [articleId]);
+  }, [articleHasBeenRead, articleId]);
 
   const hasBeenRead = useCallback(
     (nativeEvent: NativeScrollEvent) => {
       // L'article est considéré comme lu à partir du moment où l'utilisateur
-      // a scrollé au moins 25% de l'article
+      // a scrollé au moins 50% de l'article
       if (
         nativeEvent.layoutMeasurement.height + nativeEvent.contentOffset.y >=
         nativeEvent.contentSize.height * MIN_RATIO_FOR_HAS_BEEN_READ
       ) {
-        void setArticleHasBeenRead();
+        void updateArticleHasBeenRead();
       }
     },
-    [MIN_RATIO_FOR_HAS_BEEN_READ, setArticleHasBeenRead]
+    [MIN_RATIO_FOR_HAS_BEEN_READ, updateArticleHasBeenRead]
   );
-
-  const checkScrollContentHeight = () => {
-    // Considère que l'article est lu lorsqu'il est affiché entièrement à l'écran (sans avoir besoin de scroller)
-    if (scrollContentHeight.current <= scrollViewHeight.current) {
-      void setArticleHasBeenRead();
-    }
-  };
-
-  const onContentSizeChange = useCallback((width: number, height: number) => {
-    scrollContentHeight.current = height;
-  }, []);
-
-  const onScrollViewLayout = useCallback((event: LayoutChangeEvent) => {
-    scrollViewHeight.current = event.nativeEvent.layout.height;
-  }, []);
 
   const onScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -169,14 +159,6 @@ const ArticleDetail: FC<Props> = ({
     [hasBeenRead]
   );
 
-  useEffect(() => {
-    // Attend que le contenu de la scrollView soit chargé (notamment les images de l'article)
-    setTimeout(() => {
-      checkScrollContentHeight();
-    }, 3000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const scrollTopHandler = useCallback(() => {
     if (scrollerRef) scrollerRef.scrollTo({ x: 0, y: 0 });
   }, [scrollerRef]);
@@ -184,6 +166,12 @@ const ArticleDetail: FC<Props> = ({
   const updateScrollerRef = useCallback((scroller: ScrollView) => {
     setScrollerRef(scroller);
   }, []);
+
+  const renderReadArticleElement = articleHasBeenRead && (
+    <View style={styles.articleIsReadView}>
+      <SecondaryText style={styles.articleIsReadText}>Article lu</SecondaryText>
+    </View>
+  );
 
   return (
     <>
@@ -197,10 +185,8 @@ const ArticleDetail: FC<Props> = ({
       {currentArticle && (
         <>
           <ScrollView
-            onLayout={onScrollViewLayout}
             onScroll={onScroll}
             ref={updateScrollerRef}
-            onContentSizeChange={onContentSizeChange}
             scrollEventThrottle={0}
           >
             {!isInCarousel && (
@@ -234,6 +220,7 @@ const ArticleDetail: FC<Props> = ({
                       buttonStyle={styles.shareButton}
                     />
                   </View>
+                  {renderReadArticleElement}
                 </View>
                 <View style={styles.articleDetails}>
                   <Title title={currentArticle.titre} />
@@ -282,6 +269,17 @@ const styles = StyleSheet.create({
   articleDetails: {
     paddingHorizontal: paddingArticleContent,
     paddingTop: Paddings.light,
+  },
+  articleIsReadText: {
+    color: Colors.secondaryGreenDark,
+    fontWeight: FontWeight.bold,
+    padding: Paddings.smaller,
+  },
+  articleIsReadView: {
+    borderRadius: Sizes.xxxxxs,
+    bottom: Paddings.light,
+    left: Paddings.light,
+    position: "absolute",
   },
   fabButton: {
     borderColor: Colors.borderGrey,
