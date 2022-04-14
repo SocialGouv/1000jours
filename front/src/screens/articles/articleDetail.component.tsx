@@ -169,7 +169,9 @@ const ArticleDetail: FC<Props> = ({
 
   const renderReadArticleElement = articleHasBeenRead && (
     <View style={styles.articleIsReadView}>
-      <SecondaryText style={styles.articleIsReadText}>Article lu</SecondaryText>
+      <SecondaryText style={styles.articleIsReadText}>
+        {Labels.article.readArticle}
+      </SecondaryText>
     </View>
   );
 
