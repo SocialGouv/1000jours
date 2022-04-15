@@ -1,6 +1,7 @@
 import Constants from "expo-constants";
 
 import { StorageKeysConstants } from "../constants";
+import { cancelAllScheduledNotifications } from "./notification.util";
 import {
   getStringValue,
   multiRemove,
@@ -9,8 +10,10 @@ import {
 } from "./storage.util";
 
 export const manageStorage = async (): Promise<void> => {
-  if (process.env.CLEAR_STORAGE === "true")
+  if (process.env.CLEAR_STORAGE === "true") {
+    await cancelAllScheduledNotifications();
     void multiRemove(StorageKeysConstants.allStorageKeys);
+  }
 
   const lastVersionLaunch = await getStringValue(
     StorageKeysConstants.lastVersionLaunchKey

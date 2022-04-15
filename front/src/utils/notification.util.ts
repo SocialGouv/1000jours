@@ -4,6 +4,7 @@ import type {
   NotificationContentInput,
   NotificationRequestInput,
   NotificationTriggerInput,
+  WeeklyTriggerInput,
 } from "expo-notifications";
 import * as Notifications from "expo-notifications";
 
@@ -15,10 +16,23 @@ export enum NotificationType {
   epds = "epds",
   nextStep = "nextStep",
   event = "event",
+  moodboard = "moodboard",
+}
+
+export enum Weekday {
+  sunday = 1,
+  monday = 2,
+  tuesday = 3,
+  wednesday = 4,
+  thursday = 5,
+  friday = 6,
+  saturday = 7,
 }
 
 const NUMBER_OF_DAYS_NOTIF_EVENT_REMINDER = 7;
-const HOUR_TO_FIRED_NOTIF = 13;
+const MOODBOARD_NOTIF_TRIGGER_HOUR = 9;
+const EVENT_NOTIF_TRIGGER_HOUR = 13;
+const NEXTSTEP_NOTIF_TRIGGER_HOUR = 13;
 const SCREEN_CALENDAR = "tabCalendar";
 
 const sendNotificationReminder = async (
@@ -80,6 +94,29 @@ export const scheduleEpdsNotification = async (): Promise<string> => {
   return sendNotificationReminder(content, trigger);
 };
 
+export const scheduleMoodboardNotification = async (
+  weekday: Weekday
+): Promise<string> => {
+  const content = {
+    body: Labels.moodboard.notification.body,
+    categoryIdentifier: NotificationType.moodboard,
+    data: {
+      redirectFromRoot: true,
+      redirectTitle: Labels.moodboard.notification.redirectTitle,
+      redirectTo: "moodboard",
+      type: NotificationType.moodboard,
+    },
+    title: Labels.moodboard.notification.title,
+  };
+  const trigger: WeeklyTriggerInput = {
+    hour: MOODBOARD_NOTIF_TRIGGER_HOUR,
+    minute: 0,
+    repeats: true,
+    weekday: weekday,
+  };
+  return sendNotificationReminder(content, trigger);
+};
+
 export const scheduleNextStepNotification = async (
   nextStep: Step,
   triggerNow?: boolean
@@ -110,7 +147,7 @@ export const scheduleNextStepNotification = async (
       } else {
         trigger = new Date(
           addDays(new Date(childBirthday), nextStep.debut).setHours(
-            HOUR_TO_FIRED_NOTIF
+            NEXTSTEP_NOTIF_TRIGGER_HOUR
           )
         );
       }
@@ -132,6 +169,40 @@ export const cancelScheduleNextStepNotification = async (): Promise<void> => {
   if (notificationId && notificationId.length > 0) {
     void Notifications.cancelScheduledNotificationAsync(notificationId);
     void StorageUtils.removeKey(StorageKeysConstants.notifIdNextStep);
+  }
+};
+
+export const cancelAllScheduledNotifications = async (): Promise<void> => {
+  console.log("cancel All Scheduled Notifications");
+  // Remove Next Step Notification
+  const notifIdNextStep = await StorageUtils.getStringValue(
+    StorageKeysConstants.notifIdNextStep
+  );
+  if (notifIdNextStep) await cancelScheduledNotification(notifIdNextStep);
+
+  // Remove All Event Notifications
+  const notifIdsEvents = await StorageUtils.getObjectValue(
+    StorageKeysConstants.notifIdsEvents
+  );
+  if (notifIdsEvents)
+    await cancelScheduledNotifications(notifIdsEvents as string[]);
+
+  // Remove All Moodboard Notifications
+  const notifIdsMoodboard = await StorageUtils.getObjectValue(
+    StorageKeysConstants.notifIdsMoodboard
+  );
+  if (notifIdsMoodboard)
+    await cancelScheduledNotifications(notifIdsMoodboard as string[]);
+};
+
+const cancelScheduledNotification = async (notifId: string) => {
+  await Notifications.cancelScheduledNotificationAsync(notifId);
+};
+const cancelScheduledNotifications = async (notifIds: string[]) => {
+  if (notifIds.length > 0) {
+    for (const notifId of notifIds) {
+      await Notifications.cancelScheduledNotificationAsync(notifId);
+    }
   }
 };
 
@@ -172,7 +243,7 @@ const scheduleEventNotification = async (event: Event) => {
 
     if (isAfter(eventDate, now)) {
       // Planifie la notification pour le jour J
-      let notifDate = new Date(eventDate.setHours(HOUR_TO_FIRED_NOTIF));
+      let notifDate = new Date(eventDate.setHours(EVENT_NOTIF_TRIGGER_HOUR));
       let content = buildEventNotificationContent(event, false);
       let notificationId = await sendNotificationReminder(content, notifDate);
       if (notificationId) await updateStoreNotifEventIds(notificationId);
@@ -180,7 +251,7 @@ const scheduleEventNotification = async (event: Event) => {
       // Planifie la notification pour un rappel avant le jour J
       notifDate = new Date(
         subDays(eventDate, NUMBER_OF_DAYS_NOTIF_EVENT_REMINDER).setHours(
-          HOUR_TO_FIRED_NOTIF
+          EVENT_NOTIF_TRIGGER_HOUR
         )
       );
       if (isAfter(new Date(notifDate), now)) {
