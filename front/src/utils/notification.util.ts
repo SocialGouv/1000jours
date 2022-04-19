@@ -101,7 +101,7 @@ export const scheduleMoodboardNotification = async (
     body: Labels.moodboard.notification.body,
     categoryIdentifier: NotificationType.moodboard,
     data: {
-      redirectFromRoot: true,
+      redirectFromRoot: false,
       redirectTitle: Labels.moodboard.notification.redirectTitle,
       redirectTo: "moodboard",
       type: NotificationType.moodboard,

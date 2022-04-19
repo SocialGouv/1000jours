@@ -33,6 +33,10 @@ notifStyles.set(NotificationType.nextStep, {
   color: Colors.secondaryGreenDark,
   icon: IcomoonIcons.informations,
 });
+notifStyles.set(NotificationType.moodboard, {
+  color: Colors.primaryBlueDark,
+  icon: IcomoonIcons.bebe,
+});
 
 const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
   const notificationType = notification.request.content.data
