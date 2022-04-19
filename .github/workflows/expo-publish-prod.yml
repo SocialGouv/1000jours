@@ -13,7 +13,7 @@ jobs:
     env:
       PLAY_STORE_API_KEY: ${{ secrets.PLAY_STORE_API_KEY }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
@@ -36,7 +36,7 @@ jobs:
     env:
       APP_STORE_API_KEY: ${{ secrets.APP_STORE_API_KEY }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
