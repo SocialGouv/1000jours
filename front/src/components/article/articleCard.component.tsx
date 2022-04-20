@@ -9,7 +9,12 @@ import DefaultImage from "../../assets/images/default.png";
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Article, Step } from "../../types";
-import { getVisuelFormat, RootNavigation, VisuelFormat } from "../../utils";
+import {
+  ArticleUtils,
+  getVisuelFormat,
+  RootNavigation,
+  VisuelFormat,
+} from "../../utils";
 import { CommonText, SecondaryText } from "../baseComponents";
 
 interface Props {
@@ -30,6 +35,15 @@ const ArticleCard: FC<Props> = ({
   const article: Article | undefined = articles.find(
     (item) => item.id == selectedArticleId
   );
+  const [articleIsRead, setArticleIsRead] = useState(false);
+
+  useEffect(() => {
+    const checkRead = async () => {
+      if (article)
+        setArticleIsRead(await ArticleUtils.isArticleRead(article.id));
+    };
+    void checkRead();
+  }, [article]);
 
   // Permet de forcer le composant ExpoFastImage à être actualisé
   const [showImage, setShowImage] = useState(false);
@@ -72,12 +86,20 @@ const ArticleCard: FC<Props> = ({
             <ExpoFastImage
               uri={getVisuelFormat(article.visuel, VisuelFormat.thumbnail)}
               cacheKey={article.visuel?.id}
-              style={[styles.articleImage, styles.borderLeftRadius]}
+              style={[
+                styles.articleImage,
+                styles.borderLeftRadius,
+                articleIsRead && styles.readArticleImage,
+              ]}
             />
           ) : (
             <Image
               source={DefaultImage}
-              containerStyle={[styles.articleImage, styles.borderLeftRadius]}
+              containerStyle={[
+                styles.articleImage,
+                styles.borderLeftRadius,
+                articleIsRead && styles.readArticleImage,
+              ]}
             />
           )}
           <ListItem.Content style={styles.articleContent}>
@@ -140,6 +162,10 @@ const styles = StyleSheet.create({
     borderColor: Colors.borderGrey,
     borderWidth: 1,
     padding: 0,
+  },
+  readArticleImage: {
+    backgroundColor: Colors.primaryBlue,
+    opacity: 0.5,
   },
 });
 
