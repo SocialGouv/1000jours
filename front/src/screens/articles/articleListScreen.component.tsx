@@ -146,12 +146,6 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
           </View>
         )}
         <ArticlesFilter articles={articles} applyFilters={applyFilters} />
-        <SecondaryText
-          style={styles.headerListInfo}
-          accessibilityLabel={articleToReadAccessibilityLabel()}
-        >
-          {filteredArticles.length} {Labels.articleList.articlesToRead}
-        </SecondaryText>
       </View>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -221,12 +215,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     flexDirection: "row",
     flexWrap: "wrap",
-  },
-  headerListInfo: {
-    color: Colors.secondaryGreen,
-    fontSize: Sizes.xs,
-    fontStyle: "italic",
-    paddingVertical: Paddings.smaller,
   },
   listContainer: {
     paddingHorizontal: Paddings.default,
