@@ -15,7 +15,7 @@ import {
   RootNavigation,
   VisuelFormat,
 } from "../../utils";
-import { CommonText, SecondaryText } from "../baseComponents";
+import { CommonText, SecondaryText, View } from "../baseComponents";
 
 interface Props {
   selectedArticleId: number;
@@ -70,6 +70,12 @@ const ArticleCard: FC<Props> = ({
     }
   }, [isFromSearchScreen, setStepAndArticleId, article, step, articles]);
 
+  const imageStyle = [
+    styles.articleImage,
+    styles.borderLeftRadius,
+    articleIsRead && styles.readArticleImage,
+  ];
+
   return (
     <>
       {article && (
@@ -86,21 +92,17 @@ const ArticleCard: FC<Props> = ({
             <ExpoFastImage
               uri={getVisuelFormat(article.visuel, VisuelFormat.thumbnail)}
               cacheKey={article.visuel?.id}
-              style={[
-                styles.articleImage,
-                styles.borderLeftRadius,
-                articleIsRead && styles.readArticleImage,
-              ]}
+              style={imageStyle}
             />
           ) : (
-            <Image
-              source={DefaultImage}
-              containerStyle={[
-                styles.articleImage,
-                styles.borderLeftRadius,
-                articleIsRead && styles.readArticleImage,
-              ]}
-            />
+            <Image source={DefaultImage} containerStyle={imageStyle} />
+          )}
+          {articleIsRead && (
+            <View style={styles.articleIsReadView}>
+              <SecondaryText style={styles.articleIsReadText}>
+                {Labels.article.readArticle}
+              </SecondaryText>
+            </View>
           )}
           <ListItem.Content style={styles.articleContent}>
             <ListItem.Title style={styles.articleTitleContainer}>
@@ -143,6 +145,18 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     width: Sizes.thumbnail,
   },
+  articleIsReadText: {
+    color: Colors.secondaryGreenDark,
+    fontSize: Sizes.xs,
+    fontWeight: FontWeight.bold,
+    padding: Paddings.smallest,
+  },
+  articleIsReadView: {
+    borderRadius: Sizes.xxxxxs,
+    left: Paddings.light,
+    position: "absolute",
+    top: Paddings.light,
+  },
   articleTitle: {
     color: Colors.primaryBlueDark,
     fontSize: Sizes.sm,
@@ -164,7 +178,7 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   readArticleImage: {
-    backgroundColor: Colors.primaryBlue,
+    backgroundColor: Colors.primaryBlueDark,
     opacity: 0.5,
   },
 });

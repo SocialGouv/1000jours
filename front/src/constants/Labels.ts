@@ -132,7 +132,7 @@ export default {
     usefulTitle: "Cet article vous a été utile ?",
   },
   articleList: {
-    articlesAlreadyRead: "article(s)  déjà lu(s)",
+    articlesAlreadyRead: "article(s) déjà lu(s)",
     articlesToRead: "article(s) à lire",
     filters: "Filtrer",
     resetFilters: "Réinitialiser",
