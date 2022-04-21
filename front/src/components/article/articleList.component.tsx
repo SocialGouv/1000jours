@@ -8,6 +8,8 @@ import type { Article, Step } from "../../types";
 import ArticleCard from "./articleCard.component";
 
 interface Props {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  headerComponent?: any;
   articleList: Article[];
   animationDuration: number;
   step?: Step;
@@ -16,6 +18,7 @@ interface Props {
 }
 
 const ArticleList: FC<Props> = ({
+  headerComponent,
   articleList,
   animationDuration,
   step,
@@ -60,6 +63,7 @@ const ArticleList: FC<Props> = ({
   return (
     <>
       <FlatList
+        ListHeaderComponent={headerComponent}
         ref={setFlatListRef}
         data={articleList}
         keyExtractor={keyExtractor}

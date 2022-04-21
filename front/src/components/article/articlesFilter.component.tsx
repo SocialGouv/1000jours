@@ -295,7 +295,6 @@ const styles = StyleSheet.create({
     shadowRadius: Shadow.radius,
   },
   paddingsDefault: {
-    paddingHorizontal: Paddings.default,
     paddingVertical: Paddings.smallest,
   },
 });
