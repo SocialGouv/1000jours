@@ -9,8 +9,13 @@ import DefaultImage from "../../assets/images/default.png";
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Article, Step } from "../../types";
-import { getVisuelFormat, RootNavigation, VisuelFormat } from "../../utils";
-import { CommonText, SecondaryText } from "../baseComponents";
+import {
+  ArticleUtils,
+  getVisuelFormat,
+  RootNavigation,
+  VisuelFormat,
+} from "../../utils";
+import { CommonText, SecondaryText, View } from "../baseComponents";
 
 interface Props {
   selectedArticleId: number;
@@ -30,6 +35,15 @@ const ArticleCard: FC<Props> = ({
   const article: Article | undefined = articles.find(
     (item) => item.id == selectedArticleId
   );
+  const [articleIsRead, setArticleIsRead] = useState(false);
+
+  useEffect(() => {
+    const checkRead = async () => {
+      if (article)
+        setArticleIsRead(await ArticleUtils.isArticleRead(article.id));
+    };
+    void checkRead();
+  }, [article]);
 
   // Permet de forcer le composant ExpoFastImage à être actualisé
   const [showImage, setShowImage] = useState(false);
@@ -56,6 +70,12 @@ const ArticleCard: FC<Props> = ({
     }
   }, [isFromSearchScreen, setStepAndArticleId, article, step, articles]);
 
+  const imageStyle = [
+    styles.articleImage,
+    styles.borderLeftRadius,
+    articleIsRead && styles.readArticleImage,
+  ];
+
   return (
     <>
       {article && (
@@ -72,13 +92,17 @@ const ArticleCard: FC<Props> = ({
             <ExpoFastImage
               uri={getVisuelFormat(article.visuel, VisuelFormat.thumbnail)}
               cacheKey={article.visuel?.id}
-              style={[styles.articleImage, styles.borderLeftRadius]}
+              style={imageStyle}
             />
           ) : (
-            <Image
-              source={DefaultImage}
-              containerStyle={[styles.articleImage, styles.borderLeftRadius]}
-            />
+            <Image source={DefaultImage} containerStyle={imageStyle} />
+          )}
+          {articleIsRead && (
+            <View style={styles.articleIsReadView}>
+              <SecondaryText style={styles.articleIsReadText}>
+                {Labels.article.readArticle}
+              </SecondaryText>
+            </View>
           )}
           <ListItem.Content style={styles.articleContent}>
             <ListItem.Title style={styles.articleTitleContainer}>
@@ -121,6 +145,18 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     width: Sizes.thumbnail,
   },
+  articleIsReadText: {
+    color: Colors.secondaryGreenDark,
+    fontSize: Sizes.xs,
+    fontWeight: FontWeight.bold,
+    padding: Paddings.smallest,
+  },
+  articleIsReadView: {
+    borderRadius: Sizes.xxxxxs,
+    left: Paddings.light,
+    position: "absolute",
+    top: Paddings.light,
+  },
   articleTitle: {
     color: Colors.primaryBlueDark,
     fontSize: Sizes.sm,
@@ -140,6 +176,10 @@ const styles = StyleSheet.create({
     borderColor: Colors.borderGrey,
     borderWidth: 1,
     padding: 0,
+  },
+  readArticleImage: {
+    backgroundColor: Colors.primaryBlueDark,
+    opacity: 0.5,
   },
 });
 
