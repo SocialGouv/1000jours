@@ -120,14 +120,9 @@ const styles = StyleSheet.create({
     paddingVertical: Paddings.default,
   },
   itemViewLabelContainer: {
-    alignItems: "center",
-    borderBottomLeftRadius: Sizes.xxxxs,
-    borderBottomRightRadius: Sizes.xxxxs,
     borderColor: Colors.borderGrey,
+    borderRadius: Sizes.xxxxs,
     borderWidth: 1,
-    flex: 2,
-    justifyContent: "center",
-    width: "100%",
   },
   mainContainer: {
     height: "100%",
