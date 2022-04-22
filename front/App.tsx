@@ -1,6 +1,5 @@
 import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
-import { assertWrappingType } from "graphql";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
