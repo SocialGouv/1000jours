@@ -209,7 +209,7 @@ export const cancelAllScheduledNotifications = async (): Promise<void> => {
     StorageKeysConstants.notifIdsMoodboard
   );
   if (notifIdsMoodboard) {
-    const ids = notifIdsEvents as string[];
+    const ids = notifIdsMoodboard as string[];
     await cancelScheduledNotifications(ids);
   }
 };
