@@ -94,7 +94,7 @@ export const scheduleEpdsNotification = async (): Promise<string> => {
   return sendNotificationReminder(content, trigger);
 };
 
-export const scheduleMoodboardNotification = async (
+const scheduleMoodboardNotification = async (
   weekday: Weekday
 ): Promise<string> => {
   const content = {
@@ -115,6 +115,22 @@ export const scheduleMoodboardNotification = async (
     weekday: weekday,
   };
   return sendNotificationReminder(content, trigger);
+};
+
+export const scheduleMoodboardNotifications = async (): Promise<void> => {
+  const notifIdsMoodboard = await StorageUtils.getObjectValue(
+    StorageKeysConstants.notifIdsMoodboard
+  );
+  if (!notifIdsMoodboard) {
+    const ids: string[] = [
+      await scheduleMoodboardNotification(Weekday.tuesday),
+      await scheduleMoodboardNotification(Weekday.friday),
+    ];
+    await StorageUtils.storeObjectValue(
+      StorageKeysConstants.notifIdsMoodboard,
+      ids
+    );
+  }
 };
 
 export const scheduleNextStepNotification = async (
@@ -173,7 +189,6 @@ export const cancelScheduleNextStepNotification = async (): Promise<void> => {
 };
 
 export const cancelAllScheduledNotifications = async (): Promise<void> => {
-  console.log("cancel All Scheduled Notifications");
   // Remove Next Step Notification
   const notifIdNextStep = await StorageUtils.getStringValue(
     StorageKeysConstants.notifIdNextStep
@@ -184,25 +199,27 @@ export const cancelAllScheduledNotifications = async (): Promise<void> => {
   const notifIdsEvents = await StorageUtils.getObjectValue(
     StorageKeysConstants.notifIdsEvents
   );
-  if (notifIdsEvents)
-    await cancelScheduledNotifications(notifIdsEvents as string[]);
+  if (notifIdsEvents) {
+    const ids = notifIdsEvents as string[];
+    await cancelScheduledNotifications(ids);
+  }
 
   // Remove All Moodboard Notifications
   const notifIdsMoodboard = await StorageUtils.getObjectValue(
     StorageKeysConstants.notifIdsMoodboard
   );
-  if (notifIdsMoodboard)
-    await cancelScheduledNotifications(notifIdsMoodboard as string[]);
+  if (notifIdsMoodboard) {
+    const ids = notifIdsEvents as string[];
+    await cancelScheduledNotifications(ids);
+  }
 };
 
 const cancelScheduledNotification = async (notifId: string) => {
   await Notifications.cancelScheduledNotificationAsync(notifId);
 };
 const cancelScheduledNotifications = async (notifIds: string[]) => {
-  if (notifIds.length > 0) {
-    for (const notifId of notifIds) {
-      await Notifications.cancelScheduledNotificationAsync(notifId);
-    }
+  for (const notifId of notifIds) {
+    await Notifications.cancelScheduledNotificationAsync(notifId);
   }
 };
 

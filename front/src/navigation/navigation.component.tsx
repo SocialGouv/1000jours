@@ -16,7 +16,6 @@ import {
   View,
 } from "../components/baseComponents";
 import NotificationHandler from "../components/notification/notificationHandler.component";
-import NotificationScheduler from "../components/notification/notificationScheduler.component";
 import { Labels } from "../constants";
 import { LoadingScreen, Moodboard, Onboarding, Profile } from "../screens";
 import { Colors, Paddings, Sizes } from "../styles";
@@ -47,7 +46,6 @@ const Navigation: FC<NavigationProps> = ({ colorScheme }) => {
       <Backdrop isVisible={showMenu} onPress={onBackdropPressed} />
       <Menu showMenu={showMenu} setShowMenu={setShowMenu} />
       <NotificationHandler />
-      <NotificationScheduler />
     </NavigationContainer>
   );
 };
