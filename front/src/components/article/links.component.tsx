@@ -1,9 +1,8 @@
 import _ from "lodash";
 import type { FC } from "react";
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import * as React from "react";
-import { Alert, Linking, StyleSheet } from "react-native";
-import { ListItem } from "react-native-elements";
+import { Alert, FlatList, Linking, StyleSheet } from "react-native";
 
 import { Labels } from "../../constants";
 import SpecialChars from "../../constants/specialChars";
@@ -17,6 +16,12 @@ interface Props {
 }
 
 const Links: FC<Props> = ({ linksArray }) => {
+  const flatListRef = useRef<FlatList>();
+
+  const setFlatListRef = useCallback((ref: FlatList) => {
+    flatListRef.current = ref;
+  }, []);
+
   const goToUrl = useCallback(
     (url: string) => () => {
       if (url && url.length > 0) {
@@ -29,29 +34,44 @@ const Links: FC<Props> = ({ linksArray }) => {
     []
   );
 
+  const links = _.filter(linksArray, "label");
+  const keyExtractor = useCallback((item: ArticleLink) => item.label, []);
+
+  const renderArticleLink = useCallback(
+    ({ item }: { item: ArticleLink }) => {
+      return (
+        <View style={[styles.linkContainer]}>
+          <SecondaryText
+            style={styles.dot}
+            importantForAccessibility="no"
+            accessibilityElementsHidden
+            accessible={false}
+          >
+            {SpecialChars.blackLargeCircle}
+          </SecondaryText>
+          <SecondaryText
+            accessibilityRole="link"
+            style={styles.link}
+            onPress={goToUrl(item.url)}
+          >
+            {item.label}
+          </SecondaryText>
+        </View>
+      );
+    },
+    [goToUrl]
+  );
+
   return _.filter(linksArray, "label").length > 0 ? (
     <View>
       <SubTitle title={Labels.article.learnMoreAboutIt} />
       <View style={styles.linksContainer}>
-        {_.filter(linksArray, "label").map((item, index) => (
-          <ListItem.Content key={index} style={[styles.linkContainer]}>
-            <SecondaryText
-              style={[styles.dot]}
-              importantForAccessibility="no"
-              accessibilityElementsHidden={true}
-              accessible={false}
-            >
-              {SpecialChars.blackLargeCircle}
-            </SecondaryText>
-            <SecondaryText
-              accessibilityRole="link"
-              style={[styles.link]}
-              onPress={goToUrl(item.url)}
-            >
-              {item.label}
-            </SecondaryText>
-          </ListItem.Content>
-        ))}
+        <FlatList
+          ref={setFlatListRef}
+          data={links}
+          keyExtractor={keyExtractor}
+          renderItem={renderArticleLink}
+        />
       </View>
     </View>
   ) : null;
