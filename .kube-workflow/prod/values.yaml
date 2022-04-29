@@ -23,6 +23,7 @@ app-strapi:
         name: "{{ .Values.global.pgSecretName }}"
 
 app-cache:
+  certSecretName: strapi-cache-crt
   autoscale:
     enabled: true
     minReplicas: 2
