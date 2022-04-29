@@ -1,7 +1,15 @@
 app-strapi:
+  needs: [db]
   volumes:
     - name: uploads
       emptyDir: {}
   volumeMounts:
     - mountPath: /app/public/uploads
       name: uploads
+
+jobs:
+  runs:
+    - name: db
+      use: SocialGouv/kube-workflow/jobs/create-db@v1
+      with:
+        pgAdminSecretRefName: azure-pg-admin-user

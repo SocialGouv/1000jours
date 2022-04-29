@@ -19,6 +19,8 @@ app-strapi:
         name: strapi-configmap
     - secretKeyRef:
         name: azure-les1000jours-volume
+    - secretRef:
+        name: "{{ .Values.global.pgSecretName }}"
 
 app-cache:
   autoscale:
