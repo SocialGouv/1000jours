@@ -7,6 +7,14 @@ export const replaceAllText = (
   return originalString.split(search).join(replace);
 };
 
+export const removeListHyphens = (text: string | undefined): string => {
+  if (text) {
+    text = replaceAllText(text, "\n-", "\n");
+    if (text.startsWith("-")) text = text.substring(1);
+  }
+  return text ?? "";
+};
+
 export const stringIsNotNullNorEmpty = (
   str: string | null | undefined
 ): boolean => {
