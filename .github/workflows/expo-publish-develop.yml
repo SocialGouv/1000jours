@@ -10,8 +10,9 @@ on:
       - 'front/**'
       - '.github/workflows/expo-publish-develop.yml'
   workflow_dispatch:
-    name:
-      description: 'Manual workflow'
+    inputs:
+      tags:
+        description: 'Manual workflow' 
 
 concurrency:
   cancel-in-progress: true
