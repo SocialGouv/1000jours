@@ -50,13 +50,13 @@ const MainAppContainer: FC = () => {
     setAppCounter(appActiveCounter);
     if (await TrackerUtils.needToTrackOpeningApp()) {
       const newAppActiveCounter = appActiveCounter + 1;
-      void StorageUtils.storeStringValue(
+      await StorageUtils.storeStringValue(
         StorageKeysConstants.appActiveCounter,
         newAppActiveCounter.toString()
       );
       setAppCounter(newAppActiveCounter);
       setSendTracker(true);
-      void StorageUtils.storeStringValue(
+      await StorageUtils.storeStringValue(
         StorageKeysConstants.appOpeningLastDate,
         new Date().toISOString()
       );

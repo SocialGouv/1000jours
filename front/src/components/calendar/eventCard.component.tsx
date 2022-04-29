@@ -62,20 +62,20 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
     return tags;
   };
 
-  const updateCartoFilterStorage = useCallback(() => {
+  const updateCartoFilterStorage = useCallback(async () => {
     const cartoFilterStorage: CartoFilterStorage = {
       thematiques: [],
       types: event.typesPoi ? _.map(event.typesPoi, "nom") : [],
     };
-    void StorageUtils.storeObjectValue(
+    await StorageUtils.storeObjectValue(
       StorageKeysConstants.cartoFilterKey,
       cartoFilterStorage
     );
   }, [event.typesPoi]);
 
-  const seeOnTheMap = useCallback(() => {
+  const seeOnTheMap = useCallback(async () => {
     setTrackerAction(TrackerUtils.TrackingEvent.EVENT_SEE_THE_MAP);
-    updateCartoFilterStorage();
+    await updateCartoFilterStorage();
     void RootNavigation.navigate("aroundMeScreen", null);
   }, [updateCartoFilterStorage]);
 

@@ -60,8 +60,8 @@ const Onboarding: FC<Props> = ({ navigation }) => {
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 
-  const navigateToProfile = useCallback(() => {
-    void StorageUtils.storeObjectValue(
+  const navigateToProfile = useCallback(async () => {
+    await StorageUtils.storeObjectValue(
       StorageKeysConstants.isFirstLaunchKey,
       false
     );
