@@ -6,7 +6,12 @@ import _ from "lodash";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  AccessibilityInfo,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 
 import HelpIcon from "../../assets/images/help.png";
 import { Events } from "../../components";
@@ -69,6 +74,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const [trackerAction, setTrackerAction] = useState("");
 
   const [scrollToEventId, setScrollToEventId] = useState("");
+  const [isScreenReaderEnabled, setIsScreenReaderEnabled] = useState(false);
 
   const init = useCallback(async () => {
     const childBirthdayStr =
@@ -92,6 +98,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     void requestCalendarPermission();
     void getLastSyncDate();
     void getScrollToEventId();
+    void getAccessibilityInfo();
 
     // Permet de forcer le refresh de la page lorsque l'on arrive dessus
     const unsubscribe = navigation.addListener("focus", () => {
@@ -113,6 +120,11 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
       StorageKeysConstants.osCalendarSyncDate
     );
     if (calendarSyncDate) setLastSyncDate(calendarSyncDate);
+  };
+
+  const getAccessibilityInfo = async () => {
+    const value = await AccessibilityInfo.isScreenReaderEnabled();
+    setIsScreenReaderEnabled(value);
   };
 
   const requestCalendarPermission = async () => {
@@ -308,15 +320,18 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
                     action={syncEventsWithOsCalendar}
                     titleStyle={styles.buttonTitleStyle}
                     buttonStyle={styles.buttonStyle}
+                    accessibilityLabel={`${Labels.calendar.synchronise}. ${Labels.calendar.synchronizationHelper}`}
                   />
                 </View>
-                <View style={styles.helpBtnContainer}>
-                  <TouchableOpacity
-                    onPress={onShowHelpModalButtonPressed(true)}
-                  >
-                    <Image source={HelpIcon} style={styles.helpIconStyle} />
-                  </TouchableOpacity>
-                </View>
+                {!isScreenReaderEnabled && (
+                  <View style={styles.helpBtnContainer}>
+                    <TouchableOpacity
+                      onPress={onShowHelpModalButtonPressed(true)}
+                    >
+                      <Image source={HelpIcon} style={styles.helpIconStyle} />
+                    </TouchableOpacity>
+                  </View>
+                )}
               </View>
               {lastSyncDate && (
                 <SecondaryTextItalic style={styles.lastSyncDate}>
