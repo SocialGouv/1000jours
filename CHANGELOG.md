@@ -1,3 +1,10 @@
+## [1.96.2](https://github.com/SocialGouv/1000jours/compare/v1.96.1...v1.96.2) (2022-04-29)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la sauvegarde des données ([#1183](https://github.com/SocialGouv/1000jours/issues/1183)) ([5afd03f](https://github.com/SocialGouv/1000jours/commit/5afd03f229e47d02f3363a61345329954070bb7f)), closes [#1182](https://github.com/SocialGouv/1000jours/issues/1182)
+
 ## [1.96.1](https://github.com/SocialGouv/1000jours/compare/v1.96.0...v1.96.1) (2022-04-12)
 
 
