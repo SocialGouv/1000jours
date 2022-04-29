@@ -1,0 +1,7 @@
+app-strapi:
+  volumes:
+    - name: uploads
+      emptyDir: {}
+  volumeMounts:
+    - mountPath: /app/public/uploads
+      name: uploads

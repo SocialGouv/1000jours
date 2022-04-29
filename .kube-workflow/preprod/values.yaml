@@ -1,0 +1,13 @@
+app-strapi:
+  addVolumes:
+    - uploads
+  volumeMounts:
+    - mountPath: /app/public/uploads
+      name: uploads
+  envFrom:
+    - secretKeyRef:
+        name: strapi
+    - configMapRef:
+        name: strapi-configmap
+    - secretKeyRef:
+        name: azure-les1000jours-volume

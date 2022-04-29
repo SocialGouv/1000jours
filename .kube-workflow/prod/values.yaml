@@ -1,0 +1,27 @@
+global:
+  host: les1000jours.fabrique.social.gouv.fr
+  namespace: les1000jours
+
+app-strapi:
+  addVolumes:
+    - uploads
+  volumeMounts:
+    - name: uploads
+      mountPath: /app/public/uploads
+  autoscale:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+  envFrom:
+    - secretKeyRef:
+        name: strapi
+    - configMapRef:
+        name: strapi-configmap
+    - secretKeyRef:
+        name: azure-les1000jours-volume
+
+app-cache:
+  autoscale:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
