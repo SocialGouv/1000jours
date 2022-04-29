@@ -11,8 +11,9 @@ on:
     tags:
       - v*
   workflow_dispatch:
-    name:
-      description: 'Manual workflow'
+    inputs:
+      tags:
+        description: 'Manual workflow' 
 
 concurrency:
   group: expo-preproduction

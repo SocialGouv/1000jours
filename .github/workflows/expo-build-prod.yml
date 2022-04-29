@@ -1,8 +1,9 @@
 name: Expo Build Prod
 on:
   workflow_dispatch:
-    name:
-      description: 'Manual workflow'
+    inputs:
+        tags:
+          description: 'Manual workflow'  
 
 jobs:
   Build-android:
