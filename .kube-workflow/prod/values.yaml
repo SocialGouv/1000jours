@@ -13,11 +13,11 @@ app-strapi:
     minReplicas: 2
     maxReplicas: 5
   envFrom:
-    - secretKeyRef:
+    - secretRef:
         name: strapi
     - configMapRef:
         name: strapi-configmap
-    - secretKeyRef:
+    - secretRef:
         name: azure-les1000jours-volume
     - secretRef:
         name: "{{ .Values.global.pgSecretName }}"

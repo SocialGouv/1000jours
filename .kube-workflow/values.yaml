@@ -15,7 +15,7 @@ app-strapi:
   # startupProbe:
   #   initialDelaySeconds: 30
   envFrom:
-    - secretKeyRef:
+    - secretRef:
         name: strapi
     - configMapRef:
         name: strapi-configmap
