@@ -1,3 +1,6 @@
+global:
+  host: "1000jours-preprod.dev.fabrique.social.gouv.fr"
+
 app-strapi:
   addVolumes:
     - uploads
