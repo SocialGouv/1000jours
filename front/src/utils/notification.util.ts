@@ -116,7 +116,7 @@ export const scheduleNextStepNotification = async (
       }
       const notificationId = await sendNotificationReminder(content, trigger);
       if (notificationId) {
-        void StorageUtils.storeStringValue(
+        await StorageUtils.storeStringValue(
           StorageKeysConstants.notifIdNextStep,
           notificationId
         );
