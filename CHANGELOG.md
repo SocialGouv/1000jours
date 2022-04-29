@@ -1,3 +1,10 @@
+## [1.96.3](https://github.com/SocialGouv/1000jours/compare/v1.96.2...v1.96.3) (2022-04-29)
+
+
+### Bug Fixes
+
+* 🐛 Corrige les workflows github (workflow_dispatch) ([#1191](https://github.com/SocialGouv/1000jours/issues/1191)) ([b363c33](https://github.com/SocialGouv/1000jours/commit/b363c3322243420047d65a293ba2e88e8446c13d))
+
 ## [1.96.2](https://github.com/SocialGouv/1000jours/compare/v1.96.1...v1.96.2) (2022-04-29)
 
 
