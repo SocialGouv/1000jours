@@ -22,6 +22,7 @@ import Navigation from "./src/navigation/navigation.component";
 import { GraphQLProvider } from "./src/services";
 import { initMonitoring, StorageUtils, TrackerUtils } from "./src/utils";
 import { manageStorage } from "./src/utils/app.util";
+import { scheduleMoodboardNotifications } from "./src/utils/notification.util";
 
 setNotificationHandler();
 initLocales();
@@ -82,6 +83,7 @@ const MainAppContainer: FC = () => {
 
       await manageStorage();
       await updateAppActiveCounter();
+      await scheduleMoodboardNotifications();
     };
 
     void init();

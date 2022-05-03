@@ -520,6 +520,11 @@ export default {
       veryGood: "Très bien",
     },
     moodToDate: "Comment vous sentiez-vous le",
+    notification: {
+      body: "Comment vous sentez vous ?",
+      redirectTitle: "Répondre",
+      title: "Suivi d'Humeur",
+    },
     title: "Suivi d'Humeur",
   },
   notification: {
