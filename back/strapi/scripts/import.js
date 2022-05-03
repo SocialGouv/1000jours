@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const fetch = require("node-fetch");
 require("dotenv").config();
+const modelsInJson = require("./models.json");
 
 const SEED_DIR = "seeds";
 
@@ -9,20 +10,7 @@ const { IMPORT_URL } = process.env;
 
 const plural = (str) => `${str}s`.replace(/ss$/, "s");
 
-const models = [
-  "parcours",
-  "thematique",
-  "etape",
-  "evenement",
-  "article",
-  "questionnaire-epds",
-  "questionnaire-epds-traductions",
-  "cartographie-types",
-  "locale",
-  "labels-epds-traductions",
-  "parentheque-documents",
-  "widget-epds-sources",
-];
+const models = modelsInJson.models;
 
 const main = async () => {
   for (const model of models) {
