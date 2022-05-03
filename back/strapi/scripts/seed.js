@@ -13,7 +13,12 @@ const models = [
   "evenement",
   "article",
   "questionnaire-epds",
-  "cartographie-types"
+  "questionnaire-epds-traductions",
+  "cartographie-types",
+  "locale",
+  "labels-epds-traductions",
+  "parentheque-documents",
+  "widget-epds-sources",
 ];
 
 let strapi;
