@@ -2,7 +2,7 @@ import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
 import { Labels } from "../../constants";
-import { Colors, FontWeight, Margins, Sizes } from "../../styles";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import { EpdsAssets } from "../assets";
 import {
   CommonText,
@@ -62,24 +62,6 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
       style={styles.mainContainer}
       contentContainerStyle={styles.mainContentContainer}
     >
-      <TitleH1 title={Labels.epdsSurvey.onboarding.title} animated={false} />
-      {Labels.epdsSurvey.onboarding.paragraphs.map((paragraph, index) => (
-        <View key={index}>
-          <SecondaryText style={styles.paragraph}>
-            <SecondaryText style={styles.paragraphTitle}>
-              {paragraph.title}
-              {" : "}
-            </SecondaryText>
-            {getDescriptionWithBoldWords(
-              paragraph.boldIndexes,
-              paragraph.description
-            )}
-          </SecondaryText>
-        </View>
-      ))}
-      <SecondaryText style={styles.reminder}>
-        {Labels.epdsSurvey.onboarding.reminder}
-      </SecondaryText>
       <SecondaryText style={styles.paragraphTitle}>
         {Labels.epdsSurvey.onboarding.steps.title}
         {" :"}
@@ -92,6 +74,9 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
         {renderStep(2)}
         {renderStep(3)}
       </View>
+      <SecondaryText style={styles.reminder}>
+        {Labels.epdsSurvey.onboarding.reminder}
+      </SecondaryText>
       <View style={styles.validateButton}>
         <CustomButton
           title={Labels.buttons.start}
@@ -101,11 +86,40 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
           action={onBoardingIsDone}
         />
       </View>
+
+      <View style={styles.descriptionEpdsContainer}>
+        <TitleH1 title={Labels.epdsSurvey.onboarding.title} animated={false} />
+        {Labels.epdsSurvey.onboarding.paragraphs.map((paragraph, index) => (
+          <View key={index}>
+            <SecondaryText style={styles.paragraph}>
+              <SecondaryText style={styles.paragraphTitle}>
+                {paragraph.title}
+                {" : "}
+              </SecondaryText>
+              {getDescriptionWithBoldWords(
+                paragraph.boldIndexes,
+                paragraph.description
+              )}
+            </SecondaryText>
+          </View>
+        ))}
+      </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  descriptionEpdsContainer: {
+    borderBottomColor: Colors.borderGrey,
+    borderLeftColor: Colors.primaryBlueDark,
+    borderLeftWidth: 4,
+    borderRightColor: Colors.borderGrey,
+    borderTopColor: Colors.borderGrey,
+    borderWidth: 1,
+    marginBottom: Margins.light,
+    marginTop: Margins.larger,
+    padding: Paddings.light,
+  },
   fontBold: {
     fontWeight: FontWeight.bold,
   },
@@ -132,7 +146,7 @@ const styles = StyleSheet.create({
   },
   reminder: {
     fontWeight: FontWeight.bold,
-    marginVertical: Margins.smallest,
+    marginVertical: Margins.default,
   },
   row: {
     alignItems: "flex-end",
@@ -156,7 +170,7 @@ const styles = StyleSheet.create({
   },
   validateButton: {
     alignItems: "center",
-    marginTop: Margins.larger,
+    marginTop: Margins.default,
   },
 });
 
