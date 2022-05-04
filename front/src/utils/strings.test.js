@@ -61,4 +61,16 @@ describe("Strings utils", () => {
       StringUtils.validateFrenchPhoneNumber(invalidFrenchPhoneNumber)
     ).toBe(false);
   });
+
+  it("Format phone number for Elise", () => {
+    expect(StringUtils.phoneNumberFormattingForElise("0123456789")).toEqual(
+      "01 23 45 67 89"
+    );
+    expect(StringUtils.phoneNumberFormattingForElise("+33123456789")).toEqual(
+      "+33 1 23 45 67 89"
+    );
+    expect(StringUtils.phoneNumberFormattingForElise("0033123456789")).toEqual(
+      "+33 1 23 45 67 89"
+    );
+  });
 });
