@@ -41,7 +41,12 @@ const DocumentCard: FC<Props> = ({ document }) => {
       style={[styles.listItem, styles.borderLeftRadius]}
     >
       <TrackerHandler actionName={trackerAction} />
-      <View style={styles.documentImage}>
+      <View
+        style={styles.documentImage}
+        accessibilityElementsHidden={true}
+        importantForAccessibility="no-hide-descendants"
+        accessible={false}
+      >
         <StepIcon
           name={IcomoonIcons.stepParentheque}
           active={false}
