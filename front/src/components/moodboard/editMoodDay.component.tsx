@@ -82,11 +82,17 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
             <CloseButton onPress={hideModal} clear />
           </View>
           <View style={styles.content}>
-            <Icomoon
-              name={IcomoonIcons.calendrier}
-              color={Colors.primaryBlue}
-              size={Sizes.xxl}
-            />
+            <View
+              accessibilityElementsHidden={true}
+              importantForAccessibility="no-hide-descendants"
+              accessible={false}
+            >
+              <Icomoon
+                name={IcomoonIcons.calendrier}
+                color={Colors.primaryBlue}
+                size={Sizes.xxl}
+              />
+            </View>
             <TitleH1
               title={Labels.moodboard.title}
               animated={false}
