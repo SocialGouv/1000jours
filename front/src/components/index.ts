@@ -31,7 +31,8 @@ import ConditionsOfUse from "./menu/conditionsOfUse.component";
 import LegalNotice from "./menu/legalNotice.component";
 import Menu from "./menu/menu.component";
 import EditMoodDay from "./moodboard/editMoodDay.component";
-import MoodItemsInCarousel from "./moodboard/moodItemsInCarousel";
+import MoodItemsForAccessibility from "./moodboard/moodItemsForAccessibility.component";
+import MoodItemsInCarousel from "./moodboard/moodItemsInCarousel.component";
 import MoodsCalendar from "./moodboard/moodsCalendar.component";
 import NotificationHandler, {
   setNotificationHandler,
@@ -65,6 +66,7 @@ export {
   LegalNotice,
   Links,
   Menu,
+  MoodItemsForAccessibility,
   MoodItemsInCarousel,
   MoodsCalendar,
   NotificationHandler,
