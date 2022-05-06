@@ -2,12 +2,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import * as React from "react";
-import { Image, ScrollView, StyleSheet } from "react-native";
-import Carousel from "react-native-snap-carousel";
+import { ScrollView, StyleSheet } from "react-native";
 
-import { MoodsCalendar } from "../../components";
+import { MoodItemsInCarousel, MoodsCalendar } from "../../components";
 import {
   BackButton,
   CustomButton,
@@ -17,22 +16,10 @@ import {
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels } from "../../constants";
-import { SCREEN_WIDTH } from "../../constants/platform.constants";
-import { Colors, Margins, Paddings, Sizes } from "../../styles";
-import type { MoodboardItem } from "../../type";
+import { Colors, Paddings, Sizes } from "../../styles";
 import type { RootStackParamList } from "../../types";
 import { MoodboardUtils, TrackerUtils } from "../../utils";
 
-interface RenderItemProps {
-  item: MoodboardItem;
-  index: number;
-}
-
-const ITEM_WIDTH = Math.round(SCREEN_WIDTH * 0.7);
-const ITEM_HEIGHT = Math.round(
-  (ITEM_WIDTH * 3) / MoodboardUtils.MOODBOARD_ITEMS.length
-);
-const ICON_SIZE = Math.round(ITEM_WIDTH * 0.5);
 const firstItemIndexToShow = 1;
 
 interface Props {
@@ -42,42 +29,6 @@ interface Props {
 const Moodboard: FC<Props> = ({ navigation }) => {
   const [activeIndex, setActiveIndex] = useState<number>(firstItemIndexToShow);
   const [trackerAction, setTrackerAction] = useState<string>("");
-  const ref = useRef(null);
-
-  const renderItem = useCallback(({ item }: RenderItemProps) => {
-    return (
-      <View style={styles.itemContainer}>
-        <View
-          style={[
-            styles.itemViewContainer,
-            styles.borderRadius,
-            { borderColor: item.color },
-          ]}
-        >
-          <View style={styles.iconContainer}>
-            <Image
-              style={{ height: ICON_SIZE, width: ICON_SIZE }}
-              source={item.icon}
-            />
-          </View>
-          <View
-            style={[
-              styles.itemViewLabelContainer,
-              {
-                backgroundColor: item.color,
-              },
-            ]}
-          >
-            <SecondaryText style={styles.itemLabel}>{item.title}</SecondaryText>
-          </View>
-        </View>
-      </View>
-    );
-  }, []);
-
-  const snapToItem = useCallback((index: number) => {
-    setActiveIndex(index);
-  }, []);
 
   const goBack = useCallback(() => {
     setTrackerAction(Labels.buttons.cancel);
@@ -113,17 +64,10 @@ const Moodboard: FC<Props> = ({ navigation }) => {
           {Labels.moodboard.howDoYouFeelToday}
         </SecondaryText>
       </View>
-      <Carousel
-        ref={ref}
-        data={MoodboardUtils.MOODBOARD_ITEMS}
-        renderItem={renderItem}
-        sliderWidth={SCREEN_WIDTH}
-        itemWidth={ITEM_WIDTH}
-        containerCustomStyle={styles.carouselContainer}
-        inactiveSlideShift={0}
-        onSnapToItem={snapToItem}
-        useScrollView={true}
-        firstItem={firstItemIndexToShow}
+
+      <MoodItemsInCarousel
+        setActiveIndex={setActiveIndex}
+        firstItemIndexToShow={firstItemIndexToShow}
       />
 
       <View style={styles.buttonContainer}>
@@ -140,15 +84,9 @@ const Moodboard: FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  borderRadius: {
-    borderRadius: Sizes.xxxs,
-  },
   buttonContainer: {
     alignSelf: "center",
     paddingTop: Paddings.largest,
-  },
-  carouselContainer: {
-    marginTop: Margins.largest,
   },
   flexStart: {
     alignItems: "flex-start",
@@ -158,37 +96,6 @@ const styles = StyleSheet.create({
   header: {
     padding: Paddings.default,
     paddingTop: Paddings.largest,
-  },
-  iconContainer: {
-    flex: 5,
-    justifyContent: "center",
-  },
-  itemContainer: {
-    alignItems: "center",
-    height: ITEM_HEIGHT,
-    justifyContent: "center",
-    width: ITEM_WIDTH,
-  },
-  itemLabel: {
-    color: "white",
-    fontSize: Sizes.lg,
-  },
-  itemViewContainer: {
-    alignItems: "center",
-    backgroundColor: "white",
-    borderWidth: 2,
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    width: "90%",
-  },
-  itemViewLabelContainer: {
-    alignItems: "center",
-    borderBottomLeftRadius: Sizes.xxxxs,
-    borderBottomRightRadius: Sizes.xxxxs,
-    flex: 2,
-    justifyContent: "center",
-    width: "100%",
   },
   mainContainer: {
     backgroundColor: Colors.white,
