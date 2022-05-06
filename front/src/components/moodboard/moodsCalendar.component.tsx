@@ -1,14 +1,16 @@
+import { format } from "date-fns";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import type { DateData } from "react-native-calendars";
 import { Calendar } from "react-native-calendars";
-import type { Theme } from "react-native-calendars/src/types";
+import type { Direction, Theme } from "react-native-calendars/src/types";
 
-import { StorageKeysConstants } from "../../constants";
+import { Formats, Labels, StorageKeysConstants } from "../../constants";
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 import type { MoodStorageItem } from "../../type";
 import { MoodboardUtils, StorageUtils } from "../../utils";
+import { Icomoon, IcomoonIcons } from "../baseComponents";
 import EditMoodDay from "./editMoodDay.component";
 
 interface Props {}
@@ -45,6 +47,37 @@ const MoodsCalendar: React.FC<Props> = () => {
     setShowEditModal(true);
   }, []);
 
+  const renderMonthArrow = useCallback((direction: Direction) => {
+    const today = new Date();
+    const previousMonth = today.setMonth(today.getMonth() - 1);
+    const nextMonth = today.setMonth(today.getMonth() + 2);
+
+    const previousMonthLabel =
+      Labels.accessibility.mood.goToPreviousMonth +
+      format(previousMonth, Formats.dateFullMonthOnly);
+    const nextMonthLabel =
+      Labels.accessibility.mood.goToNextMonth +
+      format(nextMonth, Formats.dateFullMonthOnly);
+
+    return direction === "left" ? (
+      <View accessibilityRole="button" accessibilityLabel={previousMonthLabel}>
+        <Icomoon
+          name={IcomoonIcons.precedent}
+          size={Sizes.lg}
+          color={Colors.primaryBlue}
+        />
+      </View>
+    ) : (
+      <View accessibilityRole="button" accessibilityLabel={nextMonthLabel}>
+        <Icomoon
+          name={IcomoonIcons.suivant}
+          size={Sizes.lg}
+          color={Colors.primaryBlue}
+        />
+      </View>
+    );
+  }, []);
+
   const hideEditModal = useCallback(() => {
     setShowEditModal(false);
     void findMoods();
@@ -63,6 +96,7 @@ const MoodsCalendar: React.FC<Props> = () => {
         disableMonthChange={true}
         firstDay={1}
         markedDates={buildMarkedDatesForCalendar(moods)}
+        renderArrow={renderMonthArrow}
       />
 
       <EditMoodDay
