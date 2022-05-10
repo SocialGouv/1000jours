@@ -42,7 +42,14 @@ const ExpandableButton: React.FC<Props> = ({
   return (
     <>
       <View style={styles.buttonContainer}>
-        {!isScreenReaderEnabled ? (
+        {isScreenReaderEnabled ? (
+          <View
+            style={[styles.buttonStyle, backgroundColor]}
+            importantForAccessibility="no-hide-descendants"
+          >
+            {icon}
+          </View>
+        ) : (
           <TouchableOpacity
             accessibilityLabel={expandedText}
             style={[styles.buttonStyle, backgroundColor]}
@@ -50,13 +57,6 @@ const ExpandableButton: React.FC<Props> = ({
           >
             {icon}
           </TouchableOpacity>
-        ) : (
-          <View
-            style={[styles.buttonStyle, backgroundColor]}
-            importantForAccessibility="no-hide-descendants"
-          >
-            {icon}
-          </View>
         )}
       </View>
 
