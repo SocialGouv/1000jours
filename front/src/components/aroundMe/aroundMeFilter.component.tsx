@@ -33,6 +33,7 @@ import type {
   FetchedFilterFromDb,
 } from "../../type";
 import { StorageUtils, StringUtils, TrackerUtils } from "../../utils";
+import { modaleStyles } from "../../utils/modale.util";
 import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
@@ -275,7 +276,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
       />
       <Modal transparent={true} visible={visible} animationType="fade">
         {showModalContent && (
-          <View style={styles.behindOfModal}>
+          <View style={modaleStyles.behindOfModal}>
             <View style={styles.mainContainer}>
               <TitleH1 title={Labels.aroundMe.filter.title} animated={false} />
               <TouchableOpacity
@@ -334,11 +335,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
 };
 
 const styles = StyleSheet.create({
-  behindOfModal: {
-    backgroundColor: Colors.transparentGrey,
-    flex: 1,
-    paddingTop: Constants.statusBarHeight,
-  },
   buttonContainer: {
     flex: 1,
   },

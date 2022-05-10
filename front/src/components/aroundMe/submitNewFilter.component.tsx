@@ -30,6 +30,7 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
+import { modaleStyles } from "../../utils/modale.util";
 
 interface Props {
   visible: boolean;
@@ -134,7 +135,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
 
   return (
     <Modal transparent={true} visible={visible} animationType="fade">
-      <View style={styles.behindOfModal}>
+      <View style={modaleStyles.behindOfModal}>
         <View style={styles.mainContainer}>
           <TitleH1
             title={Labels.aroundMe.submitNewFilter.title}
@@ -200,11 +201,6 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
 };
 
 const styles = StyleSheet.create({
-  behindOfModal: {
-    backgroundColor: Colors.transparentGrey,
-    flex: 1,
-    paddingTop: Constants.statusBarHeight,
-  },
   buttonContainer: {
     flex: 1,
   },

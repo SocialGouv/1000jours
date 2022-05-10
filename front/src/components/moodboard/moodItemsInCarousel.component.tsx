@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     alignItems: "center",
-    height: ITEM_HEIGHT,
     justifyContent: "center",
+    minHeight: ITEM_HEIGHT,
     width: ITEM_WIDTH,
   },
   itemLabel: {

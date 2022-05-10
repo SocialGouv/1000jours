@@ -23,6 +23,7 @@ import {
   TitleH1,
   View,
 } from "../baseComponents";
+import { modaleStyles } from "../../utils/modale.util";
 
 interface Props {
   articles: Article[];
@@ -120,7 +121,7 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
       />
       <Modal transparent={true} visible={modalVisible} animationType="fade">
         {modalVisible && (
-          <View style={styles.behindOfModal}>
+          <View style={modaleStyles.behindOfModal}>
             <View style={styles.mainContainer}>
               <View
                 style={{
@@ -220,11 +221,6 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
 };
 
 const styles = StyleSheet.create({
-  behindOfModal: {
-    backgroundColor: Colors.transparentGrey,
-    flex: 1,
-    paddingTop: Constants.statusBarHeight,
-  },
   buttonContainer: {
     flex: 1,
   },
