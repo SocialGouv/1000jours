@@ -515,7 +515,7 @@ export default {
   },
   moodboard: {
     description:
-      "Texte descriptif qui explique qu’il s’agit d’un suivi de l’humeur pour aider à la prévention de la dépression, etc.",
+      "Le suivi d'humeur est un outil d'accompagnement pour évaluer régulièrement votre humeur et au besoin, d'effectuer le questionnaire de la dépression post-partum.",
     howDoYouFeelToday: "Comment vous sentez vous aujourd'hui ?",
     mood: {
       bad: "Mal",
