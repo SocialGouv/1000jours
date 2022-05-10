@@ -1,8 +1,7 @@
 import { format } from "date-fns";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
-import { Image, Modal, StyleSheet, View } from "react-native";
-import { ButtonGroup } from "react-native-elements";
+import { Image, Modal, StyleSheet, TouchableOpacity, View } from "react-native";
 
 import { Formats, Labels } from "../../constants";
 import { Colors, Margins, Paddings, Sizes } from "../../styles";
@@ -24,7 +23,7 @@ interface Props {
 
 const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
   const [dateFR, setDateFR] = useState<string>();
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(1);
 
   useEffect(() => {
     if (dateISO) {
@@ -46,32 +45,35 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
     });
   }, [dateISO, hideModal, selectedIndex]);
 
-  const updateSelectedIndex = useCallback((value: number) => {
-    setSelectedIndex(value);
-  }, []);
+  const updateSelectedIndex = useCallback(
+    (index: number) => () => {
+      setSelectedIndex(index);
+    },
+    []
+  );
 
   const moodItems = () => {
     const buttons = MoodboardUtils.MOODBOARD_ITEMS.map((item, index) => {
       return (
-        <View style={styles.itemStyle} key={index}>
+        <TouchableOpacity
+          key={index}
+          accessibilityRole="radio"
+          accessibilityState={{ selected: index == selectedIndex }}
+          onPress={updateSelectedIndex(index)}
+          style={[
+            index == selectedIndex ? styles.selectedButtonStyle : null,
+            styles.itemStyle,
+          ]}
+        >
           <Image style={styles.itemImageStyle} source={item.icon} />
           <SecondaryText style={{ color: item.color }}>
             {item.title}
           </SecondaryText>
-        </View>
+        </TouchableOpacity>
       );
     });
 
-    return (
-      <ButtonGroup
-        buttons={buttons}
-        selectedIndex={selectedIndex}
-        containerStyle={styles.buttonGroupContainer}
-        innerBorderStyle={styles.buttonGroupBorderStyle}
-        selectedButtonStyle={styles.selectedButtonStyle}
-        onPress={updateSelectedIndex}
-      />
-    );
+    return <View style={styles.buttonsContainer}>{buttons}</View>;
   };
 
   return (
@@ -123,14 +125,6 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
 };
 
 const styles = StyleSheet.create({
-  buttonGroupBorderStyle: {
-    width: 0,
-  },
-  buttonGroupContainer: {
-    borderWidth: 0,
-    height: Sizes.xxxxxxxl,
-    marginHorizontal: 0,
-  },
   buttonsContainer: {
     flexDirection: "row",
     marginTop: Margins.default,
@@ -158,6 +152,7 @@ const styles = StyleSheet.create({
   },
   itemStyle: {
     alignItems: "center",
+    flexGrow: 1,
     minWidth: Sizes.accessibilityMinButton,
   },
   itemsBloc: {
