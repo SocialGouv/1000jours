@@ -109,7 +109,7 @@ const ArticleDetail: FC<Props> = ({
         const reactTag = findNodeHandle(articleTitleRef.current);
         if (reactTag) {
           AccessibilityInfo.setAccessibilityFocus(reactTag);
-        } else console.log("ReactTag Not Found");
+        } else console.warn("ReactTag Not Found");
       }
     }, TIMEOUT_FOCUS);
   };

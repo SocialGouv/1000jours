@@ -152,9 +152,9 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
               <CommonText style={styles.eventTitle}>{event.nom}</CommonText>
               <Tags tags={getEventTags()} />
               <SecondaryText style={styles.eventDescription}>
-                {!isScreenReaderEnabled
-                  ? event.description
-                  : removeListHyphens(event.description)}
+                {isScreenReaderEnabled
+                  ? removeListHyphens(event.description)
+                  : event.description}
               </SecondaryText>
             </View>
           </View>
