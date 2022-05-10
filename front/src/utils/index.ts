@@ -8,7 +8,6 @@ import * as KeyboardUtils from "./keyboard.util";
 import * as LinkingUtils from "./linking.util";
 import * as LoggingUtils from "./logging.util";
 import { initMonitoring, reportError } from "./logging.util";
-import * as ModaleUtils from "./modale.util";
 import * as MoodboardUtils from "./moodboard.util";
 import * as NotificationUtils from "./notification.util";
 import * as RootNavigation from "./rootNavigation.util";
@@ -33,7 +32,6 @@ export {
   KeyboardUtils,
   LinkingUtils,
   LoggingUtils,
-  ModaleUtils,
   MoodboardUtils,
   NotificationUtils,
   reportError,

@@ -1,6 +1,5 @@
 import type { PoiType, Step } from "@socialgouv/nos1000jours-lib";
 import { AROUNDME_FILTER_DATA } from "@socialgouv/nos1000jours-lib";
-import Constants from "expo-constants";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 import {
@@ -26,14 +25,13 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import { GraphQLQuery } from "../../services";
-import { Colors, Margins, Paddings, Sizes } from "../../styles";
+import { Colors, Margins, Paddings, Sizes, Styles } from "../../styles";
 import type {
   CartoFilter,
   CartoFilterStorage,
   FetchedFilterFromDb,
 } from "../../type";
 import { StorageUtils, StringUtils, TrackerUtils } from "../../utils";
-import { modaleStyles } from "../../utils/modale.util";
 import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
@@ -276,7 +274,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
       />
       <Modal transparent={true} visible={visible} animationType="fade">
         {showModalContent && (
-          <View style={modaleStyles.behindOfModal}>
+          <View style={Styles.modale.behindOfModal}>
             <View style={styles.mainContainer}>
               <TitleH1 title={Labels.aroundMe.filter.title} animated={false} />
               <TouchableOpacity

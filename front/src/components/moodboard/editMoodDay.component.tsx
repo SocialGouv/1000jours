@@ -11,9 +11,8 @@ import {
 } from "react-native";
 
 import { Formats, Labels } from "../../constants";
-import { Colors, Margins, Paddings, Sizes } from "../../styles";
+import { Colors, Margins, Paddings, Sizes, Styles } from "../../styles";
 import { MoodboardUtils } from "../../utils";
-import { modaleStyles } from "../../utils/modale.util";
 import {
   CloseButton,
   CustomButton,
@@ -90,7 +89,7 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
 
   return (
     <Modal animationType="slide" transparent={true} visible={visible}>
-      <View style={modaleStyles.behindOfModal}>
+      <View style={Styles.modale.behindOfModal}>
         <View style={styles.modalView}>
           <View style={styles.closeButton}>
             <CloseButton onPress={hideModal} clear />

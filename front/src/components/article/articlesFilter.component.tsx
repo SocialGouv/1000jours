@@ -1,4 +1,3 @@
-import Constants from "expo-constants";
 import _ from "lodash";
 import type { FC } from "react";
 import { useCallback, useEffect } from "react";
@@ -12,7 +11,7 @@ import {
   MAJOR_VERSION_IOS,
   PLATFORM_IS_ANDROID,
 } from "../../constants/platform.constants";
-import { Colors, Margins, Paddings, Shadow, Sizes } from "../../styles";
+import { Colors, Margins, Paddings, Shadow, Sizes, Styles } from "../../styles";
 import type { Article, ArticleFilter } from "../../types";
 import { BaseAssets } from "../assets";
 import {
@@ -23,7 +22,6 @@ import {
   TitleH1,
   View,
 } from "../baseComponents";
-import { modaleStyles } from "../../utils/modale.util";
 
 interface Props {
   articles: Article[];
@@ -121,7 +119,7 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
       />
       <Modal transparent={true} visible={modalVisible} animationType="fade">
         {modalVisible && (
-          <View style={modaleStyles.behindOfModal}>
+          <View style={Styles.modale.behindOfModal}>
             <View style={styles.mainContainer}>
               <View
                 style={{
