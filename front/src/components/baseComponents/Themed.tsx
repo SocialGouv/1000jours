@@ -27,12 +27,16 @@ interface ThemeProps {
 export type TextProps = DefaultText["props"] & ThemeProps;
 export type ViewProps = DefaultView["props"] & ThemeProps;
 
-export const Text: FC<TextProps> = (props) => {
-  const { style, lightColor, darkColor, ...otherProps } = props;
-  const color = useThemeColor({ dark: darkColor, light: lightColor }, "text");
+export const Text = React.forwardRef<DefaultText, TextProps>(
+  (props: TextProps, ref) => {
+    // eslint-disable-next-line react/prop-types
+    const { style, lightColor, darkColor, ...otherProps } = props;
+    const color = useThemeColor({ dark: darkColor, light: lightColor }, "text");
 
-  return <DefaultText style={[{ color }, style]} {...otherProps} />;
-};
+    return <DefaultText ref={ref} style={[{ color }, style]} {...otherProps} />;
+  }
+);
+Text.displayName = "Text";
 
 export const View: FC<ViewProps> = (props) => {
   const { style, lightColor, darkColor, ...otherProps } = props;

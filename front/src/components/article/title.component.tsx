@@ -1,5 +1,5 @@
-import type { FC } from "react";
 import * as React from "react";
+import type { Text as DefaultText } from "react-native";
 import { StyleSheet } from "react-native";
 
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
@@ -9,12 +9,14 @@ interface Props {
   title: string | null;
 }
 
-const Title: FC<Props> = ({ title }) =>
-  title?.length ? (
-    <CommonText style={[styles.title]} accessibilityRole="header">
-      {title}
+const Title = React.forwardRef<DefaultText, Props>((props: Props, ref) => {
+  return props.title?.length ? (
+    <CommonText style={[styles.title]} accessibilityRole="header" ref={ref}>
+      {props.title}
     </CommonText>
   ) : null;
+});
+Title.displayName = "Title";
 
 const styles = StyleSheet.create({
   title: {

@@ -2,7 +2,7 @@ import ExpoFastImage from "expo-fast-image";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { AccessibilityInfo, StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
 
 import DefaultImage from "../../assets/images/default.png";
@@ -58,15 +58,23 @@ const ArticleCard: FC<Props> = ({
     };
   }, [article]);
 
-  const onItemPressed = useCallback(() => {
+  const onItemPressed = useCallback(async () => {
     if (isFromSearchScreen && setStepAndArticleId && article)
       setStepAndArticleId(article.id, step);
     else {
-      void RootNavigation.navigate("articleSwipe", {
-        articles: articles,
-        id: article?.id,
-        step: step,
-      });
+      const isScreenReaderEnabled =
+        await AccessibilityInfo.isScreenReaderEnabled();
+      void RootNavigation.navigate(
+        !isScreenReaderEnabled && articles.length > 1
+          ? "articleSwipe"
+          : "article",
+        {
+          articles: articles,
+          id: article?.id,
+          step: step,
+        },
+        true
+      );
     }
   }, [isFromSearchScreen, setStepAndArticleId, article, step, articles]);
 

@@ -5,7 +5,8 @@ export const navigationRef = createNavigationContainerRef();
 
 export const navigate = async (
   name: string,
-  params: unknown
+  params: unknown,
+  stayOnCurrentTab?: boolean
 ): Promise<void> => {
   let stop = false;
   while (!stop) {
@@ -19,31 +20,32 @@ export const navigate = async (
   // Information : Pour naviguer vers une page depuis n'importe où
   // Il faut passer par les screens du Stack.Navigator, ensuite passer par les BottomTab.Navigator puis par les BottomTab.Screen.
   // Ex : root > tabCalendar > tabCalendarScreen
-
   let screen = name;
-  switch (name) {
-    case "article":
-      screen = "root";
-      params = {
-        params: {
-          params: params,
-          screen: "article",
-        },
-        screen: "tabHome",
-      };
-      break;
-    case "event":
-      screen = "root";
-      params = {
-        params: {
-          params: params,
-          screen: "tabCalendarScreen",
-        },
-        screen: "tabCalendar",
-      };
-      break;
-    default:
-      break;
+  if (!stayOnCurrentTab) {
+    switch (name) {
+      case "article":
+        screen = "root";
+        params = {
+          params: {
+            params: params,
+            screen: "article",
+          },
+          screen: "tabHome",
+        };
+        break;
+      case "event":
+        screen = "root";
+        params = {
+          params: {
+            params: params,
+            screen: "tabCalendarScreen",
+          },
+          screen: "tabCalendar",
+        };
+        break;
+      default:
+        break;
+    }
   }
 
   navigationRef.navigate(screen as never, params as never);
