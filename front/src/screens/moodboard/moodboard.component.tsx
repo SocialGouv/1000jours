@@ -22,8 +22,7 @@ import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels } from "../../constants";
 import { Colors, Paddings, Sizes } from "../../styles";
 import type { RootStackParamList } from "../../types";
-import { MoodboardUtils, TrackerUtils } from "../../utils";
-import { screenReaderIsEnabled } from "../../utils/accessibility.util";
+import { AccessibilityUtils, MoodboardUtils, TrackerUtils } from "../../utils";
 
 const firstItemIndexToShow = 1;
 
@@ -51,7 +50,7 @@ const Moodboard: FC<Props> = ({ navigation }) => {
 
   useEffect(() => {
     const checkAccessibilityMode = async () => {
-      setAccessibilityMode(await screenReaderIsEnabled());
+      setAccessibilityMode(await AccessibilityUtils.screenReaderIsEnabled());
     };
 
     void checkAccessibilityMode();
