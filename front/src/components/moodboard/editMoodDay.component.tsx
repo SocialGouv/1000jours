@@ -68,7 +68,7 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
           accessibilityState={{ selected: index == selectedIndex }}
           onPress={updateSelectedIndex(index)}
           style={[
-            index == selectedIndex ? styles.selectedButtonStyle : null,
+            index == selectedIndex && styles.selectedButtonStyle,
             styles.itemStyle,
           ]}
         >

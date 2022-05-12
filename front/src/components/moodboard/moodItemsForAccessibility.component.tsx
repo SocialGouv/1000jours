@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from "react";
 import * as React from "react";
 import { useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -8,7 +9,7 @@ import { Colors, Margins, Paddings } from "../../styles";
 import { MOODBOARD_ITEMS } from "../../utils/moodboard.util";
 
 interface Props {
-  setActiveIndex: any;
+  setActiveIndex: Dispatch<SetStateAction<number>>;
   firstItemIndexToShow: number;
 }
 
@@ -34,13 +35,13 @@ const MoodItemsForAccessibility: React.FC<Props> = ({
       onPress={onItemPressed(index)}
       style={[
         styles.itemContainer,
-        index == selectedIndex ? { backgroundColor: item.color } : null,
+        index == selectedIndex && { backgroundColor: item.color },
       ]}
     >
       <Text
         style={[
           styles.itemLabel,
-          index == selectedIndex ? styles.itemitemLabelWhite : null,
+          index == selectedIndex && styles.itemitemLabelWhite,
         ]}
       >
         {item.title}

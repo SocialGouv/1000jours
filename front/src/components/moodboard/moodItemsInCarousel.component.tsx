@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from "react";
 import * as React from "react";
 import { useCallback, useRef } from "react";
 import { Image, StyleSheet, View } from "react-native";
@@ -10,7 +11,7 @@ import { MoodboardUtils } from "../../utils";
 import { SecondaryText } from "../baseComponents";
 
 interface Props {
-  setActiveIndex: any;
+  setActiveIndex: Dispatch<SetStateAction<number>>;
   firstItemIndexToShow: number;
 }
 
