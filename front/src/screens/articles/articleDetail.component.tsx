@@ -3,8 +3,17 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
-import { ScrollView, StyleSheet } from "react-native";
+import type {
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  Text as DefaultText,
+} from "react-native";
+import {
+  AccessibilityInfo,
+  findNodeHandle,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 import { FAB } from "react-native-elements";
 
 import {
@@ -33,6 +42,7 @@ import {
   Labels,
   StorageKeysConstants,
 } from "../../constants";
+import { TIMEOUT_FOCUS } from "../../constants/accessibility.constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { GraphQLQuery } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
@@ -73,6 +83,7 @@ const ArticleDetail: FC<Props> = ({
   const [inShortArray, setInShortArray] = useState<ArticleInShortItem[]>([]);
   const [linksArray, setLinksArray] = useState<ArticleLink[]>([]);
   const [currentArticle, setCurrentArticle] = useState<Article | undefined>();
+  const articleTitleRef = React.useRef<DefaultText>(null);
 
   const [scrollerRef, setScrollerRef] = useState<ScrollView>();
   const [articleHasBeenRead, setArticleHasBeenRead] = useState(false);
@@ -87,7 +98,21 @@ const ArticleDetail: FC<Props> = ({
     };
 
     void checkArticleRead();
+
+    // Force le focus sur le titre de l'article
+    setAccessibilityFocus();
   }, [articleId]);
+
+  const setAccessibilityFocus = () => {
+    setTimeout(() => {
+      if (articleTitleRef.current) {
+        const reactTag = findNodeHandle(articleTitleRef.current);
+        if (reactTag) {
+          AccessibilityInfo.setAccessibilityFocus(reactTag);
+        } else console.warn("ReactTag Not Found");
+      }
+    }, TIMEOUT_FOCUS);
+  };
 
   const setArticleInShortArray = useCallback((article: Article) => {
     setInShortArray([
@@ -225,7 +250,7 @@ const ArticleDetail: FC<Props> = ({
                   {renderReadArticleElement}
                 </View>
                 <View style={styles.articleDetails}>
-                  <Title title={currentArticle.titre} />
+                  <Title title={currentArticle.titre} ref={articleTitleRef} />
                   <Thematics items={currentArticle.thematiques} />
                   <InShort inShortArray={inShortArray} />
                   <SubTitle title={currentArticle.texteTitre1} />

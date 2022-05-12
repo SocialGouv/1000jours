@@ -1,6 +1,11 @@
 import * as React from "react";
-import { useCallback, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { useCallback, useEffect, useState } from "react";
+import {
+  AccessibilityInfo,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import * as Animatable from "react-native-animatable";
 import type { IconNode } from "react-native-elements/dist/icons/Icon";
 
@@ -25,18 +30,37 @@ const ExpandableButton: React.FC<Props> = ({
     setExpandButton(!expandButton);
   }, [expandButton]);
 
+  const [isScreenReaderEnabled, setIsScreenReaderEnabled] = useState(false);
+  const getAccessibilityInfo = async () => {
+    const value = await AccessibilityInfo.isScreenReaderEnabled();
+    setIsScreenReaderEnabled(value);
+  };
+  useEffect(() => {
+    void getAccessibilityInfo();
+  }, []);
+
   return (
     <>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          accessibilityLabel={expandedText}
-          style={[styles.buttonStyle, backgroundColor]}
-          onPress={expandButtonPressed}
-        >
-          {icon}
-        </TouchableOpacity>
+        {isScreenReaderEnabled ? (
+          <View
+            style={[styles.buttonStyle, backgroundColor]}
+            importantForAccessibility="no-hide-descendants"
+          >
+            {icon}
+          </View>
+        ) : (
+          <TouchableOpacity
+            accessibilityLabel={expandedText}
+            style={[styles.buttonStyle, backgroundColor]}
+            onPress={expandButtonPressed}
+          >
+            {icon}
+          </TouchableOpacity>
+        )}
       </View>
-      {expandButton && (
+
+      {(expandButton || isScreenReaderEnabled) && (
         <Animatable.View
           animation="fadeInLeft"
           duration={1000}
