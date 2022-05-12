@@ -1,14 +1,15 @@
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { AccessibilityInfo, StyleSheet, View } from "react-native";
 import type { DateData } from "react-native-calendars";
-import { Calendar } from "react-native-calendars";
-import type { Theme } from "react-native-calendars/src/types";
+import { Calendar, LocaleConfig } from "react-native-calendars";
+import type { Direction, Theme } from "react-native-calendars/src/types";
 
-import { StorageKeysConstants } from "../../constants";
+import { Labels, StorageKeysConstants } from "../../constants";
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 import type { MoodStorageItem } from "../../type";
 import { MoodboardUtils, StorageUtils } from "../../utils";
+import { Icomoon, IcomoonIcons } from "../baseComponents";
 import EditMoodDay from "./editMoodDay.component";
 
 interface Props {}
@@ -19,6 +20,7 @@ const MoodsCalendar: React.FC<Props> = () => {
   const [moods, setMoods] = useState<MoodStorageItem[]>();
   const [showEditModal, setShowEditModal] = useState(false);
   const [dateToEdit, setDateToEdit] = useState<string>();
+  const [monthToDisplay, setMonthToDisplay] = useState(new Date().getMonth());
 
   const calenderTheme: Theme = {
     arrowColor: Colors.primaryBlue,
@@ -45,6 +47,54 @@ const MoodsCalendar: React.FC<Props> = () => {
     setShowEditModal(true);
   }, []);
 
+  const renderMonthArrow = useCallback(
+    (direction: Direction) => {
+      const fullMonthName =
+        LocaleConfig.locales[LocaleConfig.defaultLocale].monthNames;
+
+      const previousMonthLabel = `${Labels.accessibility.mood.goToPreviousMonth}
+      ${fullMonthName?.[monthToDisplay - 1]}`;
+      const nextMonthLabel = `${Labels.accessibility.mood.goToNextMonth}
+      ${fullMonthName?.[monthToDisplay + 1]}`;
+
+      return direction === "left" ? (
+        <View
+          accessibilityRole="button"
+          accessibilityLabel={previousMonthLabel}
+        >
+          <Icomoon
+            name={IcomoonIcons.precedent}
+            size={Sizes.lg}
+            color={Colors.primaryBlue}
+          />
+        </View>
+      ) : (
+        <View accessibilityRole="button" accessibilityLabel={nextMonthLabel}>
+          <Icomoon
+            name={IcomoonIcons.suivant}
+            size={Sizes.lg}
+            color={Colors.primaryBlue}
+          />
+        </View>
+      );
+    },
+    [monthToDisplay]
+  );
+
+  const onMonthChange = useCallback((month: DateData) => {
+    // month a les mois numéroté de 1 à 12, alors que dans LocaleConfig c'est dans un tableau donc de 0 à 11.
+    const monthNumber = month.month - 1;
+
+    setMonthToDisplay(monthNumber);
+    AccessibilityInfo.announceForAccessibility(
+      `${
+        LocaleConfig.locales[LocaleConfig.defaultLocale].monthNames?.[
+          monthNumber
+        ]
+      }`
+    );
+  }, []);
+
   const hideEditModal = useCallback(() => {
     setShowEditModal(false);
     void findMoods();
@@ -63,6 +113,8 @@ const MoodsCalendar: React.FC<Props> = () => {
         disableMonthChange={true}
         firstDay={1}
         markedDates={buildMarkedDatesForCalendar(moods)}
+        renderArrow={renderMonthArrow}
+        onMonthChange={onMonthChange}
       />
 
       <EditMoodDay

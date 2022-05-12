@@ -1,11 +1,17 @@
 import { format } from "date-fns";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
-import { Image, Modal, StyleSheet, View } from "react-native";
-import { ButtonGroup } from "react-native-elements";
+import {
+  Image,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { Formats, Labels } from "../../constants";
-import { Colors, Margins, Paddings, Sizes } from "../../styles";
+import { Colors, Margins, Paddings, Sizes, Styles } from "../../styles";
 import { MoodboardUtils } from "../../utils";
 import {
   CloseButton,
@@ -24,7 +30,7 @@ interface Props {
 
 const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
   const [dateFR, setDateFR] = useState<string>();
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(1);
 
   useEffect(() => {
     if (dateISO) {
@@ -46,70 +52,86 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
     });
   }, [dateISO, hideModal, selectedIndex]);
 
-  const updateSelectedIndex = useCallback((value: number) => {
-    setSelectedIndex(value);
-  }, []);
+  const updateSelectedIndex = useCallback(
+    (index: number) => () => {
+      setSelectedIndex(index);
+    },
+    []
+  );
 
   const moodItems = () => {
     const buttons = MoodboardUtils.MOODBOARD_ITEMS.map((item, index) => {
       return (
-        <View style={styles.itemStyle} key={index}>
+        <TouchableOpacity
+          key={index}
+          accessibilityRole="radio"
+          accessibilityState={{ selected: index == selectedIndex }}
+          onPress={updateSelectedIndex(index)}
+          style={[
+            index == selectedIndex && styles.selectedButtonStyle,
+            styles.itemStyle,
+          ]}
+        >
           <Image style={styles.itemImageStyle} source={item.icon} />
           <SecondaryText style={{ color: item.color }}>
             {item.title}
           </SecondaryText>
-        </View>
+        </TouchableOpacity>
       );
     });
 
     return (
-      <ButtonGroup
-        buttons={buttons}
-        selectedIndex={selectedIndex}
-        containerStyle={styles.buttonGroupContainer}
-        innerBorderStyle={styles.buttonGroupBorderStyle}
-        selectedButtonStyle={styles.selectedButtonStyle}
-        onPress={updateSelectedIndex}
-      />
+      <View style={[styles.buttonsContainer, styles.itemsMoodButtons]}>
+        {buttons}
+      </View>
     );
   };
 
   return (
     <Modal animationType="slide" transparent={true} visible={visible}>
-      <View style={styles.centeredView}>
+      <View style={Styles.modale.behindOfModal}>
         <View style={styles.modalView}>
           <View style={styles.closeButton}>
             <CloseButton onPress={hideModal} clear />
           </View>
-          <View style={styles.content}>
-            <Icomoon
-              name={IcomoonIcons.calendrier}
-              color={Colors.primaryBlue}
-              size={Sizes.xxl}
-            />
-            <TitleH1
-              title={Labels.moodboard.title}
-              animated={false}
-              style={styles.titleStyle}
-            />
-            <SecondaryText style={styles.textStyle}>
-              {Labels.moodboard.moodToDate} {dateFR} ?
-            </SecondaryText>
-            {moodItems()}
+          <ScrollView>
+            <View style={styles.content}>
+              <View
+                accessibilityElementsHidden={true}
+                importantForAccessibility="no-hide-descendants"
+                accessible={false}
+              >
+                <Icomoon
+                  name={IcomoonIcons.calendrier}
+                  color={Colors.primaryBlue}
+                  size={Sizes.xxl}
+                />
+              </View>
+              <TitleH1
+                title={Labels.moodboard.title}
+                animated={false}
+                style={styles.titleStyle}
+              />
 
-            <View style={styles.buttonsContainer}>
-              <CustomButton
-                title={Labels.buttons.cancel}
-                rounded={false}
-                action={closeModal}
-              />
-              <CustomButton
-                title={Labels.buttons.validate}
-                rounded
-                action={validateMood}
-              />
+              <SecondaryText style={styles.textStyle}>
+                {Labels.moodboard.moodToDate} {dateFR} ?
+              </SecondaryText>
+              {moodItems()}
+
+              <View style={[styles.buttonsContainer, styles.validationButtons]}>
+                <CustomButton
+                  title={Labels.buttons.cancel}
+                  rounded={false}
+                  action={closeModal}
+                />
+                <CustomButton
+                  title={Labels.buttons.validate}
+                  rounded
+                  action={validateMood}
+                />
+              </View>
             </View>
-          </View>
+          </ScrollView>
         </View>
       </View>
     </Modal>
@@ -117,23 +139,10 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
 };
 
 const styles = StyleSheet.create({
-  buttonGroupBorderStyle: {
-    width: 0,
-  },
-  buttonGroupContainer: {
-    borderWidth: 0,
-    height: Sizes.xxxxxxxl,
-    marginHorizontal: 0,
-  },
   buttonsContainer: {
     flexDirection: "row",
-    marginTop: Margins.default,
-  },
-  centeredView: {
-    alignItems: "center",
-    backgroundColor: Colors.backdrop,
-    flex: 1,
     justifyContent: "center",
+    marginTop: Margins.default,
   },
   closeButton: {
     alignSelf: "flex-end",
@@ -143,7 +152,6 @@ const styles = StyleSheet.create({
   },
   content: {
     alignItems: "center",
-    marginTop: -15,
     paddingHorizontal: 35,
   },
   itemImageStyle: {
@@ -152,6 +160,7 @@ const styles = StyleSheet.create({
   },
   itemStyle: {
     alignItems: "center",
+    flexGrow: 1,
     minWidth: Sizes.accessibilityMinButton,
   },
   itemsBloc: {
@@ -159,6 +168,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginVertical: Margins.default,
     width: "100%",
+  },
+  itemsMoodButtons: {
+    flexWrap: "wrap",
   },
   modalView: {
     backgroundColor: Colors.white,
@@ -184,6 +196,9 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     marginTop: Margins.default,
+  },
+  validationButtons: {
+    flexWrap: "wrap-reverse",
   },
 });
 

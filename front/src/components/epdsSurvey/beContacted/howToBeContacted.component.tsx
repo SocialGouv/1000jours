@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import Constants from "expo-constants";
 import * as React from "react";
 import { useCallback, useMemo, useState } from "react";
 import {
@@ -23,7 +22,7 @@ import {
 } from "../../../components/baseComponents";
 import { EpdsDbQueries, Formats, Labels } from "../../../constants";
 import { GraphQLMutation } from "../../../services";
-import { Colors, Margins, Paddings, Sizes } from "../../../styles";
+import { Colors, Margins, Paddings, Sizes, Styles } from "../../../styles";
 import type { BeContactedData } from "../../../type";
 import { StringUtils } from "../../../utils";
 import { BeContactedAssets } from "../../assets";
@@ -387,7 +386,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
         triggerLaunchMutation={triggerSendContactInformation}
         onCompleted={onSendInformationCompleted}
       />
-      <View style={styles.behindOfModal}>
+      <View style={Styles.modale.behindOfModal}>
         <View style={styles.mainContainer}>
           <View style={styles.modalHeader}>
             <TitleH1
@@ -447,11 +446,6 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
 };
 
 const styles = StyleSheet.create({
-  behindOfModal: {
-    backgroundColor: Colors.transparentGrey,
-    flex: 1,
-    paddingTop: Constants.statusBarHeight,
-  },
   buttonContainer: {
     flex: 1,
   },
