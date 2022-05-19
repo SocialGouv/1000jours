@@ -93,7 +93,6 @@ const AroundMePoiList: FC<Props> = ({
         showRelaunchResearchButton={false}
         setIsLoading={setIsLoading}
       />
-      {/* <View style={styles.swipeIndicator} /> */}
       <CommonText style={styles.addressesListLabel}>
         {Labels.aroundMe.addressesListLabelStart} {poiArray.length}{" "}
         {Labels.aroundMe.addressesListLabelEnd}
