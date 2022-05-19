@@ -137,7 +137,7 @@ const Events: FC<Props> = ({ evenements, childBirthday, scrollToEventId }) => {
             </CommonText>
           </View>
           {formattedEvents[date].map((event, indexEvents) => (
-            <View key={indexEvents}>
+            <View style={styles.eventCardContainer} key={indexEvents}>
               <EventCard
                 event={event}
                 onPressed={eventCardPressed}
@@ -171,6 +171,9 @@ const styles = StyleSheet.create({
   },
   description: {
     color: Colors.commonText,
+  },
+  eventCardContainer: {
+    width: "100%",
   },
   eventContainer: {
     borderColor: Colors.borderGrey,
