@@ -71,7 +71,7 @@ const PoiList: FC<Props> = ({ poisArray, onPoiPress, handlePanel }) => {
   );
 
   return (
-    <ScrollView onScroll={handleScroll}>
+    <ScrollView onScroll={handleScroll} scrollEventThrottle={0}>
       {poisToDisplay.map((poi, poiIndex) =>
         PLATFORM_IS_IOS ? (
           <TouchableOpacity key={poiIndex} onPress={onPoiPressed(poiIndex)}>
