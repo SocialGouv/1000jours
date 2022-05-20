@@ -102,6 +102,7 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
         <Carousel
           ref={ref}
           data={articles}
+          defaultIndex={firstItemIndexToShow}
           renderItem={renderItem}
           onSnapToItem={snapToItem}
           windowSize={CAROUSEL_MAX_ITEM_TO_RENDER}
