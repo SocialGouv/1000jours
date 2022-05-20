@@ -161,7 +161,7 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
   ]);
 
   return (
-    <View style={styles.scrollView}>
+    <View style={styles.mainContainer}>
       <TrackerHandler
         screenName={`${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`}
         actionName={trackerAction}
@@ -220,8 +220,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: Paddings.default,
     paddingVertical: Paddings.smallest,
   },
-  scrollView: {
+  mainContainer: {
     backgroundColor: Colors.white,
+    flex: 1,
   },
   threeFirstMonthsBanner: {
     backgroundColor: Colors.primaryYellowLight,
