@@ -92,6 +92,7 @@ const AroundMeMapHeader: FC<Props> = ({
         <CustomButton
           buttonStyle={styles.headerButton}
           title=""
+          accessibilityLabel={Labels.aroundMe.submitNewFilter.title}
           rounded={true}
           icon={<AroundMeAssets.BulbIcon />}
           action={onSubmitNewFilterButtonPressed}

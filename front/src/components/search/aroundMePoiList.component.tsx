@@ -98,7 +98,7 @@ const AroundMePoiList: FC<Props> = ({
         {Labels.aroundMe.addressesListLabelEnd}
       </CommonText>
       <View style={styles.flex1}>
-        <PoiList poisArray={poiArray} onPoiPress={navigateToMap} /> 
+        <PoiList poisArray={poiArray} onPoiPress={navigateToMap} />
       </View>
       <CustomSnackbar
         duration={AroundMeConstants.SNACKBAR_DURATION}
