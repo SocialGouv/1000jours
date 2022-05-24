@@ -37,6 +37,7 @@ const ArticleList: FC<Props> = ({
   >([]);
 
   useEffect(() => {
+    let mounted = true;
     const sortArticles = async () => {
       const sortedArticles = await ArticleUtils.sortReadAndUnreadArticles(
         articleList
@@ -59,10 +60,14 @@ const ArticleList: FC<Props> = ({
           _articlesWithHeaders.push(article);
         });
       }
-      setArticlesWithHeaders(_articlesWithHeaders);
+      if (mounted) setArticlesWithHeaders(_articlesWithHeaders);
     };
 
     void sortArticles();
+
+    return () => {
+      mounted = false;
+    };
   }, [articleList]);
 
   const setFlatListRef = useCallback((ref: FlatList) => {

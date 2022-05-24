@@ -5,7 +5,7 @@ import type { FC } from "react";
 import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
-import Carousel from "react-native-snap-carousel";
+import Carousel from "react-native-reanimated-carousel";
 
 import {
   BackButton,
@@ -45,6 +45,10 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
   const step: Step | undefined = route?.params.step;
   const articleId: number = route ? route.params.id : 0;
 
+  const CAROUSEL_MAX_ITEM_TO_RENDER = 3;
+  const CAROUSEL_PARALLAX_OFFSET = 45;
+  const CAROUSEL_PARALLAX_SCALE = 0.9;
+
   const firstItemIndexToShow = articles.findIndex(
     (item) => item.id == articleId
   );
@@ -79,7 +83,7 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
   }, []);
 
   return (
-    <View style={styles.mainContainer}>
+    <View style={styles.flex1}>
       {trackerName && (
         <TrackerHandler
           screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${trackerName}`}
@@ -94,17 +98,25 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
         <SecondaryText>{Labels.articleSwipe.content}</SecondaryText>
       </View>
 
-      <Carousel
-        ref={ref}
-        data={articles}
-        renderItem={renderItem}
-        sliderWidth={SCREEN_WIDTH}
-        itemWidth={ITEM_WIDTH}
-        onSnapToItem={snapToItem}
-        inactiveSlideShift={0}
-        useScrollView
-        firstItem={firstItemIndexToShow}
-      />
+      <View style={styles.flex1}>
+        <Carousel
+          ref={ref}
+          data={articles}
+          defaultIndex={firstItemIndexToShow}
+          renderItem={renderItem}
+          onSnapToItem={snapToItem}
+          windowSize={CAROUSEL_MAX_ITEM_TO_RENDER}
+          width={SCREEN_WIDTH}
+          mode='parallax'
+          modeConfig={{parallaxScrollingOffset: CAROUSEL_PARALLAX_OFFSET, parallaxScrollingScale: CAROUSEL_PARALLAX_SCALE}}
+          pagingEnabled={true}
+          snapEnabled={true}
+          loop={false}
+          panGestureHandlerProps={{
+            activeOffsetX: [-Paddings.light, Paddings.light],
+          }}
+        />
+      </View>
     </View>
   );
 };
@@ -124,8 +136,8 @@ const styles = StyleSheet.create({
     borderRadius: Sizes.xxxxs,
     borderWidth: 1,
   },
-  mainContainer: {
-    height: "100%",
+  flex1: {
+    flex: 1,
   },
 });
 

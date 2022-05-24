@@ -14,7 +14,7 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
-import { FAB } from "react-native-elements";
+import { FAB } from "react-native-paper";
 
 import {
   DidYouKnow,
@@ -221,7 +221,7 @@ const ArticleDetail: FC<Props> = ({
                 screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${currentArticle.titre}`}
               />
             )}
-            <View style={isInCarousel ? null : styles.mainContainer}>
+            <View style={isInCarousel ? styles.borderRadius : styles.mainContainer}>
               {isInCarousel ? null : (
                 <View>
                   <View style={styles.flexStart}>
@@ -234,8 +234,8 @@ const ArticleDetail: FC<Props> = ({
                   />
                 </View>
               )}
-              <View>
-                <View style={isInCarousel ? null : styles.imageBannerContainer}>
+              <View style={styles.borderRadius}>
+                <View style={[isInCarousel ? styles.borderRadius : styles.imageBannerContainer]}>
                   <ImageBanner visuel={currentArticle.visuel} />
                   <View style={styles.flexEnd}>
                     <ShareButton
@@ -275,13 +275,9 @@ const ArticleDetail: FC<Props> = ({
 
           <FAB
             visible
-            icon={{
-              color: Colors.primaryBlueDark,
-              name: "expand-less",
-            }}
-            size="small"
-            placement="right"
-            color={Colors.white}
+            icon="chevron-up"
+            small
+            color={Colors.primaryBlueDark}
             onPress={scrollTopHandler}
             accessibilityLabel={Labels.accessibility.articleGoToTop}
             style={styles.fabButton}
@@ -308,9 +304,18 @@ const styles = StyleSheet.create({
     left: Paddings.light,
     position: "absolute",
   },
+  borderRadius: {
+    borderRadius: Sizes.xxxxs
+  },
   fabButton: {
+    color: Colors.primaryBlueDark,
+    backgroundColor: Colors.white,
     borderColor: Colors.borderGrey,
     borderWidth: 2,
+    position: 'absolute',
+    margin: Margins.default,
+    right: 0,
+    bottom: 0,
   },
   flexEnd: {
     alignSelf: "flex-end",

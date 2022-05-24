@@ -24,7 +24,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
     useMatomo();
 
   const userInfo: TrackerUserInfo = {
-    dimension1: Constants.manifest.version ?? "", // dimension1 = AppVersion
+    dimension1: Constants.manifest?.version ?? "", // dimension1 = AppVersion
   };
 
   useEffect(() => {

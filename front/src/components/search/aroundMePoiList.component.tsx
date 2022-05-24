@@ -78,7 +78,7 @@ const AroundMePoiList: FC<Props> = ({
   }, [triggerSearchByGpsCoords, updateSelectedPoiIndex]);
 
   return (
-    <View style={styles.slidingUpPanelView}>
+    <View style={styles.flex1}>
       <FetchPois
         triggerSearchByGpsCoords={triggerSearchByGpsCoords}
         region={region}
@@ -93,12 +93,13 @@ const AroundMePoiList: FC<Props> = ({
         showRelaunchResearchButton={false}
         setIsLoading={setIsLoading}
       />
-      <View style={styles.swipeIndicator} />
       <CommonText style={styles.addressesListLabel}>
         {Labels.aroundMe.addressesListLabelStart} {poiArray.length}{" "}
         {Labels.aroundMe.addressesListLabelEnd}
       </CommonText>
-      <PoiList poisArray={poiArray} onPoiPress={navigateToMap} />
+      <View style={styles.flex1}>
+        <PoiList poisArray={poiArray} onPoiPress={navigateToMap} /> 
+      </View>
       <CustomSnackbar
         duration={AroundMeConstants.SNACKBAR_DURATION}
         visible={showSnackBar}
@@ -143,10 +144,8 @@ const styles = StyleSheet.create({
   slidingUpPanelScrollView: {
     marginHorizontal: Margins.default,
   },
-  slidingUpPanelView: {
-    borderTopEndRadius: Sizes.xxxl,
-    borderTopStartRadius: Sizes.xxxl,
-    height: "100%",
+  flex1: {
+    flex: 1,
   },
   swipeIndicator: {
     alignSelf: "center",

@@ -1,6 +1,5 @@
 import Constants from "expo-constants";
-
-import { Colors } from ".";
+import Colors from "./colors";
 
 const Styles = {
   modale: {
