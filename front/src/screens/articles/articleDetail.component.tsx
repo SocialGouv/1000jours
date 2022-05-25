@@ -185,7 +185,13 @@ const ArticleDetail: FC<Props> = ({
   );
 
   const scrollTopHandler = useCallback(() => {
-    if (scrollerRef) scrollerRef.scrollTo({ x: 0, y: 0 });
+    if (scrollerRef) {
+      scrollerRef.scrollTo({ x: 0, y: 0 });
+      // Attendre la fin du scroll avant de faire le focus sur le titre de l'article
+      setTimeout(() => {
+        setAccessibilityFocus();
+      }, TIMEOUT_FOCUS);
+    }
   }, [scrollerRef]);
 
   const updateScrollerRef = useCallback((scroller: ScrollView) => {

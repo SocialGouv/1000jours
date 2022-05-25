@@ -37,21 +37,21 @@ const InShort: FC<Props> = ({ inShortArray }) => {
       <Icomoon
         name={IcomoonIcons.bebe}
         size={iconSize}
-        color={Colors.secondaryGreen}
+        color={Colors.secondaryGreenDark}
       />
     ),
     [inShortIconNames.parents]: (
       <Icomoon
         name={IcomoonIcons.parents}
         size={iconSize}
-        color={Colors.secondaryGreen}
+        color={Colors.secondaryGreenDark}
       />
     ),
     [inShortIconNames.babyBottle]: (
       <Icomoon
         name={IcomoonIcons.entourage}
         size={iconSize}
-        color={Colors.secondaryGreen}
+        color={Colors.secondaryGreenDark}
       />
     ),
   };
@@ -109,6 +109,7 @@ const InShort: FC<Props> = ({ inShortArray }) => {
                   importantForAccessibility="no-hide-descendants"
                   accessible={false}
                   accessibilityElementsHidden
+                  style={styles.bgTransparent}
                 >
                   {inShortIcons[item.icon]}
                 </View>
@@ -134,6 +135,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     minHeight: Sizes.accessibilityMinButton,
     minWidth: Sizes.accessibilityMinButton,
+  },
+  bgTransparent: {
+    backgroundColor: "transparent",
   },
   cardBackgroundSymbol: {
     fontSize: Sizes.xxxxl,

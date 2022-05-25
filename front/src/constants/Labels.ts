@@ -133,6 +133,7 @@ export default {
     inShortTitle: "En bref :",
     learnMoreAboutIt: "En savoir plus à ce sujet :",
     readArticle: "Article lu",
+    thematic: "Thématique",
     usefulTitle: "Cet article vous a été utile ?",
   },
   articleList: {
