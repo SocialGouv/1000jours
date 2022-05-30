@@ -56,6 +56,7 @@ const AroundMeMapAndList: React.FC<Props> = ({ navigation, route }) => {
   const updatePoiArray = useCallback((newPoiArray: Poi[]) => {
     setPoisArray(newPoiArray);
 
+    // Si le lecteur d'écran est activé, on affiche la liste des POI une fois que la première recherche a été faite
     const goToListIfScreenReaderIsEnabled = async () => {
       const isScreenReaderEnabled =
         await AccessibilityInfo.isScreenReaderEnabled();
