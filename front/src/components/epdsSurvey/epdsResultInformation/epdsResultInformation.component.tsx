@@ -3,7 +3,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import _ from "lodash";
 import * as React from "react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import type { ScrollView } from "react-native";
 import { StyleSheet, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Card } from "react-native-paper";
@@ -18,6 +19,7 @@ import {
   Sizes,
 } from "../../../styles";
 import type { EpdsResultInformationType } from "../../../type";
+import { AccessibilityUtils } from "../../../utils";
 import { EpdsAssets } from "../../assets";
 import { Icomoon, View } from "../../baseComponents";
 import EpdsResultContactParagraph from "./epdsResultContactParagraph.component";
@@ -27,17 +29,28 @@ import EpdsResultUrlParagraph from "./epdsResultUrlParagraph.component";
 interface EpdsResultInformationProps {
   leftBorderColor: string;
   informationList: EpdsResultInformationType[];
+  scrollRef: React.RefObject<ScrollView>;
 }
 
 const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
   leftBorderColor,
   informationList,
+  scrollRef,
 }) => {
+  const [isAccessibilityMode, setAccessibilityMode] = useState(false);
   const [expandedAccordions, setExpandedAccordions] = useState<boolean[]>(
     _.range(informationList.length).map(() => false)
   );
 
   const borderColorStyle = { borderStartColor: leftBorderColor };
+
+  useEffect(() => {
+    const checkAccessibilityMode = async () => {
+      setAccessibilityMode(await AccessibilityUtils.screenReaderIsEnabled());
+    };
+
+    void checkAccessibilityMode();
+  }, []);
 
   const renderParagraphs = (paragraphs: EpdsResultInformationType[]) => {
     return paragraphs.map(
@@ -78,6 +91,14 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
       );
       tempExpandedAccordions[accIndex] = !expandedAccordions[accIndex];
       setExpandedAccordions(tempExpandedAccordions);
+
+      if (isAccessibilityMode) {
+        scrollRef.current?.scrollTo({
+          animated: true,
+          x: 0,
+          y: 100,
+        });
+      }
     },
     [expandedAccordions, informationList.length]
   );
