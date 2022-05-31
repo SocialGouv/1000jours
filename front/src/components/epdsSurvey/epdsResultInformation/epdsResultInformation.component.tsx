@@ -9,6 +9,7 @@ import { StyleSheet, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Card } from "react-native-paper";
 
+import { SCREEN_HEIGHT } from "../../../constants/platform.constants";
 import {
   Colors,
   FontNames,
@@ -96,7 +97,7 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
         scrollRef.current?.scrollTo({
           animated: true,
           x: 0,
-          y: 100,
+          y: SCREEN_HEIGHT * 0.1,
         });
       }
     },
