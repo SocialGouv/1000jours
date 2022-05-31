@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import type { FC } from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
@@ -46,6 +46,7 @@ const EpdsResult: FC<Props> = ({
   const [queryVariables, setQueryVariables] = useState<unknown>();
   const [triggerLaunchQuery, setTriggerLaunchQuery] = useState(false);
   const [showSnackBar, setShowSnackBar] = useState(false);
+  const scrollRef = useRef<ScrollView>(null);
 
   const labelsResultats = Labels.epdsSurvey.resultats;
 
@@ -134,7 +135,7 @@ const EpdsResult: FC<Props> = ({
         variables={queryVariables}
         triggerLaunchMutation={triggerLaunchQuery}
       />
-      <ScrollView>
+      <ScrollView ref={scrollRef}>
         <TitleH1
           title={Labels.epdsSurveyLight.titleLight}
           animated={false}
@@ -172,6 +173,7 @@ const EpdsResult: FC<Props> = ({
         <EpdsResultInformation
           leftBorderColor={Colors.primaryBlue}
           informationList={Labels.epdsSurveyLight.professionalsList}
+          scrollRef={scrollRef}
         />
         <View style={styles.validateButton}>
           <CustomButton
