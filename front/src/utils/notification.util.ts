@@ -49,6 +49,13 @@ const sendNotificationReminder = async (
   return notificationId;
 };
 
+export const allowsNotifications = async () => {
+  const settings = await Notifications.getPermissionsAsync();
+  return (
+    settings.granted || settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
+  );
+}
+
 export const registerForPushNotificationsAsync = async (): Promise<
   string | undefined
 > => {

@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
-import type { TrackerEvent } from "../../type";
+import type { TrackerEventLight } from "../../type";
 import { TrackerUtils } from "../../utils";
 import {
   CustomButton,
@@ -24,7 +24,7 @@ const ARTICLE_IS_USEFUL = 1;
 const ARTICLE_IS_NOT_USEFUL = 0;
 
 const UsefulArticle: FC<Props> = ({ articleName }) => {
-  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
+  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEventLight>();
   const [isButtonsDisabled, setButtonsDisabled] = useState(false);
 
   const setUsefulArticleForTracker = useCallback(
