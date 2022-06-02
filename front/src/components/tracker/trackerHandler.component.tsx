@@ -3,7 +3,7 @@ import { useMatomo } from "matomo-tracker-react-native";
 import type { FC } from "react";
 import { useEffect } from "react";
 
-import type { TrackerEvent, TrackerEventLight, TrackerSearch } from "../../type";
+import type { TrackerEvent, TrackerSearch } from "../../type";
 import type { TrackerUserInfo } from "../../type/userInfo.types";
 import { StringUtils } from "../../utils";
 
@@ -11,7 +11,7 @@ interface TrackerHandlerProps {
   screenName?: string;
   actionName?: string;
   searchObject?: TrackerSearch;
-  eventObject?: TrackerEventLight;
+  eventObject?: TrackerEvent;
 }
 
 const TrackerHandler: FC<TrackerHandlerProps> = ({

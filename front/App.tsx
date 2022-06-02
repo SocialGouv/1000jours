@@ -20,7 +20,7 @@ import { StorageKeysConstants } from "./src/constants";
 import { useCachedResources, useColorScheme } from "./src/hooks";
 import Navigation from "./src/navigation/navigation.component";
 import { GraphQLProvider } from "./src/services";
-import { TrackerEventLight } from "./src/type";
+import { TrackerEvent } from "./src/type";
 import { initMonitoring, StorageUtils, TrackerUtils, AppUtils, NotificationUtils } from "./src/utils";
 
 setNotificationHandler();
@@ -40,7 +40,7 @@ const MainAppContainer: FC = () => {
   // Load Custom Fonts (Icomoon)
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
-  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEventLight>();
+  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
 
   const updateAppActiveCounter = async () => {
     const appActiveCounterStr = await StorageUtils.getStringValue(

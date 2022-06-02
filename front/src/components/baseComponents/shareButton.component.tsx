@@ -15,7 +15,7 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
-import type { TrackerEventLight } from "../../type";
+import type { TrackerEvent } from "../../type";
 import TrackerHandler from "../tracker/trackerHandler.component";
 import CustomButton from "./customButton.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
@@ -42,7 +42,7 @@ const ShareButton: React.FC<Props> = ({
   id,
   buttonStyle,
 }) => {
-  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEventLight>();
+  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
   const messageRef = useRef(message);
 
   const share = useCallback(async () => {
