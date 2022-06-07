@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "commentaires_epds",
+  "info": {
+    "name": "Commentaires EPDS"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "score": {
+      "type": "integer"
+    },
+    "commentaire": {
+      "type": "text"
+    }
+  }
+}
