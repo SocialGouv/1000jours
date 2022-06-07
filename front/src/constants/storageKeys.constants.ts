@@ -15,6 +15,7 @@ export const cartoSavedCoordinates = "@cartoSavedCoordinates";
 export const cartoIsFirstLaunch = "@cartoIsFirstLaunch";
 export const notifIdNextStep = "@notifIdNextStep";
 export const notifIdsEvents = "@notifIdsEvents";
+export const notifIdsMoodboard = "@notifIdsMoodboard";
 export const eventsCalcFromBirthday = "@eventsCalcFromBirthday";
 export const forceToScheduleEventsNotif = "@forceToScheduleEventsNotif";
 export const osCalendarId = "@osCalendarId";
@@ -22,6 +23,7 @@ export const osCalendarSyncDate = "@osCalendarSyncDate";
 export const scrollToEventId = "@scrollToEventId";
 export const articlesRead = "@articlesRead";
 export const moodsByDate = "@moodsByDate";
+export const notificationsAreAllowed = "@notificationsAreAllowed";
 
 export const allStorageKeys = [
   userUuidKey,
@@ -40,6 +42,7 @@ export const allStorageKeys = [
   cartoIsFirstLaunch,
   notifIdNextStep,
   notifIdsEvents,
+  notifIdsMoodboard,
   eventsCalcFromBirthday,
   forceToScheduleEventsNotif,
   osCalendarId,
@@ -47,6 +50,7 @@ export const allStorageKeys = [
   scrollToEventId,
   articlesRead,
   moodsByDate,
+  notificationsAreAllowed,
 ];
 
 export const epdsSurveyKeys = [epdsQuestionAndAnswersKey, epdsQuestionIndexKey];

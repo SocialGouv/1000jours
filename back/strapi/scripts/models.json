@@ -1,0 +1,16 @@
+{
+  "models": [
+    "parcours",
+    "thematique",
+    "etape",
+    "evenement",
+    "article",
+    "questionnaire-epds",
+    "questionnaire-epds-traductions",
+    "cartographie-types",
+    "locale",
+    "labels-epds-traductions",
+    "parentheque-documents",
+    "widget-epds-sources"
+  ]
+}

@@ -4,11 +4,16 @@ import { epdsInformation } from "./epdsResultInformation.constants";
 
 export default {
   accessibility: {
+    accordions: {
+      close: "Cacher le contenu",
+      open: "Afficher le contenu",
+    },
     array: "Tableau",
     articleCard: {
       description: "Description",
       title: "Titre de l'article",
     },
+    articleGoToTop: "Retour au début de l'article",
     articleToRead: "article à lire",
     articlesFilters: {
       activeFilter: "filtre actif",
@@ -32,6 +37,10 @@ export default {
     illustrationProfile: "Illustration profil",
     logoApp: "Logo de l'application",
     logoRepubliqueFr: "Logo de la République française",
+    mood: {
+      goToNextMonth: "Allez au mois suivant.",
+      goToPreviousMonth: "Allez au mois précédent.",
+    },
     step: "étape",
     subtitle: "Sous-Titre",
     tapForMoreInfo: "Appuyer deux fois pour avoir plus d'informations",
@@ -113,6 +122,7 @@ export default {
     useMyGeolocation: "Utiliser ma géolocalisation",
   },
   article: {
+    articleNotFound: "Article introuvable",
     didYouKnowTitle: "Le saviez-vous ?",
     firstThreeMonths: {
       buttonLabel: "Commencer",
@@ -122,11 +132,18 @@ export default {
     },
     inShortTitle: "En bref :",
     learnMoreAboutIt: "En savoir plus à ce sujet :",
+    readArticle: "Article lu",
+    thematic: "Thématique",
+    usefulTitle: "Cet article vous a été utile ?",
   },
   articleList: {
+    articlesAlreadyRead: "article(s) déjà lu(s)",
     articlesToRead: "article(s) à lire",
     filters: "Filtrer",
     resetFilters: "Réinitialiser",
+  },
+  articleSwipe: {
+    content: "Slidez entre les articles pour lire sur les différents sujets.",
   },
   buttons: {
     back: "Retour",
@@ -135,12 +152,14 @@ export default {
     contact: "Contacter",
     finish: "Terminer",
     next: "Suivant",
+    no: "Non",
     ok: "Ok",
     pass: "Passer",
     previous: "Précédent",
     share: "Partager",
     start: "Commencer",
     validate: "Valider",
+    yes: "Oui",
   },
   calendar: {
     description:
@@ -497,7 +516,7 @@ export default {
   },
   moodboard: {
     description:
-      "Texte descriptif qui explique qu’il s’agit d’un suivi de l’humeur pour aider à la prévention de la dépression, etc.",
+      "Le suivi d'humeur est un outil d'accompagnement pour évaluer régulièrement votre humeur et au besoin, d'effectuer le questionnaire de la dépression post-partum.",
     howDoYouFeelToday: "Comment vous sentez vous aujourd'hui ?",
     mood: {
       bad: "Mal",
@@ -506,6 +525,11 @@ export default {
       veryGood: "Très bien",
     },
     moodToDate: "Comment vous sentiez-vous le",
+    notification: {
+      body: "Comment vous sentez vous ?",
+      redirectTitle: "Répondre",
+      title: "Suivi d'Humeur",
+    },
     title: "Suivi d'Humeur",
   },
   notification: {

@@ -1,6 +1,7 @@
 import * as AccessibilityUtils from "./accessibility.util";
 import * as AppUtils from "./app.util";
 import * as AroundMeUtils from "./aroundMe.util";
+import * as ArticleUtils from "./article.util";
 import * as AssestUtils from "./asset.util";
 import * as EpdsSurveyUtils from "./epdsSurvey.util";
 import * as KeyboardUtils from "./keyboard.util";
@@ -22,6 +23,7 @@ export {
   AccessibilityUtils,
   AppUtils,
   AroundMeUtils,
+  ArticleUtils,
   AssestUtils,
   EpdsSurveyUtils,
   getAppTheme,

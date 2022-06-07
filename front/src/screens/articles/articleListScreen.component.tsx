@@ -4,7 +4,7 @@ import _ from "lodash";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { AccessibilityInfo, ScrollView, StyleSheet } from "react-native";
+import { AccessibilityInfo, StyleSheet } from "react-native";
 
 import { ArticleList, ArticlesFilter } from "../../components";
 import {
@@ -114,8 +114,54 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
     [articles]
   );
 
+  const renderArticleListHeader = useCallback(() => {
+    return (
+      <View>
+        <View style={styles.topContainer}>
+          <View style={[styles.flexStart]}>
+            <BackButton action={onGoBack} />
+          </View>
+          <TitleH1
+            title={screenTitle}
+            description={description}
+            animated={false}
+          />
+        </View>
+        {stepIsFirstThreeMonths && (
+          <View style={styles.threeFirstMonthsBanner}>
+            <CommonText style={styles.bannerTitle}>
+              {Labels.article.firstThreeMonths.title}
+            </CommonText>
+            <SecondaryText style={styles.bannerDescription}>
+              {Labels.article.firstThreeMonths.description}
+            </SecondaryText>
+            <CustomButton
+              buttonStyle={styles.bannerButton}
+              titleStyle={styles.bannerButtonTitle}
+              title={Labels.article.firstThreeMonths.buttonLabel}
+              rounded={true}
+              disabled={false}
+              action={navigateToSurvey}
+            />
+          </View>
+        )}
+        <ArticlesFilter articles={articles} applyFilters={applyFilters} />
+      </View>
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    applyFilters,
+    articles,
+    description,
+    filteredArticles.length,
+    navigateToSurvey,
+    onGoBack,
+    screenTitle,
+    stepIsFirstThreeMonths,
+  ]);
+
   return (
-    <ScrollView style={styles.scrollView}>
+    <View style={styles.mainContainer}>
       <TrackerHandler
         screenName={`${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`}
         actionName={trackerAction}
@@ -125,44 +171,10 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
         getFetchedData={handleResults}
       />
-      <View style={styles.topContainer}>
-        <View style={[styles.flexStart]}>
-          <BackButton action={onGoBack} />
-        </View>
-        <TitleH1
-          title={screenTitle}
-          description={description}
-          animated={false}
-        />
-      </View>
-      {stepIsFirstThreeMonths && (
-        <View style={styles.threeFirstMonthsBanner}>
-          <CommonText style={styles.bannerTitle}>
-            {Labels.article.firstThreeMonths.title}
-          </CommonText>
-          <SecondaryText style={styles.bannerDescription}>
-            {Labels.article.firstThreeMonths.description}
-          </SecondaryText>
-          <CustomButton
-            buttonStyle={styles.bannerButton}
-            titleStyle={styles.bannerButtonTitle}
-            title={Labels.article.firstThreeMonths.buttonLabel}
-            rounded={true}
-            disabled={false}
-            action={navigateToSurvey}
-          />
-        </View>
-      )}
-      <ArticlesFilter articles={articles} applyFilters={applyFilters} />
       {showArticles ? (
         <View style={styles.listContainer}>
-          <SecondaryText
-            style={styles.headerListInfo}
-            accessibilityLabel={articleToReadAccessibilityLabel()}
-          >
-            {filteredArticles.length} {Labels.articleList.articlesToRead}
-          </SecondaryText>
           <ArticleList
+            headerComponent={renderArticleListHeader}
             articleList={filteredArticles}
             animationDuration={1000}
             step={route.params.step}
@@ -171,7 +183,7 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
       ) : (
         <Loader />
       )}
-    </ScrollView>
+    </View>
   );
 };
 
@@ -204,18 +216,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
   },
-  headerListInfo: {
-    color: Colors.secondaryGreen,
-    fontSize: Sizes.xs,
-    fontStyle: "italic",
-    paddingVertical: Paddings.smaller,
-  },
   listContainer: {
     paddingHorizontal: Paddings.default,
     paddingVertical: Paddings.smallest,
   },
-  scrollView: {
+  mainContainer: {
     backgroundColor: Colors.white,
+    flex: 1,
   },
   threeFirstMonthsBanner: {
     backgroundColor: Colors.primaryYellowLight,
@@ -229,7 +236,6 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   topContainer: {
-    paddingHorizontal: Paddings.default,
     paddingTop: Paddings.default,
   },
 });

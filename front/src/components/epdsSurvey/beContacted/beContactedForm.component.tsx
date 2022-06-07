@@ -299,10 +299,14 @@ export const checkValidForm = (
     isEmailValid = StringUtils.validateEmail(data.email.trimEnd());
 
   let isPhoneValid = false;
-  if (data.phoneNumber)
+  if (data.phoneNumber) {
     isPhoneValid = StringUtils.validateFrenchPhoneNumber(
       data.phoneNumber.trimEnd()
     );
+    data.phoneNumber = StringUtils.phoneNumberFormattingForElise(
+      data.phoneNumber
+    );
+  }
 
   if (data.numberOfChildren > 0 && !data.lastChildBirthDate) return false;
   if (byEmail && isEmailValid) return true;

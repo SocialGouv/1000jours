@@ -3,6 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Image } from "react-native-elements";
 
+import { Sizes } from "../../styles";
 import type { Visuel } from "../../types";
 import { getVisuelFormat, VisuelFormat } from "../../utils/visuel.util";
 
@@ -23,6 +24,8 @@ const ImageBanner: FC<Props> = ({ visuel }) => {
 
 const styles = StyleSheet.create({
   articleImage: {
+    borderTopLeftRadius: Sizes.xxxxs,
+    borderTopRightRadius: Sizes.xxxxs,
     height: 150,
     width: "100%",
   },

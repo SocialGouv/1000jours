@@ -3,7 +3,7 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import { useCallback, useState } from "react";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { AccessibilityInfo, StyleSheet } from "react-native";
 import type { LatLng, Region } from "react-native-maps";
 
 import { AroundMeMap, AroundMePoiList } from "../../components";
@@ -53,6 +53,22 @@ const AroundMeMapAndList: React.FC<Props> = ({ navigation, route }) => {
     []
   );
 
+  const updatePoiArray = useCallback((newPoiArray: Poi[]) => {
+    setPoisArray(newPoiArray);
+
+    // Si le lecteur d'écran est activé, on affiche la liste des POI une fois que la première recherche a été faite
+    const goToListIfScreenReaderIsEnabled = async () => {
+      const isScreenReaderEnabled =
+        await AccessibilityInfo.isScreenReaderEnabled();
+      if (isScreenReaderEnabled) {
+        setDisplayMap(false);
+      }
+    };
+    setTimeout(() => {
+      void goToListIfScreenReaderIsEnabled();
+    }, 500);
+  }, []);
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.flexStart}>
@@ -68,7 +84,7 @@ const AroundMeMapAndList: React.FC<Props> = ({ navigation, route }) => {
           userLocation={userLocation}
           updateRegion={setRegion}
           resetCoordinates={onResetCoordinates}
-          updatePoiArray={setPoisArray}
+          updatePoiArray={updatePoiArray}
           updateSelectedPoiIndex={setSelectedPoiIndex}
           displayList={updateDisplayMap(false)}
         />

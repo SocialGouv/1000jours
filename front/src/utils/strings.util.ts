@@ -7,6 +7,14 @@ export const replaceAllText = (
   return originalString.split(search).join(replace);
 };
 
+export const removeListHyphens = (text: string | undefined): string => {
+  if (text) {
+    text = replaceAllText(text, "\n-", "\n");
+    if (text.startsWith("-")) text = text.substring(1);
+  }
+  return text ?? "";
+};
+
 export const stringIsNotNullNorEmpty = (
   str: string | null | undefined
 ): boolean => {
@@ -39,4 +47,24 @@ export const validateEmail = (inputText: string): boolean => {
 export const validateFrenchPhoneNumber = (inputText: string): boolean => {
   const frenchPhoneFormat = /^((\+)33|0|0033)[1-9](\d{2}){4}$/g;
   return frenchPhoneFormat.test(inputText);
+};
+
+export const phoneNumberFormattingForElise = (phoneNumber: string): string => {
+  const regexSeparateEveryTwo = /(.{2})(?!$)/g;
+  if (phoneNumber.length === 10)
+    return phoneNumber.replace(regexSeparateEveryTwo, "$1 ");
+  else {
+    const numberWithAreaCode = phoneNumber.replace(/^(0033)/g, "+33");
+    if (numberWithAreaCode.startsWith("+")) {
+      const simpleFormatting = numberWithAreaCode
+        .slice(4)
+        .replace(regexSeparateEveryTwo, "$1 ");
+      return `${numberWithAreaCode.slice(0, 3)} ${numberWithAreaCode.slice(
+        3,
+        4
+      )} ${simpleFormatting}`;
+    }
+  }
+
+  return phoneNumber;
 };

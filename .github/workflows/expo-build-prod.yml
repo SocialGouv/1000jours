@@ -2,8 +2,8 @@ name: Expo Build Prod
 on:
   workflow_dispatch:
     inputs:
-        tags:
-          description: 'Manual workflow'  
+      tags:
+        description: "Manual workflow"
 
 jobs:
   Build-android:
@@ -21,6 +21,7 @@ jobs:
       GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
       DEEPLINK_DOMAIN: 1000jours.fabrique.social.gouv.fr
       DEEPLINK_PATH: app-millejours
+      NODE_OPTIONS: --max_old_space_size=8192
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -52,6 +53,7 @@ jobs:
       GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
       DEEPLINK_DOMAIN: 1000jours.fabrique.social.gouv.fr
       DEEPLINK_PATH: app-millejours
+      NODE_OPTIONS: --max_old_space_size=8192
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2

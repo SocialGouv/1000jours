@@ -20,8 +20,8 @@ import { StorageKeysConstants } from "./src/constants";
 import { useCachedResources, useColorScheme } from "./src/hooks";
 import Navigation from "./src/navigation/navigation.component";
 import { GraphQLProvider } from "./src/services";
-import { initMonitoring, StorageUtils, TrackerUtils } from "./src/utils";
-import { manageStorage } from "./src/utils/app.util";
+import { TrackerEvent } from "./src/type";
+import { initMonitoring, StorageUtils, TrackerUtils, AppUtils, NotificationUtils } from "./src/utils";
 
 setNotificationHandler();
 initLocales();
@@ -39,6 +39,8 @@ const MainAppContainer: FC = () => {
   const [screenCanBeDisplayed, setScreenCanBeDisplayed] = useState(false);
   // Load Custom Fonts (Icomoon)
   const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
 
   const updateAppActiveCounter = async () => {
     const appActiveCounterStr = await StorageUtils.getStringValue(
@@ -67,7 +69,22 @@ const MainAppContainer: FC = () => {
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
     if (nextAppState === "active") {
       void updateAppActiveCounter();
+      void checkNotificationPermission();
     }
+  };
+
+  const checkNotificationPermission = async () => {
+    const notificationsAreAllowed = await NotificationUtils.allowsNotifications();
+    const notificationsAreAllowedFromStorage = await StorageUtils.getObjectValue(
+      StorageKeysConstants.notificationsAreAllowed
+    );
+    if(!notificationsAreAllowed && notificationsAreAllowedFromStorage !== false) {
+      setTrackerEventObject({ action: TrackerUtils.TrackingEvent.SETTINGS, name: TrackerUtils.TrackingEvent.NOTIFICATIONS_DISABLED });
+    }
+    await StorageUtils.storeObjectValue(
+      StorageKeysConstants.notificationsAreAllowed,
+      notificationsAreAllowed
+    );
   };
 
   useEffect(() => {
@@ -80,8 +97,9 @@ const MainAppContainer: FC = () => {
           console.log(error);
         });
 
-      await manageStorage();
+      await AppUtils.manageStorage();
       await updateAppActiveCounter();
+      await NotificationUtils.scheduleMoodboardNotifications();
     };
 
     void init();
@@ -103,6 +121,7 @@ const MainAppContainer: FC = () => {
     const appContainer = (
       <>
         <TrackerAppStart />
+        <TrackerHandler eventObject={trackerEventObject} />
         <LinksHandler />
         {sendTracker && (
           <TrackerHandler

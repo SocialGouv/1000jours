@@ -10,6 +10,7 @@ import {
   AroundMeScreen,
   ArticleDetail,
   ArticleListScreen,
+  ArticleSwipe,
   EventDetails,
   Parentheque,
   TabCalendarScreen,
@@ -128,6 +129,7 @@ const TabHomeNavigator: FC = () => (
       options={{}}
     />
     <TabHomeStack.Screen name="articleList" component={ArticleListScreen} />
+    <TabHomeStack.Screen name="articleSwipe" component={ArticleSwipe} />
     <TabHomeStack.Screen name="parentheque" component={Parentheque} />
     <TabHomeStack.Screen name="article" component={ArticleDetail} />
     <TabHomeStack.Screen name="epdsSurvey" component={TabEpdsScreen} />

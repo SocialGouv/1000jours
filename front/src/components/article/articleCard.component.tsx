@@ -2,89 +2,135 @@ import ExpoFastImage from "expo-fast-image";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { AccessibilityInfo, StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
 
 import DefaultImage from "../../assets/images/default.png";
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Article, Step } from "../../types";
-import { getVisuelFormat, RootNavigation, VisuelFormat } from "../../utils";
-import { CommonText, SecondaryText } from "../baseComponents";
+import {
+  ArticleUtils,
+  getVisuelFormat,
+  RootNavigation,
+  VisuelFormat,
+} from "../../utils";
+import { CommonText, SecondaryText, View } from "../baseComponents";
 
 interface Props {
-  article: Article;
+  selectedArticleId: number;
+  articles: Article[];
   step?: Step;
   isFromSearchScreen?: boolean;
   setStepAndArticleId?: (articleId: number, step: Step | undefined) => void;
 }
 
 const ArticleCard: FC<Props> = ({
-  article,
+  selectedArticleId,
+  articles,
   step,
   isFromSearchScreen,
   setStepAndArticleId,
 }) => {
+  const article: Article | undefined = articles.find(
+    (item) => item.id == selectedArticleId
+  );
+  const [articleIsRead, setArticleIsRead] = useState(false);
+
+  useEffect(() => {
+    const checkRead = async () => {
+      if (article)
+        setArticleIsRead(await ArticleUtils.isArticleRead(article.id));
+    };
+    void checkRead();
+  }, [article]);
+
   // Permet de forcer le composant ExpoFastImage à être actualisé
   const [showImage, setShowImage] = useState(false);
   useEffect(() => {
     let mounted = true;
+    setShowImage(false);
     setTimeout(() => {
-      if (mounted) setShowImage(Boolean(article.visuel?.id));
+      if (mounted) setShowImage(Boolean(article?.visuel?.id));
     }, 100);
     return () => {
       mounted = false;
     };
   }, [article]);
 
-  const onItemPressed = useCallback(() => {
-    if (isFromSearchScreen && setStepAndArticleId)
+  const onItemPressed = useCallback(async () => {
+    if (isFromSearchScreen && setStepAndArticleId && article)
       setStepAndArticleId(article.id, step);
     else {
-      void RootNavigation.navigate("article", {
-        id: article.id,
-        step: step,
-      });
+      const isScreenReaderEnabled =
+        await AccessibilityInfo.isScreenReaderEnabled();
+      void RootNavigation.navigate(
+        !isScreenReaderEnabled && articles.length > 1
+          ? "articleSwipe"
+          : "article",
+        {
+          articles: articles,
+          id: article?.id,
+          step: step,
+        },
+        true
+      );
     }
-  }, [article.id, isFromSearchScreen, setStepAndArticleId, step]);
+  }, [isFromSearchScreen, setStepAndArticleId, article, step, articles]);
+
+  const imageStyle = [
+    styles.articleImage,
+    styles.borderLeftRadius,
+    articleIsRead && styles.readArticleImage,
+  ];
 
   return (
-    <ListItem
-      bottomDivider
-      onPress={onItemPressed}
-      pad={0}
-      containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
-      style={[styles.listItem, styles.borderLeftRadius]}
-      accessibilityHint={Labels.accessibility.tapForMoreInfo}
-      accessibilityLabel={`${Labels.accessibility.articleCard.title} : ${article.titre}. ${Labels.accessibility.articleCard.description} : ${article.resume}`}
-    >
-      {showImage ? (
-        <ExpoFastImage
-          uri={getVisuelFormat(article.visuel, VisuelFormat.thumbnail)}
-          cacheKey={article.visuel?.id}
-          style={[styles.articleImage, styles.borderLeftRadius]}
-        />
-      ) : (
-        <Image
-          source={DefaultImage}
-          containerStyle={[styles.articleImage, styles.borderLeftRadius]}
-        />
+    <>
+      {article && (
+        <ListItem
+          bottomDivider
+          onPress={onItemPressed}
+          pad={0}
+          containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
+          style={[styles.listItem, styles.borderLeftRadius]}
+          accessibilityHint={Labels.accessibility.tapForMoreInfo}
+          accessibilityLabel={`${Labels.accessibility.articleCard.title} : ${article.titre}. ${Labels.accessibility.articleCard.description} : ${article.resume}`}
+        >
+          {showImage ? (
+            <ExpoFastImage
+              uri={getVisuelFormat(article.visuel, VisuelFormat.thumbnail)}
+              cacheKey={article.visuel?.id}
+              style={imageStyle}
+            />
+          ) : (
+            <Image source={DefaultImage} containerStyle={imageStyle} />
+          )}
+          {articleIsRead && (
+            <View style={styles.articleIsReadView}>
+              <SecondaryText style={styles.articleIsReadText}>
+                {Labels.article.readArticle}
+              </SecondaryText>
+            </View>
+          )}
+          <ListItem.Content style={styles.articleContent}>
+            <ListItem.Title style={styles.articleTitleContainer}>
+              <CommonText style={styles.articleTitle}>
+                {article.titre}
+              </CommonText>
+            </ListItem.Title>
+            <ListItem.Subtitle style={styles.articleDescription}>
+              <SecondaryText
+                style={styles.articleDescriptionFont}
+                numberOfLines={3}
+                allowFontScaling={true}
+              >
+                {article.resume}
+              </SecondaryText>
+            </ListItem.Subtitle>
+          </ListItem.Content>
+        </ListItem>
       )}
-      <ListItem.Content style={styles.articleContent}>
-        <ListItem.Title style={styles.articleTitleContainer}>
-          <CommonText style={styles.articleTitle}>{article.titre}</CommonText>
-        </ListItem.Title>
-        <ListItem.Subtitle style={styles.articleDescription}>
-          <SecondaryText
-            style={styles.articleDescriptionFont}
-            numberOfLines={3}
-            allowFontScaling={true}
-          >
-            {article.resume}
-          </SecondaryText>
-        </ListItem.Subtitle>
-      </ListItem.Content>
-    </ListItem>
+    </>
   );
 };
 
@@ -107,6 +153,18 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     width: Sizes.thumbnail,
   },
+  articleIsReadText: {
+    color: Colors.secondaryGreenDark,
+    fontSize: Sizes.xs,
+    fontWeight: FontWeight.bold,
+    padding: Paddings.smallest,
+  },
+  articleIsReadView: {
+    borderRadius: Sizes.xxxxxs,
+    left: Paddings.light,
+    position: "absolute",
+    top: Paddings.light,
+  },
   articleTitle: {
     color: Colors.primaryBlueDark,
     fontSize: Sizes.sm,
@@ -126,6 +184,10 @@ const styles = StyleSheet.create({
     borderColor: Colors.borderGrey,
     borderWidth: 1,
     padding: 0,
+  },
+  readArticleImage: {
+    backgroundColor: Colors.primaryBlueDark,
+    opacity: 0.5,
   },
 });
 

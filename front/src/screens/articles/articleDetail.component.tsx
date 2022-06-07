@@ -1,14 +1,20 @@
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import type {
-  LayoutChangeEvent,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Text as DefaultText,
 } from "react-native";
-import { ScrollView, StyleSheet } from "react-native";
+import {
+  AccessibilityInfo,
+  findNodeHandle,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
+import { FAB } from "react-native-paper";
 
 import {
   DidYouKnow,
@@ -19,9 +25,11 @@ import {
   TextHtml,
   Thematics,
   Title,
+  UsefulArticle,
 } from "../../components";
 import {
   BackButton,
+  SecondaryText,
   ShareButton,
   SharePageType,
   TitleH1,
@@ -34,8 +42,10 @@ import {
   Labels,
   StorageKeysConstants,
 } from "../../constants";
+import { TIMEOUT_FOCUS } from "../../constants/accessibility.constants";
+import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { GraphQLQuery } from "../../services";
-import { Paddings } from "../../styles";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
   Article,
   ArticleInShortItem,
@@ -43,13 +53,14 @@ import type {
   Step,
   TabHomeParamList,
 } from "../../types";
-import { StorageUtils, TrackerUtils } from "../../utils";
+import { ArticleUtils, StorageUtils, TrackerUtils } from "../../utils";
 
 interface Props {
   route?: RouteProp<{ params: { id: number; step?: Step } }, "params">;
   navigation?: StackNavigationProp<TabHomeParamList>;
   _articleId?: number;
   _articleStep?: Step | undefined;
+  isInCarousel?: boolean;
   goBack?: () => void;
 }
 
@@ -61,6 +72,7 @@ const ArticleDetail: FC<Props> = ({
   navigation,
   _articleId,
   _articleStep,
+  isInCarousel,
   goBack,
 }) => {
   const articleId = route ? route.params.id : _articleId;
@@ -71,11 +83,36 @@ const ArticleDetail: FC<Props> = ({
   const [inShortArray, setInShortArray] = useState<ArticleInShortItem[]>([]);
   const [linksArray, setLinksArray] = useState<ArticleLink[]>([]);
   const [currentArticle, setCurrentArticle] = useState<Article | undefined>();
+  const articleTitleRef = React.useRef<DefaultText>(null);
 
-  const scrollViewHeight = useRef(0);
-  const scrollContentHeight = useRef(0);
-  const articleHasBeenRead = useRef(false);
-  const MIN_RATIO_FOR_HAS_BEEN_READ = 0.25;
+  const [scrollerRef, setScrollerRef] = useState<ScrollView>();
+  const [articleHasBeenRead, setArticleHasBeenRead] = useState(false);
+  const MIN_RATIO_FOR_HAS_BEEN_READ = 0.55;
+  const WIDTH_FOR_HTML = Math.round(SCREEN_WIDTH * 0.6);
+
+  useEffect(() => {
+    const checkArticleRead = async () => {
+      if (articleId) {
+        setArticleHasBeenRead(await ArticleUtils.isArticleRead(articleId));
+      }
+    };
+
+    void checkArticleRead();
+
+    // Force le focus sur le titre de l'article
+    setAccessibilityFocus();
+  }, [articleId]);
+
+  const setAccessibilityFocus = () => {
+    setTimeout(() => {
+      if (articleTitleRef.current) {
+        const reactTag = findNodeHandle(articleTitleRef.current);
+        if (reactTag) {
+          AccessibilityInfo.setAccessibilityFocus(reactTag);
+        } else console.warn("ReactTag Not Found");
+      }
+    }, TIMEOUT_FOCUS);
+  };
 
   const setArticleInShortArray = useCallback((article: Article) => {
     setInShortArray([
@@ -109,9 +146,9 @@ const ArticleDetail: FC<Props> = ({
     else navigation?.goBack();
   }, [goBack, navigation]);
 
-  const setArticleHasBeenRead = useCallback(async () => {
-    if (articleId && !articleHasBeenRead.current) {
-      articleHasBeenRead.current = true;
+  const updateArticleHasBeenRead = useCallback(async () => {
+    if (articleId && !articleHasBeenRead) {
+      setArticleHasBeenRead(true);
       const articlesRead: number[] =
         (await StorageUtils.getObjectValue(
           StorageKeysConstants.articlesRead
@@ -124,36 +161,21 @@ const ArticleDetail: FC<Props> = ({
         );
       }
     }
-  }, [articleId]);
+  }, [articleHasBeenRead, articleId]);
 
   const hasBeenRead = useCallback(
     (nativeEvent: NativeScrollEvent) => {
       // L'article est considéré comme lu à partir du moment où l'utilisateur
-      // à scroller au moins 25% de l'article
+      // a scrollé au moins 50% de l'article
       if (
         nativeEvent.layoutMeasurement.height + nativeEvent.contentOffset.y >=
         nativeEvent.contentSize.height * MIN_RATIO_FOR_HAS_BEEN_READ
       ) {
-        void setArticleHasBeenRead();
+        void updateArticleHasBeenRead();
       }
     },
-    [MIN_RATIO_FOR_HAS_BEEN_READ, setArticleHasBeenRead]
+    [MIN_RATIO_FOR_HAS_BEEN_READ, updateArticleHasBeenRead]
   );
-
-  const checkScrollContentHeight = () => {
-    // Considère que l'article est lu lorsqu'il est affiché entièrement à l'écran (sans avoir besoin de scroller)
-    if (scrollContentHeight.current <= scrollViewHeight.current) {
-      void setArticleHasBeenRead();
-    }
-  };
-
-  const onContentSizeChange = useCallback((width: number, height: number) => {
-    scrollContentHeight.current = height;
-  }, []);
-
-  const onScrollViewLayout = useCallback((event: LayoutChangeEvent) => {
-    scrollViewHeight.current = event.nativeEvent.layout.height;
-  }, []);
 
   const onScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -162,13 +184,27 @@ const ArticleDetail: FC<Props> = ({
     [hasBeenRead]
   );
 
-  useEffect(() => {
-    // Attend que le contenu de la scrollView soit chargé (notamment les images de l'article)
-    setTimeout(() => {
-      checkScrollContentHeight();
-    }, 3000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  const scrollTopHandler = useCallback(() => {
+    if (scrollerRef) {
+      scrollerRef.scrollTo({ x: 0, y: 0 });
+      // Attendre la fin du scroll avant de faire le focus sur le titre de l'article
+      setTimeout(() => {
+        setAccessibilityFocus();
+      }, TIMEOUT_FOCUS);
+    }
+  }, [scrollerRef]);
+
+  const updateScrollerRef = useCallback((scroller: ScrollView) => {
+    setScrollerRef(scroller);
   }, []);
+
+  const renderReadArticleElement = articleHasBeenRead && (
+    <View style={styles.articleIsReadView}>
+      <SecondaryText style={styles.articleIsReadText}>
+        {Labels.article.readArticle}
+      </SecondaryText>
+    </View>
+  );
 
   return (
     <>
@@ -180,60 +216,79 @@ const ArticleDetail: FC<Props> = ({
         />
       )}
       {currentArticle && (
-        <ScrollView
-          onLayout={onScrollViewLayout}
-          onScroll={onScroll}
-          onContentSizeChange={onContentSizeChange}
-          scrollEventThrottle={0}
-        >
-          <TrackerHandler
-            screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${currentArticle.titre}`}
-          />
-          <View style={[styles.mainContainer]}>
-            <View>
-              <View style={[styles.flexStart]}>
-                <BackButton action={onBackButtonPressed} />
-              </View>
-              <TitleH1
-                title={screenTitle}
-                description={description}
-                animated={true}
+        <>
+          <ScrollView
+            onScroll={onScroll}
+            ref={updateScrollerRef}
+            scrollEventThrottle={0}
+          >
+            {!isInCarousel && (
+              <TrackerHandler
+                screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${currentArticle.titre}`}
               />
-            </View>
-            <View>
-              <View style={styles.imageBannerContainer}>
-                <ImageBanner visuel={currentArticle.visuel} />
-                <View style={styles.flexEnd}>
-                  <ShareButton
-                    buttonTitle={Labels.buttons.share}
-                    title={Labels.appName}
-                    message={`${Labels.share.article.messageStart} "${currentArticle.titre}" ${Labels.share.article.messageEnd}`}
-                    page={SharePageType.article}
-                    id={currentArticle.id}
-                    buttonStyle={styles.shareButton}
+            )}
+            <View style={isInCarousel ? styles.borderRadius : styles.mainContainer}>
+              {isInCarousel ? null : (
+                <View>
+                  <View style={styles.flexStart}>
+                    <BackButton action={onBackButtonPressed} />
+                  </View>
+                  <TitleH1
+                    title={screenTitle}
+                    description={description}
+                    animated
                   />
                 </View>
-              </View>
-              <View style={styles.articleDetails}>
-                <Title title={currentArticle.titre} />
-                <Thematics items={currentArticle.thematiques} />
-                <SubTitle title={currentArticle.texteTitre1} />
-                <TextHtml
-                  html={currentArticle.texte1}
-                  offsetTotal={paddingMainContent + paddingArticleContent}
-                />
-                <DidYouKnow description={currentArticle.leSaviezVous} />
-                <SubTitle title={currentArticle.texteTitre2} />
-                <TextHtml
-                  html={currentArticle.texte2}
-                  offsetTotal={paddingMainContent + paddingArticleContent}
-                />
-                <InShort inShortArray={inShortArray} />
-                <Links linksArray={linksArray} />
+              )}
+              <View style={styles.borderRadius}>
+                <View style={[isInCarousel ? styles.borderRadius : styles.imageBannerContainer]}>
+                  <ImageBanner visuel={currentArticle.visuel} />
+                  <View style={styles.flexEnd}>
+                    <ShareButton
+                      buttonTitle={Labels.buttons.share}
+                      title={Labels.appName}
+                      message={`${Labels.share.article.messageStart} "${currentArticle.titre}" ${Labels.share.article.messageEnd}`}
+                      page={SharePageType.article}
+                      id={currentArticle.id}
+                      buttonStyle={styles.shareButton}
+                    />
+                  </View>
+                  {renderReadArticleElement}
+                </View>
+                <View style={styles.articleDetails}>
+                  <Title title={currentArticle.titre} ref={articleTitleRef} />
+                  <Thematics items={currentArticle.thematiques} />
+                  <InShort inShortArray={inShortArray} />
+                  <SubTitle title={currentArticle.texteTitre1} />
+                  <TextHtml
+                    html={currentArticle.texte1}
+                    offsetTotal={paddingMainContent + paddingArticleContent}
+                    screenWidth={WIDTH_FOR_HTML}
+                  />
+                  <DidYouKnow description={currentArticle.leSaviezVous} />
+                  <SubTitle title={currentArticle.texteTitre2} />
+                  <TextHtml
+                    html={currentArticle.texte2}
+                    offsetTotal={paddingMainContent + paddingArticleContent}
+                    screenWidth={WIDTH_FOR_HTML}
+                  />
+                  <Links linksArray={linksArray} />
+                  <UsefulArticle articleName={currentArticle.titre} />
+                </View>
               </View>
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+
+          <FAB
+            visible
+            icon="chevron-up"
+            small
+            color={Colors.primaryBlueDark}
+            onPress={scrollTopHandler}
+            accessibilityLabel={Labels.accessibility.articleGoToTop}
+            style={styles.fabButton}
+          />
+        </>
       )}
     </>
   );
@@ -243,6 +298,30 @@ const styles = StyleSheet.create({
   articleDetails: {
     paddingHorizontal: paddingArticleContent,
     paddingTop: Paddings.light,
+  },
+  articleIsReadText: {
+    color: Colors.secondaryGreenDark,
+    fontWeight: FontWeight.bold,
+    padding: Paddings.smaller,
+  },
+  articleIsReadView: {
+    borderRadius: Sizes.xxxxxs,
+    bottom: Paddings.light,
+    left: Paddings.light,
+    position: "absolute",
+  },
+  borderRadius: {
+    borderRadius: Sizes.xxxxs
+  },
+  fabButton: {
+    color: Colors.primaryBlueDark,
+    backgroundColor: Colors.white,
+    borderColor: Colors.borderGrey,
+    borderWidth: 2,
+    position: 'absolute',
+    margin: Margins.default,
+    right: 0,
+    bottom: 0,
   },
   flexEnd: {
     alignSelf: "flex-end",
@@ -257,8 +336,8 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   imageBannerContainer: {
-    marginBottom: 15,
-    marginTop: 15,
+    marginBottom: Margins.default,
+    marginTop: Margins.default,
   },
   mainContainer: {
     padding: paddingMainContent,

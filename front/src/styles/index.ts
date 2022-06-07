@@ -4,6 +4,7 @@ import Layouts, { FontStyle, FontWeight } from "./layout";
 import Shadow from "./shadow";
 import Sizes from "./sizes";
 import { Margins, Paddings } from "./spacings";
+import Styles from "./styles";
 
 export {
   Colors,
@@ -17,4 +18,5 @@ export {
   Paddings,
   Shadow,
   Sizes,
+  Styles,
 };

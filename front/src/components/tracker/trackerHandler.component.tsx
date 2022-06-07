@@ -24,7 +24,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
     useMatomo();
 
   const userInfo: TrackerUserInfo = {
-    dimension1: Constants.manifest.version ?? "", // dimension1 = AppVersion
+    dimension1: Constants.manifest?.version ?? "", // dimension1 = AppVersion
   };
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
         userInfo,
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [screenName]);
 
   useEffect(() => {
     const screenNameIsNotEmpty =
@@ -77,7 +77,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
         category: eventCategory,
         name: eventObject.name,
         userInfo,
-        value: eventObject.value ?? 0,
+        value: eventObject.value,
       };
       void trackEvent(event);
     }

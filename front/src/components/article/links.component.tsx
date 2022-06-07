@@ -36,16 +36,16 @@ const Links: FC<Props> = ({ linksArray }) => {
         {_.filter(linksArray, "label").map((item, index) => (
           <ListItem.Content key={index} style={[styles.linkContainer]}>
             <SecondaryText
-              style={[styles.dot]}
+              style={styles.dot}
               importantForAccessibility="no"
-              accessibilityElementsHidden={true}
+              accessibilityElementsHidden
               accessible={false}
             >
               {SpecialChars.blackLargeCircle}
             </SecondaryText>
             <SecondaryText
               accessibilityRole="link"
-              style={[styles.link]}
+              style={styles.link}
               onPress={goToUrl(item.url)}
             >
               {item.label}

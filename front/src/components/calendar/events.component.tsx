@@ -8,6 +8,7 @@ import { useCallback } from "react";
 import * as React from "react";
 import type { LayoutChangeEvent } from "react-native";
 import { ScrollView, StyleSheet, View } from "react-native";
+import { ListItem } from "react-native-elements";
 
 import { Formats, Labels, StorageKeysConstants } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
@@ -111,7 +112,7 @@ const Events: FC<Props> = ({ evenements, childBirthday, scrollToEventId }) => {
     <ScrollView style={styles.mainContainer} ref={scrollViewRef}>
       <View style={styles.timeline} />
       {_.keys(formattedEvents).map((date, index) => (
-        <View
+        <ListItem.Content
           key={index}
           // eslint-disable-next-line react/jsx-no-bind
           onLayout={(layoutEvent: LayoutChangeEvent) => {
@@ -136,7 +137,7 @@ const Events: FC<Props> = ({ evenements, childBirthday, scrollToEventId }) => {
             </CommonText>
           </View>
           {formattedEvents[date].map((event, indexEvents) => (
-            <View key={indexEvents}>
+            <View style={styles.eventCardContainer} key={indexEvents}>
               <EventCard
                 event={event}
                 onPressed={eventCardPressed}
@@ -144,7 +145,7 @@ const Events: FC<Props> = ({ evenements, childBirthday, scrollToEventId }) => {
               />
             </View>
           ))}
-        </View>
+        </ListItem.Content>
       ))}
     </ScrollView>
   );
@@ -170,6 +171,9 @@ const styles = StyleSheet.create({
   },
   description: {
     color: Colors.commonText,
+  },
+  eventCardContainer: {
+    width: "100%",
   },
   eventContainer: {
     borderColor: Colors.borderGrey,

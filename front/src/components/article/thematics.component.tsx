@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { Labels } from "../../constants";
 
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
 import type { Thematique } from "../../types";
@@ -16,7 +17,7 @@ const Thematics: FC<Props> = ({ items }) => {
       {items.map((thematique, index) => {
         return (
           <View style={[styles.thematiqueContainer]} key={index}>
-            <SecondaryText style={[styles.thematique]}>
+            <SecondaryText style={[styles.thematique]} accessibilityLabel={`${Labels.article.thematic} : ${thematique.nom}`}>
               {thematique.nom}
             </SecondaryText>
           </View>

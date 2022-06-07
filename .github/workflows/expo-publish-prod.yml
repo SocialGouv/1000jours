@@ -3,16 +3,16 @@ on:
   workflow_dispatch:
     inputs:
       tags:
-        description: 'Manual workflow' 
+        description: "Manual workflow"
 
 jobs:
-
   Publish-android:
     name: Publish Android for Prod
-#    needs: Build-android
+    #    needs: Build-android
     runs-on: ubuntu-latest
     env:
       PLAY_STORE_API_KEY: ${{ secrets.PLAY_STORE_API_KEY }}
+      NODE_OPTIONS: --max_old_space_size=8192
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -32,10 +32,11 @@ jobs:
 
   Publish-ios:
     name: Publish iOS for Prod
- #   needs: Build-ios
+    #   needs: Build-ios
     runs-on: macOS-latest
     env:
       APP_STORE_API_KEY: ${{ secrets.APP_STORE_API_KEY }}
+      NODE_OPTIONS: --max_old_space_size=8192
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2

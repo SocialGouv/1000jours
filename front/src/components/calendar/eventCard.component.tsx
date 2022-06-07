@@ -17,6 +17,7 @@ import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { CartoFilterStorage } from "../../type";
 import type { Event, Tag } from "../../types";
 import { RootNavigation, StorageUtils, TrackerUtils } from "../../utils";
+import { removeListHyphens } from "../../utils/strings.util";
 import { getThematiqueIcon } from "../../utils/thematique.util";
 import ArticleCard from "../article/articleCard.component";
 import {
@@ -96,6 +97,15 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
     onPressed(event.id.toString());
   }, [event.id, onPressed]);
 
+  const [isScreenReaderEnabled, setIsScreenReaderEnabled] = useState(false);
+  const getAccessibilityInfo = async () => {
+    const value = await AccessibilityInfo.isScreenReaderEnabled();
+    setIsScreenReaderEnabled(value);
+  };
+  useEffect(() => {
+    void getAccessibilityInfo();
+  }, []);
+
   return (
     <View style={styles.eventCardContainer}>
       {event.important && (
@@ -118,7 +128,11 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
           containerStyle={styles.listItemContainer}
           onPress={onListItemPressed}
           accessibilityHint={Labels.accessibility.tapForMoreInfo}
-          accessibilityLabel={`${Labels.accessibility.eventCard.title} : ${event.nom}. ${Labels.accessibility.eventCard.description} : ${event.description}`}
+          accessibilityLabel={`${Labels.accessibility.eventCard.title} : ${
+            event.nom
+          }. ${
+            Labels.accessibility.eventCard.description
+          } : ${removeListHyphens(event.description)}`}
         >
           <View style={styles.eventContainer}>
             <View style={styles.eventIconContainer}>
@@ -138,7 +152,9 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
               <CommonText style={styles.eventTitle}>{event.nom}</CommonText>
               <Tags tags={getEventTags()} />
               <SecondaryText style={styles.eventDescription}>
-                {event.description}
+                {isScreenReaderEnabled
+                  ? removeListHyphens(event.description)
+                  : event.description}
               </SecondaryText>
             </View>
           </View>
@@ -171,7 +187,10 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
                 </CommonText>
                 {event.articles.map((article, index) => (
                   <View key={index}>
-                    <ArticleCard article={article} />
+                    <ArticleCard
+                      selectedArticleId={article.id}
+                      articles={event.articles ?? []}
+                    />
                   </View>
                 ))}
               </View>

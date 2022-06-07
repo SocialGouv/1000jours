@@ -13,64 +13,12 @@ import H3 from "../html/h3.component";
 import H4 from "../html/h4.component";
 import Li from "../html/li.component";
 import P from "../html/p.component";
-import Table from "../html/table.component";
 
 interface Props {
   setIsVisible: (showMenu: boolean) => void;
 }
 
 const ConditionsOfUse: FC<Props> = ({ setIsVisible }) => {
-  const tableRetentionPeriod = {
-    caption: "Durée de conservation",
-    data: [
-      [
-        "Données relatives aux parents",
-        "Jusqu’à la suppression de l’application ou jusqu’à 3 ans après le téléchargement de l’application",
-      ],
-      [
-        "Données relatives au PDS",
-        "Jusqu’à la suppression de l’application ou jusqu’à 3 ans après le téléchargement de l’application",
-      ],
-      [
-        "Données relatives à l’enfant",
-        "Jusqu’à la suppression de l’application ou jusqu’à 3 ans après le téléchargement de l’application",
-      ],
-      [
-        "Données relatives au formulaire et à l’envoi de la bébé box",
-        "Jusqu’à 1 an après l’envoi de la box",
-      ],
-      [
-        "Données d’hébergeur",
-        "1 an, conformément au décret n°2021-1363 du 20 octobre 2021",
-      ],
-    ],
-    head: ["Types de données", "Durée de conservation"],
-  };
-
-  const tableSubcontractors = {
-    caption: "Sous-Traitants",
-    data: [
-      [
-        "Microsoft Azure",
-        "France",
-        "Hébergement",
-        <A
-          url="https://privacy.microsoft.com/fr-fr/privacystatement"
-          style={{ margin: Margins.smaller }}
-          key={0}
-        >
-          Déclaration de confidentialité Microsoft
-        </A>,
-      ],
-    ],
-    head: [
-      "Partenaire",
-      "Pays destinataire",
-      "Traitement réalisé",
-      "Garanties",
-    ],
-  };
-
   const content = (
     <View>
       <H1>Politique de confidentialité de 1000 premiers jours</H1>
@@ -295,9 +243,30 @@ const ConditionsOfUse: FC<Props> = ({ setIsVisible }) => {
         personnel et à la libre circulation de ces données.
       </P>
 
-      <H2>Durée de conservation</H2>
+      <H2>Durée de conservation des données</H2>
 
-      <Table tableData={tableRetentionPeriod} />
+      <P>
+        Les données relatives aux parents sont conservées jusqu’à la suppression
+        de l’application ou jusqu’à 3 ans après le téléchargement de
+        l’application
+      </P>
+      <P>
+        Les données relatives au PDS sont conservées jusqu’à la suppression de
+        l’application ou jusqu’à 3 ans après le téléchargement de l’application
+      </P>
+      <P>
+        Les données relatives à l’enfant sont conservées jusqu’à la suppression
+        de l’application ou jusqu’à 3 ans après le téléchargement de
+        l’application
+      </P>
+      <P>
+        Les données relatives au formulaire et à l’envoi de la bébé box sont
+        conservées jusqu’à 1 an après l’envoi de la box
+      </P>
+      <P>
+        Les données d’hébergeur sont conservées 1 an, conformément au décret
+        n°2021-1363 du 20 octobre 2021
+      </P>
 
       <H2>Droit des personnes concernées</H2>
       <P>
@@ -374,8 +343,18 @@ const ConditionsOfUse: FC<Props> = ({ setIsVisible }) => {
         conditions strictes de confidentialité, d’usage et de protection des
         données.
       </P>
-
-      <Table tableData={tableSubcontractors} />
+      <P>
+        Notre partenaire Microsoft Azure s'occupe de l'hébergement et se trouve
+        en France (Garanties:{" "}
+        <A
+          url="https://privacy.microsoft.com/fr-fr/privacystatement"
+          style={{ margin: Margins.smaller }}
+          key={0}
+        >
+          Déclaration de confidentialité Microsoft
+        </A>
+        )
+      </P>
 
       <H2>Cookies</H2>
       <P>
