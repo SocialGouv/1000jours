@@ -1,3 +1,10 @@
+# [1.98.0](https://github.com/SocialGouv/1000jours/compare/v1.97.0...v1.98.0) (2022-06-08)
+
+
+### Features
+
+* **intentions:** ajout de la table commentaires ([#1236](https://github.com/SocialGouv/1000jours/issues/1236)) ([d7ced69](https://github.com/SocialGouv/1000jours/commit/d7ced69968ceee4c19cd2b35a599e5cfd2e07a95))
+
 # [1.97.0](https://github.com/SocialGouv/1000jours/compare/v1.96.3...v1.97.0) (2022-06-07)
 
 
