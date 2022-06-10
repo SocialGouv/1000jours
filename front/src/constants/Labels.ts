@@ -509,6 +509,7 @@ export default {
     addReview: "Laisser un avis",
     conditionsOfUse: "Politiques de confidentialité",
     contactUs: "Nous écrire",
+    information: "Informations",
     legalNotice: "Mentions légales",
     moodboard: "Suivi d'humeur",
     myProfil: "Mon profil",
