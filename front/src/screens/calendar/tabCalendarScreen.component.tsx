@@ -240,7 +240,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
       );
 
       // Supprime les anciennes et planifie les nouvelles notifications des événements
-      void NotificationUtils.cancelScheduleEventsNotification().then(() => {
+      void NotificationUtils.cancelAllNotificationsByType(NotificationUtils.NotificationType.event).then(() => {
         NotificationUtils.scheduleEventsNotification(events);
       });
     }

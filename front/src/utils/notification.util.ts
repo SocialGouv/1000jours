@@ -312,3 +312,29 @@ export const logAllScheduledNotifications = async (): Promise<void> => {
     console.log(notif);
   }
 };
+
+export const cancelAllNotificationsByType = async (notificationType: NotificationType) => {
+  const notifications = await Notifications.getAllScheduledNotificationsAsync();
+  for(const notif of notifications) {
+    if(notif.content.data.type === notificationType) {
+      cancelScheduledNotification(notif.identifier);
+    }
+  };
+}
+
+export const rescheduleEventsNotifications = async (events: Event[]) => {
+  await cancelAllNotificationsByType(NotificationType.event);
+  await scheduleEventsNotification(events);
+}
+
+export const scheduleFakeNotif_ForTesting = async () => {
+  const event: Event = {
+    id: 0,
+    nom: "FakeNotif_ForTesting",
+    debut: 0,
+    fin: 0
+  }
+  const content = buildEventNotificationContent(event, true);
+  const trigger = { seconds: 10 };
+  await sendNotificationReminder(content, trigger);
+}
