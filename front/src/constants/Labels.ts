@@ -561,6 +561,9 @@ export default {
       lastChild: "Date de naissance de votre enfant le plus jeune",
       planned: "Naissance prévue de votre enfant",
     },
+    genderMan: "Homme",
+    genderWoman: "Femme",
+    selectGender: "Sélectionnez votre genre",
     situations: {
       oneChild: "J'ai un enfant",
       pregnant: "J'attends un enfant",

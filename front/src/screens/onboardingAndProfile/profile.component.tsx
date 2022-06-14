@@ -35,6 +35,7 @@ import {
 } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
+  ProfileGender,
   RootStackParamList,
   UserContext,
   UserSituation,
@@ -90,6 +91,17 @@ const Profile: FC<Props> = ({ navigation }) => {
     ],
   };
 
+  const genders: ProfileGender[] = [
+    {
+      id: "man",
+      label: Labels.profile.genderMan,
+    },
+    {
+      id: "woman",
+      label: Labels.profile.genderWoman,
+    },
+  ];
+
   const hasCheckedSituation = () => {
     return _.filter(userSituations, ["isChecked", true]).length > 0;
   };
@@ -108,6 +120,7 @@ const Profile: FC<Props> = ({ navigation }) => {
   const [datePickerIsReady, setDatePickerIsReady] = useState(false);
   const [positionOfScroll, setPositionOfScroll] = useState(0);
   const [trackerAction, setTrackerAction] = useState<string>("");
+  const [gender, setGender] = useState<ProfileGender | undefined>(undefined);
 
   useEffect(() => {
     const initDataWithStorageValue = async () => {
@@ -220,6 +233,14 @@ const Profile: FC<Props> = ({ navigation }) => {
     navigateToRoot();
   }, [navigateToRoot]);
 
+  const onGenderPressed = useCallback(
+    (item: ProfileGender) => () => {
+      setGender(item);
+      trackScreenView(`${TrackerUtils.TrackingEvent.PROFILE} - ${item.label}`);
+    },
+    []
+  );
+
   return (
     <View style={[styles.mainContainer]}>
       <TrackerHandler
@@ -312,6 +333,38 @@ const Profile: FC<Props> = ({ navigation }) => {
                   </View>
                 </View>
               ))}
+            </View>
+            <View style={styles.genderContainer}>
+              <CommonText style={styles.textSelectGender}>
+                {Labels.profile.selectGender}
+              </CommonText>
+              <View style={styles.flexRow}>
+                {genders.map((item, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={[
+                      styles.item,
+                      styles.genderItem,
+                      item.id === gender?.id ? styles.itemSelected : null,
+                    ]}
+                    containerStyle={{
+                      flex: 1,
+                    }}
+                    onPress={onGenderPressed(item)}
+                    disabled={item.id === gender?.id}
+                    accessibilityRole="checkbox"
+                    accessibilityState={{ checked: item.id === gender?.id }}
+                  >
+                    <CommonText
+                      style={
+                        item.id === gender?.id ? styles.itemTextSelected : null
+                      }
+                    >
+                      {item.label}
+                    </CommonText>
+                  </TouchableOpacity>
+                ))}
+              </View>
             </View>
           </ScrollView>
           <View style={[styles.footer]}>
@@ -474,3 +527,6 @@ const styles = StyleSheet.create({
 });
 
 export default Profile;
+function trackScreenView(arg0: string) {
+  throw new Error("Function not implemented.");
+}
