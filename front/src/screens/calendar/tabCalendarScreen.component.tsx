@@ -240,9 +240,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
       );
 
       // Supprime les anciennes et planifie les nouvelles notifications des événements
-      void NotificationUtils.cancelAllNotificationsByType(NotificationUtils.NotificationType.event).then(() => {
-        NotificationUtils.scheduleEventsNotification(events);
-      });
+      void NotificationUtils.rescheduleEventsNotifications(events);
     }
   }, [childBirthday, events, eventsCalcFromBirthday]);
 
