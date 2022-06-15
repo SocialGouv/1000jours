@@ -170,6 +170,12 @@ export type MenuItem = {
   icon: string;
   title: string;
   onPress: () => void;
+  subItems?: MenuSubItem[];
+};
+
+export type MenuSubItem = {
+  title: string;
+  onPress: () => void;
 };
 
 export type ApolloHealthResponse = {
