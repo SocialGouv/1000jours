@@ -175,6 +175,8 @@ export default {
       title: "Événement",
       titleReminder: "Événement à venir",
     },
+    pleaseAllowAccessCalendar:
+      "Veuillez autoriser l'accès au calendrier dans les paramètres de votre téléphone",
     synchronise: "Synchroniser avec mon calendrier",
     synchronization: "Synchronisation",
     synchronizationHelper:
