@@ -272,6 +272,10 @@ const Profile: FC<Props> = ({ navigation }) => {
     setGender(item);
   }, []);
 
+  const isSelectedGender = (gender: ProfileGender) => {
+    return gender.id === gender?.id;
+  }
+
   return (
     <View style={[styles.mainContainer]}>
       <TrackerHandler
@@ -376,16 +380,16 @@ const Profile: FC<Props> = ({ navigation }) => {
                       style={[
                         styles.item,
                         styles.genderItem,
-                        item.id === gender?.id ? styles.itemSelected : null,
+                        isSelectedGender(item) ? styles.itemSelected : null,
                       ]}
                       onPress={onGenderPressed(item)}
-                      disabled={item.id === gender?.id}
+                      disabled={isSelectedGender(item)}
                       accessibilityRole="checkbox"
-                      accessibilityState={{ checked: item.id === gender?.id }}
+                      accessibilityState={{ checked: isSelectedGender(item) }}
                     >
                       <CommonText
                         style={
-                          item.id === gender?.id ? styles.itemTextSelected : null
+                          isSelectedGender(item) ? styles.itemTextSelected : null
                         }
                       >
                         {item.label}
