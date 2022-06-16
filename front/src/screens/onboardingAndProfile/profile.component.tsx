@@ -94,21 +94,21 @@ const Profile: FC<Props> = ({ navigation }) => {
 
   const genderEmpty = {
     id: "empty",
-    label: Labels.profile.genderEmpty,
+    label: Labels.profile.gender.empty,
   };
 
   const genders: ProfileGender[] = [
     {
       id: "man",
-      label: Labels.profile.genderMan,
+      label: Labels.profile.gender.man,
     },
     {
       id: "woman",
-      label: Labels.profile.genderWoman,
+      label: Labels.profile.gender.woman,
     },
     {
       id: "other",
-      label: Labels.profile.genderOther,
+      label: Labels.profile.gender.other,
     },
     genderEmpty,
   ];
@@ -367,7 +367,7 @@ const Profile: FC<Props> = ({ navigation }) => {
             </View>
             <View style={styles.genderContainer}>
               <CommonText style={styles.textSelectGender}>
-                {`${Labels.profile.selectGender} :`}
+                {`${Labels.profile.gender.select} :`}
               </CommonText>
               <View style={styles.genderItemsContainer}>
                 {genders.map((item, index) => (
