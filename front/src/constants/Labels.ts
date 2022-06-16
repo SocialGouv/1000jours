@@ -145,6 +145,7 @@ export default {
   articleSwipe: {
     content: "Slidez entre les articles pour lire sur les différents sujets.",
   },
+  birthdate: "Date de naissance",
   buttons: {
     back: "Retour",
     cancel: "Annuler",
@@ -561,6 +562,14 @@ export default {
       firstChild: "Date de naissance de votre enfant",
       lastChild: "Date de naissance de votre enfant le plus jeune",
       planned: "Naissance prévue de votre enfant",
+    },
+    gender: {
+      label: "Genre",
+      man: "Homme",
+      woman: "Femme",
+      other: "Autre",
+      empty: "Non renseigné",
+      select: "Sélectionnez votre genre",
     },
     situations: {
       oneChild: "J'ai un enfant",

@@ -121,6 +121,8 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 
       if (currentStepId) {
         const currentStep = _.find(etapes, { id: currentStepId });
+        if(currentStep?.nom)
+          StorageUtils.storeStringValue(StorageKeysConstants.currentStepLabelKey, currentStep.nom)
         if (currentStep) checkIfCurrentStepHasChanged(currentStep, etapes);
       }
     },

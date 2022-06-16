@@ -211,3 +211,8 @@ export type TableData = {
   data: ReactNode[][] | string[][];
   caption: string;
 };
+
+export type ProfileGender = {
+  id: string;
+  label: string;
+};
