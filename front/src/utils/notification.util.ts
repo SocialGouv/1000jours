@@ -29,6 +29,7 @@ export enum Weekday {
   saturday = 7,
 }
 
+const MIN_TRIGGER = {seconds: 10};
 const NUMBER_OF_DAYS_NOTIF_EVENT_REMINDER = 7;
 const MOODBOARD_NOTIF_TRIGGER_HOUR = 9;
 const EVENT_NOTIF_TRIGGER_HOUR = 13;
@@ -162,24 +163,28 @@ export const scheduleNextStepNotification = async (
         },
         title: Labels.timeline.notification.title,
       };
-      let trigger = null;
+      let needToBeScheduled = false;
+      let trigger: NotificationTriggerInput = null;
       if (triggerNow) {
-        trigger = {
-          seconds: 1,
-        };
+        trigger = MIN_TRIGGER;
+        needToBeScheduled = true;
       } else {
-        trigger = new Date(
+        const date = new Date(
           addDays(new Date(childBirthday), nextStep.debut).setHours(
             NEXTSTEP_NOTIF_TRIGGER_HOUR
           )
         );
+        trigger = date;
+        if(isAfter(date, new Date())) needToBeScheduled = true;
       }
-      const notificationId = await sendNotificationReminder(content, trigger);
-      if (notificationId) {
-        await StorageUtils.storeStringValue(
-          StorageKeysConstants.notifIdNextStep,
-          notificationId
-        );
+      if(needToBeScheduled) {
+        const notificationId = await sendNotificationReminder(content, trigger);
+        if (notificationId) {
+          await StorageUtils.storeStringValue(
+            StorageKeysConstants.notifIdNextStep,
+            notificationId
+          );
+        }
       }
     }
   }
@@ -335,6 +340,6 @@ export const scheduleFakeNotif_ForTesting = async () => {
     fin: 0
   }
   const content = buildEventNotificationContent(event, true);
-  const trigger = { seconds: 10 };
+  const trigger = MIN_TRIGGER;
   await sendNotificationReminder(content, trigger);
 }
