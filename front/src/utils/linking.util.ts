@@ -26,10 +26,8 @@ export const openWebsite = async (
 ): Promise<void> => {
   if (!website) return;
   let completeWebsite = undefined;
-  if (
-    (!website.includes("https://") || !website.includes("http://")) &&
-    !dontChangeUrl
-  ) {
+  console.log()
+  if (!website.includes("https://") && !website.includes("http://") && !dontChangeUrl) {
     const websiteWithWww = website.includes("www") ? website : `www.${website}`;
     completeWebsite =
       websiteWithWww.includes("https://") || websiteWithWww.includes("http://")
