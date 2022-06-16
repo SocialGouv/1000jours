@@ -272,8 +272,8 @@ const Profile: FC<Props> = ({ navigation }) => {
     setGender(item);
   }, []);
 
-  const isSelectedGender = (gender: ProfileGender) => {
-    return gender.id === gender?.id;
+  const isSelectedGender = (profilGender: ProfileGender) => {
+    return profilGender.id === gender?.id;
   }
 
   return (
