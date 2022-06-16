@@ -283,7 +283,7 @@ const Profile: FC<Props> = ({ navigation }) => {
         style={{ flex: 1 }}
       >
         <View style={styles.mainView}>
-          <ScrollView style={[styles.mainMargins, { flexGrow:1 }]} ref={scrollViewRef}>
+          <ScrollView style={styles.mainMargins} ref={scrollViewRef}>
             <View style={styles.appLogo}>
               <BaseAssets.AppLogo
                 height={Sizes.logo}
