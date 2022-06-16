@@ -43,6 +43,7 @@ import type {
 import { StorageUtils, TrackerUtils } from "../../utils";
 import { cancelScheduleNextStepNotification } from "../../utils/notification.util";
 import { checkErrorOnProfile } from "../../utils/step.util";
+import { TrackerEvent } from "../../type";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -91,6 +92,11 @@ const Profile: FC<Props> = ({ navigation }) => {
     ],
   };
 
+  const genderEmpty = {
+    id: "empty",
+    label: Labels.profile.genderEmpty,
+  };
+
   const genders: ProfileGender[] = [
     {
       id: "man",
@@ -100,7 +106,13 @@ const Profile: FC<Props> = ({ navigation }) => {
       id: "woman",
       label: Labels.profile.genderWoman,
     },
+    {
+      id: "other",
+      label: Labels.profile.genderOther,
+    },
+    genderEmpty,
   ];
+  const defaultGender = _.find(genders, ["id", "empty"]);
 
   const hasCheckedSituation = () => {
     return _.filter(userSituations, ["isChecked", true]).length > 0;
@@ -120,7 +132,12 @@ const Profile: FC<Props> = ({ navigation }) => {
   const [datePickerIsReady, setDatePickerIsReady] = useState(false);
   const [positionOfScroll, setPositionOfScroll] = useState(0);
   const [trackerAction, setTrackerAction] = useState<string>("");
-  const [gender, setGender] = useState<ProfileGender | undefined>(undefined);
+  const [gender, setGender] = useState<ProfileGender>(genderEmpty);
+
+  const initGender = async () => {
+    const genderStored = await StorageUtils.getObjectValue(StorageKeysConstants.userGenderKey);
+    setGender(genderStored ?? genderEmpty);
+  };
 
   useEffect(() => {
     const initDataWithStorageValue = async () => {
@@ -137,6 +154,7 @@ const Profile: FC<Props> = ({ navigation }) => {
       setDatePickerIsReady(true);
     };
     void initDataWithStorageValue();
+    void initGender();
   }, []);
 
   useEffect(() => {
@@ -185,6 +203,13 @@ const Profile: FC<Props> = ({ navigation }) => {
       userSituations
     );
 
+    if(gender) {
+      await StorageUtils.storeObjectValue(
+        StorageKeysConstants.userGenderKey,
+        gender
+      );
+    }
+
     const situationChecked = _.find(userSituations, { isChecked: true });
     if (situationChecked?.childBirthdayRequired) {
       await StorageUtils.storeStringValue(
@@ -195,14 +220,24 @@ const Profile: FC<Props> = ({ navigation }) => {
       await StorageUtils.removeKey(StorageKeysConstants.userChildBirthdayKey);
     }
 
-    // Envoie la situation choisie sur Matomo
+    // Envoi de la situation sélectionnée sur Matomo
     if (situationChecked) {
       setTrackerAction(situationChecked.label);
     }
 
+    // Envoi de la date sélectionnée sur Matomo
+    if (situationChecked?.childBirthdayRequired && childBirthday) {
+      setTrackerAction(`${Labels.birthdate} : ${childBirthday}`);
+    }
+
+    // Envoi du genre sélectionné sur Matomo
+    if (gender) {
+      setTrackerAction(`${Labels.profile.gender} : ${gender.label}`);
+    }
+
     void cancelScheduleNextStepNotification();
     navigateToRoot();
-  }, [childBirthday, navigateToRoot, userSituations]);
+  }, [childBirthday, navigateToRoot, userSituations, gender]);
 
   const scrollViewRef = React.useRef<ScrollView>(null);
   const scrollTo = useCallback(() => {
@@ -233,13 +268,9 @@ const Profile: FC<Props> = ({ navigation }) => {
     navigateToRoot();
   }, [navigateToRoot]);
 
-  const onGenderPressed = useCallback(
-    (item: ProfileGender) => () => {
-      setGender(item);
-      trackScreenView(`${TrackerUtils.TrackingEvent.PROFILE} - ${item.label}`);
-    },
-    []
-  );
+  const onGenderPressed = useCallback((item: ProfileGender) => () => {
+    setGender(item);
+  }, []);
 
   return (
     <View style={[styles.mainContainer]}>
@@ -252,7 +283,7 @@ const Profile: FC<Props> = ({ navigation }) => {
         style={{ flex: 1 }}
       >
         <View style={styles.mainView}>
-          <ScrollView style={styles.mainMargins} ref={scrollViewRef}>
+          <ScrollView style={[styles.mainMargins, { flexGrow:1 }]} ref={scrollViewRef}>
             <View style={styles.appLogo}>
               <BaseAssets.AppLogo
                 height={Sizes.logo}
@@ -336,33 +367,31 @@ const Profile: FC<Props> = ({ navigation }) => {
             </View>
             <View style={styles.genderContainer}>
               <CommonText style={styles.textSelectGender}>
-                {Labels.profile.selectGender}
+                {`${Labels.profile.selectGender} :`}
               </CommonText>
-              <View style={styles.flexRow}>
+              <View style={styles.genderItemsContainer}>
                 {genders.map((item, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    style={[
-                      styles.item,
-                      styles.genderItem,
-                      item.id === gender?.id ? styles.itemSelected : null,
-                    ]}
-                    containerStyle={{
-                      flex: 1,
-                    }}
-                    onPress={onGenderPressed(item)}
-                    disabled={item.id === gender?.id}
-                    accessibilityRole="checkbox"
-                    accessibilityState={{ checked: item.id === gender?.id }}
-                  >
-                    <CommonText
-                      style={
-                        item.id === gender?.id ? styles.itemTextSelected : null
-                      }
+                  <View key={index} style={styles.genderItemContainer}>
+                    <TouchableOpacity
+                      style={[
+                        styles.item,
+                        styles.genderItem,
+                        item.id === gender?.id ? styles.itemSelected : null,
+                      ]}
+                      onPress={onGenderPressed(item)}
+                      disabled={item.id === gender?.id}
+                      accessibilityRole="checkbox"
+                      accessibilityState={{ checked: item.id === gender?.id }}
                     >
-                      {item.label}
-                    </CommonText>
-                  </TouchableOpacity>
+                      <CommonText
+                        style={
+                          item.id === gender?.id ? styles.itemTextSelected : null
+                        }
+                      >
+                        {item.label}
+                      </CommonText>
+                    </TouchableOpacity>
+                  </View>
                 ))}
               </View>
             </View>
@@ -441,12 +470,22 @@ const styles = StyleSheet.create({
   },
   genderContainer: {
     paddingTop: Paddings.default,
+    marginBottom: Margins.default,
+  },
+  genderItemsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start'
+  },
+  genderItemContainer: {
+    width: '50%',
   },
   genderItem: {
     alignContent: "space-between",
     alignItems: "center",
-    flex: 1,
     justifyContent: "center",
+    paddingVertical: Paddings.default,
+    paddingHorizontal: Paddings.smallest,
   },
   hide: {
     display: "none",
