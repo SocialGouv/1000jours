@@ -61,7 +61,6 @@
     "expo-cli": "^4.12.12",
     "expo-constants": "~13.0.1",
     "expo-device": "~4.1.0",
-    "expo-fast-image": "^1.1.3",
     "expo-file-system": "~13.1.4",
     "expo-font": "~10.0.4",
     "expo-linking": "~3.0.0",
