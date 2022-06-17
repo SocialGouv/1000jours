@@ -19,7 +19,7 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
-import type { MenuItem } from "../../types";
+import type { MenuItem, MenuSubItem } from "../../types";
 import { RootNavigation } from "../../utils";
 import { Icomoon, IcomoonIcons, View } from "../baseComponents";
 import Accessibility from "./accessibility.component";
@@ -34,6 +34,7 @@ interface Props {
 const MAX_HEIGHT = SCREEN_HEIGHT * 0.9;
 
 const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
+  const [showInformation, setShowInformation] = React.useState(false);
   const [showLegalNotice, setShowLegalNotice] = React.useState(false);
   const [showConditionsOfUse, setShowConditionsOfUse] = React.useState(false);
   const [showAccessibility, setShowAccessibility] = React.useState(false);
@@ -76,25 +77,31 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
         title: Labels.menu.contactUs,
       },
       {
-        icon: IcomoonIcons.mentionsLegales,
-        onPress: () => {
-          setShowLegalNotice(true);
-        },
-        title: Labels.menu.legalNotice,
-      },
-      {
         icon: IcomoonIcons.politiquesConfidentialite,
         onPress: () => {
-          setShowConditionsOfUse(true);
+          setShowInformation(true);
         },
-        title: Labels.menu.conditionsOfUse,
-      },
-      {
-        icon: IcomoonIcons.mentionsLegales,
-        onPress: () => {
-          setShowAccessibility(true);
-        },
-        title: Labels.menu.accessibility,
+        subItems: [
+          {
+            onPress: () => {
+              setShowLegalNotice(true);
+            },
+            title: Labels.menu.legalNotice,
+          },
+          {
+            onPress: () => {
+              setShowConditionsOfUse(true);
+            },
+            title: Labels.menu.conditionsOfUse,
+          },
+          {
+            onPress: () => {
+              setShowAccessibility(true);
+            },
+            title: Labels.menu.accessibility,
+          },
+        ],
+        title: Labels.menu.information,
       },
     ];
   }, []);
@@ -106,13 +113,89 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
     [setShowMenu]
   );
 
+  const updateShowInformation = useCallback(() => {
+    setShowInformation(!showInformation);
+  }, [showInformation]);
+
   const onListItemPressed = useCallback(
-    (menuItem: MenuItem) => () => {
+    (menuItem: MenuItem | MenuSubItem) => () => {
       setShowMenu(false);
       // Sur iOS, sans le "setTimeout" la modal n'apparaît pas, il faut attendre la fermeture du menu.
       setTimeout(menuItem.onPress, PlatformConstants.PLATFORM_IS_IOS ? 200 : 0);
     },
     [setShowMenu]
+  );
+
+  const listItemAccordion = useCallback(
+    (menuItem: MenuItem) => (
+      <ListItem.Accordion
+        accessibilityLabel={menuItem.title}
+        accessibilityRole="button"
+        accessibilityState={{
+          expanded: showInformation,
+        }}
+        content={
+          <>
+            <View style={styles.menuItemIcon}>
+              <Icomoon
+                name={menuItem.icon}
+                size={Sizes.xl}
+                color={Colors.primaryBlueDark}
+              />
+            </View>
+            <ListItem.Content>
+              <ListItem.Title
+                style={[styles.menuItemTitle, { marginStart: Margins.default }]}
+                allowFontScaling={false}
+              >
+                {menuItem.title}
+              </ListItem.Title>
+            </ListItem.Content>
+          </>
+        }
+        isExpanded={showInformation}
+        onPress={updateShowInformation}
+      >
+        {menuItem.subItems?.map((subItem, subIndex) => (
+          <ListItem key={`sub${subIndex}`} onPress={onListItemPressed(subItem)}>
+            <ListItem.Content>
+              <ListItem.Title
+                style={styles.menuItemSubTitle}
+                allowFontScaling={false}
+              >
+                {subItem.title}
+              </ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
+        ))}
+      </ListItem.Accordion>
+    ),
+    [onListItemPressed, showInformation, updateShowInformation]
+  );
+
+  const listItem = useCallback(
+    (menuItem: MenuItem) => (
+      <ListItem
+        onPress={onListItemPressed(menuItem)}
+        accessibilityRole="button"
+        accessibilityLabel={menuItem.title}
+        bottomDivider
+      >
+        <View style={styles.menuItemIcon}>
+          <Icomoon
+            name={menuItem.icon}
+            size={Sizes.xl}
+            color={Colors.primaryBlueDark}
+          />
+        </View>
+        <ListItem.Content>
+          <ListItem.Title style={styles.menuItemTitle} allowFontScaling={false}>
+            {menuItem.title}
+          </ListItem.Title>
+        </ListItem.Content>
+      </ListItem>
+    ),
+    [onListItemPressed]
   );
 
   const renderContent = useCallback(
@@ -146,29 +229,11 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
                 </ListItem.Content>
               </ListItem>
               {menuItems.map((menuItem, index) => (
-                <ListItem
-                  key={index}
-                  onPress={onListItemPressed(menuItem)}
-                  accessibilityRole="button"
-                  accessibilityLabel={menuItem.title}
-                  bottomDivider
-                >
-                  <View style={styles.menuItemIcon}>
-                    <Icomoon
-                      name={menuItem.icon}
-                      size={Sizes.xl}
-                      color={Colors.primaryBlueDark}
-                    />
-                  </View>
-                  <ListItem.Content>
-                    <ListItem.Title
-                      style={styles.menuItemTitle}
-                      allowFontScaling={false}
-                    >
-                      {menuItem.title}
-                    </ListItem.Title>
-                  </ListItem.Content>
-                </ListItem>
+                <View key={index}>
+                  {menuItem.subItems
+                    ? listItemAccordion(menuItem)
+                    : listItem(menuItem)}
+                </View>
               ))}
               {/* App Version */}
               <ListItem>
@@ -186,7 +251,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
         </View>
       </Modal>
     ),
-    [menuItems, onListItemPressed, showMenu, updateShowMenu]
+    [showMenu, updateShowMenu, menuItems, listItemAccordion, listItem]
   );
 
   const snapPoints = [MAX_HEIGHT, MAX_HEIGHT / 1.5, 0];
@@ -217,7 +282,16 @@ const styles = StyleSheet.create({
     paddingLeft: Paddings.default,
     paddingRight: Paddings.smallest,
   },
+  menuItemSubTitle: {
+    color: Colors.primaryBlueDark,
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
+    paddingLeft: Paddings.subItemMenu,
+  },
   menuItemTitle: {
+    color: Colors.primaryBlueDark,
+    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
+  },
+  menuItemToto: {
     color: Colors.primaryBlueDark,
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
   },

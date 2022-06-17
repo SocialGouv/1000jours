@@ -35,6 +35,7 @@ import {
 } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
+  ProfileGender,
   RootStackParamList,
   UserContext,
   UserSituation,
@@ -42,6 +43,7 @@ import type {
 import { StorageUtils, TrackerUtils } from "../../utils";
 import { cancelScheduleNextStepNotification } from "../../utils/notification.util";
 import { checkErrorOnProfile } from "../../utils/step.util";
+import { TrackerEvent } from "../../type";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -90,6 +92,28 @@ const Profile: FC<Props> = ({ navigation }) => {
     ],
   };
 
+  const genderEmpty = {
+    id: "empty",
+    label: Labels.profile.gender.empty,
+  };
+
+  const genders: ProfileGender[] = [
+    {
+      id: "man",
+      label: Labels.profile.gender.man,
+    },
+    {
+      id: "woman",
+      label: Labels.profile.gender.woman,
+    },
+    {
+      id: "other",
+      label: Labels.profile.gender.other,
+    },
+    genderEmpty,
+  ];
+  const defaultGender = _.find(genders, ["id", "empty"]);
+
   const hasCheckedSituation = () => {
     return _.filter(userSituations, ["isChecked", true]).length > 0;
   };
@@ -108,6 +132,12 @@ const Profile: FC<Props> = ({ navigation }) => {
   const [datePickerIsReady, setDatePickerIsReady] = useState(false);
   const [positionOfScroll, setPositionOfScroll] = useState(0);
   const [trackerAction, setTrackerAction] = useState<string>("");
+  const [gender, setGender] = useState<ProfileGender>(genderEmpty);
+
+  const initGender = async () => {
+    const genderStored = await StorageUtils.getObjectValue(StorageKeysConstants.userGenderKey);
+    setGender(genderStored ?? genderEmpty);
+  };
 
   useEffect(() => {
     const initDataWithStorageValue = async () => {
@@ -124,6 +154,7 @@ const Profile: FC<Props> = ({ navigation }) => {
       setDatePickerIsReady(true);
     };
     void initDataWithStorageValue();
+    void initGender();
   }, []);
 
   useEffect(() => {
@@ -172,6 +203,13 @@ const Profile: FC<Props> = ({ navigation }) => {
       userSituations
     );
 
+    if(gender) {
+      await StorageUtils.storeObjectValue(
+        StorageKeysConstants.userGenderKey,
+        gender
+      );
+    }
+
     const situationChecked = _.find(userSituations, { isChecked: true });
     if (situationChecked?.childBirthdayRequired) {
       await StorageUtils.storeStringValue(
@@ -182,14 +220,24 @@ const Profile: FC<Props> = ({ navigation }) => {
       await StorageUtils.removeKey(StorageKeysConstants.userChildBirthdayKey);
     }
 
-    // Envoie la situation choisie sur Matomo
+    // Envoi de la situation sélectionnée sur Matomo
     if (situationChecked) {
       setTrackerAction(situationChecked.label);
     }
 
+    // Envoi de la date sélectionnée sur Matomo
+    if (situationChecked?.childBirthdayRequired && childBirthday) {
+      setTrackerAction(`${Labels.birthdate} : ${childBirthday}`);
+    }
+
+    // Envoi du genre sélectionné sur Matomo
+    if (gender) {
+      setTrackerAction(`${Labels.profile.gender} : ${gender.label}`);
+    }
+
     void cancelScheduleNextStepNotification();
     navigateToRoot();
-  }, [childBirthday, navigateToRoot, userSituations]);
+  }, [childBirthday, navigateToRoot, userSituations, gender]);
 
   const scrollViewRef = React.useRef<ScrollView>(null);
   const scrollTo = useCallback(() => {
@@ -219,6 +267,14 @@ const Profile: FC<Props> = ({ navigation }) => {
     setTrackerAction(Labels.buttons.pass);
     navigateToRoot();
   }, [navigateToRoot]);
+
+  const onGenderPressed = useCallback((item: ProfileGender) => () => {
+    setGender(item);
+  }, []);
+
+  const isSelectedGender = (profileGender: ProfileGender) => {
+    return profileGender.id === gender?.id;
+  }
 
   return (
     <View style={[styles.mainContainer]}>
@@ -313,6 +369,36 @@ const Profile: FC<Props> = ({ navigation }) => {
                 </View>
               ))}
             </View>
+            <View style={styles.genderContainer}>
+              <CommonText style={styles.textSelectGender}>
+                {`${Labels.profile.gender.select} :`}
+              </CommonText>
+              <View style={styles.genderItemsContainer}>
+                {genders.map((item, index) => (
+                  <View key={index} style={styles.genderItemContainer}>
+                    <TouchableOpacity
+                      style={[
+                        styles.item,
+                        styles.genderItem,
+                        isSelectedGender(item) ? styles.itemSelected : null,
+                      ]}
+                      onPress={onGenderPressed(item)}
+                      disabled={isSelectedGender(item)}
+                      accessibilityRole="checkbox"
+                      accessibilityState={{ checked: isSelectedGender(item) }}
+                    >
+                      <CommonText
+                        style={
+                          isSelectedGender(item) ? styles.itemTextSelected : null
+                        }
+                      >
+                        {item.label}
+                      </CommonText>
+                    </TouchableOpacity>
+                  </View>
+                ))}
+              </View>
+            </View>
           </ScrollView>
           <View style={[styles.footer]}>
             <View style={styles.buttonContainer}>
@@ -388,12 +474,22 @@ const styles = StyleSheet.create({
   },
   genderContainer: {
     paddingTop: Paddings.default,
+    marginBottom: Margins.default,
+  },
+  genderItemsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start'
+  },
+  genderItemContainer: {
+    width: '50%',
   },
   genderItem: {
     alignContent: "space-between",
     alignItems: "center",
-    flex: 1,
     justifyContent: "center",
+    paddingVertical: Paddings.default,
+    paddingHorizontal: Paddings.smallest,
   },
   hide: {
     display: "none",
@@ -474,3 +570,6 @@ const styles = StyleSheet.create({
 });
 
 export default Profile;
+function trackScreenView(arg0: string) {
+  throw new Error("Function not implemented.");
+}

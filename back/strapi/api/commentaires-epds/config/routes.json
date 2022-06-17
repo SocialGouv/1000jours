@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/commentaires-epds",
+      "handler": "commentaires-epds.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/commentaires-epds/count",
+      "handler": "commentaires-epds.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/commentaires-epds/:id",
+      "handler": "commentaires-epds.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/commentaires-epds",
+      "handler": "commentaires-epds.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/commentaires-epds/:id",
+      "handler": "commentaires-epds.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/commentaires-epds/:id",
+      "handler": "commentaires-epds.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

@@ -170,6 +170,12 @@ export type MenuItem = {
   icon: string;
   title: string;
   onPress: () => void;
+  subItems?: MenuSubItem[];
+};
+
+export type MenuSubItem = {
+  title: string;
+  onPress: () => void;
 };
 
 export type ApolloHealthResponse = {
@@ -204,4 +210,9 @@ export type TableData = {
   head: string[];
   data: ReactNode[][] | string[][];
   caption: string;
+};
+
+export type ProfileGender = {
+  id: string;
+  label: string;
 };
