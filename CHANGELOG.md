@@ -1,3 +1,10 @@
+## [1.98.1](https://github.com/SocialGouv/1000jours/compare/v1.98.0...v1.98.1) (2022-06-17)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le problème d'affichage des images (articles) ([#1252](https://github.com/SocialGouv/1000jours/issues/1252)) ([0338688](https://github.com/SocialGouv/1000jours/commit/0338688d9e1ae17f531f4114cccf85cedbab95b9)), closes [#1251](https://github.com/SocialGouv/1000jours/issues/1251)
+
 # [1.98.0](https://github.com/SocialGouv/1000jours/compare/v1.97.0...v1.98.0) (2022-06-08)
 
 
