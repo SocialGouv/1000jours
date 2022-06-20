@@ -8,9 +8,10 @@ const slugify = require('slugify');
 
 const relativeDirPath = path.relative(".", `public`);
 
-const r = (Math.random() + 1).toString(36).substring(7);
-const filename = (prenom) =>
-  slugify(`ResultatsEPDS ${prenom} ${r}`, `-`) + ".pdf";
+const filename = (prenom, date) => {
+  const newDate = date.replace("/", "").replace("/", "");
+  return `1000J-BLUES-Resultats-EPDS-${newDate}-${prenom}.pdf`;
+};
 
 const reminderLabel =
   "Pour rappel, la dépression post-partum touche 100 000 femmes et 75 000 hommes chaque année en France. Elle tue une femme par mois.";
@@ -134,33 +135,33 @@ const emailForEntourageTemplate = (info) => ({
 const partageForWidget = async (info, emailTemplate) => {
   if (!info.email) throw new Error("Au moins une adresse email est nécessaire");
 
-  // Création du PDF // TODO:
-  // try {
-  //   await createPdf(filename(info.prenom), pdfContent(info));
-  // } catch (e) {
-  //   console.error(e);
-  //   throw new Error("Erreur lors de la création du pdf");
-  // }
+  // Création du PDF
+  try {
+    await createPdf(filename(info.prenom, info.date), pdfContent(info));
+  } catch (e) {
+    console.error(e);
+    throw new Error("Erreur lors de la création du pdf");
+  }
 
   // Envoi du mail
   try {
     const resSending = await strapi.plugins.email.services.email.send({
       from: process.env["MAIL_SEND_FROM"],
       to: info.email,
-      // attachments: [ // TODO:
-      //   {
-      //     content: fs.createReadStream(
-      //       path.join(relativeDirPath, filename(info.prenom))
-      //     ),
-      //     contentType: "application/pdf",
-      //     filename: filename(info.prenom),
-      //   },
-      // ],
+      attachments: [
+        {
+          content: fs.createReadStream(
+            path.join(relativeDirPath, filename(info.prenom, info.date))
+          ),
+          contentType: "application/pdf",
+          filename: filename(info.prenom, info.date),
+        },
+      ],
       ...emailTemplate,
     });
 
     fs.rm(
-      relativeDirPath + "/" + filename(info.prenom),
+      relativeDirPath + "/" + filename(info.prenom, info.date),
       { recursive: false },
       (err) => {
         if (err) console.error(err);
