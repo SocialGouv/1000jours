@@ -12,6 +12,9 @@ const r = (Math.random() + 1).toString(36).substring(7);
 const filename = (prenom) =>
   slugify(`ResultatsEPDS ${prenom} ${r}`, `-`) + ".pdf";
 
+const reminderLabel =
+  "Pour rappel, la dépression post-partum touche 100 000 femmes et 75 000 hommes chaque année en France. Elle tue une femme par mois.";
+
 // Footer
 const footerText = () => `
 
@@ -65,7 +68,7 @@ const emailForHimselfHtml = (info) =>
 
 <p>Vous trouverez votre résultat au questionnaire en pièce jointe. Nous vous invitons à le communiquer à votre professionnel de santé.</p>
 
-<p>Pour rappel, la dépression post-partum touche 100 000 femmes et 75 000 hommes chaque année en France. Elle tue une femme par mois.</p>
+<p>${reminderLabel}</p>
 
 <p>En parler c'est déjà se soigner. N'hésitez pas à demander de l'aide. À tout moment, vous pouvez échanger avec Elise, présidente de l'association Maman Blues.</p>
 
@@ -75,11 +78,11 @@ ${footerHtml()}
 const emailForHimselfText = (info) =>
   _.template(`Bonjour <%- prenom %>,
 
-Le <%- date %>, vous avez passé le test EPDS (échelle d'auto-évaluation d'un état dépressif dite échelle d'Édimbourg) sur le site <%- url_test %>.
+Le <%- date %>, vous avez passé le test EPDS (échelle d'auto-évaluation d'un état dépressif dite échelle d'Édimbourg) sur le site <%- url_test %>
 
 Vous trouverez votre résultat au questionnaire en pièce jointe. Nous vous invitons à le communiquer à votre professionnel de santé.
 
-Pour rappel, la dépression post-partum touche 100 000 femmes et 75 000 hommes chaque année en France. Elle tue une femme par mois.
+${reminderLabel}
 
 En parler c'est déjà se soigner. N'hésitez pas à demander de l'aide. À tout moment, vous pouvez échanger avec Elise, présidente de l'association Maman Blues.
 
@@ -93,14 +96,84 @@ const emailForHimselfTemplate = (info) => ({
 });
 
 // Email pour l'entourage du patient
+const emailForEntourageHtml = (info) =>
+  _.template(`<p>Bonjour,</p>
+
+<p>Le <%- date %>, <%- prenom %> a passé le test EPDS sur le site <b><a href="<%- url_test %>">ICI</a></b>. C'est un questionnaire d'auto-évaluation d'un état dépressif utilisé par les professionnels de santé. Elle/il a souhaité partager le résultat avec vous pour vous tenir informer.</p>
+
+<p>Vous trouverez son résultat au questionnaire en pièce jointe. <%- prenom %> a besoin de votre soutien.</p>
+
+<p>${reminderLabel}</p>
+
+<p>En parler c'est déjà se soigner. Nous vous invitons à accompagner Marie dans cette démarche en demandant de l'aide aux professionnels de santé qui la suivent (sage-femme, médecin traitant ...).</p>
+
+${footerHtml()}
+`)(info);
+
+const emailForEntourageText = (info) =>
+  _.template(`Bonjour,
+
+Le <%- date %>, <%- prenom %> a passé le test EPDS sur le site <%- url_test %>. C'est un questionnaire d'auto-évaluation d'un état dépressif utilisé par les professionnels de santé. Elle/il a souhaité partager le résultat avec vous pour vous tenir informer.
+
+Vous trouverez son résultat au questionnaire en pièce jointe. <%- prenom %> a besoin de votre soutien.
+
+${reminderLabel}
+
+En parler c'est déjà se soigner. Nous vous invitons à accompagner Marie dans cette démarche en demandant de l'aide aux professionnels de santé qui la suivent (sage-femme, médecin traitant ...).
+
+${footerText()}
+`)(info);
+
 const emailForEntourageTemplate = (info) => ({
-  html: "",
-  subject: "",
-  text: "",
+  html: emailForEntourageHtml(info),
+  subject: _.template("1000J - BLUES : <%- prenom %> souhaite vous partager son résultat au questionnaire EPDS")(info),
+  text: emailForEntourageText(info),
 });
 
 // Partage
-const partageForWidget = async ({
+const partageForWidget = async (info, emailTemplate) => {
+  if (!info.email) throw new Error("Au moins une adresse email est nécessaire");
+
+  // Création du PDF // TODO:
+  // try {
+  //   await createPdf(filename(info.prenom), pdfContent(info));
+  // } catch (e) {
+  //   console.error(e);
+  //   throw new Error("Erreur lors de la création du pdf");
+  // }
+
+  // Envoi du mail
+  try {
+    const resSending = await strapi.plugins.email.services.email.send({
+      from: process.env["MAIL_SEND_FROM"],
+      to: info.email,
+      // attachments: [ // TODO:
+      //   {
+      //     content: fs.createReadStream(
+      //       path.join(relativeDirPath, filename(info.prenom))
+      //     ),
+      //     contentType: "application/pdf",
+      //     filename: filename(info.prenom),
+      //   },
+      // ],
+      ...emailTemplate,
+    });
+
+    fs.rm(
+      relativeDirPath + "/" + filename(info.prenom),
+      { recursive: false },
+      (err) => {
+        if (err) console.error(err);
+      }
+    );
+
+    return resSending && !!resSending.response.match(/Ok/);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const partagePourSoiMeme = async ({
   date = "ND",
   detail_questions = "ND",
   detail_reponses = "ND",
@@ -121,45 +194,34 @@ const partageForWidget = async ({
     url_test,
   };
 
-  // Création du PDF // TODO:
-  // try {
-  //   await createPdf(filename(info.prenom), pdfContent(info));
-  // } catch (e) {
-  //   console.error(e);
-  //   throw new Error("Erreur lors de la création du pdf");
-  // }
+  return partageForWidget(info, emailForHimselfTemplate(info));
+};
 
-  // Envoi du mail
-  try {
-    const resSending = await strapi.plugins.email.services.email.send({
-      from: process.env["MAIL_SEND_FROM"],
-      to: email,
-      // attachments: [ // TODO:
-      //   {
-      //     content: fs.createReadStream(
-      //       path.join(relativeDirPath, filename(info.prenom))
-      //     ),
-      //     contentType: "application/pdf",
-      //     filename: filename(info.prenom),
-      //   },
-      // ],
-      ...emailForHimselfTemplate(info),
-    });
+const partageEntourage = async ({
+  date = "ND",
+  detail_questions = "ND",
+  detail_reponses = "ND",
+  email,
+  mood_level = "ND",
+  prenom = "ND",
+  url_test = "ND",
+}) => {
+  if (!email) throw new Error("Au moins une adresse email est nécessaire");
 
-    fs.rm(
-      relativeDirPath + "/" + filename(info.prenom),
-      { recursive: false },
-      (err) => {
-        if (err) console.error(err);
-      }
-    );
+  const info = {
+    date,
+    detail_questions,
+    detail_reponses,
+    email,
+    mood_level,
+    prenom,
+    url_test,
+  };
 
-    return resSending && !!resSending.response.match(/Ok/);
-  } catch (e) {
-    console.error(e);
-  }
+  return partageForWidget(info, emailForEntourageTemplate(info));
 };
 
 module.exports = {
-  partageForWidget,
+  partageEntourage,
+  partagePourSoiMeme,
 };

@@ -18,7 +18,6 @@ const partageEpds = async (_1, _2, { context }) => {
   }
 };
 
-
 const createReponsesEpdsWidget = async (_1, _2, { context }) => {
   try {
     return ReponsesEpdsService.createReponsesEpdsWidget(context.request.body);
@@ -27,9 +26,17 @@ const createReponsesEpdsWidget = async (_1, _2, { context }) => {
   }
 };
 
-const partageEpdsViaWidget = async (_1, _2, { context }) => {
+const partageEpdsPourSoiMeme = async (_1, _2, { context }) => {
   try {
-    return ReponsesEpdsService.partageForWidget(context.request.body);
+    return ReponsesEpdsService.partagePourSoiMeme(context.request.body);
+  } catch (e) {
+    context.badRequest(e.message);
+  }
+};
+
+const partageEpdsEntourage = async (_1, _2, { context }) => {
+  try {
+    return ReponsesEpdsService.partageEntourage(context.request.body);
   } catch (e) {
     context.badRequest(e.message);
   }
@@ -81,7 +88,17 @@ module.exports = {
       source_widget_nom: String!
     ): ReponsesEpds
 
-    epdsPartageViaWidget (
+    epdsPartagePourSoiMeme (
+      email: String!
+      prenom: String
+      detail_questions: [String]
+      detail_reponses: [String]
+      date: String
+      url_test: String
+      mood_level: String
+    ): Boolean
+
+    epdsPartageEntourage (
       email: String!
       prenom: String
       detail_questions: [String]
@@ -93,6 +110,13 @@ module.exports = {
   `,
   resolver: {
     Mutation: {
+      createReponsesEpdsWidget: {
+        description:
+          "Création de réponses au questionnaire EPDS à travers l'utilisation du widget",
+        resolver: createReponsesEpdsWidget,
+        resolverOf:
+          "application::reponses-epds.reponses-epds.createReponsesEpdsWidget",
+      },
       epdsContact: {
         description: "Envoie une demande de contact post-partum",
         resolver: contactEpds,
@@ -103,15 +127,16 @@ module.exports = {
         resolver: partageEpds,
         resolverOf: "application::reponses-epds.reponses-epds.partage",
       },
-      createReponsesEpdsWidget: {
-        description: "Création de réponses au questionnaire EPDS à travers l'utilisation du widget",
-        resolver: createReponsesEpdsWidget,
-        resolverOf: "application::reponses-epds.reponses-epds.createReponsesEpdsWidget",
-      },
-      epdsPartageViaWidget: {
+      epdsPartageEntourage: {
         description: "Envoie des réponses au questionnaire EPDS par email",
-        resolver: partageEpdsViaWidget,
-        resolverOf: "application::reponses-epds.reponses-epds.partageForWidget",
+        resolver: partageEpdsEntourage,
+        resolverOf: "application::reponses-epds.reponses-epds.partageEntourage",
+      },
+      epdsPartagePourSoiMeme: {
+        description: "Envoie des réponses au questionnaire EPDS par email",
+        resolver: partageEpdsPourSoiMeme,
+        resolverOf:
+          "application::reponses-epds.reponses-epds.partagePourSoiMeme",
       },
     },
   },
