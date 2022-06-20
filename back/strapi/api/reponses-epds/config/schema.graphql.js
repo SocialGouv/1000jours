@@ -94,7 +94,6 @@ module.exports = {
       detail_questions: [String]
       detail_reponses: [String]
       date: String
-      url_test: String
       mood_level: String
     ): Boolean
 
@@ -104,7 +103,6 @@ module.exports = {
       detail_questions: [String]
       detail_reponses: [String]
       date: String
-      url_test: String
       mood_level: String
     ): Boolean
   `,

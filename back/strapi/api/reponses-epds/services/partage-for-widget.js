@@ -14,7 +14,7 @@ const filename = (prenom, date) => {
 };
 
 const reminderLabel =
-  "Pour rappel, la dépression post-partum touche 100 000 femmes et 75 000 hommes chaque année en France. Elle tue une femme par mois.";
+  "Pour rappel, la dépression post-partum touche 100 000 femmes et 75 000 hommes chaque année en France. Elle tue une femme par mois. Mais, en parler c'est déjà se soigner.";
 
 // Footer
 const footerText = () => `
@@ -27,7 +27,6 @@ const footerHtml = () => `
   <p>
     <img height="90" src="https://backoffice-les1000jours.fabrique.social.gouv.fr/uploads/logo_1000j_blues_a0341d9114.png"/>
     <img height="90" src="https://backoffice-les1000jours.fabrique.social.gouv.fr/uploads/logo_republique_francaise_365a280a09.png"/>
-    <img height="90" src="https://backoffice-les1000jours.fabrique.social.gouv.fr/uploads/logo_fabrique_96bbfe643b.png"/>
   </p>
 `;
 
@@ -65,13 +64,13 @@ const buildHtmlDetailScore = (info, index) =>
 const emailForHimselfHtml = (info) =>
   _.template(`<p>Bonjour <%- prenom %>,</p>
 
-<p>Le <%- date %>, vous avez passé le test EPDS (échelle d'auto-évaluation d'un état dépressif dite échelle d'Édimbourg) sur le site <b><a href="<%- url_test %>">ICI</a></b>.</p>
+<p>Le <%- date %>, vous avez passé le test EPDS (échelle d'auto-évaluation d'un état dépressif dite échelle d'Édimbourg).</p>
 
 <p>Vous trouverez votre résultat au questionnaire en pièce jointe. Nous vous invitons à le communiquer à votre professionnel de santé.</p>
 
 <p>${reminderLabel}</p>
 
-<p>En parler c'est déjà se soigner. N'hésitez pas à demander de l'aide. À tout moment, vous pouvez échanger avec Elise, présidente de l'association Maman Blues.</p>
+<p>N'hésitez pas à demander de l'aide en montrant le résultat de ce test à votre professionnel de santé.</p>
 
 ${footerHtml()}
 `)(info);
@@ -79,20 +78,20 @@ ${footerHtml()}
 const emailForHimselfText = (info) =>
   _.template(`Bonjour <%- prenom %>,
 
-Le <%- date %>, vous avez passé le test EPDS (échelle d'auto-évaluation d'un état dépressif dite échelle d'Édimbourg) sur le site <%- url_test %>
+Le <%- date %>, vous avez passé le test EPDS (échelle d'auto-évaluation d'un état dépressif dite échelle d'Édimbourg).
 
 Vous trouverez votre résultat au questionnaire en pièce jointe. Nous vous invitons à le communiquer à votre professionnel de santé.
 
 ${reminderLabel}
 
-En parler c'est déjà se soigner. N'hésitez pas à demander de l'aide. À tout moment, vous pouvez échanger avec Elise, présidente de l'association Maman Blues.
+N'hésitez pas à demander de l'aide en montrant le résultat de ce test à votre professionnel de santé.
 
 ${footerText()}
 `)(info);
 
 const emailForHimselfTemplate = (info) => ({
   html: emailForHimselfHtml(info),
-  subject: _.template("1000J - BLUES : <%- prenom %>, votre résultat au questionnaire EPDS")(info),
+  subject: _.template("1000J - BLUES : <%- prenom %>, votre résultat au questionnaire post-partum")(info),
   text: emailForHimselfText(info),
 });
 
@@ -100,13 +99,13 @@ const emailForHimselfTemplate = (info) => ({
 const emailForEntourageHtml = (info) =>
   _.template(`<p>Bonjour,</p>
 
-<p>Le <%- date %>, <%- prenom %> a passé le test EPDS sur le site <b><a href="<%- url_test %>">ICI</a></b>. C'est un questionnaire d'auto-évaluation d'un état dépressif utilisé par les professionnels de santé. Elle/il a souhaité partager le résultat avec vous pour vous tenir informer.</p>
+<p>Le <%- date %>, <%- prenom %> a passé le test EPDS. C'est un questionnaire d'auto-évaluation d'un état dépressif utilisé par les professionnels de santé. Elle/Il a souhaité partager le résultat avec vous pour vous tenir informer.</p>
 
-<p>Vous trouverez son résultat au questionnaire en pièce jointe. <%- prenom %> a besoin de votre soutien.</p>
+<p><%- prenom %> a besoin de votre soutien. Vous trouverez son résultat au questionnaire en pièce jointe.</p>
 
 <p>${reminderLabel}</p>
 
-<p>En parler c'est déjà se soigner. Nous vous invitons à accompagner Marie dans cette démarche en demandant de l'aide aux professionnels de santé qui la suivent (sage-femme, médecin traitant ...).</p>
+<p>Nous vous invitons à accompagner <%- prenom %> dans cette démarche en demandant de l'aide aux professionnels de santé qui la suivent (sage-femme, médecin traitant ...).</p>
 
 ${footerHtml()}
 `)(info);
@@ -114,20 +113,20 @@ ${footerHtml()}
 const emailForEntourageText = (info) =>
   _.template(`Bonjour,
 
-Le <%- date %>, <%- prenom %> a passé le test EPDS sur le site <%- url_test %>. C'est un questionnaire d'auto-évaluation d'un état dépressif utilisé par les professionnels de santé. Elle/il a souhaité partager le résultat avec vous pour vous tenir informer.
+Le <%- date %>, <%- prenom %> a passé le test EPDS. C'est un questionnaire d'auto-évaluation d'un état dépressif utilisé par les professionnels de santé. Elle/Il a souhaité partager le résultat avec vous pour vous tenir informer.
 
-Vous trouverez son résultat au questionnaire en pièce jointe. <%- prenom %> a besoin de votre soutien.
+<%- prenom %> a besoin de votre soutien. Vous trouverez son résultat au questionnaire en pièce jointe.
 
 ${reminderLabel}
 
-En parler c'est déjà se soigner. Nous vous invitons à accompagner Marie dans cette démarche en demandant de l'aide aux professionnels de santé qui la suivent (sage-femme, médecin traitant ...).
+Nous vous invitons à accompagner <%- prenom %> dans cette démarche en demandant de l'aide aux professionnels de santé qui la suivent (sage-femme, médecin traitant ...).
 
 ${footerText()}
 `)(info);
 
 const emailForEntourageTemplate = (info) => ({
   html: emailForEntourageHtml(info),
-  subject: _.template("1000J - BLUES : <%- prenom %> souhaite vous partager son résultat au questionnaire EPDS")(info),
+  subject: _.template("[IMPORTANT] <%- prenom %> souhaite vous partager son résultat au questionnaire post-partum 1000 premiers jours")(info),
   text: emailForEntourageText(info),
 });
 
@@ -181,7 +180,6 @@ const partagePourSoiMeme = async ({
   email,
   mood_level = "ND",
   prenom = "ND",
-  url_test = "ND",
 }) => {
   if (!email) throw new Error("Au moins une adresse email est nécessaire");
 
@@ -192,7 +190,6 @@ const partagePourSoiMeme = async ({
     email,
     mood_level,
     prenom,
-    url_test,
   };
 
   return partageForWidget(info, emailForHimselfTemplate(info));
@@ -205,7 +202,6 @@ const partageEntourage = async ({
   email,
   mood_level = "ND",
   prenom = "ND",
-  url_test = "ND",
 }) => {
   if (!email) throw new Error("Au moins une adresse email est nécessaire");
 
@@ -216,7 +212,6 @@ const partageEntourage = async ({
     email,
     mood_level,
     prenom,
-    url_test,
   };
 
   return partageForWidget(info, emailForEntourageTemplate(info));
