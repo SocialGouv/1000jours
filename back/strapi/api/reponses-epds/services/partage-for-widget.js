@@ -31,7 +31,7 @@ const footerHtml = () => `
   </p>
 `;
 
-// Contenu du PDF // TODO: mood + question + reponses
+// Contenu du PDF
 const pdfContent = (info) =>
   _.template(`<p>
     Résultats du test EPDS de <%- prenom %></br>
