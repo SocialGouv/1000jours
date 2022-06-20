@@ -27,6 +27,14 @@ const createReponsesEpdsWidget = async (_1, _2, { context }) => {
   }
 };
 
+const partageEpdsViaWidget = async (_1, _2, { context }) => {
+  try {
+    return ReponsesEpdsService.partageForWidget(context.request.body);
+  } catch (e) {
+    context.badRequest(e.message);
+  }
+};
+
 module.exports = {
   definition: ``,
   mutation: `
@@ -72,6 +80,16 @@ module.exports = {
       langue: ID
       source_widget_nom: String!
     ): ReponsesEpds
+
+    epdsPartageViaWidget (
+      email: String!
+      prenom: String
+      detail_questions: [String]
+      detail_reponses: [String]
+      date: String
+      url_test: String
+      mood_level: String
+    ): Boolean
   `,
   resolver: {
     Mutation: {
@@ -89,7 +107,12 @@ module.exports = {
         description: "Création de réponses au questionnaire EPDS à travers l'utilisation du widget",
         resolver: createReponsesEpdsWidget,
         resolverOf: "application::reponses-epds.reponses-epds.createReponsesEpdsWidget",
-      }
+      },
+      epdsPartageViaWidget: {
+        description: "Envoie des réponses au questionnaire EPDS par email",
+        resolver: partageEpdsViaWidget,
+        resolverOf: "application::reponses-epds.reponses-epds.partageForWidget",
+      },
     },
   },
 };
