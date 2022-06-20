@@ -1,5 +1,5 @@
 import { addDays, isAfter, subDays } from "date-fns";
-import Constants from "expo-constants";
+import { isDevice } from "expo-device";
 import type {
   NotificationContentInput,
   NotificationRequestInput,
@@ -61,7 +61,7 @@ export const registerForPushNotificationsAsync = async (): Promise<
   string | undefined
 > => {
   let token = "";
-  if (Constants.isDevice) {
+  if (isDevice) {
     const { status: existingStatus } =
       await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
@@ -274,8 +274,11 @@ const scheduleEventNotification = async (event: Event) => {
       // Planifie la notification pour le jour J
       let notifDate = new Date(eventDate.setHours(EVENT_NOTIF_TRIGGER_HOUR));
       let content = buildEventNotificationContent(event, false);
-      let notificationId = await sendNotificationReminder(content, notifDate);
-      if (notificationId) await updateStoreNotifEventIds(notificationId);
+      let notificationId = null;
+      if (isAfter(notifDate, now)) {
+        notificationId = await sendNotificationReminder(content, notifDate);
+        if (notificationId) await updateStoreNotifEventIds(notificationId);
+      }
 
       // Planifie la notification pour un rappel avant le jour J
       notifDate = new Date(
@@ -283,7 +286,7 @@ const scheduleEventNotification = async (event: Event) => {
           EVENT_NOTIF_TRIGGER_HOUR
         )
       );
-      if (isAfter(new Date(notifDate), now)) {
+      if (isAfter(notifDate, now)) {
         content = buildEventNotificationContent(event, true);
         notificationId = await sendNotificationReminder(content, notifDate);
         if (notificationId) await updateStoreNotifEventIds(notificationId);

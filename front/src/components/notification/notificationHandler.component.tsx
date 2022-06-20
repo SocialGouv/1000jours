@@ -38,6 +38,7 @@ const NotificationHandler: FC = () => {
 
   useEffect(() => {
     // Notifications
+    void NotificationUtils.registerForPushNotificationsAsync();
     // Se déclenche lorsque l'on reçoit une notification et que l'app est ouverte
     notificationListener.current =
       Notifications.addNotificationReceivedListener((newNotification) => {
