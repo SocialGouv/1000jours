@@ -2,6 +2,10 @@ import { Linking } from "react-native";
 
 import { PLATFORM_IS_ANDROID } from "../constants/platform.constants";
 
+const PREFIX_HTTP = "http://";
+const PREFIX_HTTPS = "https://";
+const WWW = "www";
+
 export const callContact = async (
   phoneNumber: string | null | undefined
 ): Promise<void> => {
@@ -26,13 +30,9 @@ export const openWebsite = async (
 ): Promise<void> => {
   if (!website) return;
   let completeWebsite = undefined;
-  console.log()
-  if (!website.includes("https://") && !website.includes("http://") && !dontChangeUrl) {
-    const websiteWithWww = website.includes("www") ? website : `www.${website}`;
-    completeWebsite =
-      websiteWithWww.includes("https://") || websiteWithWww.includes("http://")
-        ? websiteWithWww
-        : `https://${websiteWithWww}`;
+  if (!website.includes(PREFIX_HTTP) && !website.includes(PREFIX_HTTPS) && !dontChangeUrl) {
+    const websiteWithWww = website.includes(WWW) ? website : `${WWW}.${website}`;
+    completeWebsite = `${PREFIX_HTTP}${websiteWithWww}`;
   } else {
     completeWebsite = website;
   }
