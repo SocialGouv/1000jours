@@ -31,6 +31,8 @@ export default {
         "ACCESS_FINE_LOCATION",
         "READ_CALENDAR",
         "WRITE_CALENDAR",
+        "RECEIVE_BOOT_COMPLETED",
+        "SCHEDULE_EXACT_ALARM",
       ],
       versionCode: 57,
     },

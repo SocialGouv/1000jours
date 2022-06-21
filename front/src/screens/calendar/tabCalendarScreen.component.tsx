@@ -8,6 +8,7 @@ import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import {
   AccessibilityInfo,
+  Alert,
   Image,
   StyleSheet,
   TouchableOpacity,
@@ -95,7 +96,6 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   }, [triggerGetAllEvents]);
 
   useEffect(() => {
-    void requestCalendarPermission();
     void getLastSyncDate();
     void getScrollToEventId();
     void getAccessibilityInfo();
@@ -125,13 +125,6 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const getAccessibilityInfo = async () => {
     const value = await AccessibilityInfo.isScreenReaderEnabled();
     setIsScreenReaderEnabled(value);
-  };
-
-  const requestCalendarPermission = async () => {
-    const { status } = await Calendar.requestCalendarPermissionsAsync();
-    if (status === "granted") {
-      await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT);
-    }
   };
 
   const calendarSourceIOS = async () => {
@@ -170,9 +163,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   };
 
   const getAppCalendar = async () => {
-    const calendars = await Calendar.getCalendarsAsync(
-      Calendar.EntityTypes.EVENT
-    );
+    const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT);
     const calendar = _.find(calendars, {
       allowsModifications: true,
       color: Colors.primaryBlue,
@@ -184,28 +175,33 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const syncEventsWithOsCalendar = useCallback(async () => {
     setTrackerAction(TrackerUtils.TrackingEvent.CALENDAR_SYNC);
 
-    const appCalendar = await getAppCalendar();
-    if (appCalendar?.id) void Calendar.deleteCalendarAsync(appCalendar.id);
-    const newCalendarId = await createCalendar();
+    const calendarPermission = await Calendar.requestCalendarPermissionsAsync();
+    if (calendarPermission?.granted) {
+      const appCalendar = await getAppCalendar();
+      if (appCalendar?.id) void Calendar.deleteCalendarAsync(appCalendar.id);
+      const newCalendarId = await createCalendar();
 
-    events.forEach((event) => {
-      if (event.date) {
-        void Calendar.createEventAsync(newCalendarId, {
-          endDate: buildDateTimeWithTimeZone(event.date, hourWhenEventEnd),
-          notes: event.description ?? "",
-          startDate: buildDateTimeWithTimeZone(event.date, hourWhenEventStart),
-          timeZone: Localization.timezone,
-          title: event.nom,
-        });
-      }
-    });
+      events.forEach((event) => {
+        if (event.date) {
+          void Calendar.createEventAsync(newCalendarId, {
+            endDate: buildDateTimeWithTimeZone(event.date, hourWhenEventEnd),
+            notes: event.description ?? "",
+            startDate: buildDateTimeWithTimeZone(event.date, hourWhenEventStart),
+            timeZone: Localization.timezone,
+            title: event.nom,
+          });
+        }
+      });
 
-    const date = new Date().toISOString();
-    void StorageUtils.storeStringValue(
-      StorageKeysConstants.osCalendarSyncDate,
-      date
-    );
-    setLastSyncDate(date);
+      const date = new Date().toISOString();
+      void StorageUtils.storeStringValue(
+        StorageKeysConstants.osCalendarSyncDate,
+        date
+      );
+      setLastSyncDate(date);
+    } else {
+      Alert.alert(Labels.calendar.pleaseAllowAccessCalendar);
+    }
   }, [createCalendar, events]);
 
   const formattedEvents = useCallback(
