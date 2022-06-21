@@ -126,12 +126,14 @@ module.exports = {
         resolverOf: "application::reponses-epds.reponses-epds.partage",
       },
       epdsPartageEntourage: {
-        description: "Envoie des réponses au questionnaire EPDS par email",
+        description:
+          "Envoie des réponses au questionnaire EPDS par email à une personne de son entourage",
         resolver: partageEpdsEntourage,
         resolverOf: "application::reponses-epds.reponses-epds.partageEntourage",
       },
       epdsPartagePourSoiMeme: {
-        description: "Envoie des réponses au questionnaire EPDS par email",
+        description:
+          "Envoie des réponses au questionnaire EPDS par email à soi même",
         resolver: partageEpdsPourSoiMeme,
         resolverOf:
           "application::reponses-epds.reponses-epds.partagePourSoiMeme",

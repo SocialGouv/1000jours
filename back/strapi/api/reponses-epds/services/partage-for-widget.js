@@ -4,7 +4,6 @@ const _ = require('lodash');
 const { createPdf } = require('../../pdf/services');
 const fs = require('fs');
 const path = require('path');
-const slugify = require('slugify');
 
 const relativeDirPath = path.relative(".", `public`);
 
@@ -160,14 +159,14 @@ const partageForWidget = async (info, emailTemplate) => {
     });
 
     fs.rm(
-      relativeDirPath + "/" + filename(info.prenom, info.date),
+      path.join(relativeDirPath, filename(info.prenom, info.date)),
       { recursive: false },
       (err) => {
         if (err) console.error(err);
       }
     );
 
-    return resSending && !!resSending.response.match(/Ok/);
+    return resSending && /Ok/.test(resSending.response);
   } catch (e) {
     console.error(e);
   }

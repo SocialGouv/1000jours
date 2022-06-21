@@ -1,7 +1,7 @@
 const html_to_pdf = require('html-pdf-node');
 const path = require('path');
 
-const relativeDirPath = path.relative(".", `public`);
+const relativeDirPath = path.relative(".", "public");
 
 const createPdf = (filename, content = "ND") => {
   const options = {
@@ -12,11 +12,11 @@ const createPdf = (filename, content = "ND") => {
       right: 25,
       top: 25,
     },
-    path: relativeDirPath + "/" + filename,
+    path: path.join(relativeDirPath, filename),
   };
 
   const file = {
-    content: content,
+    content,
   };
 
   return html_to_pdf.generatePdf(file, options);
