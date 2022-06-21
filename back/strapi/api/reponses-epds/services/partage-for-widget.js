@@ -90,7 +90,7 @@ ${footerText()}
 
 const emailForHimselfTemplate = (info) => ({
   html: emailForHimselfHtml(info),
-  subject: _.template("1000J - BLUES : <%- prenom %>, votre résultat au questionnaire post-partum")(info),
+  subject: _.template("1000 premiers jours : <%- prenom %>, votre résultat au questionnaire post-partum")(info),
   text: emailForHimselfText(info),
 });
 
