@@ -1,3 +1,10 @@
+# [1.99.0](https://github.com/SocialGouv/1000jours/compare/v1.98.2...v1.99.0) (2022-06-21)
+
+
+### Features
+
+* **widget:** envoi des mails pour les intentions ([#1257](https://github.com/SocialGouv/1000jours/issues/1257)) ([049a5bb](https://github.com/SocialGouv/1000jours/commit/049a5bbaf524270d291460a6bab688313ad22527))
+
 ## [1.98.2](https://github.com/SocialGouv/1000jours/compare/v1.98.1...v1.98.2) (2022-06-21)
 
 
