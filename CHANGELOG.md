@@ -1,3 +1,10 @@
+## [1.98.2](https://github.com/SocialGouv/1000jours/compare/v1.98.1...v1.98.2) (2022-06-21)
+
+
+### Bug Fixes
+
+* 🐛 Sentry errors ([#1261](https://github.com/SocialGouv/1000jours/issues/1261)) ([a04c692](https://github.com/SocialGouv/1000jours/commit/a04c692fc1f78017486ab9f3995d27d6212e1bf1)), closes [#1245](https://github.com/SocialGouv/1000jours/issues/1245) [#1244](https://github.com/SocialGouv/1000jours/issues/1244) [#1246](https://github.com/SocialGouv/1000jours/issues/1246) [#1253](https://github.com/SocialGouv/1000jours/issues/1253) [#1246](https://github.com/SocialGouv/1000jours/issues/1246)
+
 ## [1.98.1](https://github.com/SocialGouv/1000jours/compare/v1.98.0...v1.98.1) (2022-06-17)
 
 
