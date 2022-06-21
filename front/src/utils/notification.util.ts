@@ -1,5 +1,5 @@
 import { addDays, isAfter, subDays } from "date-fns";
-import Constants from "expo-constants";
+import { isDevice } from "expo-device";
 import type {
   NotificationContentInput,
   NotificationRequestInput,
@@ -29,6 +29,7 @@ export enum Weekday {
   saturday = 7,
 }
 
+const MIN_TRIGGER = {seconds: 10};
 const NUMBER_OF_DAYS_NOTIF_EVENT_REMINDER = 7;
 const MOODBOARD_NOTIF_TRIGGER_HOUR = 9;
 const EVENT_NOTIF_TRIGGER_HOUR = 13;
@@ -60,7 +61,7 @@ export const registerForPushNotificationsAsync = async (): Promise<
   string | undefined
 > => {
   let token = "";
-  if (Constants.isDevice) {
+  if (isDevice) {
     const { status: existingStatus } =
       await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
@@ -162,24 +163,28 @@ export const scheduleNextStepNotification = async (
         },
         title: Labels.timeline.notification.title,
       };
-      let trigger = null;
+      let needToBeScheduled = false;
+      let trigger: NotificationTriggerInput = null;
       if (triggerNow) {
-        trigger = {
-          seconds: 1,
-        };
+        trigger = MIN_TRIGGER;
+        needToBeScheduled = true;
       } else {
-        trigger = new Date(
+        const date = new Date(
           addDays(new Date(childBirthday), nextStep.debut).setHours(
             NEXTSTEP_NOTIF_TRIGGER_HOUR
           )
         );
+        trigger = date;
+        if(isAfter(date, new Date())) needToBeScheduled = true;
       }
-      const notificationId = await sendNotificationReminder(content, trigger);
-      if (notificationId) {
-        await StorageUtils.storeStringValue(
-          StorageKeysConstants.notifIdNextStep,
-          notificationId
-        );
+      if(needToBeScheduled) {
+        const notificationId = await sendNotificationReminder(content, trigger);
+        if (notificationId) {
+          await StorageUtils.storeStringValue(
+            StorageKeysConstants.notifIdNextStep,
+            notificationId
+          );
+        }
       }
     }
   }
@@ -269,8 +274,11 @@ const scheduleEventNotification = async (event: Event) => {
       // Planifie la notification pour le jour J
       let notifDate = new Date(eventDate.setHours(EVENT_NOTIF_TRIGGER_HOUR));
       let content = buildEventNotificationContent(event, false);
-      let notificationId = await sendNotificationReminder(content, notifDate);
-      if (notificationId) await updateStoreNotifEventIds(notificationId);
+      let notificationId = null;
+      if (isAfter(notifDate, now)) {
+        notificationId = await sendNotificationReminder(content, notifDate);
+        if (notificationId) await updateStoreNotifEventIds(notificationId);
+      }
 
       // Planifie la notification pour un rappel avant le jour J
       notifDate = new Date(
@@ -278,7 +286,7 @@ const scheduleEventNotification = async (event: Event) => {
           EVENT_NOTIF_TRIGGER_HOUR
         )
       );
-      if (isAfter(new Date(notifDate), now)) {
+      if (isAfter(notifDate, now)) {
         content = buildEventNotificationContent(event, true);
         notificationId = await sendNotificationReminder(content, notifDate);
         if (notificationId) await updateStoreNotifEventIds(notificationId);
@@ -312,3 +320,29 @@ export const logAllScheduledNotifications = async (): Promise<void> => {
     console.log(notif);
   }
 };
+
+export const cancelAllNotificationsByType = async (notificationType: NotificationType) => {
+  const notifications = await Notifications.getAllScheduledNotificationsAsync();
+  for(const notif of notifications) {
+    if(notif.content.data.type === notificationType) {
+      cancelScheduledNotification(notif.identifier);
+    }
+  };
+}
+
+export const rescheduleEventsNotifications = async (events: Event[]) => {
+  await cancelAllNotificationsByType(NotificationType.event);
+  await scheduleEventsNotification(events);
+}
+
+export const scheduleFakeNotif_ForTesting = async () => {
+  const event: Event = {
+    id: 0,
+    nom: "FakeNotif_ForTesting",
+    debut: 0,
+    fin: 0
+  }
+  const content = buildEventNotificationContent(event, true);
+  const trigger = MIN_TRIGGER;
+  await sendNotificationReminder(content, trigger);
+}
