@@ -51,35 +51,15 @@ const sendNotificationReminder = async (
 };
 
 export const allowsNotifications = async () => {
-  const settings = await Notifications.getPermissionsAsync();
-  return (
-    settings.granted || settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
-  );
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  return existingStatus === 'granted';
 }
 
-export const registerForPushNotificationsAsync = async (): Promise<
-  string | undefined
-> => {
-  let token = "";
-  if (isDevice) {
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== "granted") {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== "granted") {
-      console.log("Failed to get push token for push notification!");
-      return;
-    }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
-  } else {
-    console.log("Must use physical device for Push Notifications");
+export const requestNotificationPermission = async () => {
+  const isAllowed = await allowsNotifications();
+  if (!isAllowed) {
+    await Notifications.requestPermissionsAsync();
   }
-
-  return token;
 };
 
 export const scheduleEpdsNotification = async (): Promise<string> => {
