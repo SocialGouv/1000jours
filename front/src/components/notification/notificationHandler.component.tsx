@@ -25,8 +25,7 @@ export const setNotificationHandler = (): void => {
 const NotificationHandler: FC = () => {
   const [notification, setNotification] = useState<Notification | null>(null);
   const notificationListener = useRef<Subscription>();
-  const responseListener = useRef<Subscription>();
-  const [notifType, setNotiftype] = useState<unknown | undefined>(undefined);
+  const [trackNotif, setTrackNotif] = useState<boolean>(false);
 
   const showNotificationModal = (notif: Notification) => {
     // Ajoute un setTimeout pour éviter que l'application freeze
@@ -36,6 +35,15 @@ const NotificationHandler: FC = () => {
     }, 1000);
   };
 
+  // Se déclenche lorsque l'on clique sur une notification native
+  const lastNotificationResponse = Notifications.useLastNotificationResponse();
+  useEffect(() => {
+    if(lastNotificationResponse) {
+      setTrackNotif(true);
+      showNotificationModal(lastNotificationResponse.notification);
+    }
+  }, [lastNotificationResponse]);
+
   useEffect(() => {
     // Notifications
     void NotificationUtils.requestNotificationPermission();
@@ -44,37 +52,26 @@ const NotificationHandler: FC = () => {
       Notifications.addNotificationReceivedListener((newNotification) => {
         showNotificationModal(newNotification);
       });
-    // Se déclenche lorsque l'on clique sur la notification native
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        const notificationType =
-          response.notification.request.content.data.type ?? "";
-
-        setNotiftype(notificationType);
-        showNotificationModal(response.notification);
-      });
 
     return () => {
       if (notificationListener.current)
         Notifications.removeNotificationSubscription(
           notificationListener.current
         );
-
-      if (responseListener.current)
-        Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
 
   const onNotificationDismiss = useCallback(() => {
     setNotification(null);
+    setTrackNotif(false);
   }, []);
 
   return (
     notification && (
       <>
-        {notifType && (
+        {trackNotif && (
           <TrackerHandler
-            screenName={`${TrackerUtils.TrackingEvent.NOTIFICATION} (${notifType}) - ${Labels.notification.openTheApp}`}
+            screenName={`${TrackerUtils.TrackingEvent.NOTIFICATION} (${notification.request.content.data.type}) - ${Labels.notification.openTheApp}`}
           />
         )}
         <NotificationModal
