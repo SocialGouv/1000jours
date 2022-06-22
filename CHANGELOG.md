@@ -1,3 +1,11 @@
+## [1.99.1](https://github.com/SocialGouv/1000jours/compare/v1.99.0...v1.99.1) (2022-06-22)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'erreur sentry sur 'getDevicePushTokenAsync' ([#1265](https://github.com/SocialGouv/1000jours/issues/1265)) ([fe2bbba](https://github.com/SocialGouv/1000jours/commit/fe2bbba4172052db5bffc8af55f4db0f92f8d2d8))
+* 🐛 Corrige les notifications qui ne s'ouvrent pas ([#1264](https://github.com/SocialGouv/1000jours/issues/1264)) ([18a13a4](https://github.com/SocialGouv/1000jours/commit/18a13a4b8f7fc1fb68d876c4e96ba047d39849ed)), closes [#1263](https://github.com/SocialGouv/1000jours/issues/1263)
+
 # [1.99.0](https://github.com/SocialGouv/1000jours/compare/v1.98.2...v1.99.0) (2022-06-21)
 
 
