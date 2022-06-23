@@ -114,7 +114,7 @@ module.exports = {
       dominant: true,
     },
     mots_cles: {
-      type: "string",
+      type: "text",
       default: "",
     },
   },
