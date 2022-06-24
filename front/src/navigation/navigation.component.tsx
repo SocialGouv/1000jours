@@ -88,8 +88,9 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => {
             >
               <Icomoon
                 name={IcomoonIcons.menu}
-                size={Sizes.xxxxxs}
+                size={Sizes.lg}
                 color={Colors.primaryBlue}
+                style={styles.menuIcon}
               />
               <Text
                 style={[styles.headerRightButtonText]}
@@ -128,6 +129,9 @@ const styles = StyleSheet.create({
   logoMinistere: {
     aspectRatio: 1,
   },
+  menuIcon: {
+    height: Sizes.sm,
+  }
 });
 
 export default Navigation;
