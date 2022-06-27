@@ -113,6 +113,10 @@ module.exports = {
       via: "articles",
       dominant: true,
     },
+    mots_cles: {
+      type: "text",
+      default: "",
+    },
   },
   collectionName: "articles",
   info: {
