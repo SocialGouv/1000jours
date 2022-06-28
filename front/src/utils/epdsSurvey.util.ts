@@ -14,6 +14,7 @@ import { getObjectValue, multiRemove, storeObjectValue } from "./storage.util";
 export const getQuestionsAndAnswersFromData = (
   data: unknown
 ): EpdsQuestionAndAnswers[] => {
+  if (!data) return [];
   const fetchedData = (data as { questionnaireEpds: QuestionnaireEpdsFromDB[] })
     .questionnaireEpds;
   return convertToQuestionsAndAnswers(fetchedData);
