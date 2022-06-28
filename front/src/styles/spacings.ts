@@ -21,5 +21,6 @@ export const Paddings = {
   default: scaleNormalize(16),
   larger: scaleNormalize(24),
   largest: scaleNormalize(40),
+  subItemMenu: scaleNormalize(70),
   stepOffset: scaleNormalize(100),
 };

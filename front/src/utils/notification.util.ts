@@ -1,5 +1,4 @@
 import { addDays, isAfter, subDays } from "date-fns";
-import { isDevice } from "expo-device";
 import type {
   NotificationContentInput,
   NotificationRequestInput,
@@ -29,7 +28,7 @@ export enum Weekday {
   saturday = 7,
 }
 
-const MIN_TRIGGER = {seconds: 10};
+const MIN_TRIGGER = { seconds: 10 };
 const NUMBER_OF_DAYS_NOTIF_EVENT_REMINDER = 7;
 const MOODBOARD_NOTIF_TRIGGER_HOUR = 9;
 const EVENT_NOTIF_TRIGGER_HOUR = 13;
@@ -50,12 +49,12 @@ const sendNotificationReminder = async (
   return notificationId;
 };
 
-export const allowsNotifications = async () => {
+export const allowsNotifications = async (): Promise<boolean> => {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
-  return existingStatus === 'granted';
-}
+  return existingStatus === "granted";
+};
 
-export const requestNotificationPermission = async () => {
+export const requestNotificationPermission = async (): Promise<void> => {
   const isAllowed = await allowsNotifications();
   if (!isAllowed) {
     await Notifications.requestPermissionsAsync();
@@ -155,9 +154,9 @@ export const scheduleNextStepNotification = async (
           )
         );
         trigger = date;
-        if(isAfter(date, new Date())) needToBeScheduled = true;
+        if (isAfter(date, new Date())) needToBeScheduled = true;
       }
-      if(needToBeScheduled) {
+      if (needToBeScheduled) {
         const notificationId = await sendNotificationReminder(content, trigger);
         if (notificationId) {
           await StorageUtils.storeStringValue(
@@ -301,28 +300,32 @@ export const logAllScheduledNotifications = async (): Promise<void> => {
   }
 };
 
-export const cancelAllNotificationsByType = async (notificationType: NotificationType) => {
+export const cancelAllNotificationsByType = async (
+  notificationType: NotificationType
+): Promise<void> => {
   const notifications = await Notifications.getAllScheduledNotificationsAsync();
-  for(const notif of notifications) {
-    if(notif.content.data.type === notificationType) {
-      cancelScheduledNotification(notif.identifier);
+  for (const notif of notifications) {
+    if (notif.content.data.type === notificationType) {
+      await cancelScheduledNotification(notif.identifier);
     }
-  };
-}
+  }
+};
 
-export const rescheduleEventsNotifications = async (events: Event[]) => {
+export const rescheduleEventsNotifications = async (
+  events: Event[]
+): Promise<void> => {
   await cancelAllNotificationsByType(NotificationType.event);
-  await scheduleEventsNotification(events);
-}
+  scheduleEventsNotification(events);
+};
 
-export const scheduleFakeNotif_ForTesting = async () => {
+export const scheduleFakeNotif_ForTesting = async (): Promise<void> => {
   const event: Event = {
+    debut: 0,
+    fin: 0,
     id: 0,
     nom: "FakeNotif_ForTesting",
-    debut: 0,
-    fin: 0
-  }
+  };
   const content = buildEventNotificationContent(event, true);
   const trigger = MIN_TRIGGER;
   await sendNotificationReminder(content, trigger);
-}
+};

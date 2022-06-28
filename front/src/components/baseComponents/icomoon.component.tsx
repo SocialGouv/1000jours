@@ -1,5 +1,6 @@
 import { createIconSetFromIcoMoon } from "@expo/vector-icons";
 import * as React from "react";
+import { StyleProp, TextStyle } from "react-native";
 
 import IcomoonConfig from "../../assets/icomoon/selection.json";
 
@@ -7,6 +8,7 @@ interface Props {
   name: string;
   size?: number;
   color?: string;
+  style?: StyleProp<TextStyle>
 }
 
 export enum IcomoonIcons {
@@ -87,13 +89,13 @@ export enum IcomoonIcons {
   valider = "valider",
 }
 
-const Icomoon: React.FC<Props> = ({ name, size, color }) => {
+const Icomoon: React.FC<Props> = ({ name, size, color, style }) => {
   const Icon = createIconSetFromIcoMoon(
     IcomoonConfig,
     "IcoMoon",
     "icomoon.ttf"
   );
-  return <Icon name={name} size={size} color={color} />;
+  return <Icon name={name} size={size} color={color} style={style}/>;
 };
 
 export default Icomoon;
