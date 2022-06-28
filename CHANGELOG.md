@@ -1,3 +1,27 @@
+# [1.100.0](https://github.com/SocialGouv/1000jours/compare/v1.99.1...v1.100.0) (2022-06-28)
+
+
+### Bug Fixes
+
+* **poi:** formulaire d'idée ([#1275](https://github.com/SocialGouv/1000jours/issues/1275)) ([415c34d](https://github.com/SocialGouv/1000jours/commit/415c34d76752c3108d6fc567fa126e6bef18bbe6))
+* 🐛 Corrige l'erreur sentry sur 'getDevicePushTokenAsync' ([#1265](https://github.com/SocialGouv/1000jours/issues/1265)) ([56dc9cf](https://github.com/SocialGouv/1000jours/commit/56dc9cff5b691f35b038dc7e78e252dd2c33feec))
+* 🐛 Corrige la sélection du genre sur la page profil ([#1250](https://github.com/SocialGouv/1000jours/issues/1250)) ([8e21283](https://github.com/SocialGouv/1000jours/commit/8e212834e415b0290950123c89b8838302c24da3)), closes [#1247](https://github.com/SocialGouv/1000jours/issues/1247)
+* 🐛 Corrige la taille de l'icone du menu ([#1269](https://github.com/SocialGouv/1000jours/issues/1269)) ([1d6584d](https://github.com/SocialGouv/1000jours/commit/1d6584d030efadbe26d65e96f84d1381484d785d)), closes [#1268](https://github.com/SocialGouv/1000jours/issues/1268)
+* 🐛 Corrige le problème d'affichage des images (articles) ([#1252](https://github.com/SocialGouv/1000jours/issues/1252)) ([913d7f8](https://github.com/SocialGouv/1000jours/commit/913d7f8fe317c2497aaef8c85ee504d2ee37eebf)), closes [#1251](https://github.com/SocialGouv/1000jours/issues/1251)
+* 🐛 Corrige les notifications de type événements ([#1238](https://github.com/SocialGouv/1000jours/issues/1238)) ([38fcf24](https://github.com/SocialGouv/1000jours/commit/38fcf2495333a4a990ca9c83f424b181757c05dd)), closes [#1144](https://github.com/SocialGouv/1000jours/issues/1144) [#1166](https://github.com/SocialGouv/1000jours/issues/1166)
+* 🐛 Corrige les notifications qui ne s'ouvrent pas ([#1264](https://github.com/SocialGouv/1000jours/issues/1264)) ([b324f31](https://github.com/SocialGouv/1000jours/commit/b324f3149f15240c711173d9c4b199b256fa3b2a)), closes [#1263](https://github.com/SocialGouv/1000jours/issues/1263)
+* 🐛 getQuestionsAndAnswersFromData - check if undefined ([#1273](https://github.com/SocialGouv/1000jours/issues/1273)) ([9a7f95d](https://github.com/SocialGouv/1000jours/commit/9a7f95dd5a33f3e98f38e20007242dc4af59734e))
+* 🐛 Sentry errors ([#1261](https://github.com/SocialGouv/1000jours/issues/1261)) ([4d51a6b](https://github.com/SocialGouv/1000jours/commit/4d51a6b19c26db581e8e9b0c2d19c6005f999946)), closes [#1245](https://github.com/SocialGouv/1000jours/issues/1245) [#1244](https://github.com/SocialGouv/1000jours/issues/1244) [#1246](https://github.com/SocialGouv/1000jours/issues/1246) [#1253](https://github.com/SocialGouv/1000jours/issues/1253) [#1246](https://github.com/SocialGouv/1000jours/issues/1246)
+
+
+### Features
+
+* **article:** ajout du mot-clé ([#1270](https://github.com/SocialGouv/1000jours/issues/1270)) ([d7874d8](https://github.com/SocialGouv/1000jours/commit/d7874d87c045144fc4a435a2ba4605f33f6925b7))
+* **widget:** envoi des mails pour les intentions ([#1257](https://github.com/SocialGouv/1000jours/issues/1257)) ([b1ba0e3](https://github.com/SocialGouv/1000jours/commit/b1ba0e356d592e9bd4a606a2ed453ce65eb5d4dd))
+* 🎸 Ajoute le genre sur la page Profil ([#1248](https://github.com/SocialGouv/1000jours/issues/1248)) ([67bcc35](https://github.com/SocialGouv/1000jours/commit/67bcc35eddac1ec9b995f1211284d4bd0c2b43dd)), closes [#1243](https://github.com/SocialGouv/1000jours/issues/1243)
+* **intentions:** ajout de la table commentaires ([#1236](https://github.com/SocialGouv/1000jours/issues/1236)) ([3b27a6e](https://github.com/SocialGouv/1000jours/commit/3b27a6e473f565e3c445273e91367f210906c9f8))
+* **menu:** regroupement informations ([#1237](https://github.com/SocialGouv/1000jours/issues/1237)) ([0d8eccc](https://github.com/SocialGouv/1000jours/commit/0d8eccc556f66ae483d70b72d13dda0b132b0125))
+
 ## [1.99.1](https://github.com/SocialGouv/1000jours/compare/v1.99.0...v1.99.1) (2022-06-22)
 
 
