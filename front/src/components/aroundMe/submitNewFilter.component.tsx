@@ -16,6 +16,7 @@ import {
   CustomPostalCodeTextInput,
   Icomoon,
   IcomoonIcons,
+  Loader,
   TitleH1,
 } from "../../components/baseComponents";
 import { Labels, SearchQueries } from "../../constants";
@@ -35,6 +36,10 @@ interface Props {
   visible: boolean;
   hideModal: () => void;
 }
+interface Section {
+  instruction: string;
+  placeholder: string;
+}
 
 const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
   useEffect(() => {
@@ -49,6 +54,9 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
   const [postalCode, setPostalCode] = useState("");
   const [queryVariables, setQueryVariables] = useState<unknown>();
   const [triggerSendSuggestions, setTriggerSendSuggestions] = useState(false);
+
+  const [isLoading, setLoading] = useState(false);
+
   const instructionsAndPlaceholders =
     Labels.aroundMe.submitNewFilter.instructions;
 
@@ -69,7 +77,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
 
   const onValidate = useCallback(() => {
     if (!newPoisIsEmpty && !newSuggestionsIsEmpty) {
-      hideModal();
+      setLoading(true);
       setQueryVariables({
         codePostal: postalCode,
         nombreEnfants: numberOfChildren,
@@ -77,13 +85,8 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
         suggestionsAmeliorations: newSuggestions,
       });
       setTriggerSendSuggestions(!triggerSendSuggestions);
-      setNewPois("");
-      setNewPoisIsEmpty(true);
-      setNewSuggestions("");
-      setNewPoisIsEmpty(true);
     }
   }, [
-    hideModal,
     newPois,
     newPoisIsEmpty,
     newSuggestions,
@@ -93,13 +96,17 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
     triggerSendSuggestions,
   ]);
 
-  const renderSection = (
-    section: {
-      instruction: string;
-      placeholder: string;
-    },
-    index: number
-  ) => {
+  const onSendCompleted = useCallback(() => {
+    setNewPois("");
+    setNewPoisIsEmpty(true);
+    setNewSuggestions("");
+    setNewPoisIsEmpty(true);
+
+    setLoading(false);
+    hideModal();
+  }, [hideModal]);
+
+  const renderSection = (section: Section, index: number) => {
     const functionAndValue = getChangeFunctionAndValue(index);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -113,11 +120,6 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
 
     return (
       <View style={styles.sectionView}>
-        <GraphQLMutation
-          query={SearchQueries.CARTO_SEND_SUGGESTIONS}
-          variables={queryVariables}
-          triggerLaunchMutation={triggerSendSuggestions}
-        />
         <CommonText style={styles.partsTitle}>{section.instruction}</CommonText>
         <TextInput
           style={styles.textInput}
@@ -134,6 +136,12 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
 
   return (
     <Modal transparent={true} visible={visible} animationType="fade">
+      <GraphQLMutation
+        query={SearchQueries.CARTO_SEND_SUGGESTIONS}
+        variables={queryVariables}
+        triggerLaunchMutation={triggerSendSuggestions}
+        onCompleted={onSendCompleted}
+      />
       <View style={Styles.modale.behindOfModal}>
         <View style={styles.mainContainer}>
           <TitleH1
@@ -188,9 +196,10 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
                 title={Labels.buttons.validate}
                 titleStyle={styles.buttonTitleStyle}
                 rounded={true}
-                disabled={false}
+                disabled={isLoading}
                 action={onValidate}
               />
+              {isLoading && <Loader />}
             </View>
           </View>
         </View>
