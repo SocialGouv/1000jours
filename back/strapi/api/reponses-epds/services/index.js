@@ -2,6 +2,7 @@
 
 const { partage } = require("./partage-epds");
 const { contact } = require("./contact");
+const { contactConfirmed } = require("./contact-confirmed");
 const { createReponsesEpdsWidget } = require("./create-reponses-epds-widget");
 const {
   partagePourSoiMeme,
@@ -10,6 +11,7 @@ const {
 
 module.exports = {
   contact,
+  contactConfirmed,
   createReponsesEpdsWidget,
   partage,
   partageEntourage,

@@ -10,6 +10,14 @@ const contactEpds = async (_1, _2, { context }) => {
   }
 };
 
+const contactConfirmedEpds = async (_1, _2, { context }) => {
+  try {
+    return ReponsesEpdsService.contactConfirmed(context.request.body);
+  } catch (e) {
+    context.badRequest(e.message);
+  }
+};
+
 const partageEpds = async (_1, _2, { context }) => {
   try {
     return ReponsesEpdsService.partage(context.request.body);
@@ -53,6 +61,11 @@ module.exports = {
       naissance_dernier_enfant: String
       moyen: String
       horaires: String
+    ): Boolean
+
+    epdsContactConfirmed (
+      email: String
+      prenom: String
     ): Boolean
     
     epdsPartage (
@@ -118,6 +131,12 @@ module.exports = {
       epdsContact: {
         description: "Envoie une demande de contact post-partum",
         resolver: contactEpds,
+        resolverOf: "application::reponses-epds.reponses-epds.contact",
+      },
+      epdsContactConfirmed: {
+        description:
+          "Lors d'une demande de contact post-partum, envoi d'un mail de confirmation au parent pour confirmer l'envoi de la demande",
+        resolver: contactConfirmedEpds,
         resolverOf: "application::reponses-epds.reponses-epds.contact",
       },
       epdsPartage: {
