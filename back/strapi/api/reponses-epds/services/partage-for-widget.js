@@ -148,6 +148,8 @@ const emailForEntourageHtml = (info) =>
 
 <p>Nous vous invitons à accompagner <%- prenom %> dans cette démarche en demandant de l'aide aux professionnels de santé qui la suivent (sage-femme, médecin traitant ...).</p>
 
+${mamanBluesBloc()}
+
 ${footerHtml()}
 `)(info);
 
