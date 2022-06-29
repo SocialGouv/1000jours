@@ -19,6 +19,7 @@ import { Events } from "../../components";
 import {
   CommonText,
   CustomButton,
+  CustomSnackbar,
   Icomoon,
   IcomoonIcons,
   ModalHelp,
@@ -28,6 +29,7 @@ import {
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
+  AroundMeConstants,
   CalendarDbQueries,
   FetchPoliciesConstants,
   Formats,
@@ -71,6 +73,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const hourWhenEventEnd = 18; // Se Termine à 18h
 
   const [showModalHelp, setShowModalHelp] = useState(false);
+  const [showSnackBar, setShowSnackBar] = useState(false);
   const [triggerGetAllEvents, setTriggerGetAllEvents] = useState(false);
   const [trackerAction, setTrackerAction] = useState("");
 
@@ -163,7 +166,9 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   };
 
   const getAppCalendar = async () => {
-    const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT);
+    const calendars = await Calendar.getCalendarsAsync(
+      Calendar.EntityTypes.EVENT
+    );
     const calendar = _.find(calendars, {
       allowsModifications: true,
       color: Colors.primaryBlue,
@@ -172,25 +177,40 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     return calendar;
   };
 
+  const createEventInCalendar = useCallback(
+    (calendarId: string, event: Event) => {
+      try {
+        if (event.date) {
+          void Calendar.createEventAsync(calendarId, {
+            endDate: buildDateTimeWithTimeZone(event.date, hourWhenEventEnd),
+            notes: event.description ?? "",
+            startDate: buildDateTimeWithTimeZone(
+              event.date,
+              hourWhenEventStart
+            ),
+            timeZone: Localization.timezone,
+            title: event.nom,
+          });
+        }
+      } catch (e: unknown) {
+        console.error((e as Error).message);
+        setShowSnackBar(true);
+      }
+    },
+    []
+  );
+
   const syncEventsWithOsCalendar = useCallback(async () => {
     setTrackerAction(TrackerUtils.TrackingEvent.CALENDAR_SYNC);
 
     const calendarPermission = await Calendar.requestCalendarPermissionsAsync();
-    if (calendarPermission?.granted) {
+    if (calendarPermission.granted) {
       const appCalendar = await getAppCalendar();
       if (appCalendar?.id) void Calendar.deleteCalendarAsync(appCalendar.id);
       const newCalendarId = await createCalendar();
 
       events.forEach((event) => {
-        if (event.date) {
-          void Calendar.createEventAsync(newCalendarId, {
-            endDate: buildDateTimeWithTimeZone(event.date, hourWhenEventEnd),
-            notes: event.description ?? "",
-            startDate: buildDateTimeWithTimeZone(event.date, hourWhenEventStart),
-            timeZone: Localization.timezone,
-            title: event.nom,
-          });
-        }
+        createEventInCalendar(newCalendarId, event);
       });
 
       const date = new Date().toISOString();
@@ -202,7 +222,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     } else {
       Alert.alert(Labels.calendar.pleaseAllowAccessCalendar);
     }
-  }, [createCalendar, events]);
+  }, [createCalendar, createEventInCalendar, events]);
 
   const formattedEvents = useCallback(
     (eventsToFormat: Event[]): Event[] => {
@@ -274,6 +294,10 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
 
   const navigateToProfile = useCallback(() => {
     void RootNavigation.navigate("profile", null);
+  }, []);
+
+  const onHideSnackBar = useCallback(() => {
+    setShowSnackBar(false);
   }, []);
 
   return (
@@ -364,6 +388,15 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
           onDismiss={onShowHelpModalButtonPressed(false)}
         />
       )}
+      <CustomSnackbar
+        duration={AroundMeConstants.SNACKBAR_DURATION}
+        visible={showSnackBar}
+        isOnTop={false}
+        backgroundColor={Colors.primaryBlueLight}
+        onDismiss={onHideSnackBar}
+        textColor={Colors.primaryBlue}
+        text={Labels.errorMsg}
+      />
     </View>
   );
 };
