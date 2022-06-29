@@ -1,3 +1,10 @@
+## [1.101.1](https://github.com/SocialGouv/1000jours/compare/v1.101.0...v1.101.1) (2022-06-29)
+
+
+### Bug Fixes
+
+* **widget:** bloc de contact dans le mail ([#1283](https://github.com/SocialGouv/1000jours/issues/1283)) ([e755295](https://github.com/SocialGouv/1000jours/commit/e755295401b9addc18fd8cb4fbc57d4bcb061e82))
+
 # [1.101.0](https://github.com/SocialGouv/1000jours/compare/v1.100.0...v1.101.0) (2022-06-29)
 
 
