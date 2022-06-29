@@ -7,6 +7,10 @@ const path = require('path');
 
 const relativeDirPath = path.relative(".", `public`);
 
+const WIDGET_URL = process.env["WIDGET_URL"];
+const SOURCE_FROM_EMAIL = "fromEmail";
+const WIDGET_URL_CONTACT = `${WIDGET_URL}/contact/to-be-contacted/?source=${SOURCE_FROM_EMAIL}`;
+
 const filename = (prenom, date) => {
   const newDate = date.replace("/", "").replace("/", "");
   return `1000J-BLUES-Resultats-EPDS-${newDate}-${prenom}.pdf`;
@@ -26,6 +30,42 @@ const footerHtml = () => `
   <p>
     <img height="90" src="https://backoffice-les1000jours.fabrique.social.gouv.fr/uploads/logo_1000j_blues_a0341d9114.png"/>
     <img height="90" src="https://backoffice-les1000jours.fabrique.social.gouv.fr/uploads/logo_republique_francaise_365a280a09.png"/>
+  </p>
+`;
+
+// Bloc Maman Blues
+const mamanBluesBloc = () => `
+  <p>
+    <div style="
+      padding:16px; 
+      text-align:center; 
+      justify-content:center; 
+      flex-wrap:wrap; 
+      background-color:#FFEDDF; 
+      border:2px #E86405 solid;">
+      <div style="display:contents;">
+        <img alt="Portrait d'Elise" src="https://backoffice-les1000jours.fabrique.social.gouv.fr/uploads/portrait_elise_d95a2bb0bd.jpg" 
+          style="
+            height:100px; 
+            border:5px #E86405 solid; 
+            border-radius:50%;" />
+        <div style="
+          margin-top:16px; 
+          margin-bottom:16px;">
+          <b>Trouvez un accompagnement personnalisé près de chez vous </b> auprès de professionnels sensibilisés aux difficultés maternelles en échangeant avec Elise, présidente de l’association Maman Blues
+        </div>
+      </div>
+      <a href=${WIDGET_URL_CONTACT}>
+        <button style="
+          min-width:40%; 
+          text-transform:uppercase; 
+          background-color:#E86405; 
+          border-radius:25px; 
+          line-height:1.5rem;
+          color:white;
+          border-color:transparent;">être contacté(e)</button>
+      </a>
+    </div>
   </p>
 `;
 
@@ -70,6 +110,8 @@ const emailForHimselfHtml = (info) =>
 <p>${reminderLabel}</p>
 
 <p>N'hésitez pas à demander de l'aide en montrant le résultat de ce test à votre professionnel de santé.</p>
+
+${mamanBluesBloc()}
 
 ${footerHtml()}
 `)(info);
