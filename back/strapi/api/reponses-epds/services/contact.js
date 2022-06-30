@@ -1,5 +1,7 @@
 "use strict";
 
+const { contactConfirmed } = require("./contact-confirmed");
+
 const emailTemplate = (info) => ({
   subject: "Demande de contact EPDS <%- prenom %>",
   text: `Bonjour,
@@ -60,7 +62,7 @@ const contact = async ({
   nombre_enfants = "ND",
   naissance_dernier_enfant = "ND",
   moyen = "ND",
-  horaires = "ND"
+  horaires = "ND",
 }) => {
   if (!process.env["MAIL_SEND_TO"])
     throw new Error("Le service mail n'est pas configuré");
@@ -72,7 +74,7 @@ const contact = async ({
     nombre_enfants,
     naissance_dernier_enfant,
     moyen,
-    horaires
+    horaires,
   };
 
   try {
@@ -85,7 +87,14 @@ const contact = async ({
       info
     );
 
-    return res && !!res.response.match(/Ok/);
+    const isContactSuccess = res && /Ok/.test(res.response);
+    if (isContactSuccess && info.email) {
+      return contactConfirmed({
+        email: info.email,
+        prenom: info.prenom.split(" [")[0],
+      });
+    }
+    return isContactSuccess;
   } catch (e) {
     console.error(e);
     throw new Error("Erreur de connexion au serveur mail");
@@ -93,5 +102,5 @@ const contact = async ({
 };
 
 module.exports = {
-  contact
+  contact,
 };
