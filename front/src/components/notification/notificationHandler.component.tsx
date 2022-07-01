@@ -1,9 +1,9 @@
+import type { Subscription } from "expo-modules-core";
 import type { Notification } from "expo-notifications";
 import * as Notifications from "expo-notifications";
 import type { FC } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as React from "react";
-import { Subscription } from 'expo-modules-core';
 
 import { Labels } from "../../constants";
 import { NotificationUtils, TrackerUtils } from "../../utils";
@@ -38,7 +38,7 @@ const NotificationHandler: FC = () => {
   // Se déclenche lorsque l'on clique sur une notification native
   const lastNotificationResponse = Notifications.useLastNotificationResponse();
   useEffect(() => {
-    if(lastNotificationResponse) {
+    if (lastNotificationResponse) {
       setTrackNotif(true);
       showNotificationModal(lastNotificationResponse.notification);
     }

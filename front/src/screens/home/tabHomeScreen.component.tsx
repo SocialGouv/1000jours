@@ -80,8 +80,8 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   };
 
   const handleResults = useCallback(
-    (data: unknown) => {
-      const checkIfCurrentStepHasChanged = (
+    async (data: unknown) => {
+      const checkIfCurrentStepHasChanged = async (
         currentStep: Step,
         etapes: Step[]
       ) => {
@@ -90,21 +90,27 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
           StringUtils.stringIsNotNullNorEmpty(previousCurrentStepId) &&
           previousCurrentStepId !== currentStep.id.toString()
         ) {
-          void NotificationUtils.cancelScheduleNextStepNotification().then(
-            () => {
-              void NotificationUtils.scheduleNextStepNotification(
-                currentStep,
-                true
-              );
-              setPreviousCurrentStepId(currentStep.id.toString());
-            }
+          await NotificationUtils.cancelScheduleNextStepNotification();
+          await NotificationUtils.scheduleNextStepNotification(
+            currentStep,
+            true
           );
+          setPreviousCurrentStepId(currentStep.id.toString());
         }
         // Planifie la notification du prochain changement d'étape
         else {
           const nextStep = _.find(etapes, { ordre: currentStep.ordre + 1 });
           if (nextStep)
             void NotificationUtils.scheduleNextStepNotification(nextStep);
+        }
+
+        // Programme la notification des articles non lus pour la nouvelle étape
+        if (
+          !StringUtils.stringIsNotNullNorEmpty(previousCurrentStepId) ||
+          (StringUtils.stringIsNotNullNorEmpty(previousCurrentStepId) &&
+            previousCurrentStepId !== currentStep.id.toString())
+        ) {
+          await NotificationUtils.scheduleArticlesNotification();
         }
       };
 
@@ -121,9 +127,13 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 
       if (currentStepId) {
         const currentStep = _.find(etapes, { id: currentStepId });
-        if(currentStep?.nom)
-          StorageUtils.storeStringValue(StorageKeysConstants.currentStepLabelKey, currentStep.nom)
-        if (currentStep) checkIfCurrentStepHasChanged(currentStep, etapes);
+        if (currentStep?.nom)
+          await StorageUtils.storeObjectValue(
+            StorageKeysConstants.currentStep,
+            currentStep
+          );
+        if (currentStep)
+          await checkIfCurrentStepHasChanged(currentStep, etapes);
       }
     },
     [currentStepId, previousCurrentStepId]

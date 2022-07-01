@@ -53,7 +53,12 @@ import type {
   Step,
   TabHomeParamList,
 } from "../../types";
-import { ArticleUtils, StorageUtils, TrackerUtils } from "../../utils";
+import {
+  ArticleUtils,
+  NotificationUtils,
+  StorageUtils,
+  TrackerUtils,
+} from "../../utils";
 
 interface Props {
   route?: RouteProp<{ params: { id: number; step?: Step } }, "params">;
@@ -159,6 +164,7 @@ const ArticleDetail: FC<Props> = ({
           StorageKeysConstants.articlesRead,
           articlesRead
         );
+        void NotificationUtils.updateArticlesNotification();
       }
     }
   }, [articleHasBeenRead, articleId]);
@@ -227,7 +233,9 @@ const ArticleDetail: FC<Props> = ({
                 screenName={`${TrackerUtils.TrackingEvent.ARTICLE} : ${currentArticle.titre}`}
               />
             )}
-            <View style={isInCarousel ? styles.borderRadius : styles.mainContainer}>
+            <View
+              style={isInCarousel ? styles.borderRadius : styles.mainContainer}
+            >
               {isInCarousel ? null : (
                 <View>
                   <View style={styles.flexStart}>
@@ -241,7 +249,13 @@ const ArticleDetail: FC<Props> = ({
                 </View>
               )}
               <View style={styles.borderRadius}>
-                <View style={[isInCarousel ? styles.borderRadius : styles.imageBannerContainer]}>
+                <View
+                  style={[
+                    isInCarousel
+                      ? styles.borderRadius
+                      : styles.imageBannerContainer,
+                  ]}
+                >
                   <ImageBanner visuel={currentArticle.visuel} />
                   <View style={styles.flexEnd}>
                     <ShareButton
@@ -311,17 +325,17 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   borderRadius: {
-    borderRadius: Sizes.xxxxs
+    borderRadius: Sizes.xxxxs,
   },
   fabButton: {
-    color: Colors.primaryBlueDark,
     backgroundColor: Colors.white,
     borderColor: Colors.borderGrey,
     borderWidth: 2,
-    position: 'absolute',
-    margin: Margins.default,
-    right: 0,
     bottom: 0,
+    color: Colors.primaryBlueDark,
+    margin: Margins.default,
+    position: "absolute",
+    right: 0,
   },
   flexEnd: {
     alignSelf: "flex-end",

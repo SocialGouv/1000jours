@@ -1,6 +1,7 @@
 import { IcomoonIcons } from "../components/baseComponents/icomoon.component";
 import { NUMBER_OF_DAYS_NOTIF_REMINDER } from "./epdsConstants.constants";
 import { epdsInformation } from "./epdsResultInformation.constants";
+import { MIN_SECONDS } from "./notification.constants";
 
 export default {
   accessibility: {
@@ -132,6 +133,19 @@ export default {
     },
     inShortTitle: "En bref :",
     learnMoreAboutIt: "En savoir plus à ce sujet :",
+    notification: {
+      articlesToRead: {
+        bodyPart1: "Il vous reste",
+        bodyPart2: "article(s) à lire concernant votre étape",
+        redirectTitle: "Consulter",
+        title: "Article(s) non lu(s)",
+      },
+      congrats: {
+        body: "Vous avez lu tous les articles concernant votre étape.",
+        redirectTitle: "Fermer",
+        title: "Féllicitation !",
+      },
+    },
     readArticle: "Article lu",
     thematic: "Thématique",
     usefulTitle: "Cet article vous a été utile ?",
@@ -184,6 +198,13 @@ export default {
     today: "Aujourd'hui",
   },
   dateFormatLabel: "Jour / Mois / Année",
+  dev: {
+    notifications: "Notifications",
+    scheduledNotifications: "Notifications programmées",
+    testNotification: "Tester une notification",
+    testNotificationInfo: `(se déclenche au bout de ${MIN_SECONDS}s)`,
+    title: "Infos Dev.",
+  },
   epdsSurvey: {
     beContacted: {
       beContactedSent: "Votre demande de contact a bien été envoyée",
@@ -566,12 +587,12 @@ export default {
       planned: "Naissance prévue de votre enfant",
     },
     gender: {
+      empty: "Non renseigné",
       label: "Genre",
       man: "Homme",
-      woman: "Femme",
       other: "Autre",
-      empty: "Non renseigné",
       select: "Sélectionnez votre genre",
+      woman: "Femme",
     },
     situations: {
       oneChild: "J'ai un enfant",

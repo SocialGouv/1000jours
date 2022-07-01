@@ -3,8 +3,9 @@ export const appActiveCounter = "@appActiveCounter";
 export const appOpeningLastDate = "@appOpeningLastDate";
 export const isFirstLaunchKey = "@isFirstLaunch";
 export const lastVersionLaunchKey = "@lastVersionLaunchKey";
+export const currentStep = "@currentStep";
 export const currentStepId = "@currentStepId";
-export const currentStepLabelKey = "@currentStepLabelKey";
+export const currentStepArticleIds = "@currentStepArticleIds";
 export const userSituationsKey = "@userSituations";
 export const userChildBirthdayKey = "@userChildBirthday";
 export const userGenderKey = "@userGenderKey";
@@ -26,6 +27,7 @@ export const scrollToEventId = "@scrollToEventId";
 export const articlesRead = "@articlesRead";
 export const moodsByDate = "@moodsByDate";
 export const notificationsAreAllowed = "@notificationsAreAllowed";
+export const triggerForArticlesNotification = "@triggerForArticlesNotification";
 
 export const allStorageKeys = [
   userUuidKey,
@@ -33,7 +35,9 @@ export const allStorageKeys = [
   appOpeningLastDate,
   isFirstLaunchKey,
   lastVersionLaunchKey,
+  currentStep,
   currentStepId,
+  currentStepArticleIds,
   userSituationsKey,
   userChildBirthdayKey,
   epdsGenderKey,
@@ -53,6 +57,7 @@ export const allStorageKeys = [
   articlesRead,
   moodsByDate,
   notificationsAreAllowed,
+  triggerForArticlesNotification,
 ];
 
 export const epdsSurveyKeys = [epdsQuestionAndAnswersKey, epdsQuestionIndexKey];

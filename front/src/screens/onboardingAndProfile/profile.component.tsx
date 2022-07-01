@@ -43,7 +43,6 @@ import type {
 import { StorageUtils, TrackerUtils } from "../../utils";
 import { cancelScheduleNextStepNotification } from "../../utils/notification.util";
 import { checkErrorOnProfile } from "../../utils/step.util";
-import { TrackerEvent } from "../../type";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -112,7 +111,6 @@ const Profile: FC<Props> = ({ navigation }) => {
     },
     genderEmpty,
   ];
-  const defaultGender = _.find(genders, ["id", "empty"]);
 
   const hasCheckedSituation = () => {
     return _.filter(userSituations, ["isChecked", true]).length > 0;
@@ -135,7 +133,8 @@ const Profile: FC<Props> = ({ navigation }) => {
   const [gender, setGender] = useState<ProfileGender>(genderEmpty);
 
   const initGender = async () => {
-    const genderStored = await StorageUtils.getObjectValue(StorageKeysConstants.userGenderKey);
+    const genderStored: ProfileGender | null =
+      await StorageUtils.getObjectValue(StorageKeysConstants.userGenderKey);
     setGender(genderStored ?? genderEmpty);
   };
 
@@ -155,6 +154,7 @@ const Profile: FC<Props> = ({ navigation }) => {
     };
     void initDataWithStorageValue();
     void initGender();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -203,12 +203,10 @@ const Profile: FC<Props> = ({ navigation }) => {
       userSituations
     );
 
-    if(gender) {
-      await StorageUtils.storeObjectValue(
-        StorageKeysConstants.userGenderKey,
-        gender
-      );
-    }
+    await StorageUtils.storeObjectValue(
+      StorageKeysConstants.userGenderKey,
+      gender
+    );
 
     const situationChecked = _.find(userSituations, { isChecked: true });
     if (situationChecked?.childBirthdayRequired) {
@@ -231,9 +229,7 @@ const Profile: FC<Props> = ({ navigation }) => {
     }
 
     // Envoi du genre sélectionné sur Matomo
-    if (gender) {
-      setTrackerAction(`${Labels.profile.gender} : ${gender.label}`);
-    }
+    setTrackerAction(`${Labels.profile.gender.label} : ${gender.label}`);
 
     void cancelScheduleNextStepNotification();
     navigateToRoot();
@@ -268,13 +264,16 @@ const Profile: FC<Props> = ({ navigation }) => {
     navigateToRoot();
   }, [navigateToRoot]);
 
-  const onGenderPressed = useCallback((item: ProfileGender) => () => {
-    setGender(item);
-  }, []);
+  const onGenderPressed = useCallback(
+    (item: ProfileGender) => () => {
+      setGender(item);
+    },
+    []
+  );
 
   const isSelectedGender = (profileGender: ProfileGender) => {
-    return profileGender.id === gender?.id;
-  }
+    return profileGender.id === gender.id;
+  };
 
   return (
     <View style={[styles.mainContainer]}>
@@ -389,7 +388,9 @@ const Profile: FC<Props> = ({ navigation }) => {
                     >
                       <CommonText
                         style={
-                          isSelectedGender(item) ? styles.itemTextSelected : null
+                          isSelectedGender(item)
+                            ? styles.itemTextSelected
+                            : null
                         }
                       >
                         {item.label}
@@ -473,23 +474,23 @@ const styles = StyleSheet.create({
     paddingVertical: Paddings.light,
   },
   genderContainer: {
-    paddingTop: Paddings.default,
     marginBottom: Margins.default,
-  },
-  genderItemsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start'
-  },
-  genderItemContainer: {
-    width: '50%',
+    paddingTop: Paddings.default,
   },
   genderItem: {
     alignContent: "space-between",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: Paddings.default,
     paddingHorizontal: Paddings.smallest,
+    paddingVertical: Paddings.default,
+  },
+  genderItemContainer: {
+    width: "50%",
+  },
+  genderItemsContainer: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   hide: {
     display: "none",
@@ -570,6 +571,3 @@ const styles = StyleSheet.create({
 });
 
 export default Profile;
-function trackScreenView(arg0: string) {
-  throw new Error("Function not implemented.");
-}

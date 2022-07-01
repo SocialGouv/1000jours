@@ -10,6 +10,7 @@ import Formats from "./formats";
 import Labels from "./Labels";
 import * as Links from "./links.constants";
 import Locales from "./localizations";
+import * as NotificationConstants from "./notification.constants";
 import * as PlatformConstants from "./platform.constants";
 import * as StorageKeysConstants from "./storageKeys.constants";
 
@@ -25,6 +26,7 @@ export {
   Labels,
   Links,
   Locales,
+  NotificationConstants,
   PlatformConstants,
   SearchQueries,
   StorageKeysConstants,

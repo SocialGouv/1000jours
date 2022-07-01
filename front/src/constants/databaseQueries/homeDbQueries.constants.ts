@@ -51,6 +51,19 @@ query GetStepArticles {
 }
 `;
 
+export const LIST_ID_ARTICLES_WITH_STEP = (
+  stepId: number | string
+): string => /* GraphQL */ `
+query GetStepArticles {
+  articles(where: {
+    etapes: { id: ${stepId} }
+  })
+  {
+    id
+  }
+}
+`;
+
 export const ARTICLE_DETAILS_WITH_ID = (
   articleId: number
 ): string => /* GraphQL */ `

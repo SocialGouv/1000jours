@@ -7,7 +7,9 @@ import {
   subWeeks,
 } from "date-fns";
 
+import { StorageKeysConstants } from "../constants";
 import type { UserInfos, UserSituation } from "../types";
+import { getObjectValue } from "./storage.util";
 
 const ETAPE_PROJET = 1;
 const ETAPE_CONCEPTION = 2;
@@ -143,4 +145,26 @@ export const getCurrentStepId = (
     id = ETAPE_CONCEPTION;
   }
   return id;
+};
+
+export const countCurrentStepArticlesRead = async (): Promise<number> => {
+  const articlesOfCurrentStep = (await getObjectValue(
+    StorageKeysConstants.currentStepArticleIds
+  )) as string[] | undefined;
+
+  if (articlesOfCurrentStep && articlesOfCurrentStep.length > 0) {
+    const articlesRead =
+      ((await getObjectValue(StorageKeysConstants.articlesRead)) as
+        | string[]
+        | undefined) ?? [];
+
+    const currentStepArticlesRead = articlesRead.filter((id: string) => {
+      return articlesOfCurrentStep.includes(id);
+    });
+
+    if (currentStepArticlesRead.length > 0) {
+      return articlesOfCurrentStep.length - articlesRead.length;
+    }
+  }
+  return -1;
 };

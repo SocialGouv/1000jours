@@ -28,6 +28,7 @@ import EpdsOnboarding from "./epdsSurvey/epdsOnboarding.component";
 import EpdsSurveyContent from "./epdsSurvey/epdsSurveyContent.component";
 import ParenthequeItem from "./home/parenthequeItem.component";
 import ConditionsOfUse from "./menu/conditionsOfUse.component";
+import InfosDev from "./menu/infosDev.component";
 import LegalNotice from "./menu/legalNotice.component";
 import Menu from "./menu/menu.component";
 import EditMoodDay from "./moodboard/editMoodDay.component";
@@ -62,6 +63,7 @@ export {
   Events,
   FetchPois,
   ImageBanner,
+  InfosDev,
   InShort,
   LegalNotice,
   Links,

@@ -10,6 +10,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { BaseAssets } from "./src/components/assets";
 import LinksHandler from "./src/components/links/linksHandler.component";
 import { setNotificationHandler } from "./src/components/notification/notificationHandler.component";
+import StoreCurrentStepArticleIds from "./src/components/storage/storeCurrentStepArticleIds.component";
 import TrackerHandler from "./src/components/tracker/trackerHandler.component";
 import {
   TrackerAppStart,
@@ -20,8 +21,14 @@ import { StorageKeysConstants } from "./src/constants";
 import { useCachedResources, useColorScheme } from "./src/hooks";
 import Navigation from "./src/navigation/navigation.component";
 import { GraphQLProvider } from "./src/services";
-import { TrackerEvent } from "./src/type";
-import { initMonitoring, StorageUtils, TrackerUtils, AppUtils, NotificationUtils } from "./src/utils";
+import type { TrackerEvent } from "./src/type";
+import {
+  AppUtils,
+  initMonitoring,
+  NotificationUtils,
+  StorageUtils,
+  TrackerUtils,
+} from "./src/utils";
 
 setNotificationHandler();
 initLocales();
@@ -37,6 +44,7 @@ const MainAppContainer: FC = () => {
   const [appCounterIsLoaded, setAppCounterIsLoaded] = useState(false);
   const [sendTracker, setSendTracker] = useState(false);
   const [screenCanBeDisplayed, setScreenCanBeDisplayed] = useState(false);
+  const [updateStorageValue, setUpdateStorageValue] = useState(false);
   // Load Custom Fonts (Icomoon)
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
@@ -68,18 +76,27 @@ const MainAppContainer: FC = () => {
 
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
     if (nextAppState === "active") {
+      setUpdateStorageValue(true);
       void updateAppActiveCounter();
       void checkNotificationPermission();
     }
   };
 
   const checkNotificationPermission = async () => {
-    const notificationsAreAllowed = await NotificationUtils.allowsNotifications();
-    const notificationsAreAllowedFromStorage = await StorageUtils.getObjectValue(
-      StorageKeysConstants.notificationsAreAllowed
-    );
-    if(!notificationsAreAllowed && notificationsAreAllowedFromStorage !== false) {
-      setTrackerEventObject({ action: TrackerUtils.TrackingEvent.SETTINGS, name: TrackerUtils.TrackingEvent.NOTIFICATIONS_DISABLED });
+    const notificationsAreAllowed =
+      await NotificationUtils.allowsNotifications();
+    const notificationsAreAllowedFromStorage =
+      await StorageUtils.getObjectValue(
+        StorageKeysConstants.notificationsAreAllowed
+      );
+    if (
+      !notificationsAreAllowed &&
+      notificationsAreAllowedFromStorage !== false
+    ) {
+      setTrackerEventObject({
+        action: TrackerUtils.TrackingEvent.SETTINGS,
+        name: TrackerUtils.TrackingEvent.NOTIFICATIONS_DISABLED,
+      });
     }
     await StorageUtils.storeObjectValue(
       StorageKeysConstants.notificationsAreAllowed,
@@ -128,6 +145,7 @@ const MainAppContainer: FC = () => {
             screenName={`${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${appCounter}`}
           />
         )}
+        <StoreCurrentStepArticleIds update={updateStorageValue} />
         <SafeAreaProvider>
           <Navigation colorScheme={colorScheme} />
           <StatusBar />

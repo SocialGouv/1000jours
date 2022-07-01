@@ -1,0 +1,10 @@
+export const MIN_SECONDS = 10;
+export const MIN_TRIGGER = { seconds: MIN_SECONDS };
+export const NUMBER_OF_DAYS_NOTIF_EVENT_REMINDER = 7;
+export const NUMBER_OF_DAYS_NOTIF_ARTICLES_REMINDER = 14;
+export const MOODBOARD_NOTIF_TRIGGER_HOUR = 9;
+export const EVENT_NOTIF_TRIGGER_HOUR = 13;
+export const NEXTSTEP_NOTIF_TRIGGER_HOUR = 13;
+export const ARTICLES_NOTIF_TRIGGER_HOUR = 18;
+export const SCREEN_CALENDAR = "tabCalendar";
+export const SCREEN_ARTICLES = "articleList";

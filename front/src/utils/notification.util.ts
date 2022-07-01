@@ -1,5 +1,4 @@
 import { addDays, isAfter, subDays } from "date-fns";
-import { isDevice } from "expo-device";
 import type {
   NotificationContentInput,
   NotificationRequestInput,
@@ -8,8 +7,14 @@ import type {
 } from "expo-notifications";
 import * as Notifications from "expo-notifications";
 
-import { EpdsConstants, Labels, StorageKeysConstants } from "../constants";
+import {
+  EpdsConstants,
+  Labels,
+  NotificationConstants,
+  StorageKeysConstants,
+} from "../constants";
 import type { Event, Step } from "../types";
+import { countCurrentStepArticlesRead } from "./step.util";
 import * as StorageUtils from "./storage.util";
 
 export enum NotificationType {
@@ -17,6 +22,7 @@ export enum NotificationType {
   nextStep = "nextStep",
   event = "event",
   moodboard = "moodboard",
+  articles = "articles",
 }
 
 export enum Weekday {
@@ -28,13 +34,6 @@ export enum Weekday {
   friday = 6,
   saturday = 7,
 }
-
-const MIN_TRIGGER = {seconds: 10};
-const NUMBER_OF_DAYS_NOTIF_EVENT_REMINDER = 7;
-const MOODBOARD_NOTIF_TRIGGER_HOUR = 9;
-const EVENT_NOTIF_TRIGGER_HOUR = 13;
-const NEXTSTEP_NOTIF_TRIGGER_HOUR = 13;
-const SCREEN_CALENDAR = "tabCalendar";
 
 const sendNotificationReminder = async (
   content: NotificationContentInput,
@@ -50,20 +49,20 @@ const sendNotificationReminder = async (
   return notificationId;
 };
 
-export const allowsNotifications = async () => {
+export const allowsNotifications = async (): Promise<boolean> => {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
-  return existingStatus === 'granted';
-}
+  return existingStatus === "granted";
+};
 
-export const requestNotificationPermission = async () => {
+export const requestNotificationPermission = async (): Promise<void> => {
   const isAllowed = await allowsNotifications();
   if (!isAllowed) {
     await Notifications.requestPermissionsAsync();
   }
 };
 
-export const scheduleEpdsNotification = async (): Promise<string> => {
-  const content = {
+const buildEpdsNotificationContent = () => {
+  return {
     body: Labels.epdsSurvey.notification.body,
     categoryIdentifier: NotificationType.epds,
     data: {
@@ -74,18 +73,19 @@ export const scheduleEpdsNotification = async (): Promise<string> => {
     },
     title: Labels.epdsSurvey.notification.title,
   };
+};
+
+export const scheduleEpdsNotification = async (): Promise<string> => {
   /* Si on utilise le trigger "day", on se  prend l'exception "Error: Failed to schedule the notification. Trigger of type: calendar is not supported on Android."
   et seul le trigger seconds passe, donc on convertit en secondes (3600  secondes dans une heure x 24 heures x le nombre de jours ) */
   const trigger = {
     seconds: 3600 * 24 * EpdsConstants.NUMBER_OF_DAYS_NOTIF_REMINDER,
   };
-  return sendNotificationReminder(content, trigger);
+  return sendNotificationReminder(buildEpdsNotificationContent(), trigger);
 };
 
-const scheduleMoodboardNotification = async (
-  weekday: Weekday
-): Promise<string> => {
-  const content = {
+const buildMoodboardNotificationContent = () => {
+  return {
     body: Labels.moodboard.notification.body,
     categoryIdentifier: NotificationType.moodboard,
     data: {
@@ -96,13 +96,18 @@ const scheduleMoodboardNotification = async (
     },
     title: Labels.moodboard.notification.title,
   };
+};
+
+const scheduleMoodboardNotification = async (
+  weekday: Weekday
+): Promise<string> => {
   const trigger: WeeklyTriggerInput = {
-    hour: MOODBOARD_NOTIF_TRIGGER_HOUR,
+    hour: NotificationConstants.MOODBOARD_NOTIF_TRIGGER_HOUR,
     minute: 0,
     repeats: true,
     weekday: weekday,
   };
-  return sendNotificationReminder(content, trigger);
+  return sendNotificationReminder(buildMoodboardNotificationContent(), trigger);
 };
 
 export const scheduleMoodboardNotifications = async (): Promise<void> => {
@@ -121,6 +126,19 @@ export const scheduleMoodboardNotifications = async (): Promise<void> => {
   }
 };
 
+const buildNextStepNotificationContent = (nextStep: Step) => {
+  return {
+    body: Labels.timeline.notification.body + '"' + nextStep.nom + '".',
+    data: {
+      redirectFromRoot: false,
+      redirectTitle: Labels.timeline.notification.redirectTitle,
+      redirectTo: "profile",
+      type: NotificationType.nextStep,
+    },
+    title: Labels.timeline.notification.title,
+  };
+};
+
 export const scheduleNextStepNotification = async (
   nextStep: Step,
   triggerNow?: boolean
@@ -133,32 +151,25 @@ export const scheduleNextStepNotification = async (
       StorageKeysConstants.userChildBirthdayKey
     );
     if (childBirthday) {
-      const content = {
-        body: Labels.timeline.notification.body + '"' + nextStep.nom + '".',
-        data: {
-          redirectFromRoot: false,
-          redirectTitle: Labels.timeline.notification.redirectTitle,
-          redirectTo: "profile",
-          type: NotificationType.nextStep,
-        },
-        title: Labels.timeline.notification.title,
-      };
       let needToBeScheduled = false;
       let trigger: NotificationTriggerInput = null;
       if (triggerNow) {
-        trigger = MIN_TRIGGER;
+        trigger = NotificationConstants.MIN_TRIGGER;
         needToBeScheduled = true;
       } else {
         const date = new Date(
           addDays(new Date(childBirthday), nextStep.debut).setHours(
-            NEXTSTEP_NOTIF_TRIGGER_HOUR
+            NotificationConstants.NEXTSTEP_NOTIF_TRIGGER_HOUR
           )
         );
         trigger = date;
-        if(isAfter(date, new Date())) needToBeScheduled = true;
+        if (isAfter(date, new Date())) needToBeScheduled = true;
       }
-      if(needToBeScheduled) {
-        const notificationId = await sendNotificationReminder(content, trigger);
+      if (needToBeScheduled) {
+        const notificationId = await sendNotificationReminder(
+          buildNextStepNotificationContent(nextStep),
+          trigger
+        );
         if (notificationId) {
           await StorageUtils.storeStringValue(
             StorageKeysConstants.notifIdNextStep,
@@ -236,7 +247,7 @@ const buildEventNotificationContent = (
     data: {
       redirectFromRoot: true,
       redirectTitle: Labels.calendar.notification.redirectTitle,
-      redirectTo: SCREEN_CALENDAR,
+      redirectTo: NotificationConstants.SCREEN_CALENDAR,
       type: NotificationType.event,
     },
     title: isBeforeEventDate
@@ -252,7 +263,9 @@ const scheduleEventNotification = async (event: Event) => {
 
     if (isAfter(eventDate, now)) {
       // Planifie la notification pour le jour J
-      let notifDate = new Date(eventDate.setHours(EVENT_NOTIF_TRIGGER_HOUR));
+      let notifDate = new Date(
+        eventDate.setHours(NotificationConstants.EVENT_NOTIF_TRIGGER_HOUR)
+      );
       let content = buildEventNotificationContent(event, false);
       let notificationId = null;
       if (isAfter(notifDate, now)) {
@@ -262,9 +275,10 @@ const scheduleEventNotification = async (event: Event) => {
 
       // Planifie la notification pour un rappel avant le jour J
       notifDate = new Date(
-        subDays(eventDate, NUMBER_OF_DAYS_NOTIF_EVENT_REMINDER).setHours(
-          EVENT_NOTIF_TRIGGER_HOUR
-        )
+        subDays(
+          eventDate,
+          NotificationConstants.NUMBER_OF_DAYS_NOTIF_EVENT_REMINDER
+        ).setHours(NotificationConstants.EVENT_NOTIF_TRIGGER_HOUR)
       );
       if (isAfter(notifDate, now)) {
         content = buildEventNotificationContent(event, true);
@@ -293,36 +307,154 @@ export const cancelScheduleEventsNotification = async (): Promise<void> => {
   return StorageUtils.removeKey(StorageKeysConstants.notifIdsEvents);
 };
 
+const buildArticlesNotificationContent = async (nbArticlesToRead: number) => {
+  const hasArticlesToRead = nbArticlesToRead > 0;
+  const currentStep = (await StorageUtils.getObjectValue(
+    StorageKeysConstants.currentStep
+  )) as Step | null;
+  return {
+    body: hasArticlesToRead
+      ? `${Labels.article.notification.articlesToRead.bodyPart1} ${nbArticlesToRead} ${Labels.article.notification.articlesToRead.bodyPart2}.`
+      : Labels.article.notification.congrats.body,
+    data: {
+      redirectFromRoot: false,
+      redirectParams: hasArticlesToRead ? { step: currentStep } : null,
+      redirectTitle: hasArticlesToRead
+        ? Labels.article.notification.articlesToRead.redirectTitle
+        : Labels.article.notification.congrats.redirectTitle,
+      redirectTo: hasArticlesToRead
+        ? NotificationConstants.SCREEN_ARTICLES
+        : null,
+      type: NotificationType.articles,
+    },
+    title: hasArticlesToRead
+      ? Labels.article.notification.articlesToRead.title
+      : Labels.article.notification.congrats.title,
+  };
+};
+
+const getNewTriggerForArticlesNotification = async () => {
+  const trigger = new Date(
+    addDays(
+      new Date(),
+      NotificationConstants.NUMBER_OF_DAYS_NOTIF_ARTICLES_REMINDER
+    ).setHours(NotificationConstants.ARTICLES_NOTIF_TRIGGER_HOUR)
+  );
+  await StorageUtils.storeObjectValue(
+    StorageKeysConstants.triggerForArticlesNotification,
+    trigger
+  );
+  return trigger;
+};
+
+export const updateArticlesNotification = async (): Promise<void> => {
+  const trigger =
+    ((await StorageUtils.getObjectValue(
+      StorageKeysConstants.triggerForArticlesNotification
+    )) as NotificationTriggerInput) ?? null;
+  await scheduleArticlesNotification(trigger);
+};
+
+export const scheduleArticlesNotification = async (
+  notifTrigger?: NotificationTriggerInput
+): Promise<void> => {
+  const nbArticlesToRead: number = await countCurrentStepArticlesRead();
+  if (nbArticlesToRead >= 0) {
+    const trigger: NotificationTriggerInput =
+      nbArticlesToRead > 0
+        ? notifTrigger ?? (await getNewTriggerForArticlesNotification())
+        : NotificationConstants.MIN_TRIGGER;
+    await cancelAllNotificationsByType(NotificationType.articles);
+    await sendNotificationReminder(
+      await buildArticlesNotificationContent(nbArticlesToRead),
+      trigger
+    );
+  }
+};
+
+export const getAllScheduledNotifications = async (): Promise<
+  Notifications.NotificationRequest[]
+> => {
+  return Notifications.getAllScheduledNotificationsAsync();
+};
+
 export const logAllScheduledNotifications = async (): Promise<void> => {
-  const scheduledNotifs =
-    await Notifications.getAllScheduledNotificationsAsync();
+  const scheduledNotifs = await getAllScheduledNotifications();
   for (const notif of scheduledNotifs) {
     console.log(notif);
   }
 };
 
-export const cancelAllNotificationsByType = async (notificationType: NotificationType) => {
-  const notifications = await Notifications.getAllScheduledNotificationsAsync();
-  for(const notif of notifications) {
-    if(notif.content.data.type === notificationType) {
-      cancelScheduledNotification(notif.identifier);
+export const cancelAllNotificationsByType = async (
+  notificationType: NotificationType
+): Promise<void> => {
+  const notifications = await getAllScheduledNotifications();
+  for (const notif of notifications) {
+    if (notif.content.data.type === notificationType) {
+      await cancelScheduledNotification(notif.identifier);
     }
-  };
-}
-
-export const rescheduleEventsNotifications = async (events: Event[]) => {
-  await cancelAllNotificationsByType(NotificationType.event);
-  await scheduleEventsNotification(events);
-}
-
-export const scheduleFakeNotif_ForTesting = async () => {
-  const event: Event = {
-    id: 0,
-    nom: "FakeNotif_ForTesting",
-    debut: 0,
-    fin: 0
   }
-  const content = buildEventNotificationContent(event, true);
-  const trigger = MIN_TRIGGER;
-  await sendNotificationReminder(content, trigger);
-}
+};
+
+export const rescheduleEventsNotifications = async (
+  events: Event[]
+): Promise<void> => {
+  await cancelAllNotificationsByType(NotificationType.event);
+  scheduleEventsNotification(events);
+};
+
+/**
+ * Permet de tester les notifications depuis la page cachée dans le menu
+ * En cliquant plusieurs fois sur le numéro de version en bas
+ * @param notificationType
+ */
+export const scheduleFakeNotif = async (
+  notificationType: NotificationType | string
+): Promise<void> => {
+  let content = null;
+  switch (notificationType) {
+    case NotificationType.epds:
+      content = buildEpdsNotificationContent();
+      break;
+    case NotificationType.event: {
+      const event: Event = {
+        debut: 0,
+        fin: 0,
+        id: 0,
+        nom: "Test",
+      };
+      content = buildEventNotificationContent(event, true);
+      break;
+    }
+    case NotificationType.moodboard:
+      content = buildMoodboardNotificationContent();
+      break;
+    case NotificationType.nextStep: {
+      const nextStep: Step = {
+        active: true,
+        debut: 0,
+        description: "Description",
+        fin: 0,
+        id: 0,
+        nom: "Test",
+        ordre: 0,
+      };
+      buildNextStepNotificationContent(nextStep);
+      break;
+    }
+    case NotificationType.articles: {
+      const nbArticlesToRead = await countCurrentStepArticlesRead();
+      content = await buildArticlesNotificationContent(nbArticlesToRead);
+      break;
+    }
+    default:
+      console.warn(
+        `scheduleFakeNotif : notification type '${notificationType}'`
+      );
+      break;
+  }
+
+  if (content) {
+    await sendNotificationReminder(content, NotificationConstants.MIN_TRIGGER);
+  }
+};

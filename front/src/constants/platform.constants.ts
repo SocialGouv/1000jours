@@ -17,3 +17,5 @@ export const PLATFORM_IS_IOS = Platform.OS === "ios";
 export const PLATFORM_IS_ANDROID = Platform.OS === "android";
 export const MAJOR_VERSION_IOS = parseInt(String(Platform.Version), 10);
 export const ICLOUD = "iCloud";
+
+export const TIMEOUT_ON_DISMISS_MODAL = PLATFORM_IS_IOS ? 200 : 0;

@@ -9,11 +9,11 @@ import type { NotificationStyle } from "../../types";
 import { NotificationType } from "../../utils/notification.util";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { TrackingEvent } from "../../utils/tracker.util";
+import CustomButton from "../baseComponents/customButton.component";
+import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
+import { SecondaryText } from "../baseComponents/StyledText";
+import { View } from "../baseComponents/Themed";
 import TrackerHandler from "../tracker/trackerHandler.component";
-import CustomButton from "./customButton.component";
-import Icomoon, { IcomoonIcons } from "./icomoon.component";
-import { SecondaryText } from "./StyledText";
-import { View } from "./Themed";
 
 interface Props {
   notification: ExpoNotificaiton;
@@ -37,6 +37,10 @@ notifStyles.set(NotificationType.moodboard, {
   color: Colors.primaryBlueDark,
   icon: IcomoonIcons.bebe,
 });
+notifStyles.set(NotificationType.articles, {
+  color: Colors.primaryYellowDark,
+  icon: IcomoonIcons.notification,
+});
 
 const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
   const notificationType = notification.request.content.data
@@ -51,17 +55,22 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
       `${TrackingEvent.NOTIFICATION} (${notificationType}) - ${buttonTitle}`
     );
     const redirectTo = notification.request.content.data.redirectTo as string;
+    const redirectParams = notification.request.content.data.redirectParams;
 
     if (redirectTo) {
       const redirectFromRoot = notification.request.content.data
         .redirectFromRoot as boolean;
       if (redirectFromRoot)
-        void RootNavigation.navigate("root", { screen: redirectTo });
-      else void RootNavigation.navigate(redirectTo, null);
+        void RootNavigation.navigate("root", {
+          params: redirectParams,
+          screen: redirectTo,
+        });
+      else void RootNavigation.navigate(redirectTo, redirectParams);
     }
     setModalVisible(false);
   }, [
     notification.request.content.data.redirectFromRoot,
+    notification.request.content.data.redirectParams,
     notification.request.content.data.redirectTitle,
     notification.request.content.data.redirectTo,
     notificationType,
