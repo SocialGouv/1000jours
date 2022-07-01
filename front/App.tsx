@@ -7,10 +7,10 @@ import type { AppStateStatus } from "react-native";
 import { AppState } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { StoreCurrentStepArticleIds } from "./src/components";
 import { BaseAssets } from "./src/components/assets";
 import LinksHandler from "./src/components/links/linksHandler.component";
 import { setNotificationHandler } from "./src/components/notification/notificationHandler.component";
-import StoreCurrentStepArticleIds from "./src/components/storage/storeCurrentStepArticleIds.component";
 import TrackerHandler from "./src/components/tracker/trackerHandler.component";
 import {
   TrackerAppStart,

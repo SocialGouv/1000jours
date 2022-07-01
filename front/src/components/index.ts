@@ -39,6 +39,7 @@ import NotificationHandler, {
   setNotificationHandler,
 } from "./notification/notificationHandler.component";
 import AroundMePoiList from "./search/aroundMePoiList.component";
+import StoreCurrentStepArticleIds from "./storage/storeCurrentStepArticleIds.component";
 import StepIcon from "./timeline/stepIcon.component";
 import TimelineStep from "./timeline/timelineStep.component";
 
@@ -78,6 +79,7 @@ export {
   setNotificationHandler,
   SlidingUpPanelAddressesList,
   StepIcon,
+  StoreCurrentStepArticleIds,
   SubmitNewFilter,
   SubTitle,
   TextHtml,

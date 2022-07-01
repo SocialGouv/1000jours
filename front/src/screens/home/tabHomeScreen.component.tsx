@@ -79,6 +79,23 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     setTriggerGetStep(!triggerGetSteps);
   };
 
+  const scheduleArticlesNotificationIfNeeded = useCallback(
+    async (currentStep: Step) => {
+      const triggerForArticlesNotification = await StorageUtils.getObjectValue(
+        StorageKeysConstants.triggerForArticlesNotification
+      );
+      // Programme la notification des articles non lus si cette notification n'a jamais été programmée ou si il y a un changement d'étape
+      if (
+        !triggerForArticlesNotification ||
+        (StringUtils.stringIsNotNullNorEmpty(previousCurrentStepId) &&
+          previousCurrentStepId !== currentStep.id.toString())
+      ) {
+        await NotificationUtils.scheduleArticlesNotification();
+      }
+    },
+    [previousCurrentStepId]
+  );
+
   const handleResults = useCallback(
     async (data: unknown) => {
       const checkIfCurrentStepHasChanged = async (
@@ -105,13 +122,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
         }
 
         // Programme la notification des articles non lus pour la nouvelle étape
-        if (
-          !StringUtils.stringIsNotNullNorEmpty(previousCurrentStepId) ||
-          (StringUtils.stringIsNotNullNorEmpty(previousCurrentStepId) &&
-            previousCurrentStepId !== currentStep.id.toString())
-        ) {
-          await NotificationUtils.scheduleArticlesNotification();
-        }
+        await scheduleArticlesNotificationIfNeeded(currentStep);
       };
 
       const result = data as { etapes: Step[] };
@@ -136,7 +147,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
           await checkIfCurrentStepHasChanged(currentStep, etapes);
       }
     },
-    [currentStepId, previousCurrentStepId]
+    [currentStepId, previousCurrentStepId, scheduleArticlesNotificationIfNeeded]
   );
 
   const scrollTo = (positionY: number) => {
