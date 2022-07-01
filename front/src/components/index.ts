@@ -38,6 +38,8 @@ import MoodsCalendar from "./moodboard/moodsCalendar.component";
 import NotificationHandler, {
   setNotificationHandler,
 } from "./notification/notificationHandler.component";
+import CustomPagination from "./onboardingAndProfile/customOnboardingPagination.component";
+import UpdateChildBirthdayModal from "./onboardingAndProfile/updateChildBirthdayModal.component";
 import AroundMePoiList from "./search/aroundMePoiList.component";
 import StoreCurrentStepArticleIds from "./storage/storeCurrentStepArticleIds.component";
 import StepIcon from "./timeline/stepIcon.component";
@@ -55,6 +57,7 @@ export {
   ArticlesFilter,
   ConditionsOfUse,
   CustomMapMarker,
+  CustomPagination,
   DidYouKnow,
   DocumentCard,
   EditMoodDay,
@@ -86,5 +89,6 @@ export {
   Thematics,
   TimelineStep,
   Title,
+  UpdateChildBirthdayModal,
   UsefulArticle,
 };
