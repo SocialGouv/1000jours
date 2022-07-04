@@ -1,3 +1,10 @@
+# [1.102.0](https://github.com/SocialGouv/1000jours/compare/v1.101.1...v1.102.0) (2022-07-04)
+
+
+### Features
+
+* **contact:** confirmation de contact par mail ([#1282](https://github.com/SocialGouv/1000jours/issues/1282)) ([f12f0b2](https://github.com/SocialGouv/1000jours/commit/f12f0b24bb2ba98e51ac0deb2e67a8d74aff9399))
+
 ## [1.101.1](https://github.com/SocialGouv/1000jours/compare/v1.101.0...v1.101.1) (2022-06-29)
 
 
