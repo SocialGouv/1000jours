@@ -1,5 +1,18 @@
 "use strict";
 
+const footerText = () => `
+
+- 1000 jours - Blues : https://1000jours-blues.fabrique.social.gouv.fr/ 
+- La fabrique numérique des ministères sociaux : https://www.fabrique.social.gouv.fr/
+`;
+
+const footerHtml = () => `
+  <p>
+    <img height="90" src="https://backoffice-les1000jours.fabrique.social.gouv.fr/uploads/logo_1000j_blues_a0341d9114.png"/>
+    <img height="90" src="https://backoffice-les1000jours.fabrique.social.gouv.fr/uploads/logo_republique_francaise_365a280a09.png"/>
+  </p>
+`;
+
 const emailTemplate = (info) => ({
   subject: "1000 premiers jours - suite à votre demande",
   text: `Bonjour <%- prenom %>,
@@ -10,7 +23,9 @@ const emailTemplate = (info) => ({
 
     En parler, c'est déjà se soigner.
 
-    Elise des 1000 premiers jours`,
+    Elise des 1000 premiers jours
+    
+    ${footerText}`,
   html: `<p>Bonjour <%- prenom %>,</p>
 
     <p>
@@ -25,7 +40,9 @@ const emailTemplate = (info) => ({
       <img src="https://backoffice-les1000jours.fabrique.social.gouv.fr/uploads/cercle_vertueux_3a7bb0fb95.png" style="max-width:300px;"/>
     </p>
 
-    Elise des 1000 premiers jours`,
+    Elise des 1000 premiers jours
+    
+    ${footerHtml()}`,
 });
 
 const contactConfirmed = async ({ email, prenom = "ND" }) => {
