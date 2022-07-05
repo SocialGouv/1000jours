@@ -30,6 +30,7 @@ export const notificationsAreAllowed = "@notificationsAreAllowed";
 export const triggerForEpdsNotification = "@triggerForEpdsNotification";
 export const triggerForNexStepNotification = "@triggerForNexStepNotification";
 export const triggerForArticlesNotification = "@triggerForArticlesNotification";
+export const lastProfileUpdate = "@lastProfileUpdate";
 
 export const allStorageKeys = [
   userUuidKey,
@@ -60,6 +61,7 @@ export const allStorageKeys = [
   moodsByDate,
   notificationsAreAllowed,
   triggerForArticlesNotification,
+  lastProfileUpdate,
 ];
 
 export const epdsSurveyKeys = [epdsQuestionAndAnswersKey, epdsQuestionIndexKey];

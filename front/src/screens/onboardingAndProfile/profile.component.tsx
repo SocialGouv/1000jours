@@ -180,6 +180,11 @@ const Profile: FC<Props> = ({ navigation }) => {
       gender
     );
 
+    await StorageUtils.storeStringValue(
+      StorageKeysConstants.lastProfileUpdate,
+      format(new Date(), Formats.dateISO)
+    );
+
     const situationChecked = _.find(userSituations, { isChecked: true });
     if (situationChecked?.childBirthdayRequired) {
       await StorageUtils.storeStringValue(

@@ -12,6 +12,7 @@ import {
   ParenthequeItem,
   StoreCurrentStepArticleIds,
   TimelineStep,
+  UpdateChildBirthdayModal,
 } from "../../components";
 import { TitleH1, View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
@@ -51,6 +52,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     useState(false);
   const [_etapes, setEtapes] = useState<Step[]>([]);
   const scrollViewRef = useRef<ScrollView>(null);
+  const [showUpdateProfile, setShowUpdateProfile] = useState(false);
 
   const init = useCallback(async () => {
     const previousStepId = await StorageUtils.getStringValue(
@@ -65,6 +67,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     const date = await StorageUtils.getStringValue(
       StorageKeysConstants.userChildBirthdayKey
     );
+
     const stepId = StepUtils.getCurrentStepId(userSituations, date);
     if (stepId) {
       void StorageUtils.storeStringValue(
@@ -74,6 +77,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
       setCurrentStepId(stepId);
     }
     setTriggerGetStep(!triggerGetSteps);
+    setShowUpdateProfile(await displayUpdateProfileModal(new Date()));
   }, [triggerGetSteps]);
 
   useEffect(() => {
@@ -191,6 +195,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     },
     []
   );
+
   return (
     <>
       {storeCurrentStepArticleIds && (
@@ -254,10 +259,44 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
             </View>
           </>
         )}
+        {showUpdateProfile && <UpdateChildBirthdayModal />}
       </ScrollView>
     </>
   );
 };
+
+export const displayUpdateProfileModal = async (today: Date) => {
+  const lastDateStr: string =
+    (await StorageUtils.getStringValue(
+      StorageKeysConstants.lastProfileUpdate
+    )) ?? "";
+  const lastDate: Date = new Date(lastDateStr);
+
+  const childBirthdayStr: string =
+    (await StorageUtils.getStringValue(
+      StorageKeysConstants.userChildBirthdayKey
+    )) ?? "";
+  const childBirthdayDate: Date = new Date(childBirthdayStr);
+
+  // If it's 1 to 8 month,reminder every months, and after, it's every week
+  const isMonthReminder = getDifferenceInDays(childBirthdayDate, today) >= 30;
+  const daysToLasteUpdate = getDifferenceInDays(today, lastDate);
+
+  if (!isValidDate(childBirthdayDate)) return false;
+  if (isMonthReminder && daysToLasteUpdate >= 30) return true;
+  if (isMonthReminder && daysToLasteUpdate < 30) return false;
+  if (!isMonthReminder && daysToLasteUpdate >= 7) return true;
+  if (!isMonthReminder && daysToLasteUpdate < 7) return false;
+
+  return true;
+};
+
+const getDifferenceInDays = (date1: Date, date2: Date) => {
+  const diffInMs = Math.abs(date2.getTime() - date1.getTime());
+  return diffInMs / (1000 * 60 * 60 * 24);
+};
+
+const isValidDate = (d: Date): boolean => !isNaN(d.getTime());
 
 const styles = StyleSheet.create({
   mainContainer: {

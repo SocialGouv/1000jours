@@ -35,6 +35,10 @@ const UpdateChildBirthdayModal: React.FC<Props> = () => {
     setModalVisible(false);
   }, []);
 
+  const onValid = useCallback(() => {
+    setModalVisible(false);
+  }, []);
+
   return (
     <Modal
       animationType="slide"
@@ -76,7 +80,7 @@ const UpdateChildBirthdayModal: React.FC<Props> = () => {
                   title={Labels.buttons.yes}
                   rounded={true}
                   disabled={false}
-                  action={onHideModal}
+                  action={onValid}
                   buttonStyle={styles.button}
                 />
               </View>
