@@ -1,3 +1,4 @@
+import Constants from "expo-constants";
 import { Dimensions, Platform } from "react-native";
 
 export const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
@@ -19,3 +20,7 @@ export const MAJOR_VERSION_IOS = parseInt(String(Platform.Version), 10);
 export const ICLOUD = "iCloud";
 
 export const TIMEOUT_ON_DISMISS_MODAL = PLATFORM_IS_IOS ? 200 : 0;
+export const IS_ON_EXPO_GO = Constants.appOwnership === "expo";
+export const IS_PREPROD_RELEASE =
+  Constants.manifest?.releaseChannel === "preprod";
+export const IS_DEV_ENV = IS_ON_EXPO_GO && !IS_PREPROD_RELEASE;

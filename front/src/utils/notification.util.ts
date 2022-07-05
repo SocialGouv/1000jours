@@ -312,25 +312,32 @@ const buildArticlesNotificationContent = async (nbArticlesToRead: number) => {
   const currentStep = (await StorageUtils.getObjectValue(
     StorageKeysConstants.currentStep
   )) as Step | null;
-  return {
-    body: hasArticlesToRead
-      ? `${Labels.article.notification.articlesToRead.bodyPart1} ${nbArticlesToRead} ${Labels.article.notification.articlesToRead.bodyPart2}.`
-      : Labels.article.notification.congrats.body,
-    data: {
-      redirectFromRoot: false,
-      redirectParams: hasArticlesToRead ? { step: currentStep } : null,
-      redirectTitle: hasArticlesToRead
-        ? Labels.article.notification.articlesToRead.redirectTitle
-        : Labels.article.notification.congrats.redirectTitle,
-      redirectTo: hasArticlesToRead
-        ? NotificationConstants.SCREEN_ARTICLES
-        : null,
-      type: NotificationType.articles,
-    },
-    title: hasArticlesToRead
-      ? Labels.article.notification.articlesToRead.title
-      : Labels.article.notification.congrats.title,
-  };
+
+  if (hasArticlesToRead) {
+    return {
+      body: `${Labels.article.notification.articlesToRead.bodyPart1} ${nbArticlesToRead} ${Labels.article.notification.articlesToRead.bodyPart2}.`,
+      data: {
+        redirectFromRoot: false,
+        redirectParams: { step: currentStep },
+        redirectTitle: Labels.article.notification.articlesToRead.redirectTitle,
+        redirectTo: NotificationConstants.SCREEN_ARTICLES,
+        type: NotificationType.articles,
+      },
+      title: Labels.article.notification.articlesToRead.title,
+    };
+  } else {
+    return {
+      body: Labels.article.notification.congrats.body,
+      data: {
+        redirectFromRoot: false,
+        redirectParams: null,
+        redirectTitle: Labels.article.notification.congrats.redirectTitle,
+        redirectTo: null,
+        type: NotificationType.articles,
+      },
+      title: Labels.article.notification.congrats.title,
+    };
+  }
 };
 
 const getNewTriggerForArticlesNotification = async () => {
