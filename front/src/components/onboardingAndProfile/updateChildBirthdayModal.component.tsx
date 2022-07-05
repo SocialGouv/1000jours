@@ -11,6 +11,7 @@ import {
   Sizes,
   Styles,
 } from "../../styles";
+import { RootNavigation } from "../../utils";
 import {
   CloseButton,
   CustomButton,
@@ -37,6 +38,7 @@ const UpdateChildBirthdayModal: React.FC<Props> = () => {
 
   const onValid = useCallback(() => {
     setModalVisible(false);
+    void RootNavigation.navigate("profile", null);
   }, []);
 
   return (

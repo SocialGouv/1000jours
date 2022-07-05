@@ -279,20 +279,32 @@ export const displayUpdateProfileModal = async (today: Date) => {
   const childBirthdayDate: Date = new Date(childBirthdayStr);
 
   // If it's 1 to 8 month,reminder every months, and after, it's every week
-  const isMonthReminder = getDifferenceInDays(childBirthdayDate, today) >= 30;
-  const daysToLasteUpdate = getDifferenceInDays(today, lastDate);
+  const isMonthReminder = getDifferenceInDays(today, childBirthdayDate) >= 30;
+  const daysToLasteUpdate = getDifferenceInDays(lastDate, today);
 
-  if (!isValidDate(childBirthdayDate)) return false;
-  if (isMonthReminder && daysToLasteUpdate >= 30) return true;
-  if (isMonthReminder && daysToLasteUpdate < 30) return false;
-  if (!isMonthReminder && daysToLasteUpdate >= 7) return true;
-  if (!isMonthReminder && daysToLasteUpdate < 7) return false;
+  if (
+    getDifferenceInDays(today, childBirthdayDate) < 0 ||
+    !isValidDate(childBirthdayDate)
+  )
+    return false;
+
+  if (
+    (isMonthReminder && daysToLasteUpdate >= 30) ||
+    (!isMonthReminder && daysToLasteUpdate >= 7)
+  )
+    return true;
+
+  if (
+    (isMonthReminder && daysToLasteUpdate < 30) ||
+    (!isMonthReminder && daysToLasteUpdate < 7)
+  )
+    return false;
 
   return true;
 };
 
 const getDifferenceInDays = (date1: Date, date2: Date) => {
-  const diffInMs = Math.abs(date2.getTime() - date1.getTime());
+  const diffInMs = date2.getTime() - date1.getTime();
   return diffInMs / (1000 * 60 * 60 * 24);
 };
 

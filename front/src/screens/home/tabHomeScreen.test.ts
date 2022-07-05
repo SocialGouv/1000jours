@@ -86,5 +86,31 @@ describe("TabHomeScreen", () => {
       const result = await displayUpdateProfileModal(today);
       expect(result).toBeFalsy();
     });
+
+    it("userChildBirthday in past => not open modal", async () => {
+      const today = new Date("2022-07-01");
+      await StorageUtils.storeStringValue(
+        StorageKeysConstants.userChildBirthdayKey,
+        "2022-06-20"
+      );
+
+      const result = await displayUpdateProfileModal(today);
+      expect(result).toBeFalsy();
+    });
+
+    it("date in lastProfileUpdate & date in userChildBirthday & userChildBirthday in past => not open modal", async () => {
+      const today = new Date("2022-07-01");
+      await StorageUtils.storeStringValue(
+        StorageKeysConstants.userChildBirthdayKey,
+        "2022-06-27"
+      );
+      await StorageUtils.storeStringValue(
+        StorageKeysConstants.lastProfileUpdate,
+        "2022-06-20"
+      );
+
+      const result = await displayUpdateProfileModal(today);
+      expect(result).toBeFalsy();
+    });
   });
 });
