@@ -307,13 +307,14 @@ export const cancelScheduleEventsNotification = async (): Promise<void> => {
   return StorageUtils.removeKey(StorageKeysConstants.notifIdsEvents);
 };
 
-const buildArticlesNotificationContent = async (nbArticlesToRead: number) => {
-  const hasArticlesToRead = nbArticlesToRead > 0;
+export const buildArticlesNotificationContent = async (
+  nbArticlesToRead: number
+): Promise<NotificationContentInput | null> => {
   const currentStep = (await StorageUtils.getObjectValue(
     StorageKeysConstants.currentStep
   )) as Step | null;
 
-  if (hasArticlesToRead) {
+  if (nbArticlesToRead > 0) {
     return {
       body: `${Labels.article.notification.articlesToRead.bodyPart1} ${nbArticlesToRead} ${Labels.article.notification.articlesToRead.bodyPart2}.`,
       data: {
@@ -325,7 +326,7 @@ const buildArticlesNotificationContent = async (nbArticlesToRead: number) => {
       },
       title: Labels.article.notification.articlesToRead.title,
     };
-  } else {
+  } else if (nbArticlesToRead === 0) {
     return {
       body: Labels.article.notification.congrats.body,
       data: {
@@ -338,6 +339,8 @@ const buildArticlesNotificationContent = async (nbArticlesToRead: number) => {
       title: Labels.article.notification.congrats.title,
     };
   }
+
+  return null;
 };
 
 const getNewTriggerForArticlesNotification = async () => {
@@ -371,11 +374,11 @@ export const scheduleArticlesNotification = async (
       nbArticlesToRead > 0
         ? notifTrigger ?? (await getNewTriggerForArticlesNotification())
         : NotificationConstants.MIN_TRIGGER;
-    await cancelAllNotificationsByType(NotificationType.articles);
-    await sendNotificationReminder(
-      await buildArticlesNotificationContent(nbArticlesToRead),
-      trigger
-    );
+    const content = await buildArticlesNotificationContent(nbArticlesToRead);
+    if (content) {
+      await cancelAllNotificationsByType(NotificationType.articles);
+      await sendNotificationReminder(content, trigger);
+    }
   }
 };
 
