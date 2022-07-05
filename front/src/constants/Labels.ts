@@ -198,13 +198,6 @@ export default {
     today: "Aujourd'hui",
   },
   dateFormatLabel: "Jour / Mois / Année",
-  dev: {
-    notifications: "Notifications",
-    scheduledNotifications: "Notifications programmées",
-    testNotification: "Tester une notification",
-    testNotificationInfo: `(se déclenche au bout de ${MIN_SECONDS}s)`,
-    title: "Infos Dev.",
-  },
   epdsSurvey: {
     beContacted: {
       beContactedSent: "Votre demande de contact a bien été envoyée",
@@ -524,6 +517,17 @@ export default {
     matchingArticles: "Articles correspondants à l’événement",
     seeOnTheMap: "Voir sur la carte",
     title: "Événement",
+  },
+  infosDev: {
+    notifications: "Notifications",
+    resetStorageData: "Effacer les données",
+    resetStorageDataAlertMsg:
+      "Relancez l'app pour appliquer les modifications.",
+    scheduledNotifications: "Notifications programmées",
+    showStorageData: "Voir les données",
+    testNotification: "Tester une notification",
+    testNotificationInfo: `(se déclenche au bout de ${MIN_SECONDS}s)`,
+    title: "Infos Dev.",
   },
   invalidDate: "La date saisie n'est pas valide.",
   invalidLink: "Ce lien n'est pas valide.",

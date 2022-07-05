@@ -3,11 +3,11 @@ import _ from "lodash";
 import type { FC } from "react";
 import * as React from "react";
 import { useCallback, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 
 import { Labels } from "../../constants";
 import { Paddings } from "../../styles";
-import { NotificationUtils } from "../../utils";
+import { NotificationUtils, StorageUtils } from "../../utils";
 import { NotificationType } from "../../utils/notification.util";
 import { CustomButton, SecondaryText } from "../baseComponents";
 import ModalHtmlContent from "../baseComponents/modalHtmlContent.component";
@@ -43,6 +43,12 @@ const InfosDev: FC<Props> = ({ setIsVisible }) => {
     [setIsVisible]
   );
 
+  const resetAllData = useCallback(async () => {
+    await StorageUtils.clear();
+    Alert.alert(Labels.warning, Labels.infosDev.resetStorageDataAlertMsg);
+    setIsVisible(false);
+  }, [setIsVisible]);
+
   useEffect(() => {
     void getAllScheduledNotifications();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,10 +56,18 @@ const InfosDev: FC<Props> = ({ setIsVisible }) => {
 
   const content = (
     <View>
-      <H1 style={styles.textCenter}>{Labels.dev.title}</H1>
+      <H1 style={styles.textCenter}>{Labels.infosDev.title}</H1>
 
-      <H2>{Labels.dev.notifications}</H2>
-      <H3>{Labels.dev.scheduledNotifications} :</H3>
+      <CustomButton
+        title={Labels.infosDev.resetStorageData}
+        rounded={true}
+        buttonStyle={{ margin: Paddings.smaller }}
+        titleStyle={styles.uppercase}
+        action={resetAllData}
+      />
+
+      <H2>{Labels.infosDev.notifications}</H2>
+      <H3>{Labels.infosDev.scheduledNotifications} :</H3>
       {showNotifSection &&
         notificationsCountByType &&
         Object.keys(notificationsCountByType).map((key: string) => {
@@ -63,9 +77,9 @@ const InfosDev: FC<Props> = ({ setIsVisible }) => {
             </SecondaryText>
           );
         })}
-      <H3>{Labels.dev.testNotification} :</H3>
+      <H3>{Labels.infosDev.testNotification} :</H3>
       <SecondaryText style={styles.textCenter}>
-        {Labels.dev.testNotificationInfo}
+        {Labels.infosDev.testNotificationInfo}
       </SecondaryText>
       <View>
         {Object.values(NotificationType).map((value: string) => {
