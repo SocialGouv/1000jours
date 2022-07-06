@@ -41,7 +41,6 @@ import type {
   UserSituation,
 } from "../../types";
 import { NotificationUtils, StorageUtils, TrackerUtils } from "../../utils";
-import { NotificationType } from "../../utils/notification.util";
 import { checkErrorOnProfile } from "../../utils/step.util";
 
 interface Props {
@@ -192,13 +191,10 @@ const Profile: FC<Props> = ({ navigation }) => {
   }, [navigation]);
 
   const resetNextStep = async () => {
-    await NotificationUtils.cancelAllNotificationsByType(
-      NotificationType.nextStep
-    );
+    await NotificationUtils.cancelScheduleNextStepNotification();
     await StorageUtils.multiRemove([
       StorageKeysConstants.currentStep,
       StorageKeysConstants.currentStepId,
-      StorageKeysConstants.notifIdNextStep,
     ]);
   };
 

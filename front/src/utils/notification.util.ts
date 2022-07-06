@@ -197,13 +197,8 @@ export const scheduleNextStepNotification = async (
 };
 
 export const cancelScheduleNextStepNotification = async (): Promise<void> => {
-  const notificationId = await StorageUtils.getStringValue(
-    StorageKeysConstants.notifIdNextStep
-  );
-  if (notificationId && notificationId.length > 0) {
-    void Notifications.cancelScheduledNotificationAsync(notificationId);
-    void StorageUtils.removeKey(StorageKeysConstants.notifIdNextStep);
-  }
+  await cancelAllNotificationsByType(NotificationType.nextStep);
+  await StorageUtils.removeKey(StorageKeysConstants.notifIdNextStep);
 };
 
 export const cancelAllScheduledNotifications = async (): Promise<void> => {

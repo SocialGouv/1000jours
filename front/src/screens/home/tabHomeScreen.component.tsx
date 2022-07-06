@@ -38,7 +38,7 @@ interface Props {
 
 const TabHomeScreen: FC<Props> = ({ navigation }) => {
   const [previousCurrentStepId, setPreviousCurrentStepId] = useState<
-    string | null
+    string | null | undefined
   >(null);
   const [currentStep, setCurrentStep] = useState<Step | null>(null);
   const [currentStepId, setCurrentStepId] = useState<number | null>(null);
@@ -56,7 +56,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     const previousStepId = await StorageUtils.getStringValue(
       StorageKeysConstants.currentStepId
     );
-    if (previousStepId) setPreviousCurrentStepId(previousStepId);
+    setPreviousCurrentStepId(previousStepId);
 
     const userSituations = (await StorageUtils.getObjectValue(
       StorageKeysConstants.userSituationsKey
