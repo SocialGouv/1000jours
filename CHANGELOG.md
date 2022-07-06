@@ -1,3 +1,10 @@
+## [1.102.2](https://github.com/SocialGouv/1000jours/compare/v1.102.1...v1.102.2) (2022-07-06)
+
+
+### Bug Fixes
+
+* **contact:** maj footer du mail de confirmation ([c147980](https://github.com/SocialGouv/1000jours/commit/c14798022d3c47e8188fa584a4124206618b928c))
+
 ## [1.102.1](https://github.com/SocialGouv/1000jours/compare/v1.102.0...v1.102.1) (2022-07-06)
 
 
