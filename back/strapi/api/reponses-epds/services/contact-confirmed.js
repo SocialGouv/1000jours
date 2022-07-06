@@ -25,7 +25,9 @@ const emailTemplateForSMS = (info) => ({
 
     En parler, c'est déjà se soigner.
 
-    Elise des 1000 premiers jours`,
+    Elise des 1000 premiers jours
+    
+    ${footerText}`,
   html: `<p>Bonjour <%- prenom %>,</p>
 
     <p>
@@ -40,7 +42,9 @@ const emailTemplateForSMS = (info) => ({
       <img src="https://backoffice-les1000jours.fabrique.social.gouv.fr/uploads/cercle_vertueux_3a7bb0fb95.png" style="max-width:300px;"/>
     </p>
 
-    Elise des 1000 premiers jours`,
+    Elise des 1000 premiers jours
+    
+    ${footerHtml()}`,
 });
 
 const emailTemplateForEmail = (info) => ({
