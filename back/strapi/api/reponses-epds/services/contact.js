@@ -92,6 +92,7 @@ const contact = async ({
       return contactConfirmed({
         email: info.email,
         prenom: info.prenom.split(" [")[0],
+        typeContact: moyen,
       });
     }
     return isContactSuccess;
