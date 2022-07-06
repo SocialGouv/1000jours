@@ -12,25 +12,29 @@ import type { Article } from "../../types";
 import { getStringValue, storeObjectValue } from "../../utils/storage.util";
 
 interface StoreCurrentStepArticleIdsProps {
-  update: boolean;
+  callback?: () => void;
 }
 
 const StoreCurrentStepArticleIds: FC<StoreCurrentStepArticleIdsProps> = ({
-  update,
+  callback,
 }) => {
   const [currentStepId, setCurrentStepId] = useState<string | null | undefined>(
     undefined
   );
 
-  const handleResults = useCallback(async (data: unknown) => {
-    const articles = (data as { articles: Article[] }).articles;
-    const articleIds = articles.map((article: Article) => article.id);
+  const handleResults = useCallback(
+    async (data: unknown) => {
+      const articles = (data as { articles: Article[] }).articles;
+      const articleIds = articles.map((article: Article) => article.id);
 
-    await storeObjectValue(
-      StorageKeysConstants.currentStepArticleIds,
-      articleIds
-    );
-  }, []);
+      await storeObjectValue(
+        StorageKeysConstants.currentStepArticleIds,
+        articleIds
+      );
+      if (callback) callback();
+    },
+    [callback]
+  );
 
   const getCurrentStepId = async () => {
     const stepId = await getStringValue(StorageKeysConstants.currentStepId);
@@ -38,11 +42,9 @@ const StoreCurrentStepArticleIds: FC<StoreCurrentStepArticleIdsProps> = ({
   };
 
   useEffect(() => {
-    if (update) {
-      void getCurrentStepId();
-    }
+    void getCurrentStepId();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [update]);
+  }, []);
 
   return (
     <>

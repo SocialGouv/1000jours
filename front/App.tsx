@@ -44,7 +44,8 @@ const MainAppContainer: FC = () => {
   const [appCounterIsLoaded, setAppCounterIsLoaded] = useState(false);
   const [sendTracker, setSendTracker] = useState(false);
   const [screenCanBeDisplayed, setScreenCanBeDisplayed] = useState(false);
-  const [updateStorageValue, setUpdateStorageValue] = useState(false);
+  const [storeCurrentStepArticleIds, setStoreCurrentStepArticleIds] =
+    useState(false);
   // Load Custom Fonts (Icomoon)
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
@@ -76,7 +77,7 @@ const MainAppContainer: FC = () => {
 
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
     if (nextAppState === "active") {
-      setUpdateStorageValue(true);
+      setStoreCurrentStepArticleIds(true);
       void updateAppActiveCounter();
       void checkNotificationPermission();
     }
@@ -130,8 +131,9 @@ const MainAppContainer: FC = () => {
   }, []);
 
   useEffect(() => {
-    if (isLoadingComplete && fontsLoaded && appCounterIsLoaded)
+    if (isLoadingComplete && fontsLoaded && appCounterIsLoaded) {
       setScreenCanBeDisplayed(true);
+    }
   }, [isLoadingComplete, fontsLoaded, appCounterIsLoaded]);
 
   const renderView = () => {
@@ -145,7 +147,7 @@ const MainAppContainer: FC = () => {
             screenName={`${TrackerUtils.TrackingEvent.APP_ACTIVE} - ${appCounter}`}
           />
         )}
-        <StoreCurrentStepArticleIds update={updateStorageValue} />
+        {storeCurrentStepArticleIds && <StoreCurrentStepArticleIds />}
         <SafeAreaProvider>
           <Navigation colorScheme={colorScheme} />
           <StatusBar />

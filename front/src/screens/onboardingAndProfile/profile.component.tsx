@@ -40,8 +40,8 @@ import type {
   UserContext,
   UserSituation,
 } from "../../types";
-import { StorageUtils, TrackerUtils } from "../../utils";
-import { cancelScheduleNextStepNotification } from "../../utils/notification.util";
+import { NotificationUtils, StorageUtils, TrackerUtils } from "../../utils";
+import { NotificationType } from "../../utils/notification.util";
 import { checkErrorOnProfile } from "../../utils/step.util";
 
 interface Props {
@@ -191,6 +191,17 @@ const Profile: FC<Props> = ({ navigation }) => {
     navigation.navigate("root");
   }, [navigation]);
 
+  const resetNextStep = async () => {
+    await NotificationUtils.cancelAllNotificationsByType(
+      NotificationType.nextStep
+    );
+    await StorageUtils.multiRemove([
+      StorageKeysConstants.currentStep,
+      StorageKeysConstants.currentStepId,
+      StorageKeysConstants.notifIdNextStep,
+    ]);
+  };
+
   const validateForm = useCallback(async () => {
     const error = checkErrorOnProfile(userSituations, childBirthday);
     if (error) {
@@ -231,7 +242,9 @@ const Profile: FC<Props> = ({ navigation }) => {
     // Envoi du genre sélectionné sur Matomo
     setTrackerAction(`${Labels.profile.gender.label} : ${gender.label}`);
 
-    void cancelScheduleNextStepNotification();
+    // Annule la notification 'NextStep' et supprime les données concernant l'étape courante
+    await resetNextStep();
+
     navigateToRoot();
   }, [childBirthday, navigateToRoot, userSituations, gender]);
 

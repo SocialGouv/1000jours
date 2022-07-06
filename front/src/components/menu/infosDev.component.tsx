@@ -5,10 +5,11 @@ import * as React from "react";
 import { useCallback, useEffect } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 
-import { Labels } from "../../constants";
+import { Labels, StorageKeysConstants } from "../../constants";
 import { Paddings } from "../../styles";
 import { NotificationUtils, StorageUtils } from "../../utils";
 import { NotificationType } from "../../utils/notification.util";
+import { getObjectValue } from "../../utils/storage.util";
 import { CustomButton, SecondaryText } from "../baseComponents";
 import ModalHtmlContent from "../baseComponents/modalHtmlContent.component";
 import H1 from "../html/h1.component";
@@ -23,6 +24,13 @@ const InfosDev: FC<Props> = ({ setIsVisible }) => {
   const [showNotifSection, setShowNotifSection] = React.useState(false);
   const [notificationsCountByType, setNotificationsCountByType] =
     React.useState<_.Dictionary<number> | undefined>(undefined);
+  const [triggerNotifArticles, setTriggerNotifArticles] =
+    React.useState<Date | null>(null);
+  const [triggerNotifEpds, setTriggerNotifEpds] = React.useState<Date | null>(
+    null
+  );
+  const [triggerNotifNextStep, setTriggerNotifNextStep] =
+    React.useState<Date | null>(null);
 
   const getAllScheduledNotifications = async () => {
     const notifications =
@@ -31,8 +39,23 @@ const InfosDev: FC<Props> = ({ setIsVisible }) => {
       setNotificationsCountByType(
         _.countBy(notifications, "content.data.type")
       );
-      setShowNotifSection(true);
+
+      const _triggerNotifArticles = (await getObjectValue(
+        StorageKeysConstants.triggerForArticlesNotification
+      )) as Date | null;
+      setTriggerNotifArticles(_triggerNotifArticles);
+
+      const _triggerNotifEpds = (await getObjectValue(
+        StorageKeysConstants.triggerForEpdsNotification
+      )) as Date | null;
+      setTriggerNotifEpds(_triggerNotifEpds);
+
+      const _triggerNotifNextStep = (await getObjectValue(
+        StorageKeysConstants.triggerForNexStepNotification
+      )) as Date | null;
+      setTriggerNotifNextStep(_triggerNotifNextStep);
     }
+    setShowNotifSection(true);
   };
 
   const sendNotification = useCallback(
@@ -45,6 +68,7 @@ const InfosDev: FC<Props> = ({ setIsVisible }) => {
 
   const resetAllData = useCallback(async () => {
     await StorageUtils.clear();
+    await NotificationUtils.cancelAllScheduledNotifications();
     Alert.alert(Labels.warning, Labels.infosDev.resetStorageDataAlertMsg);
     setIsVisible(false);
   }, [setIsVisible]);
@@ -53,6 +77,38 @@ const InfosDev: FC<Props> = ({ setIsVisible }) => {
     void getAllScheduledNotifications();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const renderNotificationsCountItem = (key: string, value: number) => {
+    let trigger = null;
+    if (key === NotificationType.articles && triggerNotifArticles) {
+      trigger = `(${new Date(triggerNotifArticles).toLocaleString()})`;
+    }
+    if (key === NotificationType.epds && triggerNotifEpds) {
+      trigger = `(${new Date(triggerNotifEpds).toLocaleString()})`;
+    }
+    if (key === NotificationType.nextStep && triggerNotifNextStep) {
+      trigger = `(${new Date(triggerNotifNextStep).toLocaleString()})`;
+    }
+    return (
+      <SecondaryText key={key} style={styles.paddingLeft}>
+        {key} : {value} {trigger ?? null}
+      </SecondaryText>
+    );
+  };
+
+  const renderNotificationSection = () => {
+    if (notificationsCountByType) {
+      return Object.keys(notificationsCountByType).map((key: string) => {
+        return renderNotificationsCountItem(key, notificationsCountByType[key]);
+      });
+    } else {
+      return (
+        <SecondaryText style={styles.paddingLeft}>
+          {Labels.noData}
+        </SecondaryText>
+      );
+    }
+  };
 
   const content = (
     <View>
@@ -66,17 +122,12 @@ const InfosDev: FC<Props> = ({ setIsVisible }) => {
         action={resetAllData}
       />
 
+      {/* NOTIFICATIONS */}
       <H2>{Labels.infosDev.notifications}</H2>
+
       <H3>{Labels.infosDev.scheduledNotifications} :</H3>
-      {showNotifSection &&
-        notificationsCountByType &&
-        Object.keys(notificationsCountByType).map((key: string) => {
-          return (
-            <SecondaryText key={key} style={styles.paddingLeft}>
-              {key} : {notificationsCountByType[key]}
-            </SecondaryText>
-          );
-        })}
+      {showNotifSection && renderNotificationSection()}
+
       <H3>{Labels.infosDev.testNotification} :</H3>
       <SecondaryText style={styles.textCenter}>
         {Labels.infosDev.testNotificationInfo}

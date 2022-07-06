@@ -561,6 +561,7 @@ export default {
     },
     title: "Suivi d'Humeur",
   },
+  noData: "Aucunes données",
   notification: {
     openTheApp: "Ouverture de l'app",
   },

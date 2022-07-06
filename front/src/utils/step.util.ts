@@ -164,6 +164,8 @@ export const countCurrentStepArticlesRead = async (): Promise<number> => {
 
     if (currentStepArticlesRead.length > 0) {
       return articlesOfCurrentStep.length - articlesRead.length;
+    } else {
+      return articlesOfCurrentStep.length;
     }
   }
   return -1;

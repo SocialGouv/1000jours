@@ -27,6 +27,8 @@ export const scrollToEventId = "@scrollToEventId";
 export const articlesRead = "@articlesRead";
 export const moodsByDate = "@moodsByDate";
 export const notificationsAreAllowed = "@notificationsAreAllowed";
+export const triggerForEpdsNotification = "@triggerForEpdsNotification";
+export const triggerForNexStepNotification = "@triggerForNexStepNotification";
 export const triggerForArticlesNotification = "@triggerForArticlesNotification";
 
 export const allStorageKeys = [
