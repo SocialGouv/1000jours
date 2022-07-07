@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cartographie_ds_types",
+  "info": {
+    "name": "Cartographie DS Types",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "identifiant": {
+      "type": "string"
+    },
+    "cartographie_pois_type": {
+      "model": "cartographie-types"
+    },
+    "types": {
+      "type": "component",
+      "repeatable": true,
+      "component": "cartographie.types"
+    }
+  }
+}

@@ -29,4 +29,7 @@ module.exports = ({ env }) => ({
       replyTo: env("MAIL_SEND_FROM"),
     },
   },
+  demarches: {
+    token: env("DEMARCHES_SIMPLIFIEES_TOKEN"),
+  },
 });

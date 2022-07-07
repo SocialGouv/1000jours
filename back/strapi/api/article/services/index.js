@@ -3,9 +3,13 @@
 const ArticleModel = require("../models/article.settings.js");
 const ModelsService = require("../../models/services");
 
-const normalizeString = (str) => str
-  ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
-  : "";
+const normalizeString = (str) =>
+  str
+    ? str
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+    : "";
 
 const format = (entity) => {
   // fixes weird empty object issue and GraphQL `cannot return null` error
@@ -16,20 +20,24 @@ const format = (entity) => {
   return ModelsService.format(entity, "article");
 };
 
-const ArticleTextFields = Object.keys(ArticleModel.attributes).filter(field =>
-  ["text", "richtext", "string"].indexOf(ArticleModel.attributes[field].type) !== -1
+const ArticleTextFields = Object.keys(ArticleModel.attributes).filter(
+  (field) =>
+    ["text", "richtext", "string"].indexOf(
+      ArticleModel.attributes[field].type
+    ) !== -1
 );
 
 const search = async ({ query }) => {
   query = normalizeString(query);
 
-  const articles = await strapi.query("article")
-  .find({ published_at_null: false });
+  const articles = await strapi
+    .query("article")
+    .find({ published_at_null: false });
 
   if (!articles.length) return [];
 
-  return articles.filter(article =>
-    ArticleTextFields.some(field =>
+  return articles.filter((article) =>
+    ArticleTextFields.some((field) =>
       normalizeString(article[field]).match(query)
     )
   );
