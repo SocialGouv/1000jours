@@ -259,7 +259,11 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
             </View>
           </>
         )}
-        {showUpdateProfile && <UpdateChildBirthdayModal />}
+        {showUpdateProfile && (
+          <UpdateChildBirthdayModal
+            step={_etapes.find((step) => step.active == true)}
+          />
+        )}
       </ScrollView>
     </>
   );

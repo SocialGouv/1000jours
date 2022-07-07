@@ -11,6 +11,7 @@ import {
   Sizes,
   Styles,
 } from "../../styles";
+import type { Step } from "../../types";
 import { RootNavigation } from "../../utils";
 import {
   CloseButton,
@@ -21,15 +22,11 @@ import {
   View,
 } from "../baseComponents";
 
-interface Props {}
+interface Props {
+  step: Step | undefined;
+}
 
-/**
- * TODO:
- * Stocker la date de la dernière modif
- * Mettre à jour la date à chaque MAJ
- */
-
-const UpdateChildBirthdayModal: React.FC<Props> = () => {
+const UpdateChildBirthdayModal: React.FC<Props> = ({ step }) => {
   const [modalVisible, setModalVisible] = useState(true);
 
   const onHideModal = useCallback(() => {
@@ -70,8 +67,8 @@ const UpdateChildBirthdayModal: React.FC<Props> = () => {
               {Labels.profile.updateModal.title}
             </SecondaryText>
             <SecondaryText style={styles.body}>
-              {Labels.profile.updateModal.content1}
-              NOM DE L'ETAPE
+              {Labels.profile.updateModal.content1}"
+              <SecondaryText style={styles.bold}>{step?.nom}</SecondaryText>"
             </SecondaryText>
             <SecondaryText style={styles.body}>
               {Labels.profile.updateModal.content2}
@@ -109,6 +106,9 @@ const styles = StyleSheet.create({
     fontSize: Sizes.sm,
     paddingBottom: Paddings.default,
     textAlign: "center",
+  },
+  bold: {
+    fontWeight: "bold",
   },
   button: {
     backgroundColor: Colors.secondaryGreenDark,
