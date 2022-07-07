@@ -1,3 +1,19 @@
+# [1.103.0](https://github.com/SocialGouv/1000jours/compare/v1.102.2...v1.103.0) (2022-07-07)
+
+
+### Bug Fixes
+
+* 🐛 add expo-analytics-segment ([#1296](https://github.com/SocialGouv/1000jours/issues/1296)) ([7d53f0e](https://github.com/SocialGouv/1000jours/commit/7d53f0e7cc424c08f84c075b92d7ad237d5b8d13))
+* **contact:** footer du mail de confirmation ([#1292](https://github.com/SocialGouv/1000jours/issues/1292)) ([afaf0e5](https://github.com/SocialGouv/1000jours/commit/afaf0e59eb28feeeb60cac4746e5e3c91a32dba0))
+* **widget:** bloc de contact dans le mail ([#1283](https://github.com/SocialGouv/1000jours/issues/1283)) ([a08fe06](https://github.com/SocialGouv/1000jours/commit/a08fe060b53488fee39a4ed6cea30a268ab97a99))
+* 🐛 handle calendarSync error ([#1280](https://github.com/SocialGouv/1000jours/issues/1280)) ([af13816](https://github.com/SocialGouv/1000jours/commit/af1381640ae75d97942800c9adcdb0a55223ed8c))
+
+
+### Features
+
+* **contact:** confirmation de contact par mail ([#1282](https://github.com/SocialGouv/1000jours/issues/1282)) ([77d36b0](https://github.com/SocialGouv/1000jours/commit/77d36b09c73d3f311b219c932d679b15ec0e4905))
+* **widget:** ajout bloc de contact maman blues ([#1277](https://github.com/SocialGouv/1000jours/issues/1277)) ([9a6d285](https://github.com/SocialGouv/1000jours/commit/9a6d2855a26da03881d02556636e7b7dc0cd8951))
+
 ## [1.102.2](https://github.com/SocialGouv/1000jours/compare/v1.102.1...v1.102.2) (2022-07-06)
 
 
