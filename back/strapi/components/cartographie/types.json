@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_cartographie_types",
+  "info": {
+    "name": "types",
+    "icon": "align-center",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "type": "string"
+    }
+  }
+}
