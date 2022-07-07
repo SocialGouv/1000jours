@@ -591,6 +591,15 @@ export default {
       lastChild: "Date de naissance de votre enfant le plus jeune",
       planned: "Naissance prévue de votre enfant",
     },
+    childTooOld:
+      "Selon la date que vous avez renseignée, l'enfant est âgé de deux ans ou plus",
+    dateCannotBeInTheFuture:
+      "La date que vous avez renseignée ne peut pas être dans le futur",
+    dateCannotBeInThePast:
+      "La date que vous avez renseignée ne peut pas être dans le passé",
+    dateIsRequired: "Date manquante",
+    dateTooFarInFuture:
+      "La date que vous avez renseignée est trop éloignée dans le futur",
     gender: {
       empty: "Non renseigné",
       label: "Genre",

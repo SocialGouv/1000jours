@@ -14,7 +14,7 @@ import {
   StorageKeysConstants,
 } from "../constants";
 import type { Event, Step } from "../types";
-import { countCurrentStepArticlesRead } from "./step.util";
+import { countCurrentStepArticlesNotRead } from "./step.util";
 import * as StorageUtils from "./storage.util";
 
 export enum NotificationType {
@@ -174,7 +174,7 @@ export const scheduleNextStepNotification = async (
           )
         );
         trigger = date;
-        if (isAfter(date, new Date())) needToBeScheduled = true;
+        needToBeScheduled = isAfter(date, new Date());
       }
       if (needToBeScheduled) {
         const notificationId = await sendNotificationReminder(
@@ -314,7 +314,8 @@ export const buildArticlesNotificationContent = async (
       },
       title: Labels.article.notification.articlesToRead.title,
     };
-  } else if (nbArticlesToRead === 0) {
+  }
+  if (nbArticlesToRead === 0) {
     return {
       body: Labels.article.notification.congrats.body,
       data: {
@@ -357,7 +358,7 @@ export const updateArticlesNotification = async (): Promise<void> => {
 export const scheduleArticlesNotification = async (
   notifTrigger?: NotificationTriggerInput
 ): Promise<void> => {
-  const nbArticlesToRead: number = await countCurrentStepArticlesRead();
+  const nbArticlesToRead: number = await countCurrentStepArticlesNotRead();
   if (nbArticlesToRead >= 0) {
     const trigger: NotificationTriggerInput =
       nbArticlesToRead > 0
@@ -442,7 +443,7 @@ export const scheduleFakeNotif = async (
       break;
     }
     case NotificationType.articles: {
-      const nbArticlesToRead = await countCurrentStepArticlesRead();
+      const nbArticlesToRead = await countCurrentStepArticlesNotRead();
       content = await buildArticlesNotificationContent(nbArticlesToRead);
       break;
     }

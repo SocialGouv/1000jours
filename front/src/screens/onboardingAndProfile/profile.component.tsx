@@ -33,6 +33,7 @@ import {
   PlatformConstants,
   StorageKeysConstants,
 } from "../../constants";
+import { USER_SITUATIONS } from "../../constants/profile.constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
   ProfileGender,
@@ -51,43 +52,7 @@ const Profile: FC<Props> = ({ navigation }) => {
   const imageProfile = require("../../assets/images/profile.png");
   const defaultUserContext: UserContext = {
     childBirthday: null,
-    situations: [
-      {
-        childBirthdayLabel: "",
-        childBirthdayRequired: false,
-        id: "projet",
-        isChecked: false,
-        label: Labels.profile.situations.project,
-      },
-      {
-        childBirthdayLabel: "",
-        childBirthdayRequired: false,
-        id: "conception",
-        isChecked: false,
-        label: Labels.profile.situations.search,
-      },
-      {
-        childBirthdayLabel: Labels.profile.childBirthday.planned,
-        childBirthdayRequired: true,
-        id: "grossesse",
-        isChecked: false,
-        label: Labels.profile.situations.pregnant,
-      },
-      {
-        childBirthdayLabel: Labels.profile.childBirthday.firstChild,
-        childBirthdayRequired: true,
-        id: "enfant",
-        isChecked: false,
-        label: Labels.profile.situations.oneChild,
-      },
-      {
-        childBirthdayLabel: Labels.profile.childBirthday.lastChild,
-        childBirthdayRequired: true,
-        id: "enfants",
-        isChecked: false,
-        label: Labels.profile.situations.severalChildren,
-      },
-    ],
+    situations: USER_SITUATIONS,
   };
 
   const genderEmpty = {
