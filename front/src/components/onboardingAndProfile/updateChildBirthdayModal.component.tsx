@@ -1,8 +1,9 @@
+import { format } from "date-fns";
 import * as React from "react";
 import { useCallback, useState } from "react";
 import { Modal, StyleSheet } from "react-native";
 
-import { Labels } from "../../constants";
+import { Formats, Labels, StorageKeysConstants } from "../../constants";
 import {
   Colors,
   FontWeight,
@@ -12,7 +13,7 @@ import {
   Styles,
 } from "../../styles";
 import type { Step } from "../../types";
-import { RootNavigation } from "../../utils";
+import { RootNavigation, StorageUtils } from "../../utils";
 import {
   CloseButton,
   CustomButton,
@@ -29,7 +30,12 @@ interface Props {
 const UpdateChildBirthdayModal: React.FC<Props> = ({ step }) => {
   const [modalVisible, setModalVisible] = useState(true);
 
-  const onHideModal = useCallback(() => {
+  const onHideModal = useCallback(async () => {
+    await StorageUtils.storeStringValue(
+      StorageKeysConstants.lastProfileUpdate,
+      format(new Date(), Formats.dateISO)
+    );
+
     setModalVisible(false);
   }, []);
 

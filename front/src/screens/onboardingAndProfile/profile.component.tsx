@@ -107,7 +107,26 @@ const Profile: FC<Props> = ({ navigation }) => {
       const userSituationsStored = (await StorageUtils.getObjectValue(
         StorageKeysConstants.userSituationsKey
       )) as UserSituation[] | null;
-      if (userSituationsStored) setUserSituations(userSituationsStored);
+
+      if (
+        userSituationsStored &&
+        userSituationsStored.length == defaultUserContext.situations.length
+      )
+        setUserSituations(userSituationsStored);
+      else {
+        setUserSituations(() => {
+          return defaultUserContext.situations.map((item) => {
+            const situation = userSituationsStored?.find(
+              (s) => s.id === item.id
+            );
+            if (item.id === situation?.id) {
+              return { ...item, isChecked: situation.isChecked };
+            } else {
+              return item;
+            }
+          });
+        });
+      }
 
       const childBirthdayStr =
         (await StorageUtils.getStringValue(

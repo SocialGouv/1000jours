@@ -69,4 +69,11 @@ export const USER_SITUATIONS: UserSituation[] = [
     isChecked: false,
     label: Labels.profile.situations.severalChildren,
   },
+  {
+    childBirthdayLabel: "",
+    childBirthdayRequired: false,
+    id: "nonConcerné",
+    isChecked: false,
+    label: Labels.profile.situations.notConcerned,
+  },
 ];

@@ -609,6 +609,7 @@ export default {
       woman: "Femme",
     },
     situations: {
+      notConcerned: "Je ne suis plus concerné(e) par l'application",
       oneChild: "J'ai un enfant",
       pregnant: "J'attends un enfant",
       pro: "Je suis un professionnel de santé",
