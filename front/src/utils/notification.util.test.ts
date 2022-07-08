@@ -56,6 +56,7 @@ describe("Notification utils", () => {
       const expected = {
         body: Labels.article.notification.congrats.body,
         data: {
+          confetti: true,
           redirectFromRoot: false,
           redirectParams: null,
           redirectTitle: Labels.article.notification.congrats.redirectTitle,
