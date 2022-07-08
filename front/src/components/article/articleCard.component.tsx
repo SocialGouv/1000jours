@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { AccessibilityInfo, StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
+
 import DefaultImage from "../../assets/images/default.png";
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";

@@ -8,7 +8,11 @@ import type { LayoutChangeEvent } from "react-native";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { ParenthequeItem, TimelineStep } from "../../components";
+import {
+  ParenthequeItem,
+  StoreCurrentStepArticleIds,
+  TimelineStep,
+} from "../../components";
 import { TitleH1, View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
@@ -34,32 +38,25 @@ interface Props {
 
 const TabHomeScreen: FC<Props> = ({ navigation }) => {
   const [previousCurrentStepId, setPreviousCurrentStepId] = useState<
-    string | null
+    string | null | undefined
   >(null);
+  const [currentStep, setCurrentStep] = useState<Step | null>(null);
   const [currentStepId, setCurrentStepId] = useState<number | null>(null);
   const [
     numberOfStepsWithoutTheFirstAndLast,
     setNumberOfStepsWithoutTheFirstAndLast,
   ] = useState(-1);
   const [triggerGetSteps, setTriggerGetStep] = useState(false);
+  const [storeCurrentStepArticleIds, setStoreCurrentStepArticleIds] =
+    useState(false);
   const [_etapes, setEtapes] = useState<Step[]>([]);
   const scrollViewRef = useRef<ScrollView>(null);
 
-  useEffect(() => {
-    // Permet de forcer le refresh de la page lorsque l'on arrive dessus
-    const unsubscribe = navigation.addListener("focus", () => {
-      void init();
-    });
-    // Return the function to unsubscribe from the event so it gets removed on unmount
-    return unsubscribe;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const init = async () => {
+  const init = useCallback(async () => {
     const previousStepId = await StorageUtils.getStringValue(
       StorageKeysConstants.currentStepId
     );
-    if (previousStepId) setPreviousCurrentStepId(previousStepId);
+    setPreviousCurrentStepId(previousStepId);
 
     const userSituations = (await StorageUtils.getObjectValue(
       StorageKeysConstants.userSituationsKey
@@ -77,38 +74,84 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
       setCurrentStepId(stepId);
     }
     setTriggerGetStep(!triggerGetSteps);
-  };
+  }, [triggerGetSteps]);
+
+  useEffect(() => {
+    // Permet de forcer le refresh de la page lorsque l'on arrive dessus
+    const unsubscribe = navigation.addListener("focus", () => {
+      void init();
+    });
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [init, navigation]);
+
+  useEffect(() => {
+    if (currentStep) {
+      setStoreCurrentStepArticleIds(true);
+    }
+  }, [currentStep]);
+
+  const scheduleArticlesNotificationIfNeeded = useCallback(async () => {
+    if (currentStep) {
+      const triggerForArticlesNotification = await StorageUtils.getObjectValue(
+        StorageKeysConstants.triggerForArticlesNotification
+      );
+      // Programme la notification des articles non lus si cette notification n'a jamais été programmée ou si il y a un changement d'étape
+      if (
+        !triggerForArticlesNotification ||
+        (StringUtils.stringIsNotNullNorEmpty(previousCurrentStepId) &&
+          previousCurrentStepId !== currentStep.id.toString())
+      ) {
+        await NotificationUtils.scheduleArticlesNotification();
+      }
+    }
+  }, [currentStep, previousCurrentStepId]);
+
+  const checkIfCurrentStepHasChanged = useCallback(
+    async (etapes: Step[], _currentStep: Step) => {
+      // Force le déclenchement de la notification suite au changement d'étape
+      if (
+        StringUtils.stringIsNotNullNorEmpty(previousCurrentStepId) &&
+        previousCurrentStepId !== _currentStep.id.toString()
+      ) {
+        await NotificationUtils.cancelScheduleNextStepNotification();
+        await NotificationUtils.scheduleNextStepNotification(
+          _currentStep,
+          true
+        );
+        setPreviousCurrentStepId(_currentStep.id.toString());
+      }
+      // Planifie la notification du prochain changement d'étape
+      else {
+        const nextStep = _.find(etapes, { ordre: _currentStep.ordre + 1 });
+        if (nextStep)
+          await NotificationUtils.scheduleNextStepNotification(nextStep);
+      }
+    },
+    [previousCurrentStepId]
+  );
 
   const handleResults = useCallback(
-    (data: unknown) => {
-      const checkIfCurrentStepHasChanged = (
-        currentStep: Step,
-        etapes: Step[]
-      ) => {
-        // Force le déclenchement de la notification suite au changement d'étape
-        if (
-          StringUtils.stringIsNotNullNorEmpty(previousCurrentStepId) &&
-          previousCurrentStepId !== currentStep.id.toString()
-        ) {
-          void NotificationUtils.cancelScheduleNextStepNotification().then(
-            () => {
-              void NotificationUtils.scheduleNextStepNotification(
-                currentStep,
-                true
-              );
-              setPreviousCurrentStepId(currentStep.id.toString());
-            }
+    async (data: unknown) => {
+      const result = data as { etapes: Step[] };
+      let _currentStep = undefined;
+
+      // Set CurrentStep
+      if (result.etapes.length && currentStepId) {
+        _currentStep = _.find(result.etapes, (o) => {
+          return o.id == currentStepId;
+        });
+        if (_currentStep?.nom) {
+          setCurrentStep(_currentStep);
+          await StorageUtils.storeObjectValue(
+            StorageKeysConstants.currentStep,
+            _currentStep
           );
         }
-        // Planifie la notification du prochain changement d'étape
-        else {
-          const nextStep = _.find(etapes, { ordre: currentStep.ordre + 1 });
-          if (nextStep)
-            void NotificationUtils.scheduleNextStepNotification(nextStep);
-        }
-      };
+      }
 
-      const result = data as { etapes: Step[] };
+      // Format and Set the Steps
       const etapes = result.etapes.map((etape) => ({
         ...etape,
         // '+' permet de convertir l'id (string) en number
@@ -119,14 +162,10 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 
       setNumberOfStepsWithoutTheFirstAndLast(etapes.length - 1 - 2);
 
-      if (currentStepId) {
-        const currentStep = _.find(etapes, { id: currentStepId });
-        if(currentStep?.nom)
-          StorageUtils.storeStringValue(StorageKeysConstants.currentStepLabelKey, currentStep.nom)
-        if (currentStep) checkIfCurrentStepHasChanged(currentStep, etapes);
-      }
+      if (_currentStep)
+        await checkIfCurrentStepHasChanged(etapes, _currentStep);
     },
-    [currentStepId, previousCurrentStepId]
+    [checkIfCurrentStepHasChanged, currentStepId]
   );
 
   const scrollTo = (positionY: number) => {
@@ -153,63 +192,70 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     []
   );
   return (
-    <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>
-      <TrackerHandler screenName={TrackerUtils.TrackingEvent.HOME} />
-      <GraphQLLazyQuery
-        query={HomeDbQueries.HOME_GET_ALL_STEPS}
-        fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-        getFetchedData={handleResults}
-        triggerLaunchQuery={triggerGetSteps}
-        noLoaderBackdrop
-      />
-      {_etapes.length > 0 && (
-        <>
-          <TitleH1
-            title={Labels.timeline.title}
-            description={Labels.timeline.description}
-            animated={false}
-          />
-          <ParenthequeItem navigation={navigation} />
-          <View style={[styles.timelineStepContainer]}>
-            <View style={[styles.timelineContainer]}>
-              <View
-                style={[
-                  styles.timelineBlock,
-                  styles.timelineBlockRight,
-                  styles.timelineBlockFirst,
-                ]}
-              />
-              {range(numberOfStepsWithoutTheFirstAndLast).map((index) => (
+    <>
+      {storeCurrentStepArticleIds && (
+        <StoreCurrentStepArticleIds
+          callback={scheduleArticlesNotificationIfNeeded}
+        />
+      )}
+      <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>
+        <TrackerHandler screenName={TrackerUtils.TrackingEvent.HOME} />
+        <GraphQLLazyQuery
+          query={HomeDbQueries.HOME_GET_ALL_STEPS}
+          fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
+          getFetchedData={handleResults}
+          triggerLaunchQuery={triggerGetSteps}
+          noLoaderBackdrop
+        />
+        {_etapes.length > 0 && (
+          <>
+            <TitleH1
+              title={Labels.timeline.title}
+              description={Labels.timeline.description}
+              animated={false}
+            />
+            <ParenthequeItem navigation={navigation} />
+            <View style={[styles.timelineStepContainer]}>
+              <View style={[styles.timelineContainer]}>
                 <View
                   style={[
                     styles.timelineBlock,
-                    index % 2 === 0
-                      ? styles.timelineBlockLeft
-                      : styles.timelineBlockRight,
+                    styles.timelineBlockRight,
+                    styles.timelineBlockFirst,
                   ]}
+                />
+                {range(numberOfStepsWithoutTheFirstAndLast).map((index) => (
+                  <View
+                    style={[
+                      styles.timelineBlock,
+                      index % 2 === 0
+                        ? styles.timelineBlockLeft
+                        : styles.timelineBlockRight,
+                    ]}
+                    key={index}
+                  />
+                ))}
+              </View>
+              {_etapes.map((step, index) => (
+                <TimelineStep
+                  order={step.ordre}
+                  name={step.nom}
+                  index={index}
+                  isTheLast={index === _etapes.length - 1}
                   key={index}
+                  active={step.active}
+                  onPress={onTimelineStepPress(step)}
+                  // eslint-disable-next-line react/jsx-no-bind
+                  onLayout={(event: LayoutChangeEvent) => {
+                    onTimelineStepLayout(event, step);
+                  }}
                 />
               ))}
             </View>
-            {_etapes.map((step, index) => (
-              <TimelineStep
-                order={step.ordre}
-                name={step.nom}
-                index={index}
-                isTheLast={index === _etapes.length - 1}
-                key={index}
-                active={step.active}
-                onPress={onTimelineStepPress(step)}
-                // eslint-disable-next-line react/jsx-no-bind
-                onLayout={(event: LayoutChangeEvent) => {
-                  onTimelineStepLayout(event, step);
-                }}
-              />
-            ))}
-          </View>
-        </>
-      )}
-    </ScrollView>
+          </>
+        )}
+      </ScrollView>
+    </>
   );
 };
 

@@ -3264,6 +3264,13 @@
     "@types/react-native" "*"
     "@types/xdate" "*"
 
+"@types/react-native-confetti@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@types/react-native-confetti/-/react-native-confetti-0.1.0.tgz#8e3067428bd762fa7b1d5801431a0fcf5d041faf"
+  integrity sha512-mRJPe4MMyuCoWVEJ8Ng11MZwRSKT72EBsgMPOFGtgYkOSE1bDKoFDVWUjxRygpvEdXGoqpPLaKmTgIVSwjTx6Q==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-native-indicators@^0.16.1":
   version "0.16.2"
   resolved "https://registry.yarnpkg.com/@types/react-native-indicators/-/react-native-indicators-0.16.2.tgz#f57c9bbf05aa9abefc0ef4b3b7c09e10eecccf3e"
@@ -13290,6 +13297,11 @@ react-native-codegen@^0.0.6:
     flow-parser "^0.121.0"
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
+
+react-native-confetti@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-confetti/-/react-native-confetti-0.1.0.tgz#9ec93c07f845de5ebeaed700043fd5218792b6f1"
+  integrity sha512-+cXJvnPXKc0i/eTQcuzcjrlfIxmn/xFw4UyuVKQOWNK6BfWABvO6Ms6Zp6ivF1E8Vxt2vJkzJlNyoBvMh9FxKA==
 
 react-native-elements@^3.4.2:
   version "3.4.2"

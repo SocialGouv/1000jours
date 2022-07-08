@@ -1,3 +1,4 @@
+import NotificationModal from "../notification/notificationModal.component";
 import BackButton from "./backButton.component";
 import Backdrop from "./backdrop.component";
 import Checkbox from "./checkbox.component";
@@ -16,7 +17,6 @@ import Icomoon, { IcomoonIcons } from "./icomoon.component";
 import Loader from "./loader.component";
 import MapLoader from "./mapLoader.component";
 import ModalHelp from "./modalHelp.component";
-import NotificationModal from "./notificationModal.component";
 import ShareButton, { SharePageType } from "./shareButton.component";
 import { CommonText, SecondaryText, SecondaryTextItalic } from "./StyledText";
 import Tags from "./tags.component";

@@ -2,18 +2,19 @@ import type { Notification as ExpoNotificaiton } from "expo-notifications";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { Modal, StyleSheet, TouchableOpacity } from "react-native";
+import { Modal, StyleSheet, TouchableOpacity, Vibration } from "react-native";
+import Confetti from "react-native-confetti";
 
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
 import type { NotificationStyle } from "../../types";
 import { NotificationType } from "../../utils/notification.util";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { TrackingEvent } from "../../utils/tracker.util";
+import CustomButton from "../baseComponents/customButton.component";
+import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
+import { SecondaryText } from "../baseComponents/StyledText";
+import { View } from "../baseComponents/Themed";
 import TrackerHandler from "../tracker/trackerHandler.component";
-import CustomButton from "./customButton.component";
-import Icomoon, { IcomoonIcons } from "./icomoon.component";
-import { SecondaryText } from "./StyledText";
-import { View } from "./Themed";
 
 interface Props {
   notification: ExpoNotificaiton;
@@ -37,13 +38,22 @@ notifStyles.set(NotificationType.moodboard, {
   color: Colors.primaryBlueDark,
   icon: IcomoonIcons.bebe,
 });
+notifStyles.set(NotificationType.articles, {
+  color: Colors.primaryBlueDark,
+  icon: IcomoonIcons.notification,
+});
 
 const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
   const notificationType = notification.request.content.data
     .type as NotificationType;
 
+  const confetti = notification.request.content.data.confetti as boolean;
+
   const [modalVisible, setModalVisible] = useState(true);
   const [trackerAction, setTrackerAction] = useState("");
+
+  const confettiRef = React.useRef<Confetti>(null);
+  const VIBRATION_PATTERN = [0, 700, 700]; // intervalles entre chaque vibration.
 
   const action = useCallback(() => {
     const buttonTitle = notification.request.content.data.redirectTitle ?? "";
@@ -51,17 +61,22 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
       `${TrackingEvent.NOTIFICATION} (${notificationType}) - ${buttonTitle}`
     );
     const redirectTo = notification.request.content.data.redirectTo as string;
+    const redirectParams = notification.request.content.data.redirectParams;
 
     if (redirectTo) {
       const redirectFromRoot = notification.request.content.data
         .redirectFromRoot as boolean;
       if (redirectFromRoot)
-        void RootNavigation.navigate("root", { screen: redirectTo });
-      else void RootNavigation.navigate(redirectTo, null);
+        void RootNavigation.navigate("root", {
+          params: redirectParams,
+          screen: redirectTo,
+        });
+      else void RootNavigation.navigate(redirectTo, redirectParams);
     }
     setModalVisible(false);
   }, [
     notification.request.content.data.redirectFromRoot,
+    notification.request.content.data.redirectParams,
     notification.request.content.data.redirectTitle,
     notification.request.content.data.redirectTo,
     notificationType,
@@ -70,6 +85,14 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
   useEffect(() => {
     if (!modalVisible) onDismiss();
   }, [modalVisible, onDismiss]);
+
+  useEffect(() => {
+    if (confetti) {
+      confettiRef.current?.startConfetti();
+      Vibration.vibrate(VIBRATION_PATTERN);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [confettiRef]);
 
   const onHideModalButtonPressed = useCallback(() => {
     setModalVisible(false);
@@ -85,6 +108,7 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
       <TrackerHandler actionName={trackerAction} />
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
+          <Confetti ref={confettiRef} />
           <TouchableOpacity
             style={styles.closeButton}
             onPress={onHideModalButtonPressed}
@@ -97,8 +121,10 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
           </TouchableOpacity>
           <Icomoon
             name={
-              notifStyles.get(notificationType)?.icon ??
-              IcomoonIcons.notification
+              confetti
+                ? IcomoonIcons.confetti
+                : notifStyles.get(notificationType)?.icon ??
+                  IcomoonIcons.notification
             }
             color={notifStyles.get(notificationType)?.color}
             size={Sizes.xxxxl}

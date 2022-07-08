@@ -33,6 +33,7 @@ import {
   PlatformConstants,
   StorageKeysConstants,
 } from "../../constants";
+import { USER_SITUATIONS } from "../../constants/profile.constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
   ProfileGender,
@@ -40,10 +41,8 @@ import type {
   UserContext,
   UserSituation,
 } from "../../types";
-import { StorageUtils, TrackerUtils } from "../../utils";
-import { cancelScheduleNextStepNotification } from "../../utils/notification.util";
+import { NotificationUtils, StorageUtils, TrackerUtils } from "../../utils";
 import { checkErrorOnProfile } from "../../utils/step.util";
-import { TrackerEvent } from "../../type";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -53,43 +52,7 @@ const Profile: FC<Props> = ({ navigation }) => {
   const imageProfile = require("../../assets/images/profile.png");
   const defaultUserContext: UserContext = {
     childBirthday: null,
-    situations: [
-      {
-        childBirthdayLabel: "",
-        childBirthdayRequired: false,
-        id: "projet",
-        isChecked: false,
-        label: Labels.profile.situations.project,
-      },
-      {
-        childBirthdayLabel: "",
-        childBirthdayRequired: false,
-        id: "conception",
-        isChecked: false,
-        label: Labels.profile.situations.search,
-      },
-      {
-        childBirthdayLabel: Labels.profile.childBirthday.planned,
-        childBirthdayRequired: true,
-        id: "grossesse",
-        isChecked: false,
-        label: Labels.profile.situations.pregnant,
-      },
-      {
-        childBirthdayLabel: Labels.profile.childBirthday.firstChild,
-        childBirthdayRequired: true,
-        id: "enfant",
-        isChecked: false,
-        label: Labels.profile.situations.oneChild,
-      },
-      {
-        childBirthdayLabel: Labels.profile.childBirthday.lastChild,
-        childBirthdayRequired: true,
-        id: "enfants",
-        isChecked: false,
-        label: Labels.profile.situations.severalChildren,
-      },
-    ],
+    situations: USER_SITUATIONS,
   };
 
   const genderEmpty = {
@@ -112,7 +75,6 @@ const Profile: FC<Props> = ({ navigation }) => {
     },
     genderEmpty,
   ];
-  const defaultGender = _.find(genders, ["id", "empty"]);
 
   const hasCheckedSituation = () => {
     return _.filter(userSituations, ["isChecked", true]).length > 0;
@@ -135,7 +97,8 @@ const Profile: FC<Props> = ({ navigation }) => {
   const [gender, setGender] = useState<ProfileGender>(genderEmpty);
 
   const initGender = async () => {
-    const genderStored = await StorageUtils.getObjectValue(StorageKeysConstants.userGenderKey);
+    const genderStored: ProfileGender | null =
+      await StorageUtils.getObjectValue(StorageKeysConstants.userGenderKey);
     setGender(genderStored ?? genderEmpty);
   };
 
@@ -155,6 +118,7 @@ const Profile: FC<Props> = ({ navigation }) => {
     };
     void initDataWithStorageValue();
     void initGender();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -191,6 +155,14 @@ const Profile: FC<Props> = ({ navigation }) => {
     navigation.navigate("root");
   }, [navigation]);
 
+  const resetNextStep = async () => {
+    await NotificationUtils.cancelScheduleNextStepNotification();
+    await StorageUtils.multiRemove([
+      StorageKeysConstants.currentStep,
+      StorageKeysConstants.currentStepId,
+    ]);
+  };
+
   const validateForm = useCallback(async () => {
     const error = checkErrorOnProfile(userSituations, childBirthday);
     if (error) {
@@ -203,12 +175,10 @@ const Profile: FC<Props> = ({ navigation }) => {
       userSituations
     );
 
-    if(gender) {
-      await StorageUtils.storeObjectValue(
-        StorageKeysConstants.userGenderKey,
-        gender
-      );
-    }
+    await StorageUtils.storeObjectValue(
+      StorageKeysConstants.userGenderKey,
+      gender
+    );
 
     const situationChecked = _.find(userSituations, { isChecked: true });
     if (situationChecked?.childBirthdayRequired) {
@@ -231,11 +201,11 @@ const Profile: FC<Props> = ({ navigation }) => {
     }
 
     // Envoi du genre sélectionné sur Matomo
-    if (gender) {
-      setTrackerAction(`${Labels.profile.gender} : ${gender.label}`);
-    }
+    setTrackerAction(`${Labels.profile.gender.label} : ${gender.label}`);
 
-    void cancelScheduleNextStepNotification();
+    // Annule la notification 'NextStep' et supprime les données concernant l'étape courante
+    await resetNextStep();
+
     navigateToRoot();
   }, [childBirthday, navigateToRoot, userSituations, gender]);
 
@@ -268,13 +238,16 @@ const Profile: FC<Props> = ({ navigation }) => {
     navigateToRoot();
   }, [navigateToRoot]);
 
-  const onGenderPressed = useCallback((item: ProfileGender) => () => {
-    setGender(item);
-  }, []);
+  const onGenderPressed = useCallback(
+    (item: ProfileGender) => () => {
+      setGender(item);
+    },
+    []
+  );
 
   const isSelectedGender = (profileGender: ProfileGender) => {
-    return profileGender.id === gender?.id;
-  }
+    return profileGender.id === gender.id;
+  };
 
   return (
     <View style={[styles.mainContainer]}>
@@ -389,7 +362,9 @@ const Profile: FC<Props> = ({ navigation }) => {
                     >
                       <CommonText
                         style={
-                          isSelectedGender(item) ? styles.itemTextSelected : null
+                          isSelectedGender(item)
+                            ? styles.itemTextSelected
+                            : null
                         }
                       >
                         {item.label}
@@ -473,23 +448,23 @@ const styles = StyleSheet.create({
     paddingVertical: Paddings.light,
   },
   genderContainer: {
-    paddingTop: Paddings.default,
     marginBottom: Margins.default,
-  },
-  genderItemsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start'
-  },
-  genderItemContainer: {
-    width: '50%',
+    paddingTop: Paddings.default,
   },
   genderItem: {
     alignContent: "space-between",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: Paddings.default,
     paddingHorizontal: Paddings.smallest,
+    paddingVertical: Paddings.default,
+  },
+  genderItemContainer: {
+    width: "50%",
+  },
+  genderItemsContainer: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   hide: {
     display: "none",
@@ -570,6 +545,3 @@ const styles = StyleSheet.create({
 });
 
 export default Profile;
-function trackScreenView(arg0: string) {
-  throw new Error("Function not implemented.");
-}

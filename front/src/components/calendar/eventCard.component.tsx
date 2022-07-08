@@ -77,7 +77,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
   const seeOnTheMap = useCallback(async () => {
     setTrackerAction(TrackerUtils.TrackingEvent.EVENT_SEE_THE_MAP);
     await updateCartoFilterStorage();
-    void RootNavigation.navigate("aroundMeScreen", null);
+    void RootNavigation.navigate("aroundMeScreen");
   }, [updateCartoFilterStorage]);
 
   const setAccessibilityFocus = () => {

@@ -24,6 +24,7 @@ import { RootNavigation } from "../../utils";
 import { Icomoon, IcomoonIcons, View } from "../baseComponents";
 import Accessibility from "./accessibility.component";
 import ConditionsOfUse from "./conditionsOfUse.component";
+import InfosDev from "./infosDev.component";
 import LegalNotice from "./legalNotice.component";
 
 interface Props {
@@ -32,12 +33,15 @@ interface Props {
 }
 
 const MAX_HEIGHT = SCREEN_HEIGHT * 0.9;
+const NB_PRESS_TO_UNLOCK_ACTION = 5;
 
 const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
   const [showInformation, setShowInformation] = React.useState(false);
   const [showLegalNotice, setShowLegalNotice] = React.useState(false);
   const [showConditionsOfUse, setShowConditionsOfUse] = React.useState(false);
   const [showAccessibility, setShowAccessibility] = React.useState(false);
+  const [showInfosDev, setShowInfosDev] = React.useState(false);
+  const [counterPressVersion, setCounterPressVersion] = React.useState(0);
 
   const menuItems: MenuItem[] = useMemo(() => {
     return [
@@ -51,21 +55,21 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       {
         icon: IcomoonIcons.profil,
         onPress: () => {
-          void RootNavigation.navigate("profile", null);
+          void RootNavigation.navigate("profile");
         },
         title: Labels.menu.myProfil,
       },
       {
         icon: IcomoonIcons.bebe,
         onPress: () => {
-          void RootNavigation.navigate("moodboard", null);
+          void RootNavigation.navigate("moodboard");
         },
         title: Labels.menu.moodboard,
       },
       {
         icon: IcomoonIcons.stepParentheque,
         onPress: () => {
-          void RootNavigation.navigate("parentheque", undefined);
+          void RootNavigation.navigate("parentheque");
         },
         title: Labels.timeline.library.nom,
       },
@@ -121,10 +125,23 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
     (menuItem: MenuItem | MenuSubItem) => () => {
       setShowMenu(false);
       // Sur iOS, sans le "setTimeout" la modal n'apparaît pas, il faut attendre la fermeture du menu.
-      setTimeout(menuItem.onPress, PlatformConstants.PLATFORM_IS_IOS ? 200 : 0);
+      setTimeout(menuItem.onPress, PlatformConstants.TIMEOUT_ON_DISMISS_MODAL);
     },
     [setShowMenu]
   );
+
+  const onVersionPress = useCallback(() => {
+    if (counterPressVersion > NB_PRESS_TO_UNLOCK_ACTION) {
+      setCounterPressVersion(0);
+      setShowMenu(false);
+      // Sur iOS, sans le "setTimeout" la modal n'apparaît pas, il faut attendre la fermeture du menu.
+      setTimeout(() => {
+        setShowInfosDev(true);
+      }, PlatformConstants.TIMEOUT_ON_DISMISS_MODAL);
+    } else {
+      setCounterPressVersion(counterPressVersion + 1);
+    }
+  }, [counterPressVersion, setShowMenu]);
 
   const listItemAccordion = useCallback(
     (menuItem: MenuItem) => (
@@ -241,6 +258,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
                   <ListItem.Title
                     style={styles.version}
                     accessibilityLabel={`${Labels.accessibility.version}${Constants.manifest?.version}`}
+                    onPress={onVersionPress}
                   >
                     {`${Labels.version}${Constants.manifest?.version}`}
                   </ListItem.Title>
@@ -251,7 +269,14 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
         </View>
       </Modal>
     ),
-    [showMenu, updateShowMenu, menuItems, listItemAccordion, listItem]
+    [
+      showMenu,
+      updateShowMenu,
+      menuItems,
+      onVersionPress,
+      listItemAccordion,
+      listItem,
+    ]
   );
 
   const snapPoints = [MAX_HEIGHT, MAX_HEIGHT / 1.5, 0];
@@ -273,6 +298,8 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
     <ConditionsOfUse setIsVisible={setShowConditionsOfUse} />
   ) : showAccessibility ? (
     <Accessibility setIsVisible={setShowAccessibility} />
+  ) : showInfosDev ? (
+    <InfosDev setIsVisible={setShowInfosDev} />
   ) : null;
 };
 

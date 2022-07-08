@@ -1,6 +1,7 @@
 import { IcomoonIcons } from "../components/baseComponents/icomoon.component";
 import { NUMBER_OF_DAYS_NOTIF_REMINDER } from "./epdsConstants.constants";
 import { epdsInformation } from "./epdsResultInformation.constants";
+import { MIN_SECONDS } from "./notification.constants";
 
 export default {
   accessibility: {
@@ -132,6 +133,19 @@ export default {
     },
     inShortTitle: "En bref :",
     learnMoreAboutIt: "En savoir plus à ce sujet :",
+    notification: {
+      articlesToRead: {
+        bodyPart1: "Il vous reste",
+        bodyPart2: "article(s) à lire concernant votre étape",
+        redirectTitle: "Consulter",
+        title: "Article(s) non lu(s)",
+      },
+      congrats: {
+        body: "Vous avez lu tous les articles présents actuellement à l’étape suite et fin de grossesse ! Vous faites parti de nos grand(e)s lecteur(rices). \n\nNous en ajoutons régulièrement, vous pouvez aussi lire des articles dans d’autres étapes.",
+        redirectTitle: "Fermer",
+        title: "Félicitations !",
+      },
+    },
     readArticle: "Article lu",
     thematic: "Thématique",
     usefulTitle: "Cet article vous a été utile ?",
@@ -504,6 +518,17 @@ export default {
     seeOnTheMap: "Voir sur la carte",
     title: "Événement",
   },
+  infosDev: {
+    notifications: "Notifications",
+    resetStorageData: "Effacer les données",
+    resetStorageDataAlertMsg:
+      "Relancez l'app pour appliquer les modifications.",
+    scheduledNotifications: "Notifications programmées",
+    showStorageData: "Voir les données",
+    testNotification: "Tester une notification",
+    testNotificationInfo: `(se déclenche au bout de ${MIN_SECONDS}s)`,
+    title: "Infos Dev.",
+  },
   invalidDate: "La date saisie n'est pas valide.",
   invalidLink: "Ce lien n'est pas valide.",
   mandatoryField: "Ce champ est obligatoire",
@@ -536,6 +561,7 @@ export default {
     },
     title: "Suivi d'Humeur",
   },
+  noData: "Aucunes données",
   notification: {
     openTheApp: "Ouverture de l'app",
   },
@@ -565,13 +591,22 @@ export default {
       lastChild: "Date de naissance de votre enfant le plus jeune",
       planned: "Naissance prévue de votre enfant",
     },
+    childTooOld:
+      "Selon la date que vous avez renseignée, l'enfant est âgé de deux ans ou plus",
+    dateCannotBeInTheFuture:
+      "La date que vous avez renseignée ne peut pas être dans le futur",
+    dateCannotBeInThePast:
+      "La date que vous avez renseignée ne peut pas être dans le passé",
+    dateIsRequired: "Date manquante",
+    dateTooFarInFuture:
+      "La date que vous avez renseignée est trop éloignée dans le futur",
     gender: {
+      empty: "Non renseigné",
       label: "Genre",
       man: "Homme",
-      woman: "Femme",
       other: "Autre",
-      empty: "Non renseigné",
       select: "Sélectionnez votre genre",
+      woman: "Femme",
     },
     situations: {
       oneChild: "J'ai un enfant",

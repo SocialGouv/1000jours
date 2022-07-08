@@ -12,6 +12,7 @@ export type RootStackParamList = {
   loading: undefined;
   legalNotice: undefined;
   conditionsOfUse: undefined;
+  infosDev: undefined;
 };
 
 export type BottomTabParamList = {
@@ -215,4 +216,9 @@ export type TableData = {
 export type ProfileGender = {
   id: string;
   label: string;
+};
+
+export type RootNavigationParams = {
+  screen?: string;
+  params?: RootNavigationParams;
 };

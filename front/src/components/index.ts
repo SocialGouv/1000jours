@@ -28,6 +28,7 @@ import EpdsOnboarding from "./epdsSurvey/epdsOnboarding.component";
 import EpdsSurveyContent from "./epdsSurvey/epdsSurveyContent.component";
 import ParenthequeItem from "./home/parenthequeItem.component";
 import ConditionsOfUse from "./menu/conditionsOfUse.component";
+import InfosDev from "./menu/infosDev.component";
 import LegalNotice from "./menu/legalNotice.component";
 import Menu from "./menu/menu.component";
 import EditMoodDay from "./moodboard/editMoodDay.component";
@@ -38,6 +39,7 @@ import NotificationHandler, {
   setNotificationHandler,
 } from "./notification/notificationHandler.component";
 import AroundMePoiList from "./search/aroundMePoiList.component";
+import StoreCurrentStepArticleIds from "./storage/storeCurrentStepArticleIds.component";
 import StepIcon from "./timeline/stepIcon.component";
 import TimelineStep from "./timeline/timelineStep.component";
 
@@ -62,6 +64,7 @@ export {
   Events,
   FetchPois,
   ImageBanner,
+  InfosDev,
   InShort,
   LegalNotice,
   Links,
@@ -76,6 +79,7 @@ export {
   setNotificationHandler,
   SlidingUpPanelAddressesList,
   StepIcon,
+  StoreCurrentStepArticleIds,
   SubmitNewFilter,
   SubTitle,
   TextHtml,

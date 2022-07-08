@@ -293,7 +293,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   );
 
   const navigateToProfile = useCallback(() => {
-    void RootNavigation.navigate("profile", null);
+    void RootNavigation.navigate("profile");
   }, []);
 
   const onHideSnackBar = useCallback(() => {
