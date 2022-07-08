@@ -56,6 +56,7 @@ export enum TrackingEvent {
   MOODBOARD = "Moodboard",
   SETTINGS = "Settings",
   NOTIFICATIONS_DISABLED = "Notifications désactivées",
+  RESSOURCES = "Ressources",
 }
 
 export const dateWithMinHoursDelayIsBeforeNow = (date: Date): boolean => {

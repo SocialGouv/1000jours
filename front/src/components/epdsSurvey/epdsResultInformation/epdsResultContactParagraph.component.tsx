@@ -14,9 +14,10 @@ import {
   Sizes,
 } from "../../../styles";
 import type { EpdsResultContactInformation } from "../../../type";
-import { LinkingUtils } from "../../../utils";
+import { LinkingUtils, TrackerUtils } from "../../../utils";
 import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
 import { CustomButton, SecondaryText, View } from "../../baseComponents";
+import TrackerHandler from "../../tracker/trackerHandler.component";
 
 interface EpdsResultContactParagraphProps {
   paragraphTitle?: string;
@@ -31,6 +32,7 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
 }) => {
   const titleStyle = [styles.contactName, { fontSize: Sizes.sm }];
   const titleRef = React.useRef<Text>(null);
+  const [trackerAction, setTrackerAction] = React.useState<string>("");
 
   if (isFocusOnFirstElement) {
     setTimeout(() => {
@@ -39,14 +41,19 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
   }
 
   const onCallButtonPressed = useCallback(
-    (phoneNumber: string) => async () => {
+    (phoneNumber: string, phoneName: string) => async () => {
       await LinkingUtils.callContact(phoneNumber);
+      setTrackerAction(`appeler_${phoneName}`);
     },
     []
   );
 
   return (
     <View style={styles.itemBorder}>
+      <TrackerHandler
+        screenName={TrackerUtils.TrackingEvent.RESSOURCES}
+        actionName={trackerAction}
+      />
       {paragraphTitle && paragraphTitle.length > 0 && (
         <Text style={titleStyle} ref={titleRef}>
           {paragraphTitle}
@@ -83,7 +90,10 @@ const EpdsResultContactParagraph: React.FC<EpdsResultContactParagraphProps> = ({
             titleStyle={styles.fontButton}
             rounded={true}
             disabled={false}
-            action={onCallButtonPressed(contact.phoneNumber)}
+            action={onCallButtonPressed(
+              contact.phoneNumber,
+              contact.contactName
+            )}
           />
         </View>
       ))}

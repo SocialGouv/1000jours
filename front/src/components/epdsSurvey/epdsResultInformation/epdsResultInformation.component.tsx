@@ -20,9 +20,10 @@ import {
   Sizes,
 } from "../../../styles";
 import type { EpdsResultInformationType } from "../../../type";
-import { AccessibilityUtils } from "../../../utils";
+import { AccessibilityUtils, TrackerUtils } from "../../../utils";
 import { EpdsAssets } from "../../assets";
 import { Icomoon, View } from "../../baseComponents";
+import TrackerHandler from "../../tracker/trackerHandler.component";
 import EpdsResultContactParagraph from "./epdsResultContactParagraph.component";
 import EpdsResultSimpleParagraph from "./epdsResultSimpleParagraph.component";
 import EpdsResultUrlParagraph from "./epdsResultUrlParagraph.component";
@@ -39,6 +40,7 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
   scrollRef,
 }) => {
   const [isAccessibilityMode, setAccessibilityMode] = useState(false);
+  const [trackerAction, setTrackerAction] = useState<string>("");
   const [expandedAccordions, setExpandedAccordions] = useState<boolean[]>(
     _.range(informationList.length).map(() => false)
   );
@@ -93,6 +95,11 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
       tempExpandedAccordions[accIndex] = !expandedAccordions[accIndex];
       setExpandedAccordions(tempExpandedAccordions);
 
+      if (tempExpandedAccordions[accIndex])
+        setTrackerAction(
+          `Ouverture : ${informationList[accIndex].sectionTitle}`
+        );
+
       if (isAccessibilityMode) {
         scrollRef.current?.scrollTo({
           animated: true,
@@ -108,6 +115,10 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
     <>
       {informationList.map((professional: any, professionalIndex: number) => (
         <View key={professionalIndex}>
+          <TrackerHandler
+            screenName={TrackerUtils.TrackingEvent.RESSOURCES}
+            actionName={trackerAction}
+          />
           <Card
             style={[styles.card, borderColorStyle]}
             accessible={false}

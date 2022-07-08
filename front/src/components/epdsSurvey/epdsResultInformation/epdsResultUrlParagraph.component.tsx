@@ -11,9 +11,10 @@ import {
   Margins,
   Sizes,
 } from "../../../styles";
-import { LinkingUtils } from "../../../utils";
+import { LinkingUtils, TrackerUtils } from "../../../utils";
 import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
 import { SecondaryText, View } from "../../baseComponents";
+import TrackerHandler from "../../tracker/trackerHandler.component";
 
 interface EpdsResultUrlParagraphProps {
   paragraphTitle?: string;
@@ -27,6 +28,7 @@ const EpdsResultUrlParagraph: React.FC<EpdsResultUrlParagraphProps> = ({
   isFocusOnFirstElement,
 }) => {
   const titleRef = React.useRef<Text>(null);
+  const [trackerAction, setTrackerAction] = React.useState<string>("");
 
   if (isFocusOnFirstElement) {
     setTimeout(() => {
@@ -35,12 +37,19 @@ const EpdsResultUrlParagraph: React.FC<EpdsResultUrlParagraphProps> = ({
   }
 
   const onUrlParagraphPressed = useCallback(
-    (url: string) => async () => LinkingUtils.openWebsite(url),
+    (url: string) => async () => {
+      await LinkingUtils.openWebsite(url);
+      setTrackerAction(`${url}`);
+    },
     []
   );
 
   return (
     <View style={styles.itemBorder}>
+      <TrackerHandler
+        screenName={TrackerUtils.TrackingEvent.RESSOURCES}
+        actionName={trackerAction}
+      />
       {paragraphTitle && paragraphTitle.length > 0 && (
         <Text style={styles.paragraphTitle} ref={titleRef}>
           {paragraphTitle}
