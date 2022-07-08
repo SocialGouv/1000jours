@@ -319,6 +319,7 @@ export const buildArticlesNotificationContent = async (
     return {
       body: Labels.article.notification.congrats.body,
       data: {
+        confetti: true,
         redirectFromRoot: false,
         redirectParams: null,
         redirectTitle: Labels.article.notification.congrats.redirectTitle,
@@ -348,10 +349,15 @@ const getNewTriggerForArticlesNotification = async () => {
 };
 
 export const updateArticlesNotification = async (): Promise<void> => {
-  const trigger =
+  const triggerStored =
     ((await StorageUtils.getObjectValue(
       StorageKeysConstants.triggerForArticlesNotification
     )) as NotificationTriggerInput) ?? null;
+  // Attention - Si le trigger sauvegardé est de type 'Date', le 'getObjectValue' retournera un 'string'
+  const trigger =
+    triggerStored && typeof triggerStored === "string"
+      ? new Date(triggerStored)
+      : triggerStored;
   await scheduleArticlesNotification(trigger);
 };
 

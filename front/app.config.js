@@ -33,6 +33,7 @@ export default {
         "WRITE_CALENDAR",
         "RECEIVE_BOOT_COMPLETED",
         "SCHEDULE_EXACT_ALARM",
+        "VIBRATE",
       ],
       versionCode: 60,
     },

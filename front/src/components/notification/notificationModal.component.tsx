@@ -2,7 +2,8 @@ import type { Notification as ExpoNotificaiton } from "expo-notifications";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { Modal, StyleSheet, TouchableOpacity } from "react-native";
+import { Modal, StyleSheet, TouchableOpacity, Vibration } from "react-native";
+import Confetti from "react-native-confetti";
 
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
 import type { NotificationStyle } from "../../types";
@@ -38,7 +39,7 @@ notifStyles.set(NotificationType.moodboard, {
   icon: IcomoonIcons.bebe,
 });
 notifStyles.set(NotificationType.articles, {
-  color: Colors.primaryYellowDark,
+  color: Colors.primaryBlueDark,
   icon: IcomoonIcons.notification,
 });
 
@@ -46,8 +47,13 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
   const notificationType = notification.request.content.data
     .type as NotificationType;
 
+  const confetti = notification.request.content.data.confetti as boolean;
+
   const [modalVisible, setModalVisible] = useState(true);
   const [trackerAction, setTrackerAction] = useState("");
+
+  const confettiRef = React.useRef<Confetti>(null);
+  const VIBRATION_PATTERN = [0, 700, 700]; // intervalles entre chaque vibration.
 
   const action = useCallback(() => {
     const buttonTitle = notification.request.content.data.redirectTitle ?? "";
@@ -80,6 +86,14 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
     if (!modalVisible) onDismiss();
   }, [modalVisible, onDismiss]);
 
+  useEffect(() => {
+    if (confetti) {
+      confettiRef.current?.startConfetti();
+      Vibration.vibrate(VIBRATION_PATTERN);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [confettiRef]);
+
   const onHideModalButtonPressed = useCallback(() => {
     setModalVisible(false);
   }, []);
@@ -94,6 +108,7 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
       <TrackerHandler actionName={trackerAction} />
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
+          <Confetti ref={confettiRef} />
           <TouchableOpacity
             style={styles.closeButton}
             onPress={onHideModalButtonPressed}
@@ -106,8 +121,10 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
           </TouchableOpacity>
           <Icomoon
             name={
-              notifStyles.get(notificationType)?.icon ??
-              IcomoonIcons.notification
+              confetti
+                ? IcomoonIcons.confetti
+                : notifStyles.get(notificationType)?.icon ??
+                  IcomoonIcons.notification
             }
             color={notifStyles.get(notificationType)?.color}
             size={Sizes.xxxxl}

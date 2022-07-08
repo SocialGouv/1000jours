@@ -141,9 +141,9 @@ export default {
         title: "Article(s) non lu(s)",
       },
       congrats: {
-        body: "Vous avez lu tous les articles concernant votre étape.",
+        body: "Vous avez lu tous les articles présents actuellement à l’étape suite et fin de grossesse ! Vous faites parti de nos grand(e)s lecteur(rices). \n\nNous en ajoutons régulièrement, vous pouvez aussi lire des articles dans d’autres étapes.",
         redirectTitle: "Fermer",
-        title: "Féllicitation !",
+        title: "Félicitations !",
       },
     },
     readArticle: "Article lu",
