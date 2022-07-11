@@ -19,7 +19,7 @@ import {
   Paddings,
   Sizes,
 } from "../../../styles";
-import type { EpdsResultInformationType } from "../../../type";
+import type { EpdsResultInformationType, TrackerEvent } from "../../../type";
 import { AccessibilityUtils, TrackerUtils } from "../../../utils";
 import { EpdsAssets } from "../../assets";
 import { Icomoon, View } from "../../baseComponents";
@@ -40,7 +40,8 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
   scrollRef,
 }) => {
   const [isAccessibilityMode, setAccessibilityMode] = useState(false);
-  const [trackerAction, setTrackerAction] = useState<string>("");
+  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
+  const [trackerLabel, setTrackerLabel] = useState("");
   const [expandedAccordions, setExpandedAccordions] = useState<boolean[]>(
     _.range(informationList.length).map(() => false)
   );
@@ -54,6 +55,13 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
 
     void checkAccessibilityMode();
   }, []);
+
+  useEffect(() => {
+    setTrackerEventObject({
+      action: TrackerUtils.TrackingEvent.RESSOURCES,
+      name: trackerLabel,
+    });
+  }, [trackerLabel]);
 
   const renderParagraphs = (paragraphs: EpdsResultInformationType[]) => {
     return paragraphs.map(
@@ -96,7 +104,7 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
       setExpandedAccordions(tempExpandedAccordions);
 
       if (tempExpandedAccordions[accIndex])
-        setTrackerAction(
+        setTrackerLabel(
           `Ouverture : ${informationList[accIndex].sectionTitle}`
         );
 
@@ -115,10 +123,7 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
     <>
       {informationList.map((professional: any, professionalIndex: number) => (
         <View key={professionalIndex}>
-          <TrackerHandler
-            screenName={TrackerUtils.TrackingEvent.RESSOURCES}
-            actionName={trackerAction}
-          />
+          <TrackerHandler eventObject={trackerEventObject} />
           <Card
             style={[styles.card, borderColorStyle]}
             accessible={false}

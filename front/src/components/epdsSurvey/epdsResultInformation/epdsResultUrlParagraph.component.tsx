@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
@@ -11,6 +11,7 @@ import {
   Margins,
   Sizes,
 } from "../../../styles";
+import type { TrackerEvent } from "../../../type";
 import { LinkingUtils, TrackerUtils } from "../../../utils";
 import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
 import { SecondaryText, View } from "../../baseComponents";
@@ -28,7 +29,7 @@ const EpdsResultUrlParagraph: React.FC<EpdsResultUrlParagraphProps> = ({
   isFocusOnFirstElement,
 }) => {
   const titleRef = React.useRef<Text>(null);
-  const [trackerAction, setTrackerAction] = React.useState<string>("");
+  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
 
   if (isFocusOnFirstElement) {
     setTimeout(() => {
@@ -39,17 +40,17 @@ const EpdsResultUrlParagraph: React.FC<EpdsResultUrlParagraphProps> = ({
   const onUrlParagraphPressed = useCallback(
     (url: string) => async () => {
       await LinkingUtils.openWebsite(url);
-      setTrackerAction(`${url}`);
+      setTrackerEventObject({
+        action: TrackerUtils.TrackingEvent.RESSOURCES,
+        name: url,
+      });
     },
     []
   );
 
   return (
     <View style={styles.itemBorder}>
-      <TrackerHandler
-        screenName={TrackerUtils.TrackingEvent.RESSOURCES}
-        actionName={trackerAction}
-      />
+      <TrackerHandler eventObject={trackerEventObject} />
       {paragraphTitle && paragraphTitle.length > 0 && (
         <Text style={styles.paragraphTitle} ref={titleRef}>
           {paragraphTitle}
