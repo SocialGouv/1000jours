@@ -1,3 +1,10 @@
+# [1.104.0](https://github.com/SocialGouv/1000jours/compare/v1.103.0...v1.104.0) (2022-07-11)
+
+
+### Features
+
+* **widget:** trackers dans email ([#1295](https://github.com/SocialGouv/1000jours/issues/1295)) ([2b80a1f](https://github.com/SocialGouv/1000jours/commit/2b80a1f7ef0a0f8ea59990448b509e4c63458bd2))
+
 # [1.103.0](https://github.com/SocialGouv/1000jours/compare/v1.102.2...v1.103.0) (2022-07-07)
 
 
