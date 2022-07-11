@@ -10,6 +10,8 @@ const relativeDirPath = path.relative(".", `public`);
 const WIDGET_URL = process.env["WIDGET_URL"];
 const SOURCE_FROM_EMAIL = "fromEmail";
 const WIDGET_URL_CONTACT = `${WIDGET_URL}/contact/to-be-contacted/?source=${SOURCE_FROM_EMAIL}`;
+const URL_FOR_PRO_SANTE = `${WIDGET_URL_CONTACT}&mtm_campaign=abtesting_intention&mtm_kwd=pro_sante&mtm_source=email`;
+const URL_FOR_ENTOURAGE = `${WIDGET_URL_CONTACT}&mtm_campaign=abtesting_intention&mtm_kwd=entourage&mtm_source=email`;
 
 const filename = (prenom, date) => {
   const newDate = date.replace("/", "").replace("/", "");
@@ -34,7 +36,7 @@ const footerHtml = () => `
 `;
 
 // Bloc Maman Blues
-const mamanBluesBloc = () => `
+const mamanBluesBloc = (url) => `
   <p>
     <div style="
       padding:16px; 
@@ -55,7 +57,7 @@ const mamanBluesBloc = () => `
           <b>Trouvez un accompagnement personnalisé près de chez vous </b> auprès de professionnels sensibilisés aux difficultés maternelles en échangeant avec Elise, présidente de l’association Maman Blues
         </div>
       </div>
-      <a href=${WIDGET_URL_CONTACT}>
+      <a href=${url}>
         <button style="
           min-width:40%; 
           text-transform:uppercase; 
@@ -111,7 +113,7 @@ const emailForHimselfHtml = (info) =>
 
 <p>N'hésitez pas à demander de l'aide en montrant le résultat de ce test à votre professionnel de santé.</p>
 
-${mamanBluesBloc()}
+${mamanBluesBloc(URL_FOR_PRO_SANTE)}
 
 ${footerHtml()}
 `)(info);
@@ -148,7 +150,7 @@ const emailForEntourageHtml = (info) =>
 
 <p>Nous vous invitons à accompagner <%- prenom %> dans cette démarche en demandant de l'aide aux professionnels de santé qui la suivent (sage-femme, médecin traitant ...).</p>
 
-${mamanBluesBloc()}
+${mamanBluesBloc(URL_FOR_ENTOURAGE)}
 
 ${footerHtml()}
 `)(info);
