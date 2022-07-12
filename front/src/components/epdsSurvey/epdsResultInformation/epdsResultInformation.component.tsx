@@ -41,7 +41,6 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
 }) => {
   const [isAccessibilityMode, setAccessibilityMode] = useState(false);
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
-  const [trackerLabel, setTrackerLabel] = useState("");
   const [expandedAccordions, setExpandedAccordions] = useState<boolean[]>(
     _.range(informationList.length).map(() => false)
   );
@@ -55,13 +54,6 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
 
     void checkAccessibilityMode();
   }, []);
-
-  useEffect(() => {
-    setTrackerEventObject({
-      action: TrackerUtils.TrackingEvent.RESSOURCES,
-      name: trackerLabel,
-    });
-  }, [trackerLabel]);
 
   const renderParagraphs = (paragraphs: EpdsResultInformationType[]) => {
     return paragraphs.map(
@@ -103,10 +95,12 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
       tempExpandedAccordions[accIndex] = !expandedAccordions[accIndex];
       setExpandedAccordions(tempExpandedAccordions);
 
-      if (tempExpandedAccordions[accIndex])
-        setTrackerLabel(
-          `Ouverture : ${informationList[accIndex].sectionTitle}`
-        );
+      if (tempExpandedAccordions[accIndex]) {
+        setTrackerEventObject({
+          action: TrackerUtils.TrackingEvent.RESSOURCES,
+          name: `Ouverture : ${informationList[accIndex].sectionTitle}`,
+        });
+      }
 
       if (isAccessibilityMode) {
         scrollRef.current?.scrollTo({
@@ -121,9 +115,9 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
 
   return (
     <>
+      <TrackerHandler eventObject={trackerEventObject} />
       {informationList.map((professional: any, professionalIndex: number) => (
         <View key={professionalIndex}>
-          <TrackerHandler eventObject={trackerEventObject} />
           <Card
             style={[styles.card, borderColorStyle]}
             accessible={false}
