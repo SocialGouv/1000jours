@@ -8,6 +8,14 @@ export const isArticleRead = async (articleId: number): Promise<boolean> => {
   return articlesRead.includes(articleId);
 };
 
+export const isArticleInFavorites = async (
+  articleId: number
+): Promise<boolean> => {
+  const favoritesArticles: number[] =
+    (await getObjectValue(StorageKeysConstants.favoriteArticlesIds)) ?? [];
+  return favoritesArticles.includes(articleId);
+};
+
 export const areArticlesRead = async (
   articlesId: number[]
 ): Promise<boolean[]> => {
