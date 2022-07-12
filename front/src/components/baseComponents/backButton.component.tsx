@@ -26,11 +26,7 @@ const BackButton: React.FC<Props> = ({
     <CustomButton
       title={Labels.buttons.back}
       icon={
-        <Icomoon
-          name={IcomoonIcons.retour}
-          size={Sizes.xs}
-          color={Colors.secondaryGreen}
-        />
+        <Icomoon name={IcomoonIcons.retour} size={Sizes.xs} color={color} />
       }
       rounded={false}
       disabled={false}
