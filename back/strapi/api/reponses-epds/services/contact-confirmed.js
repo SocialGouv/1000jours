@@ -19,7 +19,7 @@ const emailTemplateForSMS = (info) => ({
   subject: "1000 premiers jours - suite à votre demande",
   text: `Bonjour <%- prenom %>,
 
-    Je m'appelle Elise, je suis la présidente de l'association Maman Blues et de l'équipe des 1000 premiers jours.
+    Je m'appelle Elise, je suis la présidente de l'association Maman Blues et membre de l'équipe des 1000 premiers jours.
     Je vous confirme que j'ai bien reçu votre demande.
     Je vous contacterai en respectant les créneaux que vous avez choisis.
 
@@ -31,7 +31,7 @@ const emailTemplateForSMS = (info) => ({
   html: `<p>Bonjour <%- prenom %>,</p>
 
     <p>
-      Je m'appelle Elise, je suis la présidente de l'association Maman Blues et de l'équipe des 1000 premiers jours.<br/>
+      Je m'appelle Elise, je suis la présidente de l'association Maman Blues et membre de l'équipe des 1000 premiers jours.<br/>
       Je vous confirme que j'ai bien reçu votre demande.<br/>
       Je vous contacterai en respectant les créneaux que vous avez choisis.
     </p>
