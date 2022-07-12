@@ -10,7 +10,7 @@ const H3: React.FC<TextProps> = (props) => (
   <SecondaryText
     {...props}
     style={[styles.h3, props.style]}
-    accessibilityHint={Labels.accessibility.subtitle}
+    accessibilityHint={`${props.children}. ${Labels.accessibility.subSubtitle}`}
   />
 );
 
