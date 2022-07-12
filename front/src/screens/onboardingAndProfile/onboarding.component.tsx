@@ -6,6 +6,7 @@ import { useCallback, useRef, useState } from "react";
 import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import { Dimensions, FlatList, ScrollView, StyleSheet } from "react-native";
 
+import { CustomPagination } from "../../components";
 import { OnBoardingAssets } from "../../components/assets";
 import {
   CommonText,
@@ -16,7 +17,6 @@ import {
   SecondaryText,
   View,
 } from "../../components/baseComponents";
-import { CustomPagination } from "../../components/onboarding/customOnboardingPagination.component";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels, StorageKeysConstants } from "../../constants";
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";

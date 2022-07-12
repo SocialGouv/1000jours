@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Modal, StyleSheet } from "react-native";
 
 import { Labels } from "../../constants";
-import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
+import { Colors, FontWeight, Paddings, Sizes, Styles } from "../../styles";
 import CloseButton from "./closeButton.component";
 import CustomButton from "./customButton.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
@@ -38,8 +38,8 @@ const ModalHelp: React.FC<Props> = ({ icon, title, body, onDismiss }) => {
         onRequestClose={onHideModal}
       >
         <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View style={styles.closeButton}>
+          <View style={Styles.modale.modalView}>
+            <View style={Styles.modale.closeButton}>
               <CloseButton onPress={onHideModal} clear={true} />
             </View>
             <View style={styles.content}>
@@ -95,30 +95,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  closeButton: {
-    alignSelf: "flex-end",
-    backgroundColor: "transparent",
-    paddingEnd: Paddings.smaller,
-    paddingTop: Paddings.smaller,
-  },
   content: {
     alignItems: "center",
     marginTop: -15,
     paddingHorizontal: 35,
-  },
-  modalView: {
-    backgroundColor: Colors.white,
-    borderRadius: 20,
-    elevation: 5,
-    margin: 20,
-    paddingBottom: 35,
-    shadowColor: "#000",
-    shadowOffset: {
-      height: 2,
-      width: 0,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
   },
   title: {
     fontSize: Sizes.mmd,

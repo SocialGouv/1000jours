@@ -14,6 +14,7 @@ export enum StepId {
   enfant3PremiersMois = 6,
   enfant4Mois1An = 7,
   enfant1An2Ans = 8,
+  nonConcerne = 9,
 }
 
 export enum UserInfo {
@@ -22,6 +23,7 @@ export enum UserInfo {
   grossesse = "grossesse",
   enfant = "enfant",
   enfants = "enfants",
+  nonConcerne = "nonConcerné",
 }
 
 export const DEFAULT_USER_INFOS: UserInfos = {
@@ -30,6 +32,7 @@ export const DEFAULT_USER_INFOS: UserInfos = {
   enfant: false,
   enfants: false,
   grossesse: false,
+  nonConcerne: false,
   projet: false,
 };
 
@@ -68,5 +71,12 @@ export const USER_SITUATIONS: UserSituation[] = [
     id: UserInfo.enfants,
     isChecked: false,
     label: Labels.profile.situations.severalChildren,
+  },
+  {
+    childBirthdayLabel: "",
+    childBirthdayRequired: false,
+    id: "nonConcerné",
+    isChecked: false,
+    label: Labels.profile.situations.notConcerned,
   },
 ];

@@ -74,6 +74,7 @@ export type UserInfos = {
   enfant?: boolean;
   enfants?: boolean;
   date?: string | null;
+  nonConcerne?: boolean;
 };
 
 export type TabItem = {

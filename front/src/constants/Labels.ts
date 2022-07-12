@@ -609,6 +609,7 @@ export default {
       woman: "Femme",
     },
     situations: {
+      notConcerned: "Je ne suis plus concerné(e) par l'application",
       oneChild: "J'ai un enfant",
       pregnant: "J'attends un enfant",
       pro: "Je suis un professionnel de santé",
@@ -619,6 +620,12 @@ export default {
     subTitle: "- Votre profil -",
     title: "À quelle étape êtes-vous ?",
     update: "Modifier ma situation",
+    updateModal: {
+      content1:
+        "D'après la date de naissance que vous avez saisie, vous êtes à l'étape ",
+      content2: "Votre situation a-t-elle changé ?",
+      title: "Votre situation a-t-elle changée ?",
+    },
   },
   search: {
     aroundMe: "Autour de moi",

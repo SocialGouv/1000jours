@@ -80,3 +80,5 @@ const styles = StyleSheet.create({
     fontSize: Sizes.md,
   },
 });
+
+export default CustomPagination;
