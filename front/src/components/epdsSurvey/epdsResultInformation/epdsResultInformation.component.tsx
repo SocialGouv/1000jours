@@ -19,10 +19,11 @@ import {
   Paddings,
   Sizes,
 } from "../../../styles";
-import type { EpdsResultInformationType } from "../../../type";
-import { AccessibilityUtils } from "../../../utils";
+import type { EpdsResultInformationType, TrackerEvent } from "../../../type";
+import { AccessibilityUtils, TrackerUtils } from "../../../utils";
 import { EpdsAssets } from "../../assets";
 import { Icomoon, View } from "../../baseComponents";
+import TrackerHandler from "../../tracker/trackerHandler.component";
 import EpdsResultContactParagraph from "./epdsResultContactParagraph.component";
 import EpdsResultSimpleParagraph from "./epdsResultSimpleParagraph.component";
 import EpdsResultUrlParagraph from "./epdsResultUrlParagraph.component";
@@ -39,6 +40,7 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
   scrollRef,
 }) => {
   const [isAccessibilityMode, setAccessibilityMode] = useState(false);
+  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
   const [expandedAccordions, setExpandedAccordions] = useState<boolean[]>(
     _.range(informationList.length).map(() => false)
   );
@@ -93,6 +95,13 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
       tempExpandedAccordions[accIndex] = !expandedAccordions[accIndex];
       setExpandedAccordions(tempExpandedAccordions);
 
+      if (tempExpandedAccordions[accIndex]) {
+        setTrackerEventObject({
+          action: TrackerUtils.TrackingEvent.RESSOURCES,
+          name: `Ouverture : ${informationList[accIndex].sectionTitle}`,
+        });
+      }
+
       if (isAccessibilityMode) {
         scrollRef.current?.scrollTo({
           animated: true,
@@ -106,6 +115,7 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
 
   return (
     <>
+      <TrackerHandler eventObject={trackerEventObject} />
       {informationList.map((professional: any, professionalIndex: number) => (
         <View key={professionalIndex}>
           <Card
