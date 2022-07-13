@@ -25,7 +25,6 @@ import {
   TextHtml,
   Thematics,
   Title,
-  UsefulArticle,
 } from "../../components";
 import {
   BackButton,
@@ -33,6 +32,7 @@ import {
   ShareButton,
   SharePageType,
   TitleH1,
+  UsefulQuestion,
   View,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
@@ -287,7 +287,11 @@ const ArticleDetail: FC<Props> = ({
                     screenWidth={WIDTH_FOR_HTML}
                   />
                   <Links linksArray={linksArray} />
-                  <UsefulArticle articleName={currentArticle.titre} />
+                  <UsefulQuestion
+                    question={Labels.article.usefulTitle}
+                    trackerActionValue={TrackerUtils.TrackingEvent.ARTICLE}
+                    trackerNameValue={`${TrackerUtils.TrackingEvent.ARTICLE} : ${currentArticle.titre}`}
+                  />
                 </View>
               </View>
             </View>
