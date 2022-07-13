@@ -9,6 +9,7 @@ import { StyleSheet, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Card } from "react-native-paper";
 
+import { Labels } from "../../../constants";
 import { SCREEN_HEIGHT } from "../../../constants/platform.constants";
 import {
   Colors,
@@ -22,7 +23,7 @@ import {
 import type { EpdsResultInformationType, TrackerEvent } from "../../../type";
 import { AccessibilityUtils, TrackerUtils } from "../../../utils";
 import { EpdsAssets } from "../../assets";
-import { Icomoon, View } from "../../baseComponents";
+import { Icomoon, UsefulQuestion, View } from "../../baseComponents";
 import TrackerHandler from "../../tracker/trackerHandler.component";
 import EpdsResultContactParagraph from "./epdsResultContactParagraph.component";
 import EpdsResultSimpleParagraph from "./epdsResultSimpleParagraph.component";
@@ -160,8 +161,20 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
             </TouchableOpacity>
 
             {expandedAccordions[professionalIndex]
-              ? professional.paragraphs &&
-                renderParagraphs(professional.paragraphs)
+              ? professional.paragraphs && (
+                  <>
+                    {renderParagraphs(professional.paragraphs)}
+                    <View style={{ marginHorizontal: 10 }}>
+                      <UsefulQuestion
+                        question={Labels.epdsSurvey.usefulResource}
+                        trackerActionValue={
+                          TrackerUtils.TrackingEvent.RESSOURCES
+                        }
+                        trackerNameValue={`${TrackerUtils.TrackingEvent.RESSOURCES} : ${professional.sectionTitle}`}
+                      />
+                    </View>
+                  </>
+                )
               : null}
           </Card>
         </View>

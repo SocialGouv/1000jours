@@ -419,6 +419,7 @@ export default {
     },
     title: "Et si c'était une dépression post-partum ?",
     titleResults: "Résultat",
+    usefulResource: "Ces ressources sont-elles utiles ?",
   },
   epdsSurveyLight: {
     oserEnParler:

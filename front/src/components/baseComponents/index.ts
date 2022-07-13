@@ -24,6 +24,7 @@ import type { TextProps } from "./Themed";
 import { Text, View } from "./Themed";
 import TitleH1 from "./titleH1.component";
 import TitleH2 from "./titleH2.component";
+import UsefulQuestion from "./usefulQuestion.component";
 
 export {
   BackButton,
@@ -56,5 +57,6 @@ export {
   TextProps,
   TitleH1,
   TitleH2,
+  UsefulQuestion,
   View,
 };

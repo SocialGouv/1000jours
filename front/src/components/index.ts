@@ -20,7 +20,6 @@ import SubTitle from "./article/subTitle.component";
 import TextHtml from "./article/textHtml.component";
 import Thematics from "./article/thematics.component";
 import Title from "./article/title.component";
-import UsefulArticle from "./article/usefulArticle.component";
 import Events from "./calendar/events.component";
 import DocumentCard from "./document/documentCard.component";
 import EpdsGenderEntry from "./epdsSurvey/epdsGenderEntry.component";
@@ -90,5 +89,4 @@ export {
   TimelineStep,
   Title,
   UpdateChildBirthdayModal,
-  UsefulArticle,
 };
