@@ -19,7 +19,7 @@ const emailTemplateForSMS = (info) => ({
   subject: "1000 premiers jours - suite à votre demande",
   text: `Bonjour <%- prenom %>,
 
-    Je m'appelle Elise, je suis membre de l'association Maman Blues et de l'équipe des 1000 premiers jours.
+    Je m'appelle Elise, je suis la présidente de l'association Maman Blues et membre de l'équipe des 1000 premiers jours.
     Je vous confirme que j'ai bien reçu votre demande.
     Je vous contacterai en respectant les créneaux que vous avez choisis.
 
@@ -31,7 +31,7 @@ const emailTemplateForSMS = (info) => ({
   html: `<p>Bonjour <%- prenom %>,</p>
 
     <p>
-      Je m'appelle Elise, je suis membre de l'association Maman Blues et de l'équipe des 1000 premiers jours.<br/>
+      Je m'appelle Elise, je suis la présidente de l'association Maman Blues et membre de l'équipe des 1000 premiers jours.<br/>
       Je vous confirme que j'ai bien reçu votre demande.<br/>
       Je vous contacterai en respectant les créneaux que vous avez choisis.
     </p>
@@ -51,7 +51,7 @@ const emailTemplateForEmail = (info) => ({
   subject: "1000 premiers jours - Suite à votre questionnaire, échangeons",
   text: `Bonjour <%- prenom %>,
 
-    Je suis Elise, la bénévole de Maman Blues en charge des réponses suite au passage du questionnaire sur la dépression du post-partum.
+    Je suis Elise, la présidente de l'association Maman Blues en charge des réponses suite au passage du questionnaire sur la dépression du post-partum.
     Vous avez demandé à être recontactée.
 
     Souhaiteriez-vous m'en dire plus vous concernant ? Ce que vous vivez, quels sont vos besoins si vous parvenez à les exprimer ? votre lieu de résidence pour vous orienter vers des professionnels et/ou structures adaptées le cas échéant ?
@@ -69,7 +69,7 @@ const emailTemplateForEmail = (info) => ({
   html: `<p>Bonjour <%- prenom %>,</p>
 
     <p>
-      Je suis Elise, la bénévole de Maman Blues en charge des réponses suite au passage du questionnaire sur la dépression du post-partum.<br/>
+      Je suis Elise, la présidente de l'association Maman Blues en charge des réponses suite au passage du questionnaire sur la dépression du post-partum.<br/>
       Vous avez demandé à être recontactée.
     </p>
 
