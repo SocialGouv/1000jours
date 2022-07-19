@@ -25,9 +25,11 @@ const UsefulQuestion: FC<Props> = ({
 }) => {
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
   const [isButtonsDisabled, setButtonsDisabled] = useState(false);
+  const [buttonValue, setButtonValue] = useState<number>();
 
   const setUsefulObjectForTracker = useCallback(
     (value: number) => () => {
+      setButtonValue(value);
       setTrackerEventObject({
         action: `Useful${trackerActionValue}`,
         name: trackerNameValue,
@@ -47,7 +49,11 @@ const UsefulQuestion: FC<Props> = ({
           title={Labels.buttons.yes}
           rounded={false}
           buttonStyle={styles.buttonStyle}
-          disabledStyle={styles.buttonDisabledStyle}
+          disabledStyle={
+            buttonValue == IS_USEFUL
+              ? styles.selectedButtonStyle
+              : styles.buttonDisabledStyle
+          }
           titleStyle={styles.buttonTitle}
           action={setUsefulObjectForTracker(IS_USEFUL)}
           disabled={isButtonsDisabled}
@@ -64,7 +70,11 @@ const UsefulQuestion: FC<Props> = ({
           rounded={false}
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.buttonTitle}
-          disabledStyle={styles.buttonDisabledStyle}
+          disabledStyle={
+            buttonValue == IS_NOT_USEFUL
+              ? styles.selectedButtonStyle
+              : styles.buttonDisabledStyle
+          }
           action={setUsefulObjectForTracker(IS_NOT_USEFUL)}
           disabled={isButtonsDisabled}
           icon={
@@ -97,6 +107,9 @@ const styles = StyleSheet.create({
   },
   buttonsBloc: {
     flexDirection: "row",
+  },
+  selectedButtonStyle: {
+    backgroundColor: Colors.primaryBlue,
   },
   usefulContainer: {
     alignItems: "center",
