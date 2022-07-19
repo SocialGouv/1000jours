@@ -30,8 +30,14 @@ export const openWebsite = async (
 ): Promise<void> => {
   if (!website) return;
   let completeWebsite = undefined;
-  if (!website.includes(PREFIX_HTTP) && !website.includes(PREFIX_HTTPS) && !dontChangeUrl) {
-    const websiteWithWww = website.includes(WWW) ? website : `${WWW}.${website}`;
+  if (
+    !website.includes(PREFIX_HTTP) &&
+    !website.includes(PREFIX_HTTPS) &&
+    !dontChangeUrl
+  ) {
+    const websiteWithWww = website.includes(WWW)
+      ? website
+      : `${WWW}.${website}`;
     completeWebsite = `${PREFIX_HTTP}${websiteWithWww}`;
   } else {
     completeWebsite = website;
@@ -44,8 +50,11 @@ export const openNavigationApp = async (
   lat: number,
   long: number
 ): Promise<void> => {
+  const webUrl = `https://maps.google.com?q=${lat}+${long}`;
   const url = PLATFORM_IS_ANDROID
     ? `google.navigation:q=${lat}+${long}`
     : `maps://app?daddr=${lat}+${long}`;
-  await Linking.openURL(url);
+
+  const supported = await Linking.canOpenURL(url);
+  await Linking.openURL(supported ? url : webUrl);
 };
