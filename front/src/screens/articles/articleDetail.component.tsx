@@ -1,5 +1,6 @@
 import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
+import { decode } from "html-entities";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
@@ -31,6 +32,7 @@ import {
   SecondaryText,
   ShareButton,
   SharePageType,
+  SpeechText,
   TitleH1,
   UsefulQuestion,
   View,
@@ -88,6 +90,7 @@ const ArticleDetail: FC<Props> = ({
   const [inShortArray, setInShortArray] = useState<ArticleInShortItem[]>([]);
   const [linksArray, setLinksArray] = useState<ArticleLink[]>([]);
   const [currentArticle, setCurrentArticle] = useState<Article | undefined>();
+  const [textToRead, setTextToRead] = useState<string>("");
   const articleTitleRef = React.useRef<DefaultText>(null);
 
   const [scrollerRef, setScrollerRef] = useState<ScrollView>();
@@ -136,14 +139,25 @@ const ArticleDetail: FC<Props> = ({
     ]);
   }, []);
 
+  const buildTextToRead = useCallback((article: Article) => {
+    let text = "";
+    text += `${article.titre}.`;
+    if (article.texte1) {
+      const stringToBeDecoded = article.texte1.replace(/<[^>]*>?/gm, "");
+      text += decode(stringToBeDecoded);
+    }
+    return text;
+  }, []);
+
   const handleResults = useCallback(
     (data: unknown) => {
       const result = (data as { article: Article }).article;
       setArticleInShortArray(result);
       setArticleLinksArray(result);
+      setTextToRead(buildTextToRead(result)); // SpeechText
       setCurrentArticle(result);
     },
-    [setArticleInShortArray, setArticleLinksArray]
+    [buildTextToRead, setArticleInShortArray, setArticleLinksArray]
   );
 
   const onBackButtonPressed = useCallback(() => {
@@ -266,6 +280,7 @@ const ArticleDetail: FC<Props> = ({
                       id={currentArticle.id}
                       buttonStyle={styles.shareButton}
                     />
+                    <SpeechText textToRead={textToRead} />
                   </View>
                   {renderReadArticleElement}
                 </View>
