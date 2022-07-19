@@ -6,14 +6,14 @@ import { Image, ListItem } from "react-native-elements";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 import DefaultImage from "../../assets/images/default.png";
-import { Labels, StorageKeysConstants } from "../../constants";
+import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Article, Step } from "../../types";
 import {
   ArticleUtils,
+  FavoritesUtils,
   getVisuelFormat,
   RootNavigation,
-  StorageUtils,
   VisuelFormat,
 } from "../../utils";
 import { FavoritesAssets } from "../assets";
@@ -38,13 +38,13 @@ const ArticleCard: FC<Props> = ({
     (item) => item.id == selectedArticleId
   );
   const [articleIsRead, setArticleIsRead] = useState(false);
-  const [articleIsFavorites, setArticleIsFavorites] = useState(false);
+  const [isArticleFavorite, setIsArticleFavorite] = useState(false);
 
   useEffect(() => {
     const checkReadAndFavorites = async () => {
       if (article) {
         setArticleIsRead(await ArticleUtils.isArticleRead(article.id));
-        setArticleIsFavorites(
+        setIsArticleFavorite(
           await ArticleUtils.isArticleInFavorites(article.id)
         );
       }
@@ -92,30 +92,12 @@ const ArticleCard: FC<Props> = ({
   ];
 
   const onFavoriteButtonClick = useCallback(async () => {
-    let favoritesArticles: number[] =
-      (await StorageUtils.getObjectValue(
-        StorageKeysConstants.favoriteArticlesIds
-      )) ?? [];
-
-    if (
-      !articleIsFavorites &&
-      article &&
-      !favoritesArticles.includes(article.id)
-    )
-      favoritesArticles.push(article.id);
-    else {
-      favoritesArticles = favoritesArticles.filter(
-        (articleId) => articleId !== article?.id
-      );
+    if (article) {
+      const shouldAddFavorite = !isArticleFavorite;
+      await FavoritesUtils.handleOnFavorite(shouldAddFavorite, article.id);
+      setIsArticleFavorite(!isArticleFavorite);
     }
-
-    await StorageUtils.storeObjectValue(
-      StorageKeysConstants.favoriteArticlesIds,
-      favoritesArticles
-    );
-
-    setArticleIsFavorites(!articleIsFavorites);
-  }, [article, articleIsFavorites]);
+  }, [article, isArticleFavorite]);
 
   return (
     <>
@@ -166,7 +148,7 @@ const ArticleCard: FC<Props> = ({
           </ListItem>
           <View style={styles.favoriteView}>
             <TouchableWithoutFeedback onPress={onFavoriteButtonClick}>
-              {FavoritesAssets.getFavoriteIcon(articleIsFavorites, Sizes.xl)}
+              {FavoritesAssets.getFavoriteIcon(isArticleFavorite, Sizes.xl)}
             </TouchableWithoutFeedback>
           </View>
         </>

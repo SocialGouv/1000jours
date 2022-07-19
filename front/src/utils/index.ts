@@ -4,6 +4,7 @@ import * as AroundMeUtils from "./aroundMe.util";
 import * as ArticleUtils from "./article.util";
 import * as AssestUtils from "./asset.util";
 import * as EpdsSurveyUtils from "./epdsSurvey.util";
+import * as FavoritesUtils from "./favorites.util";
 import * as KeyboardUtils from "./keyboard.util";
 import * as LinkingUtils from "./linking.util";
 import * as LoggingUtils from "./logging.util";
@@ -26,6 +27,7 @@ export {
   ArticleUtils,
   AssestUtils,
   EpdsSurveyUtils,
+  FavoritesUtils,
   getAppTheme,
   getVisuelFormat,
   initMonitoring,
@@ -41,5 +43,5 @@ export {
   StorageUtils,
   StringUtils,
   TrackerUtils,
-  VisuelFormat,
+  VisuelFormat
 };
