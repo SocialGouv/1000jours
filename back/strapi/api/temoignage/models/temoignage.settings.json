@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "temoignages",
+  "info": {
+    "name": "Témoignage",
+    "description": "Témoignages et chiffres chocs permettant de convaincre le parent de passer le test EPDS"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "titre": {
+      "type": "string"
+    },
+    "texte": {
+      "type": "richtext",
+      "required": true
+    },
+    "chiffre_choc": {
+      "type": "boolean",
+      "default": false
+    },
+    "source": {
+      "type": "string"
+    }
+  }
+}

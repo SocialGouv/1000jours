@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/temoignages",
+      "handler": "temoignage.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/temoignages/count",
+      "handler": "temoignage.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/temoignages/:id",
+      "handler": "temoignage.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/temoignages",
+      "handler": "temoignage.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/temoignages/:id",
+      "handler": "temoignage.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/temoignages/:id",
+      "handler": "temoignage.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
