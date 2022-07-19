@@ -29,6 +29,7 @@ import {
 } from "../../components";
 import {
   BackButton,
+  FavoriteButton,
   SecondaryText,
   ShareButton,
   SharePageType,
@@ -258,6 +259,12 @@ const ArticleDetail: FC<Props> = ({
                 >
                   <ImageBanner visuel={currentArticle.visuel} />
                   <View style={styles.flexEnd}>
+                    {articleId && (
+                      <FavoriteButton
+                        articleId={articleId}
+                        buttonStyle={styles.favoriteButton}
+                      />
+                    )}
                     <ShareButton
                       buttonTitle={Labels.buttons.share}
                       title={Labels.appName}
@@ -337,7 +344,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
   },
+  favoriteButton: {
+    marginBottom: Margins.smaller,
+  },
   flexEnd: {
+    alignItems: "flex-end",
     alignSelf: "flex-end",
     backgroundColor: "transparent",
     bottom: Paddings.light,

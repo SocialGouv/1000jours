@@ -125,6 +125,10 @@ export default {
   article: {
     articleNotFound: "Article introuvable",
     didYouKnowTitle: "Le saviez-vous ?",
+    favorite: {
+      addToFavorites: "Ajouter",
+      deleteFromFavorites: "Supprimer",
+    },
     firstThreeMonths: {
       buttonLabel: "Commencer",
       description:
