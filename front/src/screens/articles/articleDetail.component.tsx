@@ -140,8 +140,7 @@ const ArticleDetail: FC<Props> = ({
   }, []);
 
   const buildTextToRead = useCallback((article: Article) => {
-    let text = "";
-    text += `${article.titre}.`;
+    let text = `${article.titre}.`;
     if (article.texte1) {
       const stringToBeDecoded = article.texte1.replace(/<[^>]*>?/gm, "");
       text += decode(stringToBeDecoded);
