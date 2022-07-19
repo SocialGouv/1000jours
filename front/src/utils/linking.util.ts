@@ -50,14 +50,11 @@ export const openNavigationApp = async (
   lat: number,
   long: number
 ): Promise<void> => {
+  const webUrl = `https://maps.google.com?q=${lat}+${long}`;
   const url = PLATFORM_IS_ANDROID
     ? `google.navigation:q=${lat}+${long}`
     : `maps://app?daddr=${lat}+${long}`;
 
   const supported = await Linking.canOpenURL(url);
-  if (supported) {
-    await Linking.openURL(url);
-  } else {
-    await Linking.openURL(`https://maps.google.com?q=${lat}+${long}`);
-  }
+  await Linking.openURL(supported ? url : webUrl);
 };
