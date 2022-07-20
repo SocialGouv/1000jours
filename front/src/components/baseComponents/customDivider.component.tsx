@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     borderRadius: Sizes.xs,
     height: Sizes.divider,
     marginVertical: Margins.default,
-    width: `100%`,
+    width: "100%",
   },
 });
 

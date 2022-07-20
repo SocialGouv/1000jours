@@ -14,8 +14,8 @@ import {
   Sizes,
 } from "../../styles";
 import { ArticleUtils, FavoritesUtils } from "../../utils";
+import { FavoritesAssets } from "../assets";
 import CustomButton from "./customButton.component";
-import Icomoon, { IcomoonIcons } from "./icomoon.component";
 
 interface Props {
   buttonStyle?: StyleProp<ViewStyle>;
@@ -35,7 +35,7 @@ const FavoriteButton: React.FC<Props> = ({ buttonStyle, articleId }) => {
   const addOrDeleteFromFavorites = useCallback(async () => {
     const shouldAddFavorite = !isArticleFavorite;
     await FavoritesUtils.handleOnFavorite(shouldAddFavorite, articleId);
-    setIsArticleFavorite(!isArticleFavorite);
+    setIsArticleFavorite(shouldAddFavorite);
   }, [articleId, isArticleFavorite]);
 
   return (
@@ -46,18 +46,8 @@ const FavoriteButton: React.FC<Props> = ({ buttonStyle, articleId }) => {
             ? Labels.article.favorite.deleteFromFavorites
             : Labels.article.favorite.addToFavorites
         }
-        icon={
-          <Icomoon
-            name={
-              isArticleFavorite
-                ? IcomoonIcons.favorisChecked
-                : IcomoonIcons.favoris
-            }
-            size={Sizes.md}
-            color={Colors.primaryBlue}
-          />
-        }
-        rounded={true}
+        icon={FavoritesAssets.getFavoriteIcon(isArticleFavorite, Sizes.md)}
+        rounded
         disabled={false}
         action={addOrDeleteFromFavorites}
         titleStyle={styles.buttonTitleStyle}

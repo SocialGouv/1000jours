@@ -1,17 +1,19 @@
 import type { ReactElement } from "react";
 import * as React from "react";
 
-import FavoriteIcon from "../../assets/images/favori.svg";
-import FavoriteCheckedIcon from "../../assets/images/favori_coche.svg";
+import { Colors } from "../../styles";
+import { Icomoon, IcomoonIcons } from "../baseComponents";
 
 const getFavoriteIcon = (
   isFavorite: boolean,
   iconSize: number
 ): ReactElement => {
-  return isFavorite ? (
-    <FavoriteCheckedIcon height={iconSize} width={iconSize} />
-  ) : (
-    <FavoriteIcon height={iconSize} width={iconSize} />
+  return (
+    <Icomoon
+      name={isFavorite ? IcomoonIcons.favorisChecked : IcomoonIcons.favoris}
+      size={iconSize}
+      color={Colors.primaryBlue}
+    />
   );
 };
 

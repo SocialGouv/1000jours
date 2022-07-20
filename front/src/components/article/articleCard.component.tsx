@@ -95,7 +95,7 @@ const ArticleCard: FC<Props> = ({
     if (article) {
       const shouldAddFavorite = !isArticleFavorite;
       await FavoritesUtils.handleOnFavorite(shouldAddFavorite, article.id);
-      setIsArticleFavorite(!isArticleFavorite);
+      setIsArticleFavorite(shouldAddFavorite);
     }
   }, [article, isArticleFavorite]);
 
@@ -120,8 +120,8 @@ const ArticleCard: FC<Props> = ({
                 }}
               />
             ) : (
-                <Image source={DefaultImage} containerStyle={imageStyle} />
-              )}
+              <Image source={DefaultImage} containerStyle={imageStyle} />
+            )}
             {articleIsRead && (
               <View style={styles.articleIsReadView}>
                 <SecondaryText style={styles.articleIsReadText}>
@@ -194,8 +194,8 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
   },
   articleTitleContainer: {
+    maxWidth: "90%",
     paddingBottom: Paddings.light,
-    maxWidth: `90%`,
   },
   borderLeftRadius: {
     borderBottomLeftRadius: Sizes.xxxxxs,
