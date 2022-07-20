@@ -120,8 +120,8 @@ const ArticleCard: FC<Props> = ({
                 }}
               />
             ) : (
-              <Image source={DefaultImage} containerStyle={imageStyle} />
-            )}
+                <Image source={DefaultImage} containerStyle={imageStyle} />
+              )}
             {articleIsRead && (
               <View style={styles.articleIsReadView}>
                 <SecondaryText style={styles.articleIsReadText}>
@@ -195,6 +195,7 @@ const styles = StyleSheet.create({
   },
   articleTitleContainer: {
     paddingBottom: Paddings.light,
+    maxWidth: `90%`,
   },
   borderLeftRadius: {
     borderBottomLeftRadius: Sizes.xxxxxs,

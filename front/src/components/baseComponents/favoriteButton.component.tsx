@@ -13,7 +13,7 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
-import { ArticleUtils } from "../../utils";
+import { ArticleUtils, FavoritesUtils } from "../../utils";
 import CustomButton from "./customButton.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 
@@ -23,35 +23,33 @@ interface Props {
 }
 
 const FavoriteButton: React.FC<Props> = ({ buttonStyle, articleId }) => {
-  const [articleIsFavorites, setArticleIsFavorites] = useState(false);
+  const [isArticleFavorite, setIsArticleFavorite] = useState(false);
 
   useEffect(() => {
     const checkFavorites = async () => {
-      setArticleIsFavorites(await ArticleUtils.isArticleInFavorites(articleId));
+      setIsArticleFavorite(await ArticleUtils.isArticleInFavorites(articleId));
     };
     void checkFavorites();
   }, [articleId]);
 
-  const addOrDeleteFromFavorites = useCallback(() => {
-    try {
-      console.log("addOrDeleteFromFavorites");
-    } catch (error: unknown) {
-      console.error(error);
-    }
-  }, []);
+  const addOrDeleteFromFavorites = useCallback(async () => {
+    const shouldAddFavorite = !isArticleFavorite;
+    await FavoritesUtils.handleOnFavorite(shouldAddFavorite, articleId);
+    setIsArticleFavorite(!isArticleFavorite);
+  }, [articleId, isArticleFavorite]);
 
   return (
     <>
       <CustomButton
         title={
-          articleIsFavorites
+          isArticleFavorite
             ? Labels.article.favorite.deleteFromFavorites
             : Labels.article.favorite.addToFavorites
         }
         icon={
           <Icomoon
             name={
-              articleIsFavorites
+              isArticleFavorite
                 ? IcomoonIcons.favorisChecked
                 : IcomoonIcons.favoris
             }

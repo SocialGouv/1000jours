@@ -1,6 +1,6 @@
 import _ from "lodash";
 import type { FC } from "react";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { Modal, StyleSheet } from "react-native";
 import { CheckBox } from "react-native-elements";
@@ -45,10 +45,10 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
       .value();
   };
 
-  const [filters, setFilters] = React.useState<ArticleFilter[]>([]);
-  const [initalFilters, setInitalFilters] = React.useState<ArticleFilter[]>([]);
-  const [triggerUpdateFilters, setTriggerUpdateFilters] = React.useState(false);
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [filters, setFilters] = useState<ArticleFilter[]>([]);
+  const [initalFilters, setInitalFilters] = useState<ArticleFilter[]>([]);
+  const [triggerUpdateFilters, setTriggerUpdateFilters] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     if (filters.length === 0) setFilters(getFilters(articles));
