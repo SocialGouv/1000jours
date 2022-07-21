@@ -1,3 +1,10 @@
+# [1.106.0](https://github.com/SocialGouv/1000jours/compare/v1.105.0...v1.106.0) (2022-07-21)
+
+
+### Features
+
+* **epds:** ajout de la collection temoignages dans le BO ([#1314](https://github.com/SocialGouv/1000jours/issues/1314)) ([f45da49](https://github.com/SocialGouv/1000jours/commit/f45da497018ebfcf125b7e15ad3113937a8e23b0))
+
 # [1.105.0](https://github.com/SocialGouv/1000jours/compare/v1.104.0...v1.105.0) (2022-07-18)
 
 
