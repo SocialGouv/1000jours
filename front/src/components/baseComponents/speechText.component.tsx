@@ -1,4 +1,5 @@
 import * as Speech from "expo-speech";
+import _ from "lodash";
 import type { FC } from "react";
 import * as React from "react";
 import { useCallback } from "react";
@@ -23,8 +24,17 @@ interface Props {
 }
 
 const SpeechText: FC<Props> = ({ buttonTitle, textToRead }) => {
-  const readText = useCallback(() => {
-    Speech.speak(textToRead);
+  const readText = useCallback(async () => {
+    const voices = await Speech.getAvailableVoicesAsync();
+    const frVoices = _.filter(voices, { language: "fr-FR" });
+    console.log(frVoices);
+    console.log("Text maxLength : ", Speech.maxSpeechInputLength);
+    const speechOptions: Speech.SpeechOptions = {
+      language: "fr-FR",
+      pitch: 1,
+      rate: 1,
+    };
+    Speech.speak(textToRead, speechOptions);
   }, [textToRead]);
 
   return (
