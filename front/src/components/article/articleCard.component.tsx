@@ -40,16 +40,11 @@ const ArticleCard: FC<Props> = ({
   const [articleIsRead, setArticleIsRead] = useState(false);
   const [isArticleFavorite, setIsArticleFavorite] = useState(false);
 
-  useEffect(() => {
-    const checkReadAndFavorites = async () => {
-      if (article) {
-        setArticleIsRead(await ArticleUtils.isArticleRead(article.id));
-        setIsArticleFavorite(
-          await ArticleUtils.isArticleInFavorites(article.id)
-        );
-      }
-    };
-    void checkReadAndFavorites();
+  const checkReadAndFavorites = useCallback(async () => {
+    if (article) {
+      setArticleIsRead(await ArticleUtils.isArticleRead(article.id));
+      setIsArticleFavorite(await ArticleUtils.isArticleInFavorites(article.id));
+    }
   }, [article]);
 
   // Permet de forcer le composant ExpoFastImage à être actualisé
@@ -65,6 +60,14 @@ const ArticleCard: FC<Props> = ({
     };
   }, [article]);
 
+  useEffect(() => {
+    void checkReadAndFavorites();
+  }, [checkReadAndFavorites]);
+
+  const updateView = useCallback(() => {
+    void checkReadAndFavorites();
+  }, [checkReadAndFavorites]);
+
   const onItemPressed = useCallback(async () => {
     if (isFromSearchScreen && setStepAndArticleId && article)
       setStepAndArticleId(article.id, step);
@@ -78,12 +81,22 @@ const ArticleCard: FC<Props> = ({
         {
           articles: articles,
           id: article?.id,
+          onBackButtonPressed: () => {
+            updateView();
+          },
           step: step,
         },
         true
       );
     }
-  }, [isFromSearchScreen, setStepAndArticleId, article, step, articles]);
+  }, [
+    isFromSearchScreen,
+    setStepAndArticleId,
+    article,
+    step,
+    articles,
+    updateView,
+  ]);
 
   const imageStyle = [
     styles.articleImage,
