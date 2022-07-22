@@ -54,6 +54,15 @@ export type TabSearchParamList = {
   };
 };
 
+export type ArticleSwipeRouteParamList = {
+  params: {
+    id: number;
+    step?: Step;
+    articles: Article[];
+    onBackButtonPressed: () => void;
+  };
+};
+
 export type UserSituation = {
   id: string;
   label: string;

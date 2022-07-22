@@ -11,6 +11,7 @@ import CustomTextInput from "./customTextInput.component";
 import Datepicker from "./datePicker.component";
 import ErrorMessage from "./errorMessage.component";
 import ExpandableButton from "./expandableButton.component";
+import FavoriteButton from "./favoriteButton.component";
 import { GraphQLLoader } from "./graphQLLoader.component";
 import HeaderApp from "./headerApp.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
@@ -40,6 +41,7 @@ export {
   Datepicker,
   ErrorMessage,
   ExpandableButton,
+  FavoriteButton,
   GraphQLLoader,
   HeaderApp,
   Icomoon,

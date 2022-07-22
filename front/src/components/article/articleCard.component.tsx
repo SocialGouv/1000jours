@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { AccessibilityInfo, StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 import DefaultImage from "../../assets/images/default.png";
 import { Labels } from "../../constants";
@@ -10,10 +11,12 @@ import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Article, Step } from "../../types";
 import {
   ArticleUtils,
+  FavoritesUtils,
   getVisuelFormat,
   RootNavigation,
   VisuelFormat,
 } from "../../utils";
+import { FavoritesAssets } from "../assets";
 import { CommonText, SecondaryText, View } from "../baseComponents";
 
 interface Props {
@@ -35,13 +38,13 @@ const ArticleCard: FC<Props> = ({
     (item) => item.id == selectedArticleId
   );
   const [articleIsRead, setArticleIsRead] = useState(false);
+  const [isArticleFavorite, setIsArticleFavorite] = useState(false);
 
-  useEffect(() => {
-    const checkRead = async () => {
-      if (article)
-        setArticleIsRead(await ArticleUtils.isArticleRead(article.id));
-    };
-    void checkRead();
+  const checkReadAndFavorites = useCallback(async () => {
+    if (article) {
+      setArticleIsRead(await ArticleUtils.isArticleRead(article.id));
+      setIsArticleFavorite(await ArticleUtils.isArticleInFavorites(article.id));
+    }
   }, [article]);
 
   // Permet de forcer le composant ExpoFastImage à être actualisé
@@ -57,6 +60,14 @@ const ArticleCard: FC<Props> = ({
     };
   }, [article]);
 
+  useEffect(() => {
+    void checkReadAndFavorites();
+  }, [checkReadAndFavorites]);
+
+  const updateView = useCallback(() => {
+    void checkReadAndFavorites();
+  }, [checkReadAndFavorites]);
+
   const onItemPressed = useCallback(async () => {
     if (isFromSearchScreen && setStepAndArticleId && article)
       setStepAndArticleId(article.id, step);
@@ -70,12 +81,22 @@ const ArticleCard: FC<Props> = ({
         {
           articles: articles,
           id: article?.id,
+          onBackButtonPressed: () => {
+            updateView();
+          },
           step: step,
         },
         true
       );
     }
-  }, [isFromSearchScreen, setStepAndArticleId, article, step, articles]);
+  }, [
+    isFromSearchScreen,
+    setStepAndArticleId,
+    article,
+    step,
+    articles,
+    updateView,
+  ]);
 
   const imageStyle = [
     styles.articleImage,
@@ -83,52 +104,67 @@ const ArticleCard: FC<Props> = ({
     articleIsRead && styles.readArticleImage,
   ];
 
+  const onFavoriteButtonClick = useCallback(async () => {
+    if (article) {
+      const shouldAddFavorite = !isArticleFavorite;
+      await FavoritesUtils.handleOnFavorite(shouldAddFavorite, article.id);
+      setIsArticleFavorite(shouldAddFavorite);
+    }
+  }, [article, isArticleFavorite]);
+
   return (
     <>
       {article && (
-        <ListItem
-          bottomDivider
-          onPress={onItemPressed}
-          pad={0}
-          containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
-          style={[styles.listItem, styles.borderLeftRadius]}
-          accessibilityHint={Labels.accessibility.tapForMoreInfo}
-          accessibilityLabel={`${Labels.accessibility.articleCard.title} : ${article.titre}. ${Labels.accessibility.articleCard.description} : ${article.resume}`}
-        >
-          {showImage ? (
-            <Image
-              containerStyle={imageStyle}
-              source={{
-                uri: getVisuelFormat(article.visuel, VisuelFormat.thumbnail),
-              }}
-            />
-          ) : (
-            <Image source={DefaultImage} containerStyle={imageStyle} />
-          )}
-          {articleIsRead && (
-            <View style={styles.articleIsReadView}>
-              <SecondaryText style={styles.articleIsReadText}>
-                {Labels.article.readArticle}
-              </SecondaryText>
-            </View>
-          )}
-          <ListItem.Content style={styles.articleContent}>
-            <ListItem.Title style={styles.articleTitleContainer}>
-              <CommonText style={styles.articleTitle}>
-                {article.titre}
-              </CommonText>
-            </ListItem.Title>
-            <ListItem.Subtitle style={styles.articleDescription}>
-              <SecondaryText
-                style={styles.articleDescriptionFont}
-                numberOfLines={3}
-                allowFontScaling={true}
-              >
-                {article.resume}
-              </SecondaryText>
-            </ListItem.Subtitle>
-          </ListItem.Content>
-        </ListItem>
+        <>
+          <ListItem
+            bottomDivider
+            onPress={onItemPressed}
+            pad={0}
+            containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
+            style={[styles.listItem, styles.borderLeftRadius]}
+            accessibilityHint={Labels.accessibility.tapForMoreInfo}
+            accessibilityLabel={`${Labels.accessibility.articleCard.title} : ${article.titre}. ${Labels.accessibility.articleCard.description} : ${article.resume}`}
+          >
+            {showImage ? (
+              <Image
+                containerStyle={imageStyle}
+                source={{
+                  uri: getVisuelFormat(article.visuel, VisuelFormat.thumbnail),
+                }}
+              />
+            ) : (
+              <Image source={DefaultImage} containerStyle={imageStyle} />
+            )}
+            {articleIsRead && (
+              <View style={styles.articleIsReadView}>
+                <SecondaryText style={styles.articleIsReadText}>
+                  {Labels.article.readArticle}
+                </SecondaryText>
+              </View>
+            )}
+            <ListItem.Content style={styles.articleContent}>
+              <ListItem.Title style={styles.articleTitleContainer}>
+                <CommonText style={styles.articleTitle}>
+                  {article.titre}
+                </CommonText>
+              </ListItem.Title>
+              <ListItem.Subtitle style={styles.articleDescription}>
+                <SecondaryText
+                  style={styles.articleDescriptionFont}
+                  numberOfLines={3}
+                  allowFontScaling={true}
+                >
+                  {article.resume}
+                </SecondaryText>
+              </ListItem.Subtitle>
+            </ListItem.Content>
+          </ListItem>
+          <View style={styles.favoriteView}>
+            <TouchableWithoutFeedback onPress={onFavoriteButtonClick}>
+              {FavoritesAssets.getFavoriteIcon(isArticleFavorite, Sizes.xl)}
+            </TouchableWithoutFeedback>
+          </View>
+        </>
       )}
     </>
   );
@@ -171,11 +207,19 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
   },
   articleTitleContainer: {
+    maxWidth: "90%",
     paddingBottom: Paddings.light,
   },
   borderLeftRadius: {
     borderBottomLeftRadius: Sizes.xxxxxs,
     borderTopLeftRadius: Sizes.xxxxxs,
+  },
+  favoriteView: {
+    backgroundColor: "transparent",
+    padding: Paddings.smallest,
+    position: "absolute",
+    right: Paddings.light,
+    top: Paddings.light,
   },
   listItem: {
     marginVertical: Margins.smallest,

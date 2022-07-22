@@ -28,6 +28,7 @@ export enum IcomoonIcons {
   calendrierActive = "calendrier-active",
   dent = "dent",
   favoris = "favoris",
+  favorisChecked = "favoris-checked",
   menu = "menu",
   fermer = "fermer",
   retour = "retour",

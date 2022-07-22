@@ -17,15 +17,16 @@ import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { Colors, Paddings, Sizes } from "../../styles";
-import type { Step, TabHomeParamList } from "../../types";
+import type {
+  ArticleSwipeRouteParamList,
+  Step,
+  TabHomeParamList,
+} from "../../types";
 import { TrackerUtils } from "../../utils";
 import ArticleDetail from "./articleDetail.component";
 
 interface Props {
-  route?: RouteProp<
-    { params: { id: number; step?: Step; articles: Article[] } },
-    "params"
-  >;
+  route?: RouteProp<ArticleSwipeRouteParamList, "params">;
   navigation: StackNavigationProp<TabHomeParamList>;
 }
 
@@ -33,8 +34,6 @@ interface RenderItemProps {
   item: Article;
   index: number;
 }
-
-const ITEM_WIDTH = Math.round(SCREEN_WIDTH * 0.8);
 
 const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
   const ref = useRef(null);
@@ -44,6 +43,8 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
   const articles: Article[] = route ? route.params.articles : [];
   const step: Step | undefined = route?.params.step;
   const articleId: number = route ? route.params.id : 0;
+  // TODO - find a better way to pass the callback through
+  const onBackPressed = route?.params.onBackButtonPressed;
 
   const CAROUSEL_MAX_ITEM_TO_RENDER = 3;
   const CAROUSEL_PARALLAX_OFFSET = 45;
@@ -53,6 +54,13 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
     (item) => item.id == articleId
   );
 
+  const onGoBack = useCallback(() => {
+    if (onBackPressed) {
+      onBackPressed();
+    }
+    navigation.goBack();
+  }, [onBackPressed, navigation]);
+
   const renderItem = useCallback(
     ({ item }: RenderItemProps) => {
       return (
@@ -61,21 +69,18 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
             _articleId={item.id}
             _articleStep={step}
             isInCarousel
+            goBack={onGoBack}
           />
         </View>
       );
     },
-    [step]
+    [step, onGoBack]
   );
 
   useEffect(() => {
     snapToItem(firstItemIndexToShow);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const onGoBack = useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
 
   const snapToItem = useCallback((index: number) => {
     setTrackerName(articles[index].titre);
@@ -107,8 +112,11 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
           onSnapToItem={snapToItem}
           windowSize={CAROUSEL_MAX_ITEM_TO_RENDER}
           width={SCREEN_WIDTH}
-          mode='parallax'
-          modeConfig={{parallaxScrollingOffset: CAROUSEL_PARALLAX_OFFSET, parallaxScrollingScale: CAROUSEL_PARALLAX_SCALE}}
+          mode="parallax"
+          modeConfig={{
+            parallaxScrollingOffset: CAROUSEL_PARALLAX_OFFSET,
+            parallaxScrollingScale: CAROUSEL_PARALLAX_SCALE,
+          }}
           pagingEnabled={true}
           snapEnabled={true}
           loop={false}
@@ -122,6 +130,9 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  flex1: {
+    flex: 1,
+  },
   flexStart: {
     alignItems: "flex-start",
     flexDirection: "row",
@@ -135,9 +146,6 @@ const styles = StyleSheet.create({
     borderColor: Colors.borderGrey,
     borderRadius: Sizes.xxxxs,
     borderWidth: 1,
-  },
-  flex1: {
-    flex: 1,
   },
 });
 
