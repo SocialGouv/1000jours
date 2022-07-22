@@ -36,6 +36,7 @@ export default {
       title: "Titre de l'événement",
     },
     illustrationProfile: "Illustration profil",
+    listen: "Écouter",
     logoApp: "Logo de l'application",
     logoRepubliqueFr: "Logo de la République française",
     mood: {

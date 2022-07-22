@@ -18,6 +18,7 @@ import Loader from "./loader.component";
 import MapLoader from "./mapLoader.component";
 import ModalHelp from "./modalHelp.component";
 import ShareButton, { SharePageType } from "./shareButton.component";
+import SpeechText from "./speechText.component";
 import { CommonText, SecondaryText, SecondaryTextItalic } from "./StyledText";
 import Tags from "./tags.component";
 import type { TextProps } from "./Themed";
@@ -52,6 +53,7 @@ export {
   SecondaryTextItalic,
   ShareButton,
   SharePageType,
+  SpeechText,
   Tags,
   Text,
   TextProps,
