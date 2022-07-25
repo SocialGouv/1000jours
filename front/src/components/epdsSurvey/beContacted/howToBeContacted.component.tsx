@@ -276,7 +276,7 @@ const HowToBeContacted: React.FC<Props> = ({ visible, hideModal }) => {
       let dateAsString = "";
       if (
         dataForm.lastChildBirthDate &&
-        StringUtils.stringIsNotNullNorEmpty(dataForm.lastChildBirthDate)
+        StringUtils.isNotNullNorEmpty(dataForm.lastChildBirthDate)
       ) {
         const date = new Date(dataForm.lastChildBirthDate);
         dateAsString = format(date, Formats.dateFR).replace(/\//g, "-");

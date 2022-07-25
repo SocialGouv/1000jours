@@ -15,19 +15,17 @@ export const removeListHyphens = (text: string | undefined): string => {
   return text ?? "";
 };
 
-export const stringIsNotNullNorEmpty = (
-  str: string | null | undefined
-): boolean => {
+export const isNotNullNorEmpty = (str: string | null | undefined): boolean => {
   return str !== null && str !== undefined && str.length > 0;
 };
 
-export const stringArrayIsNullOrEmpty = (
+export const isStringArrayNullOrEmpty = (
   str: string[] | null | undefined
 ): boolean => {
   return str === null || str === undefined || str.length === 0;
 };
 
-export const arraysHaveSameLengthAndContainSameValues = (
+export const areArraysTheSameInContentAndLength = (
   firstArray: string[],
   secondArray: string[]
 ): boolean => {
@@ -39,17 +37,17 @@ export const arraysHaveSameLengthAndContainSameValues = (
   );
 };
 
-export const validateEmail = (inputText: string): boolean => {
-  const mailformat = /^[\w-.]+@([\w-]+\.)+[\w-]+$/;
-  return mailformat.test(inputText);
+export const isValidEmail = (inputText: string): boolean => {
+  const mailFormat = /^[\w-.]+@([\w-]+\.)+[\w-]+$/;
+  return mailFormat.test(inputText);
 };
 
-export const validateFrenchPhoneNumber = (inputText: string): boolean => {
+export const isValidFrenchPhoneNumber = (phoneNumber: string): boolean => {
   const frenchPhoneFormat = /^((\+)33|0|0033)[1-9](\d{2}){4}$/g;
-  return frenchPhoneFormat.test(inputText);
+  return frenchPhoneFormat.test(phoneNumber);
 };
 
-export const phoneNumberFormattingForElise = (phoneNumber: string): string => {
+export const formatPhoneNumber = (phoneNumber: string): string => {
   const regexSeparateEveryTwo = /(.{2})(?!$)/g;
   if (phoneNumber.length === 10)
     return phoneNumber.replace(regexSeparateEveryTwo, "$1 ");

@@ -48,8 +48,8 @@ const FetchPois: React.FC<Props> = ({
       !savedFilters ||
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       (savedFilters &&
-        StringUtils.stringArrayIsNullOrEmpty(savedFilters.types) &&
-        StringUtils.stringArrayIsNullOrEmpty(savedFilters.thematiques))
+        StringUtils.isStringArrayNullOrEmpty(savedFilters.types) &&
+        StringUtils.isStringArrayNullOrEmpty(savedFilters.thematiques))
     ) {
       chooseFilterMessage();
       return;

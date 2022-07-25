@@ -50,7 +50,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
   const [cartoFilterStorage, setCartoFilterStorage] =
     useState<CartoFilterStorage>({ thematiques: [], types: [] });
   const [showModalContent, setShowModalContent] = useState(false);
-  const [savedcartoFilterStorage, setSavedCartoFilterStorage] =
+  const [savedCartoFilterStorage, setSavedCartoFilterStorage] =
     useState<CartoFilterStorage>({ thematiques: [], types: [] });
   const [trackerAction, setTrackerAction] = useState("");
 
@@ -83,7 +83,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
         if (
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           savedFilters &&
-          !StringUtils.stringArrayIsNullOrEmpty(savedFilters.types)
+          !StringUtils.isStringArrayNullOrEmpty(savedFilters.types)
         ) {
           fetchedFiltersFromDB.professionnels =
             checkSavedFiltersInFetchedFilters(
@@ -219,7 +219,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
   };
 
   const sendFiltersTracker = (filters: string[]) => {
-    if (!StringUtils.stringArrayIsNullOrEmpty(filters)) {
+    if (!StringUtils.isStringArrayNullOrEmpty(filters)) {
       filters.forEach((filter) => {
         setTrackerAction(
           `${TrackerUtils.TrackingEvent.FILTER_CARTO} - ${filter}`
@@ -245,17 +245,17 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     sendFiltersTracker(cartoFilterStorage.thematiques);
 
     const noSavedFilterButNewFilter =
-      savedcartoFilterStorage.types.length === 0 &&
+      savedCartoFilterStorage.types.length === 0 &&
       cartoFilterStorage.types.length > 0;
 
-    const savedFilterAndNewFiltersAreDifferent =
-      !StringUtils.arraysHaveSameLengthAndContainSameValues(
-        savedcartoFilterStorage.types,
+    const areSavedFiltersAndNewFiltersDifferent =
+      !StringUtils.areArraysTheSameInContentAndLength(
+        savedCartoFilterStorage.types,
         cartoFilterStorage.types
       );
 
     const differenceBetweenSavedAndNew =
-      noSavedFilterButNewFilter || savedFilterAndNewFiltersAreDifferent;
+      noSavedFilterButNewFilter || areSavedFiltersAndNewFiltersDifferent;
 
     setCartoFilterStorage({
       thematiques: [],
@@ -263,7 +263,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     });
 
     hideModal(differenceBetweenSavedAndNew);
-  }, [cartoFilterStorage, hideModal, savedcartoFilterStorage.types]);
+  }, [cartoFilterStorage, hideModal, savedCartoFilterStorage.types]);
   return (
     <>
       <TrackerHandler actionName={trackerAction} />

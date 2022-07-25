@@ -16,8 +16,7 @@ import { Labels, StorageKeysConstants } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { CartoFilterStorage } from "../../type";
 import type { Event, Tag } from "../../types";
-import { RootNavigation, StorageUtils, TrackerUtils } from "../../utils";
-import { removeListHyphens } from "../../utils/strings.util";
+import { RootNavigation, StorageUtils, StringUtils, TrackerUtils } from "../../utils";
 import { getThematiqueIcon } from "../../utils/thematique.util";
 import ArticleCard from "../article/articleCard.component";
 import {
@@ -132,7 +131,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
             event.nom
           }. ${
             Labels.accessibility.eventCard.description
-          } : ${removeListHyphens(event.description)}`}
+          } : ${StringUtils.removeListHyphens(event.description)}`}
         >
           <View style={styles.eventContainer}>
             <View style={styles.eventIconContainer}>
@@ -153,7 +152,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
               <Tags tags={getEventTags()} />
               <SecondaryText style={styles.eventDescription}>
                 {isScreenReaderEnabled
-                  ? removeListHyphens(event.description)
+                  ? StringUtils.removeListHyphens(event.description)
                   : event.description}
               </SecondaryText>
             </View>
