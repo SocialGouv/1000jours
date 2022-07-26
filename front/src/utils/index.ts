@@ -6,7 +6,7 @@ import * as AssestUtils from "./asset.util";
 import * as EpdsSurveyUtils from "./epdsSurvey.util";
 import * as FavoritesUtils from "./favorites/favorites.util";
 import * as KeyboardUtils from "./keyboard.util";
-import * as LinkingUtils from "./linking.util";
+import * as LinkingUtils from "./linking/linking.util";
 import * as LoggingUtils from "./logging.util";
 import { initMonitoring, reportError } from "./logging.util";
 import * as MoodboardUtils from "./moodboard.util";
