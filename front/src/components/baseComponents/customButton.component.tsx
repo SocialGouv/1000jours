@@ -1,6 +1,11 @@
 import type { FC } from "react";
 import * as React from "react";
-import type { StyleProp, TextStyle, ViewStyle } from "react-native";
+import type {
+  AccessibilityState,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from "react-native";
 import { StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import type { IconNode } from "react-native-elements/dist/icons/Icon";
@@ -25,6 +30,7 @@ interface Props {
   titleStyle?: StyleProp<TextStyle>;
   onPressIn?: () => void;
   accessibilityLabel?: string;
+  accessibilityState?: AccessibilityState;
 }
 
 const setDisabledStyle = (
@@ -43,6 +49,7 @@ const CustomButton: FC<Props> = ({
   titleStyle,
   onPressIn,
   accessibilityLabel,
+  accessibilityState,
 }) => (
   <Button
     disabled={disabled}
@@ -67,6 +74,8 @@ const CustomButton: FC<Props> = ({
     onPress={action}
     type={rounded ? "solid" : "clear"}
     accessibilityLabel={accessibilityLabel}
+    accessibilityRole="button"
+    accessibilityState={accessibilityState}
   />
 );
 
