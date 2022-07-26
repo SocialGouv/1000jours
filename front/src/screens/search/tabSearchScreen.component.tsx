@@ -33,7 +33,6 @@ import {
 import type { TrackerSearch } from "../../type";
 import type { Article } from "../../types";
 import { KeyboardUtils, StringUtils, TrackerUtils } from "../../utils";
-import { stringIsNotNullNorEmpty } from "../../utils/strings.util";
 
 const TabSearchScreen: FC = () => {
   const [keywords, setKeywords] = useState("");
@@ -64,7 +63,7 @@ const TabSearchScreen: FC = () => {
   const onSearchByKeywords = useCallback(() => {
     setUpdatedText(Labels.search.loading);
     KeyboardUtils.dismissKeyboard();
-    if (stringIsNotNullNorEmpty(keywords)) {
+    if (StringUtils.isNotNullNorEmpty(keywords)) {
       const trimedKeywords = keywords.trim();
       setKeywords(trimedKeywords);
       setQueryVariables({ keywords: trimedKeywords });
@@ -108,7 +107,7 @@ const TabSearchScreen: FC = () => {
 
   const onKeywordsTextInputChanged = useCallback((text: string) => {
     setKeywords(text);
-    if (!StringUtils.stringIsNotNullNorEmpty(text)) {
+    if (!StringUtils.isNotNullNorEmpty(text)) {
       setUpdatedText(Labels.search.writeKeyword);
       setArticles([]);
     }

@@ -54,7 +54,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
 
   const onChangeScreenName = async () => {
     const userInfo = await getUserInfo();
-    if (screenName && StringUtils.stringIsNotNullNorEmpty(screenName))
+    if (screenName && StringUtils.isNotNullNorEmpty(screenName))
       void trackScreenView({
         name: screenName,
         userInfo,
@@ -64,9 +64,9 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
   const onChangeActionName = async () => {
     const userInfo = await getUserInfo();
     const screenNameIsNotEmpty =
-      screenName && StringUtils.stringIsNotNullNorEmpty(screenName);
+      screenName && StringUtils.isNotNullNorEmpty(screenName);
     const actionNameIsNotEmpty =
-      actionName && StringUtils.stringIsNotNullNorEmpty(actionName);
+      actionName && StringUtils.isNotNullNorEmpty(actionName);
 
     if (screenNameIsNotEmpty && actionNameIsNotEmpty)
       void trackAction({
@@ -80,9 +80,9 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
     const userInfo = await getUserInfo();
     if (
       searchObject?.keyword &&
-      StringUtils.stringIsNotNullNorEmpty(searchObject.keyword) &&
+      StringUtils.isNotNullNorEmpty(searchObject.keyword) &&
       searchObject.category &&
-      StringUtils.stringIsNotNullNorEmpty(searchObject.category)
+      StringUtils.isNotNullNorEmpty(searchObject.category)
     ) {
       searchObject.userInfo = userInfo;
       void trackSiteSearch(searchObject);

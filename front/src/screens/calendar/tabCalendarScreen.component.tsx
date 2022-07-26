@@ -245,7 +245,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
       StorageKeysConstants.forceToScheduleEventsNotif
     );
     if (
-      StringUtils.stringIsNotNullNorEmpty(eventsCalcFromBirthday) &&
+      StringUtils.isNotNullNorEmpty(eventsCalcFromBirthday) &&
       (!notifIdsEventsStored ||
         eventsCalcFromBirthday !== childBirthday ||
         forceToScheduleEventsNotif)

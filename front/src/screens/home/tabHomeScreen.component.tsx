@@ -104,7 +104,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
       // Programme la notification des articles non lus si cette notification n'a jamais été programmée ou si il y a un changement d'étape
       if (
         !triggerForArticlesNotification ||
-        (StringUtils.stringIsNotNullNorEmpty(previousCurrentStepId) &&
+        (StringUtils.isNotNullNorEmpty(previousCurrentStepId) &&
           previousCurrentStepId !== currentStep.id.toString())
       ) {
         await NotificationUtils.scheduleArticlesNotification();
@@ -116,7 +116,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
     async (etapes: Step[], _currentStep: Step) => {
       // Force le déclenchement de la notification suite au changement d'étape
       if (
-        StringUtils.stringIsNotNullNorEmpty(previousCurrentStepId) &&
+        StringUtils.isNotNullNorEmpty(previousCurrentStepId) &&
         previousCurrentStepId !== _currentStep.id.toString()
       ) {
         await NotificationUtils.cancelScheduleNextStepNotification();

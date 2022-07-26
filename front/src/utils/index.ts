@@ -15,7 +15,7 @@ import * as RootNavigation from "./rootNavigation.util";
 import * as SearchUtils from "./search.util";
 import * as StepUtils from "./step.util";
 import * as StorageUtils from "./storage.util";
-import * as StringUtils from "./strings.util";
+import * as StringUtils from "./strings/strings.util";
 import { getAppTheme } from "./theme.util";
 import * as TrackerUtils from "./tracker.util";
 import { getVisuelFormat, VisuelFormat } from "./visuel.util";
