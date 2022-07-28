@@ -199,7 +199,9 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
   }) => {
     return (
       <View style={styles.filterView}>
-        <CommonText style={styles.partsTitle}>{section.title}</CommonText>
+        <CommonText style={styles.partsTitle} accessibilityRole="header">
+          {section.title}
+        </CommonText>
         <View style={styles.filterContainer}>
           {renderChips(section.filters)}
         </View>

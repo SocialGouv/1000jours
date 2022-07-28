@@ -2,6 +2,7 @@ import AddressDetails from "./aroundMe/addressDetails.component";
 import AroundMeFilter from "./aroundMe/aroundMeFilter.component";
 import AroundMeMap from "./aroundMe/aroundMeMap.component";
 import AroundMeMapHeader from "./aroundMe/aroundMeMapHeader.component";
+import AroundMePoiResultInformation from "./aroundMe/aroundMePoiResultInformation.component";
 import AroundMeScreenHeader from "./aroundMe/aroundMeScreenHeader.component";
 import CustomMapMarker from "./aroundMe/customMapMarker.component";
 import FetchPois from "./aroundMe/fetchPois.component";
@@ -50,6 +51,7 @@ export {
   AroundMeMap,
   AroundMeMapHeader,
   AroundMePoiList,
+  AroundMePoiResultInformation,
   AroundMeScreenHeader,
   ArticleCard,
   ArticleList,

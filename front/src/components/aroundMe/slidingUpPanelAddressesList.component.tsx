@@ -5,9 +5,9 @@ import { useCallback, useRef, useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
 
-import { Labels } from "../../constants";
-import { Colors, FontWeight, Margins, Sizes } from "../../styles";
-import { CommonText, View } from "../baseComponents";
+import { Colors, Margins, Sizes } from "../../styles";
+import { View } from "../baseComponents";
+import AroundMePoiResultInformation from "./aroundMePoiResultInformation.component";
 import PoiList from "./poiList.component";
 
 interface Props {
@@ -43,10 +43,7 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
     return (
       <View style={styles.slidingUpPanelView}>
         <View style={styles.swipeIndicator} />
-        <CommonText style={styles.addressesListLabel}>
-          {Labels.aroundMe.addressesListLabelStart} {poisArray.length}{" "}
-          {Labels.aroundMe.addressesListLabelEnd}
-        </CommonText>
+        <AroundMePoiResultInformation numberOfPoisFound={poisArray.length} />
         <PoiList
           poisArray={poisArray}
           onPoiPress={goToMarkerAndMinimizeSlider}
@@ -67,13 +64,6 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
 };
 
 const styles = StyleSheet.create({
-  addressesListLabel: {
-    color: Colors.primaryBlue,
-    fontSize: Sizes.xs,
-    fontWeight: FontWeight.bold,
-    marginHorizontal: Margins.default,
-    marginVertical: Margins.smaller,
-  },
   slidingUpPanelScrollView: {
     marginHorizontal: Margins.default,
   },

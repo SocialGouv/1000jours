@@ -27,7 +27,11 @@ const TitleH1: React.FC<Props> = ({
       duration={1500}
       style={style}
     >
-      <SecondaryText style={styles.title} accessibilityRole="header">
+      <SecondaryText
+        style={styles.title}
+        accessibilityRole="header"
+        accessibilityLabel={title}
+      >
         {title}
       </SecondaryText>
       {(showDescription === undefined || showDescription) && description && (
