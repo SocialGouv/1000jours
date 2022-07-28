@@ -30,7 +30,7 @@ const DocumentCard: FC<Props> = ({ document }) => {
       `${TrackerUtils.TrackingEvent.PARENTHEQUE} - Téléchargement du doc "${document.nom}"`
     );
     if (document.fichier)
-      void LinkingUtils.openWebsite(document.fichier.url, true);
+      void LinkingUtils.openWebsite(document.fichier.url, false);
   }, [document.fichier, document.nom]);
 
   return (
