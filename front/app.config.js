@@ -67,7 +67,7 @@ export default {
       supportsTablet: true,
     },
     name: "1000 jours",
-    orientation: "portrait",
+    // orientation: "portrait",
     plugins: [
       [
         "expo-notifications",
