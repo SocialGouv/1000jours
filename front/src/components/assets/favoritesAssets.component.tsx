@@ -2,7 +2,7 @@ import type { ReactElement } from "react";
 import * as React from "react";
 
 import { Colors } from "../../styles";
-import { Icomoon, IcomoonIcons } from "../baseComponents";
+import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
 
 const getFavoriteIcon = (
   isFavorite: boolean,
