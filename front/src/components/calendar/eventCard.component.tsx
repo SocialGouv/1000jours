@@ -13,10 +13,16 @@ import { ListItem } from "react-native-elements";
 
 import BgImage from "../../assets/images/bg-icon-event-type.png";
 import { Labels, StorageKeysConstants } from "../../constants";
+import { useAccessibilityReader } from "../../hooks";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { CartoFilterStorage } from "../../type";
 import type { Event, Tag } from "../../types";
-import { RootNavigation, StorageUtils, StringUtils, TrackerUtils } from "../../utils";
+import {
+  RootNavigation,
+  StorageUtils,
+  StringUtils,
+  TrackerUtils,
+} from "../../utils";
 import { getThematiqueIcon } from "../../utils/thematique.util";
 import ArticleCard from "../article/articleCard.component";
 import {
@@ -96,14 +102,7 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
     onPressed(event.id.toString());
   }, [event.id, onPressed]);
 
-  const [isScreenReaderEnabled, setIsScreenReaderEnabled] = useState(false);
-  const getAccessibilityInfo = async () => {
-    const value = await AccessibilityInfo.isScreenReaderEnabled();
-    setIsScreenReaderEnabled(value);
-  };
-  useEffect(() => {
-    void getAccessibilityInfo();
-  }, []);
+  const isScreenReaderEnabled = useAccessibilityReader();
 
   return (
     <View style={styles.eventCardContainer}>
