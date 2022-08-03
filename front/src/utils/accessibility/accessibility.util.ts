@@ -2,7 +2,9 @@ import type { RefObject } from "react";
 import type { Text } from "react-native";
 import { AccessibilityInfo, findNodeHandle } from "react-native";
 
-export const screenReaderIsEnabled = async (): Promise<boolean> => {
+import { SnackBarConstants } from "../../constants";
+
+export const isScreenReaderEnabled = async (): Promise<boolean> => {
   return AccessibilityInfo.isScreenReaderEnabled();
 };
 
@@ -14,4 +16,10 @@ export const setAccessibilityFocusOnText = (
 
   if (!reactTag) return;
   AccessibilityInfo.setAccessibilityFocus(reactTag);
+};
+
+export const getSnackBarDuration = (isAccessibilityModeOn: boolean): number => {
+  return isAccessibilityModeOn
+    ? SnackBarConstants.ACCESSIBILITY_SNACKBAR_DURATION
+    : SnackBarConstants.SNACKBAR_DURATION;
 };

@@ -13,6 +13,7 @@ import Locales from "./localizations";
 import * as NotificationConstants from "./notification.constants";
 import * as PlatformConstants from "./platform.constants";
 import * as ProfileConstants from "./profile.constants";
+import * as SnackBarConstants from "./snackbar.constants";
 import * as StorageKeysConstants from "./storageKeys.constants";
 
 export {
@@ -31,5 +32,6 @@ export {
   PlatformConstants,
   ProfileConstants,
   SearchQueries,
+  SnackBarConstants,
   StorageKeysConstants,
 };

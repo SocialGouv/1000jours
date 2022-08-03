@@ -15,7 +15,7 @@ import {
 } from "../../../styles";
 import type { EpdsResultSimpleInformation } from "../../../type";
 import { LinkingUtils } from "../../../utils";
-import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
+import { setAccessibilityFocusOnText } from "../../../utils/accessibility/accessibility.util";
 import { CustomButton, SecondaryText, View } from "../../baseComponents";
 
 interface EpdsResultSimpleParagraphProps {
