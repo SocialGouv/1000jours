@@ -24,6 +24,7 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
+import { useAccessibilityReader } from "../../hooks";
 import { Colors, Paddings, Sizes } from "../../styles";
 import { AroundMeUtils, StorageUtils } from "../../utils";
 
@@ -49,6 +50,8 @@ const AroundMeScreen: FC = () => {
   const [showMap, setShowMap] = useState(false);
   const [triggerMoveMapCoordinates, setTriggerMoveMapCoordinates] =
     useState(false);
+
+  const isAccessibilityModeOn = useAccessibilityReader();
 
   const SNACKBAR_MARGIN_TOP_VALUE = "2%";
 
@@ -137,7 +140,7 @@ const AroundMeScreen: FC = () => {
           isFromSimpleCarto
         />
         <CustomSnackbar
-          duration={AroundMeConstants.SNACKBAR_DURATION}
+          isAccessibilityModeOn={isAccessibilityModeOn}
           visible={showSnackBar}
           isOnTop
           marginTopValue={SNACKBAR_MARGIN_TOP_VALUE}

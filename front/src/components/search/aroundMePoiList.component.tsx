@@ -5,8 +5,9 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
 
-import { AroundMeConstants, Labels } from "../../constants";
+import { Labels } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
+import { useAccessibilityReader } from "../../hooks";
 import { Colors, Margins, Sizes } from "../../styles";
 import AroundMeMapHeader from "../aroundMe/aroundMeMapHeader.component";
 import AroundMePoiResultInformation from "../aroundMe/aroundMePoiResultInformation.component";
@@ -36,6 +37,7 @@ const AroundMePoiList: FC<Props> = ({
   // Snackbar
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
+  const isAccessibilityModeOn = useAccessibilityReader();
 
   const handlePois = useCallback(
     (pois: Poi[]) => {
@@ -99,7 +101,7 @@ const AroundMePoiList: FC<Props> = ({
         <PoiList poisArray={poiArray} onPoiPress={navigateToMap} />
       </View>
       <CustomSnackbar
-        duration={AroundMeConstants.SNACKBAR_DURATION}
+        isAccessibilityModeOn={isAccessibilityModeOn}
         visible={showSnackBar}
         isOnTop={true}
         backgroundColor={Colors.aroundMeSnackbar.background}

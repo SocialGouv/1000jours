@@ -6,12 +6,22 @@ const useAccessibilityReader = (): boolean => {
   const [isAccessibilityModeOn, setIsAccessibilityModeOn] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+
     const checkAccessibilityMode = async () => {
-      setIsAccessibilityModeOn(
-        await AccessibilityUtils.isScreenReaderEnabled()
-      );
+      const isScreenReaderEnabled =
+        await AccessibilityUtils.isScreenReaderEnabled();
+
+      if (isMounted) {
+        setIsAccessibilityModeOn(isScreenReaderEnabled);
+      }
     };
+
     void checkAccessibilityMode();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return isAccessibilityModeOn;

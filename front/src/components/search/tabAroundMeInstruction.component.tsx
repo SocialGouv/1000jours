@@ -13,6 +13,7 @@ import {
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
+import { useAccessibilityReader } from "../../hooks";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Article } from "../../types";
 import { AroundMeUtils, RootNavigation, SearchUtils } from "../../utils";
@@ -38,13 +39,14 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
   const [triggerCheckLocation, setTriggerCheckLocation] = useState(false);
   const [triggerSearchByPostalCode, setTriggerSearchByPostalCode] =
     useState(false);
+  const isAccessibilityModeOn = useAccessibilityReader();
 
   const geolocationIcon = require("../../assets/images/carto/geolocation.png");
 
-  const showSnackBarWithMessage = (message: string) => {
+  const showSnackBarWithMessage = useCallback((message: string) => {
     setSnackBarMessage(message);
     setShowSnackBar(true);
-  };
+  }, []);
 
   const onPostalCodeChanged = useCallback((newPostalCode: string) => {
     setPostalCodeInput(newPostalCode);
@@ -93,20 +95,27 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
             newCoordinates.longitude
           );
         goToAroundMeMapAndListScreen(newCoordinates, zoomOrAltitude);
-      } else
+      } else {
         showSnackBarWithMessage(
           searchIsByPostalCode
             ? Labels.aroundMe.postalCodeNotFound
             : Labels.aroundMe.geolocationRetrievingError
         );
+      }
     },
-    [articles, goToAroundMeMapAndListScreen, searchIsByPostalCode]
+    [
+      articles,
+      goToAroundMeMapAndListScreen,
+      searchIsByPostalCode,
+      showSnackBarWithMessage,
+    ]
   );
 
   const onAllowGeolocMessage = useCallback(() => {
     setIsLoading(false);
     showSnackBarWithMessage(Labels.aroundMe.pleaseAllowGeolocation);
-  }, []);
+  }, [showSnackBarWithMessage]);
+
   const onSnackBarDismiss = useCallback(() => {
     setShowSnackBar(false);
   }, []);
@@ -175,7 +184,7 @@ const TabAroundMeInstruction: FC<Props> = ({ articles }) => {
           {Labels.aroundMe.postalCodeInvalid}
         </HelperText>
         <CustomSnackbar
-          duration={AroundMeConstants.SNACKBAR_DURATION}
+          isAccessibilityModeOn={isAccessibilityModeOn}
           visible={showSnackBar}
           isOnTop
           backgroundColor={Colors.aroundMeSnackbar.background}

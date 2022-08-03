@@ -18,6 +18,7 @@ import {
   PLATFORM_IS_IOS,
   SCREEN_HEIGHT,
 } from "../../constants/platform.constants";
+import { useAccessibilityReader } from "../../hooks";
 import { Colors, Margins } from "../../styles";
 import {
   AroundMeUtils,
@@ -78,6 +79,7 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
     useState(true);
 
   // Snackbar
+  const isAccessibilityModeOn = useAccessibilityReader();
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
 
@@ -335,7 +337,7 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
           hideDisplayListButton={isFromSimpleCarto}
         />
         <CustomSnackbar
-          duration={AroundMeConstants.SNACKBAR_DURATION}
+          isAccessibilityModeOn={isAccessibilityModeOn}
           visible={showSnackBar}
           isOnTop={true}
           backgroundColor={Colors.aroundMeSnackbar.background}

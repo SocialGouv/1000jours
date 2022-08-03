@@ -24,14 +24,19 @@ export const CommonText = React.forwardRef<DefaultText, TextProps>(
 );
 CommonText.displayName = "CommonText";
 
-export const SecondaryText: FC<TextProps> = (props) => {
-  return (
-    <Text
-      {...props}
-      style={[props.style, getFontFromWeight(FontNames.avenir, props.style)]}
-    />
-  );
-};
+export const SecondaryText = React.forwardRef<DefaultText, TextProps>(
+  (props: TextProps, ref) => {
+    return (
+      <Text
+        ref={ref}
+        {...props}
+        // eslint-disable-next-line react/prop-types
+        style={[props.style, getFontFromWeight(FontNames.avenir, props.style)]}
+      />
+    );
+  }
+);
+SecondaryText.displayName = "SecondaryText";
 
 export const SecondaryTextItalic: FC<TextProps> = (props) => {
   return (
