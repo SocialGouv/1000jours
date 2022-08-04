@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/demarches-simplifiees/dossiers",
+      "handler": "demarches-simplifiees.getDossiers",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
