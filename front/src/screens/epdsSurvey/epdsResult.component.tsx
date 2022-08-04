@@ -17,12 +17,12 @@ import {
 import EpdsResultContactMamanBlues from "../../components/epdsSurvey/epdsResultContactMamanBlues.component";
 import EpdsResultInformation from "../../components/epdsSurvey/epdsResultInformation/epdsResultInformation.component";
 import {
-  AroundMeConstants,
   EpdsConstants,
   EpdsDbQueries,
   Labels,
   StorageKeysConstants,
 } from "../../constants";
+import { useAccessibilityReader } from "../../hooks";
 import { GraphQLMutation } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { EpdsQuestionAndAnswers } from "../../type";
@@ -47,6 +47,7 @@ const EpdsResult: FC<Props> = ({
   const [triggerLaunchQuery, setTriggerLaunchQuery] = useState(false);
   const [showSnackBar, setShowSnackBar] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
+  const isAccessibilityModeOn = useAccessibilityReader();
 
   const labelsResultats = Labels.epdsSurvey.resultats;
 
@@ -186,7 +187,7 @@ const EpdsResult: FC<Props> = ({
         </View>
       </ScrollView>
       <CustomSnackbar
-        duration={AroundMeConstants.SNACKBAR_DURATION}
+        isAccessibilityModeOn={isAccessibilityModeOn}
         visible={showSnackBar}
         isOnTop={false}
         backgroundColor={Colors.aroundMeSnackbar.background}

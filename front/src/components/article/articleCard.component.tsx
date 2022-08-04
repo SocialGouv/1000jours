@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { AccessibilityInfo, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
@@ -10,6 +10,7 @@ import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Article, Step } from "../../types";
 import {
+  AccessibilityUtils,
   ArticleUtils,
   FavoritesUtils,
   getVisuelFormat,
@@ -73,7 +74,7 @@ const ArticleCard: FC<Props> = ({
       setStepAndArticleId(article.id, step);
     else {
       const isScreenReaderEnabled =
-        await AccessibilityInfo.isScreenReaderEnabled();
+        await AccessibilityUtils.isScreenReaderEnabled();
       void RootNavigation.navigate(
         !isScreenReaderEnabled && articles.length > 1
           ? "articleSwipe"

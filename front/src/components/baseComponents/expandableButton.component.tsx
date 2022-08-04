@@ -1,14 +1,10 @@
 import * as React from "react";
-import { useCallback, useEffect, useState } from "react";
-import {
-  AccessibilityInfo,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { useCallback, useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import type { IconNode } from "react-native-elements/dist/icons/Icon";
 
+import { useAccessibilityReader } from "../../hooks";
 import { Colors, Paddings, Sizes } from "../../styles";
 import { SecondaryText } from "./StyledText";
 
@@ -30,14 +26,7 @@ const ExpandableButton: React.FC<Props> = ({
     setExpandButton(!expandButton);
   }, [expandButton]);
 
-  const [isScreenReaderEnabled, setIsScreenReaderEnabled] = useState(false);
-  const getAccessibilityInfo = async () => {
-    const value = await AccessibilityInfo.isScreenReaderEnabled();
-    setIsScreenReaderEnabled(value);
-  };
-  useEffect(() => {
-    void getAccessibilityInfo();
-  }, []);
+  const isScreenReaderEnabled = useAccessibilityReader();
 
   return (
     <>

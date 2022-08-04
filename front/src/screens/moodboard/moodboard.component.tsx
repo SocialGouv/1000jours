@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
@@ -20,9 +20,10 @@ import {
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels } from "../../constants";
+import { useAccessibilityReader } from "../../hooks";
 import { Colors, Paddings, Sizes } from "../../styles";
 import type { RootStackParamList } from "../../types";
-import { AccessibilityUtils, MoodboardUtils, TrackerUtils } from "../../utils";
+import { MoodboardUtils, TrackerUtils } from "../../utils";
 
 const firstItemIndexToShow = 1;
 
@@ -33,7 +34,7 @@ interface Props {
 const Moodboard: FC<Props> = ({ navigation }) => {
   const [activeIndex, setActiveIndex] = useState<number>(firstItemIndexToShow);
   const [trackerAction, setTrackerAction] = useState<string>("");
-  const [isAccessibilityMode, setAccessibilityMode] = useState(false);
+  const isAccessibilityMode = useAccessibilityReader();
 
   const goBack = useCallback(() => {
     setTrackerAction(Labels.buttons.cancel);
@@ -47,14 +48,6 @@ const Moodboard: FC<Props> = ({ navigation }) => {
     setTrackerAction(`${MoodboardUtils.MOODBOARD_ITEMS[activeIndex].title}`);
     navigation.goBack();
   }, [activeIndex, navigation]);
-
-  useEffect(() => {
-    const checkAccessibilityMode = async () => {
-      setAccessibilityMode(await AccessibilityUtils.screenReaderIsEnabled());
-    };
-
-    void checkAccessibilityMode();
-  }, []);
 
   return (
     <ScrollView style={styles.mainContainer}>

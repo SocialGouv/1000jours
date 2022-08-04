@@ -56,7 +56,7 @@ export default {
       "points d'intérêts qui correspondent à vos critères :",
     addressesListLabelStart: "Il y a",
     chooseFilter:
-      "Veuillez choisir un au moins un élément dans le filtre afin de lancer la recherche",
+      "Veuillez choisir au moins un élément dans le filtre afin de lancer la recherche",
     displayListButton: "Afficher en liste",
     displayMapButton: "Afficher sur la carte",
     filter: {

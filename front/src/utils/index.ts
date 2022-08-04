@@ -1,4 +1,4 @@
-import * as AccessibilityUtils from "./accessibility.util";
+import * as AccessibilityUtils from "./accessibility/accessibility.util";
 import * as AppUtils from "./app.util";
 import * as AroundMeUtils from "./aroundMe.util";
 import * as ArticleUtils from "./article.util";

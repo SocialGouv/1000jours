@@ -1,13 +1,15 @@
 import * as React from "react";
-import { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import type { Text as DefaultText } from "react-native";
+import { AccessibilityInfo, findNodeHandle, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
 import { Colors, FontWeight, Margins, Paddings } from "../../styles";
+import { AccessibilityUtils } from "../../utils";
 import { SecondaryText } from "./StyledText";
 
 interface Props {
-  duration: number;
+  isAccessibilityModeOn: boolean;
   visible: boolean;
   isOnTop?: boolean;
   marginTopValue?: string;
@@ -18,7 +20,7 @@ interface Props {
 }
 
 const CustomSnackbar: React.FC<Props> = ({
-  duration,
+  isAccessibilityModeOn,
   visible,
   isOnTop,
   marginTopValue,
@@ -27,17 +29,23 @@ const CustomSnackbar: React.FC<Props> = ({
   textColor,
   text,
 }) => {
+  const [duration, setDuration] = useState(0);
+
   useEffect(() => {
     let mounted = true;
     if (!visible) return;
+    setAccessibilityFocus();
+    setDuration(AccessibilityUtils.getSnackBarDuration(isAccessibilityModeOn));
+
     setTimeout(() => {
       if (mounted) onDismiss();
     }, duration);
+
     return () => {
       mounted = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible]);
+  }, [visible, duration]);
 
   const snackbarStyle = {
     backgroundColor: backgroundColor ?? Colors.white,
@@ -47,6 +55,16 @@ const CustomSnackbar: React.FC<Props> = ({
   };
 
   const marginTop = { marginTop: marginTopValue };
+
+  const elementRef = useRef<DefaultText>(null);
+  const setAccessibilityFocus = () => {
+    if (elementRef.current) {
+      const reactTag = findNodeHandle(elementRef.current);
+      if (reactTag) {
+        AccessibilityInfo.setAccessibilityFocus(reactTag);
+      }
+    }
+  };
 
   return (
     <>
@@ -62,7 +80,10 @@ const CustomSnackbar: React.FC<Props> = ({
             snackbarStyle,
           ]}
         >
-          <SecondaryText style={[styles.defaultTextStyle, textColorStyle]}>
+          <SecondaryText
+            ref={elementRef}
+            style={[styles.defaultTextStyle, textColorStyle]}
+          >
             {text}
           </SecondaryText>
         </Animatable.View>

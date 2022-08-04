@@ -1,11 +1,12 @@
 import type { FC } from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import * as React from "react";
 import type { StyleProp, ViewStyle } from "react-native";
-import { AccessibilityInfo, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { Labels } from "../../constants";
 import { PLATFORM_IS_ANDROID } from "../../constants/platform.constants";
+import { useAccessibilityReader } from "../../hooks";
 import { Colors, Margins, Paddings, Sizes } from "../../styles";
 import { AroundMeAssets } from "../assets";
 import { CustomButton, Icomoon, IcomoonIcons, View } from "../baseComponents";
@@ -37,15 +38,7 @@ const AroundMeMapHeader: FC<Props> = ({
   const [showFilter, setShowFilter] = useState(false);
   const [showSubmitNewFilterModal, setShowSubmitNewFilterModal] =
     useState(false);
-  const [screenReaderIsEnabled, setScreenReaderIsEnabled] = useState(false);
-
-  useEffect(() => {
-    const checkIfScreenReaderIsEnabled = async () => {
-      setScreenReaderIsEnabled(await AccessibilityInfo.isScreenReaderEnabled());
-    };
-
-    void checkIfScreenReaderIsEnabled();
-  }, []);
+  const isScreenReaderEnabled = useAccessibilityReader();
 
   const onSubmitNewFilterButtonPressed = useCallback(() => {
     setShowSubmitNewFilterModal(true);
@@ -108,7 +101,7 @@ const AroundMeMapHeader: FC<Props> = ({
         />
         <View style={styles.headerButtonsRightPartView}>
           {!hideDisplayListButton &&
-            !screenReaderIsEnabled && ( //Si le lecteur d'écran est activé, on cache le bouton de retour à la carte
+            !isScreenReaderEnabled && ( //Si le lecteur d'écran est activé, on cache le bouton de retour à la carte
               <CustomButton
                 buttonStyle={styles.headerButton}
                 title={

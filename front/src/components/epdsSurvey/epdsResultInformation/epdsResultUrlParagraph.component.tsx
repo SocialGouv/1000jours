@@ -13,7 +13,7 @@ import {
 } from "../../../styles";
 import type { TrackerEvent } from "../../../type";
 import { LinkingUtils, TrackerUtils } from "../../../utils";
-import { setAccessibilityFocusOnText } from "../../../utils/accessibility.util";
+import { setAccessibilityFocusOnText } from "../../../utils/accessibility/accessibility.util";
 import { SecondaryText, View } from "../../baseComponents";
 import TrackerHandler from "../../tracker/trackerHandler.component";
 
