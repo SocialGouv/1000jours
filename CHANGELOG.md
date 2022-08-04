@@ -1,3 +1,10 @@
+# [1.107.0](https://github.com/SocialGouv/1000jours/compare/v1.106.0...v1.107.0) (2022-08-04)
+
+
+### Features
+
+* **demarches-simplifiees:** Ajoute une route de récupération des dossiers et une collection de correspondance entre les types ([#1338](https://github.com/SocialGouv/1000jours/issues/1338)) ([38c366d](https://github.com/SocialGouv/1000jours/commit/38c366deb2eb02f51c538884f2156bec8ca6eec9))
+
 # [1.106.0](https://github.com/SocialGouv/1000jours/compare/v1.105.0...v1.106.0) (2022-07-21)
 
 
