@@ -1,7 +1,9 @@
 "use strict";
 
-const fetch = require("node-fetch");
 const { parse } = require("json2csv");
+
+const fetch = (...args) =>
+  import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
 const { DOSSIERS_QUERY } = require("./query");
 
@@ -22,18 +24,18 @@ const request = async (date) => {
 
   const body = {
     operationName: "getDemarche",
-    variables,
     query: DOSSIERS_QUERY,
+    variables,
   };
 
   return fetch(DS_API_URL, {
-    method: "POST",
+    body: JSON.stringify(body),
     headers: {
-      Authorization: `Bearer ${token}`,
       Accept: "application/json",
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body),
+    method: "POST",
   });
 };
 
