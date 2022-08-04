@@ -28,7 +28,7 @@
     "pg": "latest",
     "pg-query-stream": "^4.2.1",
     "slugify": "^1.6.3",
-    "strapi": "^3.6.8",
+    "strapi": "^3.6.10",
     "strapi-admin": "^3.6.8",
     "strapi-connector-bookshelf": "^3.6.8",
     "strapi-deepsearch-service": "^0.5.0",
