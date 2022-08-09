@@ -52,7 +52,6 @@ jobs:
 
       - name: Yarn
         run: |
-          env
           cd front
           yarn install
           expo publish --release-channel ${{ steps.env.outputs.branch }}
