@@ -1,6 +1,7 @@
 import { addDays, isAfter, subDays } from "date-fns";
 import type {
   NotificationContentInput,
+  NotificationRequest,
   NotificationRequestInput,
   NotificationTriggerInput,
   WeeklyTriggerInput,
@@ -119,18 +120,12 @@ const scheduleMoodboardNotification = async (
 };
 
 export const scheduleMoodboardNotifications = async (): Promise<void> => {
-  const notifIdsMoodboard = await StorageUtils.getObjectValue(
-    StorageKeysConstants.notifIdsMoodboard
+  const notifsMoodboard = await getAllNotificationsByType(
+    NotificationType.moodboard
   );
-  if (!notifIdsMoodboard) {
-    const ids: string[] = [
-      await scheduleMoodboardNotification(Weekday.tuesday),
-      await scheduleMoodboardNotification(Weekday.friday),
-    ];
-    await StorageUtils.storeObjectValue(
-      StorageKeysConstants.notifIdsMoodboard,
-      ids
-    );
+  if (notifsMoodboard.length === 0) {
+    await scheduleMoodboardNotification(Weekday.tuesday);
+    await scheduleMoodboardNotification(Weekday.friday);
   }
 };
 
@@ -389,6 +384,15 @@ export const logAllScheduledNotifications = async (): Promise<void> => {
   for (const notif of scheduledNotifs) {
     console.info(notif);
   }
+};
+
+export const getAllNotificationsByType = async (
+  notificationType: NotificationType
+): Promise<NotificationRequest[]> => {
+  const notifications = await getAllScheduledNotifications();
+  return notifications.filter(
+    (notification) => notification.content.data.type === notificationType
+  );
 };
 
 export const cancelAllNotificationsByType = async (
