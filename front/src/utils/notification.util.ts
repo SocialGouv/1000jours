@@ -390,13 +390,9 @@ export const getAllNotificationsByType = async (
   notificationType: NotificationType
 ): Promise<NotificationRequest[]> => {
   const notifications = await getAllScheduledNotifications();
-  const notifsToReturn = [];
-  for (const notif of notifications) {
-    if (notif.content.data.type === notificationType) {
-      notifsToReturn.push(notif);
-    }
-  }
-  return notifsToReturn;
+  return notifications.filter(
+    (notification) => notification.content.data.type === notificationType
+  );
 };
 
 export const cancelAllNotificationsByType = async (
