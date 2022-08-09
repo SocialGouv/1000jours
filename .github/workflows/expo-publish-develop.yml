@@ -52,13 +52,10 @@ jobs:
 
       - name: Yarn
         run: |
-          ENV_SLUG=$(npx @socialgouv/env-slug $BRANCH_NAME)
-          echo "BRANCH_NAME: $BRANCH_NAME"
-          echo "ENV_SLUG: $ENV_SLUG"
-          API_URL="https://backoffice-${ENV_SLUG}.dev.fabrique.social.gouv.fr"
-          echo "API_URL: $API_URL"
+          env
           cd front
           yarn install
           expo publish --release-channel ${{ steps.env.outputs.branch }}
         env:
-          BRANCH_NAME: ${{ env.BRANCH_NAME }}
+          API_URL: "https://backoffice-${{ steps.env.outputs.namespace }}.dev.fabrique.social.gouv.fr"
+          BRANCH_NAME: ${{ steps.env.outputs.branch }}
