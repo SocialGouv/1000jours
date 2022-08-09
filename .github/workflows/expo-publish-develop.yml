@@ -3,16 +3,16 @@ on:
   push:
     # branches: [develop, alpha, beta, next]
     branches:
-      - '**'
+      - "**"
     tags-ignore:
       - v*
     paths:
-      - 'front/**'
-      - '.github/workflows/expo-publish-develop.yml'
+      - "front/**"
+      - ".github/workflows/expo-publish-develop.yml"
   workflow_dispatch:
     inputs:
       tags:
-        description: 'Manual workflow' 
+        description: "Manual workflow"
 
 concurrency:
   cancel-in-progress: true
@@ -35,7 +35,6 @@ jobs:
       DEEPLINK_PATH: app-millejours
       NODE_OPTIONS: --max_old_space_size=8192
     steps:
-
       - uses: actions/checkout@v2
 
       - uses: actions/setup-node@v2
@@ -53,9 +52,10 @@ jobs:
 
       - name: Yarn
         run: |
+          env
           cd front
           yarn install
           expo publish --release-channel ${{ steps.env.outputs.branch }}
         env:
-          BRANCH_NAME: ${{ env.BRANCH_NAME }}
-          API_URL: https://backoffice-${{ steps.env.outputs.namespace }}.dev.fabrique.social.gouv.fr
+          API_URL: "https://backoffice-${{ steps.env.outputs.namespace }}.dev.fabrique.social.gouv.fr"
+          BRANCH_NAME: ${{ steps.env.outputs.branch }}
