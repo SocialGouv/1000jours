@@ -37,7 +37,6 @@ app-strapi:
       value: "$(PGPASSWORD)"
     - name: DATABASE_SSL
       value: "true"
-
 #app-cache:
 #  image: "nginx:1.19.6"
 #  needs: ["app-strapi"]

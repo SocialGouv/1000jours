@@ -1,9 +1,9 @@
 global:
-  host: les1000jours.fabrique.social.gouv.fr
   namespace: les1000jours
 
 app-strapi:
   certSecretName: strapi-cache-crt
+  host: "backoffice-les1000jours.fabrique.social.gouv.fr"
   addVolumes:
     - uploads
   volumeMounts:
@@ -22,7 +22,6 @@ app-strapi:
         name: azure-les1000jours-volume
     - secretRef:
         name: "{{ .Values.global.pgSecretName }}"
-
 #app-cache:
 #  certSecretName: strapi-cache-crt
 #  autoscale:
