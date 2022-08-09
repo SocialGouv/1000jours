@@ -3,6 +3,7 @@ global:
   namespace: les1000jours
 
 app-strapi:
+  certSecretName: strapi-cache-crt
   addVolumes:
     - uploads
   volumeMounts:
@@ -22,9 +23,9 @@ app-strapi:
     - secretRef:
         name: "{{ .Values.global.pgSecretName }}"
 
-app-cache:
-  certSecretName: strapi-cache-crt
-  autoscale:
-    enabled: true
-    minReplicas: 2
-    maxReplicas: 5
+#app-cache:
+#  certSecretName: strapi-cache-crt
+#  autoscale:
+#    enabled: true
+#    minReplicas: 2
+#    maxReplicas: 5
