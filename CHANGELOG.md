@@ -1,3 +1,10 @@
+# [1.108.0](https://github.com/SocialGouv/1000jours/compare/v1.107.0...v1.108.0) (2022-08-09)
+
+
+### Features
+
+* use kube-workflow deployment ([#1346](https://github.com/SocialGouv/1000jours/issues/1346)) ([58c6b66](https://github.com/SocialGouv/1000jours/commit/58c6b66feb52be66682437e859b5de7e750b4476)), closes [#1189](https://github.com/SocialGouv/1000jours/issues/1189) [#1345](https://github.com/SocialGouv/1000jours/issues/1345)
+
 # [1.107.0](https://github.com/SocialGouv/1000jours/compare/v1.106.0...v1.107.0) (2022-08-04)
 
 
