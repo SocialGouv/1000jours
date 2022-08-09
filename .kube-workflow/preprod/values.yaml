@@ -1,0 +1,18 @@
+global:
+  host: "1000jours-preprod.dev.fabrique.social.gouv.fr"
+
+app-strapi:
+  addVolumes:
+    - uploads
+  volumeMounts:
+    - mountPath: /app/public/uploads
+      name: uploads
+  envFrom:
+    - secretRef:
+        name: strapi
+    - configMapRef:
+        name: strapi-configmap
+    - secretRef:
+        name: azure-les1000jours-volume
+    - secretRef:
+        name: "{{ .Values.global.pgSecretName }}"
