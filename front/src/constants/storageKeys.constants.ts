@@ -3,8 +3,9 @@ export const appActiveCounter = "@appActiveCounter";
 export const appOpeningLastDate = "@appOpeningLastDate";
 export const isFirstLaunchKey = "@isFirstLaunch";
 export const lastVersionLaunchKey = "@lastVersionLaunchKey";
+export const currentStep = "@currentStep";
 export const currentStepId = "@currentStepId";
-export const currentStepLabelKey = "@currentStepLabelKey";
+export const currentStepArticleIds = "@currentStepArticleIds";
 export const userSituationsKey = "@userSituations";
 export const userChildBirthdayKey = "@userChildBirthday";
 export const userGenderKey = "@userGenderKey";
@@ -17,15 +18,21 @@ export const cartoSavedCoordinates = "@cartoSavedCoordinates";
 export const cartoIsFirstLaunch = "@cartoIsFirstLaunch";
 export const notifIdNextStep = "@notifIdNextStep";
 export const notifIdsEvents = "@notifIdsEvents";
-export const notifIdsMoodboard = "@notifIdsMoodboard";
 export const eventsCalcFromBirthday = "@eventsCalcFromBirthday";
 export const forceToScheduleEventsNotif = "@forceToScheduleEventsNotif";
 export const osCalendarId = "@osCalendarId";
 export const osCalendarSyncDate = "@osCalendarSyncDate";
 export const scrollToEventId = "@scrollToEventId";
 export const articlesRead = "@articlesRead";
+export const favoriteArticlesIds = "@favoriteArticlesIds";
 export const moodsByDate = "@moodsByDate";
 export const notificationsAreAllowed = "@notificationsAreAllowed";
+export const triggerForEpdsNotification = "@triggerForEpdsNotification";
+export const triggerForNexStepNotification = "@triggerForNexStepNotification";
+export const triggerForArticlesNotification = "@triggerForArticlesNotification";
+export const lastProfileUpdate = "@lastProfileUpdate";
+export const stepsAlreadyCongratulatedForArticles =
+  "@stepsAlreadyCongratulatedForArticles";
 
 export const allStorageKeys = [
   userUuidKey,
@@ -33,7 +40,9 @@ export const allStorageKeys = [
   appOpeningLastDate,
   isFirstLaunchKey,
   lastVersionLaunchKey,
+  currentStep,
   currentStepId,
+  currentStepArticleIds,
   userSituationsKey,
   userChildBirthdayKey,
   epdsGenderKey,
@@ -44,7 +53,6 @@ export const allStorageKeys = [
   cartoIsFirstLaunch,
   notifIdNextStep,
   notifIdsEvents,
-  notifIdsMoodboard,
   eventsCalcFromBirthday,
   forceToScheduleEventsNotif,
   osCalendarId,
@@ -53,6 +61,10 @@ export const allStorageKeys = [
   articlesRead,
   moodsByDate,
   notificationsAreAllowed,
+  triggerForArticlesNotification,
+  lastProfileUpdate,
+  favoriteArticlesIds,
+  stepsAlreadyCongratulatedForArticles,
 ];
 
 export const epdsSurveyKeys = [epdsQuestionAndAnswersKey, epdsQuestionIndexKey];

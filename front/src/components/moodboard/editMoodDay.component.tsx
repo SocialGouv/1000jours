@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import { Formats, Labels } from "../../constants";
-import { Colors, Margins, Paddings, Sizes, Styles } from "../../styles";
+import { Colors, Margins, Sizes, Styles } from "../../styles";
 import { MoodboardUtils } from "../../utils";
 import {
   CloseButton,
@@ -90,8 +90,8 @@ const EditMoodDay: React.FC<Props> = ({ visible, hideModal, dateISO }) => {
   return (
     <Modal animationType="slide" transparent={true} visible={visible}>
       <View style={Styles.modale.behindOfModal}>
-        <View style={styles.modalView}>
-          <View style={styles.closeButton}>
+        <View style={Styles.modale.modalView}>
+          <View style={Styles.modale.closeButton}>
             <CloseButton onPress={hideModal} clear />
           </View>
           <ScrollView>
@@ -144,12 +144,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: Margins.default,
   },
-  closeButton: {
-    alignSelf: "flex-end",
-    backgroundColor: "transparent",
-    paddingEnd: Paddings.smaller,
-    paddingTop: Paddings.smaller,
-  },
   content: {
     alignItems: "center",
     paddingHorizontal: 35,
@@ -171,20 +165,6 @@ const styles = StyleSheet.create({
   },
   itemsMoodButtons: {
     flexWrap: "wrap",
-  },
-  modalView: {
-    backgroundColor: Colors.white,
-    borderRadius: 20,
-    elevation: 5,
-    margin: 20,
-    paddingBottom: 35,
-    shadowColor: "#000",
-    shadowOffset: {
-      height: 2,
-      width: 0,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
   },
   selectedButtonStyle: {
     backgroundColor: "transparent",

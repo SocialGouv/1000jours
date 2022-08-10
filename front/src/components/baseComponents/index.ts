@@ -1,3 +1,4 @@
+import NotificationModal from "../notification/notificationModal.component";
 import BackButton from "./backButton.component";
 import Backdrop from "./backdrop.component";
 import Checkbox from "./checkbox.component";
@@ -10,13 +11,13 @@ import CustomTextInput from "./customTextInput.component";
 import Datepicker from "./datePicker.component";
 import ErrorMessage from "./errorMessage.component";
 import ExpandableButton from "./expandableButton.component";
+import FavoriteButton from "./favoriteButton.component";
 import { GraphQLLoader } from "./graphQLLoader.component";
 import HeaderApp from "./headerApp.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 import Loader from "./loader.component";
 import MapLoader from "./mapLoader.component";
 import ModalHelp from "./modalHelp.component";
-import NotificationModal from "./notificationModal.component";
 import ShareButton, { SharePageType } from "./shareButton.component";
 import { CommonText, SecondaryText, SecondaryTextItalic } from "./StyledText";
 import Tags from "./tags.component";
@@ -24,6 +25,7 @@ import type { TextProps } from "./Themed";
 import { Text, View } from "./Themed";
 import TitleH1 from "./titleH1.component";
 import TitleH2 from "./titleH2.component";
+import UsefulQuestion from "./usefulQuestion.component";
 
 export {
   BackButton,
@@ -39,6 +41,7 @@ export {
   Datepicker,
   ErrorMessage,
   ExpandableButton,
+  FavoriteButton,
   GraphQLLoader,
   HeaderApp,
   Icomoon,
@@ -56,5 +59,6 @@ export {
   TextProps,
   TitleH1,
   TitleH2,
+  UsefulQuestion,
   View,
 };

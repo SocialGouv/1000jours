@@ -3,13 +3,14 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import { useCallback, useState } from "react";
 import * as React from "react";
-import { AccessibilityInfo, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import type { LatLng, Region } from "react-native-maps";
 
 import { AroundMeMap, AroundMePoiList } from "../../components";
 import { BackButton, View } from "../../components/baseComponents";
 import { Margins } from "../../styles";
 import type { TabSearchParamList } from "../../types";
+import { AccessibilityUtils } from "../../utils";
 
 interface Props {
   route: RouteProp<
@@ -59,7 +60,7 @@ const AroundMeMapAndList: React.FC<Props> = ({ navigation, route }) => {
     // Si le lecteur d'écran est activé, on affiche la liste des POI une fois que la première recherche a été faite
     const goToListIfScreenReaderIsEnabled = async () => {
       const isScreenReaderEnabled =
-        await AccessibilityInfo.isScreenReaderEnabled();
+        await AccessibilityUtils.isScreenReaderEnabled();
       if (isScreenReaderEnabled) {
         setDisplayMap(false);
       }

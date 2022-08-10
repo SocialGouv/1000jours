@@ -112,14 +112,14 @@ const BeContactedForm: React.FC<Props> = ({
 
   const checkEmailInput = (text: string) => {
     if (text.trimEnd().length > 0) {
-      setEmailIsValid(StringUtils.validateEmail(text.trimEnd()));
+      setEmailIsValid(StringUtils.isValidEmail(text.trimEnd()));
     } else setEmailIsValid(true);
   };
 
   const checkPhoneInput = (text: string) => {
     if (text.trimEnd().length > 0) {
       setPhoneNumberIsValid(
-        StringUtils.validateFrenchPhoneNumber(text.trimEnd())
+        StringUtils.isValidFrenchPhoneNumber(text.trimEnd())
       );
     } else setPhoneNumberIsValid(true);
   };
@@ -295,17 +295,14 @@ export const checkValidForm = (
   bySms: boolean
 ): boolean => {
   let isEmailValid = false;
-  if (data.email)
-    isEmailValid = StringUtils.validateEmail(data.email.trimEnd());
+  if (data.email) isEmailValid = StringUtils.isValidEmail(data.email.trimEnd());
 
   let isPhoneValid = false;
   if (data.phoneNumber) {
-    isPhoneValid = StringUtils.validateFrenchPhoneNumber(
+    isPhoneValid = StringUtils.isValidFrenchPhoneNumber(
       data.phoneNumber.trimEnd()
     );
-    data.phoneNumber = StringUtils.phoneNumberFormattingForElise(
-      data.phoneNumber
-    );
+    data.phoneNumber = StringUtils.formatPhoneNumber(data.phoneNumber);
   }
 
   if (data.numberOfChildren > 0 && !data.lastChildBirthDate) return false;

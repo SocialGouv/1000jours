@@ -42,8 +42,6 @@ export enum LatLngPointType {
   center = "center",
 }
 
-export const SNACKBAR_DURATION = 3000;
-
 export enum PoiCategorieEnum {
   structure = "structure",
   professionnel = "professionnel",

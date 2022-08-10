@@ -12,6 +12,7 @@ export type RootStackParamList = {
   loading: undefined;
   legalNotice: undefined;
   conditionsOfUse: undefined;
+  infosDev: undefined;
 };
 
 export type BottomTabParamList = {
@@ -53,6 +54,15 @@ export type TabSearchParamList = {
   };
 };
 
+export type ArticleSwipeRouteParamList = {
+  params: {
+    id: number;
+    step?: Step;
+    articles: Article[];
+    onBackButtonPressed: () => void;
+  };
+};
+
 export type UserSituation = {
   id: string;
   label: string;
@@ -73,6 +83,7 @@ export type UserInfos = {
   enfant?: boolean;
   enfants?: boolean;
   date?: string | null;
+  nonConcerne?: boolean;
 };
 
 export type TabItem = {
@@ -215,4 +226,9 @@ export type TableData = {
 export type ProfileGender = {
   id: string;
   label: string;
+};
+
+export type RootNavigationParams = {
+  screen?: string;
+  params?: RootNavigationParams;
 };

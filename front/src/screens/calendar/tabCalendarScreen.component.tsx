@@ -6,13 +6,7 @@ import _ from "lodash";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import {
-  AccessibilityInfo,
-  Alert,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { Alert, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 import HelpIcon from "../../assets/images/help.png";
 import { Events } from "../../components";
@@ -29,7 +23,6 @@ import {
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
-  AroundMeConstants,
   CalendarDbQueries,
   FetchPoliciesConstants,
   Formats,
@@ -41,6 +34,7 @@ import {
   PLATFORM_IS_IOS,
   SCREEN_WIDTH,
 } from "../../constants/platform.constants";
+import { useAccessibilityReader } from "../../hooks";
 import { GraphQLLazyQuery } from "../../services";
 import {
   Colors,
@@ -78,7 +72,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const [trackerAction, setTrackerAction] = useState("");
 
   const [scrollToEventId, setScrollToEventId] = useState("");
-  const [isScreenReaderEnabled, setIsScreenReaderEnabled] = useState(false);
+  const isAccessibilityModeOn = useAccessibilityReader();
 
   const init = useCallback(async () => {
     const childBirthdayStr =
@@ -101,7 +95,6 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   useEffect(() => {
     void getLastSyncDate();
     void getScrollToEventId();
-    void getAccessibilityInfo();
 
     // Permet de forcer le refresh de la page lorsque l'on arrive dessus
     const unsubscribe = navigation.addListener("focus", () => {
@@ -123,11 +116,6 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
       StorageKeysConstants.osCalendarSyncDate
     );
     if (calendarSyncDate) setLastSyncDate(calendarSyncDate);
-  };
-
-  const getAccessibilityInfo = async () => {
-    const value = await AccessibilityInfo.isScreenReaderEnabled();
-    setIsScreenReaderEnabled(value);
   };
 
   const calendarSourceIOS = async () => {
@@ -245,7 +233,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
       StorageKeysConstants.forceToScheduleEventsNotif
     );
     if (
-      StringUtils.stringIsNotNullNorEmpty(eventsCalcFromBirthday) &&
+      StringUtils.isNotNullNorEmpty(eventsCalcFromBirthday) &&
       (!notifIdsEventsStored ||
         eventsCalcFromBirthday !== childBirthday ||
         forceToScheduleEventsNotif)
@@ -293,7 +281,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   );
 
   const navigateToProfile = useCallback(() => {
-    void RootNavigation.navigate("profile", null);
+    void RootNavigation.navigate("profile");
   }, []);
 
   const onHideSnackBar = useCallback(() => {
@@ -341,7 +329,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
                     accessibilityLabel={`${Labels.calendar.synchronise}. ${Labels.calendar.synchronizationHelper}`}
                   />
                 </View>
-                {!isScreenReaderEnabled && (
+                {!isAccessibilityModeOn && (
                   <View style={styles.helpBtnContainer}>
                     <TouchableOpacity
                       onPress={onShowHelpModalButtonPressed(true)}
@@ -389,7 +377,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
         />
       )}
       <CustomSnackbar
-        duration={AroundMeConstants.SNACKBAR_DURATION}
+        isAccessibilityModeOn={isAccessibilityModeOn}
         visible={showSnackBar}
         isOnTop={false}
         backgroundColor={Colors.primaryBlueLight}

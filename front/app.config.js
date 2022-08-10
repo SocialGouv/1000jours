@@ -33,8 +33,9 @@ export default {
         "WRITE_CALENDAR",
         "RECEIVE_BOOT_COMPLETED",
         "SCHEDULE_EXACT_ALARM",
+        "VIBRATE",
       ],
-      versionCode: 61,
+      versionCode: 62,
     },
     assetBundlePatterns: ["**/*"],
     hooks: {
@@ -53,7 +54,7 @@ export default {
     icon: "./src/assets/images/icon.png",
     ios: {
       associatedDomains: [`applinks:${process.env.DEEPLINK_DOMAIN}`],
-      buildNumber: "1.1.61",
+      buildNumber: "1.1.62",
       bundleIdentifier: "com.fabrique.millejours",
       infoPlist: {
         NSCalendarsUsageDescription:
@@ -86,7 +87,7 @@ export default {
       fallbackToCacheTimeout: 0,
     },
     userInterfaceStyle: "light",
-    version: "1.1.61",
+    version: "1.1.62",
     web: {
       favicon: "./src/assets/images/favicon.png",
     },

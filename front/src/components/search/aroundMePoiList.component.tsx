@@ -5,13 +5,15 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
 
-import { AroundMeConstants, Labels } from "../../constants";
+import { Labels } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
-import { Colors, FontWeight, Margins, Sizes } from "../../styles";
+import { useAccessibilityReader } from "../../hooks";
+import { Colors, Margins, Sizes } from "../../styles";
 import AroundMeMapHeader from "../aroundMe/aroundMeMapHeader.component";
+import AroundMePoiResultInformation from "../aroundMe/aroundMePoiResultInformation.component";
 import FetchPois from "../aroundMe/fetchPois.component";
 import PoiList from "../aroundMe/poiList.component";
-import { CommonText, CustomSnackbar, MapLoader, View } from "../baseComponents";
+import { CustomSnackbar, MapLoader, View } from "../baseComponents";
 
 interface Props {
   region: Region;
@@ -35,6 +37,7 @@ const AroundMePoiList: FC<Props> = ({
   // Snackbar
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
+  const isAccessibilityModeOn = useAccessibilityReader();
 
   const handlePois = useCallback(
     (pois: Poi[]) => {
@@ -93,15 +96,12 @@ const AroundMePoiList: FC<Props> = ({
         showRelaunchResearchButton={false}
         setIsLoading={setIsLoading}
       />
-      <CommonText style={styles.addressesListLabel}>
-        {Labels.aroundMe.addressesListLabelStart} {poiArray.length}{" "}
-        {Labels.aroundMe.addressesListLabelEnd}
-      </CommonText>
+      <AroundMePoiResultInformation numberOfPoisFound={poiArray.length} />
       <View style={styles.flex1}>
         <PoiList poisArray={poiArray} onPoiPress={navigateToMap} />
       </View>
       <CustomSnackbar
-        duration={AroundMeConstants.SNACKBAR_DURATION}
+        isAccessibilityModeOn={isAccessibilityModeOn}
         visible={showSnackBar}
         isOnTop={true}
         backgroundColor={Colors.aroundMeSnackbar.background}
@@ -115,17 +115,13 @@ const AroundMePoiList: FC<Props> = ({
 };
 
 const styles = StyleSheet.create({
-  addressesListLabel: {
-    color: Colors.primaryBlue,
-    fontSize: Sizes.xs,
-    fontWeight: FontWeight.bold,
-    marginHorizontal: Margins.default,
-    marginVertical: Margins.smaller,
-  },
   filterView: {
     backgroundColor: "transparent",
     flexDirection: "row",
     margin: Margins.smaller,
+  },
+  flex1: {
+    flex: 1,
   },
   headerButtonsMapView: {
     flexDirection: "row",
@@ -143,9 +139,6 @@ const styles = StyleSheet.create({
   },
   slidingUpPanelScrollView: {
     marginHorizontal: Margins.default,
-  },
-  flex1: {
-    flex: 1,
   },
   swipeIndicator: {
     alignSelf: "center",

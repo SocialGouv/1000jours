@@ -29,8 +29,8 @@ const Colors = {
   primaryYellowDark: "#DA9F03",
   primaryYellowVeryDark: "#BD8C09",
   primaryYellowLight: "#FFF8E1",
-  secondaryGreen: "#83BCA0",
-  secondaryGreenDark: "#5A8C74",
+  secondaryGreen: "#57A287",
+  secondaryGreenDark: "#46816C",
   secondaryGreenLight: "#F0FFEF",
   secondaryRedDark: "#FFEDDF",
   secondaryRedMiddle: "#D15903",
@@ -48,7 +48,7 @@ const Colors = {
   transparentGrey: "rgba(52, 52, 52, 0.8)",
   onBoardingSwiperFlatList: {
     paginationDefault: "#26366E",
-    paginationActive: "#74C09F",
+    paginationActive: "#57A287",
   },
   mapLoaderBackground: "#00000030",
   mood: {

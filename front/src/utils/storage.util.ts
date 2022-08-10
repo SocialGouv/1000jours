@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { StorageKeysConstants } from "../constants";
 import { reportError } from "./logging.util";
 
 export const getStringValue = async (
@@ -56,6 +57,24 @@ export const removeKey = async (storageKey: string): Promise<void> => {
 export const multiRemove = async (storageKeys: string[]): Promise<void> => {
   try {
     await AsyncStorage.multiRemove(storageKeys);
+  } catch (error: unknown) {
+    reportError((error as Error).message);
+  }
+};
+
+export const log = async (): Promise<[string, string | null][] | null> => {
+  let storage = null;
+  try {
+    storage = await AsyncStorage.multiGet(StorageKeysConstants.allStorageKeys);
+  } catch (error: unknown) {
+    reportError((error as Error).message);
+  }
+  return storage;
+};
+
+export const clear = async (): Promise<void> => {
+  try {
+    await AsyncStorage.clear();
   } catch (error: unknown) {
     reportError((error as Error).message);
   }

@@ -27,6 +27,7 @@ const Sizes = {
   timelineBlock: scaleNormalize(100),
   thumbnail: scaleNormalize(100),
   accessibilityMinButton: scaleNormalize(48),
+  divider: scaleNormalize(1),
 };
 
 export default Sizes;

@@ -1,6 +1,6 @@
 import { Linking } from "react-native";
 
-import { PLATFORM_IS_ANDROID } from "../constants/platform.constants";
+import { PLATFORM_IS_ANDROID } from "../../constants/platform.constants";
 
 const PREFIX_HTTP = "http://";
 const PREFIX_HTTPS = "https://";
@@ -26,26 +26,44 @@ export const sendEmail = async (
 };
 export const openWebsite = async (
   website: string | null | undefined,
-  dontChangeUrl = false
+  shouldChangeUrl = true
 ): Promise<void> => {
   if (!website) return;
-  let completeWebsite = undefined;
-  if (!website.includes(PREFIX_HTTP) && !website.includes(PREFIX_HTTPS) && !dontChangeUrl) {
-    const websiteWithWww = website.includes(WWW) ? website : `${WWW}.${website}`;
-    completeWebsite = `${PREFIX_HTTP}${websiteWithWww}`;
-  } else {
-    completeWebsite = website;
-  }
+  const formattedURL = _formatURL(website, shouldChangeUrl);
 
-  await Linking.openURL(completeWebsite);
+  const isURLSupported = await Linking.canOpenURL(formattedURL);
+  if (isURLSupported) {
+    await Linking.openURL(formattedURL);
+  }
 };
 
 export const openNavigationApp = async (
   lat: number,
   long: number
 ): Promise<void> => {
+  const webUrl = `https://maps.google.com?q=${lat}+${long}`;
   const url = PLATFORM_IS_ANDROID
     ? `google.navigation:q=${lat}+${long}`
     : `maps://app?daddr=${lat}+${long}`;
-  await Linking.openURL(url);
+
+  const supported = await Linking.canOpenURL(url);
+  await Linking.openURL(supported ? url : webUrl);
+};
+
+const _formatURL = (website: string, shouldChangeUrl = true): string => {
+  let completeWebsite = undefined;
+  if (
+    !website.includes(PREFIX_HTTP) &&
+    !website.includes(PREFIX_HTTPS) &&
+    shouldChangeUrl
+  ) {
+    const websiteWithWww = website.includes(WWW)
+      ? website
+      : `${WWW}.${website}`;
+    completeWebsite = `${PREFIX_HTTP}${websiteWithWww}`;
+  } else {
+    completeWebsite = website;
+  }
+
+  return completeWebsite;
 };

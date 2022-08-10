@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { StorageKeysConstants } from "../constants";
 import { getStringValue, storeObjectValue } from "./storage.util";
-import { replaceAllText } from "./strings.util";
+import { replaceAllText } from "./strings/strings.util";
 
 export const MIN_HOURS_DELAY_TO_TRACK_NEW_OPENING = 6;
 
@@ -56,6 +56,7 @@ export enum TrackingEvent {
   MOODBOARD = "Moodboard",
   SETTINGS = "Settings",
   NOTIFICATIONS_DISABLED = "Notifications désactivées",
+  RESSOURCES = "Ressources",
 }
 
 export const dateWithMinHoursDelayIsBeforeNow = (date: Date): boolean => {

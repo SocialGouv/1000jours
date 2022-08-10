@@ -6,7 +6,7 @@ import * as React from "react";
 import type { ColorSchemeName } from "react-native";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-import { ConditionsOfUse, LegalNotice, Menu } from "../components";
+import { ConditionsOfUse, InfosDev, LegalNotice, Menu } from "../components";
 import { BaseAssets } from "../components/assets";
 import {
   Backdrop,
@@ -67,6 +67,7 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => {
       <Stack.Screen name="moodboard" component={Moodboard} />
       <Stack.Screen name="legalNotice" component={LegalNotice} />
       <Stack.Screen name="conditionsOfUse" component={ConditionsOfUse} />
+      <Stack.Screen name="infosDev" component={InfosDev} />
       <Stack.Screen
         name="root"
         component={BottomTabNavigator}
@@ -88,7 +89,7 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => {
             >
               <Icomoon
                 name={IcomoonIcons.menu}
-                size={Sizes.lg}
+                size={Sizes.xxxxxs}
                 color={Colors.primaryBlue}
                 style={styles.menuIcon}
               />
@@ -130,8 +131,8 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   menuIcon: {
-    height: Sizes.sm,
-  }
+    height: Sizes.xxxxs,
+  },
 });
 
 export default Navigation;

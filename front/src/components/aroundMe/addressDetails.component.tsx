@@ -181,7 +181,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
       <TrackerHandler actionName={trackerAction} />
       <View style={styles.icon}>{iconType}</View>
       <View style={styles.addressDetails}>
-        {StringUtils.stringIsNotNullNorEmpty(details.nom) && (
+        {StringUtils.isNotNullNorEmpty(details.nom) && (
           <CommonText style={styles.name}>{details.nom}</CommonText>
         )}
         <CommonText style={styles.type}>{details.type}</CommonText>
@@ -194,16 +194,16 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({
             </SecondaryText>
           </View>
         </View>
-        {(StringUtils.stringIsNotNullNorEmpty(details.telephone) ||
-          StringUtils.stringIsNotNullNorEmpty(details.courriel)) && (
+        {(StringUtils.isNotNullNorEmpty(details.telephone) ||
+          StringUtils.isNotNullNorEmpty(details.courriel)) && (
           <View style={styles.phoneAndMail}>
-            {StringUtils.stringIsNotNullNorEmpty(details.telephone) &&
+            {StringUtils.isNotNullNorEmpty(details.telephone) &&
               renderTouchableView(ContactType.telephone, details.telephone)}
-            {StringUtils.stringIsNotNullNorEmpty(details.courriel) &&
+            {StringUtils.isNotNullNorEmpty(details.courriel) &&
               renderTouchableView(ContactType.courriel, details.courriel)}
           </View>
         )}
-        {StringUtils.stringIsNotNullNorEmpty(details.site_internet) &&
+        {StringUtils.isNotNullNorEmpty(details.site_internet) &&
           renderTouchableView(ContactType.siteInternet, details.site_internet)}
       </View>
       <View style={styles.goThereView}>

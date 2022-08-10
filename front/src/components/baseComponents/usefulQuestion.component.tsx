@@ -6,53 +6,56 @@ import { StyleSheet } from "react-native";
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { TrackerEvent } from "../../type";
-import { TrackerUtils } from "../../utils";
-import {
-  CustomButton,
-  Icomoon,
-  IcomoonIcons,
-  SecondaryText,
-  View,
-} from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
+import { CustomButton, Icomoon, IcomoonIcons, SecondaryText, View } from ".";
 
 interface Props {
-  articleName: string;
+  question: string;
+  trackerActionValue: string;
+  trackerNameValue: string;
 }
 
-const ARTICLE_IS_USEFUL = 1;
-const ARTICLE_IS_NOT_USEFUL = 0;
+const IS_USEFUL = 1;
+const IS_NOT_USEFUL = 0;
 
-const UsefulArticle: FC<Props> = ({ articleName }) => {
+const UsefulQuestion: FC<Props> = ({
+  question,
+  trackerActionValue,
+  trackerNameValue,
+}) => {
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
   const [isButtonsDisabled, setButtonsDisabled] = useState(false);
+  const [buttonValue, setButtonValue] = useState<number>();
 
-  const setUsefulArticleForTracker = useCallback(
+  const setUsefulObjectForTracker = useCallback(
     (value: number) => () => {
+      setButtonValue(value);
       setTrackerEventObject({
-        action: "UsefulArticle",
-        name: `${TrackerUtils.TrackingEvent.ARTICLE} : ${articleName}`,
+        action: `Useful${trackerActionValue}`,
+        name: trackerNameValue,
         value: value,
       });
       setButtonsDisabled(true);
     },
-    [articleName]
+    [trackerActionValue, trackerNameValue]
   );
 
   return (
     <View style={styles.usefulContainer}>
       <TrackerHandler eventObject={trackerEventObject} />
-      <SecondaryText style={[styles.usefulContent]}>
-        {Labels.article.usefulTitle}
-      </SecondaryText>
+      <SecondaryText style={[styles.usefulContent]}>{question}</SecondaryText>
       <View style={styles.buttonsBloc}>
         <CustomButton
           title={Labels.buttons.yes}
           rounded={false}
           buttonStyle={styles.buttonStyle}
-          disabledStyle={styles.buttonDisabledStyle}
+          disabledStyle={
+            buttonValue == IS_USEFUL
+              ? styles.selectedButtonStyle
+              : styles.buttonDisabledStyle
+          }
           titleStyle={styles.buttonTitle}
-          action={setUsefulArticleForTracker(ARTICLE_IS_USEFUL)}
+          action={setUsefulObjectForTracker(IS_USEFUL)}
           disabled={isButtonsDisabled}
           icon={
             <Icomoon
@@ -67,8 +70,12 @@ const UsefulArticle: FC<Props> = ({ articleName }) => {
           rounded={false}
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.buttonTitle}
-          disabledStyle={styles.buttonDisabledStyle}
-          action={setUsefulArticleForTracker(ARTICLE_IS_NOT_USEFUL)}
+          disabledStyle={
+            buttonValue == IS_NOT_USEFUL
+              ? styles.selectedButtonStyle
+              : styles.buttonDisabledStyle
+          }
+          action={setUsefulObjectForTracker(IS_NOT_USEFUL)}
           disabled={isButtonsDisabled}
           icon={
             <Icomoon
@@ -101,6 +108,9 @@ const styles = StyleSheet.create({
   buttonsBloc: {
     flexDirection: "row",
   },
+  selectedButtonStyle: {
+    backgroundColor: Colors.primaryBlue,
+  },
   usefulContainer: {
     alignItems: "center",
     backgroundColor: Colors.cardWhite,
@@ -123,4 +133,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: Paddings.default,
   },
 });
-export default UsefulArticle;
+export default UsefulQuestion;

@@ -3,13 +3,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import _ from "lodash";
 import * as React from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import type { ScrollView } from "react-native";
 import { StyleSheet, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Card } from "react-native-paper";
 
+import { Labels } from "../../../constants";
 import { SCREEN_HEIGHT } from "../../../constants/platform.constants";
+import { useAccessibilityReader } from "../../../hooks";
 import {
   Colors,
   FontNames,
@@ -19,10 +21,11 @@ import {
   Paddings,
   Sizes,
 } from "../../../styles";
-import type { EpdsResultInformationType } from "../../../type";
-import { AccessibilityUtils } from "../../../utils";
+import type { EpdsResultInformationType, TrackerEvent } from "../../../type";
+import { TrackerUtils } from "../../../utils";
 import { EpdsAssets } from "../../assets";
-import { Icomoon, View } from "../../baseComponents";
+import { Icomoon, UsefulQuestion, View } from "../../baseComponents";
+import TrackerHandler from "../../tracker/trackerHandler.component";
 import EpdsResultContactParagraph from "./epdsResultContactParagraph.component";
 import EpdsResultSimpleParagraph from "./epdsResultSimpleParagraph.component";
 import EpdsResultUrlParagraph from "./epdsResultUrlParagraph.component";
@@ -38,20 +41,13 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
   informationList,
   scrollRef,
 }) => {
-  const [isAccessibilityMode, setAccessibilityMode] = useState(false);
+  const isAccessibilityMode = useAccessibilityReader();
+  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
   const [expandedAccordions, setExpandedAccordions] = useState<boolean[]>(
     _.range(informationList.length).map(() => false)
   );
 
   const borderColorStyle = { borderStartColor: leftBorderColor };
-
-  useEffect(() => {
-    const checkAccessibilityMode = async () => {
-      setAccessibilityMode(await AccessibilityUtils.screenReaderIsEnabled());
-    };
-
-    void checkAccessibilityMode();
-  }, []);
 
   const renderParagraphs = (paragraphs: EpdsResultInformationType[]) => {
     return paragraphs.map(
@@ -93,6 +89,13 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
       tempExpandedAccordions[accIndex] = !expandedAccordions[accIndex];
       setExpandedAccordions(tempExpandedAccordions);
 
+      if (tempExpandedAccordions[accIndex]) {
+        setTrackerEventObject({
+          action: TrackerUtils.TrackingEvent.RESSOURCES,
+          name: `Ouverture : ${informationList[accIndex].sectionTitle}`,
+        });
+      }
+
       if (isAccessibilityMode) {
         scrollRef.current?.scrollTo({
           animated: true,
@@ -106,6 +109,7 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
 
   return (
     <>
+      <TrackerHandler eventObject={trackerEventObject} />
       {informationList.map((professional: any, professionalIndex: number) => (
         <View key={professionalIndex}>
           <Card
@@ -150,8 +154,20 @@ const EpdsResultInformation: React.FC<EpdsResultInformationProps> = ({
             </TouchableOpacity>
 
             {expandedAccordions[professionalIndex]
-              ? professional.paragraphs &&
-                renderParagraphs(professional.paragraphs)
+              ? professional.paragraphs && (
+                  <>
+                    {renderParagraphs(professional.paragraphs)}
+                    <View style={{ marginHorizontal: 10 }}>
+                      <UsefulQuestion
+                        question={Labels.epdsSurvey.usefulResource}
+                        trackerActionValue={
+                          TrackerUtils.TrackingEvent.RESSOURCES
+                        }
+                        trackerNameValue={`${TrackerUtils.TrackingEvent.RESSOURCES} : ${professional.sectionTitle}`}
+                      />
+                    </View>
+                  </>
+                )
               : null}
           </Card>
         </View>
