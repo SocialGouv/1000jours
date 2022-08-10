@@ -14,7 +14,7 @@ data:
       sources: [existing]
       resourceMatchers:
       - apiVersionKindMatcher: {apiVersion: apps/v1, kind: Deployment}
-    - path: [spec, template, spec, containers, {allIndexes: true}, readinessProbe, initialDelaySeconds]
+    - path: [spec, template, spec, containers, {index:0}, readinessProbe, initialDelaySeconds]
       type: copy
       sources: [existing]
       resourceMatchers:
