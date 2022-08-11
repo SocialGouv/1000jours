@@ -45,7 +45,7 @@ const dsTypeTo1000jType = (dsTypes, dsTypeNom) => {
       dsType.types.filter((type) => type.value === dsTypeNom).length > 0
   );
 
-  return dsType ? dsType.cartographie_pois_type.nom : dsTypeNom;
+  return dsType ? dsType.cartographie_pois_type : null;
 };
 
 const formatDossiers = (dsTypes, nodes = []) =>
@@ -76,10 +76,16 @@ const formatDossiers = (dsTypes, nodes = []) =>
 
         if (champ.label.match("secteur d'activité")) {
           dossier.secteur = champ.primaryValue.trim();
-          dossier.type = dsTypeTo1000jType(
-            dsTypes,
-            champ.secondaryValue.trim()
-          );
+
+          const dsType = champ.secondaryValue.trim();
+          dossier.type_ds = dsType;
+
+          const type = dsTypeTo1000jType(dsTypes, dsType);
+
+          if (type) {
+            dossier.type = type.id;
+            dossier.type_nom = type.nom;
+          }
         } else if (
           champ.label.match("votre nom ou le nom de votre établissement")
         ) {
@@ -112,6 +118,8 @@ const formatToCsv = (dossiers) => {
     "nom",
     "categorie",
     "type",
+    "type_nom",
+    "type_ds",
     "secteur",
     "telephone",
     "courriel",

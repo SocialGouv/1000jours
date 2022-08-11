@@ -1,25 +1,32 @@
 "use strict";
 
 const format = async (data) => {
-  if (!data.cartographie_pois_type) return data;
+  if (data.types) {
+    data.types = data.types.filter((type) => {
+      type.value = type.value.trim();
 
-  const type = await strapi
-    .query("cartographie-types")
-    .findOne(data.cartographie_pois_type);
+      return type.value;
+    });
+  }
 
-  if (!type)
-    throw new Error(
-      `Aucun type de POI de ce type : ${data.cartographie_pois_type}`
-    );
+  if (data.cartographie_pois_type) {
+    const type = await strapi
+      .query("cartographie-types")
+      .findOne({ id: data.cartographie_pois_type });
 
-  const typeNom = type.nom;
+    if (!type) {
+      throw new Error(
+        `Aucun type de POI de ce type : ${data.cartographie_pois_type}`
+      );
+    }
 
-  data.identifiant = typeNom;
+    data.identifiant = type.nom;
+  }
 };
 
 module.exports = {
   lifecycles: {
     beforeCreate: format,
-    beforeUpdate: format,
+    beforeUpdate: (_params, data) => format(data),
   },
 };
