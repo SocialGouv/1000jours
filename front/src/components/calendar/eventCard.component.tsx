@@ -70,7 +70,6 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
 
   const updateCartoFilterStorage = useCallback(async () => {
     const cartoFilterStorage: CartoFilterStorage = {
-      thematiques: [],
       types: event.typesPoi ? _.map(event.typesPoi, "nom") : [],
     };
     await StorageUtils.storeObjectValue(

@@ -1,4 +1,4 @@
-import type { PoiType, Step } from "@socialgouv/nos1000jours-lib";
+import type { PoiType } from "@socialgouv/nos1000jours-lib";
 import { AROUNDME_FILTER_DATA } from "@socialgouv/nos1000jours-lib";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
@@ -24,6 +24,7 @@ import {
   Labels,
   StorageKeysConstants,
 } from "../../constants";
+import { useSavedCartographyFilters } from "../../hooks";
 import { GraphQLQuery } from "../../services";
 import { Colors, Margins, Paddings, Sizes, Styles } from "../../styles";
 import type {
@@ -31,7 +32,12 @@ import type {
   CartoFilterStorage,
   FetchedFilterFromDb,
 } from "../../type";
-import { StorageUtils, StringUtils, TrackerUtils } from "../../utils";
+import {
+  AroundMeFilterUtils,
+  StorageUtils,
+  StringUtils,
+  TrackerUtils,
+} from "../../utils";
 import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
@@ -48,11 +54,12 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     { title: string; filters: CartoFilter[] }[]
   >([]);
   const [cartoFilterStorage, setCartoFilterStorage] =
-    useState<CartoFilterStorage>({ thematiques: [], types: [] });
+    useState<CartoFilterStorage>({ types: [] });
   const [showModalContent, setShowModalContent] = useState(false);
-  const [savedCartoFilterStorage, setSavedCartoFilterStorage] =
-    useState<CartoFilterStorage>({ thematiques: [], types: [] });
   const [trackerAction, setTrackerAction] = useState("");
+  const [isValidateButtonDisabled, setIsValidateButtonDisabled] =
+    useState(false);
+  const savedCartographyFilters = useSavedCartographyFilters();
 
   useEffect(() => {
     if (!filterDataFromDb) return;
@@ -67,31 +74,20 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     if (!visible) return;
 
     setShowModalContent(false);
-    const getSavedFilter = async () => {
-      const savedFilters: CartoFilterStorage | null =
-        await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
-
-      if (savedFilters) setSavedCartoFilterStorage(savedFilters);
-
+    const getSavedFilter = () => {
       if (fetchedFiltersFromDB) {
-        fetchedFiltersFromDB.professionnels.forEach(
-          (filter) => (filter.active = false)
-        );
-        fetchedFiltersFromDB.structures.forEach(
-          (filter) => (filter.active = false)
-        );
+        AroundMeFilterUtils.deactivateFetchedFilterFromDb(fetchedFiltersFromDB);
+
         if (
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          savedFilters &&
-          !StringUtils.isStringArrayNullOrEmpty(savedFilters.types)
+          !StringUtils.isStringArrayNullOrEmpty(savedCartographyFilters.types)
         ) {
           fetchedFiltersFromDB.professionnels =
             checkSavedFiltersInFetchedFilters(
-              savedFilters.types,
+              savedCartographyFilters.types,
               fetchedFiltersFromDB.professionnels
             );
           fetchedFiltersFromDB.structures = checkSavedFiltersInFetchedFilters(
-            savedFilters.types,
+            savedCartographyFilters.types,
             fetchedFiltersFromDB.structures
           );
         }
@@ -102,7 +98,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
       setShowModalContent(true);
     };
 
-    void getSavedFilter();
+    getSavedFilter();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
@@ -120,11 +116,12 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
       ]);
     }
   };
+
   const checkSavedFiltersInFetchedFilters = (
     savedFilters: string[],
-    cartoFilters: CartoFilter[]
+    cartographyFilters: CartoFilter[]
   ) => {
-    cartoFilters.forEach((cartoFilter) => {
+    cartographyFilters.forEach((cartoFilter) => {
       if (!savedFilters.includes(cartoFilter.name)) return;
       cartoFilter.active = true;
 
@@ -134,46 +131,14 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
       setCartoFilterStorage(cartoFilterStorage);
     });
 
-    return cartoFilters;
+    return cartographyFilters;
   };
 
-  const extractFilterData = (poiTypesToFilter: PoiType[]) => {
-    setFetchedFiltersFromDB({
-      professionnels: filterToPoiCategorie(
-        poiTypesToFilter,
-        AroundMeConstants.PoiCategorieEnum.professionnel
-      ).map((poiType) =>
-        convertToCartoFilter(poiType, AroundMeConstants.CartoFilterEnum.type)
-      ),
-      structures: filterToPoiCategorie(
-        poiTypesToFilter,
-        AroundMeConstants.PoiCategorieEnum.structure
-      ).map((poiType) =>
-        convertToCartoFilter(poiType, AroundMeConstants.CartoFilterEnum.type)
-      ),
-    });
-    convertFetchedFiltersToDisplayedFilters();
-  };
-
-  const filterToPoiCategorie = (
-    poiTypesToFilter: PoiType[],
-    categorie: AroundMeConstants.PoiCategorieEnum
-  ): PoiType[] => {
-    return poiTypesToFilter.filter(
-      (poiType) => poiType.categorie === categorie
+  const extractFilterData = (poiTypes: PoiType[]) => {
+    setFetchedFiltersFromDB(
+      AroundMeFilterUtils.getFetchedFilterFromDb(poiTypes)
     );
-  };
-
-  const convertToCartoFilter = (
-    filter: PoiType | Step,
-    filterType: AroundMeConstants.CartoFilterEnum
-  ): CartoFilter => {
-    return {
-      active: false,
-      filterType: filterType,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      name: filter.nom,
-    };
+    convertFetchedFiltersToDisplayedFilters();
   };
 
   const updateQueryFilter = useCallback(
@@ -189,9 +154,43 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
 
       cartoFilterStorage.types = tempQueryFilter;
       setCartoFilterStorage(cartoFilterStorage);
+      setIsValidateButtonDisabled(
+        AroundMeFilterUtils.isValidateButtonDisabled(cartoFilterStorage.types)
+      );
     },
     [cartoFilterStorage]
   );
+
+  const sendFiltersTracker = (filters: string[]) => {
+    filters.forEach((filter) => {
+      setTrackerAction(
+        `${TrackerUtils.TrackingEvent.FILTER_CARTO} - ${filter}`
+      );
+    });
+  };
+
+  const onCloseModalButtonPressed = useCallback(() => {
+    setCartoFilterStorage({ types: [] });
+    hideModal(false);
+  }, [hideModal]);
+
+  const onValidateButtonPressed = useCallback(() => {
+    void StorageUtils.storeObjectValue(
+      StorageKeysConstants.cartoFilterKey,
+      cartoFilterStorage
+    );
+    sendFiltersTracker(cartoFilterStorage.types);
+
+    const areSavedFiltersAndNewFiltersDifferent =
+      !StringUtils.areArraysTheSameInContentAndLength(
+        savedCartographyFilters.types,
+        cartoFilterStorage.types
+      );
+
+    setCartoFilterStorage({ types: [] });
+
+    hideModal(areSavedFiltersAndNewFiltersDifferent);
+  }, [cartoFilterStorage, hideModal, savedCartographyFilters.types]);
 
   const renderSection = (section: {
     title: string;
@@ -208,6 +207,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
       </View>
     );
   };
+
   const renderChips = (cartoFilters: CartoFilter[] | undefined) => {
     return cartoFilters?.map((filter, index) => (
       <Chip
@@ -220,52 +220,6 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
     ));
   };
 
-  const sendFiltersTracker = (filters: string[]) => {
-    if (!StringUtils.isStringArrayNullOrEmpty(filters)) {
-      filters.forEach((filter) => {
-        setTrackerAction(
-          `${TrackerUtils.TrackingEvent.FILTER_CARTO} - ${filter}`
-        );
-      });
-    }
-  };
-
-  const onCloseModalButtonPressed = useCallback(() => {
-    setCartoFilterStorage({
-      thematiques: [],
-      types: [],
-    });
-    hideModal(false);
-  }, [hideModal]);
-
-  const onValidateButtonPressed = useCallback(() => {
-    void StorageUtils.storeObjectValue(
-      StorageKeysConstants.cartoFilterKey,
-      cartoFilterStorage
-    );
-    sendFiltersTracker(cartoFilterStorage.types);
-    sendFiltersTracker(cartoFilterStorage.thematiques);
-
-    const noSavedFilterButNewFilter =
-      savedCartoFilterStorage.types.length === 0 &&
-      cartoFilterStorage.types.length > 0;
-
-    const areSavedFiltersAndNewFiltersDifferent =
-      !StringUtils.areArraysTheSameInContentAndLength(
-        savedCartoFilterStorage.types,
-        cartoFilterStorage.types
-      );
-
-    const differenceBetweenSavedAndNew =
-      noSavedFilterButNewFilter || areSavedFiltersAndNewFiltersDifferent;
-
-    setCartoFilterStorage({
-      thematiques: [],
-      types: [],
-    });
-
-    hideModal(differenceBetweenSavedAndNew);
-  }, [cartoFilterStorage, hideModal, savedCartoFilterStorage.types]);
   return (
     <>
       <TrackerHandler actionName={trackerAction} />
@@ -321,8 +275,13 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                     title={Labels.buttons.validate}
                     titleStyle={styles.buttonTitleStyle}
                     rounded={true}
-                    disabled={false}
+                    disabled={isValidateButtonDisabled}
                     action={onValidateButtonPressed}
+                    accessibilityLabel={Labels.buttons.validate}
+                    accessibilityState={{ disabled: isValidateButtonDisabled }}
+                    accessibilityHint={
+                      Labels.accessibility.cartographyFilters.validateButtonHint
+                    }
                   />
                 </View>
               </View>

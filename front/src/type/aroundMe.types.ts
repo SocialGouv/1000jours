@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import type { AroundMeConstants } from "../constants";
 
 export interface CartoFilter {
@@ -15,5 +13,4 @@ export interface FetchedFilterFromDb {
 
 export interface CartoFilterStorage {
   types: string[];
-  thematiques: string[];
 }

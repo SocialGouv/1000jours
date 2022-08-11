@@ -42,6 +42,8 @@ const Chip: React.FC<Props> = ({ id, title, selected, action }) => {
         isSelected ? styles.chipSelectedTitle : null,
       ]}
       onPress={onPress}
+      accessibilityRole="button"
+      accessibilityState={{ selected: isSelected }}
     />
   );
 };
