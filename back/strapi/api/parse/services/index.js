@@ -77,7 +77,12 @@ const processRegles = (line, key, keyRegles, fileType = "csv") => {
 
     if (key === "type") {
       // get cartographie-type id value
-      valeur = `"${valeur.id}"`;
+      if (valeur) {
+        valeur = `"${valeur.id}"`;
+      } else {
+        // if "value" is empty, get type cartographie-type id from "type" column
+        valeur = "type";
+      }
     }
 
     if (
