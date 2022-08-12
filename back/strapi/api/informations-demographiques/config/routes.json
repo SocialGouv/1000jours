@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/informations-demographiques",
+      "handler": "informations-demographiques.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/informations-demographiques/count",
+      "handler": "informations-demographiques.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/informations-demographiques/:id",
+      "handler": "informations-demographiques.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/informations-demographiques",
+      "handler": "informations-demographiques.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/informations-demographiques/:id",
+      "handler": "informations-demographiques.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/informations-demographiques/:id",
+      "handler": "informations-demographiques.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

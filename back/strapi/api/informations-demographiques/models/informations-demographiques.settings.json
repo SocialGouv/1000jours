@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "informations_demographiques",
+  "info": {
+    "name": "Informations démographiques",
+    "description": "Informations démographiques des utilisateurs"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "genre": {
+      "type": "string"
+    },
+    "age": {
+      "type": "string"
+    },
+    "entourage_dispo": {
+      "type": "string"
+    },
+    "situation": {
+      "type": "string"
+    },
+    "code_postal": {
+      "type": "integer"
+    },
+    "ville": {
+      "type": "string"
+    },
+    "departement": {
+      "type": "integer"
+    },
+    "region": {
+      "type": "string"
+    },
+    "reponses_epds": {
+      "model": "reponses-epds"
+    }
+  }
+}
