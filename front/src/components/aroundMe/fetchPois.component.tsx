@@ -17,7 +17,6 @@ interface Props {
   triggerSearchByGpsCoords: boolean;
   region?: Region;
   setFetchedPois: (pois: Poi[]) => void;
-  //chooseFilterMessage: () => void;
 }
 
 const FetchPois: React.FC<Props> = ({
