@@ -19,6 +19,8 @@ interface TimelineProps {
 }
 
 const Timeline: FC<TimelineProps> = ({ steps, navigation, scrollTo }) => {
+  // Compte le nombre de step sans la première et la dernière
+  // car elles ont un rendu un peu différent (-1 pour avoir le nombre de step total et -2 pour la première et dernière step).
   const numberOfStepsWithoutTheFirstAndLast = steps.length - 1 - 2;
 
   const onTimelineStepPress = useCallback(
