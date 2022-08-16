@@ -20,7 +20,6 @@ export const extractedPoiTypesFromArticles = (
 
   if (finalCartographieTypes.length > 0) {
     const cartoFilterStorage: CartoFilterStorage = {
-      thematiques: [],
       types: finalCartographieTypes.map((type) => type.nom),
     };
     void storeObjectValue(

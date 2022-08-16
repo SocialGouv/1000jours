@@ -25,6 +25,9 @@ export default {
       more: "ajouter",
       sendingInProgress: "Envoi en cours",
     },
+    cartographyFilters: {
+      validateButtonHint: "Sélectionner au moins un filtre pour valider",
+    },
     close: "Fermer",
     closeMenu: "Fermer le menu",
     epds: {

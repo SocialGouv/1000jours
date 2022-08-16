@@ -152,16 +152,6 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
     [showBottomPanel, updatePoiArray]
   );
 
-  const chooseFilterMessage = useCallback(() => {
-    setTimeout(
-      () => {
-        setIsLoading(false);
-      },
-      PLATFORM_IS_IOS ? 500 : 0
-    );
-    showSnackBarWithMessage(Labels.aroundMe.chooseFilter);
-  }, []);
-
   const onViewMapLayout = useCallback((event: LayoutChangeEvent) => {
     setHeightOfMapView(Math.round(event.nativeEvent.layout.height));
     setWidthOfMapView(Math.round(event.nativeEvent.layout.width));
@@ -281,7 +271,6 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
           triggerSearchByGpsCoords={triggerSearchByGpsCoords}
           region={currentRegion}
           setFetchedPois={handleFetchedPois}
-          chooseFilterMessage={chooseFilterMessage}
         />
       </View>
       <View style={styles.map} onLayout={onViewMapLayout}>
