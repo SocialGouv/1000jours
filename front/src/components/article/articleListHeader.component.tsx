@@ -64,7 +64,7 @@ const ArticleListHeader: FC<Props> = ({
     let isMatching = false;
     article.thematiques.map((thematique: Thematique) => {
       const res = _.filter(filters, ["thematique", thematique]);
-      if (res.length > 0) {
+      if (res.length > 0) isMatching = true;
         isMatching = true;
       }
     });
