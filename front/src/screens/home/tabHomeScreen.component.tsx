@@ -1,20 +1,18 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
 // eslint-disable-next-line import/named
-import _, { range } from "lodash";
+import _ from "lodash";
 import type { FC } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as React from "react";
-import type { LayoutChangeEvent } from "react-native";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import {
-  ParenthequeItem,
   StoreCurrentStepArticleIds,
-  TimelineStep,
   UpdateChildBirthdayModal,
 } from "../../components";
-import { TitleH1, View } from "../../components/baseComponents";
+import { TitleH1 } from "../../components/baseComponents";
+import Timeline from "../../components/timeline/timeline.component";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
   FetchPoliciesConstants,
@@ -23,7 +21,7 @@ import {
 } from "../../constants";
 import Labels from "../../constants/Labels";
 import { GraphQLLazyQuery } from "../../services";
-import { Colors, Paddings, Sizes } from "../../styles";
+import { Paddings } from "../../styles";
 import type { Step, TabHomeParamList, UserSituation } from "../../types";
 import {
   NotificationUtils,
@@ -43,10 +41,6 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   >(null);
   const [currentStep, setCurrentStep] = useState<Step | null>(null);
   const [currentStepId, setCurrentStepId] = useState<number | null>(null);
-  const [
-    numberOfStepsWithoutTheFirstAndLast,
-    setNumberOfStepsWithoutTheFirstAndLast,
-  ] = useState(-1);
   const [triggerGetSteps, setTriggerGetStep] = useState(false);
   const [storeCurrentStepArticleIds, setStoreCurrentStepArticleIds] =
     useState(false);
@@ -164,37 +158,18 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
       }));
       setEtapes(etapes);
 
-      setNumberOfStepsWithoutTheFirstAndLast(etapes.length - 1 - 2);
-
       if (_currentStep)
         await checkIfCurrentStepHasChanged(etapes, _currentStep);
     },
     [checkIfCurrentStepHasChanged, currentStepId]
   );
 
-  const scrollTo = (positionY: number) => {
+  const scrollTo = useCallback((positionY: number) => {
     scrollViewRef.current?.scrollTo({
       animated: true,
       y: positionY,
     });
-  };
-
-  const onTimelineStepPress = useCallback(
-    (step: Step) => () => {
-      navigation.navigate("articleList", { step });
-    },
-    [navigation]
-  );
-
-  const onTimelineStepLayout = useCallback(
-    (event: LayoutChangeEvent, step: Step) => {
-      if (step.active) {
-        const { layout } = event.nativeEvent;
-        scrollTo(layout.y);
-      }
-    },
-    []
-  );
+  }, []);
 
   return (
     <>
@@ -219,44 +194,11 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
               description={Labels.timeline.description}
               animated={false}
             />
-            <ParenthequeItem navigation={navigation} />
-            <View style={[styles.timelineStepContainer]}>
-              <View style={[styles.timelineContainer]}>
-                <View
-                  style={[
-                    styles.timelineBlock,
-                    styles.timelineBlockRight,
-                    styles.timelineBlockFirst,
-                  ]}
-                />
-                {range(numberOfStepsWithoutTheFirstAndLast).map((index) => (
-                  <View
-                    style={[
-                      styles.timelineBlock,
-                      index % 2 === 0
-                        ? styles.timelineBlockLeft
-                        : styles.timelineBlockRight,
-                    ]}
-                    key={index}
-                  />
-                ))}
-              </View>
-              {_etapes.map((step, index) => (
-                <TimelineStep
-                  order={step.ordre}
-                  name={step.nom}
-                  index={index}
-                  isTheLast={index === _etapes.length - 1}
-                  key={index}
-                  active={step.active}
-                  onPress={onTimelineStepPress(step)}
-                  // eslint-disable-next-line react/jsx-no-bind
-                  onLayout={(event: LayoutChangeEvent) => {
-                    onTimelineStepLayout(event, step);
-                  }}
-                />
-              ))}
-            </View>
+            <Timeline
+              steps={_etapes}
+              scrollTo={scrollTo}
+              navigation={navigation}
+            />
           </>
         )}
         {showUpdateProfile && (
@@ -269,7 +211,9 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   );
 };
 
-export const displayUpdateProfileModal = async (today: Date) => {
+export const displayUpdateProfileModal = async (
+  today: Date
+): Promise<boolean> => {
   const lastDateStr: string =
     (await StorageUtils.getStringValue(
       StorageKeysConstants.lastProfileUpdate
@@ -320,53 +264,6 @@ const styles = StyleSheet.create({
     paddingLeft: Paddings.default,
     paddingRight: Paddings.default,
     paddingTop: Paddings.default,
-  },
-  timelineBlock: {
-    backgroundColor: "transparent",
-    borderBottomWidth: 1,
-    borderColor: Colors.primaryYellow,
-    borderStyle: "solid",
-    borderTopWidth: 1,
-    height: Sizes.timelineBlock,
-    marginTop: -1,
-  },
-  timelineBlockFirst: {
-    marginTop: 0,
-  },
-  timelineBlockLeft: {
-    borderBottomLeftRadius: Sizes.timelineBlock / 2,
-    borderLeftWidth: 1,
-    borderRightWidth: 0,
-    borderTopLeftRadius: Sizes.timelineBlock / 2,
-    marginLeft: Sizes.step / 4,
-    marginRight: Sizes.step,
-  },
-  timelineBlockRight: {
-    borderBottomRightRadius: Sizes.timelineBlock / 2,
-    borderLeftWidth: 0,
-    borderRightWidth: 1,
-    borderTopRightRadius: Sizes.timelineBlock / 2,
-    marginLeft: Sizes.step,
-    marginRight: Sizes.step / 4,
-  },
-  timelineContainer: {
-    flex: 1,
-    flexDirection: "column",
-  },
-  timelineLibraryBlock: {
-    borderBottomWidth: 0,
-    borderColor: Colors.primaryBlue,
-    borderStyle: "solid",
-    borderTopWidth: 1,
-  },
-  timelineStepContainer: {
-    marginBottom: Sizes.step,
-    marginLeft: "5%",
-    marginRight: "5%",
-  },
-  timelineStepLibraryContainer: {
-    marginBottom: 0,
-    marginTop: Sizes.step,
   },
 });
 
