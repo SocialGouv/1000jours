@@ -1,3 +1,10 @@
+## [1.109.1](https://github.com/SocialGouv/1000jours/compare/v1.109.0...v1.109.1) (2022-08-16)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la date de déclenchement des notifs article ([#1360](https://github.com/SocialGouv/1000jours/issues/1360)) ([78ebb13](https://github.com/SocialGouv/1000jours/commit/78ebb1391c5ac211ea4b7dbb4334ae6f4a5c9881)), closes [#1359](https://github.com/SocialGouv/1000jours/issues/1359)
+
 # [1.109.0](https://github.com/SocialGouv/1000jours/compare/v1.108.0...v1.109.0) (2022-08-10)
 
 
