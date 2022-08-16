@@ -345,12 +345,12 @@ const getNewTriggerForArticlesNotification = async () => {
 
 export const getValidTriggerDate = (originalDate: Date): Date => {
   // Reporte la notif si la date est dépassé
-  if (isAfter(originalDate, new Date())) {
+  const currentDate = new Date();
+  if (isAfter(originalDate, currentDate)) {
     return originalDate;
   } else {
-    const currentDate = new Date();
     const newDate = new Date(currentDate.setHours(originalDate.getHours()));
-    return isAfter(newDate, new Date()) ? newDate : addDays(newDate, 1);
+    return isAfter(newDate, currentDate) ? newDate : addDays(newDate, 1);
   }
 };
 
