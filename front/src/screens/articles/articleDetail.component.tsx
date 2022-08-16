@@ -263,6 +263,7 @@ const ArticleDetail: FC<Props> = ({
                       <FavoriteButton
                         articleId={articleId}
                         buttonStyle={styles.favoriteButton}
+                        isDisplayedWithTitle={true}
                       />
                     )}
                     <ShareButton

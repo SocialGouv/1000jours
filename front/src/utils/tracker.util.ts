@@ -40,6 +40,7 @@ export enum TrackingEvent {
   HOME = "Accueil",
   PARENTHEQUE = "Parenthèque",
   ARTICLE_LIST = "Liste d'articles",
+  ARTICLE_FAVORITES = "Favoris (articles)",
   ARTICLE = "Article",
   CALENDAR = "Calendrier",
   CALENDAR_SYNC = "Demande de synchronisation",

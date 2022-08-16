@@ -60,6 +60,13 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
         title: Labels.menu.myProfil,
       },
       {
+        icon: IcomoonIcons.favoris,
+        onPress: () => {
+          void RootNavigation.navigate("articleFavorites");
+        },
+        title: Labels.menu.myFavorites,
+      },
+      {
         icon: IcomoonIcons.bebe,
         onPress: () => {
           void RootNavigation.navigate("moodboard");

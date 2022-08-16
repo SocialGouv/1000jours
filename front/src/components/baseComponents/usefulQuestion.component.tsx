@@ -7,7 +7,10 @@ import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { TrackerEvent } from "../../type";
 import TrackerHandler from "../tracker/trackerHandler.component";
-import { CustomButton, Icomoon, IcomoonIcons, SecondaryText, View } from ".";
+import CustomButton from "./customButton.component";
+import Icomoon, { IcomoonIcons } from "./icomoon.component";
+import { SecondaryText } from "./StyledText";
+import { View } from "./Themed";
 
 interface Props {
   question: string;
