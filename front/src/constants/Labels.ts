@@ -204,6 +204,7 @@ export default {
     synchronizationHelper:
       "Ce bouton permet de synchroniser votre calendrier personnel avec celui de l’application. Ainsi, les événements affichés ici le seront aussi sur votre calendrier.",
     today: "Aujourd'hui",
+    usefulEvent: "Cette information vous a été utile ?",
   },
   dateFormatLabel: "Jour / Mois / Année",
   epdsSurvey: {
