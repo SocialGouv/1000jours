@@ -1,5 +1,6 @@
 import AroundMeScreen from "./aroundMe/aroundMeScreen.component";
 import ArticleDetail from "./articles/articleDetail.component";
+import ArticleFavorites from "./articles/articleFavorites.component";
 import ArticleListScreen from "./articles/articleListScreen.component";
 import ArticleSwipe from "./articles/articleSwipe.component";
 import EventDetails from "./calendar/eventDetails.component";
@@ -19,6 +20,7 @@ export {
   AroundMeMapAndList,
   AroundMeScreen,
   ArticleDetail,
+  ArticleFavorites,
   ArticleListScreen,
   ArticleSwipe,
   EpdsResult,

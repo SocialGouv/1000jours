@@ -1,22 +1,28 @@
+import type { StackNavigationProp } from "@react-navigation/stack";
+import _ from "lodash";
 import type { FC } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { AccessibilityInfo, FlatList, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
 import { Labels } from "../../constants";
 import { Colors, Paddings, Sizes } from "../../styles";
-import type { Article, Step } from "../../types";
+import type { Article, Step, TabHomeParamList } from "../../types";
 import { ArticleUtils } from "../../utils";
-import { SecondaryText } from "../baseComponents";
+import { SecondaryText } from "../baseComponents/StyledText";
 import ArticleCard from "./articleCard.component";
+import ArticleListHeader from "./articleListHeader.component";
 
 type ArticleOrString = Article | string;
 
 interface Props {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  headerComponent?: any;
-  articleList: Article[];
+  title: string;
+  description?: string;
+  articles: Article[];
+  setArticles: React.Dispatch<React.SetStateAction<Article[]>>;
+  setTrackerAction: React.Dispatch<React.SetStateAction<string>>;
+  navigation: StackNavigationProp<TabHomeParamList>;
   animationDuration: number;
   step?: Step;
   isFromSearchScreen?: boolean;
@@ -24,23 +30,42 @@ interface Props {
 }
 
 const ArticleList: FC<Props> = ({
-  headerComponent,
-  articleList,
+  title,
+  description,
+  articles,
+  setArticles,
+  setTrackerAction,
+  navigation,
   animationDuration,
   step,
   isFromSearchScreen,
   setStepAndArticleId,
 }) => {
   const flatListRef = useRef<FlatList>();
+  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
   const [articlesWithHeaders, setArticlesWithHeaders] = useState<
     ArticleOrString[]
   >([]);
 
   useEffect(() => {
+    const articlesToShow = _.filter(articles, (article) => !article.hide);
+    setFilteredArticles(articlesToShow);
+
+    if (articlesToShow.length > 0)
+      AccessibilityInfo.announceForAccessibility(
+        articleToReadAccessibilityLabel()
+      );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [articles, filteredArticles.length]);
+
+  const articleToReadAccessibilityLabel = () =>
+    `${filteredArticles.length} ${Labels.accessibility.articleToRead}`;
+
+  useEffect(() => {
     let mounted = true;
     const sortArticles = async () => {
       const sortedArticles = await ArticleUtils.sortReadAndUnreadArticles(
-        articleList
+        filteredArticles
       );
 
       const _articlesWithHeaders: ArticleOrString[] = [];
@@ -68,7 +93,7 @@ const ArticleList: FC<Props> = ({
     return () => {
       mounted = false;
     };
-  }, [articleList]);
+  }, [filteredArticles]);
 
   const setFlatListRef = useCallback((ref: FlatList) => {
     flatListRef.current = ref;
@@ -95,7 +120,7 @@ const ArticleList: FC<Props> = ({
           >
             <ArticleCard
               selectedArticleId={item.id}
-              articles={articleList}
+              articles={filteredArticles}
               step={step}
               isFromSearchScreen={isFromSearchScreen}
               setStepAndArticleId={setStepAndArticleId}
@@ -106,7 +131,7 @@ const ArticleList: FC<Props> = ({
     },
     [
       animationDuration,
-      articleList,
+      filteredArticles,
       isFromSearchScreen,
       setStepAndArticleId,
       step,
@@ -116,7 +141,16 @@ const ArticleList: FC<Props> = ({
   return (
     <>
       <FlatList
-        ListHeaderComponent={headerComponent}
+        ListHeaderComponent={
+          <ArticleListHeader
+            title={title}
+            description={description}
+            articles={articles}
+            setArticles={setArticles}
+            setTrackerAction={setTrackerAction}
+            navigation={navigation}
+          />
+        }
         ref={setFlatListRef}
         data={articlesWithHeaders}
         keyExtractor={keyExtractor}

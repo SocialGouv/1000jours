@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 import DefaultImage from "../../assets/images/default.png";
 import { Labels } from "../../constants";
@@ -12,13 +11,16 @@ import type { Article, Step } from "../../types";
 import {
   AccessibilityUtils,
   ArticleUtils,
-  FavoritesUtils,
   getVisuelFormat,
   RootNavigation,
   VisuelFormat,
 } from "../../utils";
-import { FavoritesAssets } from "../assets";
-import { CommonText, SecondaryText, View } from "../baseComponents";
+import {
+  CommonText,
+  FavoriteButton,
+  SecondaryText,
+  View,
+} from "../baseComponents";
 
 interface Props {
   selectedArticleId: number;
@@ -39,12 +41,10 @@ const ArticleCard: FC<Props> = ({
     (item) => item.id == selectedArticleId
   );
   const [articleIsRead, setArticleIsRead] = useState(false);
-  const [isArticleFavorite, setIsArticleFavorite] = useState(false);
 
   const checkReadAndFavorites = useCallback(async () => {
     if (article) {
       setArticleIsRead(await ArticleUtils.isArticleRead(article.id));
-      setIsArticleFavorite(await ArticleUtils.isArticleInFavorites(article.id));
     }
   }, [article]);
 
@@ -105,14 +105,6 @@ const ArticleCard: FC<Props> = ({
     articleIsRead && styles.readArticleImage,
   ];
 
-  const onFavoriteButtonClick = useCallback(async () => {
-    if (article) {
-      const shouldAddFavorite = !isArticleFavorite;
-      await FavoritesUtils.handleOnFavorite(shouldAddFavorite, article.id);
-      setIsArticleFavorite(shouldAddFavorite);
-    }
-  }, [article, isArticleFavorite]);
-
   return (
     <>
       {article && (
@@ -161,9 +153,10 @@ const ArticleCard: FC<Props> = ({
             </ListItem.Content>
           </ListItem>
           <View style={styles.favoriteView}>
-            <TouchableWithoutFeedback onPress={onFavoriteButtonClick}>
-              {FavoritesAssets.getFavoriteIcon(isArticleFavorite, Sizes.xl)}
-            </TouchableWithoutFeedback>
+            <FavoriteButton
+              articleId={article.id}
+              isDisplayedWithTitle={false}
+            />
           </View>
         </>
       )}

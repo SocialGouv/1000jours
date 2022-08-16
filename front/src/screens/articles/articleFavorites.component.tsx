@@ -1,4 +1,3 @@
-import type { RouteProp } from "@react-navigation/core";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
@@ -6,25 +5,40 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import { ArticleList } from "../../components";
-import { Loader, View } from "../../components/baseComponents";
+import { CommonText, Loader, View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { FetchPoliciesConstants, HomeDbQueries } from "../../constants";
+import {
+  FetchPoliciesConstants,
+  HomeDbQueries,
+  Labels,
+  StorageKeysConstants,
+} from "../../constants";
 import { GraphQLQuery } from "../../services";
-import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
-import type { Article, Step, TabHomeParamList } from "../../types";
-import { TrackerUtils } from "../../utils";
+import { Colors, Paddings } from "../../styles";
+import type { Article, TabHomeParamList } from "../../types";
+import { StorageUtils, TrackerUtils } from "../../utils";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;
-  route: RouteProp<{ params: { step: Step } }, "params">;
 }
 
-const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
-  const screenTitle = route.params.step.nom;
-  const description = route.params.step.description;
+const ArticleFavorites: FC<Props> = ({ navigation }) => {
   const [trackerAction, setTrackerAction] = useState("");
+
+  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
   const [showArticles, setShowArticles] = useState(false);
+
+  const setFavorites = async () => {
+    const ids = (await StorageUtils.getObjectValue(
+      StorageKeysConstants.favoriteArticlesIds
+    )) as number[] | undefined;
+    if (ids) setFavoriteIds(ids);
+  };
+
+  useEffect(() => {
+    void setFavorites();
+  }, []);
 
   useEffect(() => {
     setShowArticles(true);
@@ -38,25 +52,31 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
   return (
     <View style={styles.mainContainer}>
       <TrackerHandler
-        screenName={`${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`}
+        screenName={`${TrackerUtils.TrackingEvent.ARTICLE_FAVORITES}`}
         actionName={trackerAction}
       />
-      <GraphQLQuery
-        query={HomeDbQueries.LIST_ARTICLES_WITH_STEP(route.params.step.id)}
-        fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-        getFetchedData={handleResults}
-      />
+      {favoriteIds.length > 0 ? (
+        <GraphQLQuery
+          query={HomeDbQueries.LIST_FAVORITES_ARTICLES(favoriteIds)}
+          fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
+          getFetchedData={handleResults}
+        />
+      ) : (
+        <View>
+          <CommonText>{Labels.article.favorite.empty}</CommonText>
+        </View>
+      )}
+
       {showArticles ? (
         <View style={styles.listContainer}>
           <ArticleList
-            title={screenTitle}
-            description={description ?? undefined}
+            title={Labels.article.favorite.title}
+            description={Labels.article.favorite.description}
             articles={articles}
             setArticles={setArticles}
             setTrackerAction={setTrackerAction}
             navigation={navigation}
             animationDuration={1000}
-            step={route.params.step}
           />
         </View>
       ) : (
@@ -67,18 +87,6 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-  borderLeftRadius: {
-    borderBottomLeftRadius: Sizes.xxxxxs,
-    borderTopLeftRadius: Sizes.xxxxxs,
-  },
-  description: {
-    color: Colors.commonText,
-  },
-  flexStart: {
-    alignItems: "flex-start",
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
   listContainer: {
     paddingHorizontal: Paddings.default,
     paddingVertical: Paddings.smallest,
@@ -87,15 +95,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     flex: 1,
   },
-  title: {
-    color: Colors.primaryBlueDark,
-    fontSize: Sizes.md,
-    fontWeight: FontWeight.black,
-    textTransform: "uppercase",
-  },
-  topContainer: {
-    paddingTop: Paddings.default,
-  },
 });
 
-export default ArticleListScreen;
+export default ArticleFavorites;
