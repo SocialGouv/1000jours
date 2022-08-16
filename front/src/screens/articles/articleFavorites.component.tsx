@@ -1,9 +1,8 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
-import _ from "lodash";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { AccessibilityInfo, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { ArticleList } from "../../components";
 import { CommonText, Loader, View } from "../../components/baseComponents";
@@ -28,7 +27,6 @@ const ArticleFavorites: FC<Props> = ({ navigation }) => {
 
   const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
-  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
   const [showArticles, setShowArticles] = useState(false);
 
   const setFavorites = async () => {
@@ -43,18 +41,8 @@ const ArticleFavorites: FC<Props> = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    const articlesToShow = _.filter(articles, (article) => !article.hide);
-    setFilteredArticles(articlesToShow);
     setShowArticles(true);
-    if (articlesToShow.length > 0)
-      AccessibilityInfo.announceForAccessibility(
-        articleToReadAccessibilityLabel()
-      );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [articles, filteredArticles.length]);
-
-  const articleToReadAccessibilityLabel = () =>
-    `${filteredArticles.length} ${Labels.accessibility.articleToRead}`;
+  }, [articles]);
 
   const handleResults = useCallback((data: unknown) => {
     const results = (data as { articles: Article[] }).articles;

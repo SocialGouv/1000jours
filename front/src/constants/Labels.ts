@@ -129,11 +129,11 @@ export default {
     favorite: {
       addToFavorites: "Ajouter",
       confirmDeleteMessage:
-        "Êtes-vous sûr de vouloir supprimer cet article de vos favoris",
+        "Êtes-vous sûr de vouloir supprimer cet article de vos favoris ?",
       deleteFromFavorites: "Supprimer",
       description:
         "Retrouvez ici les articles que vous avez ajouté en favoris.",
-      empty: "Aucun articles en favoris",
+      empty: "Aucun article en favoris",
       title: "Favoris",
     },
     firstThreeMonths: {
