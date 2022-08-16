@@ -1,3 +1,10 @@
+## [1.109.2](https://github.com/SocialGouv/1000jours/compare/v1.109.1...v1.109.2) (2022-08-16)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la taille de l'icone du menu ([#1369](https://github.com/SocialGouv/1000jours/issues/1369)) ([a63687e](https://github.com/SocialGouv/1000jours/commit/a63687e5b1e614b80dfd15487bd31cd6e4cc6f3c)), closes [#1368](https://github.com/SocialGouv/1000jours/issues/1368)
+
 ## [1.109.1](https://github.com/SocialGouv/1000jours/compare/v1.109.0...v1.109.1) (2022-08-16)
 
 
