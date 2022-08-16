@@ -35,7 +35,7 @@ export default {
         "SCHEDULE_EXACT_ALARM",
         "VIBRATE",
       ],
-      versionCode: 63,
+      versionCode: 64,
     },
     assetBundlePatterns: ["**/*"],
     hooks: {
@@ -54,7 +54,7 @@ export default {
     icon: "./src/assets/images/icon.png",
     ios: {
       associatedDomains: [`applinks:${process.env.DEEPLINK_DOMAIN}`],
-      buildNumber: "1.1.63",
+      buildNumber: "1.1.64",
       bundleIdentifier: "com.fabrique.millejours",
       infoPlist: {
         NSCalendarsUsageDescription:
@@ -87,7 +87,7 @@ export default {
       fallbackToCacheTimeout: 0,
     },
     userInterfaceStyle: "light",
-    version: "1.1.63",
+    version: "1.1.64",
     web: {
       favicon: "./src/assets/images/favicon.png",
     },
