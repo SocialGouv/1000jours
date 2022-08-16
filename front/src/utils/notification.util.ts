@@ -335,12 +335,23 @@ const getNewTriggerForArticlesNotification = async () => {
       NotificationConstants.NUMBER_OF_DAYS_NOTIF_ARTICLES_REMINDER
     ).setHours(NotificationConstants.ARTICLES_NOTIF_TRIGGER_HOUR, 0, 0, 0)
   );
-  const trigger = isAfter(date, new Date()) ? date : addDays(date, 1); // Reporte la notif au lendemain si la date est dépassé
+  const trigger = getValidTriggerDate(date);
   await StorageUtils.storeObjectValue(
     StorageKeysConstants.triggerForArticlesNotification,
     trigger
   );
   return trigger;
+};
+
+export const getValidTriggerDate = (originalDate: Date): Date => {
+  // Reporte la notif si la date est dépassé
+  if (isAfter(originalDate, new Date())) {
+    return originalDate;
+  } else {
+    const currentDate = new Date();
+    const newDate = new Date(currentDate.setHours(originalDate.getHours()));
+    return isAfter(newDate, new Date()) ? newDate : addDays(newDate, 1);
+  }
 };
 
 export const updateArticlesNotification = async (): Promise<void> => {
@@ -351,8 +362,9 @@ export const updateArticlesNotification = async (): Promise<void> => {
   // Attention - Si le trigger sauvegardé est de type 'Date', le 'getObjectValue' retournera un 'string'
   const trigger =
     triggerStored && typeof triggerStored === "string"
-      ? new Date(triggerStored)
+      ? getValidTriggerDate(new Date(triggerStored))
       : triggerStored;
+
   await scheduleArticlesNotification(trigger);
 };
 
