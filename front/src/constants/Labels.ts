@@ -128,7 +128,13 @@ export default {
     didYouKnowTitle: "Le saviez-vous ?",
     favorite: {
       addToFavorites: "Ajouter",
+      confirmDeleteMessage:
+        "Êtes-vous sûr de vouloir supprimer cet article de vos favoris",
       deleteFromFavorites: "Supprimer",
+      description:
+        "Retrouvez ici les articles que vous avez ajouté en favoris.",
+      empty: "Aucun articles en favoris",
+      title: "Favoris",
     },
     firstThreeMonths: {
       buttonLabel: "Commencer",
@@ -546,6 +552,7 @@ export default {
     information: "Informations",
     legalNotice: "Mentions légales",
     moodboard: "Suivi d'humeur",
+    myFavorites: "Mes favoris",
     myProfil: "Mon profil",
     title: "Menu",
   },

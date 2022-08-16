@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
-import type { StyleProp, ViewStyle } from "react-native";
-import { StyleSheet } from "react-native";
+import type { AlertButton, StyleProp, ViewStyle } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity } from "react-native";
 
 import { Labels } from "../../constants";
 import {
@@ -20,9 +20,14 @@ import CustomButton from "./customButton.component";
 interface Props {
   buttonStyle?: StyleProp<ViewStyle>;
   articleId: number;
+  isDisplayedWithTitle: boolean;
 }
 
-const FavoriteButton: React.FC<Props> = ({ buttonStyle, articleId }) => {
+const FavoriteButton: React.FC<Props> = ({
+  buttonStyle,
+  articleId,
+  isDisplayedWithTitle,
+}) => {
   const [isArticleFavorite, setIsArticleFavorite] = useState(false);
 
   useEffect(() => {
@@ -32,27 +37,58 @@ const FavoriteButton: React.FC<Props> = ({ buttonStyle, articleId }) => {
     void checkFavorites();
   }, [articleId]);
 
+  const handleOnFavorite = useCallback(
+    async (shouldAddFavorite: boolean) => {
+      await FavoritesUtils.handleOnFavorite(shouldAddFavorite, articleId);
+      setIsArticleFavorite(shouldAddFavorite);
+    },
+    [articleId]
+  );
+
+  const confirmDeleteFavorite = useCallback(() => {
+    const alertButtons: AlertButton[] = [
+      { text: Labels.buttons.no },
+      {
+        onPress: async () => {
+          await handleOnFavorite(false);
+        },
+        text: Labels.buttons.yes,
+      },
+    ];
+    Alert.alert(
+      Labels.warning,
+      Labels.article.favorite.confirmDeleteMessage,
+      alertButtons
+    );
+  }, [handleOnFavorite]);
+
   const addOrDeleteFromFavorites = useCallback(async () => {
     const shouldAddFavorite = !isArticleFavorite;
-    await FavoritesUtils.handleOnFavorite(shouldAddFavorite, articleId);
-    setIsArticleFavorite(shouldAddFavorite);
-  }, [articleId, isArticleFavorite]);
+    if (shouldAddFavorite) await handleOnFavorite(shouldAddFavorite);
+    else confirmDeleteFavorite();
+  }, [confirmDeleteFavorite, handleOnFavorite, isArticleFavorite]);
 
   return (
     <>
-      <CustomButton
-        title={
-          isArticleFavorite
-            ? Labels.article.favorite.deleteFromFavorites
-            : Labels.article.favorite.addToFavorites
-        }
-        icon={FavoritesAssets.getFavoriteIcon(isArticleFavorite, Sizes.md)}
-        rounded
-        disabled={false}
-        action={addOrDeleteFromFavorites}
-        titleStyle={styles.buttonTitleStyle}
-        buttonStyle={[styles.defaultButtonStyle, buttonStyle]}
-      />
+      {isDisplayedWithTitle ? (
+        <CustomButton
+          title={
+            isArticleFavorite
+              ? Labels.article.favorite.deleteFromFavorites
+              : Labels.article.favorite.addToFavorites
+          }
+          icon={FavoritesAssets.getFavoriteIcon(isArticleFavorite, Sizes.md)}
+          rounded
+          disabled={false}
+          action={addOrDeleteFromFavorites}
+          titleStyle={styles.buttonTitleStyle}
+          buttonStyle={[styles.defaultButtonStyle, buttonStyle]}
+        />
+      ) : (
+        <TouchableOpacity onPress={addOrDeleteFromFavorites}>
+          {FavoritesAssets.getFavoriteIcon(isArticleFavorite, Sizes.xl)}
+        </TouchableOpacity>
+      )}
     </>
   );
 };
