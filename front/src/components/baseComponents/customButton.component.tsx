@@ -31,6 +31,7 @@ interface Props {
   onPressIn?: () => void;
   accessibilityLabel?: string;
   accessibilityState?: AccessibilityState;
+  accessibilityHint?: string;
 }
 
 const setDisabledStyle = (
@@ -50,6 +51,7 @@ const CustomButton: FC<Props> = ({
   onPressIn,
   accessibilityLabel,
   accessibilityState,
+  accessibilityHint,
 }) => (
   <Button
     disabled={disabled}
@@ -73,6 +75,7 @@ const CustomButton: FC<Props> = ({
     onPressIn={onPressIn}
     onPress={action}
     type={rounded ? "solid" : "clear"}
+    accessibilityHint={disabled ? accessibilityHint : undefined}
     accessibilityLabel={accessibilityLabel}
     accessibilityRole="button"
     accessibilityState={accessibilityState}
