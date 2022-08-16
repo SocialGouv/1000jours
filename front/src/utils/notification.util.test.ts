@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { addDays, isAfter, subDays } from "date-fns";
 
 import {
   Labels,
@@ -77,6 +78,21 @@ describe("Notification utils", () => {
       const expected = null;
 
       expect(content).toEqual(expected);
+    });
+
+    it("getValidTriggerDate is called with a future date", () => {
+      const originalDate = addDays(new Date(), 1);
+      const triggerDate = NotificationUtils.getValidTriggerDate(originalDate);
+      const expected = isAfter(triggerDate, new Date());
+
+      expect(true).toEqual(expected);
+    });
+    it("getValidTriggerDate is called with a past date", () => {
+      const originalDate = subDays(new Date(), 1);
+      const triggerDate = NotificationUtils.getValidTriggerDate(originalDate);
+      const expected = isAfter(triggerDate, new Date());
+
+      expect(true).toEqual(expected);
     });
   });
 });
