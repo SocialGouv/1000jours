@@ -60,6 +60,10 @@ const UsefulQuestion: FC<Props> = ({
           titleStyle={styles.buttonTitle}
           action={setUsefulObjectForTracker(IS_USEFUL)}
           disabled={isButtonsDisabled}
+          accessibilityState={{
+            disabled: isButtonsDisabled,
+            selected: buttonValue == IS_USEFUL,
+          }}
           icon={
             <Icomoon
               name={IcomoonIcons.valider}
@@ -80,6 +84,10 @@ const UsefulQuestion: FC<Props> = ({
           }
           action={setUsefulObjectForTracker(IS_NOT_USEFUL)}
           disabled={isButtonsDisabled}
+          accessibilityState={{
+            disabled: isButtonsDisabled,
+            selected: buttonValue == IS_NOT_USEFUL,
+          }}
           icon={
             <Icomoon
               name={IcomoonIcons.annuler}
