@@ -1,3 +1,10 @@
+## [1.109.4](https://github.com/SocialGouv/1000jours/compare/v1.109.3...v1.109.4) (2022-08-17)
+
+
+### Bug Fixes
+
+* **ds-types:** Corrige le nommage de l'identifiant des types DS ([#1354](https://github.com/SocialGouv/1000jours/issues/1354)) ([c24e916](https://github.com/SocialGouv/1000jours/commit/c24e9162dd635252e9947928b7c6ccdaee89cbe7))
+
 ## [1.109.3](https://github.com/SocialGouv/1000jours/compare/v1.109.2...v1.109.3) (2022-08-17)
 
 
