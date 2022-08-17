@@ -1,5 +1,5 @@
 app-strapi:
-  needs: [restore]
+  needs: []
   volumes:
     - name: uploads
       emptyDir: {}
