@@ -4,7 +4,7 @@ global:
 
 app-strapi:
   certSecretName: strapi-cache-crt
-  host: "backoffice-les1000jours.fabrique.social.gouv.fr"
+  host: "backoffice-1000jours.fabrique.social.gouv.fr"
   addVolumes:
     - uploads
   volumeMounts:
