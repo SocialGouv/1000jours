@@ -1,5 +1,6 @@
 global:
-  registry: ghcr.io/socialgouv
+  registry: ghcr.io
+  imageProject: socialgouv
 
 app-strapi:
   enabled: true
