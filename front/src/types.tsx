@@ -62,7 +62,7 @@ export type ArticleSwipeRouteParamList = {
     id: number;
     step?: Step;
     articles: Article[];
-    onBackButtonPressed: () => void;
+    //onBackButtonPressed: () => void;
   };
 };
 
