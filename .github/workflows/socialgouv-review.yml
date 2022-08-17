@@ -43,6 +43,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           rancherProjectId: ${{ secrets.RANCHER_PROJECT_ID }}
           ciNamespace: "${{ secrets.RANCHER_PROJECT_NAME }}-ci"
+          disableDiff: "true"
 
   ##############################################################################
   ## RESTORE DATABASE
