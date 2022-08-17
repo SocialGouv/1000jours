@@ -73,14 +73,16 @@ const TabSearchScreen: FC = () => {
 
   const handleResults = useCallback(
     (data: unknown) => {
-      const results = (data as { articles: Article[] }).articles;
-      setArticles(results);
-      if (results.length === 0) setUpdatedText(Labels.search.noArticleFound);
-      setTrackerSearchObject({
-        category: trackerSearchCategory,
-        count: results.length,
-        keyword: keywords,
-      });
+      if (data) {
+        const results = (data as { articles: Article[] }).articles;
+        setArticles(results);
+        if (results.length === 0) setUpdatedText(Labels.search.noArticleFound);
+        setTrackerSearchObject({
+          category: trackerSearchCategory,
+          count: results.length,
+          keyword: keywords,
+        });
+      } else setUpdatedText(Labels.errorMsg);
     },
     [keywords]
   );
