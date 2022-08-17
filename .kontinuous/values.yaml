@@ -1,3 +1,6 @@
+global:
+  registry: ghcr.io/socialgouv
+
 app-strapi:
   enabled: true
   host: "backoffice-{{ .Values.global.host }}"
