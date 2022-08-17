@@ -1,5 +1,6 @@
 global:
   namespace: les1000jours
+  host: "les1000jours.fabrique.social.gouv.fr"
 
 app-strapi:
   certSecretName: strapi-cache-crt
