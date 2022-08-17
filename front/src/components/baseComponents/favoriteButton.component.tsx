@@ -13,8 +13,10 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
+import type { TrackerEvent } from "../../type";
 import { ArticleUtils, FavoritesUtils } from "../../utils";
 import { FavoritesAssets } from "../assets";
+import TrackerHandler from "../tracker/trackerHandler.component";
 import CustomButton from "./customButton.component";
 
 interface Props {
@@ -29,6 +31,7 @@ const FavoriteButton: React.FC<Props> = ({
   isDisplayedWithTitle,
 }) => {
   const [isArticleFavorite, setIsArticleFavorite] = useState(false);
+  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
 
   useEffect(() => {
     const checkFavorites = async () => {
@@ -64,12 +67,20 @@ const FavoriteButton: React.FC<Props> = ({
 
   const addOrDeleteFromFavorites = useCallback(async () => {
     const shouldAddFavorite = !isArticleFavorite;
-    if (shouldAddFavorite) await handleOnFavorite(shouldAddFavorite);
-    else confirmDeleteFavorite();
-  }, [confirmDeleteFavorite, handleOnFavorite, isArticleFavorite]);
+    if (shouldAddFavorite) {
+      await handleOnFavorite(shouldAddFavorite);
+      setTrackerEventObject({
+        action: "AddToFavorites",
+        name: `Article : ${articleId}`,
+      });
+    } else {
+      confirmDeleteFavorite();
+    }
+  }, [confirmDeleteFavorite, handleOnFavorite, isArticleFavorite, articleId]);
 
   return (
     <>
+      <TrackerHandler eventObject={trackerEventObject} />
       {isDisplayedWithTitle ? (
         <CustomButton
           title={
