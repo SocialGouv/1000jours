@@ -15,7 +15,7 @@ jobs:
     #     pgAdminSecretRefName: azure-pg-admin-user
     restore:
       # needs: [create-db]
-      use: SocialGouv/kube-workflow/jobs/pg-restore
+      use: SocialGouv/kontinuous/plugins/fabrique/jobs/pg-restore
       checkout: false
       with:
         mountPath: /mnt/restore
