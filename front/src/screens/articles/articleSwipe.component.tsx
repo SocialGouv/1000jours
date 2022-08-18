@@ -43,8 +43,6 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
   const articles: Article[] = route ? route.params.articles : [];
   const step: Step | undefined = route?.params.step;
   const articleId: number = route ? route.params.id : 0;
-  // TODO - find a better way to pass the callback through
-  const onBackPressed = route?.params.onBackButtonPressed;
 
   const CAROUSEL_MAX_ITEM_TO_RENDER = 3;
   const CAROUSEL_PARALLAX_OFFSET = 45;
@@ -55,11 +53,8 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
   );
 
   const onGoBack = useCallback(() => {
-    if (onBackPressed) {
-      onBackPressed();
-    }
     navigation.goBack();
-  }, [onBackPressed, navigation]);
+  }, [navigation]);
 
   const renderItem = useCallback(
     ({ item }: RenderItemProps) => {

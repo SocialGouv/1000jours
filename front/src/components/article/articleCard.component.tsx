@@ -82,9 +82,6 @@ const ArticleCard: FC<Props> = ({
         {
           articles: articles,
           id: article?.id,
-          onBackButtonPressed: () => {
-            updateView();
-          },
           step: step,
         },
         true
