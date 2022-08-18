@@ -49,12 +49,14 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
       {showArticles ? (
         <View style={styles.listContainer}>
           <ArticleList
-            title={screenTitle}
-            description={description ?? undefined}
+            articleListHeaderParams={{
+              description: description ?? undefined,
+              navigation: navigation,
+              setArticles: setArticles,
+              setTrackerAction: setTrackerAction,
+              title: screenTitle,
+            }}
             articles={articles}
-            setArticles={setArticles}
-            setTrackerAction={setTrackerAction}
-            navigation={navigation}
             animationDuration={1000}
             step={route.params.step}
           />

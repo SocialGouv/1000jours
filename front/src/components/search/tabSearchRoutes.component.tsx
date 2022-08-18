@@ -52,7 +52,7 @@ export const ArticlesRoute = (
   ) : (
     <View style={styles.listContainer}>
       <ArticleList
-        articleList={articles}
+        articles={articles}
         animationDuration={500}
         isFromSearchScreen
         setStepAndArticleId={onUpdateStepAndArticleId}
