@@ -70,12 +70,14 @@ const ArticleFavorites: FC<Props> = ({ navigation }) => {
       {showArticles ? (
         <View style={styles.listContainer}>
           <ArticleList
-            title={Labels.article.favorite.title}
-            description={Labels.article.favorite.description}
+            articleListHeaderParams={{
+              description: Labels.article.favorite.description,
+              navigation: navigation,
+              setArticles: setArticles,
+              setTrackerAction: setTrackerAction,
+              title: Labels.article.favorite.title,
+            }}
             articles={articles}
-            setArticles={setArticles}
-            setTrackerAction={setTrackerAction}
-            navigation={navigation}
             animationDuration={1000}
           />
         </View>

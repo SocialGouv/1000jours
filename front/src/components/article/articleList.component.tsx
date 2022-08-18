@@ -1,4 +1,3 @@
-import type { StackNavigationProp } from "@react-navigation/stack";
 import _ from "lodash";
 import type { FC } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -8,7 +7,7 @@ import * as Animatable from "react-native-animatable";
 
 import { Labels } from "../../constants";
 import { Colors, Paddings, Sizes } from "../../styles";
-import type { Article, Step, TabHomeParamList } from "../../types";
+import type { Article, ArticleListHeaderParams, Step } from "../../types";
 import { ArticleUtils } from "../../utils";
 import { SecondaryText } from "../baseComponents/StyledText";
 import ArticleCard from "./articleCard.component";
@@ -17,12 +16,8 @@ import ArticleListHeader from "./articleListHeader.component";
 type ArticleOrString = Article | string;
 
 interface Props {
-  title: string;
-  description?: string;
   articles: Article[];
-  setArticles: React.Dispatch<React.SetStateAction<Article[]>>;
-  setTrackerAction: React.Dispatch<React.SetStateAction<string>>;
-  navigation: StackNavigationProp<TabHomeParamList>;
+  articleListHeaderParams?: ArticleListHeaderParams;
   animationDuration: number;
   step?: Step;
   isFromSearchScreen?: boolean;
@@ -30,12 +25,8 @@ interface Props {
 }
 
 const ArticleList: FC<Props> = ({
-  title,
-  description,
+  articleListHeaderParams,
   articles,
-  setArticles,
-  setTrackerAction,
-  navigation,
   animationDuration,
   step,
   isFromSearchScreen,
@@ -142,14 +133,16 @@ const ArticleList: FC<Props> = ({
     <>
       <FlatList
         ListHeaderComponent={
-          <ArticleListHeader
-            title={title}
-            description={description}
-            articles={articles}
-            setArticles={setArticles}
-            setTrackerAction={setTrackerAction}
-            navigation={navigation}
-          />
+          articleListHeaderParams ? (
+            <ArticleListHeader
+              title={articleListHeaderParams.title}
+              description={articleListHeaderParams.description}
+              articles={articles}
+              setArticles={articleListHeaderParams.setArticles}
+              setTrackerAction={articleListHeaderParams.setTrackerAction}
+              navigation={articleListHeaderParams.navigation}
+            />
+          ) : null
         }
         ref={setFlatListRef}
         data={articlesWithHeaders}

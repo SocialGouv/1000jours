@@ -1,5 +1,7 @@
+import type { StackNavigationProp } from "@react-navigation/stack";
 import type { PoiType } from "@socialgouv/nos1000jours-lib";
 import type { FC, ReactNode } from "react";
+import type React from "react";
 import type { LatLng } from "react-native-maps";
 
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
@@ -232,4 +234,12 @@ export type ProfileGender = {
 export type RootNavigationParams = {
   screen?: string;
   params?: RootNavigationParams;
+};
+
+export type ArticleListHeaderParams = {
+  title: string;
+  description?: string;
+  setArticles: React.Dispatch<React.SetStateAction<Article[]>>;
+  setTrackerAction: React.Dispatch<React.SetStateAction<string>>;
+  navigation: StackNavigationProp<TabHomeParamList>;
 };
