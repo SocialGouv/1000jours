@@ -31,6 +31,9 @@ const FavoriteButton: React.FC<Props> = ({
   isDisplayedWithTitle,
 }) => {
   const [isArticleFavorite, setIsArticleFavorite] = useState(false);
+  const [accessibilityLabel, setAccessibilityLabel] = useState(
+    Labels.accessibility.favorites.add
+  );
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
 
   useEffect(() => {
@@ -39,6 +42,14 @@ const FavoriteButton: React.FC<Props> = ({
     };
     void checkFavorites();
   }, [articleId]);
+
+  useEffect(() => {
+    setAccessibilityLabel(
+      isArticleFavorite
+        ? Labels.accessibility.favorites.remove
+        : Labels.accessibility.favorites.add
+    );
+  }, [isArticleFavorite]);
 
   const handleOnFavorite = useCallback(
     async (shouldAddFavorite: boolean) => {
@@ -94,9 +105,14 @@ const FavoriteButton: React.FC<Props> = ({
           action={addOrDeleteFromFavorites}
           titleStyle={styles.buttonTitleStyle}
           buttonStyle={[styles.defaultButtonStyle, buttonStyle]}
+          accessibilityLabel={accessibilityLabel}
         />
       ) : (
-        <TouchableOpacity onPress={addOrDeleteFromFavorites}>
+        <TouchableOpacity
+          onPress={addOrDeleteFromFavorites}
+          accessibilityLabel={accessibilityLabel}
+          accessibilityRole={"button"}
+        >
           {FavoritesAssets.getFavoriteIcon(isArticleFavorite, Sizes.xl)}
         </TouchableOpacity>
       )}

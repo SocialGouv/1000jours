@@ -38,6 +38,10 @@ export default {
       description: "Description",
       title: "Titre de l'événement",
     },
+    favorites: {
+      add: "Ajouter dans vos favoris",
+      remove: "Retirer de vos favoris",
+    },
     illustrationProfile: "Illustration profil",
     logoApp: "Logo de l'application",
     logoRepubliqueFr: "Logo de la République française",
