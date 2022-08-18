@@ -16,6 +16,8 @@ jobs:
     restore:
       # needs: [create-db]
       use: SocialGouv/kontinuous/plugins/fabrique/jobs/pg-restore
+      run: |
+        echo Hello
       checkout: false
       with:
         mountPath: /mnt/restore
