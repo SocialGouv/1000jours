@@ -51,16 +51,16 @@ jobs:
 
         set +e
 
-        sleep 240
-        # pg_restore \
-        #   --dbname "$PGDATABASE" \
-        #   --clean --if-exists \
-        #   --exclude-schema=audit \
-        #   --no-owner \
-        #   --role "$OWNER" \
-        #   --no-acl \
-        #   --verbose \
-        #   "${DUMP}"
+        # sleep 240
+        pg_restore \
+          --dbname "$PGDATABASE" \
+          --clean --if-exists \
+          --exclude-schema=audit \
+          --no-owner \
+          --role "$OWNER" \
+          --no-acl \
+          --verbose \
+          "${DUMP}"
 
         set -e
 
