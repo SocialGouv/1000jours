@@ -1,3 +1,10 @@
+## [1.109.5](https://github.com/SocialGouv/1000jours/compare/v1.109.4...v1.109.5) (2022-08-18)
+
+
+### Bug Fixes
+
+* **ds:** Corrige le secret du token de Démarches Simplifiéees ([#1382](https://github.com/SocialGouv/1000jours/issues/1382)) ([e150d5b](https://github.com/SocialGouv/1000jours/commit/e150d5b6a96600f493a30470202ab815ebb76dcf))
+
 ## [1.109.4](https://github.com/SocialGouv/1000jours/compare/v1.109.3...v1.109.4) (2022-08-17)
 
 
