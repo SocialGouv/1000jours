@@ -19,6 +19,7 @@ import {
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels, StorageKeysConstants } from "../../constants";
+import { useAccessibilityReader } from "../../hooks";
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
 import type { RootStackParamList } from "../../types";
 import { StorageUtils, TrackerUtils } from "../../utils";
@@ -59,6 +60,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
 
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
+  const isScreenReaderEnabled = useAccessibilityReader();
 
   const navigateToProfile = useCallback(async () => {
     await StorageUtils.storeObjectValue(
@@ -143,6 +145,7 @@ const Onboarding: FC<Props> = ({ navigation }) => {
               horizontal={true}
               ref={flatListRef}
               onScroll={onScroll}
+              scrollEnabled={!isScreenReaderEnabled}
             />
             <CustomPagination
               currentIndex={swiperCurrentIndex}
