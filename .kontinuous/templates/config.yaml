@@ -87,6 +87,12 @@ rebaseRules:
   resourceMatchers:
   - apiVersionKindMatcher: {apiVersion: apps/v1, kind: Deployment}
 
+- path: [spec, template, spec, containers, {index: 0}, ports]
+  type: copy
+  sources: [existing]
+  resourceMatchers:
+  - apiVersionKindMatcher: {apiVersion: apps/v1, kind: Deployment}
+
 - path: [spec, template, spec, restartPolicy]
   type: copy
   sources: [existing]
