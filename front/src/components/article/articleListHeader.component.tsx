@@ -123,7 +123,9 @@ const ArticleListHeader: FC<Props> = ({
           />
         </View>
       )}
-      <ArticlesFilter articles={articles} applyFilters={applyFilters} />
+      {articles.length > 0 && (
+        <ArticlesFilter articles={articles} applyFilters={applyFilters} />
+      )}
     </View>
   );
 };

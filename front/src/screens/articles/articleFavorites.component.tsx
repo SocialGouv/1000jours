@@ -5,7 +5,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import { ArticleList } from "../../components";
-import { CommonText, Loader, View } from "../../components/baseComponents";
+import { Loader, View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
   FetchPoliciesConstants,
@@ -55,16 +55,12 @@ const ArticleFavorites: FC<Props> = ({ navigation }) => {
         screenName={`${TrackerUtils.TrackingEvent.ARTICLE_FAVORITES}`}
         actionName={trackerAction}
       />
-      {favoriteIds.length > 0 ? (
+      {favoriteIds.length > 0 && (
         <GraphQLQuery
           query={HomeDbQueries.LIST_FAVORITES_ARTICLES(favoriteIds)}
           fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
           getFetchedData={handleResults}
         />
-      ) : (
-        <View>
-          <CommonText>{Labels.article.favorite.empty}</CommonText>
-        </View>
       )}
 
       {showArticles ? (
@@ -79,6 +75,7 @@ const ArticleFavorites: FC<Props> = ({ navigation }) => {
             }}
             articles={articles}
             animationDuration={1000}
+            emptyListMessage={Labels.article.favorite.empty}
           />
         </View>
       ) : (
