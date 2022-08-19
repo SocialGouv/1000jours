@@ -3,6 +3,8 @@ projectName: les1000jours
 dependencies:
   fabrique:
     import: SocialGouv/kontinuous/plugins/fabrique
-    patches:
-      reloader:
-        enabled: false
+    dependencies:
+      contrib:
+        patches:
+          reloader:
+            enabled: false
