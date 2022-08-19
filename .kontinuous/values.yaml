@@ -3,7 +3,8 @@ global:
   imageProject: socialgouv
 
 app-strapi:
-  enabled: true
+  ingress:
+    enabled: false
   host: "backoffice-{{ .Values.global.host }}"
   imagePackage: strapi
   containerPort: 1337
