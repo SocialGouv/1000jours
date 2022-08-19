@@ -111,7 +111,7 @@ const FavoriteButton: React.FC<Props> = ({
         <TouchableOpacity
           onPress={addOrDeleteFromFavorites}
           accessibilityLabel={accessibilityLabel}
-          accessibilityRole={"button"}
+          accessibilityRole="button"
         >
           {FavoritesAssets.getFavoriteIcon(isArticleFavorite, Sizes.xl)}
         </TouchableOpacity>
