@@ -177,19 +177,7 @@ const styles = StyleSheet.create({
   headerButtonsRightPartView: {
     alignItems: "flex-end",
     backgroundColor: "transparent",
-    justifyContent: "flex-end",
-    position: "absolute",
-    right: 0,
-  },
-  headerButtonsView: {
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    height: "15%",
-    left: 0,
-    margin: Margins.smaller,
-    position: "absolute",
-    right: 0,
-    top: 0,
+    flexGrow: 1,
   },
 });
 
