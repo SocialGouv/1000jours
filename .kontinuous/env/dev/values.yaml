@@ -9,12 +9,12 @@ app-strapi:
 
 jobs:
   runs:
-    # create-db:
-    #   use: SocialGouv/kube-workflow/jobs/create-db@v1
-    #   with:
-    #     pgAdminSecretRefName: azure-pg-admin-user
+    create-db:
+      use: SocialGouv/kube-workflow/jobs/create-db@v1
+      with:
+        pgAdminSecretRefName: azure-pg-admin-user
     restore:
-      # needs: [create-db]
+      needs: [create-db]
       cpuLimit: "2"
       cpuRequest: "1"
       use: SocialGouv/kontinuous/plugins/fabrique/jobs/pg-restore
