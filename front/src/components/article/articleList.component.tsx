@@ -9,7 +9,8 @@ import { Labels } from "../../constants";
 import { Colors, Paddings, Sizes } from "../../styles";
 import type { Article, ArticleListHeaderParams, Step } from "../../types";
 import { ArticleUtils } from "../../utils";
-import { SecondaryText } from "../baseComponents/StyledText";
+import { CommonText, SecondaryText } from "../baseComponents/StyledText";
+import { View } from "../baseComponents/Themed";
 import ArticleCard from "./articleCard.component";
 import ArticleListHeader from "./articleListHeader.component";
 
@@ -22,9 +23,11 @@ interface Props {
   step?: Step;
   isFromSearchScreen?: boolean;
   setStepAndArticleId?: (articleId: number, step: Step | undefined) => void;
+  emptyListMessage?: string;
 }
 
 const ArticleList: FC<Props> = ({
+  emptyListMessage,
   articleListHeaderParams,
   articles,
   animationDuration,
@@ -149,11 +152,22 @@ const ArticleList: FC<Props> = ({
         keyExtractor={keyExtractor}
         renderItem={renderArticle}
       />
+      {emptyListMessage && articles.length === 0 && (
+        <View>
+          <CommonText style={styles.emptyMessage}>
+            {emptyListMessage}
+          </CommonText>
+        </View>
+      )}
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  emptyMessage: {
+    paddingTop: Paddings.largest,
+    textAlign: "center",
+  },
   headerListInfo: {
     color: Colors.secondaryGreen,
     fontSize: Sizes.xs,
