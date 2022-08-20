@@ -9,10 +9,10 @@ app-strapi:
   probesPath: /_health
   resources:
     requests:
-      cpu: "500m"
+      cpu: 0.5
       memory: 256Mi
     limits:
-      cpu: "1"
+      cpu: 1
       memory: 1Gi
   # startupProbe:
   #   initialDelaySeconds: 30
