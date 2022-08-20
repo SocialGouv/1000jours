@@ -1,5 +1,9 @@
 app-strapi:
   needs: [restore]
+  ~preDeploy.cleaner:
+    match:
+      kind: Deployment  
+    value: true
   volumes:
     - name: uploads
       emptyDir: {}
@@ -10,12 +14,12 @@ app-strapi:
 jobs:
   runs:
     create-db:
-      use: SocialGouv/kube-workflow/jobs/create-db@v1
+      use: SocialGouv/kontinuous/plugins/fabrique/jobs/create-db
       with:
         pgAdminSecretRefName: azure-pg-admin-user
     restore:
       needs: [create-db]
-      use: SocialGouv/kube-workflow/jobs/pg-restore
+      use: SocialGouv/kontinuous/plugins/fabrique/jobs/pg-restore
       checkout: false
       with:
         mountPath: /mnt/restore
