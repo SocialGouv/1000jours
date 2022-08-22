@@ -37,13 +37,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: [register]
     steps:
-      - uses: SocialGouv/kube-workflow@v1
+      - uses: SocialGouv/kontinuous@v1
         with:
           environment: dev
           token: ${{ secrets.GITHUB_TOKEN }}
           kubeconfig: ${{ secrets.KUBECONFIG }}
           rancherProjectId: ${{ secrets.RANCHER_PROJECT_ID }}
-          rancherProjectName: ${{ secrets.RANCHER_PROJECT_NAME }}
+          ciNamespace: "${{ secrets.RANCHER_PROJECT_NAME }}-ci"
+          disableDiff: "true"
 
   ##############################################################################
   ## RESTORE DATABASE

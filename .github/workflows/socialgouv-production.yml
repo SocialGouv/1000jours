@@ -37,10 +37,11 @@ jobs:
       name: production
       url: https://backoffice-les1000jours.fabrique.social.gouv.fr
     steps:
-      - uses: SocialGouv/kube-workflow@v1
+      - uses: SocialGouv/kontinuous@v1
         with:
           environment: prod
           token: ${{ secrets.GITHUB_TOKEN }}
           kubeconfig: ${{ secrets.KUBECONFIG }}
           rancherProjectId: ${{ secrets.RANCHER_PROJECT_ID }}
-          rancherProjectName: ${{ secrets.RANCHER_PROJECT_NAME }}
+          ciNamespace: "${{ secrets.RANCHER_PROJECT_NAME }}-ci"
+          disableDiff: "true"
