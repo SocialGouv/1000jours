@@ -40,12 +40,7 @@
       ]
     },
     "situation": {
-      "type": "enumeration",
-      "enum": [
-        "vousAttendez1Enfant",
-        "vousAvezEnfantDeMoinsDe2ans",
-        "vousAvezDesEnfantsDePlusDe2ans"
-      ]
+      "type": "string"
     },
     "code_postal": {
       "type": "string"
