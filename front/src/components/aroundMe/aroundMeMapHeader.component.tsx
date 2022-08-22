@@ -76,7 +76,7 @@ const AroundMeMapHeader: FC<Props> = ({
 
   return (
     <>
-      <View style={headerStyle}>
+      <View style={[headerStyle, styles.headerBasic]}>
         <CustomButton
           buttonStyle={styles.headerButton}
           title={Labels.articleList.filters}
@@ -162,6 +162,9 @@ const AroundMeMapHeader: FC<Props> = ({
 const styles = StyleSheet.create({
   buttonMarginTop: {
     marginTop: Margins.smaller,
+  },
+  headerBasic: {
+    flexWrap: "wrap",
   },
   headerButton: {
     backgroundColor: Colors.white,
