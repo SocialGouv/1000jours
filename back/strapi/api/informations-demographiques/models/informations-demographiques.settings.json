@@ -1,0 +1,66 @@
+{
+  "kind": "collectionType",
+  "collectionName": "informations_demographiques",
+  "info": {
+    "name": "Informations démographiques",
+    "description": "Informations démographiques des utilisateurs"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "genre": {
+      "type": "enumeration",
+      "enum": [
+        "homme",
+        "femme",
+        "nonPrecise"
+      ]
+    },
+    "age": {
+      "type": "enumeration",
+      "enum": [
+        "moinsDe18ans",
+        "entre18_25ans",
+        "entre25_30ans",
+        "entre30_35ans",
+        "entre35_40ans",
+        "entre40_45ans",
+        "plusDe45ans"
+      ]
+    },
+    "entourage_dispo": {
+      "type": "enumeration",
+      "enum": [
+        "oui",
+        "non",
+        "jeNeSaisPas"
+      ]
+    },
+    "situation": {
+      "type": "enumeration",
+      "enum": [
+        "vousAttendez1Enfant",
+        "vousAvezEnfantDeMoinsDe2ans",
+        "vousAvezDesEnfantsDePlusDe2ans"
+      ]
+    },
+    "code_postal": {
+      "type": "string"
+    },
+    "ville": {
+      "type": "string"
+    },
+    "departement": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "reponses_epds": {
+      "model": "reponses-epds"
+    }
+  }
+}
