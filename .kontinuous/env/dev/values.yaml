@@ -1,5 +1,5 @@
 app-strapi:
-  needs: [restore]
+  ~needs: [restore]
   ~preDeploy.cleaner:
     match:
       kind: Deployment  
@@ -18,7 +18,7 @@ jobs:
       with:
         pgAdminSecretRefName: azure-pg-admin-user
     restore:
-      needs: [create-db]
+      ~needs: [create-db]
       use: SocialGouv/kontinuous/plugins/contrib/jobs/pg-restore
       checkout: false
       with:
