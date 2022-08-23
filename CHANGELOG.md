@@ -1,3 +1,15 @@
+# [1.110.0](https://github.com/SocialGouv/1000jours/compare/v1.109.5...v1.110.0) (2022-08-23)
+
+
+### Bug Fixes
+
+* **demigraphie:** type d'un champ ([#1394](https://github.com/SocialGouv/1000jours/issues/1394)) ([813fb5c](https://github.com/SocialGouv/1000jours/commit/813fb5c37e6c98e893c365ae0e8438924458fa7f))
+
+
+### Features
+
+* **demographie:** ajout collection ([#1357](https://github.com/SocialGouv/1000jours/issues/1357)) ([bacdc73](https://github.com/SocialGouv/1000jours/commit/bacdc73b3d9b889149619dced590c53fc9e6d5e0))
+
 ## [1.109.5](https://github.com/SocialGouv/1000jours/compare/v1.109.4...v1.109.5) (2022-08-18)
 
 
