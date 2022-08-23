@@ -23,12 +23,14 @@ interface Props {
   buttonStyle?: StyleProp<ViewStyle>;
   articleId: number;
   isDisplayedWithTitle: boolean;
+  onUpdate?: () => void;
 }
 
 const FavoriteButton: React.FC<Props> = ({
   buttonStyle,
   articleId,
   isDisplayedWithTitle,
+  onUpdate,
 }) => {
   const [isArticleFavorite, setIsArticleFavorite] = useState(false);
   const [accessibilityLabel, setAccessibilityLabel] = useState(
@@ -55,8 +57,9 @@ const FavoriteButton: React.FC<Props> = ({
     async (shouldAddFavorite: boolean) => {
       await FavoritesUtils.handleOnFavorite(shouldAddFavorite, articleId);
       setIsArticleFavorite(shouldAddFavorite);
+      if (onUpdate) onUpdate();
     },
-    [articleId]
+    [articleId, onUpdate]
   );
 
   const confirmDeleteFavorite = useCallback(() => {

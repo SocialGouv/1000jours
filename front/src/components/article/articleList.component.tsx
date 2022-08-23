@@ -24,6 +24,7 @@ interface Props {
   isFromSearchScreen?: boolean;
   setStepAndArticleId?: (articleId: number, step: Step | undefined) => void;
   emptyListMessage?: string;
+  onFavoriteUpdate?: () => void;
 }
 
 const ArticleList: FC<Props> = ({
@@ -34,6 +35,7 @@ const ArticleList: FC<Props> = ({
   step,
   isFromSearchScreen,
   setStepAndArticleId,
+  onFavoriteUpdate,
 }) => {
   const flatListRef = useRef<FlatList>();
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
@@ -118,6 +120,7 @@ const ArticleList: FC<Props> = ({
               step={step}
               isFromSearchScreen={isFromSearchScreen}
               setStepAndArticleId={setStepAndArticleId}
+              onFavoriteUpdate={onFavoriteUpdate}
             />
           </Animatable.View>
         );
@@ -127,6 +130,7 @@ const ArticleList: FC<Props> = ({
       animationDuration,
       filteredArticles,
       isFromSearchScreen,
+      onFavoriteUpdate,
       setStepAndArticleId,
       step,
     ]

@@ -28,6 +28,7 @@ interface Props {
   step?: Step;
   isFromSearchScreen?: boolean;
   setStepAndArticleId?: (articleId: number, step: Step | undefined) => void;
+  onFavoriteUpdate?: () => void;
 }
 
 const ArticleCard: FC<Props> = ({
@@ -36,6 +37,7 @@ const ArticleCard: FC<Props> = ({
   step,
   isFromSearchScreen,
   setStepAndArticleId,
+  onFavoriteUpdate,
 }) => {
   const article: Article | undefined = articles.find(
     (item) => item.id == selectedArticleId
@@ -65,10 +67,6 @@ const ArticleCard: FC<Props> = ({
     void checkReadAndFavorites();
   }, [checkReadAndFavorites]);
 
-  const updateView = useCallback(() => {
-    void checkReadAndFavorites();
-  }, [checkReadAndFavorites]);
-
   const onItemPressed = useCallback(async () => {
     if (isFromSearchScreen && setStepAndArticleId && article)
       setStepAndArticleId(article.id, step);
@@ -87,14 +85,7 @@ const ArticleCard: FC<Props> = ({
         true
       );
     }
-  }, [
-    isFromSearchScreen,
-    setStepAndArticleId,
-    article,
-    step,
-    articles,
-    updateView,
-  ]);
+  }, [isFromSearchScreen, setStepAndArticleId, article, step, articles]);
 
   const imageStyle = [
     styles.articleImage,
@@ -153,6 +144,7 @@ const ArticleCard: FC<Props> = ({
             <FavoriteButton
               articleId={article.id}
               isDisplayedWithTitle={false}
+              onUpdate={onFavoriteUpdate}
             />
           </View>
         </>
