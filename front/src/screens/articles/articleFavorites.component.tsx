@@ -29,20 +29,27 @@ const ArticleFavorites: FC<Props> = ({ navigation }) => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [showArticles, setShowArticles] = useState(false);
 
-  const setFavorites = async () => {
+  const setFavorites = useCallback(async () => {
     const ids = (await StorageUtils.getObjectValue(
       StorageKeysConstants.favoriteArticlesIds
     )) as number[] | undefined;
     if (ids) setFavoriteIds(ids);
-  };
+  }, []);
 
   useEffect(() => {
     void setFavorites();
-  }, []);
+  }, [setFavorites]);
 
   useEffect(() => {
     setShowArticles(true);
   }, [articles]);
+
+  useEffect(() => {
+    const willFocusSubscription = navigation.addListener("focus", () => {
+      void setFavorites();
+    });
+    return willFocusSubscription;
+  }, [navigation, setFavorites]);
 
   const handleResults = useCallback((data: unknown) => {
     const results = (data as { articles: Article[] }).articles;
@@ -76,6 +83,7 @@ const ArticleFavorites: FC<Props> = ({ navigation }) => {
             articles={articles}
             animationDuration={1000}
             emptyListMessage={Labels.article.favorite.empty}
+            onFavoriteUpdate={setFavorites}
           />
         </View>
       ) : (

@@ -30,6 +30,16 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
     setShowArticles(true);
   }, [articles]);
 
+  useEffect(() => {
+    const willFocusSubscription = navigation.addListener("focus", () => {
+      setShowArticles(false);
+      setTimeout(() => {
+        setShowArticles(true);
+      }, 100);
+    });
+    return willFocusSubscription;
+  }, [navigation]);
+
   const handleResults = useCallback((data: unknown) => {
     const results = (data as { articles: Article[] }).articles;
     setArticles(results);
