@@ -3,6 +3,7 @@ import * as AppUtils from "./app.util";
 import * as AroundMeUtils from "./aroundMe.util";
 import * as AroundMeFilterUtils from "./aroundMe/aroundMeFilter.util";
 import * as ArticleUtils from "./article.util";
+import * as ArticleFilterUtils from "./articles/articleFilter.util";
 import * as AssestUtils from "./asset.util";
 import * as EpdsSurveyUtils from "./epdsSurvey.util";
 import * as FavoritesUtils from "./favorites/favorites.util";
@@ -26,6 +27,7 @@ export {
   AppUtils,
   AroundMeFilterUtils,
   AroundMeUtils,
+  ArticleFilterUtils,
   ArticleUtils,
   AssestUtils,
   EpdsSurveyUtils,

@@ -1,6 +1,7 @@
 import NotificationModal from "../notification/notificationModal.component";
 import BackButton from "./backButton.component";
 import Backdrop from "./backdrop.component";
+import CancelButton from "./cancelButton.component";
 import Checkbox from "./checkbox.component";
 import CloseButton from "./closeButton.component";
 import CustomButton from "./customButton.component";
@@ -30,6 +31,7 @@ import UsefulQuestion from "./usefulQuestion.component";
 export {
   BackButton,
   Backdrop,
+  CancelButton,
   Checkbox,
   CloseButton,
   CommonText,

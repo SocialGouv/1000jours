@@ -1,4 +1,3 @@
-import _ from "lodash";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
@@ -7,14 +6,13 @@ import { CheckBox } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { Labels } from "../../constants";
-import {
-  MAJOR_VERSION_IOS,
-  PLATFORM_IS_ANDROID,
-} from "../../constants/platform.constants";
-import { Colors, Margins, Paddings, Shadow, Sizes, Styles } from "../../styles";
+import { PLATFORM_IS_ANDROID } from "../../constants/platform.constants";
+import { Colors, Margins, Paddings, Sizes, Styles } from "../../styles";
 import type { Article, ArticleFilter } from "../../types";
+import { ArticleFilterUtils } from "../../utils";
 import { BaseAssets } from "../assets";
 import {
+  CancelButton,
   CloseButton,
   CustomButton,
   Icomoon,
@@ -29,74 +27,48 @@ interface Props {
 }
 
 const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
-  const getFilters = (articlesToFilter: Article[]) => {
-    return _.chain(articlesToFilter)
-      .flatMap(({ thematiques }) => {
-        return thematiques;
-      })
-      .groupBy("id")
-      .map((thematiques) => {
-        return {
-          active: false,
-          nbArticles: thematiques.length,
-          thematique: thematiques[0],
-        };
-      })
-      .value();
-  };
-
   const [filters, setFilters] = useState<ArticleFilter[]>([]);
-  const [initalFilters, setInitalFilters] = useState<ArticleFilter[]>([]);
-  const [triggerUpdateFilters, setTriggerUpdateFilters] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [lastAppliedFilters, setLastAppliedFilters] = useState<ArticleFilter[]>(
+    []
+  );
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
-    if (filters.length === 0) setFilters(getFilters(articles));
+    if (filters.length === 0) {
+      const fetchedFilters = ArticleFilterUtils.getFilters(articles);
+      setFilters(fetchedFilters);
+      setLastAppliedFilters(fetchedFilters);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [articles]);
 
-  useEffect(() => {
-    if (modalVisible) setInitalFilters(_.cloneDeep(filters));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modalVisible]);
-
-  const numberActiveFilters = () => {
-    const number = filters.filter((item) => item.active).length;
-    return number ? `(${number} actif(s))` : "";
-  };
-
-  const numberActiveAccessibilityFilters = () => {
-    const number = filters.filter((item) => item.active).length;
-    return `${Labels.articleList.filters}. (${number} ${Labels.accessibility.articlesFilters.activeFilter})`;
-  };
-
-  const checkboxAccessibilityLabel = (filter: ArticleFilter) =>
-    `${filter.thematique.nom}. (${filter.nbArticles} ${Labels.accessibility.articlesFilters.availableArticles})`;
-
   const onShowModal = useCallback(() => {
-    setModalVisible(!modalVisible);
-  }, [modalVisible]);
+    if (lastAppliedFilters.length > 0) {
+      setFilters(lastAppliedFilters);
+    }
+    setIsModalVisible(!isModalVisible);
+  }, [isModalVisible, lastAppliedFilters]);
 
   const resetFilters = useCallback(() => {
-    setFilters(initalFilters);
-  }, [initalFilters]);
+    setFilters(ArticleFilterUtils.getFilters(articles));
+  }, [articles]);
 
   const cancelFiltersModal = useCallback(() => {
-    setModalVisible(false);
-    resetFilters();
-  }, [resetFilters]);
+    setFilters(lastAppliedFilters);
+    setIsModalVisible(false);
+  }, [lastAppliedFilters]);
 
   const onCheckboxPressed = useCallback(
-    (filter: ArticleFilter) => () => {
-      filter.active = !filter.active;
-      setTriggerUpdateFilters(!triggerUpdateFilters);
+    (selectedFilter: ArticleFilter) => () => {
+      setFilters(ArticleFilterUtils.updateFilters(filters, selectedFilter));
     },
-    [triggerUpdateFilters]
+    [filters]
   );
 
   const onValidateFilter = useCallback(() => {
+    setLastAppliedFilters(filters);
     applyFilters(filters);
-    setModalVisible(false);
+    setIsModalVisible(false);
   }, [applyFilters, filters]);
 
   return (
@@ -104,10 +76,12 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
       <CustomButton
         buttonStyle={styles.filterButton}
         titleStyle={styles.filterButtonTitle}
-        title={`${Labels.articleList.filters} ${numberActiveFilters()}`}
+        title={ArticleFilterUtils.filterButtonLabel(lastAppliedFilters)}
         rounded={true}
         disabled={false}
-        accessibilityLabel={numberActiveAccessibilityFilters()}
+        accessibilityLabel={ArticleFilterUtils.filterButtonAccessibilityLabel(
+          lastAppliedFilters
+        )}
         icon={
           <Icomoon
             name={IcomoonIcons.filtrer}
@@ -117,8 +91,8 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
         }
         action={onShowModal}
       />
-      <Modal transparent={true} visible={modalVisible} animationType="fade">
-        {modalVisible && (
+      <Modal transparent={true} visible={isModalVisible} animationType="fade">
+        {isModalVisible && (
           <View style={Styles.modale.behindOfModal}>
             <View style={styles.mainContainer}>
               <View
@@ -176,7 +150,9 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
                     uncheckedColor={Colors.primaryBlueDark}
                     checkedColor={Colors.primaryBlueDark}
                     title={`${filter.thematique.nom} (${filter.nbArticles})`}
-                    accessibilityLabel={checkboxAccessibilityLabel(filter)}
+                    accessibilityLabel={ArticleFilterUtils.checkboxAccessibilityLabel(
+                      filter
+                    )}
                     checked={filter.active}
                     onPress={onCheckboxPressed(filter)}
                   />
@@ -184,22 +160,7 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
               </ScrollView>
 
               <View style={styles.buttonsContainer}>
-                <View style={styles.buttonContainer}>
-                  <CustomButton
-                    title={Labels.buttons.cancel}
-                    titleStyle={styles.buttonTitleStyle}
-                    rounded={false}
-                    disabled={false}
-                    icon={
-                      <Icomoon
-                        name={IcomoonIcons.fermer}
-                        size={14}
-                        color={Colors.primaryBlue}
-                      />
-                    }
-                    action={cancelFiltersModal}
-                  />
-                </View>
+                <CancelButton action={cancelFiltersModal} />
                 <View style={styles.buttonContainer}>
                   <CustomButton
                     title={Labels.buttons.validate}
@@ -229,11 +190,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: Margins.default,
   },
-  centeredView: {
-    alignItems: MAJOR_VERSION_IOS < 14 ? "stretch" : "center",
-    justifyContent: "center",
-    marginTop: Margins.default,
-  },
   checkboxItem: {
     backgroundColor: "transparent",
     borderColor: "transparent",
@@ -258,11 +214,6 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlue,
     fontSize: Sizes.xxs,
   },
-  filterContainer: {
-    flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
   mainContainer: {
     backgroundColor: Colors.white,
     borderColor: Colors.primaryBlue,
@@ -272,21 +223,6 @@ const styles = StyleSheet.create({
     margin: Margins.default,
     padding: Paddings.default,
     paddingTop: 0,
-  },
-  modalView: {
-    alignItems: MAJOR_VERSION_IOS < 14 ? "stretch" : "center",
-    backgroundColor: Colors.white,
-    borderRadius: Sizes.mmd,
-    elevation: 5,
-    margin: Margins.larger,
-    padding: Paddings.larger,
-    shadowColor: "black",
-    shadowOffset: {
-      height: Shadow.offsetHeight,
-      width: Shadow.offsetWidth,
-    },
-    shadowOpacity: Shadow.opacity,
-    shadowRadius: Shadow.radius,
   },
   paddingsDefault: {
     paddingVertical: Paddings.smallest,
