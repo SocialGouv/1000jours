@@ -11,6 +11,7 @@ import {
 } from "react-native";
 
 import {
+  CancelButton,
   CommonText,
   CustomButton,
   Icomoon,
@@ -254,22 +255,7 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
                 )}
               </ScrollView>
               <View style={styles.buttonsContainer}>
-                <View style={styles.buttonContainer}>
-                  <CustomButton
-                    title={Labels.buttons.cancel}
-                    titleStyle={styles.buttonTitleStyle}
-                    rounded={false}
-                    disabled={false}
-                    icon={
-                      <Icomoon
-                        name={IcomoonIcons.fermer}
-                        size={14}
-                        color={Colors.primaryBlue}
-                      />
-                    }
-                    action={onCloseModalButtonPressed}
-                  />
-                </View>
+                <CancelButton action={onCloseModalButtonPressed} />
                 <View style={styles.buttonContainer}>
                   <CustomButton
                     title={Labels.buttons.validate}
