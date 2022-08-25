@@ -6,17 +6,15 @@ import { Calendar, LocaleConfig } from "react-native-calendars";
 import type { Direction, Theme } from "react-native-calendars/src/types";
 
 import { Labels, StorageKeysConstants } from "../../constants";
-import { Colors, FontWeight, Margins, Sizes } from "../../styles";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { MoodStorageItem } from "../../type";
 import { MoodboardUtils, StorageUtils } from "../../utils";
-import { Icomoon, IcomoonIcons } from "../baseComponents";
+import { Icomoon, IcomoonIcons, SecondaryText } from "../baseComponents";
 import EditMoodDay from "./editMoodDay.component";
-
-interface Props {}
 
 const CALENDAR_MONTH_FORMAT = "MMMM yyyy";
 
-const MoodsCalendar: React.FC<Props> = () => {
+const MoodsCalendar: React.FC = () => {
   const [moods, setMoods] = useState<MoodStorageItem[]>();
   const [showEditModal, setShowEditModal] = useState(false);
   const [dateToEdit, setDateToEdit] = useState<string>();
@@ -102,6 +100,11 @@ const MoodsCalendar: React.FC<Props> = () => {
 
   return (
     <>
+      <View style={styles.titleContainer}>
+        <SecondaryText style={styles.title}>
+          {Labels.moodboard.completeMoodboard}
+        </SecondaryText>
+      </View>
       <Calendar
         style={styles.calendarStyle}
         theme={calenderTheme}
@@ -150,6 +153,17 @@ const styles = StyleSheet.create({
     borderColor: Colors.borderGrey,
     borderWidth: 1,
     margin: Margins.default,
+  },
+  title: {
+    color: Colors.primaryBlue,
+    fontSize: Sizes.md,
+    paddingHorizontal: Paddings.default,
+    textAlign: "center",
+  },
+  titleContainer: {
+    alignContent: "center",
+    alignItems: "center",
+    paddingVertical: Paddings.smallest,
   },
 });
 
