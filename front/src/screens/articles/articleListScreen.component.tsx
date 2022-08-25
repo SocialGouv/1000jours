@@ -23,7 +23,7 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
   const screenTitle = route.params.step.nom;
   const description = route.params.step.description;
   const [trackerAction, setTrackerAction] = useState("");
-  const [articles, setArticles] = useState<Article[]>([]);
+  const [articles, setArticles] = useState<Article[] | undefined>(undefined);
   const [showArticles, setShowArticles] = useState(false);
 
   useEffect(() => {
@@ -55,8 +55,9 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
         query={HomeDbQueries.LIST_ARTICLES_WITH_STEP(route.params.step.id)}
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
         getFetchedData={handleResults}
+        noLoader={true}
       />
-      {showArticles ? (
+      {showArticles && articles ? (
         <View style={styles.listContainer}>
           <ArticleList
             articleListHeaderParams={{
@@ -72,7 +73,7 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
           />
         </View>
       ) : (
-        <Loader />
+        <Loader backdrop={false} />
       )}
     </View>
   );

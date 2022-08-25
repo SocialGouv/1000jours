@@ -26,7 +26,7 @@ const ArticleFavorites: FC<Props> = ({ navigation }) => {
   const [trackerAction, setTrackerAction] = useState("");
 
   const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
-  const [articles, setArticles] = useState<Article[]>([]);
+  const [articles, setArticles] = useState<Article[] | undefined>(undefined);
   const [showArticles, setShowArticles] = useState(false);
 
   const setFavorites = useCallback(async () => {
@@ -67,10 +67,11 @@ const ArticleFavorites: FC<Props> = ({ navigation }) => {
           query={HomeDbQueries.LIST_FAVORITES_ARTICLES(favoriteIds)}
           fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
           getFetchedData={handleResults}
+          noLoader={true}
         />
       )}
 
-      {showArticles ? (
+      {showArticles && articles ? (
         <View style={styles.listContainer}>
           <ArticleList
             articleListHeaderParams={{
@@ -87,7 +88,7 @@ const ArticleFavorites: FC<Props> = ({ navigation }) => {
           />
         </View>
       ) : (
-        <Loader />
+        <Loader backdrop={false} />
       )}
     </View>
   );
