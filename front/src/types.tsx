@@ -238,7 +238,7 @@ export type RootNavigationParams = {
 export type ArticleListHeaderParams = {
   title: string;
   description?: string;
-  setArticles: React.Dispatch<React.SetStateAction<Article[]>>;
+  setArticles: React.Dispatch<React.SetStateAction<Article[] | undefined>>;
   setTrackerAction: React.Dispatch<React.SetStateAction<string>>;
   navigation: StackNavigationProp<TabHomeParamList>;
 };
