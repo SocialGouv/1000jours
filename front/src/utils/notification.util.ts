@@ -15,7 +15,7 @@ import {
   StorageKeysConstants,
 } from "../constants";
 import type { Event, Step } from "../types";
-import { countCurrentStepArticlesNotRead } from "./step.util";
+import { countCurrentStepArticlesNotRead } from "./step/step.util";
 import * as StorageUtils from "./storage.util";
 
 export enum NotificationType {

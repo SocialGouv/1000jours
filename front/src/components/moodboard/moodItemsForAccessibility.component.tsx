@@ -6,7 +6,7 @@ import { Text } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { Colors, Margins, Paddings } from "../../styles";
-import { MOODBOARD_ITEMS } from "../../utils/moodboard.util";
+import { MOODBOARD_ITEMS } from "../../utils/moodboard/moodboard.util";
 
 interface Props {
   setActiveIndex: Dispatch<SetStateAction<number>>;

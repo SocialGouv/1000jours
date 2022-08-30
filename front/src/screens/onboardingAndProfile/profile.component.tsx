@@ -42,7 +42,7 @@ import type {
   UserSituation,
 } from "../../types";
 import { NotificationUtils, StorageUtils, TrackerUtils } from "../../utils";
-import { checkErrorOnProfile } from "../../utils/step.util";
+import { checkErrorOnProfile } from "../../utils/step/step.util";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;

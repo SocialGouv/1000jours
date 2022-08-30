@@ -15,7 +15,7 @@ import * as MoodboardUtils from "./moodboard/moodboard.util";
 import * as NotificationUtils from "./notification.util";
 import * as RootNavigation from "./rootNavigation.util";
 import * as SearchUtils from "./search.util";
-import * as StepUtils from "./step.util";
+import * as StepUtils from "./step/step.util";
 import * as StorageUtils from "./storage.util";
 import * as StringUtils from "./strings/strings.util";
 import { getAppTheme } from "./theme.util";
