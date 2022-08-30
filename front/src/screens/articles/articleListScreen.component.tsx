@@ -23,7 +23,7 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
   const screenTitle = route.params.step.nom;
   const description = route.params.step.description;
   const [trackerAction, setTrackerAction] = useState("");
-  const [articles, setArticles] = useState<Article[] | undefined>(undefined);
+  const [articles, setArticles] = useState<Article[]>([]);
   const [showArticles, setShowArticles] = useState(false);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
         getFetchedData={handleResults}
         noLoader={true}
       />
-      {showArticles && articles ? (
+      {showArticles ? (
         <View style={styles.listContainer}>
           <ArticleList
             articleListHeaderParams={{
