@@ -565,6 +565,8 @@ export default {
     title: "Menu",
   },
   moodboard: {
+    completeMoodboard:
+      "Complétez votre suivi d'humeur en cliquant sur le calendrier ci-dessous.",
     description:
       "Le suivi d'humeur est un outil d'accompagnement pour évaluer régulièrement votre humeur et au besoin, d'effectuer le questionnaire de la dépression post-partum.",
     howDoYouFeelToday: "Comment vous sentez vous aujourd'hui ?",
