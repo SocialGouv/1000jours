@@ -11,7 +11,7 @@ import * as KeyboardUtils from "./keyboard.util";
 import * as LinkingUtils from "./linking/linking.util";
 import * as LoggingUtils from "./logging.util";
 import { initMonitoring, reportError } from "./logging.util";
-import * as MoodboardUtils from "./moodboard.util";
+import * as MoodboardUtils from "./moodboard/moodboard.util";
 import * as NotificationUtils from "./notification.util";
 import * as RootNavigation from "./rootNavigation.util";
 import * as SearchUtils from "./search.util";

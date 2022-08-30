@@ -1,10 +1,10 @@
 import { format } from "date-fns";
 
-import { MoodboardAssets } from "../components/assets";
-import { Formats, Labels, StorageKeysConstants } from "../constants";
-import { Colors } from "../styles";
-import type { MoodboardItem, MoodStorageItem } from "../type";
-import { getObjectValue, storeObjectValue } from "./storage.util";
+import { MoodboardAssets } from "../../components/assets";
+import { Formats, Labels, StorageKeysConstants } from "../../constants";
+import { Colors } from "../../styles";
+import type { MoodboardItem, MoodStorageItem } from "../../type";
+import { getObjectValue, storeObjectValue } from "./../storage.util";
 
 export const MOODBOARD_ITEMS: MoodboardItem[] = [
   {
