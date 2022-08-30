@@ -65,10 +65,12 @@ const FetchPois: React.FC<Props> = ({
 
   const handleResults = useCallback(
     (data: unknown) => {
-      const { searchPois } = data as {
-        searchPois: Poi[];
-      };
-      setFetchedPois(searchPois);
+      if (data) {
+        const { searchPois } = data as {
+          searchPois: Poi[];
+        };
+        setFetchedPois(searchPois);
+      } else setFetchedPois([]);
     },
     [setFetchedPois]
   );
