@@ -1,6 +1,6 @@
 import * as AccessibilityUtils from "./accessibility/accessibility.util";
 import * as AppUtils from "./app.util";
-import * as AroundMeUtils from "./aroundMe.util";
+import * as AroundMeUtils from "./aroundMe/aroundMe.util";
 import * as AroundMeFilterUtils from "./aroundMe/aroundMeFilter.util";
 import * as ArticleUtils from "./article.util";
 import * as ArticleFilterUtils from "./articles/articleFilter.util";
