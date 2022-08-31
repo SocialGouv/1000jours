@@ -12,7 +12,7 @@ describe("AroundMeUtils", () => {
       longitudeDelta: 0.13483263552188873,
     };
 
-    it("Center point of region", () => {
+    it("Should return center point of a given region", () => {
       const expected: LatLng = {
         latitude: 47.223324097274556,
         longitude: -1.538015529513359,
@@ -23,7 +23,7 @@ describe("AroundMeUtils", () => {
       ).toEqual(expected);
     });
 
-    it("Top left point of region", () => {
+    it("Should return top left point of a given region", () => {
       const newLatitude: number =
         regionNantes.latitude + regionNantes.latitudeDelta / 2;
       const newLongitude: number =
@@ -38,7 +38,7 @@ describe("AroundMeUtils", () => {
       ).toEqual(expected);
     });
 
-    it("Bottom right point of region", () => {
+    it("Should return bottom right point of a given region", () => {
       const newLatitude: number =
         regionNantes.latitude - regionNantes.latitudeDelta / 2;
       const newLongitude: number =
