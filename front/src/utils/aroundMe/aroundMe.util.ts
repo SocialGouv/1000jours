@@ -1,7 +1,7 @@
 import type { LatLng, Region } from "react-native-maps";
 
-import { AroundMeConstants } from "../constants";
-import { PLATFORM_IS_IOS } from "../constants/platform.constants";
+import { AroundMeConstants } from "../../constants";
+import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 
 export const getPostalCodeCoords = async (
   postalCodeInput: string
