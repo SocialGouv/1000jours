@@ -26,15 +26,16 @@ const ArticleFavorites: FC<Props> = ({ navigation }) => {
   const [trackerAction, setTrackerAction] = useState("");
 
   const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
-  const [articles, setArticles] = useState<Article[] | undefined>(undefined);
+  const [articles, setArticles] = useState<Article[]>([]);
   const [showArticles, setShowArticles] = useState(false);
 
   const setFavorites = useCallback(async () => {
     const ids = (await StorageUtils.getObjectValue(
       StorageKeysConstants.favoriteArticlesIds
     )) as number[] | undefined;
-    if (ids) setFavoriteIds(ids);
-  }, []);
+    setFavoriteIds(ids ?? []);
+    if (favoriteIds.length === 0) setArticles([]);
+  }, [favoriteIds.length]);
 
   useEffect(() => {
     void setFavorites();
@@ -42,7 +43,7 @@ const ArticleFavorites: FC<Props> = ({ navigation }) => {
 
   useEffect(() => {
     setShowArticles(true);
-  }, [articles]);
+  }, [articles, favoriteIds]);
 
   useEffect(() => {
     const willFocusSubscription = navigation.addListener("focus", () => {
@@ -71,7 +72,7 @@ const ArticleFavorites: FC<Props> = ({ navigation }) => {
         />
       )}
 
-      {showArticles && articles ? (
+      {showArticles ? (
         <View style={styles.listContainer}>
           <ArticleList
             articleListHeaderParams={{

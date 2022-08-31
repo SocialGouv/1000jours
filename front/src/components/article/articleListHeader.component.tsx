@@ -26,7 +26,7 @@ interface Props {
   title: string;
   description?: string;
   articles: Article[];
-  setArticles: React.Dispatch<React.SetStateAction<Article[] | undefined>>;
+  setArticles: React.Dispatch<React.SetStateAction<Article[]>>;
   setTrackerAction: React.Dispatch<React.SetStateAction<string>>;
   navigation: StackNavigationProp<TabHomeParamList>;
   step?: Step;
