@@ -55,6 +55,7 @@ export enum TrackingEvent {
   FILTER_ARTICLES = "Filtre (Articles)",
   RECHERCHER = "Rechercher",
   MOODBOARD = "Moodboard",
+  NOTIFICATIONS_CENTER = "Centre de notifications",
   SETTINGS = "Settings",
   NOTIFICATIONS_DISABLED = "Notifications désactivées",
   RESSOURCES = "Ressources",

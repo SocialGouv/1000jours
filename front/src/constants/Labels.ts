@@ -562,6 +562,7 @@ export default {
     moodboard: "Suivi d'humeur",
     myFavorites: "Mes favoris",
     myProfil: "Mon profil",
+    notificationsCenter: "Centre de notification",
     title: "Menu",
   },
   moodboard: {
@@ -587,6 +588,16 @@ export default {
   noData: "Aucunes données",
   notification: {
     openTheApp: "Ouverture de l'app",
+  },
+  notificationsCenter: {
+    article: {
+      decription:
+        "Vous précisant qu’il y a tel article non lu sur votre étape.",
+      title: "Notifications des articles non lus",
+    },
+    description:
+      "Ici vous pouvez paramétrer les notifications que vous souhaitez recevoir en les activant/désactivant :",
+    title: "Paramètres de notifications",
   },
   onboarding: {
     screenNumber: "Écran n°",

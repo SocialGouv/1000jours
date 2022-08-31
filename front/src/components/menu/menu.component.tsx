@@ -83,6 +83,13 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       {
         icon: IcomoonIcons.email,
         onPress: () => {
+          void RootNavigation.navigate("notificationsCenter");
+        },
+        title: Labels.menu.notificationsCenter,
+      },
+      {
+        icon: IcomoonIcons.email,
+        onPress: () => {
           void Linking.openURL(`mailto:${emailContact}`);
         },
         title: Labels.menu.contactUs,
