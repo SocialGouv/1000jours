@@ -37,7 +37,9 @@ const NotificationToggle: FC<Props> = ({ title, description, type }) => {
   return (
     <View style={styles.mainContent}>
       <View style={styles.itemTextBloc}>
-        <Text style={styles.itemTextTitle}>{title}</Text>
+        <Text style={styles.itemTextTitle} accessibilityRole="header">
+          {title}
+        </Text>
         <Text style={styles.itemTextDescr}>{description}</Text>
       </View>
       <View style={styles.itemToggleBloc}>
@@ -46,6 +48,9 @@ const NotificationToggle: FC<Props> = ({ title, description, type }) => {
             styles.itemToggleText,
             isToggleOn ? null : { fontWeight: FontWeight.bold },
           ]}
+          importantForAccessibility="no"
+          accessibilityElementsHidden
+          accessible={false}
         >
           {Labels.buttons.no}
         </Text>
@@ -57,6 +62,9 @@ const NotificationToggle: FC<Props> = ({ title, description, type }) => {
             styles.itemToggleText,
             isToggleOn ? { fontWeight: FontWeight.bold } : null,
           ]}
+          importantForAccessibility="no"
+          accessibilityElementsHidden
+          accessible={false}
         >
           {Labels.buttons.yes}
         </Text>
