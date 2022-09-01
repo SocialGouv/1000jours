@@ -1,3 +1,4 @@
+import CheckAppVersion from "./app/checkAppVersion.component";
 import AddressDetails from "./aroundMe/addressDetails.component";
 import AroundMeFilter from "./aroundMe/aroundMeFilter.component";
 import AroundMeMap from "./aroundMe/aroundMeMap.component";
@@ -56,6 +57,7 @@ export {
   ArticleCard,
   ArticleList,
   ArticlesFilter,
+  CheckAppVersion,
   ConditionsOfUse,
   CustomMapMarker,
   CustomPagination,

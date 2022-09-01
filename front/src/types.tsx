@@ -242,3 +242,7 @@ export type ArticleListHeaderParams = {
   setTrackerAction: React.Dispatch<React.SetStateAction<string>>;
   navigation: StackNavigationProp<TabHomeParamList>;
 };
+
+export type Config = {
+  lastAppVersionNumber: string | null;
+};

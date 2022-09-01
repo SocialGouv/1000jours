@@ -20,7 +20,7 @@ export const manageStorage = async (): Promise<void> => {
   );
 
   if (
-    Constants?.manifest?.version &&
+    Constants.manifest?.version &&
     lastVersionLaunch !== Constants.manifest.version
   ) {
     await storeStringValue(
@@ -32,4 +32,32 @@ export const manageStorage = async (): Promise<void> => {
       true
     );
   }
+};
+
+export const hasNewVersionAvailable = (
+  currentVersion: string | null,
+  lastVersionAvailable: string | null
+): boolean => {
+  let hasNewVersion = false;
+  if (currentVersion && lastVersionAvailable) {
+    const lastVersionAvailableSplitted = lastVersionAvailable.split(".");
+    const currentVersionSplitted = currentVersion.split(".");
+    for (let i = 0; i < lastVersionAvailableSplitted.length; i++) {
+      if (
+        Number(currentVersionSplitted[i]) <
+        Number(lastVersionAvailableSplitted[i])
+      ) {
+        hasNewVersion = true;
+        break;
+      } else if (
+        Number(currentVersionSplitted[i]) >
+        Number(lastVersionAvailableSplitted[i])
+      ) {
+        hasNewVersion = false;
+        break;
+      }
+    }
+  }
+
+  return hasNewVersion;
 };
