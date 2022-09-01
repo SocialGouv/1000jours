@@ -58,6 +58,11 @@ export default {
     version: "version.",
   },
   appName: "1000 premiers jours",
+  appVersion: {
+    doUpdate: "Mettre à jour",
+    newVersionAvailable: "Une nouvelle version de l'application est disponible",
+    update: "Mise à jour",
+  },
   aroundMe: {
     addressesListLabelEnd:
       "points d'intérêts qui correspondent à vos critères :",

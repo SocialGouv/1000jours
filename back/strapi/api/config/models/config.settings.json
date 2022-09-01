@@ -2,7 +2,8 @@
   "kind": "singleType",
   "collectionName": "configs",
   "info": {
-    "name": "config"
+    "name": "config",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -10,7 +11,7 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "minAppVersionNumber": {
+    "lastAppVersionNumber": {
       "type": "string"
     }
   }
