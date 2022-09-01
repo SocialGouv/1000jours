@@ -37,6 +37,14 @@ initMonitoring();
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const customFonts = { IcoMoon: BaseAssets.IcomoonFont };
 
+export enum AppStatus {
+  active = "active",
+  inactive = "inactive",
+  background = "background",
+  unknown = "unknown",
+  extension = "extension",
+}
+
 const MainAppContainer: FC = () => {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
@@ -77,13 +85,13 @@ const MainAppContainer: FC = () => {
   };
 
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
-    if (nextAppState === "active") {
+    if (nextAppState === AppStatus.active) {
       setStoreCurrentStepArticleIds(true);
       setCheckAppVersion(true);
       void updateAppActiveCounter();
       void checkNotificationPermission();
     }
-    if (nextAppState === "inactive") {
+    if (nextAppState === AppStatus.inactive) {
       setCheckAppVersion(false);
     }
   };

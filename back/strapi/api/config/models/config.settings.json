@@ -3,7 +3,7 @@
   "collectionName": "configs",
   "info": {
     "name": "config",
-    "description": ""
+    "description": "Configuration"
   },
   "options": {
     "increments": true,
