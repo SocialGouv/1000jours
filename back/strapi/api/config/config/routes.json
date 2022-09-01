@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/config",
+      "handler": "config.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/config",
+      "handler": "config.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/config",
+      "handler": "config.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
