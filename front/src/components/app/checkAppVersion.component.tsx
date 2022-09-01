@@ -5,8 +5,12 @@ import * as React from "react";
 import type { AlertButton } from "react-native";
 import { Alert, Linking } from "react-native";
 
-import { ConfigQueries, FetchPoliciesConstants, Labels } from "../../constants";
-import { appUrlAndroid, appUrliOS } from "../../constants/links.constants";
+import {
+  ConfigQueries,
+  FetchPoliciesConstants,
+  Labels,
+  Links,
+} from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import { GraphQLQuery } from "../../services";
 import type { Config } from "../../types";
@@ -18,7 +22,9 @@ const CheckAppVersion: FC = () => {
       { text: Labels.buttons.no },
       {
         onPress: () => {
-          void Linking.openURL(PLATFORM_IS_IOS ? appUrliOS : appUrlAndroid);
+          void Linking.openURL(
+            PLATFORM_IS_IOS ? Links.appUrliOS : Links.appUrlAndroid
+          );
         },
         text: Labels.appVersion.doUpdate,
       },
