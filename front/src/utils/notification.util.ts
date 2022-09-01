@@ -371,41 +371,47 @@ export const updateArticlesNotification = async (): Promise<void> => {
 export const scheduleArticlesNotification = async (
   notifTrigger?: NotificationTriggerInput
 ): Promise<void> => {
-  const nbArticlesToRead: number = await countCurrentStepArticlesNotRead();
-  if (nbArticlesToRead >= 0) {
-    const trigger: NotificationTriggerInput =
-      nbArticlesToRead > 0
-        ? notifTrigger ?? (await getNewTriggerForArticlesNotification())
-        : NotificationConstants.MIN_TRIGGER;
-    const content = await buildArticlesNotificationContent(nbArticlesToRead);
+  const isToggleActive = (await StorageUtils.getObjectValue(
+    StorageKeysConstants.notifToggleArticles
+  )) as boolean;
 
-    const stepsAlreadyCongratulatedForArticles =
-      ((await StorageUtils.getObjectValue(
-        StorageKeysConstants.stepsAlreadyCongratulatedForArticles
-      )) as string[] | undefined) ?? null;
-    const currentStep = (await StorageUtils.getObjectValue(
-      StorageKeysConstants.currentStep
-    )) as Step | null;
+  if (isToggleActive) {
+    const nbArticlesToRead: number = await countCurrentStepArticlesNotRead();
+    if (nbArticlesToRead >= 0) {
+      const trigger: NotificationTriggerInput =
+        nbArticlesToRead > 0
+          ? notifTrigger ?? (await getNewTriggerForArticlesNotification())
+          : NotificationConstants.MIN_TRIGGER;
+      const content = await buildArticlesNotificationContent(nbArticlesToRead);
 
-    if (content) {
-      await cancelAllNotificationsByType(NotificationType.articles);
-      const hasBeenAlreadyNotified =
-        stepsAlreadyCongratulatedForArticles?.includes(
-          currentStep ? currentStep.id.toString() : ""
-        );
-      if (!hasBeenAlreadyNotified) {
-        await sendNotificationReminder(content, trigger);
+      const stepsAlreadyCongratulatedForArticles =
+        ((await StorageUtils.getObjectValue(
+          StorageKeysConstants.stepsAlreadyCongratulatedForArticles
+        )) as string[] | undefined) ?? null;
+      const currentStep = (await StorageUtils.getObjectValue(
+        StorageKeysConstants.currentStep
+      )) as Step | null;
 
-        // Enregistre les étapes pour lesquelles la notification de félicitations (articles tous lus) a déjà été programmée
-        if (nbArticlesToRead === 0 && currentStep) {
-          const currentStepId = currentStep.id.toString();
-          const newValue = stepsAlreadyCongratulatedForArticles
-            ? stepsAlreadyCongratulatedForArticles.push(currentStepId)
-            : [currentStepId];
-          await StorageUtils.storeObjectValue(
-            StorageKeysConstants.stepsAlreadyCongratulatedForArticles,
-            newValue
+      if (content) {
+        await cancelAllNotificationsByType(NotificationType.articles);
+        const hasBeenAlreadyNotified =
+          stepsAlreadyCongratulatedForArticles?.includes(
+            currentStep ? currentStep.id.toString() : ""
           );
+        if (!hasBeenAlreadyNotified) {
+          await sendNotificationReminder(content, trigger);
+
+          // Enregistre les étapes pour lesquelles la notification de félicitations (articles tous lus) a déjà été programmée
+          if (nbArticlesToRead === 0 && currentStep) {
+            const currentStepId = currentStep.id.toString();
+            const newValue = stepsAlreadyCongratulatedForArticles
+              ? stepsAlreadyCongratulatedForArticles.push(currentStepId)
+              : [currentStepId];
+            await StorageUtils.storeObjectValue(
+              StorageKeysConstants.stepsAlreadyCongratulatedForArticles,
+              newValue
+            );
+          }
         }
       }
     }

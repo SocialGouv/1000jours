@@ -81,7 +81,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
         title: Labels.timeline.library.nom,
       },
       {
-        icon: IcomoonIcons.email,
+        icon: IcomoonIcons.notification,
         onPress: () => {
           void RootNavigation.navigate("notificationsCenter");
         },

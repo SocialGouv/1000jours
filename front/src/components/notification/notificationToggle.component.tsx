@@ -4,8 +4,9 @@ import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { Toggle } from "../../components/baseComponents";
-import { Labels } from "../../constants";
+import { Labels, StorageKeysConstants } from "../../constants";
 import { Colors, FontStyle, FontWeight, Margins } from "../../styles";
+import { StorageUtils } from "../../utils";
 import * as NotificationUtils from "../../utils/notification.util";
 import { NotificationType } from "../../utils/notification.util";
 
@@ -19,14 +20,24 @@ const NotificationToggle: FC<Props> = ({ title, description, type }) => {
   const [isToggleOn, setToggleOn] = useState(false);
 
   useEffect(() => {
-    void NotificationUtils.getAllNotificationsByType(type).then((data) => {
-      setToggleOn(data.length > 0);
-    });
+    void initToggle();
   }, []);
+
+  const initToggle = async () => {
+    // Value in storage
+    const storageValue = (await StorageUtils.getObjectValue(
+      StorageKeysConstants.notifToggleArticles
+    )) as boolean;
+    setToggleOn(storageValue);
+  };
 
   const onTouchToggle = useCallback(async () => {
     const newValue = !isToggleOn;
     setToggleOn(newValue);
+    await StorageUtils.storeObjectValue(
+      StorageKeysConstants.notifToggleArticles,
+      newValue
+    );
 
     if (newValue) {
       if (type === NotificationType.articles)
