@@ -6,8 +6,13 @@ import {
   NotificationConstants,
   StorageKeysConstants,
 } from "../constants";
+import type { Step } from "../types";
 import { NotificationUtils, StorageUtils } from ".";
-import { NotificationType } from "./notification.util";
+import {
+  getNotificationTrigger,
+  NotificationType,
+  saveStepForCongratNotifScheduled,
+} from "./notification.util";
 
 describe("Notification utils", () => {
   describe("Build Articles Notification Content", () => {
@@ -93,6 +98,104 @@ describe("Notification utils", () => {
       const expected = isAfter(triggerDate, new Date());
 
       expect(true).toEqual(expected);
+    });
+  });
+
+  describe("getNotificationTrigger", () => {
+    afterEach(() => {
+      void AsyncStorage.clear();
+    });
+
+    it("getNotificationTrigger with 0 article and no trigger", async () => {
+      const result = await getNotificationTrigger(0, null);
+      const expected = NotificationConstants.MIN_TRIGGER;
+
+      expect(result).toEqual(expected);
+    });
+
+    it("getNotificationTrigger with articles", async () => {
+      const notifTrigger = { seconds: 20 };
+      const result = await getNotificationTrigger(5, notifTrigger);
+      const expected = { seconds: 20 };
+
+      expect(result).toEqual(expected);
+    });
+
+    it("getNotificationTrigger with articles and no trigger", async () => {
+      const result = await getNotificationTrigger(5, null);
+      const expected = new Date(
+        addDays(
+          new Date(),
+          NotificationConstants.NUMBER_OF_DAYS_NOTIF_ARTICLES_REMINDER
+        ).setHours(NotificationConstants.ARTICLES_NOTIF_TRIGGER_HOUR, 0, 0, 0)
+      );
+
+      expect(result).toEqual(expected);
+      await StorageUtils.getObjectValue(
+        StorageKeysConstants.triggerForArticlesNotification
+      ).then((data) => {
+        expect(data).toEqual(expected.toJSON());
+      });
+    });
+  });
+
+  describe("saveStepForCongratNotifScheduled", () => {
+    afterEach(() => {
+      void AsyncStorage.clear();
+    });
+
+    it("saveStepForCongratNotifScheduled with no article and currentStep is null", async () => {
+      await saveStepForCongratNotifScheduled(0, null, null);
+      await StorageUtils.getObjectValue(
+        StorageKeysConstants.stepsAlreadyCongratulatedForArticles
+      ).then((data) => {
+        expect(data).toBeNull();
+      });
+    });
+
+    it("saveStepForCongratNotifScheduled with no article, currentStep and no stepsAlreadyCongratulatedForArticles", async () => {
+      const currentStep: Step = {
+        active: null,
+        debut: 0,
+        description: null,
+        fin: 90,
+        id: 6,
+        nom: "De 0 à 3 mois",
+        ordre: 6,
+      };
+      const expected = ["6"];
+
+      await saveStepForCongratNotifScheduled(0, currentStep, null);
+      await StorageUtils.getObjectValue(
+        StorageKeysConstants.stepsAlreadyCongratulatedForArticles
+      ).then((data) => {
+        expect(data).toEqual(expected);
+      });
+    });
+
+    it("saveStepForCongratNotifScheduled with no article, currentStep and stepsAlreadyCongratulatedForArticles", async () => {
+      const currentStep: Step = {
+        active: null,
+        debut: 0,
+        description: null,
+        fin: 90,
+        id: 6,
+        nom: "De 0 à 3 mois",
+        ordre: 6,
+      };
+      const stepsAlreadyCongratulatedForArticles = ["2", "5"];
+      const expected = stepsAlreadyCongratulatedForArticles.length + 1;
+
+      await saveStepForCongratNotifScheduled(
+        0,
+        currentStep,
+        stepsAlreadyCongratulatedForArticles
+      );
+      await StorageUtils.getObjectValue(
+        StorageKeysConstants.stepsAlreadyCongratulatedForArticles
+      ).then((data) => {
+        expect(data).toEqual(expected);
+      });
     });
   });
 });

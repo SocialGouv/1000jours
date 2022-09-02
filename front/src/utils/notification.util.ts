@@ -368,6 +368,32 @@ export const updateArticlesNotification = async (): Promise<void> => {
   await scheduleArticlesNotification(trigger);
 };
 
+export const getNotificationTrigger = async (
+  nbArticlesToRead: number,
+  notifTrigger: NotificationTriggerInput | undefined
+): Promise<NotificationTriggerInput> =>
+  nbArticlesToRead > 0
+    ? notifTrigger ?? getNewTriggerForArticlesNotification()
+    : NotificationConstants.MIN_TRIGGER;
+
+// Enregistre les étapes pour lesquelles la notification de félicitations (articles tous lus) a déjà été programmée
+export const saveStepForCongratNotifScheduled = async (
+  nbArticlesToRead: number,
+  currentStep: Step | null,
+  stepsAlreadyCongratulatedForArticles: string[] | null
+) => {
+  if (nbArticlesToRead === 0 && currentStep) {
+    const currentStepId = currentStep.id.toString();
+    const newValue = stepsAlreadyCongratulatedForArticles
+      ? stepsAlreadyCongratulatedForArticles.push(currentStepId)
+      : [currentStepId];
+    await StorageUtils.storeObjectValue(
+      StorageKeysConstants.stepsAlreadyCongratulatedForArticles,
+      newValue
+    );
+  }
+};
+
 export const scheduleArticlesNotification = async (
   notifTrigger?: NotificationTriggerInput
 ): Promise<void> => {
@@ -378,10 +404,10 @@ export const scheduleArticlesNotification = async (
   if (isToggleActive) {
     const nbArticlesToRead: number = await countCurrentStepArticlesNotRead();
     if (nbArticlesToRead >= 0) {
-      const trigger: NotificationTriggerInput =
-        nbArticlesToRead > 0
-          ? notifTrigger ?? (await getNewTriggerForArticlesNotification())
-          : NotificationConstants.MIN_TRIGGER;
+      const trigger: NotificationTriggerInput = await getNotificationTrigger(
+        nbArticlesToRead,
+        notifTrigger
+      );
       const content = await buildArticlesNotificationContent(nbArticlesToRead);
 
       const stepsAlreadyCongratulatedForArticles =
@@ -400,18 +426,11 @@ export const scheduleArticlesNotification = async (
           );
         if (!hasBeenAlreadyNotified) {
           await sendNotificationReminder(content, trigger);
-
-          // Enregistre les étapes pour lesquelles la notification de félicitations (articles tous lus) a déjà été programmée
-          if (nbArticlesToRead === 0 && currentStep) {
-            const currentStepId = currentStep.id.toString();
-            const newValue = stepsAlreadyCongratulatedForArticles
-              ? stepsAlreadyCongratulatedForArticles.push(currentStepId)
-              : [currentStepId];
-            await StorageUtils.storeObjectValue(
-              StorageKeysConstants.stepsAlreadyCongratulatedForArticles,
-              newValue
-            );
-          }
+          await saveStepForCongratNotifScheduled(
+            nbArticlesToRead,
+            currentStep,
+            stepsAlreadyCongratulatedForArticles
+          );
         }
       }
     }
