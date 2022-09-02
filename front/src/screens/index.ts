@@ -11,6 +11,7 @@ import Parentheque from "./home/parentheque.component";
 import TabHomeScreen from "./home/tabHomeScreen.component";
 import LoadingScreen from "./loading/loading.component";
 import Moodboard from "./moodboard/moodboard.component";
+import NotificationsCenter from "./notificationsCenter/notificationsCenter.component";
 import Onboarding from "./onboardingAndProfile/onboarding.component";
 import Profile from "./onboardingAndProfile/profile.component";
 import AroundMeMapAndList from "./search/aroundMeMapAndList.component";
@@ -27,6 +28,7 @@ export {
   EventDetails,
   LoadingScreen,
   Moodboard,
+  NotificationsCenter,
   Onboarding,
   Parentheque,
   Profile,

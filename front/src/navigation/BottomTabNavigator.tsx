@@ -19,7 +19,7 @@ import {
   TabHomeScreen,
   TabSearchScreen,
 } from "../screens";
-import NotificationsCenter from "../screens/notificationsCenter/notificationsCenter.copmonent";
+import NotificationsCenter from "../screens/notificationsCenter/notificationsCenter.component";
 import { Colors } from "../styles";
 import type {
   BottomTabParamList,
