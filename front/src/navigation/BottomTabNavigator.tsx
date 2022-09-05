@@ -19,6 +19,7 @@ import {
   TabHomeScreen,
   TabSearchScreen,
 } from "../screens";
+import NotificationsCenter from "../screens/notificationsCenter/notificationsCenter.component";
 import { Colors } from "../styles";
 import type {
   BottomTabParamList,
@@ -135,6 +136,10 @@ const TabHomeNavigator: FC = () => (
     <TabHomeStack.Screen name="parentheque" component={Parentheque} />
     <TabHomeStack.Screen name="article" component={ArticleDetail} />
     <TabHomeStack.Screen name="epdsSurvey" component={TabEpdsScreen} />
+    <TabHomeStack.Screen
+      name="notificationsCenter"
+      component={NotificationsCenter}
+    />
   </TabHomeStack.Navigator>
 );
 
@@ -150,6 +155,10 @@ const TabCalendarNavigator: FC = () => (
     <TabCalendarStack.Screen name="article" component={ArticleDetail} />
     <TabHomeStack.Screen name="parentheque" component={Parentheque} />
     <TabCalendarStack.Screen name="aroundMeScreen" component={AroundMeScreen} />
+    <TabHomeStack.Screen
+      name="notificationsCenter"
+      component={NotificationsCenter}
+    />
   </TabCalendarStack.Navigator>
 );
 
@@ -162,6 +171,10 @@ const TabEpdsNavigator: FC = () => (
       options={{}}
     />
     <TabHomeStack.Screen name="parentheque" component={Parentheque} />
+    <TabHomeStack.Screen
+      name="notificationsCenter"
+      component={NotificationsCenter}
+    />
   </TabEpdsStack.Navigator>
 );
 
@@ -178,6 +191,10 @@ const TabSearchNavigator: FC = () => (
       component={AroundMeMapAndList}
     />
     <TabHomeStack.Screen name="parentheque" component={Parentheque} />
+    <TabHomeStack.Screen
+      name="notificationsCenter"
+      component={NotificationsCenter}
+    />
   </TabSearchStack.Navigator>
 );
 

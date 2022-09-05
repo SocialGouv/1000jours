@@ -32,6 +32,7 @@ export type TabHomeParamList = {
   parentheque: { documents?: Document[] };
   article: { id: number; step?: Step };
   epdsSurvey: undefined;
+  notificationsCenter: undefined;
 };
 
 export type TabCalendarParamList = {
