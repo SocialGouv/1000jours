@@ -14,6 +14,7 @@ interface Props {
   notifyOnNetworkStatusChange?: boolean;
   noLoader?: boolean;
   noLoaderBackdrop?: boolean;
+  showErrorMessage?: boolean;
 }
 
 export const GraphQLQuery: FC<Props> = ({
@@ -23,6 +24,7 @@ export const GraphQLQuery: FC<Props> = ({
   notifyOnNetworkStatusChange,
   noLoader,
   noLoaderBackdrop,
+  showErrorMessage = true,
 }) => {
   const { loading, error, data } = useQuery(gql(query), {
     fetchPolicy: fetchPolicy ?? FetchPoliciesConstants.NETWORK_ONLY,
@@ -36,7 +38,7 @@ export const GraphQLQuery: FC<Props> = ({
     return (
       <GraphQLLoader noLoader={noLoader} noLoaderBackdrop={noLoaderBackdrop} />
     );
-  if (error) return <ErrorMessage error={error} />;
+  if (error && showErrorMessage) return <ErrorMessage error={error} />;
   return null;
 };
 

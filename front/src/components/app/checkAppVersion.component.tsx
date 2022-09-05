@@ -53,6 +53,7 @@ const CheckAppVersion: FC = () => {
       query={ConfigQueries.CONFIG_GET_LAST_APP_VERSION}
       fetchPolicy={FetchPoliciesConstants.NO_CACHE}
       getFetchedData={handleResults}
+      showErrorMessage={false}
     />
   );
 };
