@@ -2,11 +2,13 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import _ from "lodash";
 import type { FC } from "react";
 import * as React from "react";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
 
 import { Labels } from "../../constants";
+import { useFavoriteArticlesIds } from "../../hooks";
 import { Colors, Margins, Paddings, Sizes } from "../../styles";
+import type { TrackerEvent } from "../../type";
 import type {
   Article,
   ArticleFilter,
@@ -14,13 +16,14 @@ import type {
   TabHomeParamList,
   Thematique,
 } from "../../types";
-import { TrackerUtils } from "../../utils";
+import { ArticleFilterUtils, TrackerUtils } from "../../utils";
 import ArticlesFilter from "../article/articlesFilter.component";
 import BackButton from "../baseComponents/backButton.component";
 import CustomButton from "../baseComponents/customButton.component";
 import { CommonText, SecondaryText } from "../baseComponents/StyledText";
 import { View } from "../baseComponents/Themed";
 import TitleH1 from "../baseComponents/titleH1.component";
+import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
   title: string;
@@ -45,6 +48,8 @@ const ArticleListHeader: FC<Props> = ({
   navigation,
   step,
 }) => {
+  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
+  const favoriteIds = useFavoriteArticlesIds();
   const stepIsFirstThreeMonths = step
     ? step.id == ETAPE_ENFANT_3_PREMIERS_MOIS
     : false;
@@ -89,6 +94,24 @@ const ArticleListHeader: FC<Props> = ({
     [articles, sendFiltersTracker, setArticles]
   );
 
+  const filterArticlesByFavorites = useCallback(() => {
+    const filteredArticles = ArticleFilterUtils.getFavoriteArticles(
+      articles,
+      favoriteIds
+    );
+    const result = articles.map((article) => {
+      return ArticleFilterUtils.hideArticleNotInFavorites(
+        article,
+        filteredArticles
+      );
+    });
+    setTrackerEventObject({
+      action: "FilterByFavorites",
+      name: `Step: ${step?.nom}`,
+    });
+    setArticles(result);
+  }, [articles, favoriteIds, setArticles, step]);
+
   const navigateToSurvey = useCallback(() => {
     navigation.navigate("epdsSurvey");
   }, [navigation]);
@@ -99,6 +122,7 @@ const ArticleListHeader: FC<Props> = ({
 
   return (
     <View>
+      <TrackerHandler eventObject={trackerEventObject} />
       <View style={styles.topContainer}>
         <View style={[styles.flexStart]}>
           <BackButton action={onGoBack} />
@@ -124,7 +148,11 @@ const ArticleListHeader: FC<Props> = ({
         </View>
       )}
       {articles.length > 0 && (
-        <ArticlesFilter articles={articles} applyFilters={applyFilters} />
+        <ArticlesFilter
+          articles={articles}
+          applyFilters={applyFilters}
+          filterByFavorites={filterArticlesByFavorites}
+        />
       )}
     </View>
   );

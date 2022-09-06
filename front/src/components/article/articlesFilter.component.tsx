@@ -7,6 +7,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import { Labels } from "../../constants";
 import { PLATFORM_IS_ANDROID } from "../../constants/platform.constants";
+import { useFavoriteArticlesIds } from "../../hooks";
 import { Colors, Margins, Paddings, Sizes, Styles } from "../../styles";
 import type { Article, ArticleFilter } from "../../types";
 import { ArticleFilterUtils } from "../../utils";
@@ -20,18 +21,31 @@ import {
   TitleH1,
   View,
 } from "../baseComponents";
+import CustomDivider from "../baseComponents/customDivider.component";
+import ArticlesFilterFavoritesRow from "./articlesFilterFavoritesRow.component";
 
 interface Props {
   articles: Article[];
   applyFilters: (filters: ArticleFilter[]) => void;
+  filterByFavorites: () => void;
 }
 
-const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
+const ArticlesFilter: FC<Props> = ({
+  articles,
+  applyFilters,
+  filterByFavorites,
+}) => {
+  const favoriteArticlesIds = useFavoriteArticlesIds();
   const [filters, setFilters] = useState<ArticleFilter[]>([]);
   const [lastAppliedFilters, setLastAppliedFilters] = useState<ArticleFilter[]>(
     []
   );
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [showFavoriteToggle, setShowFavoriteToggle] = useState(false);
+
+  const [lastToggleOnFavoritesValue, setLastToggleOnFavoritesValue] =
+    useState(false);
+  const [isToggleOn, setIsToggleOn] = useState(false);
 
   useEffect(() => {
     if (filters.length === 0) {
@@ -42,34 +56,78 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [articles]);
 
+  useEffect(() => {
+    setShowFavoriteToggle(
+      ArticleFilterUtils.shouldShowFavoriteToggle(articles, favoriteArticlesIds)
+    );
+  }, [articles, favoriteArticlesIds]);
+
+  useEffect(() => {
+    if (showFavoriteToggle && !isToggleOn) {
+      const areArticlesAllFavorites =
+        !ArticleFilterUtils.areArticlesNotAllFavorites(
+          articles,
+          favoriteArticlesIds
+        );
+
+      setLastToggleOnFavoritesValue(areArticlesAllFavorites);
+      setIsToggleOn(areArticlesAllFavorites);
+    }
+  }, [articles, favoriteArticlesIds, isToggleOn, showFavoriteToggle]);
+
   const onShowModal = useCallback(() => {
     if (lastAppliedFilters.length > 0) {
       setFilters(lastAppliedFilters);
     }
+    setIsToggleOn(lastToggleOnFavoritesValue);
     setIsModalVisible(!isModalVisible);
-  }, [isModalVisible, lastAppliedFilters]);
+  }, [isModalVisible, lastAppliedFilters, lastToggleOnFavoritesValue]);
 
   const resetFilters = useCallback(() => {
     setFilters(ArticleFilterUtils.getFilters(articles));
+    setIsToggleOn(false);
   }, [articles]);
 
   const cancelFiltersModal = useCallback(() => {
     setFilters(lastAppliedFilters);
+    setIsToggleOn(lastToggleOnFavoritesValue);
     setIsModalVisible(false);
-  }, [lastAppliedFilters]);
+  }, [lastAppliedFilters, lastToggleOnFavoritesValue]);
 
   const onCheckboxPressed = useCallback(
     (selectedFilter: ArticleFilter) => () => {
+      if (isToggleOn) setIsToggleOn(false);
       setFilters(ArticleFilterUtils.updateFilters(filters, selectedFilter));
     },
-    [filters]
+    [filters, isToggleOn]
   );
 
+  const onToggleFavorite = useCallback(() => {
+    setIsToggleOn(!isToggleOn);
+    setFilters(ArticleFilterUtils.getFilters(articles));
+  }, [isToggleOn, articles]);
+
   const onValidateFilter = useCallback(() => {
+    setLastToggleOnFavoritesValue(isToggleOn);
     setLastAppliedFilters(filters);
-    applyFilters(filters);
+
+    if (isToggleOn) filterByFavorites();
+    else applyFilters(filters);
+
     setIsModalVisible(false);
-  }, [applyFilters, filters]);
+  }, [applyFilters, filters, isToggleOn, filterByFavorites]);
+
+  const renderFavoriteToggleRow = () => {
+    return showFavoriteToggle ? (
+      <>
+        <CustomDivider />
+        <ArticlesFilterFavoritesRow
+          onToggleFavorite={onToggleFavorite}
+          isToggleOn={isToggleOn}
+        />
+      </>
+    ) : null;
+  };
 
   return (
     <View style={styles.paddingsDefault}>
@@ -130,21 +188,22 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
                   <CheckBox
                     containerStyle={styles.checkboxItem}
                     textStyle={{
+                      color: Colors.primaryBlueDark,
                       flex: 1,
                       fontWeight: filter.active ? "bold" : "normal",
                     }}
                     key={index}
                     iconRight
                     uncheckedIcon={
-                      <BaseAssets.UncheckedIcon
-                        width={Sizes.lg}
-                        height={Sizes.lg}
+                      <BaseAssets.CheckboxUncheckedIcon
+                        width={Sizes.sm}
+                        height={Sizes.sm}
                       />
                     }
                     checkedIcon={
-                      <BaseAssets.CheckedIcon
-                        width={Sizes.lg}
-                        height={Sizes.lg}
+                      <BaseAssets.CheckboxCheckedIcon
+                        width={Sizes.sm}
+                        height={Sizes.sm}
                       />
                     }
                     uncheckedColor={Colors.primaryBlueDark}
@@ -157,6 +216,7 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
                     onPress={onCheckboxPressed(filter)}
                   />
                 ))}
+                {renderFavoriteToggleRow()}
               </ScrollView>
 
               <View style={styles.buttonsContainer}>

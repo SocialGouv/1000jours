@@ -12,7 +12,7 @@ const CustomDivider: FC = () => {
 const styles = StyleSheet.create({
   divider: {
     alignSelf: "center",
-    backgroundColor: Colors.navigation,
+    backgroundColor: Colors.primaryBlue,
     borderRadius: Sizes.xs,
     height: Sizes.divider,
     marginVertical: Margins.default,
