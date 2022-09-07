@@ -14,6 +14,7 @@ import SubmitNewFilter from "./aroundMe/submitNewFilter.component";
 import ArticleCard from "./article/articleCard.component";
 import ArticleList from "./article/articleList.component";
 import ArticlesFilter from "./article/articlesFilter.component";
+import ArticlesFilterFavoritesRow from "./article/articlesFilterFavoritesRow.component";
 import DidYouKnow from "./article/didYouKnow.component";
 import ImageBanner from "./article/imageBanner.component";
 import InShort from "./article/inShort.component";
@@ -57,6 +58,7 @@ export {
   ArticleCard,
   ArticleList,
   ArticlesFilter,
+  ArticlesFilterFavoritesRow,
   CheckAppVersion,
   ConditionsOfUse,
   CustomMapMarker,

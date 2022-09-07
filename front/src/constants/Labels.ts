@@ -176,6 +176,7 @@ export default {
   articleList: {
     articlesAlreadyRead: "article(s) déjà lu(s)",
     articlesToRead: "article(s) à lire",
+    filterByFavorites: "Afficher seulement mes favoris",
     filters: "Filtrer",
     resetFilters: "Réinitialiser",
   },

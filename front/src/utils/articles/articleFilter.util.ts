@@ -39,11 +39,40 @@ export const filterButtonLabel = (filters: ArticleFilter[]): string => {
 export const filterButtonAccessibilityLabel = (
   filters: ArticleFilter[]
 ): string =>
-  `${Labels.articleList.filters}. (${numberOfActiveFilters(filters)} ${Labels.accessibility.articlesFilters.activeFilter
+  `${Labels.articleList.filters}. (${numberOfActiveFilters(filters)} ${
+    Labels.accessibility.articlesFilters.activeFilter
   })`;
 
 export const checkboxAccessibilityLabel = (filter: ArticleFilter): string =>
   `${filter.thematique.nom}. (${filter.nbArticles} ${Labels.accessibility.articlesFilters.availableArticles})`;
+
+export const areArticlesNotAllFavorites = (
+  articles: Article[],
+  favoriteArticlesIds: number[]
+): boolean =>
+  articles.some((article) => {
+    return !favoriteArticlesIds.includes(article.id);
+  });
+
+export const shouldShowFavoriteToggle = (
+  articles: Article[],
+  favoriteArticlesIds: number[]
+): boolean => getFavoriteArticles(articles, favoriteArticlesIds).length > 0;
+
+export const getFavoriteArticles = (
+  articles: Article[],
+  favoriteArticlesIds: number[]
+): Article[] =>
+  articles.filter((article) => favoriteArticlesIds.includes(article.id));
+
+export const hideArticleNotInFavorites = (
+  article: Article,
+  favoriteArticles: Article[]
+): Article => {
+  let hide = false;
+  if (favoriteArticles.length > 0) hide = !favoriteArticles.includes(article);
+  return { ...article, hide: hide };
+};
 
 const numberOfActiveFilters = (filters: ArticleFilter[]) =>
   filters.filter((item) => item.active).length;
