@@ -29,6 +29,8 @@ import type { RootStackParamList } from "../../types";
 import { MoodboardUtils, TrackerUtils } from "../../utils";
 import { getObjectValue } from "../../utils/storage.util";
 
+type MoodsCalendarRef = React.ElementRef<typeof MoodsCalendar>;
+
 const firstItemIndexToShow = 1;
 
 interface Props {
@@ -42,6 +44,7 @@ const Moodboard: FC<Props> = ({ navigation }) => {
   const [dismissAnimation, setDismissAnimation] = useState<unknown>(null);
   const isAccessibilityMode = useAccessibilityReader();
   const elementRef = useRef<Animatable.View & View>(null);
+  const moodsCalendarRef = useRef<MoodsCalendarRef>(null);
 
   const onViewLayout = useCallback((event: LayoutChangeEvent) => {
     const { layout } = event.nativeEvent;
@@ -77,12 +80,13 @@ const Moodboard: FC<Props> = ({ navigation }) => {
     navigation.goBack();
   }, [navigation]);
 
-  const validate = useCallback(() => {
-    void MoodboardUtils.saveMood(
+  const validate = useCallback(async () => {
+    await MoodboardUtils.saveMood(
       MoodboardUtils.MOODBOARD_ITEMS[activeIndex].title
     );
     setTrackerAction(MoodboardUtils.MOODBOARD_ITEMS[activeIndex].title);
     hideCarouselChoice();
+    moodsCalendarRef.current?.refresh();
   }, [activeIndex, hideCarouselChoice]);
 
   return (
@@ -130,7 +134,7 @@ const Moodboard: FC<Props> = ({ navigation }) => {
         </Animatable.View>
       ) : null}
 
-      <MoodsCalendar />
+      <MoodsCalendar ref={moodsCalendarRef} />
     </ScrollView>
   );
 };

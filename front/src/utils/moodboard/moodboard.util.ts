@@ -44,5 +44,5 @@ export const saveMood = async (
     title: mood,
   });
 
-  void storeObjectValue(StorageKeysConstants.moodsByDate, newMoods);
+  await storeObjectValue(StorageKeysConstants.moodsByDate, newMoods);
 };
