@@ -22,11 +22,11 @@ import EditMoodDay from "./editMoodDay.component";
 
 const CALENDAR_MONTH_FORMAT = "MMMM yyyy";
 
-interface MoodsCalendarHandle {
+interface RefreshMoodCalendar {
   refresh: () => void;
 }
 
-const MoodsCalendar: React.ForwardRefRenderFunction<MoodsCalendarHandle> = (
+const MoodsCalendar: React.ForwardRefRenderFunction<RefreshMoodCalendar> = (
   props,
   forwardedRef
 ) => {
