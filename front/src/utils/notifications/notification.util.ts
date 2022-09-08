@@ -426,10 +426,14 @@ export const scheduleArticlesNotification = async (
 
       if (content) {
         await cancelAllNotificationsByType(NotificationType.articles);
-        const hasBeenAlreadyNotified =
-          stepsAlreadyCongratulatedForArticles?.includes(
-            currentStep ? currentStep.id.toString() : ""
-          );
+        let hasBeenAlreadyNotified = false;
+        if (Array.isArray(stepsAlreadyCongratulatedForArticles)) {
+          hasBeenAlreadyNotified =
+            stepsAlreadyCongratulatedForArticles.includes(
+              currentStep ? currentStep.id.toString() : ""
+            );
+        }
+
         if (!hasBeenAlreadyNotified) {
           await sendNotificationReminder(content, trigger);
           await saveStepForCongratNotifScheduled(
