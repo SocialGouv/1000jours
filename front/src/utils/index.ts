@@ -12,7 +12,8 @@ import * as LinkingUtils from "./linking/linking.util";
 import * as LoggingUtils from "./logging.util";
 import { initMonitoring, reportError } from "./logging.util";
 import * as MoodboardUtils from "./moodboard/moodboard.util";
-import * as NotificationUtils from "./notification.util";
+import * as NotificationUtils from "./notifications/notification.util";
+import * as NotificationToggleUtils from "./notifications/notificationToggle.util";
 import * as RootNavigation from "./rootNavigation.util";
 import * as SearchUtils from "./search.util";
 import * as StepUtils from "./step/step.util";
@@ -39,6 +40,7 @@ export {
   LinkingUtils,
   LoggingUtils,
   MoodboardUtils,
+  NotificationToggleUtils,
   NotificationUtils,
   reportError,
   RootNavigation,

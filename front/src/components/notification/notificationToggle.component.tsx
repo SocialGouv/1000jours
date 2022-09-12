@@ -4,11 +4,11 @@ import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { Toggle } from "../../components/baseComponents";
-import { Labels, StorageKeysConstants } from "../../constants";
+import { Labels } from "../../constants";
 import { Colors, FontStyle, FontWeight, Margins } from "../../styles";
-import { StorageUtils } from "../../utils";
-import * as NotificationUtils from "../../utils/notification.util";
-import { NotificationType } from "../../utils/notification.util";
+import { NotificationToggleUtils, StorageUtils } from "../../utils";
+import type { NotificationType } from "../../utils/notifications/notification.util";
+import * as NotificationUtils from "../../utils/notifications/notification.util";
 
 interface Props {
   title: string;
@@ -17,33 +17,29 @@ interface Props {
 }
 
 const NotificationToggle: FC<Props> = ({ title, description, type }) => {
-  const [isToggleOn, setToggleOn] = useState(false);
+  const [isToggleOn, setIsToggleOn] = useState(false);
+  const toggleKey = NotificationToggleUtils.getStorageKey(type);
+
+  const initToggle = useCallback(async () => {
+    if (toggleKey) {
+      const shouldToggleOn = await NotificationToggleUtils.isToggleOn(type);
+      setIsToggleOn(shouldToggleOn);
+    }
+  }, [toggleKey, type]);
 
   useEffect(() => {
     void initToggle();
-  }, []);
-
-  const initToggle = async () => {
-    // Value in storage
-    const storageValue = (await StorageUtils.getObjectValue(
-      StorageKeysConstants.notifToggleArticles
-    )) as boolean;
-    setToggleOn(storageValue);
-  };
+  }, [initToggle]);
 
   const onTouchToggle = useCallback(async () => {
     const newValue = !isToggleOn;
-    setToggleOn(newValue);
-    await StorageUtils.storeObjectValue(
-      StorageKeysConstants.notifToggleArticles,
-      newValue
-    );
+    setIsToggleOn(newValue);
+    if (toggleKey) await StorageUtils.storeObjectValue(toggleKey, newValue);
 
     if (newValue) {
-      if (type === NotificationType.articles)
-        void NotificationUtils.updateArticlesNotification();
+      NotificationToggleUtils.updateNotification(type);
     } else await NotificationUtils.cancelAllNotificationsByType(type);
-  }, [isToggleOn, type]);
+  }, [isToggleOn, type, toggleKey]);
 
   return (
     <View style={styles.mainContent}>

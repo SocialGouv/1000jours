@@ -23,6 +23,7 @@ import SubTitle from "./article/subTitle.component";
 import TextHtml from "./article/textHtml.component";
 import Thematics from "./article/thematics.component";
 import Title from "./article/title.component";
+import CustomDivider from "./baseComponents/customDivider.component";
 import Events from "./calendar/events.component";
 import DocumentCard from "./document/documentCard.component";
 import EpdsGenderEntry from "./epdsSurvey/epdsGenderEntry.component";
@@ -40,6 +41,7 @@ import MoodsCalendar from "./moodboard/moodsCalendar.component";
 import NotificationHandler, {
   setNotificationHandler,
 } from "./notification/notificationHandler.component";
+import NotificationToggle from "./notification/notificationToggle.component";
 import CustomPagination from "./onboardingAndProfile/customOnboardingPagination.component";
 import UpdateChildBirthdayModal from "./onboardingAndProfile/updateChildBirthdayModal.component";
 import AroundMePoiList from "./search/aroundMePoiList.component";
@@ -61,6 +63,7 @@ export {
   ArticlesFilterFavoritesRow,
   CheckAppVersion,
   ConditionsOfUse,
+  CustomDivider,
   CustomMapMarker,
   CustomPagination,
   DidYouKnow,
@@ -81,6 +84,7 @@ export {
   MoodItemsInCarousel,
   MoodsCalendar,
   NotificationHandler,
+  NotificationToggle,
   ParenthequeItem,
   PoiList,
   SearchUserLocationOrPostalCodeCoords,

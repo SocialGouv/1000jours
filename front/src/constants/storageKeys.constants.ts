@@ -19,6 +19,7 @@ export const cartoIsFirstLaunch = "@cartoIsFirstLaunch";
 export const notifIdNextStep = "@notifIdNextStep";
 export const notifIdsEvents = "@notifIdsEvents";
 export const notifToggleArticles = "@notifToggleArticles";
+export const notifToggleMoodboard = "@notifToggleMoodboard";
 export const eventsCalcFromBirthday = "@eventsCalcFromBirthday";
 export const forceToScheduleEventsNotif = "@forceToScheduleEventsNotif";
 export const osCalendarId = "@osCalendarId";
@@ -55,6 +56,7 @@ export const allStorageKeys = [
   notifIdNextStep,
   notifIdsEvents,
   notifToggleArticles,
+  notifToggleMoodboard,
   eventsCalcFromBirthday,
   forceToScheduleEventsNotif,
   osCalendarId,

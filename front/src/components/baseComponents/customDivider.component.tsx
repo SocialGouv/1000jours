@@ -2,7 +2,7 @@ import type { FC } from "react";
 import React from "react";
 import { StyleSheet } from "react-native";
 
-import { Colors, Margins, Sizes } from "../../styles";
+import { Colors, Sizes } from "../../styles";
 import { View } from "../baseComponents";
 
 const CustomDivider: FC = () => {
@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryBlue,
     borderRadius: Sizes.xs,
     height: Sizes.divider,
-    marginVertical: Margins.default,
     width: "100%",
   },
 });
