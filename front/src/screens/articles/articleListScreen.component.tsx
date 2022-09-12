@@ -20,8 +20,10 @@ interface Props {
 }
 
 const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
-  const screenTitle = route.params.step.nom;
-  const description = route.params.step.description;
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  const screenTitle = route?.params?.step?.nom ?? null;
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  const description = route?.params?.step?.description ?? null;
   const [trackerAction, setTrackerAction] = useState("");
   const [articles, setArticles] = useState<Article[]>([]);
   const [showArticles, setShowArticles] = useState(false);
