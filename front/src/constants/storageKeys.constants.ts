@@ -20,6 +20,7 @@ export const notifIdNextStep = "@notifIdNextStep";
 export const notifIdsEvents = "@notifIdsEvents";
 export const notifToggleArticles = "@notifToggleArticles";
 export const notifToggleMoodboard = "@notifToggleMoodboard";
+export const notifToggleEvents = "@notifToggleEvents";
 export const eventsCalcFromBirthday = "@eventsCalcFromBirthday";
 export const forceToScheduleEventsNotif = "@forceToScheduleEventsNotif";
 export const osCalendarId = "@osCalendarId";
@@ -57,6 +58,7 @@ export const allStorageKeys = [
   notifIdsEvents,
   notifToggleArticles,
   notifToggleMoodboard,
+  notifToggleEvents,
   eventsCalcFromBirthday,
   forceToScheduleEventsNotif,
   osCalendarId,

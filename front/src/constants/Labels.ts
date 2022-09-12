@@ -607,6 +607,10 @@ export default {
     },
     description:
       "Ici vous pouvez paramétrer les notifications que vous souhaitez recevoir en les activant/désactivant :",
+    event: {
+      decription: "Vous rappelant les événements à venir.",
+      title: "Notifications des événements",
+    },
     moodboard: {
       description: "Vous invitant à venir renseigner votre état émotionnel.",
       title: "Notifications du suivi d'humeur",

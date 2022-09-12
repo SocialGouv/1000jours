@@ -278,10 +278,16 @@ const scheduleEventNotification = async (event: Event) => {
   }
 };
 
-export const scheduleEventsNotification = (events: Event[]): void => {
-  events.forEach((event) => {
-    void scheduleEventNotification(event);
-  });
+export const scheduleEventsNotification = async (events: Event[]): void => {
+  const isToggleActive = (await StorageUtils.getObjectValue(
+    StorageKeysConstants.notifToggleEvents
+  )) as boolean;
+
+  if (isToggleActive) {
+    events.forEach((event) => {
+      void scheduleEventNotification(event);
+    });
+  }
 };
 
 export const cancelScheduleEventsNotification = async (): Promise<void> => {

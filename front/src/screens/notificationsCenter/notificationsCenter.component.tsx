@@ -71,6 +71,12 @@ const NotificationsCenter: FC<Props> = ({ navigation }) => {
           description={Labels.notificationsCenter.moodboard.description}
           type={NotificationType.moodboard}
         />
+        <CustomDivider />
+        <NotificationToggle
+          title={Labels.notificationsCenter.event.title}
+          description={Labels.notificationsCenter.event.decription}
+          type={NotificationType.event}
+        />
       </View>
 
       <NotificationPermissionInSettingsModal
