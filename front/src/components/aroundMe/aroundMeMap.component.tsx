@@ -19,7 +19,7 @@ import {
   SCREEN_HEIGHT,
 } from "../../constants/platform.constants";
 import { useAccessibilityReader } from "../../hooks";
-import { Colors, Margins } from "../../styles";
+import { Colors, Margins, Paddings } from "../../styles";
 import {
   AroundMeUtils,
   KeyboardUtils,
@@ -274,6 +274,16 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
         />
       </View>
       <View style={styles.map} onLayout={onViewMapLayout}>
+        <AroundMeMapHeader
+          headerStyle={styles.headerButtonsMapView}
+          displayMap
+          setDisplayMap={onDisplayMap}
+          relaunchSearch={onRelaunchSearch}
+          showRelaunchResearchButton={showRelaunchResearchButton}
+          setIsLoading={setIsLoading}
+          showDisplayListButton={showDisplayListButton}
+          hideDisplayListButton={isFromSimpleCarto}
+        />
         <MapView
           minZoomLevel={AroundMeConstants.MAPVIEW_MIN_ZOOM_LEVEL}
           ref={setMapViewRef}
@@ -315,16 +325,6 @@ const AroundMeMap: FC<ExtendedPropsForSimpleMap> = ({
             </Marker>
           )}
         </MapView>
-        <AroundMeMapHeader
-          headerStyle={styles.headerButtonsMapView}
-          displayMap
-          setDisplayMap={onDisplayMap}
-          relaunchSearch={onRelaunchSearch}
-          showRelaunchResearchButton={showRelaunchResearchButton}
-          setIsLoading={setIsLoading}
-          showDisplayListButton={showDisplayListButton}
-          hideDisplayListButton={isFromSimpleCarto}
-        />
         <CustomSnackbar
           isAccessibilityModeOn={isAccessibilityModeOn}
           visible={showSnackBar}
@@ -380,18 +380,19 @@ const styles = StyleSheet.create({
   headerButtonsMapView: {
     backgroundColor: "transparent",
     flexDirection: "row",
-    height: "15%",
     left: 0,
-    margin: Margins.smaller,
+    padding: Paddings.smaller,
     position: "absolute",
     right: 0,
     top: 0,
+    zIndex: 1,
   },
   mainContainer: {
     flex: 1,
   },
   map: {
     flex: 1,
+    marginTop: 1,
   },
 });
 
