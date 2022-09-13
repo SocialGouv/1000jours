@@ -9,7 +9,7 @@ import { getObjectValue } from "../storage.util";
 export const isToggleOn = async (type: NotificationType): Promise<boolean> => {
   const key = getStorageKey(type);
   if (key) return (await getObjectValue(key)) as boolean;
-  return false;
+  return true; // 'On' par défaut
 };
 
 export const getStorageKey = (
