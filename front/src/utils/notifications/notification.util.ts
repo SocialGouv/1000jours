@@ -390,14 +390,28 @@ export const saveStepForCongratNotifScheduled = async (
 ): Promise<void> => {
   if (nbArticlesToRead === 0 && currentStep) {
     const currentStepId = currentStep.id.toString();
-    const newValue = stepsAlreadyCongratulatedForArticles
-      ? stepsAlreadyCongratulatedForArticles.push(currentStepId)
-      : [currentStepId];
+    if (stepsAlreadyCongratulatedForArticles) {
+      stepsAlreadyCongratulatedForArticles.push(currentStepId);
+    }
+    const newValue = stepsAlreadyCongratulatedForArticles ?? [currentStepId];
     await StorageUtils.storeObjectValue(
       StorageKeysConstants.stepsAlreadyCongratulatedForArticles,
       newValue
     );
   }
+};
+
+export const hasBeenAlreadyNotifiedForArticles = (
+  currentStep: Step | null,
+  stepsAlreadyCongratulatedForArticles: string[] | null
+): boolean => {
+  let hasBeenAlreadyNotified = false;
+  if (Array.isArray(stepsAlreadyCongratulatedForArticles)) {
+    hasBeenAlreadyNotified = stepsAlreadyCongratulatedForArticles.includes(
+      currentStep ? currentStep.id.toString() : ""
+    );
+  }
+  return hasBeenAlreadyNotified;
 };
 
 export const scheduleArticlesNotification = async (
@@ -426,15 +440,13 @@ export const scheduleArticlesNotification = async (
 
       if (content) {
         await cancelAllNotificationsByType(NotificationType.articles);
-        let hasBeenAlreadyNotified = false;
-        if (Array.isArray(stepsAlreadyCongratulatedForArticles)) {
-          hasBeenAlreadyNotified =
-            stepsAlreadyCongratulatedForArticles.includes(
-              currentStep ? currentStep.id.toString() : ""
-            );
-        }
 
-        if (!hasBeenAlreadyNotified) {
+        if (
+          !hasBeenAlreadyNotifiedForArticles(
+            currentStep,
+            stepsAlreadyCongratulatedForArticles
+          )
+        ) {
           await sendNotificationReminder(content, trigger);
           await saveStepForCongratNotifScheduled(
             nbArticlesToRead,
