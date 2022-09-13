@@ -6,9 +6,15 @@ import { StyleSheet, Text, View } from "react-native";
 import { Toggle } from "../../components/baseComponents";
 import { Labels } from "../../constants";
 import { Colors, FontStyle, FontWeight, Margins } from "../../styles";
-import { NotificationToggleUtils, StorageUtils } from "../../utils";
+import type { TrackerEvent } from "../../type";
+import {
+  NotificationToggleUtils,
+  StorageUtils,
+  TrackerUtils,
+} from "../../utils";
 import type { NotificationType } from "../../utils/notifications/notification.util";
 import * as NotificationUtils from "../../utils/notifications/notification.util";
+import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
   title: string;
@@ -18,6 +24,7 @@ interface Props {
 
 const NotificationToggle: FC<Props> = ({ title, description, type }) => {
   const [isToggleOn, setIsToggleOn] = useState(false);
+  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
   const toggleKey = NotificationToggleUtils.getStorageKey(type);
 
   const initToggle = useCallback(async () => {
@@ -39,10 +46,17 @@ const NotificationToggle: FC<Props> = ({ title, description, type }) => {
     if (newValue) {
       NotificationToggleUtils.updateNotification(type);
     } else await NotificationUtils.cancelAllNotificationsByType(type);
+
+    setTrackerEventObject({
+      action: TrackerUtils.TrackingEvent.NOTIFICATIONS_CENTER,
+      name: `${TrackerUtils.TrackingEvent.NOTIFICATIONS_CENTER} : ${type}`,
+      value: newValue ? 1 : 0,
+    });
   }, [isToggleOn, type, toggleKey]);
 
   return (
     <View style={styles.mainContent}>
+      <TrackerHandler eventObject={trackerEventObject} />
       <View style={styles.itemTextBloc}>
         <Text style={styles.itemTextTitle} accessibilityRole="header">
           {title}
