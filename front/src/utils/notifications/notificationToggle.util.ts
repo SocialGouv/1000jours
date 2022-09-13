@@ -1,6 +1,7 @@
 import { StorageKeysConstants } from "../../constants";
 import {
   NotificationType,
+  scheduleEventsNotification,
   scheduleMoodboardNotifications,
   updateArticlesNotification,
 } from "../notifications/notification.util";
@@ -22,6 +23,9 @@ export const getStorageKey = (
     case NotificationType.articles: {
       return StorageKeysConstants.notifToggleArticles;
     }
+    case NotificationType.event: {
+      return StorageKeysConstants.notifToggleEvents;
+    }
     default:
       console.warn(`should get storage key for type ${withType}`);
       break;
@@ -36,6 +40,10 @@ export const updateNotification = (type: NotificationType): void => {
     }
     case NotificationType.articles: {
       void updateArticlesNotification();
+      break;
+    }
+    case NotificationType.event: {
+      void scheduleEventsNotification([]); // TOOD:
       break;
     }
     default:
