@@ -5,9 +5,9 @@ import {
   Labels,
   NotificationConstants,
   StorageKeysConstants,
-} from "../constants";
-import type { Step } from "../types";
-import { NotificationUtils, StorageUtils } from ".";
+} from "../../constants";
+import type { Step } from "../../types";
+import { NotificationUtils, StorageUtils } from "..";
 import {
   getNotificationTrigger,
   NotificationType,

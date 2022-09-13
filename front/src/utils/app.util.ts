@@ -1,7 +1,7 @@
 import Constants from "expo-constants";
 
 import { StorageKeysConstants } from "../constants";
-import { cancelAllScheduledNotifications } from "./notification.util";
+import { cancelAllScheduledNotifications } from "./notifications/notification.util";
 import {
   getStringValue,
   multiRemove,

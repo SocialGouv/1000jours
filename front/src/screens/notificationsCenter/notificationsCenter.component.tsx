@@ -4,14 +4,14 @@ import * as React from "react";
 import { useCallback, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
+import { CustomDivider, NotificationToggle } from "../../components";
 import { BackButton, TitleH1 } from "../../components/baseComponents";
-import NotificationToggle from "../../components/notification/notificationToggle.component";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels } from "../../constants";
 import { Colors, Paddings } from "../../styles";
 import type { RootStackParamList } from "../../types";
 import { TrackerUtils } from "../../utils";
-import { NotificationType } from "../../utils/notification.util";
+import { NotificationType } from "../../utils/notifications/notification.util";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -44,6 +44,12 @@ const NotificationsCenter: FC<Props> = ({ navigation }) => {
           title={Labels.notificationsCenter.article.title}
           description={Labels.notificationsCenter.article.decription}
           type={NotificationType.articles}
+        />
+        <CustomDivider />
+        <NotificationToggle
+          title={Labels.notificationsCenter.moodboard.title}
+          description={Labels.notificationsCenter.moodboard.description}
+          type={NotificationType.moodboard}
         />
       </View>
     </ScrollView>

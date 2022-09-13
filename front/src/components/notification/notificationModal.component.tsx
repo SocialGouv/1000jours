@@ -7,7 +7,7 @@ import Confetti from "react-native-confetti";
 
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
 import type { NotificationStyle } from "../../types";
-import { NotificationType } from "../../utils/notification.util";
+import { NotificationType } from "../../utils/notifications/notification.util";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import { TrackingEvent } from "../../utils/tracker.util";
 import CustomButton from "../baseComponents/customButton.component";

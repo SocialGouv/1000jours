@@ -8,7 +8,7 @@ import { Alert, StyleSheet, View } from "react-native";
 import { Labels, StorageKeysConstants } from "../../constants";
 import { Paddings } from "../../styles";
 import { NotificationUtils, StorageUtils } from "../../utils";
-import { NotificationType } from "../../utils/notification.util";
+import { NotificationType } from "../../utils/notifications/notification.util";
 import { getObjectValue } from "../../utils/storage.util";
 import { CustomButton, SecondaryText } from "../baseComponents";
 import ModalHtmlContent from "../baseComponents/modalHtmlContent.component";

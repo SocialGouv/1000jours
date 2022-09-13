@@ -13,10 +13,11 @@ import {
   Labels,
   NotificationConstants,
   StorageKeysConstants,
-} from "../constants";
-import type { Event, Step } from "../types";
-import { countCurrentStepArticlesNotRead } from "./step/step.util";
-import * as StorageUtils from "./storage.util";
+} from "../../constants";
+import type { Event, Step } from "../../types";
+import { NotificationToggleUtils } from "..";
+import { countCurrentStepArticlesNotRead } from "../step/step.util";
+import * as StorageUtils from "../storage.util";
 
 export enum NotificationType {
   epds = "epds",
@@ -120,12 +121,17 @@ const scheduleMoodboardNotification = async (
 };
 
 export const scheduleMoodboardNotifications = async (): Promise<void> => {
-  const notifsMoodboard = await getAllNotificationsByType(
+  const isToggleActive = await NotificationToggleUtils.isToggleOn(
     NotificationType.moodboard
   );
-  if (notifsMoodboard.length === 0) {
-    await scheduleMoodboardNotification(Weekday.tuesday);
-    await scheduleMoodboardNotification(Weekday.friday);
+  if (isToggleActive) {
+    const notifsMoodboard = await getAllNotificationsByType(
+      NotificationType.moodboard
+    );
+    if (notifsMoodboard.length === 0) {
+      await scheduleMoodboardNotification(Weekday.tuesday);
+      await scheduleMoodboardNotification(Weekday.friday);
+    }
   }
 };
 
@@ -381,7 +387,7 @@ export const saveStepForCongratNotifScheduled = async (
   nbArticlesToRead: number,
   currentStep: Step | null,
   stepsAlreadyCongratulatedForArticles: string[] | null
-) => {
+): Promise<void> => {
   if (nbArticlesToRead === 0 && currentStep) {
     const currentStepId = currentStep.id.toString();
     const newValue = stepsAlreadyCongratulatedForArticles
@@ -397,9 +403,9 @@ export const saveStepForCongratNotifScheduled = async (
 export const scheduleArticlesNotification = async (
   notifTrigger?: NotificationTriggerInput
 ): Promise<void> => {
-  const isToggleActive = (await StorageUtils.getObjectValue(
-    StorageKeysConstants.notifToggleArticles
-  )) as boolean;
+  const isToggleActive = await NotificationToggleUtils.isToggleOn(
+    NotificationType.articles
+  );
 
   if (isToggleActive) {
     const nbArticlesToRead: number = await countCurrentStepArticlesNotRead();
@@ -439,9 +445,7 @@ export const scheduleArticlesNotification = async (
 
 export const getAllScheduledNotifications = async (): Promise<
   Notifications.NotificationRequest[]
-> => {
-  return Notifications.getAllScheduledNotificationsAsync();
-};
+> => Notifications.getAllScheduledNotificationsAsync();
 
 export const logAllScheduledNotifications = async (): Promise<void> => {
   const scheduledNotifs = await getAllScheduledNotifications();
