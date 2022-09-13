@@ -8,11 +8,7 @@ import {
 } from "../../constants";
 import type { Step } from "../../types";
 import { NotificationUtils, StorageUtils } from "..";
-import {
-  getNotificationTrigger,
-  NotificationType,
-  saveStepForCongratNotifScheduled,
-} from "./notification.util";
+import { NotificationType } from "./notification.util";
 
 describe("Notification utils", () => {
   describe("Build Articles Notification Content", () => {
@@ -107,7 +103,7 @@ describe("Notification utils", () => {
     });
 
     it("getNotificationTrigger with 0 article and no trigger", async () => {
-      const result = await getNotificationTrigger(0, null);
+      const result = await NotificationUtils.getNotificationTrigger(0, null);
       const expected = NotificationConstants.MIN_TRIGGER;
 
       expect(result).toEqual(expected);
@@ -115,14 +111,17 @@ describe("Notification utils", () => {
 
     it("getNotificationTrigger with articles", async () => {
       const notifTrigger = { seconds: 20 };
-      const result = await getNotificationTrigger(5, notifTrigger);
+      const result = await NotificationUtils.getNotificationTrigger(
+        5,
+        notifTrigger
+      );
       const expected = { seconds: 20 };
 
       expect(result).toEqual(expected);
     });
 
     it("getNotificationTrigger with articles and no trigger", async () => {
-      const result = await getNotificationTrigger(5, null);
+      const result = await NotificationUtils.getNotificationTrigger(5, null);
       const expected = new Date(
         addDays(
           new Date(),
@@ -139,13 +138,83 @@ describe("Notification utils", () => {
     });
   });
 
+  describe("hasBeenAlreadyNotifiedForArticles", () => {
+    afterEach(() => {
+      void AsyncStorage.clear();
+    });
+
+    it("hasBeenAlreadyNotifiedForArticles with currentStep is null", () => {
+      const CURRENT_STEP = null;
+      const stepsAlreadyCongratulatedForArticles = ["6"];
+      const data = NotificationUtils.hasBeenAlreadyNotifiedForArticles(
+        CURRENT_STEP,
+        stepsAlreadyCongratulatedForArticles
+      );
+      expect(data).toBeFalsy();
+    });
+
+    it("hasBeenAlreadyNotifiedForArticles with stepsAlreadyCongratulatedForArticles is null", () => {
+      const CURRENT_STEP = {
+        active: true,
+        debut: 0,
+        description: null,
+        fin: 90,
+        id: 6,
+        nom: "De 0 à 3 mois",
+        ordre: 6,
+      };
+      const stepsAlreadyCongratulatedForArticles = null;
+      const data = NotificationUtils.hasBeenAlreadyNotifiedForArticles(
+        CURRENT_STEP,
+        stepsAlreadyCongratulatedForArticles
+      );
+      expect(data).toBeFalsy();
+    });
+
+    it("hasBeenAlreadyNotifiedForArticles is false", () => {
+      const CURRENT_STEP = {
+        active: true,
+        debut: 0,
+        description: null,
+        fin: 90,
+        id: 6,
+        nom: "De 0 à 3 mois",
+        ordre: 6,
+      };
+      const stepsAlreadyCongratulatedForArticles = ["1"];
+      const data = NotificationUtils.hasBeenAlreadyNotifiedForArticles(
+        CURRENT_STEP,
+        stepsAlreadyCongratulatedForArticles
+      );
+      expect(data).toBeFalsy();
+    });
+
+    it("hasBeenAlreadyNotifiedForArticles is true", () => {
+      const CURRENT_STEP = {
+        active: true,
+        debut: 0,
+        description: null,
+        fin: 90,
+        id: 6,
+        nom: "De 0 à 3 mois",
+        ordre: 6,
+      };
+      const stepsAlreadyCongratulatedForArticles = ["6"];
+      const data = NotificationUtils.hasBeenAlreadyNotifiedForArticles(
+        CURRENT_STEP,
+        stepsAlreadyCongratulatedForArticles
+      );
+      expect(data).toBeTruthy();
+    });
+  });
+
   describe("saveStepForCongratNotifScheduled", () => {
     afterEach(() => {
       void AsyncStorage.clear();
     });
 
     it("saveStepForCongratNotifScheduled with no article and currentStep is null", async () => {
-      await saveStepForCongratNotifScheduled(0, null, null);
+      await NotificationUtils.saveStepForCongratNotifScheduled(0, null, null);
       await StorageUtils.getObjectValue(
         StorageKeysConstants.stepsAlreadyCongratulatedForArticles
       ).then((data) => {
@@ -165,7 +234,11 @@ describe("Notification utils", () => {
       };
       const expected = ["6"];
 
-      await saveStepForCongratNotifScheduled(0, currentStep, null);
+      await NotificationUtils.saveStepForCongratNotifScheduled(
+        0,
+        currentStep,
+        null
+      );
       await StorageUtils.getObjectValue(
         StorageKeysConstants.stepsAlreadyCongratulatedForArticles
       ).then((data) => {
@@ -184,9 +257,9 @@ describe("Notification utils", () => {
         ordre: 6,
       };
       const stepsAlreadyCongratulatedForArticles = ["2", "5"];
-      const expected = stepsAlreadyCongratulatedForArticles.length + 1;
+      const expected = ["2", "5", "6"];
 
-      await saveStepForCongratNotifScheduled(
+      await NotificationUtils.saveStepForCongratNotifScheduled(
         0,
         currentStep,
         stepsAlreadyCongratulatedForArticles
