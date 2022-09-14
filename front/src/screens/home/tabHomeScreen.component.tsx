@@ -24,12 +24,16 @@ import { GraphQLLazyQuery } from "../../services";
 import { Paddings } from "../../styles";
 import type { Step, TabHomeParamList, UserSituation } from "../../types";
 import {
-  NotificationUtils,
   StepUtils,
   StorageUtils,
   StringUtils,
   TrackerUtils,
 } from "../../utils";
+import { scheduleArticlesNotification } from "../../utils/notifications/articles/articlesNotification.util";
+import {
+  cancelScheduleNextStepNotification,
+  scheduleNextStepNotification,
+} from "../../utils/notifications/step/nextStepNotification.util";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;
@@ -101,7 +105,7 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
         (StringUtils.isNotNullNorEmpty(previousCurrentStepId) &&
           previousCurrentStepId !== currentStep.id.toString())
       ) {
-        await NotificationUtils.scheduleArticlesNotification();
+        await scheduleArticlesNotification();
       }
     }
   }, [currentStep, previousCurrentStepId]);
@@ -113,18 +117,14 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
         StringUtils.isNotNullNorEmpty(previousCurrentStepId) &&
         previousCurrentStepId !== _currentStep.id.toString()
       ) {
-        await NotificationUtils.cancelScheduleNextStepNotification();
-        await NotificationUtils.scheduleNextStepNotification(
-          _currentStep,
-          true
-        );
+        await cancelScheduleNextStepNotification();
+        await scheduleNextStepNotification(_currentStep, true);
         setPreviousCurrentStepId(_currentStep.id.toString());
       }
       // Planifie la notification du prochain changement d'étape
       else {
         const nextStep = _.find(etapes, { ordre: _currentStep.ordre + 1 });
-        if (nextStep)
-          await NotificationUtils.scheduleNextStepNotification(nextStep);
+        if (nextStep) await scheduleNextStepNotification(nextStep);
       }
     },
     [previousCurrentStepId]

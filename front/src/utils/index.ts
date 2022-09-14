@@ -12,8 +12,13 @@ import * as LinkingUtils from "./linking/linking.util";
 import * as LoggingUtils from "./logging.util";
 import { initMonitoring, reportError } from "./logging.util";
 import * as MoodboardUtils from "./moodboard/moodboard.util";
+import * as ArticlesNotificationUtils from "./notifications/articles/articlesNotification.util";
+import * as EpdsNotificationUtils from "./notifications/epds/epdsNotification.util";
+import * as EventNotificationUtils from "./notifications/event/eventNotification.util";
+import * as MoodboardNotificationUtils from "./notifications/moodboard/moodboardNotification.util";
 import * as NotificationUtils from "./notifications/notification.util";
 import * as NotificationToggleUtils from "./notifications/notificationToggle.util";
+import * as NextStepNotificationUtils from "./notifications/step/nextStepNotification.util";
 import * as RootNavigation from "./rootNavigation.util";
 import * as SearchUtils from "./search.util";
 import * as StepUtils from "./step/step.util";
@@ -29,9 +34,12 @@ export {
   AroundMeFilterUtils,
   AroundMeUtils,
   ArticleFilterUtils,
+  ArticlesNotificationUtils,
   ArticleUtils,
   AssestUtils,
+  EpdsNotificationUtils,
   EpdsSurveyUtils,
+  EventNotificationUtils,
   FavoritesUtils,
   getAppTheme,
   getVisuelFormat,
@@ -39,7 +47,9 @@ export {
   KeyboardUtils,
   LinkingUtils,
   LoggingUtils,
+  MoodboardNotificationUtils,
   MoodboardUtils,
+  NextStepNotificationUtils,
   NotificationToggleUtils,
   NotificationUtils,
   reportError,

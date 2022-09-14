@@ -211,7 +211,7 @@ describe("Step utils", () => {
         new Date(),
         GROSSESSE_TOTAL_SEMAINES_SA - 1
       ).toISOString();
-      const result = StepUtils.checkErrorOnProfile(
+      const result = StepUtils.getErrorMessageOnProfile(
         getUserSituations(UserInfo.grossesse),
         childBirthday
       );
@@ -222,7 +222,7 @@ describe("Step utils", () => {
 
     it("getCurrentStepId is called with no date", () => {
       const childBirthday = null;
-      const result = StepUtils.checkErrorOnProfile(
+      const result = StepUtils.getErrorMessageOnProfile(
         getUserSituations(UserInfo.grossesse),
         childBirthday
       );
@@ -236,7 +236,7 @@ describe("Step utils", () => {
         new Date(),
         GROSSESSE_TOTAL_SEMAINES_SA + 1
       ).toISOString();
-      const result = StepUtils.checkErrorOnProfile(
+      const result = StepUtils.getErrorMessageOnProfile(
         getUserSituations(UserInfo.grossesse),
         childBirthday
       );
@@ -247,7 +247,7 @@ describe("Step utils", () => {
 
     it("getCurrentStepId is called with date in the past (grossesse)", () => {
       const childBirthday = subDays(new Date(), 1).toISOString();
-      const result = StepUtils.checkErrorOnProfile(
+      const result = StepUtils.getErrorMessageOnProfile(
         getUserSituations(UserInfo.grossesse),
         childBirthday
       );
@@ -258,7 +258,7 @@ describe("Step utils", () => {
 
     it("getCurrentStepId is called with date in the future (enfant)", () => {
       const childBirthday = addDays(new Date(), 1).toISOString();
-      const result = StepUtils.checkErrorOnProfile(
+      const result = StepUtils.getErrorMessageOnProfile(
         getUserSituations(UserInfo.enfant),
         childBirthday
       );
@@ -269,7 +269,7 @@ describe("Step utils", () => {
 
     it("getCurrentStepId is called with date to far in the future (enfant)", () => {
       const childBirthday = subYears(new Date(), 3).toISOString();
-      const result = StepUtils.checkErrorOnProfile(
+      const result = StepUtils.getErrorMessageOnProfile(
         getUserSituations(UserInfo.enfant),
         childBirthday
       );

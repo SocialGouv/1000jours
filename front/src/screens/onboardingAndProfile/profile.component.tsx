@@ -42,7 +42,7 @@ import type {
   UserSituation,
 } from "../../types";
 import { NotificationUtils, StorageUtils, TrackerUtils } from "../../utils";
-import { checkErrorOnProfile } from "../../utils/step/step.util";
+import { getErrorMessageOnProfile } from "../../utils/step/step.util";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -183,7 +183,7 @@ const Profile: FC<Props> = ({ navigation }) => {
   };
 
   const validateForm = useCallback(async () => {
-    const error = checkErrorOnProfile(userSituations, childBirthday);
+    const error = getErrorMessageOnProfile(userSituations, childBirthday);
     if (error) {
       Alert.alert(Labels.warning, error, [{ text: "OK" }]);
       return;

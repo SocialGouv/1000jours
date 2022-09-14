@@ -29,6 +29,7 @@ import {
   StorageUtils,
   TrackerUtils,
 } from "./src/utils";
+import { scheduleMoodboardNotifications } from "./src/utils/notifications/moodboard/moodboardNotification.util";
 
 setNotificationHandler();
 initLocales();
@@ -98,7 +99,7 @@ const MainAppContainer: FC = () => {
 
   const checkNotificationPermission = async () => {
     const notificationsAreAllowed =
-      await NotificationUtils.allowsNotifications();
+      await NotificationUtils.shouldAllowNotifications();
     const notificationsAreAllowedFromStorage =
       await StorageUtils.getObjectValue(
         StorageKeysConstants.notificationsAreAllowed
@@ -130,7 +131,7 @@ const MainAppContainer: FC = () => {
 
       await AppUtils.manageStorage();
       await updateAppActiveCounter();
-      await NotificationUtils.scheduleMoodboardNotifications();
+      await scheduleMoodboardNotifications();
     };
 
     void init();

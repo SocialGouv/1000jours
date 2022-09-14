@@ -19,77 +19,80 @@ import {
 import type { UserInfos, UserSituation } from "../../types";
 import { getObjectValue } from "./../storage.util";
 
-const getUserInfos = (
+const getUserInformation = (
   userSituations: UserSituation[] | null,
   childBirthday: string | null | undefined
 ): UserInfos => {
-  const infos: UserInfos = _.cloneDeep(DEFAULT_USER_INFOS);
+  const userInformation: UserInfos = _.cloneDeep(DEFAULT_USER_INFOS);
   if (userSituations && userSituations.length > 0) {
     userSituations.map((userSituation) => {
       const id = userSituation.id as keyof typeof UserInfo;
-      infos[id] = userSituation.isChecked;
+      userInformation[id] = userSituation.isChecked;
     });
   }
-  if (childBirthday && childBirthday.length > 0) infos.date = childBirthday;
+  if (childBirthday && childBirthday.length > 0)
+    userInformation.date = childBirthday;
 
-  return infos;
+  return userInformation;
 };
 
-const checkErrorForGrossesse = (date: Date): string | null => {
-  let errorMessage = null;
+const getErrorMessageForPregnancy = (date: Date): string | null => {
   const now = new Date();
-  const grossesseDebut = subWeeks(date, GROSSESSE_TOTAL_SEMAINES_SA);
-  if (isBefore(now, grossesseDebut)) {
-    errorMessage = Labels.profile.dateTooFarInFuture;
-  } else if (isBefore(date, now)) {
-    errorMessage = Labels.profile.dateCannotBeInThePast;
-  }
-  return errorMessage;
+  const startOfPregnancy = subWeeks(date, GROSSESSE_TOTAL_SEMAINES_SA);
+
+  return isBefore(now, startOfPregnancy)
+    ? Labels.profile.dateTooFarInFuture
+    : isBefore(date, now)
+    ? Labels.profile.dateCannotBeInThePast
+    : null;
 };
 
-const checkErrorForEnfant = (date: Date): string | null => {
-  let errorMessage = null;
+const getErrorMessageForChild = (date: Date): string | null => {
   const now = new Date();
-  if (isBefore(now, date)) {
-    errorMessage = Labels.profile.dateCannotBeInTheFuture;
-  } else if (isAfter(now, addYears(date, 2))) {
-    errorMessage = Labels.profile.childTooOld;
-  }
-  return errorMessage;
+
+  return isBefore(now, date)
+    ? Labels.profile.dateCannotBeInTheFuture
+    : isAfter(now, addYears(date, 2))
+    ? Labels.profile.childTooOld
+    : null;
 };
 
-export const checkErrorOnProfile = (
+export const getErrorMessageOnProfile = (
   userSituations: UserSituation[],
   childBirthday: string | null | undefined
 ): string | null => {
-  const infos = getUserInfos(userSituations, childBirthday);
+  const userInformation = getUserInformation(userSituations, childBirthday);
   let errorMessage = null;
-  if (infos.grossesse || infos.enfant || infos.enfants) {
-    if (!infos.date) {
+  if (
+    userInformation.grossesse ||
+    userInformation.enfant ||
+    userInformation.enfants
+  ) {
+    if (!userInformation.date) {
       errorMessage = Labels.profile.dateIsRequired;
     } else {
-      const date = new Date(infos.date);
-      if (infos.grossesse) {
-        errorMessage = checkErrorForGrossesse(date);
-      } else if (infos.enfant || infos.enfants) {
-        errorMessage = checkErrorForEnfant(date);
+      const date = new Date(userInformation.date);
+      if (userInformation.grossesse) {
+        errorMessage = getErrorMessageForPregnancy(date);
+      } else if (userInformation.enfant || userInformation.enfants) {
+        errorMessage = getErrorMessageForChild(date);
       }
     }
   }
   return errorMessage;
 };
 
-const calcCurrentStep = (date: Date): number => {
+const getCurrentStep = (date: Date): number => {
   const now = new Date();
-  const grossesseDebut = subWeeks(date, GROSSESSE_TOTAL_SEMAINES_SA);
-  const trimestre2 = addWeeks(
-    grossesseDebut,
+  const startOfPregnancy = subWeeks(date, GROSSESSE_TOTAL_SEMAINES_SA);
+  const secondTrimester = addWeeks(
+    startOfPregnancy,
     GROSSESSE_TRIMESTRE_2_SEMAINES_SA
   );
 
   // Période de grossesse
   if (isBefore(now, date)) {
-    return isBefore(now, trimestre2)
+    return isBefore(now, secondTrimester)
       ? StepId.grossesseDebut
       : StepId.grossesseSuiteFin;
   }
@@ -108,14 +111,19 @@ export const getCurrentStepId = (
   childBirthday: string | null | undefined
 ): number | null => {
   let id = null;
-  const infos = getUserInfos(userSituations, childBirthday);
-  if ((infos.grossesse || infos.enfant || infos.enfants) && infos.date) {
-    const date = new Date(infos.date);
-    id = calcCurrentStep(date);
-  } else if (infos.projet) {
+  const userInformation = getUserInformation(userSituations, childBirthday);
+  if (
+    (userInformation.grossesse ||
+      userInformation.enfant ||
+      userInformation.enfants) &&
+    userInformation.date
+  ) {
+    const date = new Date(userInformation.date);
+    id = getCurrentStep(date);
+  } else if (userInformation.projet) {
     id = StepId.projet;
   }
-  if (infos.conception) {
+  if (userInformation.conception) {
     id = StepId.conception;
   }
   return id;
