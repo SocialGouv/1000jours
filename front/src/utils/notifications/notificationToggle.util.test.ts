@@ -36,7 +36,7 @@ describe("Notification Toggle Utils", () => {
       );
     });
 
-    it("should return false when key for type is undefined (toogle default value)", async () => {
+    it("should return true when key for type is undefined (toogle default value)", async () => {
       await NotificationToggleUtils.isToggleOn(NotificationType.epds).then(
         (data) => {
           expect(data).toEqual(true);
