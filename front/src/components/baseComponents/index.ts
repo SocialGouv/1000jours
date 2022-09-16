@@ -1,6 +1,7 @@
 import NotificationModal from "../notification/notificationModal.component";
 import BackButton from "./backButton.component";
 import Backdrop from "./backdrop.component";
+import CancelButton from "./cancelButton.component";
 import Checkbox from "./checkbox.component";
 import CloseButton from "./closeButton.component";
 import CustomButton from "./customButton.component";
@@ -25,11 +26,13 @@ import type { TextProps } from "./Themed";
 import { Text, View } from "./Themed";
 import TitleH1 from "./titleH1.component";
 import TitleH2 from "./titleH2.component";
+import Toggle from "./toggle.component";
 import UsefulQuestion from "./usefulQuestion.component";
 
 export {
   BackButton,
   Backdrop,
+  CancelButton,
   Checkbox,
   CloseButton,
   CommonText,
@@ -59,6 +62,7 @@ export {
   TextProps,
   TitleH1,
   TitleH2,
+  Toggle,
   UsefulQuestion,
   View,
 };

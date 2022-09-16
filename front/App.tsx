@@ -7,7 +7,7 @@ import type { AppStateStatus } from "react-native";
 import { AppState } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { StoreCurrentStepArticleIds } from "./src/components";
+import { CheckAppVersion, StoreCurrentStepArticleIds } from "./src/components";
 import { BaseAssets } from "./src/components/assets";
 import LinksHandler from "./src/components/links/linksHandler.component";
 import { setNotificationHandler } from "./src/components/notification/notificationHandler.component";
@@ -37,6 +37,14 @@ initMonitoring();
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const customFonts = { IcoMoon: BaseAssets.IcomoonFont };
 
+export enum AppStatus {
+  active = "active",
+  inactive = "inactive",
+  background = "background",
+  unknown = "unknown",
+  extension = "extension",
+}
+
 const MainAppContainer: FC = () => {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
@@ -46,6 +54,7 @@ const MainAppContainer: FC = () => {
   const [screenCanBeDisplayed, setScreenCanBeDisplayed] = useState(false);
   const [storeCurrentStepArticleIds, setStoreCurrentStepArticleIds] =
     useState(false);
+  const [checkAppVersion, setCheckAppVersion] = useState(false);
   // Load Custom Fonts (Icomoon)
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
@@ -76,10 +85,14 @@ const MainAppContainer: FC = () => {
   };
 
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
-    if (nextAppState === "active") {
+    if (nextAppState === AppStatus.active) {
       setStoreCurrentStepArticleIds(true);
+      setCheckAppVersion(true);
       void updateAppActiveCounter();
       void checkNotificationPermission();
+    }
+    if (nextAppState === AppStatus.inactive) {
+      setCheckAppVersion(false);
     }
   };
 
@@ -148,6 +161,7 @@ const MainAppContainer: FC = () => {
           />
         )}
         {storeCurrentStepArticleIds && <StoreCurrentStepArticleIds />}
+        {checkAppVersion && <CheckAppVersion />}
         <SafeAreaProvider>
           <Navigation colorScheme={colorScheme} />
           <StatusBar />

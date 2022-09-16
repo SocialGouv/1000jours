@@ -35,6 +35,7 @@ import {
   ShareButton,
   SharePageType,
   Tags,
+  UsefulQuestion,
 } from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
 
@@ -70,7 +71,6 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
 
   const updateCartoFilterStorage = useCallback(async () => {
     const cartoFilterStorage: CartoFilterStorage = {
-      thematiques: [],
       types: event.typesPoi ? _.map(event.typesPoi, "nom") : [],
     };
     await StorageUtils.storeObjectValue(
@@ -176,6 +176,11 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
               message={`${Labels.share.event.messageStart} "${event.nom}" ${Labels.share.event.messageEnd}`}
               page={SharePageType.event}
               id={event.id}
+            />
+            <UsefulQuestion
+              question={Labels.calendar.usefulEvent}
+              trackerActionValue={TrackerUtils.TrackingEvent.EVENT}
+              trackerNameValue={`${TrackerUtils.TrackingEvent.EVENT} : ${event.nom}`}
             />
 
             {event.articles && event.articles.length > 0 && (

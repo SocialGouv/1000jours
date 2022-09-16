@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 import DefaultImage from "../../assets/images/default.png";
 import { Labels } from "../../constants";
@@ -12,13 +11,16 @@ import type { Article, Step } from "../../types";
 import {
   AccessibilityUtils,
   ArticleUtils,
-  FavoritesUtils,
   getVisuelFormat,
   RootNavigation,
   VisuelFormat,
 } from "../../utils";
-import { FavoritesAssets } from "../assets";
-import { CommonText, SecondaryText, View } from "../baseComponents";
+import {
+  CommonText,
+  FavoriteButton,
+  SecondaryText,
+  View,
+} from "../baseComponents";
 
 interface Props {
   selectedArticleId: number;
@@ -26,6 +28,7 @@ interface Props {
   step?: Step;
   isFromSearchScreen?: boolean;
   setStepAndArticleId?: (articleId: number, step: Step | undefined) => void;
+  onFavoriteUpdate?: () => void;
 }
 
 const ArticleCard: FC<Props> = ({
@@ -34,17 +37,16 @@ const ArticleCard: FC<Props> = ({
   step,
   isFromSearchScreen,
   setStepAndArticleId,
+  onFavoriteUpdate,
 }) => {
   const article: Article | undefined = articles.find(
     (item) => item.id == selectedArticleId
   );
   const [articleIsRead, setArticleIsRead] = useState(false);
-  const [isArticleFavorite, setIsArticleFavorite] = useState(false);
 
   const checkReadAndFavorites = useCallback(async () => {
     if (article) {
       setArticleIsRead(await ArticleUtils.isArticleRead(article.id));
-      setIsArticleFavorite(await ArticleUtils.isArticleInFavorites(article.id));
     }
   }, [article]);
 
@@ -65,10 +67,6 @@ const ArticleCard: FC<Props> = ({
     void checkReadAndFavorites();
   }, [checkReadAndFavorites]);
 
-  const updateView = useCallback(() => {
-    void checkReadAndFavorites();
-  }, [checkReadAndFavorites]);
-
   const onItemPressed = useCallback(async () => {
     if (isFromSearchScreen && setStepAndArticleId && article)
       setStepAndArticleId(article.id, step);
@@ -82,36 +80,18 @@ const ArticleCard: FC<Props> = ({
         {
           articles: articles,
           id: article?.id,
-          onBackButtonPressed: () => {
-            updateView();
-          },
           step: step,
         },
         true
       );
     }
-  }, [
-    isFromSearchScreen,
-    setStepAndArticleId,
-    article,
-    step,
-    articles,
-    updateView,
-  ]);
+  }, [isFromSearchScreen, setStepAndArticleId, article, step, articles]);
 
   const imageStyle = [
     styles.articleImage,
     styles.borderLeftRadius,
     articleIsRead && styles.readArticleImage,
   ];
-
-  const onFavoriteButtonClick = useCallback(async () => {
-    if (article) {
-      const shouldAddFavorite = !isArticleFavorite;
-      await FavoritesUtils.handleOnFavorite(shouldAddFavorite, article.id);
-      setIsArticleFavorite(shouldAddFavorite);
-    }
-  }, [article, isArticleFavorite]);
 
   return (
     <>
@@ -161,9 +141,11 @@ const ArticleCard: FC<Props> = ({
             </ListItem.Content>
           </ListItem>
           <View style={styles.favoriteView}>
-            <TouchableWithoutFeedback onPress={onFavoriteButtonClick}>
-              {FavoritesAssets.getFavoriteIcon(isArticleFavorite, Sizes.xl)}
-            </TouchableWithoutFeedback>
+            <FavoriteButton
+              articleId={article.id}
+              isDisplayedWithTitle={false}
+              onUpdate={onFavoriteUpdate}
+            />
           </View>
         </>
       )}

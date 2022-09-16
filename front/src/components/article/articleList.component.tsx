@@ -1,46 +1,67 @@
+import _ from "lodash";
 import type { FC } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { AccessibilityInfo, FlatList, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
 import { Labels } from "../../constants";
 import { Colors, Paddings, Sizes } from "../../styles";
-import type { Article, Step } from "../../types";
+import type { Article, ArticleListHeaderParams, Step } from "../../types";
 import { ArticleUtils } from "../../utils";
-import { SecondaryText } from "../baseComponents";
+import { CommonText, SecondaryText } from "../baseComponents/StyledText";
+import { View } from "../baseComponents/Themed";
 import ArticleCard from "./articleCard.component";
+import ArticleListHeader from "./articleListHeader.component";
 
 type ArticleOrString = Article | string;
 
 interface Props {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  headerComponent?: any;
-  articleList: Article[];
+  articles: Article[];
+  articleListHeaderParams?: ArticleListHeaderParams;
   animationDuration: number;
   step?: Step;
   isFromSearchScreen?: boolean;
   setStepAndArticleId?: (articleId: number, step: Step | undefined) => void;
+  emptyListMessage?: string;
+  onFavoriteUpdate?: () => void;
 }
 
 const ArticleList: FC<Props> = ({
-  headerComponent,
-  articleList,
+  emptyListMessage,
+  articleListHeaderParams,
+  articles,
   animationDuration,
   step,
   isFromSearchScreen,
   setStepAndArticleId,
+  onFavoriteUpdate,
 }) => {
   const flatListRef = useRef<FlatList>();
+  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
   const [articlesWithHeaders, setArticlesWithHeaders] = useState<
     ArticleOrString[]
   >([]);
 
   useEffect(() => {
+    const articlesToShow = _.filter(articles, (article) => !article.hide);
+    setFilteredArticles(articlesToShow);
+
+    if (articlesToShow.length > 0)
+      AccessibilityInfo.announceForAccessibility(
+        articleToReadAccessibilityLabel()
+      );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [articles, filteredArticles.length]);
+
+  const articleToReadAccessibilityLabel = () =>
+    `${filteredArticles.length} ${Labels.accessibility.articleToRead}`;
+
+  useEffect(() => {
     let mounted = true;
     const sortArticles = async () => {
       const sortedArticles = await ArticleUtils.sortReadAndUnreadArticles(
-        articleList
+        filteredArticles
       );
 
       const _articlesWithHeaders: ArticleOrString[] = [];
@@ -68,7 +89,7 @@ const ArticleList: FC<Props> = ({
     return () => {
       mounted = false;
     };
-  }, [articleList]);
+  }, [filteredArticles]);
 
   const setFlatListRef = useCallback((ref: FlatList) => {
     flatListRef.current = ref;
@@ -95,10 +116,11 @@ const ArticleList: FC<Props> = ({
           >
             <ArticleCard
               selectedArticleId={item.id}
-              articles={articleList}
+              articles={filteredArticles}
               step={step}
               isFromSearchScreen={isFromSearchScreen}
               setStepAndArticleId={setStepAndArticleId}
+              onFavoriteUpdate={onFavoriteUpdate}
             />
           </Animatable.View>
         );
@@ -106,8 +128,9 @@ const ArticleList: FC<Props> = ({
     },
     [
       animationDuration,
-      articleList,
+      filteredArticles,
       isFromSearchScreen,
+      onFavoriteUpdate,
       setStepAndArticleId,
       step,
     ]
@@ -116,17 +139,39 @@ const ArticleList: FC<Props> = ({
   return (
     <>
       <FlatList
-        ListHeaderComponent={headerComponent}
+        ListHeaderComponent={
+          articleListHeaderParams ? (
+            <ArticleListHeader
+              title={articleListHeaderParams.title}
+              description={articleListHeaderParams.description}
+              articles={articles}
+              setArticles={articleListHeaderParams.setArticles}
+              setTrackerAction={articleListHeaderParams.setTrackerAction}
+              navigation={articleListHeaderParams.navigation}
+            />
+          ) : null
+        }
         ref={setFlatListRef}
         data={articlesWithHeaders}
         keyExtractor={keyExtractor}
         renderItem={renderArticle}
       />
+      {emptyListMessage && articles.length === 0 && (
+        <View>
+          <CommonText style={styles.emptyMessage}>
+            {emptyListMessage}
+          </CommonText>
+        </View>
+      )}
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  emptyMessage: {
+    paddingTop: Paddings.largest,
+    textAlign: "center",
+  },
   headerListInfo: {
     color: Colors.secondaryGreen,
     fontSize: Sizes.xs,

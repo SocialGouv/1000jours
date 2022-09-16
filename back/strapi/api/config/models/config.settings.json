@@ -1,0 +1,18 @@
+{
+  "kind": "singleType",
+  "collectionName": "configs",
+  "info": {
+    "name": "config",
+    "description": "Configuration"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "lastAppVersionNumber": {
+      "type": "string"
+    }
+  }
+}

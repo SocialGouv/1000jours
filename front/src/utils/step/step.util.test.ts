@@ -2,16 +2,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { addDays, addWeeks, subDays, subMonths, subYears } from "date-fns";
 import _ from "lodash";
 
-import { Labels, StorageKeysConstants } from "../constants";
+import { Labels, StorageKeysConstants } from "../../constants";
 import {
   GROSSESSE_TOTAL_SEMAINES_SA,
   GROSSESSE_TRIMESTRE_2_SEMAINES_SA,
   StepId,
   USER_SITUATIONS,
   UserInfo,
-} from "../constants/profile.constants";
-import type { UserSituation } from "../types";
-import { StepUtils, StorageUtils } from ".";
+} from "../../constants/profile.constants";
+import type { UserSituation } from "../../types";
+import { StepUtils, StorageUtils } from "..";
 
 describe("Step utils", () => {
   describe("Count Articles to read in CurrentStep", () => {

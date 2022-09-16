@@ -11,20 +11,18 @@ import {
 } from "../../constants";
 import { GraphQLLazyQuery } from "../../services";
 import type { CartoFilterStorage } from "../../type";
-import { AroundMeUtils, StorageUtils, StringUtils } from "../../utils";
+import { AroundMeUtils, StorageUtils } from "../../utils";
 
 interface Props {
   triggerSearchByGpsCoords: boolean;
   region?: Region;
   setFetchedPois: (pois: Poi[]) => void;
-  chooseFilterMessage: () => void;
 }
 
 const FetchPois: React.FC<Props> = ({
   triggerSearchByGpsCoords,
   region,
   setFetchedPois,
-  chooseFilterMessage,
 }) => {
   const [componentIsInitialized, setComponentIsInitialized] = useState(false);
   const [triggerGetPois, setTriggerGetPois] = useState(false);
@@ -44,23 +42,13 @@ const FetchPois: React.FC<Props> = ({
     const savedFilters: CartoFilterStorage | undefined =
       await StorageUtils.getObjectValue(StorageKeysConstants.cartoFilterKey);
 
-    if (
-      !savedFilters ||
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      (savedFilters &&
-        StringUtils.isStringArrayNullOrEmpty(savedFilters.types) &&
-        StringUtils.isStringArrayNullOrEmpty(savedFilters.thematiques))
-    ) {
-      chooseFilterMessage();
-      return;
-    }
+    if (!savedFilters) return;
 
     setQueryVariables({
       lat1: topLeftPoint.latitude,
       lat2: bottomRightPoint.latitude,
       long1: topLeftPoint.longitude,
       long2: bottomRightPoint.longitude,
-      thematiques: savedFilters.thematiques,
       types: savedFilters.types,
     });
     setTriggerGetPois(!triggerGetPois);
@@ -77,10 +65,12 @@ const FetchPois: React.FC<Props> = ({
 
   const handleResults = useCallback(
     (data: unknown) => {
-      const { searchPois } = data as {
-        searchPois: Poi[];
-      };
-      setFetchedPois(searchPois);
+      if (data) {
+        const { searchPois } = data as {
+          searchPois: Poi[];
+        };
+        setFetchedPois(searchPois);
+      } else setFetchedPois([]);
     },
     [setFetchedPois]
   );

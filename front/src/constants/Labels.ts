@@ -25,6 +25,9 @@ export default {
       more: "ajouter",
       sendingInProgress: "Envoi en cours",
     },
+    cartographyFilters: {
+      validateButtonHint: "Sélectionner au moins un filtre pour valider",
+    },
     close: "Fermer",
     closeMenu: "Fermer le menu",
     epds: {
@@ -34,6 +37,10 @@ export default {
     eventCard: {
       description: "Description",
       title: "Titre de l'événement",
+    },
+    favorites: {
+      add: "Ajouter dans vos favoris",
+      remove: "Retirer de vos favoris",
     },
     illustrationProfile: "Illustration profil",
     logoApp: "Logo de l'application",
@@ -51,6 +58,11 @@ export default {
     version: "version.",
   },
   appName: "1000 premiers jours",
+  appVersion: {
+    doUpdate: "Mettre à jour",
+    newVersionAvailable: "Une nouvelle version de l'application est disponible",
+    update: "Mise à jour",
+  },
   aroundMe: {
     addressesListLabelEnd:
       "points d'intérêts qui correspondent à vos critères :",
@@ -128,7 +140,13 @@ export default {
     didYouKnowTitle: "Le saviez-vous ?",
     favorite: {
       addToFavorites: "Ajouter",
+      confirmDeleteMessage:
+        "Êtes-vous sûr de vouloir supprimer cet article de vos favoris ?",
       deleteFromFavorites: "Supprimer",
+      description:
+        "Retrouvez ici les articles que vous avez ajouté en favoris.",
+      empty: "Aucun article en favoris",
+      title: "Favoris",
     },
     firstThreeMonths: {
       buttonLabel: "Commencer",
@@ -158,6 +176,7 @@ export default {
   articleList: {
     articlesAlreadyRead: "article(s) déjà lu(s)",
     articlesToRead: "article(s) à lire",
+    filterByFavorites: "Afficher seulement mes favoris",
     filters: "Filtrer",
     resetFilters: "Réinitialiser",
   },
@@ -201,6 +220,7 @@ export default {
     synchronizationHelper:
       "Ce bouton permet de synchroniser votre calendrier personnel avec celui de l’application. Ainsi, les événements affichés ici le seront aussi sur votre calendrier.",
     today: "Aujourd'hui",
+    usefulEvent: "Cette information vous a été utile ?",
   },
   dateFormatLabel: "Jour / Mois / Année",
   epdsSurvey: {
@@ -546,10 +566,14 @@ export default {
     information: "Informations",
     legalNotice: "Mentions légales",
     moodboard: "Suivi d'humeur",
+    myFavorites: "Mes favoris",
     myProfil: "Mon profil",
+    notificationsCenter: "Centre de notification",
     title: "Menu",
   },
   moodboard: {
+    completeMoodboard:
+      "Complétez votre suivi d'humeur en cliquant sur le calendrier ci-dessous.",
     description:
       "Le suivi d'humeur est un outil d'accompagnement pour évaluer régulièrement votre humeur et au besoin, d'effectuer le questionnaire de la dépression post-partum.",
     howDoYouFeelToday: "Comment vous sentez vous aujourd'hui ?",
@@ -570,6 +594,20 @@ export default {
   noData: "Aucunes données",
   notification: {
     openTheApp: "Ouverture de l'app",
+  },
+  notificationsCenter: {
+    article: {
+      decription:
+        "Vous précisant qu’il y a tel article non lu sur votre étape.",
+      title: "Notifications des articles non lus",
+    },
+    description:
+      "Ici vous pouvez paramétrer les notifications que vous souhaitez recevoir en les activant/désactivant :",
+    moodboard: {
+      description: "Vous invitant à venir renseigner votre état émotionnel.",
+      title: "Notifications du suivi d'humeur",
+    },
+    title: "Paramètres de notifications",
   },
   onboarding: {
     screenNumber: "Écran n°",

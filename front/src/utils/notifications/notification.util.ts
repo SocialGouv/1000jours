@@ -13,10 +13,11 @@ import {
   Labels,
   NotificationConstants,
   StorageKeysConstants,
-} from "../constants";
-import type { Event, Step } from "../types";
-import { countCurrentStepArticlesNotRead } from "./step.util";
-import * as StorageUtils from "./storage.util";
+} from "../../constants";
+import type { Event, Step } from "../../types";
+import { NotificationToggleUtils } from "..";
+import { countCurrentStepArticlesNotRead } from "../step/step.util";
+import * as StorageUtils from "../storage.util";
 
 export enum NotificationType {
   epds = "epds",
@@ -120,12 +121,17 @@ const scheduleMoodboardNotification = async (
 };
 
 export const scheduleMoodboardNotifications = async (): Promise<void> => {
-  const notifsMoodboard = await getAllNotificationsByType(
+  const isToggleActive = await NotificationToggleUtils.isToggleOn(
     NotificationType.moodboard
   );
-  if (notifsMoodboard.length === 0) {
-    await scheduleMoodboardNotification(Weekday.tuesday);
-    await scheduleMoodboardNotification(Weekday.friday);
+  if (isToggleActive) {
+    const notifsMoodboard = await getAllNotificationsByType(
+      NotificationType.moodboard
+    );
+    if (notifsMoodboard.length === 0) {
+      await scheduleMoodboardNotification(Weekday.tuesday);
+      await scheduleMoodboardNotification(Weekday.friday);
+    }
   }
 };
 
@@ -368,43 +374,84 @@ export const updateArticlesNotification = async (): Promise<void> => {
   await scheduleArticlesNotification(trigger);
 };
 
+export const getNotificationTrigger = async (
+  nbArticlesToRead: number,
+  notifTrigger: NotificationTriggerInput | undefined
+): Promise<NotificationTriggerInput> =>
+  nbArticlesToRead > 0
+    ? notifTrigger ?? getNewTriggerForArticlesNotification()
+    : NotificationConstants.MIN_TRIGGER;
+
+// Enregistre les étapes pour lesquelles la notification de félicitations (articles tous lus) a déjà été programmée
+export const saveStepForCongratNotifScheduled = async (
+  nbArticlesToRead: number,
+  currentStep: Step | null,
+  stepsAlreadyCongratulatedForArticles: string[] | null
+): Promise<void> => {
+  if (nbArticlesToRead === 0 && currentStep) {
+    const currentStepId = currentStep.id.toString();
+    if (stepsAlreadyCongratulatedForArticles) {
+      stepsAlreadyCongratulatedForArticles.push(currentStepId);
+    }
+    const newValue = stepsAlreadyCongratulatedForArticles ?? [currentStepId];
+    await StorageUtils.storeObjectValue(
+      StorageKeysConstants.stepsAlreadyCongratulatedForArticles,
+      newValue
+    );
+  }
+};
+
+export const hasBeenAlreadyNotifiedForArticles = (
+  currentStep: Step | null,
+  stepsAlreadyCongratulatedForArticles: string[] | null
+): boolean => {
+  let hasBeenAlreadyNotified = false;
+  if (Array.isArray(stepsAlreadyCongratulatedForArticles)) {
+    hasBeenAlreadyNotified = stepsAlreadyCongratulatedForArticles.includes(
+      currentStep ? currentStep.id.toString() : ""
+    );
+  }
+  return hasBeenAlreadyNotified;
+};
+
 export const scheduleArticlesNotification = async (
   notifTrigger?: NotificationTriggerInput
 ): Promise<void> => {
-  const nbArticlesToRead: number = await countCurrentStepArticlesNotRead();
-  if (nbArticlesToRead >= 0) {
-    const trigger: NotificationTriggerInput =
-      nbArticlesToRead > 0
-        ? notifTrigger ?? (await getNewTriggerForArticlesNotification())
-        : NotificationConstants.MIN_TRIGGER;
-    const content = await buildArticlesNotificationContent(nbArticlesToRead);
+  const isToggleActive = await NotificationToggleUtils.isToggleOn(
+    NotificationType.articles
+  );
 
-    const stepsAlreadyCongratulatedForArticles =
-      ((await StorageUtils.getObjectValue(
-        StorageKeysConstants.stepsAlreadyCongratulatedForArticles
-      )) as string[] | undefined) ?? null;
-    const currentStep = (await StorageUtils.getObjectValue(
-      StorageKeysConstants.currentStep
-    )) as Step | null;
+  if (isToggleActive) {
+    const nbArticlesToRead: number = await countCurrentStepArticlesNotRead();
+    if (nbArticlesToRead >= 0) {
+      const trigger: NotificationTriggerInput = await getNotificationTrigger(
+        nbArticlesToRead,
+        notifTrigger
+      );
+      const content = await buildArticlesNotificationContent(nbArticlesToRead);
 
-    if (content) {
-      await cancelAllNotificationsByType(NotificationType.articles);
-      const hasBeenAlreadyNotified =
-        stepsAlreadyCongratulatedForArticles?.includes(
-          currentStep ? currentStep.id.toString() : ""
-        );
-      if (!hasBeenAlreadyNotified) {
-        await sendNotificationReminder(content, trigger);
+      const stepsAlreadyCongratulatedForArticles =
+        ((await StorageUtils.getObjectValue(
+          StorageKeysConstants.stepsAlreadyCongratulatedForArticles
+        )) as string[] | undefined) ?? null;
+      const currentStep = (await StorageUtils.getObjectValue(
+        StorageKeysConstants.currentStep
+      )) as Step | null;
 
-        // Enregistre les étapes pour lesquelles la notification de félicitations (articles tous lus) a déjà été programmée
-        if (nbArticlesToRead === 0 && currentStep) {
-          const currentStepId = currentStep.id.toString();
-          const newValue = stepsAlreadyCongratulatedForArticles
-            ? stepsAlreadyCongratulatedForArticles.push(currentStepId)
-            : [currentStepId];
-          await StorageUtils.storeObjectValue(
-            StorageKeysConstants.stepsAlreadyCongratulatedForArticles,
-            newValue
+      if (content) {
+        await cancelAllNotificationsByType(NotificationType.articles);
+
+        if (
+          !hasBeenAlreadyNotifiedForArticles(
+            currentStep,
+            stepsAlreadyCongratulatedForArticles
+          )
+        ) {
+          await sendNotificationReminder(content, trigger);
+          await saveStepForCongratNotifScheduled(
+            nbArticlesToRead,
+            currentStep,
+            stepsAlreadyCongratulatedForArticles
           );
         }
       }
@@ -414,9 +461,7 @@ export const scheduleArticlesNotification = async (
 
 export const getAllScheduledNotifications = async (): Promise<
   Notifications.NotificationRequest[]
-> => {
-  return Notifications.getAllScheduledNotificationsAsync();
-};
+> => Notifications.getAllScheduledNotificationsAsync();
 
 export const logAllScheduledNotifications = async (): Promise<void> => {
   const scheduledNotifs = await getAllScheduledNotifications();

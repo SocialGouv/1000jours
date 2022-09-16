@@ -1,6 +1,7 @@
 import * as AccessibiltyConstants from "./accessibility.constants";
 import * as AroundMeConstants from "./aroundMe.constants";
 import * as CalendarDbQueries from "./databaseQueries/calendarDbQueries.constants";
+import * as ConfigQueries from "./databaseQueries/configDbQueries.constants";
 import * as EpdsDbQueries from "./databaseQueries/epdsDbQueries.constants";
 import * as HomeDbQueries from "./databaseQueries/homeDbQueries.constants";
 import * as SearchQueries from "./databaseQueries/searchQueries.constants";
@@ -20,6 +21,7 @@ export {
   AccessibiltyConstants,
   AroundMeConstants,
   CalendarDbQueries,
+  ConfigQueries,
   EpdsConstants,
   EpdsDbQueries,
   FetchPoliciesConstants,

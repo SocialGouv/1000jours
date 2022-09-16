@@ -60,6 +60,13 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
         title: Labels.menu.myProfil,
       },
       {
+        icon: IcomoonIcons.favoris,
+        onPress: () => {
+          void RootNavigation.navigate("articleFavorites");
+        },
+        title: Labels.menu.myFavorites,
+      },
+      {
         icon: IcomoonIcons.bebe,
         onPress: () => {
           void RootNavigation.navigate("moodboard");
@@ -73,6 +80,14 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
         },
         title: Labels.timeline.library.nom,
       },
+      // TODO: feature-flipping => centre de notifications
+      // {
+      //   icon: IcomoonIcons.notification,
+      //   onPress: () => {
+      //     void RootNavigation.navigate("notificationsCenter");
+      //   },
+      //   title: Labels.menu.notificationsCenter,
+      // },
       {
         icon: IcomoonIcons.email,
         onPress: () => {

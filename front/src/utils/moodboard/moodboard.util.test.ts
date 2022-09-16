@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { format } from "date-fns";
 
-import { Formats, StorageKeysConstants } from "../constants";
-import { MoodboardUtils, StorageUtils } from ".";
+import { Formats, StorageKeysConstants } from "../../constants";
+import { MoodboardUtils, StorageUtils } from "..";
 
 describe("Moodboard utils", () => {
   describe("saveMood", () => {

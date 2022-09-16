@@ -1,4 +1,3 @@
-import _ from "lodash";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
@@ -7,14 +6,14 @@ import { CheckBox } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { Labels } from "../../constants";
-import {
-  MAJOR_VERSION_IOS,
-  PLATFORM_IS_ANDROID,
-} from "../../constants/platform.constants";
-import { Colors, Margins, Paddings, Shadow, Sizes, Styles } from "../../styles";
+import { PLATFORM_IS_ANDROID } from "../../constants/platform.constants";
+import { useFavoriteArticlesIds } from "../../hooks";
+import { Colors, Margins, Paddings, Sizes, Styles } from "../../styles";
 import type { Article, ArticleFilter } from "../../types";
+import { ArticleFilterUtils } from "../../utils";
 import { BaseAssets } from "../assets";
 import {
+  CancelButton,
   CloseButton,
   CustomButton,
   Icomoon,
@@ -22,92 +21,125 @@ import {
   TitleH1,
   View,
 } from "../baseComponents";
+import CustomDivider from "../baseComponents/customDivider.component";
+import ArticlesFilterFavoritesRow from "./articlesFilterFavoritesRow.component";
 
 interface Props {
   articles: Article[];
   applyFilters: (filters: ArticleFilter[]) => void;
+  filterByFavorites: () => void;
 }
 
-const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
-  const getFilters = (articlesToFilter: Article[]) => {
-    return _.chain(articlesToFilter)
-      .flatMap(({ thematiques }) => {
-        return thematiques;
-      })
-      .groupBy("id")
-      .map((thematiques) => {
-        return {
-          active: false,
-          nbArticles: thematiques.length,
-          thematique: thematiques[0],
-        };
-      })
-      .value();
-  };
-
+const ArticlesFilter: FC<Props> = ({
+  articles,
+  applyFilters,
+  filterByFavorites,
+}) => {
+  const favoriteArticlesIds = useFavoriteArticlesIds();
   const [filters, setFilters] = useState<ArticleFilter[]>([]);
-  const [initalFilters, setInitalFilters] = useState<ArticleFilter[]>([]);
-  const [triggerUpdateFilters, setTriggerUpdateFilters] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [lastAppliedFilters, setLastAppliedFilters] = useState<ArticleFilter[]>(
+    []
+  );
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [showFavoriteToggle, setShowFavoriteToggle] = useState(false);
+
+  const [lastToggleOnFavoritesValue, setLastToggleOnFavoritesValue] =
+    useState(false);
+  const [isToggleOn, setIsToggleOn] = useState(false);
 
   useEffect(() => {
-    if (filters.length === 0) setFilters(getFilters(articles));
+    if (filters.length === 0) {
+      const fetchedFilters = ArticleFilterUtils.getFilters(articles);
+      setFilters(fetchedFilters);
+      setLastAppliedFilters(fetchedFilters);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [articles]);
 
   useEffect(() => {
-    if (modalVisible) setInitalFilters(_.cloneDeep(filters));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modalVisible]);
+    setShowFavoriteToggle(
+      ArticleFilterUtils.shouldShowFavoriteToggle(articles, favoriteArticlesIds)
+    );
+  }, [articles, favoriteArticlesIds]);
 
-  const numberActiveFilters = () => {
-    const number = filters.filter((item) => item.active).length;
-    return number ? `(${number} actif(s))` : "";
-  };
+  useEffect(() => {
+    if (showFavoriteToggle && !isToggleOn) {
+      const areArticlesAllFavorites =
+        !ArticleFilterUtils.areArticlesNotAllFavorites(
+          articles,
+          favoriteArticlesIds
+        );
 
-  const numberActiveAccessibilityFilters = () => {
-    const number = filters.filter((item) => item.active).length;
-    return `${Labels.articleList.filters}. (${number} ${Labels.accessibility.articlesFilters.activeFilter})`;
-  };
-
-  const checkboxAccessibilityLabel = (filter: ArticleFilter) =>
-    `${filter.thematique.nom}. (${filter.nbArticles} ${Labels.accessibility.articlesFilters.availableArticles})`;
+      setLastToggleOnFavoritesValue(areArticlesAllFavorites);
+      setIsToggleOn(areArticlesAllFavorites);
+    }
+  }, [articles, favoriteArticlesIds, isToggleOn, showFavoriteToggle]);
 
   const onShowModal = useCallback(() => {
-    setModalVisible(!modalVisible);
-  }, [modalVisible]);
+    if (lastAppliedFilters.length > 0) {
+      setFilters(lastAppliedFilters);
+    }
+    setIsToggleOn(lastToggleOnFavoritesValue);
+    setIsModalVisible(!isModalVisible);
+  }, [isModalVisible, lastAppliedFilters, lastToggleOnFavoritesValue]);
 
   const resetFilters = useCallback(() => {
-    setFilters(initalFilters);
-  }, [initalFilters]);
+    setFilters(ArticleFilterUtils.getFilters(articles));
+    setIsToggleOn(false);
+  }, [articles]);
 
   const cancelFiltersModal = useCallback(() => {
-    setModalVisible(false);
-    resetFilters();
-  }, [resetFilters]);
+    setFilters(lastAppliedFilters);
+    setIsToggleOn(lastToggleOnFavoritesValue);
+    setIsModalVisible(false);
+  }, [lastAppliedFilters, lastToggleOnFavoritesValue]);
 
   const onCheckboxPressed = useCallback(
-    (filter: ArticleFilter) => () => {
-      filter.active = !filter.active;
-      setTriggerUpdateFilters(!triggerUpdateFilters);
+    (selectedFilter: ArticleFilter) => () => {
+      if (isToggleOn) setIsToggleOn(false);
+      setFilters(ArticleFilterUtils.updateFilters(filters, selectedFilter));
     },
-    [triggerUpdateFilters]
+    [filters, isToggleOn]
   );
 
+  const onToggleFavorite = useCallback(() => {
+    setIsToggleOn(!isToggleOn);
+    setFilters(ArticleFilterUtils.getFilters(articles));
+  }, [isToggleOn, articles]);
+
   const onValidateFilter = useCallback(() => {
-    applyFilters(filters);
-    setModalVisible(false);
-  }, [applyFilters, filters]);
+    setLastToggleOnFavoritesValue(isToggleOn);
+    setLastAppliedFilters(filters);
+
+    if (isToggleOn) filterByFavorites();
+    else applyFilters(filters);
+
+    setIsModalVisible(false);
+  }, [applyFilters, filters, isToggleOn, filterByFavorites]);
+
+  const renderFavoriteToggleRow = () => {
+    return showFavoriteToggle ? (
+      <>
+        <CustomDivider />
+        <ArticlesFilterFavoritesRow
+          onToggleFavorite={onToggleFavorite}
+          isToggleOn={isToggleOn}
+        />
+      </>
+    ) : null;
+  };
 
   return (
     <View style={styles.paddingsDefault}>
       <CustomButton
         buttonStyle={styles.filterButton}
         titleStyle={styles.filterButtonTitle}
-        title={`${Labels.articleList.filters} ${numberActiveFilters()}`}
+        title={ArticleFilterUtils.filterButtonLabel(lastAppliedFilters)}
         rounded={true}
         disabled={false}
-        accessibilityLabel={numberActiveAccessibilityFilters()}
+        accessibilityLabel={ArticleFilterUtils.filterButtonAccessibilityLabel(
+          lastAppliedFilters
+        )}
         icon={
           <Icomoon
             name={IcomoonIcons.filtrer}
@@ -117,8 +149,8 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
         }
         action={onShowModal}
       />
-      <Modal transparent={true} visible={modalVisible} animationType="fade">
-        {modalVisible && (
+      <Modal transparent={true} visible={isModalVisible} animationType="fade">
+        {isModalVisible && (
           <View style={Styles.modale.behindOfModal}>
             <View style={styles.mainContainer}>
               <View
@@ -156,50 +188,39 @@ const ArticlesFilter: FC<Props> = ({ articles, applyFilters }) => {
                   <CheckBox
                     containerStyle={styles.checkboxItem}
                     textStyle={{
+                      color: Colors.primaryBlueDark,
                       flex: 1,
                       fontWeight: filter.active ? "bold" : "normal",
                     }}
                     key={index}
                     iconRight
                     uncheckedIcon={
-                      <BaseAssets.UncheckedIcon
-                        width={Sizes.lg}
-                        height={Sizes.lg}
+                      <BaseAssets.CheckboxUncheckedIcon
+                        width={Sizes.sm}
+                        height={Sizes.sm}
                       />
                     }
                     checkedIcon={
-                      <BaseAssets.CheckedIcon
-                        width={Sizes.lg}
-                        height={Sizes.lg}
+                      <BaseAssets.CheckboxCheckedIcon
+                        width={Sizes.sm}
+                        height={Sizes.sm}
                       />
                     }
                     uncheckedColor={Colors.primaryBlueDark}
                     checkedColor={Colors.primaryBlueDark}
                     title={`${filter.thematique.nom} (${filter.nbArticles})`}
-                    accessibilityLabel={checkboxAccessibilityLabel(filter)}
+                    accessibilityLabel={ArticleFilterUtils.checkboxAccessibilityLabel(
+                      filter
+                    )}
                     checked={filter.active}
                     onPress={onCheckboxPressed(filter)}
                   />
                 ))}
+                {renderFavoriteToggleRow()}
               </ScrollView>
 
               <View style={styles.buttonsContainer}>
-                <View style={styles.buttonContainer}>
-                  <CustomButton
-                    title={Labels.buttons.cancel}
-                    titleStyle={styles.buttonTitleStyle}
-                    rounded={false}
-                    disabled={false}
-                    icon={
-                      <Icomoon
-                        name={IcomoonIcons.fermer}
-                        size={14}
-                        color={Colors.primaryBlue}
-                      />
-                    }
-                    action={cancelFiltersModal}
-                  />
-                </View>
+                <CancelButton action={cancelFiltersModal} />
                 <View style={styles.buttonContainer}>
                   <CustomButton
                     title={Labels.buttons.validate}
@@ -229,11 +250,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: Margins.default,
   },
-  centeredView: {
-    alignItems: MAJOR_VERSION_IOS < 14 ? "stretch" : "center",
-    justifyContent: "center",
-    marginTop: Margins.default,
-  },
   checkboxItem: {
     backgroundColor: "transparent",
     borderColor: "transparent",
@@ -258,11 +274,6 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlue,
     fontSize: Sizes.xxs,
   },
-  filterContainer: {
-    flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
   mainContainer: {
     backgroundColor: Colors.white,
     borderColor: Colors.primaryBlue,
@@ -272,21 +283,6 @@ const styles = StyleSheet.create({
     margin: Margins.default,
     padding: Paddings.default,
     paddingTop: 0,
-  },
-  modalView: {
-    alignItems: MAJOR_VERSION_IOS < 14 ? "stretch" : "center",
-    backgroundColor: Colors.white,
-    borderRadius: Sizes.mmd,
-    elevation: 5,
-    margin: Margins.larger,
-    padding: Paddings.larger,
-    shadowColor: "black",
-    shadowOffset: {
-      height: Shadow.offsetHeight,
-      width: Shadow.offsetWidth,
-    },
-    shadowOpacity: Shadow.opacity,
-    shadowRadius: Shadow.radius,
   },
   paddingsDefault: {
     paddingVertical: Paddings.smallest,

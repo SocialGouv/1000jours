@@ -8,16 +8,16 @@ import {
 } from "date-fns";
 import _ from "lodash";
 
-import { Labels, StorageKeysConstants } from "../constants";
-import type { UserInfo } from "../constants/profile.constants";
+import { Labels, StorageKeysConstants } from "../../constants";
+import type { UserInfo } from "../../constants/profile.constants";
 import {
   DEFAULT_USER_INFOS,
   GROSSESSE_TOTAL_SEMAINES_SA,
   GROSSESSE_TRIMESTRE_2_SEMAINES_SA,
   StepId,
-} from "../constants/profile.constants";
-import type { UserInfos, UserSituation } from "../types";
-import { getObjectValue } from "./storage.util";
+} from "../../constants/profile.constants";
+import type { UserInfos, UserSituation } from "../../types";
+import { getObjectValue } from "./../storage.util";
 
 const getUserInfos = (
   userSituations: UserSituation[] | null,

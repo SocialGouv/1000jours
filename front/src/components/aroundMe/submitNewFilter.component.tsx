@@ -10,6 +10,7 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 
 import {
+  CancelButton,
   CommonText,
   CustomButton,
   CustomNumberOfChildrenPicker,
@@ -175,22 +176,7 @@ const SubmitNewFilter: React.FC<Props> = ({ visible, hideModal }) => {
             <CustomPostalCodeTextInput updatePostalCode={setPostalCode} />
           </ScrollView>
           <View style={styles.buttonsContainer}>
-            <View style={styles.buttonContainer}>
-              <CustomButton
-                title={Labels.buttons.cancel}
-                titleStyle={styles.buttonTitleStyle}
-                rounded={false}
-                disabled={false}
-                icon={
-                  <Icomoon
-                    name={IcomoonIcons.fermer}
-                    size={14}
-                    color={Colors.primaryBlue}
-                  />
-                }
-                action={hideModal}
-              />
-            </View>
+            <CancelButton action={hideModal} />
             <View style={styles.buttonContainer}>
               <CustomButton
                 title={Labels.buttons.validate}

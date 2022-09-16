@@ -51,6 +51,32 @@ query GetStepArticles {
 }
 `;
 
+export const LIST_FAVORITES_ARTICLES = (
+  ids: number[]
+): string => /* GraphQL */ `
+query GetFavoritesArticles {
+  articles(sort: "ordre", where: {
+    id_in: [${ids.toString()}]
+  })
+  {
+    id
+    titre
+    resume
+    visuel {
+      id
+      hash
+      url
+      height
+      width
+    }
+    thematiques {
+      nom
+      id
+    }
+  }
+}
+`;
+
 export const LIST_ID_ARTICLES_WITH_STEP = (
   stepId: number | string
 ): string => /* GraphQL */ `

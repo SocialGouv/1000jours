@@ -1,26 +1,40 @@
 import * as React from "react";
-import { useCallback, useEffect, useState } from "react";
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { AccessibilityInfo, StyleSheet, View } from "react-native";
 import type { DateData } from "react-native-calendars";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import type { Direction, Theme } from "react-native-calendars/src/types";
 
 import { Labels, StorageKeysConstants } from "../../constants";
-import { Colors, FontWeight, Margins, Sizes } from "../../styles";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { MoodStorageItem } from "../../type";
+import type { MarkedDatesType } from "../../types";
 import { MoodboardUtils, StorageUtils } from "../../utils";
-import { Icomoon, IcomoonIcons } from "../baseComponents";
+import { Icomoon, IcomoonIcons, SecondaryText } from "../baseComponents";
 import EditMoodDay from "./editMoodDay.component";
-
-interface Props {}
 
 const CALENDAR_MONTH_FORMAT = "MMMM yyyy";
 
-const MoodsCalendar: React.FC<Props> = () => {
+interface RefreshMoodCalendar {
+  refresh: () => void;
+}
+
+const MoodsCalendar: React.ForwardRefRenderFunction<RefreshMoodCalendar> = (
+  props,
+  forwardedRef
+) => {
   const [moods, setMoods] = useState<MoodStorageItem[]>();
   const [showEditModal, setShowEditModal] = useState(false);
   const [dateToEdit, setDateToEdit] = useState<string>();
   const [monthToDisplay, setMonthToDisplay] = useState(new Date().getMonth());
+  const calendarRef = useRef<Calendar>(null);
 
   const calenderTheme: Theme = {
     arrowColor: Colors.primaryBlue,
@@ -30,16 +44,23 @@ const MoodsCalendar: React.FC<Props> = () => {
     textMonthFontSize: Sizes.xs,
   };
 
-  const findMoods = async () => {
+  useImperativeHandle(forwardedRef, () => ({
+    async refresh() {
+      await findMoods();
+    },
+  }));
+
+  const findMoods = useCallback(async () => {
     const moodsStorage: MoodStorageItem[] =
       (await StorageUtils.getObjectValue(StorageKeysConstants.moodsByDate)) ??
       [];
 
     setMoods(moodsStorage);
-  };
+  }, []);
 
   useEffect(() => {
     void findMoods();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onDayPress = useCallback((day: DateData) => {
@@ -95,13 +116,18 @@ const MoodsCalendar: React.FC<Props> = () => {
     );
   }, []);
 
-  const hideEditModal = useCallback(() => {
+  const hideEditModal = useCallback(async () => {
     setShowEditModal(false);
-    void findMoods();
-  }, []);
+    await findMoods();
+  }, [findMoods]);
 
   return (
     <>
+      <View style={styles.titleContainer}>
+        <SecondaryText style={styles.title}>
+          {Labels.moodboard.completeMoodboard}
+        </SecondaryText>
+      </View>
       <Calendar
         style={styles.calendarStyle}
         theme={calenderTheme}
@@ -115,6 +141,7 @@ const MoodsCalendar: React.FC<Props> = () => {
         markedDates={buildMarkedDatesForCalendar(moods)}
         renderArrow={renderMonthArrow}
         onMonthChange={onMonthChange}
+        ref={calendarRef}
       />
 
       <EditMoodDay
@@ -125,11 +152,12 @@ const MoodsCalendar: React.FC<Props> = () => {
     </>
   );
 };
+MoodsCalendar.displayName = "MoodsCalendar";
 
 export const buildMarkedDatesForCalendar = (
   moods: MoodStorageItem[] | undefined
-) => {
-  const markedList = {};
+): MarkedDatesType | undefined => {
+  const markedList: MarkedDatesType = {};
 
   moods?.forEach((item) => {
     const moodItem = MoodboardUtils.MOODBOARD_ITEMS.find(
@@ -151,6 +179,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: Margins.default,
   },
+  title: {
+    color: Colors.primaryBlue,
+    fontSize: Sizes.md,
+    paddingHorizontal: Paddings.default,
+    textAlign: "center",
+  },
+  titleContainer: {
+    alignContent: "center",
+    alignItems: "center",
+    paddingVertical: Paddings.smallest,
+  },
 });
 
-export default MoodsCalendar;
+export default forwardRef(MoodsCalendar);

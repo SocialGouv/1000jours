@@ -34,6 +34,7 @@ export const CustomPagination: FC<OnboardingPaginationProps> = ({
           key={value}
           onPress={onPaginationPressed(value)}
           accessibilityLabel={`${Labels.onboarding.screenNumber}${value + 1}`}
+          accessibilityState={{ selected: value === currentIndex }}
           style={styles.paginationTouchableStyle}
         >
           <View

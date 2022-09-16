@@ -7,7 +7,10 @@ import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { TrackerEvent } from "../../type";
 import TrackerHandler from "../tracker/trackerHandler.component";
-import { CustomButton, Icomoon, IcomoonIcons, SecondaryText, View } from ".";
+import CustomButton from "./customButton.component";
+import Icomoon, { IcomoonIcons } from "./icomoon.component";
+import { SecondaryText } from "./StyledText";
+import { View } from "./Themed";
 
 interface Props {
   question: string;
@@ -57,6 +60,10 @@ const UsefulQuestion: FC<Props> = ({
           titleStyle={styles.buttonTitle}
           action={setUsefulObjectForTracker(IS_USEFUL)}
           disabled={isButtonsDisabled}
+          accessibilityState={{
+            disabled: isButtonsDisabled,
+            selected: buttonValue == IS_USEFUL,
+          }}
           icon={
             <Icomoon
               name={IcomoonIcons.valider}
@@ -77,6 +84,10 @@ const UsefulQuestion: FC<Props> = ({
           }
           action={setUsefulObjectForTracker(IS_NOT_USEFUL)}
           disabled={isButtonsDisabled}
+          accessibilityState={{
+            disabled: isButtonsDisabled,
+            selected: buttonValue == IS_NOT_USEFUL,
+          }}
           icon={
             <Icomoon
               name={IcomoonIcons.annuler}
