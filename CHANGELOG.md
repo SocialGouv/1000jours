@@ -1,3 +1,55 @@
+# [1.111.0](https://github.com/SocialGouv/1000jours/compare/v1.110.0...v1.111.0) (2022-09-16)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'accessibilité des favoris ([#1387](https://github.com/SocialGouv/1000jours/issues/1387)) ([228e6f8](https://github.com/SocialGouv/1000jours/commit/228e6f820bc1a24508c4b2cfcf7cbc241c17fb13)), closes [#1385](https://github.com/SocialGouv/1000jours/issues/1385)
+* 🐛 Corrige la date de déclenchement des notifs article ([#1360](https://github.com/SocialGouv/1000jours/issues/1360)) ([62f4a90](https://github.com/SocialGouv/1000jours/commit/62f4a90a9cc6e6d8cc8259fdbd57c8ee214e718e)), closes [#1359](https://github.com/SocialGouv/1000jours/issues/1359)
+* 🐛 Corrige la liste des favoris lorsqu'elle est vide ([#1406](https://github.com/SocialGouv/1000jours/issues/1406)) ([1633be0](https://github.com/SocialGouv/1000jours/commit/1633be03996a403720c04d2421c3295344aa6255))
+* 🐛 Corrige la taille de l'icone du menu ([#1369](https://github.com/SocialGouv/1000jours/issues/1369)) ([89a8e3e](https://github.com/SocialGouv/1000jours/commit/89a8e3ea98268f4aafe34761910e0627d066cce2)), closes [#1368](https://github.com/SocialGouv/1000jours/issues/1368)
+* 🐛 Corrige le freeze du loader sur les listes articles ([#1401](https://github.com/SocialGouv/1000jours/issues/1401)) ([abe90fc](https://github.com/SocialGouv/1000jours/commit/abe90fcc0670511a6db6f50634b00cfb38930b7c))
+* 🐛 Corrige un problème de refresh sur le moodboard ([#1428](https://github.com/SocialGouv/1000jours/issues/1428)) ([746c1f7](https://github.com/SocialGouv/1000jours/commit/746c1f765ce08d3ee3eb5710273cb2208d0681f8)), closes [#1427](https://github.com/SocialGouv/1000jours/issues/1427)
+* 🐛 Corrige une erreur sentry 'b.includes is not a function' ([#1433](https://github.com/SocialGouv/1000jours/issues/1433)) ([671fa57](https://github.com/SocialGouv/1000jours/commit/671fa574bf94484788d6d56e76425384bb05d3cf)), closes [#1426](https://github.com/SocialGouv/1000jours/issues/1426)
+* 🐛 Corrige une erreur sentry 'null is not an object' ([#1432](https://github.com/SocialGouv/1000jours/issues/1432)) ([08d2f2f](https://github.com/SocialGouv/1000jours/commit/08d2f2fed90e67d75579df1a78560c7d2cb0853e)), closes [#1425](https://github.com/SocialGouv/1000jours/issues/1425)
+* 🐛 Désactive l'accès au centre de notifications ([#1442](https://github.com/SocialGouv/1000jours/issues/1442)) ([f63cc2d](https://github.com/SocialGouv/1000jours/commit/f63cc2d36a08e5006bd71acef4a7199b03a12f4e)), closes [#1441](https://github.com/SocialGouv/1000jours/issues/1441)
+* 🐛 Les 'Toogles' sont activés par défaut (notifs) ([#1440](https://github.com/SocialGouv/1000jours/issues/1440)) ([7a56e7f](https://github.com/SocialGouv/1000jours/commit/7a56e7fc719d3b0706a64b310c3fbda8eb8a7a3d)), closes [#1439](https://github.com/SocialGouv/1000jours/issues/1439)
+* 🐛 Merge conflict (icomoon) ([a1db27f](https://github.com/SocialGouv/1000jours/commit/a1db27f9b27bd103a2110a21f160e103ee920f00))
+* **accessibility:** écran onboardinig ([#1386](https://github.com/SocialGouv/1000jours/issues/1386)) ([b4e811e](https://github.com/SocialGouv/1000jours/commit/b4e811ec1ea3fefb5c92c269a14a0ae91b22f4fd))
+* **accessibility:** focus map ([#1390](https://github.com/SocialGouv/1000jours/issues/1390)) ([767111f](https://github.com/SocialGouv/1000jours/commit/767111fb514e8e81a9c724421c205855f51d81a0))
+* 🐛 Corrige l'affichage du message 'empty' (favoris) ([#1388](https://github.com/SocialGouv/1000jours/issues/1388)) ([afbf9be](https://github.com/SocialGouv/1000jours/commit/afbf9be132e2ec54a33df1aec436ed122372d3a4)), closes [#1331](https://github.com/SocialGouv/1000jours/issues/1331)
+* 🐛 Mise à jour des écrans après la mise en favoris ([#1397](https://github.com/SocialGouv/1000jours/issues/1397)) ([96f4b75](https://github.com/SocialGouv/1000jours/commit/96f4b7575a7ce8377c5e2f9cad60274c318ec5d4)), closes [#1361](https://github.com/SocialGouv/1000jours/issues/1361)
+* 🐛 Permet de masquer les messages d'erreur graphQL ([#1429](https://github.com/SocialGouv/1000jours/issues/1429)) ([694ce60](https://github.com/SocialGouv/1000jours/commit/694ce60e2c6e37f1aa98962b9a99ad75373e9fbd))
+* utils tu ([#1416](https://github.com/SocialGouv/1000jours/issues/1416)) ([9ee3782](https://github.com/SocialGouv/1000jours/commit/9ee37821549f71f550630a94d940f713a10f8ae8))
+* **article:** navigation ([#1383](https://github.com/SocialGouv/1000jours/issues/1383)) ([b696e3d](https://github.com/SocialGouv/1000jours/commit/b696e3d706a8654323fcb9aa0016e2a0021ab57e))
+* **pois:** search pois ([#1407](https://github.com/SocialGouv/1000jours/issues/1407)) ([c72d8f0](https://github.com/SocialGouv/1000jours/commit/c72d8f03699e96feb329591f4c9399199594dae6))
+* filtres liste articles ([#1398](https://github.com/SocialGouv/1000jours/issues/1398)) ([5c9ed75](https://github.com/SocialGouv/1000jours/commit/5c9ed75086bd7c06c1db3f31644d2cfaa10ac219))
+* **ci:** up kontinuous syntax ([40703ee](https://github.com/SocialGouv/1000jours/commit/40703ee2f1d6905b128f3871c9e617b6aa1f2946))
+* **demigraphie:** type d'un champ ([#1394](https://github.com/SocialGouv/1000jours/issues/1394)) ([0f0bea9](https://github.com/SocialGouv/1000jours/commit/0f0bea9dbc0914bbe79363a126001a7208bb41d5))
+* 🐛 Corrige la liste article de la recherche ([#1384](https://github.com/SocialGouv/1000jours/issues/1384)) ([f266cfa](https://github.com/SocialGouv/1000jours/commit/f266cfa53a29f646052a187012efdbdd0c82d89f))
+* migrate on kontinuous ([#1392](https://github.com/SocialGouv/1000jours/issues/1392)) ([f26dee4](https://github.com/SocialGouv/1000jours/commit/f26dee4be25bf312292508f7312453eea3c1e50d))
+* **article:** articles undefined ([#1371](https://github.com/SocialGouv/1000jours/issues/1371)) ([0e923b3](https://github.com/SocialGouv/1000jours/commit/0e923b3e8ababbab227d285d4399c10fb21e3767))
+* **ds:** Corrige le secret du token de Démarches Simplifiéees ([#1382](https://github.com/SocialGouv/1000jours/issues/1382)) ([f6d8da6](https://github.com/SocialGouv/1000jours/commit/f6d8da62f3e056b343d00f05ef9485e06e27d187))
+* prod BACKOFFICE_URL ([#1373](https://github.com/SocialGouv/1000jours/issues/1373)) ([1d4d520](https://github.com/SocialGouv/1000jours/commit/1d4d5201596e7a27d9f372ab67def66de9109dd0))
+* prod url backoffice ([#1372](https://github.com/SocialGouv/1000jours/issues/1372)) ([15c686f](https://github.com/SocialGouv/1000jours/commit/15c686f5221d878ff9ff4b450af800708259b10a))
+* **ds-types:** Corrige le nommage de l'identifiant des types DS ([#1354](https://github.com/SocialGouv/1000jours/issues/1354)) ([6a95cfb](https://github.com/SocialGouv/1000jours/commit/6a95cfb7390a789fca5d86a9108b90ebdb6ba39f))
+
+
+### Features
+
+* **articles:** ajout filtre favoris ([#1430](https://github.com/SocialGouv/1000jours/issues/1430)) ([aeb5c1e](https://github.com/SocialGouv/1000jours/commit/aeb5c1e75b7d474b5167b2d92daa8275d3fd654a))
+* **notif:** stats ([#1437](https://github.com/SocialGouv/1000jours/issues/1437)) ([e8256c0](https://github.com/SocialGouv/1000jours/commit/e8256c0d83e5e17b2430a44ce85217aa8fb3fd15))
+* **notifications:** ajout toggle suivi humeur ([#1434](https://github.com/SocialGouv/1000jours/issues/1434)) ([9e2ba14](https://github.com/SocialGouv/1000jours/commit/9e2ba14b93bf9b157e9bbdf64fde661c38e6f401))
+* **notifs:** centre de notifs pour les articles ([#1418](https://github.com/SocialGouv/1000jours/issues/1418)) ([baefebf](https://github.com/SocialGouv/1000jours/commit/baefebfe78e018b3a5b83837a4f4d8ef4383c2d7))
+* 🎸 Ajoute l'écran des favoris ([#1358](https://github.com/SocialGouv/1000jours/issues/1358)) ([487e324](https://github.com/SocialGouv/1000jours/commit/487e324501f6fab195142112def48c60a9f4e173)), closes [#1328](https://github.com/SocialGouv/1000jours/issues/1328) [#1329](https://github.com/SocialGouv/1000jours/issues/1329) [#1331](https://github.com/SocialGouv/1000jours/issues/1331)
+* 🎸 Ajoute une alerte lorsqu'une maj est disponible  ([#1424](https://github.com/SocialGouv/1000jours/issues/1424)) ([df50a35](https://github.com/SocialGouv/1000jours/commit/df50a35e27a12cc4a7f182d2a33b900c6f808567)), closes [#1399](https://github.com/SocialGouv/1000jours/issues/1399)
+* 🎸 Ajoute une nouvelle collection 'Config' (Strapi) ([#1423](https://github.com/SocialGouv/1000jours/issues/1423)) ([42c6942](https://github.com/SocialGouv/1000jours/commit/42c6942e1571642f388225409b8b3b1c8adef298)), closes [#1399](https://github.com/SocialGouv/1000jours/issues/1399)
+* 🎸 Améliore le suivi d'humeur ([#1400](https://github.com/SocialGouv/1000jours/issues/1400)) ([532e0db](https://github.com/SocialGouv/1000jours/commit/532e0dbd15355b3e8dce01fae8b7b475436e2f16)), closes [#1395](https://github.com/SocialGouv/1000jours/issues/1395)
+* ajout composant toggle ([#1417](https://github.com/SocialGouv/1000jours/issues/1417)) ([e6eee0e](https://github.com/SocialGouv/1000jours/commit/e6eee0eb72b030893ab2ce202d145277e05cfb46))
+* **calendrier:** question utilité ([#1362](https://github.com/SocialGouv/1000jours/issues/1362)) ([05040e1](https://github.com/SocialGouv/1000jours/commit/05040e111359af32ea9574777610b0ba0428239b))
+* **demographie:** ajout collection ([#1357](https://github.com/SocialGouv/1000jours/issues/1357)) ([bea4fba](https://github.com/SocialGouv/1000jours/commit/bea4fba5eb30e45bd9ed768f0474e871f26773d9))
+* ajout tracking favoris ([#1381](https://github.com/SocialGouv/1000jours/issues/1381)) ([76a77d1](https://github.com/SocialGouv/1000jours/commit/76a77d197163a01329729179d15b10f4d3bd6801))
+* modale filtres cartographie bouton valider + refacto ([#1355](https://github.com/SocialGouv/1000jours/issues/1355)) ([48b595c](https://github.com/SocialGouv/1000jours/commit/48b595c27f7b8aac3158dca5a76749b17cc31b0a))
+
 # [1.110.0](https://github.com/SocialGouv/1000jours/compare/v1.109.5...v1.110.0) (2022-08-23)
 
 
