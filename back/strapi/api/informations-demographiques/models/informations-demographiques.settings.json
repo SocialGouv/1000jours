@@ -56,6 +56,12 @@
     },
     "reponses_epds": {
       "model": "reponses-epds"
+    },
+    "csp_code": {
+      "type": "string"
+    },
+    "csp_libelle": {
+      "type": "string"
     }
   }
 }
