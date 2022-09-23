@@ -1,3 +1,10 @@
+# [1.112.0](https://github.com/SocialGouv/1000jours/compare/v1.111.0...v1.112.0) (2022-09-23)
+
+
+### Features
+
+* **demographie:** ajour csp ([#1445](https://github.com/SocialGouv/1000jours/issues/1445)) ([40c6214](https://github.com/SocialGouv/1000jours/commit/40c621436c551b18c7d60b78aa4a8aac86a58181))
+
 # [1.111.0](https://github.com/SocialGouv/1000jours/compare/v1.110.0...v1.111.0) (2022-09-16)
 
 
