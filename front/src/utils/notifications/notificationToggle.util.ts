@@ -7,6 +7,8 @@ import {
 } from "../notifications/notification.util";
 import { getObjectValue } from "../storage.util";
 
+// TODO: warning ! dépendance circulaire avec notification.util.ts
+// Ca sera bien de le déplacer dedans
 export const isToggleOn = async (type: NotificationType): Promise<boolean> => {
   const key = getStorageKey(type);
   if (key) return (await getObjectValue(key)) as boolean;
