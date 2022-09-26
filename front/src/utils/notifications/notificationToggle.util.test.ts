@@ -18,7 +18,7 @@ describe("Notification Toggle Utils", () => {
 
       await NotificationToggleUtils.isToggleOn(NotificationType.moodboard).then(
         (data) => {
-          expect(data).toEqual(true);
+          expect(data).toBeTruthy();
         }
       );
     });
@@ -31,7 +31,7 @@ describe("Notification Toggle Utils", () => {
 
       await NotificationToggleUtils.isToggleOn(NotificationType.moodboard).then(
         (data) => {
-          expect(data).toEqual(false);
+          expect(data).toBeFalsy();
         }
       );
     });
@@ -39,7 +39,7 @@ describe("Notification Toggle Utils", () => {
     it("should return true when key for type is undefined (toogle default value)", async () => {
       await NotificationToggleUtils.isToggleOn(NotificationType.epds).then(
         (data) => {
-          expect(data).toEqual(true);
+          expect(data).toBeTruthy();
         }
       );
     });
@@ -56,6 +56,12 @@ describe("Notification Toggle Utils", () => {
       expect(
         NotificationToggleUtils.getStorageKey(NotificationType.articles)
       ).toEqual("@notifToggleArticles");
+    });
+
+    it("should return notifToggleEvents when type is event", () => {
+      expect(
+        NotificationToggleUtils.getStorageKey(NotificationType.event)
+      ).toEqual("@notifToggleEvents");
     });
 
     it("should return undefined when type is not articles or moodboard", () => {
@@ -82,6 +88,15 @@ describe("Notification Toggle Utils", () => {
       );
       NotificationToggleUtils.updateNotification(NotificationType.moodboard);
       expect(moodboardNotificationSpy).toHaveBeenCalled();
+    });
+
+    it("should call scheduleEventsNotification when type is event", () => {
+      const eventNotificationSpy = jest.spyOn(
+        NotificationUtils,
+        "scheduleEventsNotification"
+      );
+      NotificationToggleUtils.updateNotification(NotificationType.event);
+      expect(eventNotificationSpy).toHaveBeenCalled();
     });
   });
 });
