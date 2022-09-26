@@ -6,6 +6,7 @@ import * as ArticleUtils from "./article.util";
 import * as ArticleFilterUtils from "./articles/articleFilter.util";
 import * as AssestUtils from "./asset.util";
 import * as EpdsSurveyUtils from "./epdsSurvey.util";
+import * as EventUtils from "./events/event.util";
 import * as FavoritesUtils from "./favorites/favorites.util";
 import * as KeyboardUtils from "./keyboard.util";
 import * as LinkingUtils from "./linking/linking.util";
@@ -32,6 +33,7 @@ export {
   ArticleUtils,
   AssestUtils,
   EpdsSurveyUtils,
+  EventUtils,
   FavoritesUtils,
   getAppTheme,
   getVisuelFormat,

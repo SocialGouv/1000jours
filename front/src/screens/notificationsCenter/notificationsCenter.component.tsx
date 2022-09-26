@@ -12,6 +12,7 @@ import {
 import { BackButton, TitleH1 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels } from "../../constants";
+import { useEvents } from "../../hooks";
 import { Colors, Paddings } from "../../styles";
 import type { RootStackParamList } from "../../types";
 import { NotificationUtils, TrackerUtils } from "../../utils";
@@ -24,6 +25,7 @@ interface Props {
 const NotificationsCenter: FC<Props> = ({ navigation }) => {
   const [trackerAction, setTrackerAction] = useState<string>("");
   const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const hookEvents = useEvents();
 
   useEffect(() => {
     void checkNotificationInSettings();
@@ -76,6 +78,7 @@ const NotificationsCenter: FC<Props> = ({ navigation }) => {
           title={Labels.notificationsCenter.event.title}
           description={Labels.notificationsCenter.event.decription}
           type={NotificationType.event}
+          events={hookEvents}
         />
       </View>
 

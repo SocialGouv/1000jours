@@ -7,6 +7,7 @@ import { Toggle } from "../../components/baseComponents";
 import { Labels } from "../../constants";
 import { Colors, FontStyle, FontWeight, Margins } from "../../styles";
 import type { TrackerEvent } from "../../type";
+import type { Event } from "../../types";
 import {
   NotificationToggleUtils,
   StorageUtils,
@@ -20,9 +21,15 @@ interface Props {
   title: string;
   description: string;
   type: NotificationType;
+  events?: Event[];
 }
 
-const NotificationToggle: FC<Props> = ({ title, description, type }) => {
+const NotificationToggle: FC<Props> = ({
+  title,
+  description,
+  type,
+  events,
+}) => {
   const [isToggleOn, setIsToggleOn] = useState(false);
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
   const toggleKey = NotificationToggleUtils.getStorageKey(type);
@@ -44,7 +51,7 @@ const NotificationToggle: FC<Props> = ({ title, description, type }) => {
     if (toggleKey) await StorageUtils.storeObjectValue(toggleKey, newValue);
 
     if (newValue) {
-      NotificationToggleUtils.updateNotification(type);
+      NotificationToggleUtils.updateNotification(type, events);
     } else await NotificationUtils.cancelAllNotificationsByType(type);
 
     setTrackerEventObject({
@@ -52,7 +59,7 @@ const NotificationToggle: FC<Props> = ({ title, description, type }) => {
       name: `${TrackerUtils.TrackingEvent.NOTIFICATIONS_CENTER} : ${type}`,
       value: newValue ? 1 : 0,
     });
-  }, [isToggleOn, type, toggleKey]);
+  }, [isToggleOn, toggleKey, type, events]);
 
   return (
     <View style={styles.mainContent}>

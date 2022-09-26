@@ -1,4 +1,5 @@
 import { StorageKeysConstants } from "../../constants";
+import type { Event } from "../../types";
 import {
   NotificationType,
   scheduleEventsNotification,
@@ -34,7 +35,10 @@ export const getStorageKey = (
   }
 };
 
-export const updateNotification = (type: NotificationType): void => {
+export const updateNotification = (
+  type: NotificationType,
+  events?: Event[]
+): void => {
   switch (type) {
     case NotificationType.moodboard: {
       void scheduleMoodboardNotifications();
@@ -45,7 +49,7 @@ export const updateNotification = (type: NotificationType): void => {
       break;
     }
     case NotificationType.event: {
-      void scheduleEventsNotification([]); // TOOD:
+      if (events) void scheduleEventsNotification(events);
       break;
     }
     default:
