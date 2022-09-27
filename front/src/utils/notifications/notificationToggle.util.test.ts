@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { StorageKeysConstants } from "../../constants";
+import type { Event } from "../../types";
 import { NotificationToggleUtils, NotificationUtils } from "..";
 import { NotificationType } from "./notification.util";
 
@@ -95,7 +96,16 @@ describe("Notification Toggle Utils", () => {
         NotificationUtils,
         "scheduleEventsNotification"
       );
-      NotificationToggleUtils.updateNotification(NotificationType.event);
+      const event: Event = {
+        debut: 0,
+        fin: 8,
+        id: 1,
+        nom: "événement",
+      };
+
+      NotificationToggleUtils.updateNotification(NotificationType.event, [
+        event,
+      ]);
       expect(eventNotificationSpy).toHaveBeenCalled();
     });
   });
