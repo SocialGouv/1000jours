@@ -26,7 +26,7 @@ export const getPostalCodeCoords = async (
 
     return newCoords;
   } catch (error: unknown) {
-    console.log(error);
+    console.warn(error);
     return undefined;
   }
 };
