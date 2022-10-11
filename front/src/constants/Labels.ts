@@ -195,6 +195,7 @@ export default {
     ok: "Ok",
     pass: "Passer",
     previous: "Précédent",
+    settings: "Paramètres",
     share: "Partager",
     start: "Commencer",
     validate: "Valider",
@@ -593,7 +594,10 @@ export default {
   },
   noData: "Aucunes données",
   notification: {
+    openSettings:
+      "Vos paramètres de notification sont désactivés pour cette application. Merci de vous rendre dans les réglages de votre téléphone afin de modifier ces paramètres.",
     openTheApp: "Ouverture de l'app",
+    title: "Notifications",
   },
   notificationsCenter: {
     article: {

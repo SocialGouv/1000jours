@@ -1,16 +1,20 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
-import { CustomDivider, NotificationToggle } from "../../components";
+import {
+  CustomDivider,
+  NotificationPermissionInSettingsModal,
+  NotificationToggle,
+} from "../../components";
 import { BackButton, TitleH1 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels } from "../../constants";
 import { Colors, Paddings } from "../../styles";
 import type { RootStackParamList } from "../../types";
-import { TrackerUtils } from "../../utils";
+import { NotificationUtils, TrackerUtils } from "../../utils";
 import { NotificationType } from "../../utils/notifications/notification.util";
 
 interface Props {
@@ -19,11 +23,26 @@ interface Props {
 
 const NotificationsCenter: FC<Props> = ({ navigation }) => {
   const [trackerAction, setTrackerAction] = useState<string>("");
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
+
+  useEffect(() => {
+    void checkNotificationInSettings();
+  }, []);
 
   const goBack = useCallback(() => {
     setTrackerAction(Labels.buttons.cancel);
     navigation.goBack();
   }, [navigation]);
+
+  const hideSettingsModal = useCallback(() => {
+    setShowSettingsModal(false);
+  }, []);
+
+  const checkNotificationInSettings = async () => {
+    const notificationsAreAllowed =
+      await NotificationUtils.allowsNotifications();
+    if (!notificationsAreAllowed) setShowSettingsModal(true);
+  };
 
   return (
     <ScrollView style={styles.mainContainer}>
@@ -31,6 +50,7 @@ const NotificationsCenter: FC<Props> = ({ navigation }) => {
         screenName={TrackerUtils.TrackingEvent.NOTIFICATIONS_CENTER}
         actionName={trackerAction}
       />
+
       <View style={styles.header}>
         <View style={styles.flexStart}>
           <BackButton action={goBack} />
@@ -52,6 +72,11 @@ const NotificationsCenter: FC<Props> = ({ navigation }) => {
           type={NotificationType.moodboard}
         />
       </View>
+
+      <NotificationPermissionInSettingsModal
+        visible={showSettingsModal}
+        closeModal={hideSettingsModal}
+      />
     </ScrollView>
   );
 };
