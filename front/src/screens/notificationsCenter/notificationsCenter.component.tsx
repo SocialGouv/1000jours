@@ -39,9 +39,9 @@ const NotificationsCenter: FC<Props> = ({ navigation }) => {
   }, []);
 
   const checkNotificationInSettings = async () => {
-    const notificationsAreAllowed =
+    const areNotificationsAllowed =
       await NotificationUtils.allowsNotifications();
-    if (!notificationsAreAllowed) setShowSettingsModal(true);
+    if (!areNotificationsAllowed) setShowSettingsModal(true);
   };
 
   return (
