@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type { FC, ReactElement } from "react";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -13,9 +13,10 @@ import {
   StorageUtils,
   TrackerUtils,
 } from "../../utils";
-import type { NotificationType } from "../../utils/notifications/notification.util";
+import { NotificationType } from "../../utils/notifications/notification.util";
 import * as NotificationUtils from "../../utils/notifications/notification.util";
 import TrackerHandler from "../tracker/trackerHandler.component";
+import NotificationsFrequency from "./notificationsFrequency.component";
 
 interface Props {
   title: string;
@@ -69,6 +70,7 @@ const NotificationToggle: FC<Props> = ({
           {title}
         </Text>
         <Text style={styles.itemTextDescr}>{description}</Text>
+        {isToggleOn && showOptionByType(type)}
       </View>
       <View style={styles.itemToggleBloc}>
         <Text
@@ -99,6 +101,12 @@ const NotificationToggle: FC<Props> = ({
       </View>
     </View>
   );
+};
+
+export const showOptionByType = (type: NotificationType): ReactElement => {
+  if (type == NotificationType.moodboard)
+    return <NotificationsFrequency type={type} />;
+  return <View />;
 };
 
 const styles = StyleSheet.create({

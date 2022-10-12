@@ -37,6 +37,11 @@ export enum Weekday {
   saturday = 7,
 }
 
+export enum Frequencies {
+  onceADay = "1 fois par jours",
+  twiceAWeek = "2 fois par semaine",
+}
+
 const sendNotificationReminder = async (
   content: NotificationContentInput,
   trigger: NotificationTriggerInput
@@ -128,9 +133,25 @@ export const scheduleMoodboardNotifications = async (): Promise<void> => {
     const notifsMoodboard = await getAllNotificationsByType(
       NotificationType.moodboard
     );
+
+    const frequency = (await StorageUtils.getStringValue(
+      StorageKeysConstants.notifToggleMoodboardFrequency
+    )) as Frequencies;
+    console.log("scheduleMoodboardNotifications : " + frequency);
+
     if (notifsMoodboard.length === 0) {
-      await scheduleMoodboardNotification(Weekday.tuesday);
-      await scheduleMoodboardNotification(Weekday.friday);
+      await cancelAllNotificationsByType(NotificationType.moodboard);
+
+      switch (frequency) {
+        case Frequencies.onceADay:
+          await scheduleMoodboardNotification(Weekday.tuesday);
+          break;
+        case Frequencies.twiceAWeek:
+        default:
+          await scheduleMoodboardNotification(Weekday.tuesday);
+          await scheduleMoodboardNotification(Weekday.friday);
+          break;
+      }
     }
   }
 };
