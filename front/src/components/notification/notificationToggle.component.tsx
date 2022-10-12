@@ -111,6 +111,12 @@ const NotificationToggle: FC<Props> = ({
   );
 };
 
+export const showOptionByType = (type: NotificationType): ReactElement => {
+  if (type == NotificationType.moodboard)
+    return <NotificationsFrequency type={type} />;
+  return <View />;
+};
+
 const styles = StyleSheet.create({
   itemTextBloc: {
     flex: 2,
