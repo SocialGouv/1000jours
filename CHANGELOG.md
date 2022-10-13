@@ -1,3 +1,11 @@
+## [1.112.1](https://github.com/SocialGouv/1000jours/compare/v1.112.0...v1.112.1) (2022-10-13)
+
+
+### Bug Fixes
+
+* 🐛 Corrige un bug Sentry undefined is not an object ([b48cd32](https://github.com/SocialGouv/1000jours/commit/b48cd3262f1302d0653c9d748967a28ff44770a9)), closes [#1460](https://github.com/SocialGouv/1000jours/issues/1460)
+* 🐛 Corrige un crash sur le moodboard (Animatable.View) ([7eef29a](https://github.com/SocialGouv/1000jours/commit/7eef29a07353fa73754e33c402b277da9cd3f480)), closes [#1427](https://github.com/SocialGouv/1000jours/issues/1427)
+
 # [1.112.0](https://github.com/SocialGouv/1000jours/compare/v1.111.0...v1.112.0) (2022-09-23)
 
 
