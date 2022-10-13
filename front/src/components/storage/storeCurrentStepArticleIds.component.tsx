@@ -24,14 +24,16 @@ const StoreCurrentStepArticleIds: FC<StoreCurrentStepArticleIdsProps> = ({
 
   const handleResults = useCallback(
     async (data: unknown) => {
-      const articles = (data as { articles: Article[] }).articles;
-      const articleIds = articles.map((article: Article) => article.id);
+      if (data) {
+        const articles = (data as { articles: Article[] }).articles;
+        const articleIds = articles.map((article: Article) => article.id);
 
-      await storeObjectValue(
-        StorageKeysConstants.currentStepArticleIds,
-        articleIds
-      );
-      if (callback) callback();
+        await storeObjectValue(
+          StorageKeysConstants.currentStepArticleIds,
+          articleIds
+        );
+        if (callback) callback();
+      }
     },
     [callback]
   );
