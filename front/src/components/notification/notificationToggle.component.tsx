@@ -65,39 +65,43 @@ const NotificationToggle: FC<Props> = ({
   return (
     <View style={styles.mainContent}>
       <TrackerHandler eventObject={trackerEventObject} />
-      <View style={styles.itemTextBloc}>
-        <Text style={styles.itemTextTitle} accessibilityRole="header">
-          {title}
-        </Text>
-        <Text style={styles.itemTextDescr}>{description}</Text>
-        {isToggleOn && showOptionByType(type)}
-      </View>
-      <View style={styles.itemToggleBloc}>
-        <Text
-          style={[
-            styles.itemToggleText,
-            isToggleOn ? null : { fontWeight: FontWeight.bold },
-          ]}
-          importantForAccessibility="no"
-          accessibilityElementsHidden
-          accessible={false}
-        >
-          {Labels.buttons.no}
-        </Text>
-        <View style={styles.itemToggle}>
-          <Toggle isToggleOn={isToggleOn} toggleSwitch={onTouchToggle} />
+      <View style={styles.toggleContent}>
+        <View style={styles.itemTextBloc}>
+          <Text style={styles.itemTextTitle} accessibilityRole="header">
+            {title}
+          </Text>
+          <Text style={styles.itemTextDescr}>{description}</Text>
         </View>
-        <Text
-          style={[
-            styles.itemToggleText,
-            isToggleOn ? { fontWeight: FontWeight.bold } : null,
-          ]}
-          importantForAccessibility="no"
-          accessibilityElementsHidden
-          accessible={false}
-        >
-          {Labels.buttons.yes}
-        </Text>
+        <View style={styles.itemToggleBloc}>
+          <Text
+            style={[
+              styles.itemToggleText,
+              isToggleOn ? null : { fontWeight: FontWeight.bold },
+            ]}
+            importantForAccessibility="no"
+            accessibilityElementsHidden
+            accessible={false}
+          >
+            {Labels.buttons.no}
+          </Text>
+          <View style={styles.itemToggle}>
+            <Toggle isToggleOn={isToggleOn} toggleSwitch={onTouchToggle} />
+          </View>
+          <Text
+            style={[
+              styles.itemToggleText,
+              isToggleOn ? { fontWeight: FontWeight.bold } : null,
+            ]}
+            importantForAccessibility="no"
+            accessibilityElementsHidden
+            accessible={false}
+          >
+            {Labels.buttons.yes}
+          </Text>
+        </View>
+      </View>
+      <View style={styles.itemFrequencyBloc}>
+        {isToggleOn && showOptionByType(type)}
       </View>
     </View>
   );
@@ -110,6 +114,7 @@ export const showOptionByType = (type: NotificationType): ReactElement => {
 };
 
 const styles = StyleSheet.create({
+  itemFrequencyBloc: {},
   itemTextBloc: {
     flex: 2,
   },
@@ -133,8 +138,11 @@ const styles = StyleSheet.create({
     color: Colors.secondaryGreenDark,
   },
   mainContent: {
-    flexDirection: "row",
+    flexDirection: "column",
     marginVertical: Margins.larger,
+  },
+  toggleContent: {
+    flexDirection: "row",
   },
 });
 
