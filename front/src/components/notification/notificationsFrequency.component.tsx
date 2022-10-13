@@ -32,13 +32,16 @@ const NotificationsFrequency: FC<Props> = ({ type }) => {
     setRadioValue(frequency);
   }, []);
 
-  const saveFraquency = useCallback(async () => {
-    await StorageUtils.storeStringValue(
-      StorageKeys.notifToggleMoodboardFrequency,
-      radioValue
-    );
-    void NotificationUtils.scheduleMoodboardNotifications();
-  }, [radioValue]);
+  const saveFraquency = useCallback(
+    async (frequency: NotificationUtils.Frequencies) => {
+      await StorageUtils.storeStringValue(
+        StorageKeys.notifToggleMoodboardFrequency,
+        frequency
+      );
+      void NotificationUtils.scheduleMoodboardNotifications(frequency);
+    },
+    []
+  );
 
   useEffect(() => {
     void initRadio();
@@ -48,15 +51,14 @@ const NotificationsFrequency: FC<Props> = ({ type }) => {
     (value: string) => {
       const newValue = value as NotificationUtils.Frequencies;
       setRadioValue(newValue);
-      console.log("onRadioChange : " + newValue);
 
-      void saveFraquency();
+      void saveFraquency(newValue);
       setTrackerEventObject({
         action: TrackerUtils.TrackingEvent.NOTIFICATIONS_CENTER,
         name: `${TrackerUtils.TrackingEvent.NOTIFICATIONS_CENTER} : ${type} & ${newValue}`,
       });
     },
-    [type]
+    [saveFraquency, type]
   );
 
   return (

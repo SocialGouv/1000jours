@@ -15,6 +15,7 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import type { Event, Step } from "../../types";
+import type { NotificationUtils } from "..";
 import * as NotificationToggleUtils from "../notifications/notificationToggle.util";
 import { countCurrentStepArticlesNotRead } from "../step/step.util";
 import * as StorageUtils from "../storage.util";
@@ -125,7 +126,9 @@ const scheduleMoodboardNotification = async (
   return sendNotificationReminder(buildMoodboardNotificationContent(), trigger);
 };
 
-export const scheduleMoodboardNotifications = async (): Promise<void> => {
+export const scheduleMoodboardNotifications = async (
+  frequency?: NotificationUtils.Frequencies
+): Promise<void> => {
   const isToggleActive = await NotificationToggleUtils.isToggleOn(
     NotificationType.moodboard
   );
@@ -133,11 +136,6 @@ export const scheduleMoodboardNotifications = async (): Promise<void> => {
     const notifsMoodboard = await getAllNotificationsByType(
       NotificationType.moodboard
     );
-
-    const frequency = (await StorageUtils.getStringValue(
-      StorageKeysConstants.notifToggleMoodboardFrequency
-    )) as Frequencies;
-    console.log("scheduleMoodboardNotifications : " + frequency);
 
     if (notifsMoodboard.length === 0) {
       await cancelAllNotificationsByType(NotificationType.moodboard);
