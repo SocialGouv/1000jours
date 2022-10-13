@@ -21,7 +21,6 @@ import {
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Formats, Labels, StorageKeysConstants } from "../../constants";
-import { IS_ON_EXPO_GO } from "../../constants/platform.constants";
 import { useAccessibilityReader } from "../../hooks";
 import { Colors, Paddings } from "../../styles";
 import type { MoodStorageItem } from "../../type";
@@ -110,7 +109,7 @@ const Moodboard: FC<Props> = ({ navigation }) => {
         <Animatable.View
           ref={elementRef}
           onLayout={onViewLayout}
-          useNativeDriver={!IS_ON_EXPO_GO}
+          useNativeDriver={false} // true => Crash : Style property 'height' is not supported by native animated module
         >
           {isAccessibilityMode ? (
             <MoodItemsForAccessibility
