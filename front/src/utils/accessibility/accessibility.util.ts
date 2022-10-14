@@ -23,3 +23,9 @@ export const getSnackBarDuration = (isAccessibilityModeOn: boolean): number => {
     ? SnackBarConstants.ACCESSIBILITY_SNACKBAR_DURATION
     : SnackBarConstants.SNACKBAR_DURATION;
 };
+
+export const getCleanAccessibilityLabel = (
+  accessibilityLabel: string
+): string => {
+  return accessibilityLabel.replaceAll("(s)", "");
+};
