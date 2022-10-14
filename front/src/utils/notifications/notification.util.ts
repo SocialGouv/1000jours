@@ -15,7 +15,7 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import type { Event, Step } from "../../types";
-import { NotificationToggleUtils } from "..";
+import * as NotificationToggleUtils from "../notifications/notificationToggle.util";
 import { countCurrentStepArticlesNotRead } from "../step/step.util";
 import * as StorageUtils from "../storage.util";
 
@@ -278,10 +278,18 @@ const scheduleEventNotification = async (event: Event) => {
   }
 };
 
-export const scheduleEventsNotification = (events: Event[]): void => {
-  events.forEach((event) => {
-    void scheduleEventNotification(event);
-  });
+export const scheduleEventsNotification = async (
+  events: Event[]
+): Promise<void> => {
+  const isToggleActive = await NotificationToggleUtils.isToggleOn(
+    NotificationType.event
+  );
+
+  if (isToggleActive) {
+    events.forEach((event) => {
+      void scheduleEventNotification(event);
+    });
+  }
 };
 
 export const cancelScheduleEventsNotification = async (): Promise<void> => {
@@ -494,7 +502,7 @@ export const rescheduleEventsNotifications = async (
   events: Event[]
 ): Promise<void> => {
   await cancelAllNotificationsByType(NotificationType.event);
-  scheduleEventsNotification(events);
+  await scheduleEventsNotification(events);
 };
 
 /**
