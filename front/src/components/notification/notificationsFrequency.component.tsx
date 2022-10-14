@@ -61,6 +61,16 @@ const NotificationsFrequency: FC<Props> = ({ type }) => {
     [saveFraquency, type]
   );
 
+  const radioButtonFrequency = (
+    frequencyValue: NotificationUtils.Frequencies,
+    frequencyLabel: string
+  ) => (
+    <View style={styles.radioItem}>
+      <RadioButton value={frequencyValue} color={Colors.primaryBlueDark} />
+      <Text style={styles.radioItemText}>{frequencyLabel}</Text>
+    </View>
+  );
+
   return (
     <View style={styles.mainContent}>
       <TrackerHandler eventObject={trackerEventObject} />
@@ -68,24 +78,14 @@ const NotificationsFrequency: FC<Props> = ({ type }) => {
         {Labels.notification.frequency.question}
       </SecondaryText>
       <RadioButton.Group onValueChange={onRadioChange} value={radioValue}>
-        <View style={styles.radioItem}>
-          <RadioButton
-            value={NotificationUtils.Frequencies.onceADay}
-            color={Colors.primaryBlueDark}
-          />
-          <Text style={styles.radioItemText}>
-            {Labels.notification.frequency.onceADay}
-          </Text>
-        </View>
-        <View style={styles.radioItem}>
-          <RadioButton
-            value={NotificationUtils.Frequencies.twiceAWeek}
-            color={Colors.primaryBlueDark}
-          />
-          <Text style={styles.radioItemText}>
-            {Labels.notification.frequency.twiceAWeek}
-          </Text>
-        </View>
+        {radioButtonFrequency(
+          NotificationUtils.Frequencies.onceADay,
+          Labels.notification.frequency.onceADay
+        )}
+        {radioButtonFrequency(
+          NotificationUtils.Frequencies.twiceAWeek,
+          Labels.notification.frequency.twiceAWeek
+        )}
       </RadioButton.Group>
     </View>
   );

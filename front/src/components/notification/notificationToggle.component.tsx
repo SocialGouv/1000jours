@@ -62,6 +62,12 @@ const NotificationToggle: FC<Props> = ({
     });
   }, [isToggleOn, toggleKey, type, events]);
 
+  const showOptionByType = (_type: NotificationType): ReactElement => {
+    if (_type == NotificationType.moodboard)
+      return <NotificationsFrequency type={_type} />;
+    return <View />;
+  };
+
   return (
     <View style={styles.mainContent}>
       <TrackerHandler eventObject={trackerEventObject} />
@@ -103,12 +109,6 @@ const NotificationToggle: FC<Props> = ({
       <View>{isToggleOn && showOptionByType(type)}</View>
     </View>
   );
-};
-
-export const showOptionByType = (type: NotificationType): ReactElement => {
-  if (type == NotificationType.moodboard)
-    return <NotificationsFrequency type={type} />;
-  return <View />;
 };
 
 const styles = StyleSheet.create({
