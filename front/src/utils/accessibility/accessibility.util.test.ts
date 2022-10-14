@@ -9,4 +9,19 @@ describe("Accessibility utils", () => {
       expect(AccessibilityUtils.getSnackBarDuration(false)).toEqual(4000);
     });
   });
+
+  describe("getCleanAccessibilityLabel", () => {
+    const cleanLabel = "Label de test";
+    const dirtyLabel = "Label(s) de test(s)";
+    it("should return the same label", () => {
+      expect(AccessibilityUtils.getCleanAccessibilityLabel(cleanLabel)).toEqual(
+        cleanLabel
+      );
+    });
+    it("should return the label", () => {
+      expect(AccessibilityUtils.getCleanAccessibilityLabel(dirtyLabel)).toEqual(
+        cleanLabel
+      );
+    });
+  });
 });

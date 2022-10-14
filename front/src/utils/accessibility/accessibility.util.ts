@@ -3,6 +3,7 @@ import type { Text } from "react-native";
 import { AccessibilityInfo, findNodeHandle } from "react-native";
 
 import { SnackBarConstants } from "../../constants";
+import { replaceAllText } from "../strings/strings.util";
 
 export const isScreenReaderEnabled = async (): Promise<boolean> => {
   return AccessibilityInfo.isScreenReaderEnabled();
@@ -27,5 +28,5 @@ export const getSnackBarDuration = (isAccessibilityModeOn: boolean): number => {
 export const getCleanAccessibilityLabel = (
   accessibilityLabel: string
 ): string => {
-  return accessibilityLabel.replaceAll("(s)", "");
+  return replaceAllText(accessibilityLabel, "(s)", "");
 };
