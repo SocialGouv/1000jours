@@ -142,7 +142,13 @@ export const scheduleMoodboardNotifications = async (
 
       switch (frequency) {
         case Frequencies.onceADay:
+          await scheduleMoodboardNotification(Weekday.monday);
           await scheduleMoodboardNotification(Weekday.tuesday);
+          await scheduleMoodboardNotification(Weekday.wednesday);
+          await scheduleMoodboardNotification(Weekday.thursday);
+          await scheduleMoodboardNotification(Weekday.friday);
+          await scheduleMoodboardNotification(Weekday.saturday);
+          await scheduleMoodboardNotification(Weekday.sunday);
           break;
         case Frequencies.twiceAWeek:
         default:
