@@ -596,7 +596,7 @@ export default {
   notification: {
     frequency: {
       onceADay: "1 fois par jour",
-      question: "A quelle fréquence ?",
+      question: "À quelle fréquence ?",
       twiceAWeek: "2 fois par semaine",
     },
     openSettings:

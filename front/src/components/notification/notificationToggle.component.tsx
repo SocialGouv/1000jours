@@ -100,9 +100,7 @@ const NotificationToggle: FC<Props> = ({
           </Text>
         </View>
       </View>
-      <View style={styles.itemFrequencyBloc}>
-        {isToggleOn && showOptionByType(type)}
-      </View>
+      <View>{isToggleOn && showOptionByType(type)}</View>
     </View>
   );
 };
@@ -114,7 +112,6 @@ export const showOptionByType = (type: NotificationType): ReactElement => {
 };
 
 const styles = StyleSheet.create({
-  itemFrequencyBloc: {},
   itemTextBloc: {
     flex: 2,
   },

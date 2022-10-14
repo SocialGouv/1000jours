@@ -39,7 +39,7 @@ export enum Weekday {
 }
 
 export enum Frequencies {
-  onceADay = "1 fois par jours",
+  onceADay = "1 fois par jour",
   twiceAWeek = "2 fois par semaine",
 }
 
