@@ -30,10 +30,18 @@ export type ViewProps = DefaultView["props"] & ThemeProps;
 export const Text = React.forwardRef<DefaultText, TextProps>(
   (props: TextProps, ref) => {
     // eslint-disable-next-line react/prop-types
-    const { style, lightColor, darkColor, ...otherProps } = props;
+    const { style, lightColor, darkColor, accessibilityLabel, ...otherProps } =
+      props;
     const color = useThemeColor({ dark: darkColor, light: lightColor }, "text");
-
-    return <DefaultText ref={ref} style={[{ color }, style]} {...otherProps} />;
+    const cleanAccessibilityLabel = accessibilityLabel;
+    return (
+      <DefaultText
+        ref={ref}
+        style={[{ color }, style]}
+        accessibilityLabel={cleanAccessibilityLabel}
+        {...otherProps}
+      />
+    );
   }
 );
 Text.displayName = "Text";

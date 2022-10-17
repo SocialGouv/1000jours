@@ -2,13 +2,14 @@ import _ from "lodash";
 import type { FC } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as React from "react";
+import type { Text as DefaultText } from "react-native";
 import { AccessibilityInfo, FlatList, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-import { Labels } from "../../constants";
+import { AccessibiltyConstants, Labels } from "../../constants";
 import { Colors, Paddings, Sizes } from "../../styles";
 import type { Article, ArticleListHeaderParams, Step } from "../../types";
-import { ArticleUtils } from "../../utils";
+import { AccessibilityUtils, ArticleUtils } from "../../utils";
 import { CommonText, SecondaryText } from "../baseComponents/StyledText";
 import { View } from "../baseComponents/Themed";
 import ArticleCard from "./articleCard.component";
@@ -42,6 +43,7 @@ const ArticleList: FC<Props> = ({
   const [articlesWithHeaders, setArticlesWithHeaders] = useState<
     ArticleOrString[]
   >([]);
+  const textFocusRef = React.useRef<DefaultText>(null);
 
   useEffect(() => {
     const articlesToShow = _.filter(articles, (article) => !article.hide);
@@ -91,6 +93,13 @@ const ArticleList: FC<Props> = ({
     };
   }, [filteredArticles]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      AccessibilityUtils.setAccessibilityFocusOnText(textFocusRef);
+    }, AccessibiltyConstants.TIMEOUT_FOCUS);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [articlesWithHeaders]);
+
   const setFlatListRef = useCallback((ref: FlatList) => {
     flatListRef.current = ref;
   }, []);
@@ -105,7 +114,20 @@ const ArticleList: FC<Props> = ({
     ({ item }: { item: ArticleOrString }) => {
       if (typeof item === "string") {
         return (
-          <SecondaryText style={styles.headerListInfo}>{item}</SecondaryText>
+          // Accessibilité : Focus sur le label "X articles à lire"
+          <SecondaryText
+            accessibilityLabel={AccessibilityUtils.getCleanAccessibilityLabel(
+              item
+            )}
+            style={styles.headerListInfo}
+            ref={
+              item.indexOf(Labels.articleList.articlesToRead) > 0
+                ? textFocusRef
+                : null
+            }
+          >
+            {item}
+          </SecondaryText>
         );
       } else {
         return (
