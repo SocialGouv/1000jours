@@ -56,7 +56,7 @@ const NotificationsEssentialEvents: FC<Props> = ({ events }) => {
     void scheduleEssentialEvents(shouldScheduleEssentialEvents);
     setTrackerEventObject({
       action: TrackerUtils.TrackingEvent.NOTIFICATIONS_CENTER,
-      name: `${TrackerUtils.TrackingEvent.NOTIFICATIONS_CENTER} : ${NotificationType.event}`,
+      name: `${TrackerUtils.TrackingEvent.NOTIFICATIONS_CENTER} : ${NotificationType.event} essentiels`,
     });
   }, [isCheckboxChecked, scheduleEssentialEvents]);
 
