@@ -15,6 +15,7 @@ import {
 } from "../../utils";
 import { NotificationType } from "../../utils/notifications/notification.util";
 import * as NotificationUtils from "../../utils/notifications/notification.util";
+import { NotificationsEssentialEvents } from "..";
 import TrackerHandler from "../tracker/trackerHandler.component";
 import NotificationsFrequency from "./notificationsFrequency.component";
 
@@ -65,6 +66,8 @@ const NotificationToggle: FC<Props> = ({
   const showOptionByType = (_type: NotificationType): ReactElement => {
     if (_type == NotificationType.moodboard)
       return <NotificationsFrequency type={_type} />;
+    if (_type == NotificationType.event && events)
+      return <NotificationsEssentialEvents events={events} />;
     return <View />;
   };
 
