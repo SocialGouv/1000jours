@@ -594,6 +594,11 @@ export default {
   },
   noData: "Aucunes données",
   notification: {
+    frequency: {
+      onceADay: "1 fois par jour",
+      question: "À quelle fréquence ?",
+      twiceAWeek: "2 fois par semaine",
+    },
     openSettings:
       "Vos paramètres de notification sont désactivés pour cette application. Merci de vous rendre dans les réglages de votre téléphone afin de modifier ces paramètres.",
     openTheApp: "Ouverture de l'app",

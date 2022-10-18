@@ -22,7 +22,8 @@ const NotificationPermissionInSettingsModal: React.FC<Props> = ({
 }) => {
   const openSettings = useCallback(() => {
     void Linking.openSettings();
-  }, []);
+    closeModal();
+  }, [closeModal]);
 
   return (
     <Modal animationType="slide" transparent={true} visible={visible}>

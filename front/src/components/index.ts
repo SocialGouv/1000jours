@@ -42,6 +42,7 @@ import NotificationHandler, {
   setNotificationHandler,
 } from "./notification/notificationHandler.component";
 import NotificationPermissionInSettingsModal from "./notification/notificationPermissionInSettingsModal.component";
+import NotificationsFrequency from "./notification/notificationsFrequency.component";
 import NotificationToggle from "./notification/notificationToggle.component";
 import CustomPagination from "./onboardingAndProfile/customOnboardingPagination.component";
 import UpdateChildBirthdayModal from "./onboardingAndProfile/updateChildBirthdayModal.component";
@@ -86,6 +87,7 @@ export {
   MoodsCalendar,
   NotificationHandler,
   NotificationPermissionInSettingsModal,
+  NotificationsFrequency,
   NotificationToggle,
   ParenthequeItem,
   PoiList,
