@@ -16,6 +16,7 @@ import * as MoodboardUtils from "./moodboard/moodboard.util";
 import * as NotificationUtils from "./notifications/notification.util";
 import * as NotificationToggleUtils from "./notifications/notificationToggle.util";
 import * as RootNavigation from "./rootNavigation.util";
+import * as ScaleNormalize from "./scaleNormalize.util";
 import * as SearchUtils from "./search.util";
 import * as StepUtils from "./step/step.util";
 import * as StorageUtils from "./storage.util";
@@ -46,6 +47,7 @@ export {
   NotificationUtils,
   reportError,
   RootNavigation,
+  ScaleNormalize,
   SearchUtils,
   StepUtils,
   StorageUtils,
