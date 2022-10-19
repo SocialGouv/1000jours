@@ -19,6 +19,4 @@ export const scaleNormalize = (size: number): number => {
   return result;
 };
 
-export const getFontScale = (): number => {
-  return PixelRatio.getFontScale();
-};
+export const getFontScale = (): number => PixelRatio.getFontScale();
