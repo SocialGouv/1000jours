@@ -17,3 +17,8 @@ export const formattedEvents = (
     }));
   else return [];
 };
+
+export const essentialEvents = (events: Event[]): Event[] =>
+  events.filter((event) => {
+    return event.important;
+  });

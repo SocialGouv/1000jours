@@ -594,6 +594,7 @@ export default {
   },
   noData: "Aucunes données",
   notification: {
+    essentialEvents: "Que les événements essentiels",
     frequency: {
       onceADay: "1 fois par jour",
       question: "À quelle fréquence ?",
