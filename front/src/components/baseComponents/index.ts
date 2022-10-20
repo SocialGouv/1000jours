@@ -1,8 +1,8 @@
 import NotificationModal from "../notification/notificationModal.component";
 import BackButton from "./backButton.component";
 import Backdrop from "./backdrop.component";
+import BlueCheckbox from "./blueCheckbox.component";
 import CancelButton from "./cancelButton.component";
-import Checkbox from "./checkbox.component";
 import CloseButton from "./closeButton.component";
 import CustomButton from "./customButton.component";
 import CustomNumberOfChildrenPicker from "./customNumberOfChildrenPicker.component";
@@ -14,6 +14,7 @@ import ErrorMessage from "./errorMessage.component";
 import ExpandableButton from "./expandableButton.component";
 import FavoriteButton from "./favoriteButton.component";
 import { GraphQLLoader } from "./graphQLLoader.component";
+import GreenRadioButton from "./greenRadioButton.component";
 import HeaderApp from "./headerApp.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
 import Loader from "./loader.component";
@@ -32,8 +33,8 @@ import UsefulQuestion from "./usefulQuestion.component";
 export {
   BackButton,
   Backdrop,
+  BlueCheckbox,
   CancelButton,
-  Checkbox,
   CloseButton,
   CommonText,
   CustomButton,
@@ -46,6 +47,7 @@ export {
   ExpandableButton,
   FavoriteButton,
   GraphQLLoader,
+  GreenRadioButton,
   HeaderApp,
   Icomoon,
   IcomoonIcons,

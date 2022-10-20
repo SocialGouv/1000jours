@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { CheckBox as RNECheckBox } from "react-native-elements";
+import { CheckBox } from "react-native-elements";
 
 import {
   Colors,
@@ -15,15 +15,22 @@ import { BaseAssets } from "../assets";
 
 interface Props {
   title: string;
-  checked: boolean;
+  isChecked: boolean;
   onPress: () => void;
   labelSize?: number;
 }
 
-const Checkbox: React.FC<Props> = ({ title, checked, onPress, labelSize }) => {
+const GreenRadioButton: React.FC<Props> = ({
+  title,
+  isChecked,
+  onPress,
+  labelSize,
+}) => {
   const labelSizeStyle = { fontSize: labelSize ?? Sizes.xxs };
   return (
-    <RNECheckBox
+    // The native checkbox is used instead of the native radio button for
+    // its customization possibilities
+    <CheckBox
       title={title}
       checkedIcon={
         <BaseAssets.CheckedIcon width={Sizes.xs} height={Sizes.xs} />
@@ -31,13 +38,14 @@ const Checkbox: React.FC<Props> = ({ title, checked, onPress, labelSize }) => {
       uncheckedIcon={
         <BaseAssets.UncheckedIcon width={Sizes.xs} height={Sizes.xs} />
       }
-      checked={checked}
+      checked={isChecked}
+      accessibilityState={{ selected: isChecked }}
       onPress={onPress}
       containerStyle={[styles.checkbox]}
       textStyle={[
         styles.label,
         labelSizeStyle,
-        checked ? styles.labelSelected : null,
+        isChecked ? styles.selectedLabel : null,
       ]}
     />
   );
@@ -57,9 +65,9 @@ const styles = StyleSheet.create({
     fontFamily: getFontFamilyName(FontNames.comfortaa, FontWeight.bold),
     fontWeight: FontWeight.normal,
   },
-  labelSelected: {
+  selectedLabel: {
     color: Colors.secondaryGreen,
   },
 });
 
-export default Checkbox;
+export default GreenRadioButton;
