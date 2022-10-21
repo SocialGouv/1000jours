@@ -2,7 +2,6 @@ import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { Modal, StyleSheet } from "react-native";
-import { CheckBox } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { Labels } from "../../constants";
@@ -11,8 +10,8 @@ import { useFavoriteArticlesIds } from "../../hooks";
 import { Colors, Margins, Paddings, Sizes, Styles } from "../../styles";
 import type { Article, ArticleFilter } from "../../types";
 import { ArticleFilterUtils } from "../../utils";
-import { BaseAssets } from "../assets";
 import {
+  BlueCheckbox,
   CancelButton,
   CloseButton,
   CustomButton,
@@ -185,34 +184,14 @@ const ArticlesFilter: FC<Props> = ({
 
               <ScrollView>
                 {filters.map((filter, index) => (
-                  <CheckBox
-                    containerStyle={styles.checkboxItem}
-                    textStyle={{
-                      color: Colors.primaryBlueDark,
-                      flex: 1,
-                      fontWeight: filter.active ? "bold" : "normal",
-                    }}
+                  <BlueCheckbox
                     key={index}
                     iconRight
-                    uncheckedIcon={
-                      <BaseAssets.CheckboxUncheckedIcon
-                        width={Sizes.sm}
-                        height={Sizes.sm}
-                      />
-                    }
-                    checkedIcon={
-                      <BaseAssets.CheckboxCheckedIcon
-                        width={Sizes.sm}
-                        height={Sizes.sm}
-                      />
-                    }
-                    uncheckedColor={Colors.primaryBlueDark}
-                    checkedColor={Colors.primaryBlueDark}
                     title={`${filter.thematique.nom} (${filter.nbArticles})`}
                     accessibilityLabel={ArticleFilterUtils.checkboxAccessibilityLabel(
                       filter
                     )}
-                    checked={filter.active}
+                    isChecked={filter.active}
                     onPress={onCheckboxPressed(filter)}
                   />
                 ))}
@@ -249,11 +228,6 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: "row",
     marginTop: Margins.default,
-  },
-  checkboxItem: {
-    backgroundColor: "transparent",
-    borderColor: "transparent",
-    minHeight: Sizes.accessibilityMinButton,
   },
   filterButton: {
     alignSelf: "flex-start",

@@ -2,10 +2,8 @@ import type { FC } from "react";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import { CheckBox } from "react-native-elements";
 
 import { Labels, StorageKeysConstants } from "../../constants";
-import { Colors, Sizes } from "../../styles";
 import type { TrackerEvent } from "../../type";
 import type { Event } from "../../types";
 import {
@@ -15,7 +13,7 @@ import {
   TrackerUtils,
 } from "../../utils";
 import { NotificationType } from "../../utils/notifications/notification.util";
-import { BaseAssets } from "../assets";
+import { BlueCheckbox, View } from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
@@ -67,38 +65,22 @@ const NotificationsEssentialEvents: FC<Props> = ({ events }) => {
   return (
     <>
       <TrackerHandler eventObject={trackerEventObject} />
-      <CheckBox
-        containerStyle={styles.checkboxItem}
-        textStyle={{
-          color: Colors.primaryBlueDark,
-          fontWeight: isCheckboxChecked ? "bold" : "normal",
-        }}
-        key={1}
-        iconRight={false}
-        uncheckedIcon={
-          <BaseAssets.CheckboxUncheckedIcon
-            width={Sizes.sm}
-            height={Sizes.sm}
-          />
-        }
-        checkedIcon={
-          <BaseAssets.CheckboxCheckedIcon width={Sizes.sm} height={Sizes.sm} />
-        }
-        title={Labels.notification.essentialEvents}
-        accessibilityLabel={Labels.notification.essentialEvents}
-        checked={isCheckboxChecked}
-        onPress={onCheckboxPressed}
-      />
+      <View style={styles.checkboxItem}>
+        <BlueCheckbox
+          key={1}
+          iconRight={false}
+          title={Labels.notification.essentialEvents}
+          isChecked={isCheckboxChecked}
+          onPress={onCheckboxPressed}
+        />
+      </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   checkboxItem: {
-    backgroundColor: "transparent",
-    borderColor: "transparent",
     marginStart: 0,
-    minHeight: Sizes.accessibilityMinButton,
     paddingStart: 0,
   },
 });
