@@ -51,6 +51,10 @@
     "parentheque_documents": {
       "via": "etapes",
       "collection": "parentheque-documents"
+    },
+    "videotheques": {
+      "via": "etapes",
+      "collection": "videotheque"
     }
   }
 }

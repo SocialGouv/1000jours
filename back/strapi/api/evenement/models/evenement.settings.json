@@ -52,6 +52,10 @@
       "collection": "cartographie-types",
       "via": "evenements",
       "dominant": true
+    },
+    "videotheques": {
+      "via": "evenements",
+      "collection": "videotheque"
     }
   }
 }

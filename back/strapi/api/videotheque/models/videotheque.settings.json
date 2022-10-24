@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "videotheque",
+  "info": {
+    "name": "Videotheque"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "miniature": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "video_url": {
+      "type": "string"
+    },
+    "etapes": {
+      "collection": "etape",
+      "via": "videotheques",
+      "dominant": true
+    },
+    "thematique": {
+      "model": "thematique",
+      "via": "videotheques"
+    },
+    "evenements": {
+      "collection": "evenement",
+      "via": "videotheques",
+      "dominant": true
+    },
+    "ordre": {
+      "type": "integer"
+    }
+  }
+}
