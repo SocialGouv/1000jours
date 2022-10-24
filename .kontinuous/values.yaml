@@ -9,7 +9,7 @@ app-strapi:
   probesPath: /_health
   resources:
     requests:
-      cpu: 0.5
+      cpu: 0.2
       memory: 256Mi
     limits:
       cpu: 1
