@@ -33,6 +33,10 @@
     "parentheque_documents": {
       "via": "thematique",
       "collection": "parentheque-documents"
+    },
+    "videos": {
+      "via": "thematique",
+      "collection": "video"
     }
   }
 }

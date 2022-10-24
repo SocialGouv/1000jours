@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "videos",
+  "info": {
+    "name": "Video"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "miniature": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "url": {
+      "type": "string"
+    },
+    "etapes": {
+      "collection": "etape",
+      "via": "videos",
+      "dominant": true
+    },
+    "thematique": {
+      "model": "thematique",
+      "via": "videos"
+    },
+    "evenements": {
+      "collection": "evenement",
+      "via": "videos",
+      "dominant": true
+    },
+    "ordre": {
+      "type": "integer"
+    }
+  }
+}
