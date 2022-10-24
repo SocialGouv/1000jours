@@ -34,9 +34,9 @@
       "via": "thematique",
       "collection": "parentheque-documents"
     },
-    "videotheques": {
+    "videos": {
       "via": "thematique",
-      "collection": "videotheque"
+      "collection": "video"
     }
   }
 }

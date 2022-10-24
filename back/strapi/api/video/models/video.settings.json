@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "videotheque",
+  "collectionName": "videos",
   "info": {
-    "name": "Videotheque"
+    "name": "Video"
   },
   "options": {
     "increments": true,
@@ -28,21 +28,21 @@
       "required": false,
       "pluginOptions": {}
     },
-    "video_url": {
+    "url": {
       "type": "string"
     },
     "etapes": {
       "collection": "etape",
-      "via": "videotheques",
+      "via": "videos",
       "dominant": true
     },
     "thematique": {
       "model": "thematique",
-      "via": "videotheques"
+      "via": "videos"
     },
     "evenements": {
       "collection": "evenement",
-      "via": "videotheques",
+      "via": "videos",
       "dominant": true
     },
     "ordre": {

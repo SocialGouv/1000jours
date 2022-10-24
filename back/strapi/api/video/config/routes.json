@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/videotheques",
-      "handler": "videotheque.find",
+      "path": "/videos",
+      "handler": "video.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/videotheques/count",
-      "handler": "videotheque.count",
+      "path": "/videos/count",
+      "handler": "video.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/videotheques/:id",
-      "handler": "videotheque.findOne",
+      "path": "/videos/:id",
+      "handler": "video.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/videotheques",
-      "handler": "videotheque.create",
+      "path": "/videos",
+      "handler": "video.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/videotheques/:id",
-      "handler": "videotheque.update",
+      "path": "/videos/:id",
+      "handler": "video.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/videotheques/:id",
-      "handler": "videotheque.delete",
+      "path": "/videos/:id",
+      "handler": "video.delete",
       "config": {
         "policies": []
       }
