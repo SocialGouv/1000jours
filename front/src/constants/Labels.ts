@@ -569,7 +569,7 @@ export default {
     moodboard: "Suivi d'humeur",
     myFavorites: "Mes favoris",
     myProfil: "Mon profil",
-    notificationsCenter: "Centre de notification",
+    notificationsCenter: "Centre de notifications",
     title: "Menu",
   },
   moodboard: {
