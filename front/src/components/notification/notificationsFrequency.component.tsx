@@ -66,7 +66,10 @@ const NotificationsFrequency: FC<Props> = ({ type }) => {
     frequencyLabel: string
   ) => (
     <View style={styles.radioItem}>
-      <RadioButton value={frequencyValue} color={Colors.primaryBlueDark} />
+      <RadioButton.Android
+        value={frequencyValue}
+        color={Colors.primaryBlueDark}
+      />
       <Text style={styles.radioItemText}>{frequencyLabel}</Text>
     </View>
   );
