@@ -1,9 +1,10 @@
 import type { FC } from "react";
 import { useCallback, useState } from "react";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { ImageBackground, StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
 
+import BgImage from "../../assets/images/bg-icon-event-type.png";
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Document } from "../../types";
@@ -11,11 +12,11 @@ import { LinkingUtils, TrackerUtils } from "../../utils";
 import {
   CommonText,
   CustomButton,
+  Icomoon,
   IcomoonIcons,
   SecondaryText,
   View,
 } from "../baseComponents";
-import StepIcon from "../timeline/stepIcon.component";
 import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
@@ -47,11 +48,17 @@ const DocumentCard: FC<Props> = ({ document }) => {
         importantForAccessibility="no-hide-descendants"
         accessible={false}
       >
-        <StepIcon
-          name={IcomoonIcons.stepParentheque}
-          active={false}
-          isParentheque
-        />
+        <ImageBackground
+          source={BgImage}
+          imageStyle={styles.parenthequeIcon}
+          style={styles.parenthequeIconBackground}
+        >
+          <Icomoon
+            name={IcomoonIcons.stepParentheque}
+            size={Sizes.xxxl}
+            color={Colors.primaryBlue}
+          />
+        </ImageBackground>
       </View>
       <ListItem.Content style={styles.documentContent}>
         <ListItem.Title style={styles.documentTitleContainer}>
@@ -68,8 +75,8 @@ const DocumentCard: FC<Props> = ({ document }) => {
         </ListItem.Subtitle>
         <View style={styles.contentButton}>
           <CustomButton
-            title={Labels.timeline.library.download}
-            accessibilityLabel={Labels.timeline.library.download + document.nom}
+            title={Labels.parentheque.download}
+            accessibilityLabel={Labels.parentheque.download + document.nom}
             titleStyle={styles.fontButton}
             rounded={true}
             disabled={false}
@@ -92,7 +99,8 @@ const styles = StyleSheet.create({
   },
   documentContent: {
     justifyContent: "center",
-    padding: Paddings.default,
+    paddingEnd: Paddings.default,
+    paddingVertical: Paddings.default,
   },
   documentDescription: {
     color: Colors.commonText,
@@ -104,6 +112,7 @@ const styles = StyleSheet.create({
     lineHeight: Sizes.lg,
   },
   documentImage: {
+    alignSelf: "flex-start",
     marginStart: Margins.smaller,
   },
   documentTitle: {
@@ -125,6 +134,25 @@ const styles = StyleSheet.create({
     borderColor: Colors.borderGrey,
     borderWidth: 1,
     padding: 0,
+  },
+  parenthequeIcon: {
+    marginBottom: Margins.smaller,
+    marginStart: Margins.smallest,
+    resizeMode: "contain",
+  },
+  parenthequeIconBackground: {
+    alignItems: "center",
+    backgroundColor: "transparent",
+    height: Sizes.xxxxl + Paddings.default,
+    justifyContent: "center",
+    marginEnd: Margins.default,
+    paddingTop: Margins.light,
+    width: Sizes.xxxxl + Paddings.light,
+  },
+  titleRow: {
+    flex: 1,
+    flexDirection: "row",
+    marginStart: 0,
   },
 });
 

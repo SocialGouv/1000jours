@@ -78,7 +78,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
         onPress: () => {
           void RootNavigation.navigate("parentheque");
         },
-        title: Labels.timeline.library.nom,
+        title: Labels.menu.parentheque,
       },
       {
         icon: IcomoonIcons.notification,

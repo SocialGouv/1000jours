@@ -570,6 +570,7 @@ export default {
     myFavorites: "Mes favoris",
     myProfil: "Mon profil",
     notificationsCenter: "Centre de notifications",
+    parentheque: "Parenthèque",
     title: "Menu",
   },
   moodboard: {
@@ -642,6 +643,15 @@ export default {
         title: "Connaître les différentes étapes",
       },
     ],
+  },
+  parentheque: {
+    description:
+      "Retrouvez ici les documents et vidéos utiles pour l'ensemble des 1000 premiers jours.",
+    documentSection: "Documents",
+    download: "Télécharger",
+    sectionTitle: "Parenthèque",
+    video: "Voir la vidéo",
+    videoSection: "Vidéos",
   },
   profile: {
     childBirthday: {
@@ -722,9 +732,6 @@ export default {
     description:
       "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. A chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
     library: {
-      description:
-        "Retrouvez ici les documents utiles pour l'ensemble des 1000 premiers jours.",
-      download: "Télécharger",
       nom: "Parenthèque",
     },
     notification: {
