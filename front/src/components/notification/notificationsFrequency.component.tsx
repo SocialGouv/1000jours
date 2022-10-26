@@ -29,7 +29,8 @@ const NotificationsFrequency: FC<Props> = ({ type }) => {
       StorageKeys.notifToggleMoodboardFrequency
     )) as NotificationUtils.Frequencies;
 
-    setRadioValue(frequency);
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    setRadioValue(frequency ?? NotificationUtils.Frequencies.twiceAWeek);
   }, []);
 
   const saveFrequency = useCallback(
@@ -67,6 +68,7 @@ const NotificationsFrequency: FC<Props> = ({ type }) => {
   ) => (
     <View style={styles.radioItem}>
       <RadioButton.Android
+        testID={frequencyValue}
         value={frequencyValue}
         color={Colors.primaryBlueDark}
       />
