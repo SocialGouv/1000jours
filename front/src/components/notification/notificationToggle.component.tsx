@@ -32,14 +32,15 @@ const NotificationToggle: FC<Props> = ({
   type,
   events,
 }) => {
-  const [isToggleOn, setIsToggleOn] = useState(false);
+  const [isToggleOn, setIsToggleOn] = useState<boolean>();
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
   const toggleKey = NotificationToggleUtils.getStorageKey(type);
 
   const initToggle = useCallback(async () => {
     if (toggleKey) {
       const shouldToggleOn = await NotificationToggleUtils.isToggleOn(type);
-      setIsToggleOn(shouldToggleOn);
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      setIsToggleOn(shouldToggleOn ?? true);
     }
   }, [toggleKey, type]);
 
