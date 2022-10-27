@@ -92,50 +92,5 @@ describe("Notification Toggle", () => {
         expect(screen.getByA11yState({ checked: true })).toBeTruthy();
       });
     });
-
-    // it("toggle by type is in localStorage at true", async () => {
-    //   await StorageUtils.storeObjectValue(
-    //     StorageKeysConstants.notifToggleArticles,
-    //     true
-    //   );
-
-    //   screen = render(
-    //     <NotificationToggle
-    //       title={Labels.notificationsCenter.article.title}
-    //       description={Labels.notificationsCenter.article.decription}
-    //       type={NotificationType.articles}
-    //     />
-    //   );
-
-    //   await waitFor(async () => {
-    //     const toggle = screen.getByRole("switch");
-    //     expect(toggle).toBeTruthy();
-
-    //     // storage value : true
-    //     const storageValue = await StorageUtils.getObjectValue(
-    //       StorageKeysConstants.notifToggleArticles
-    //     );
-    //     expect(storageValue).toBeTruthy();
-    //     expect(screen.getByA11yState({ checked: true })).toBeTruthy();
-
-    //     await fireEvent.press(toggle);
-
-    //     // new value : false
-    //     const storageAfterPress = await StorageUtils.getObjectValue(
-    //       StorageKeysConstants.notifToggleArticles
-    //     );
-    //     expect(storageAfterPress).toBeFalsy();
-    //     expect(screen.getByA11yState({ checked: false })).toBeTruthy();
-    //   });
-    // });
-
-    /*
-      // await waitFor(() => {
-      //   const toto = screen.queryByText("Oui");
-      //   console.log(toto);
-      // });
-
-      //expect(screen.getByRole("image")).toBeTruthy();
-    */
   });
 });
