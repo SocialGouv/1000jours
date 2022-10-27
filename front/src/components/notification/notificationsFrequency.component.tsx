@@ -20,16 +20,14 @@ interface Props {
 
 const NotificationsFrequency: FC<Props> = ({ type }) => {
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
-  const [radioValue, setRadioValue] = useState(
-    NotificationUtils.Frequencies.twiceAWeek
-  );
+  const [radioValue, setRadioValue] = useState<NotificationUtils.Frequencies>();
 
   const initRadio = useCallback(async () => {
     const frequency = (await StorageUtils.getStringValue(
       StorageKeys.notifToggleMoodboardFrequency
-    )) as NotificationUtils.Frequencies;
+    )) as NotificationUtils.Frequencies | undefined;
 
-    setRadioValue(frequency);
+    setRadioValue(frequency ?? NotificationUtils.Frequencies.twiceAWeek);
   }, []);
 
   const saveFrequency = useCallback(
@@ -67,6 +65,7 @@ const NotificationsFrequency: FC<Props> = ({ type }) => {
   ) => (
     <View style={styles.radioItem}>
       <RadioButton.Android
+        testID={frequencyValue}
         value={frequencyValue}
         color={Colors.primaryBlueDark}
       />

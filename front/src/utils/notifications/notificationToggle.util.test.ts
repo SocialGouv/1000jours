@@ -44,6 +44,14 @@ describe("Notification Toggle Utils", () => {
         }
       );
     });
+
+    it("should return true when key for type is defined and value is undefined", async () => {
+      await NotificationToggleUtils.isToggleOn(NotificationType.moodboard).then(
+        (data) => {
+          expect(data).toBeTruthy();
+        }
+      );
+    });
   });
 
   describe("getStorageKey", () => {

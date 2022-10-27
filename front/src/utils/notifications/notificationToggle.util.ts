@@ -11,9 +11,14 @@ import { getObjectValue } from "../storage.util";
 // TODO: warning ! dépendance circulaire avec notification.util.ts
 // Ca sera bien de le déplacer dedans
 export const isToggleOn = async (type: NotificationType): Promise<boolean> => {
+  const DEFAULT_VALUE = true; // 'On' par défaut
   const key = getStorageKey(type);
-  if (key) return (await getObjectValue(key)) as boolean;
-  return true; // 'On' par défaut
+
+  if (key) {
+    const data = (await getObjectValue(key)) as boolean | undefined;
+    return data ?? DEFAULT_VALUE;
+  }
+  return DEFAULT_VALUE;
 };
 
 export const getStorageKey = (
