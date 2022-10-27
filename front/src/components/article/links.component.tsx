@@ -34,19 +34,18 @@ const Links: FC<Props> = ({ linksArray }) => {
       <SubTitle title={Labels.article.learnMoreAboutIt} />
       <View style={styles.linksContainer}>
         {_.filter(linksArray, "label").map((item, index) => (
-          <ListItem.Content key={index} style={[styles.linkContainer]}>
-            <SecondaryText
-              style={styles.dot}
-              importantForAccessibility="no"
-              accessibilityElementsHidden
-              accessible={false}
-            >
+          <ListItem.Content
+            key={index}
+            style={[styles.linkContainer]}
+            accessibilityRole="tab"
+          >
+            <SecondaryText style={styles.dot} accessibilityLabel="Puces">
               {SpecialChars.blackLargeCircle}
             </SecondaryText>
             <SecondaryText
-              accessibilityRole="link"
               style={styles.link}
               onPress={goToUrl(item.url)}
+              accessibilityRole="link"
             >
               {item.label}
             </SecondaryText>
@@ -60,7 +59,7 @@ const Links: FC<Props> = ({ linksArray }) => {
 const styles = StyleSheet.create({
   dot: {
     color: Colors.primaryBlue,
-    fontSize: Sizes.xxxxxs,
+    fontSize: Sizes.xxxxs,
     lineHeight: Sizes.lg,
     textAlignVertical: "top",
   },

@@ -80,14 +80,13 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
         },
         title: Labels.timeline.library.nom,
       },
-      // TODO: feature-flipping => centre de notifications
-      // {
-      //   icon: IcomoonIcons.notification,
-      //   onPress: () => {
-      //     void RootNavigation.navigate("notificationsCenter");
-      //   },
-      //   title: Labels.menu.notificationsCenter,
-      // },
+      {
+        icon: IcomoonIcons.notification,
+        onPress: () => {
+          void RootNavigation.navigate("notificationsCenter");
+        },
+        title: Labels.menu.notificationsCenter,
+      },
       {
         icon: IcomoonIcons.email,
         onPress: () => {

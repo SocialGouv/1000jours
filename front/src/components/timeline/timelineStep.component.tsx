@@ -24,7 +24,9 @@ interface TimelineStepProps {
   onPress: () => void;
   onLayout?: (event: LayoutChangeEvent) => void;
   isParentheque?: boolean;
+  isBasicTimeline?: boolean;
 }
+const sizeOfStepNum = Sizes.xxxxxl;
 
 const TimelineStep: FC<TimelineStepProps> = ({
   active,
@@ -35,6 +37,7 @@ const TimelineStep: FC<TimelineStepProps> = ({
   onPress,
   onLayout,
   isParentheque,
+  isBasicTimeline,
 }) => {
   const stepIcons: IconNode[] = [
     <StepIcon
@@ -88,6 +91,13 @@ const TimelineStep: FC<TimelineStepProps> = ({
   const getStepStyles = (index: number, isLast: boolean) => {
     const initialOffset = Paddings.light;
     const verticalOffset = Paddings.stepOffset;
+    if (isBasicTimeline) {
+      return [
+        styles.basicStep,
+        styles.flexRow,
+        isLast ? null : { marginBottom: Sizes.step * 0.7 },
+      ];
+    }
     if (isParentheque) {
       return [
         styles.step,
@@ -115,11 +125,31 @@ const TimelineStep: FC<TimelineStepProps> = ({
     }
   };
   const getStepNumStyles = (index: number) => {
+    if (isBasicTimeline) return styles.stepNum;
     if (isParentheque) return [styles.stepNum, styles.stepNumRight];
     else if (index === 0) return [styles.stepNum, styles.stepNumLeft];
     return [
       styles.stepNum,
       index % 2 === 0 ? styles.stepNumLeft : styles.stepNumRight,
+    ];
+  };
+
+  const getStepDescriptionStyles = () => {
+    if (isBasicTimeline) return [styles.stepTitleContainer, { flex: 3 }];
+    if (isParentheque) return styles.stepTitleParentheque;
+    return [
+      styles.stepTitleContainer,
+      { height: sizeOfStepNum },
+      isTheLast ? styles.stepLast : listIndex === 0 ? styles.stepFirst : null,
+    ];
+  };
+
+  const getIconButtonStyles = () => {
+    return [
+      styles.stepIconButton,
+      styles.justifyContentCenter,
+      active ? styles.stepActive : null,
+      isParentheque && styles.stepIconButtonParentheque,
     ];
   };
 
@@ -132,36 +162,21 @@ const TimelineStep: FC<TimelineStepProps> = ({
       accessibilityLabel={`${Labels.accessibility.step} ${order}. ${name}`}
     >
       <View
-        style={[styles.stepIconContainer]}
+        style={styles.stepIconContainer}
         importantForAccessibility="no-hide-descendants"
       >
-        <TouchableOpacity
-          style={[
-            styles.stepIconButton,
-            styles.justifyContentCenter,
-            active ? styles.stepActive : null,
-            isParentheque && styles.stepIconButtonParentheque,
-          ]}
-          onPress={onPress}
-        >
+        <TouchableOpacity style={getIconButtonStyles()} onPress={onPress}>
           {stepIcons[order]}
         </TouchableOpacity>
       </View>
-      <View
-        style={
-          isParentheque
-            ? styles.stepTitleParentheque
-            : [
-                styles.stepTitleContainer,
-                isTheLast
-                  ? styles.stepLast
-                  : listIndex === 0
-                  ? styles.stepFirst
-                  : null,
-              ]
-        }
-      >
-        <CommonText style={[styles.stepTitle]} allowFontScaling={false}>
+      <View style={getStepDescriptionStyles()}>
+        <CommonText
+          style={[
+            styles.stepTitle,
+            active ? { fontWeight: FontWeight.bold } : null,
+          ]}
+          allowFontScaling={true}
+        >
           {name}
         </CommonText>
         <SecondaryText
@@ -175,8 +190,15 @@ const TimelineStep: FC<TimelineStepProps> = ({
   );
 };
 
-const sizeOfStepNum = Sizes.xxxxxl;
 const styles = StyleSheet.create({
+  basicStep: {
+    alignItems: "flex-start",
+    backgroundColor: "transparent",
+  },
+  flexRow: {
+    flex: 1,
+    flexDirection: "row",
+  },
   justifyContentCenter: {
     alignItems: "center",
     justifyContent: "center",
@@ -206,7 +228,9 @@ const styles = StyleSheet.create({
     borderColor: Colors.primaryBlue,
   },
   stepIconContainer: {
+    alignItems: "flex-start",
     backgroundColor: "white",
+    justifyContent: "flex-start",
   },
   stepLast: {
     marginTop: Margins.step,
@@ -242,7 +266,6 @@ const styles = StyleSheet.create({
   stepTitleContainer: {
     alignSelf: "center",
     backgroundColor: "transparent",
-    height: sizeOfStepNum,
     justifyContent: "center",
     paddingLeft: Paddings.default,
     paddingRight: Paddings.light,

@@ -195,6 +195,7 @@ export default {
     ok: "Ok",
     pass: "Passer",
     previous: "Précédent",
+    settings: "Paramètres",
     share: "Partager",
     start: "Commencer",
     validate: "Valider",
@@ -568,7 +569,7 @@ export default {
     moodboard: "Suivi d'humeur",
     myFavorites: "Mes favoris",
     myProfil: "Mon profil",
-    notificationsCenter: "Centre de notification",
+    notificationsCenter: "Centre de notifications",
     title: "Menu",
   },
   moodboard: {
@@ -593,7 +594,16 @@ export default {
   },
   noData: "Aucunes données",
   notification: {
+    essentialEvents: "Que les événements essentiels",
+    frequency: {
+      onceADay: "1 fois par jour",
+      question: "À quelle fréquence ?",
+      twiceAWeek: "2 fois par semaine",
+    },
+    openSettings:
+      "Vos paramètres de notification sont désactivés pour cette application. Merci de vous rendre dans les réglages de votre téléphone afin de modifier ces paramètres.",
     openTheApp: "Ouverture de l'app",
+    title: "Notifications",
   },
   notificationsCenter: {
     article: {
@@ -603,6 +613,10 @@ export default {
     },
     description:
       "Ici vous pouvez paramétrer les notifications que vous souhaitez recevoir en les activant/désactivant :",
+    event: {
+      decription: "Vous rappelant les événements à venir.",
+      title: "Notifications des événements",
+    },
     moodboard: {
       description: "Vous invitant à venir renseigner votre état émotionnel.",
       title: "Notifications du suivi d'humeur",

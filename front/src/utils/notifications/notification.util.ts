@@ -15,7 +15,8 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import type { Event, Step } from "../../types";
-import { NotificationToggleUtils } from "..";
+import type { NotificationUtils } from "..";
+import * as NotificationToggleUtils from "../notifications/notificationToggle.util";
 import { countCurrentStepArticlesNotRead } from "../step/step.util";
 import * as StorageUtils from "../storage.util";
 
@@ -35,6 +36,11 @@ export enum Weekday {
   thursday = 5,
   friday = 6,
   saturday = 7,
+}
+
+export enum Frequencies {
+  onceADay = "1 fois par jour",
+  twiceAWeek = "2 fois par semaine",
 }
 
 const sendNotificationReminder = async (
@@ -120,7 +126,9 @@ const scheduleMoodboardNotification = async (
   return sendNotificationReminder(buildMoodboardNotificationContent(), trigger);
 };
 
-export const scheduleMoodboardNotifications = async (): Promise<void> => {
+export const scheduleMoodboardNotifications = async (
+  frequency?: NotificationUtils.Frequencies
+): Promise<void> => {
   const isToggleActive = await NotificationToggleUtils.isToggleOn(
     NotificationType.moodboard
   );
@@ -128,9 +136,26 @@ export const scheduleMoodboardNotifications = async (): Promise<void> => {
     const notifsMoodboard = await getAllNotificationsByType(
       NotificationType.moodboard
     );
+
     if (notifsMoodboard.length === 0) {
-      await scheduleMoodboardNotification(Weekday.tuesday);
-      await scheduleMoodboardNotification(Weekday.friday);
+      await cancelAllNotificationsByType(NotificationType.moodboard);
+
+      switch (frequency) {
+        case Frequencies.onceADay:
+          await scheduleMoodboardNotification(Weekday.monday);
+          await scheduleMoodboardNotification(Weekday.tuesday);
+          await scheduleMoodboardNotification(Weekday.wednesday);
+          await scheduleMoodboardNotification(Weekday.thursday);
+          await scheduleMoodboardNotification(Weekday.friday);
+          await scheduleMoodboardNotification(Weekday.saturday);
+          await scheduleMoodboardNotification(Weekday.sunday);
+          break;
+        case Frequencies.twiceAWeek:
+        default:
+          await scheduleMoodboardNotification(Weekday.tuesday);
+          await scheduleMoodboardNotification(Weekday.friday);
+          break;
+      }
     }
   }
 };
@@ -278,10 +303,18 @@ const scheduleEventNotification = async (event: Event) => {
   }
 };
 
-export const scheduleEventsNotification = (events: Event[]): void => {
-  events.forEach((event) => {
-    void scheduleEventNotification(event);
-  });
+export const scheduleEventsNotification = async (
+  events: Event[]
+): Promise<void> => {
+  const isToggleActive = await NotificationToggleUtils.isToggleOn(
+    NotificationType.event
+  );
+
+  if (isToggleActive) {
+    events.forEach((event) => {
+      void scheduleEventNotification(event);
+    });
+  }
 };
 
 export const cancelScheduleEventsNotification = async (): Promise<void> => {
@@ -494,7 +527,7 @@ export const rescheduleEventsNotifications = async (
   events: Event[]
 ): Promise<void> => {
   await cancelAllNotificationsByType(NotificationType.event);
-  scheduleEventsNotification(events);
+  await scheduleEventsNotification(events);
 };
 
 /**

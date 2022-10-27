@@ -1,5 +1,5 @@
 import type { StackNavigationProp } from "@react-navigation/stack";
-import { addDays, format } from "date-fns";
+import { format } from "date-fns";
 import * as Calendar from "expo-calendar";
 import * as Localization from "expo-localization";
 import _ from "lodash";
@@ -51,6 +51,7 @@ import {
   StringUtils,
   TrackerUtils,
 } from "../../utils";
+import { formattedEvents } from "../../utils/events/event.util";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 
 interface Props {
@@ -142,6 +143,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
       sourceId: defaultCalendarSource.id,
       title: Labels.appName,
     });
+
     return newCalendarID;
   }, []);
 
@@ -212,19 +214,6 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
     }
   }, [createCalendar, createEventInCalendar, events]);
 
-  const formattedEvents = useCallback(
-    (eventsToFormat: Event[]): Event[] => {
-      return eventsToFormat.map((event) => ({
-        ...event,
-        date: format(
-          addDays(new Date(childBirthday), event.debut),
-          Formats.dateISO
-        ),
-      }));
-    },
-    [childBirthday]
-  );
-
   const scheduleEventsNotification = useCallback(async () => {
     const notifIdsEventsStored = await StorageUtils.getObjectValue(
       StorageKeysConstants.notifIdsEvents
@@ -264,13 +253,13 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
         childBirthday
       )
         .then(() => {
-          setEvents(formattedEvents(evenements));
+          setEvents(formattedEvents(evenements, childBirthday));
         })
         .catch(() => {
           setLoadingEvents(false);
         });
     },
-    [childBirthday, formattedEvents]
+    [childBirthday]
   );
 
   const onShowHelpModalButtonPressed = useCallback(

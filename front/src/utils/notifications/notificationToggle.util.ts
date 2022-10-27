@@ -1,15 +1,24 @@
 import { StorageKeysConstants } from "../../constants";
+import type { Event } from "../../types";
 import {
   NotificationType,
+  scheduleEventsNotification,
   scheduleMoodboardNotifications,
   updateArticlesNotification,
 } from "../notifications/notification.util";
 import { getObjectValue } from "../storage.util";
 
+// TODO: warning ! dépendance circulaire avec notification.util.ts
+// Ca sera bien de le déplacer dedans
 export const isToggleOn = async (type: NotificationType): Promise<boolean> => {
+  const DEFAULT_VALUE = true; // 'On' par défaut
   const key = getStorageKey(type);
-  if (key) return (await getObjectValue(key)) as boolean;
-  return true; // 'On' par défaut
+
+  if (key) {
+    const data = (await getObjectValue(key)) as boolean | undefined;
+    return data ?? DEFAULT_VALUE;
+  }
+  return DEFAULT_VALUE;
 };
 
 export const getStorageKey = (
@@ -22,13 +31,19 @@ export const getStorageKey = (
     case NotificationType.articles: {
       return StorageKeysConstants.notifToggleArticles;
     }
+    case NotificationType.event: {
+      return StorageKeysConstants.notifToggleEvents;
+    }
     default:
       console.warn(`should get storage key for type ${withType}`);
       break;
   }
 };
 
-export const updateNotification = (type: NotificationType): void => {
+export const updateNotification = (
+  type: NotificationType,
+  events?: Event[]
+): void => {
   switch (type) {
     case NotificationType.moodboard: {
       void scheduleMoodboardNotifications();
@@ -36,6 +51,10 @@ export const updateNotification = (type: NotificationType): void => {
     }
     case NotificationType.articles: {
       void updateArticlesNotification();
+      break;
+    }
+    case NotificationType.event: {
+      if (events) void scheduleEventsNotification(events);
       break;
     }
     default:

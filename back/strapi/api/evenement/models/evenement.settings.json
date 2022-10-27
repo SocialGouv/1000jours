@@ -52,6 +52,10 @@
       "collection": "cartographie-types",
       "via": "evenements",
       "dominant": true
+    },
+    "videos": {
+      "via": "evenements",
+      "collection": "video"
     }
   }
 }

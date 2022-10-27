@@ -5,9 +5,9 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import {
-  Checkbox,
   CommonText,
   CustomButton,
+  GreenRadioButton,
   TitleH1,
   View,
 } from "../../components/baseComponents";
@@ -80,9 +80,9 @@ const EpdsGenderEntry: FC<EpdsGenderEntryProps> = ({ goToEpdsSurvey }) => {
         <View style={styles.answers}>
           {epdsGenders.map((genderElement, index) => (
             <View key={index}>
-              <Checkbox
+              <GreenRadioButton
                 title={genderElement.element.label}
-                checked={genderElement.isChecked}
+                isChecked={genderElement.isChecked}
                 labelSize={Sizes.xs}
                 onPress={updateGendersArray(genderElement)}
               />

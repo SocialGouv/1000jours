@@ -2,20 +2,13 @@ import type { PoiType } from "@socialgouv/nos1000jours-lib";
 import { AROUNDME_FILTER_DATA } from "@socialgouv/nos1000jours-lib";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
-import {
-  Modal,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Modal, ScrollView, StyleSheet, View } from "react-native";
 
 import {
   CancelButton,
+  CloseButton,
   CommonText,
   CustomButton,
-  Icomoon,
-  IcomoonIcons,
   TitleH1,
 } from "../../components/baseComponents";
 import Chip from "../../components/baseComponents/chip.component";
@@ -233,17 +226,13 @@ const AroundMeFilter: React.FC<Props> = ({ visible, hideModal }) => {
         {showModalContent && (
           <View style={Styles.modale.behindOfModal}>
             <View style={styles.mainContainer}>
-              <TitleH1 title={Labels.aroundMe.filter.title} animated={false} />
-              <TouchableOpacity
-                style={styles.closeModalView}
-                onPress={onCloseModalButtonPressed}
-              >
-                <Icomoon
-                  name={IcomoonIcons.fermer}
-                  size={Sizes.xs}
-                  color={Colors.primaryBlue}
+              <View style={styles.modalHeader}>
+                <TitleH1
+                  title={Labels.aroundMe.filter.title}
+                  animated={false}
                 />
-              </TouchableOpacity>
+                <CloseButton onPress={onCloseModalButtonPressed} clear={true} />
+              </View>
               <ScrollView>
                 {displayedCartoFilters.map(
                   (
@@ -311,6 +300,11 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: Margins.default,
     padding: Paddings.default,
+  },
+  modalHeader: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   partsTitle: {
     color: Colors.primaryBlueDark,

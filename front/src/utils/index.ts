@@ -6,6 +6,7 @@ import * as ArticleUtils from "./article.util";
 import * as ArticleFilterUtils from "./articles/articleFilter.util";
 import * as AssestUtils from "./asset.util";
 import * as EpdsSurveyUtils from "./epdsSurvey.util";
+import * as EventUtils from "./events/event.util";
 import * as FavoritesUtils from "./favorites/favorites.util";
 import * as KeyboardUtils from "./keyboard.util";
 import * as LinkingUtils from "./linking/linking.util";
@@ -15,6 +16,7 @@ import * as MoodboardUtils from "./moodboard/moodboard.util";
 import * as NotificationUtils from "./notifications/notification.util";
 import * as NotificationToggleUtils from "./notifications/notificationToggle.util";
 import * as RootNavigation from "./rootNavigation.util";
+import * as ScaleNormalize from "./scaleNormalize.util";
 import * as SearchUtils from "./search.util";
 import * as StepUtils from "./step/step.util";
 import * as StorageUtils from "./storage.util";
@@ -32,6 +34,7 @@ export {
   ArticleUtils,
   AssestUtils,
   EpdsSurveyUtils,
+  EventUtils,
   FavoritesUtils,
   getAppTheme,
   getVisuelFormat,
@@ -44,6 +47,7 @@ export {
   NotificationUtils,
   reportError,
   RootNavigation,
+  ScaleNormalize,
   SearchUtils,
   StepUtils,
   StorageUtils,

@@ -12,7 +12,7 @@ import { Labels } from "../../constants";
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
 import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
 import { TrackerUtils } from "../../utils";
-import { Checkbox, CommonText, View } from "../baseComponents";
+import { CommonText, GreenRadioButton, View } from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
@@ -77,11 +77,11 @@ const EpdsQuestion: React.FC<Props> = ({
         </View>
         <View style={styles.paddingRight}>
           {questionAndAnswers.answers.map((answer, answerIndex) => (
-            <Checkbox
+            <GreenRadioButton
               key={answerIndex}
               labelSize={Sizes.xs}
               title={answer.label}
-              checked={answer.isChecked}
+              isChecked={answer.isChecked}
               onPress={onAnswerPressed(answer)}
             />
           ))}

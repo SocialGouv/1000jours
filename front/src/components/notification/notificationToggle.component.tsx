@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type { FC, ReactElement } from "react";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -7,23 +7,32 @@ import { Toggle } from "../../components/baseComponents";
 import { Labels } from "../../constants";
 import { Colors, FontStyle, FontWeight, Margins } from "../../styles";
 import type { TrackerEvent } from "../../type";
+import type { Event } from "../../types";
 import {
   NotificationToggleUtils,
   StorageUtils,
   TrackerUtils,
 } from "../../utils";
-import type { NotificationType } from "../../utils/notifications/notification.util";
+import { NotificationType } from "../../utils/notifications/notification.util";
 import * as NotificationUtils from "../../utils/notifications/notification.util";
+import { NotificationsEssentialEvents } from "..";
 import TrackerHandler from "../tracker/trackerHandler.component";
+import NotificationsFrequency from "./notificationsFrequency.component";
 
 interface Props {
   title: string;
   description: string;
   type: NotificationType;
+  events?: Event[];
 }
 
-const NotificationToggle: FC<Props> = ({ title, description, type }) => {
-  const [isToggleOn, setIsToggleOn] = useState(false);
+const NotificationToggle: FC<Props> = ({
+  title,
+  description,
+  type,
+  events,
+}) => {
+  const [isToggleOn, setIsToggleOn] = useState<boolean>();
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
   const toggleKey = NotificationToggleUtils.getStorageKey(type);
 
@@ -44,7 +53,7 @@ const NotificationToggle: FC<Props> = ({ title, description, type }) => {
     if (toggleKey) await StorageUtils.storeObjectValue(toggleKey, newValue);
 
     if (newValue) {
-      NotificationToggleUtils.updateNotification(type);
+      NotificationToggleUtils.updateNotification(type, events);
     } else await NotificationUtils.cancelAllNotificationsByType(type);
 
     setTrackerEventObject({
@@ -52,44 +61,55 @@ const NotificationToggle: FC<Props> = ({ title, description, type }) => {
       name: `${TrackerUtils.TrackingEvent.NOTIFICATIONS_CENTER} : ${type}`,
       value: newValue ? 1 : 0,
     });
-  }, [isToggleOn, type, toggleKey]);
+  }, [isToggleOn, toggleKey, type, events]);
+
+  const showOptionByType = (_type: NotificationType): ReactElement => {
+    if (_type == NotificationType.moodboard)
+      return <NotificationsFrequency type={_type} />;
+    if (_type == NotificationType.event && events)
+      return <NotificationsEssentialEvents events={events} />;
+    return <View />;
+  };
 
   return (
     <View style={styles.mainContent}>
       <TrackerHandler eventObject={trackerEventObject} />
-      <View style={styles.itemTextBloc}>
-        <Text style={styles.itemTextTitle} accessibilityRole="header">
-          {title}
-        </Text>
-        <Text style={styles.itemTextDescr}>{description}</Text>
-      </View>
-      <View style={styles.itemToggleBloc}>
-        <Text
-          style={[
-            styles.itemToggleText,
-            isToggleOn ? null : { fontWeight: FontWeight.bold },
-          ]}
-          importantForAccessibility="no"
-          accessibilityElementsHidden
-          accessible={false}
-        >
-          {Labels.buttons.no}
-        </Text>
-        <View style={styles.itemToggle}>
-          <Toggle isToggleOn={isToggleOn} toggleSwitch={onTouchToggle} />
+      <View style={styles.toggleContent}>
+        <View style={styles.itemTextBloc}>
+          <Text style={styles.itemTextTitle} accessibilityRole="header">
+            {title}
+          </Text>
+          <Text style={styles.itemTextDescr}>{description}</Text>
         </View>
-        <Text
-          style={[
-            styles.itemToggleText,
-            isToggleOn ? { fontWeight: FontWeight.bold } : null,
-          ]}
-          importantForAccessibility="no"
-          accessibilityElementsHidden
-          accessible={false}
-        >
-          {Labels.buttons.yes}
-        </Text>
+        <View style={styles.itemToggleBloc}>
+          <Text
+            style={[
+              styles.itemToggleText,
+              isToggleOn ? null : { fontWeight: FontWeight.bold },
+            ]}
+            importantForAccessibility="no"
+            accessibilityElementsHidden
+            accessible={false}
+          >
+            {Labels.buttons.no}
+          </Text>
+          <View style={styles.itemToggle}>
+            <Toggle isToggleOn={isToggleOn} toggleSwitch={onTouchToggle} />
+          </View>
+          <Text
+            style={[
+              styles.itemToggleText,
+              isToggleOn ? { fontWeight: FontWeight.bold } : null,
+            ]}
+            importantForAccessibility="no"
+            accessibilityElementsHidden
+            accessible={false}
+          >
+            {Labels.buttons.yes}
+          </Text>
+        </View>
       </View>
+      <View>{isToggleOn && showOptionByType(type)}</View>
     </View>
   );
 };
@@ -118,8 +138,11 @@ const styles = StyleSheet.create({
     color: Colors.secondaryGreenDark,
   },
   mainContent: {
-    flexDirection: "row",
+    flexDirection: "column",
     marginVertical: Margins.larger,
+  },
+  toggleContent: {
+    flexDirection: "row",
   },
 });
 

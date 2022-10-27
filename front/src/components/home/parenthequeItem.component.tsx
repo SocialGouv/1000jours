@@ -12,9 +12,10 @@ import TimelineStep from "../timeline/timelineStep.component";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;
+  isBasicTimeline?: boolean;
 }
 
-const ParenthequeItem: FC<Props> = ({ navigation }) => {
+const ParenthequeItem: FC<Props> = ({ navigation, isBasicTimeline }) => {
   const [documents, setDocuments] = useState<Document[]>([]);
 
   const handleResults = useCallback((data: unknown) => {
@@ -29,11 +30,32 @@ const ParenthequeItem: FC<Props> = ({ navigation }) => {
     });
   }, [documents, navigation]);
 
+  const drawTimeLine = () => {
+    if (isBasicTimeline) {
+      return (
+        <View style={styles.lineContainer}>
+          <View style={styles.line} />
+        </View>
+      );
+    }
+    return (
+      <View
+        style={[
+          styles.timelineContainer,
+          styles.timelineBlock,
+          styles.timelineLibraryBlock,
+          styles.timelineBlockLeft,
+        ]}
+      />
+    );
+  };
+
   return (
     <View
       style={[
         styles.timelineStepContainer,
         styles.timelineStepLibraryContainer,
+        isBasicTimeline ? null : styles.timelineMargin,
       ]}
     >
       <GraphQLQuery
@@ -43,14 +65,7 @@ const ParenthequeItem: FC<Props> = ({ navigation }) => {
       />
       {documents.length > 0 && (
         <>
-          <View
-            style={[
-              styles.timelineContainer,
-              styles.timelineBlock,
-              styles.timelineLibraryBlock,
-              styles.timelineBlockLeft,
-            ]}
-          />
+          {drawTimeLine()}
           <TimelineStep
             order={0}
             name={Labels.timeline.library.nom}
@@ -59,6 +74,7 @@ const ParenthequeItem: FC<Props> = ({ navigation }) => {
             isTheLast={false}
             onPress={onNavigateToParenthequeButtonPressed}
             isParentheque
+            isBasicTimeline={isBasicTimeline}
           />
         </>
       )}
@@ -67,6 +83,18 @@ const ParenthequeItem: FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  line: {
+    backgroundColor: Colors.primaryBlueDark,
+    height: "100%",
+    position: "absolute",
+    width: 1,
+  },
+  lineContainer: {
+    height: "100%",
+    marginLeft: Sizes.step / 2,
+    position: "absolute",
+    width: 1,
+  },
   timelineBlock: {
     backgroundColor: "transparent",
     borderBottomWidth: 1,
@@ -94,10 +122,9 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderTopWidth: 1,
   },
+  timelineMargin: { marginHorizontal: "5%" },
   timelineStepContainer: {
     marginBottom: Sizes.step,
-    marginLeft: "5%",
-    marginRight: "5%",
   },
   timelineStepLibraryContainer: {
     marginBottom: 0,
