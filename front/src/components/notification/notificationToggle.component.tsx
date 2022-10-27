@@ -39,8 +39,7 @@ const NotificationToggle: FC<Props> = ({
   const initToggle = useCallback(async () => {
     if (toggleKey) {
       const shouldToggleOn = await NotificationToggleUtils.isToggleOn(type);
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      setIsToggleOn(shouldToggleOn ?? true);
+      setIsToggleOn(shouldToggleOn);
     }
   }, [toggleKey, type]);
 

@@ -20,16 +20,13 @@ interface Props {
 
 const NotificationsFrequency: FC<Props> = ({ type }) => {
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
-  const [radioValue, setRadioValue] = useState(
-    NotificationUtils.Frequencies.twiceAWeek
-  );
+  const [radioValue, setRadioValue] = useState<NotificationUtils.Frequencies>();
 
   const initRadio = useCallback(async () => {
     const frequency = (await StorageUtils.getStringValue(
       StorageKeys.notifToggleMoodboardFrequency
-    )) as NotificationUtils.Frequencies;
+    )) as NotificationUtils.Frequencies | undefined;
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     setRadioValue(frequency ?? NotificationUtils.Frequencies.twiceAWeek);
   }, []);
 
