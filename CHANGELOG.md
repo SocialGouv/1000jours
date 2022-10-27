@@ -1,3 +1,28 @@
+# [1.113.0](https://github.com/SocialGouv/1000jours/compare/v1.112.1...v1.113.0) (2022-10-27)
+
+
+### Bug Fixes
+
+* **accessibility:** bouton fermer ([#1451](https://github.com/SocialGouv/1000jours/issues/1451)) ([d97b1b8](https://github.com/SocialGouv/1000jours/commit/d97b1b899e57d65f89f4990c0b038252ad050aff))
+* **notif:** initialisation toogle + tests ([#1489](https://github.com/SocialGouv/1000jours/issues/1489)) ([69df4bf](https://github.com/SocialGouv/1000jours/commit/69df4bfb0362d4f8f4209bc62bdfdbdd18277231))
+* **notif:** radiobutton pour ios ([#1486](https://github.com/SocialGouv/1000jours/issues/1486)) ([0bfb9b9](https://github.com/SocialGouv/1000jours/commit/0bfb9b90053e3fd63e532a42149aa63fa4410999))
+* **notif:** wording ([#1485](https://github.com/SocialGouv/1000jours/issues/1485)) ([4ac9bf5](https://github.com/SocialGouv/1000jours/commit/4ac9bf5ac09167ad93a4fa1777270e0a15e6ba5a))
+* 🐛 Accessibilité - annoncer le nombre d'articles à lire ([#1461](https://github.com/SocialGouv/1000jours/issues/1461)) ([cac10d9](https://github.com/SocialGouv/1000jours/commit/cac10d94ffddb316893b8753a38dc459dbb32ebb))
+* 🐛 Ajoute un système de retry lors d'une erreur 'Network' ([#1476](https://github.com/SocialGouv/1000jours/issues/1476)) ([7ab77fa](https://github.com/SocialGouv/1000jours/commit/7ab77faa91265510b33451a9d91a82ec0d420488)), closes [#1470](https://github.com/SocialGouv/1000jours/issues/1470)
+* 🐛 Corrige le parcours lorsque la font est augmentée (200%) ([#1469](https://github.com/SocialGouv/1000jours/issues/1469)) ([3c7cb87](https://github.com/SocialGouv/1000jours/commit/3c7cb8756337ff409efc8f724cf04833e8786c94))
+* 🐛 Corrige un bug Sentry undefined is not an object ([c769cce](https://github.com/SocialGouv/1000jours/commit/c769cce7d7985c352a3c73a4d1492259099ef383)), closes [#1460](https://github.com/SocialGouv/1000jours/issues/1460)
+* 🐛 Corrige un crash sur le moodboard (Animatable.View) ([0628e6f](https://github.com/SocialGouv/1000jours/commit/0628e6f8a0cfc8a5c694ec4a9b0bab82ecc03efb)), closes [#1427](https://github.com/SocialGouv/1000jours/issues/1427)
+* **accessibility:** label puce ([#1452](https://github.com/SocialGouv/1000jours/issues/1452)) ([ef6202e](https://github.com/SocialGouv/1000jours/commit/ef6202eb1d30b7441cfa8815aae57b71472a5553))
+
+
+### Features
+
+* 🎸 Ajoute la videotheque sur le BO ([#1482](https://github.com/SocialGouv/1000jours/issues/1482)) ([213b39c](https://github.com/SocialGouv/1000jours/commit/213b39c9a0cd3c61503914e0069ee7e7d34b80bf)), closes [#1477](https://github.com/SocialGouv/1000jours/issues/1477)
+* **demographie:** ajour csp ([#1445](https://github.com/SocialGouv/1000jours/issues/1445)) ([8bcddf3](https://github.com/SocialGouv/1000jours/commit/8bcddf31a6d12a0310b795715051165af44b6949))
+* **notif:** fréquence pour le moodboard ([#1459](https://github.com/SocialGouv/1000jours/issues/1459)) ([59de7e7](https://github.com/SocialGouv/1000jours/commit/59de7e74b4d3c870228d24e52becef1a504c39d2))
+* **notif:** ouverture settings du tél ([#1458](https://github.com/SocialGouv/1000jours/issues/1458)) ([9484fdf](https://github.com/SocialGouv/1000jours/commit/9484fdf6df6143c54b47c2b03d8ba5d0e312fc00))
+* **notif:** paramétrer les notifs d'événement ([#1436](https://github.com/SocialGouv/1000jours/issues/1436)) ([fc9a34d](https://github.com/SocialGouv/1000jours/commit/fc9a34d909c817a28ed249a705c5458c1ed3c52b))
+
 ## [1.112.1](https://github.com/SocialGouv/1000jours/compare/v1.112.0...v1.112.1) (2022-10-13)
 
 
