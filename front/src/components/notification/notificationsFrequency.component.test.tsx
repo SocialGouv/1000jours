@@ -17,7 +17,7 @@ describe("Notification Frenquency", () => {
       void AsyncStorage.clear();
     });
 
-    it("show for the first time", async () => {
+    it("moodboard frequency init state should be twice a week", async () => {
       screen = render(
         <NotificationsFrequency type={NotificationType.moodboard} />
       );
@@ -26,10 +26,10 @@ describe("Notification Frenquency", () => {
         expect(screen.getAllByRole("radio")).toHaveLength(2);
 
         // Example 1 : find by TestId + look at checked state
-        const radioOnceDay = screen.getByTestId(
+        const radioOnceADay = screen.getByTestId(
           NotificationUtils.Frequencies.onceADay
         );
-        expect(radioOnceDay.props.accessibilityState.checked).toBeFalsy();
+        expect(radioOnceADay.props.accessibilityState.checked).toBeFalsy();
 
         // Example 2 : find the checked state + verify TestId
         const radioTwiceWeek = screen.getByA11yState({ checked: true });
@@ -39,7 +39,7 @@ describe("Notification Frenquency", () => {
       });
     });
 
-    it("show for value in localStorage when is onceADay", async () => {
+    it("moodboard frequency state should match localStorage when value is once a day", async () => {
       await StorageUtils.storeStringValue(
         StorageKeysConstants.notifToggleMoodboardFrequency,
         NotificationUtils.Frequencies.onceADay
@@ -53,10 +53,10 @@ describe("Notification Frenquency", () => {
         expect(screen.getAllByRole("radio")).toHaveLength(2);
 
         // Example 1 : find by TestId + look at checked state
-        const radioOnceDay = screen.getByTestId(
+        const radioOnceADay = screen.getByTestId(
           NotificationUtils.Frequencies.onceADay
         );
-        expect(radioOnceDay.props.accessibilityState.checked).toBeTruthy();
+        expect(radioOnceADay.props.accessibilityState.checked).toBeTruthy();
 
         // Example 2 : find the checked state + verify TestId
         const radioTwiceWeek = screen.getByA11yState({ checked: false });
