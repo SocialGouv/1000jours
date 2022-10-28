@@ -3,7 +3,7 @@ import type { PoiType } from "@socialgouv/nos1000jours-lib";
 import { AroundMeConstants, StorageKeysConstants } from "../../constants";
 import type { CartoFilterStorage } from "../../type";
 import type { Article } from "../../types";
-import { AroundMeUtils } from "..";
+import * as AroundMeUtils from "../aroundMe/aroundMe.util";
 import { storeObjectValue } from "../storage.util";
 
 export const extractedPoiTypesFromArticles = (
