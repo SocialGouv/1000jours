@@ -27,22 +27,30 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
-import type { Document, TabHomeParamList } from "../../types";
+import type { Document, TabHomeParamList, Video } from "../../types";
 import { TrackerUtils } from "../../utils";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;
-  route: RouteProp<{ params?: { documents?: Document[] } }, "params">;
+  route: RouteProp<
+    { params?: { documents?: Document[]; videos?: Video[] } },
+    "params"
+  >;
 }
 
 const Parentheque: FC<Props> = ({ navigation, route }) => {
   const documentsFromParam =
     route.params?.documents && sortDocuments(route.params.documents);
+  const videosFromParameters =
+    route.params?.videos && sortVideos(route.params.videos);
 
   const [documents, setDocuments] = useState<Document[]>(
     documentsFromParam ?? []
   );
-  const [triggerGetDocuments, setTriggerGetDocuments] = useState(false);
+  const [shouldGetDocuments, setShouldGetDocuments] = useState(false);
+
+  const [videos, setVideos] = useState<Video[]>(videosFromParameters ?? []);
+  const [shouldGetVideos, setShouldGetVideos] = useState(false);
 
   // TabView
   const layout = useWindowDimensions();
@@ -61,9 +69,8 @@ const Parentheque: FC<Props> = ({ navigation, route }) => {
   ]);
 
   useEffect(() => {
-    if (!documentsFromParam) {
-      setTriggerGetDocuments(!triggerGetDocuments);
-    }
+    if (!documentsFromParam) setShouldGetDocuments(!shouldGetDocuments);
+    if (!videosFromParameters) setShouldGetVideos(!shouldGetVideos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -71,10 +78,15 @@ const Parentheque: FC<Props> = ({ navigation, route }) => {
     navigation.goBack();
   }, [navigation]);
 
-  const handleResults = useCallback((data: unknown) => {
+  const handleDocumentsResults = useCallback((data: unknown) => {
     const results = (data as { parenthequeDocuments: Document[] })
       .parenthequeDocuments;
     setDocuments(results);
+  }, []);
+
+  const handleVideosResults = useCallback((data: unknown) => {
+    const results = (data as { videos: Video[] }).videos;
+    setVideos(results);
   }, []);
 
   const renderTabBar = useCallback(
@@ -116,8 +128,15 @@ const Parentheque: FC<Props> = ({ navigation, route }) => {
         <GraphQLLazyQuery
           query={HomeDbQueries.PARENTS_DOCUMENTS}
           fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-          getFetchedData={handleResults}
-          triggerLaunchQuery={triggerGetDocuments}
+          getFetchedData={handleDocumentsResults}
+          triggerLaunchQuery={shouldGetDocuments}
+          noLoaderBackdrop
+        />
+        <GraphQLLazyQuery
+          query={HomeDbQueries.PARENTHEQUE_VIDEOS}
+          fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
+          getFetchedData={handleVideosResults}
+          triggerLaunchQuery={shouldGetVideos}
           noLoaderBackdrop
         />
       </View>
@@ -126,7 +145,7 @@ const Parentheque: FC<Props> = ({ navigation, route }) => {
         navigationState={{ index, routes }}
         renderScene={SceneMap({
           documents: () => TabParenthequeDocuments(documents),
-          videos: () => TabParenthequeVideos(),
+          videos: () => TabParenthequeVideos(videos),
         })}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
@@ -136,13 +155,19 @@ const Parentheque: FC<Props> = ({ navigation, route }) => {
   );
 };
 
-const sortDocuments = (documents: Document[]) => {
-  return _.sortBy(documents, [
+const sortDocuments = (documents: Document[]) =>
+  _.sortBy(documents, [
     function (doc) {
       return doc.ordre;
     },
   ]);
-};
+
+const sortVideos = (videos: Video[]) =>
+  _.sortBy(videos, [
+    function (video) {
+      return video.ordre;
+    },
+  ]);
 
 const styles = StyleSheet.create({
   flexStart: {

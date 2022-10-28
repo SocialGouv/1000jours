@@ -25,6 +25,28 @@ export const PARENTS_DOCUMENTS = `
   }
 `;
 
+export const PARENTHEQUE_VIDEOS = `
+  query GetParenthequeVideos {
+    videos(sort: "ordre") {
+      id
+      nom
+      description
+      ordre
+      miniature {
+        id
+        url
+        height
+        width
+      }
+      url
+      thematique {
+        id
+        nom
+      }
+    }
+  }
+`;
+
 export const LIST_ARTICLES_WITH_STEP = (
   stepId: number
 ): string => /* GraphQL */ `

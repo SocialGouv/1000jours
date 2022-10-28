@@ -5,13 +5,11 @@ import * as React from "react";
 import {
   AccessibilityInfo,
   findNodeHandle,
-  ImageBackground,
   StyleSheet,
   View,
 } from "react-native";
 import { ListItem } from "react-native-elements";
 
-import BgImage from "../../assets/images/bg-icon-event-type.png";
 import { Labels, StorageKeysConstants } from "../../constants";
 import { useAccessibilityReader } from "../../hooks";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
@@ -31,6 +29,7 @@ import {
   ExpandableButton,
   Icomoon,
   IcomoonIcons,
+  IconWithBackground,
   SecondaryText,
   ShareButton,
   SharePageType,
@@ -134,17 +133,9 @@ const EventCard: FC<Props> = ({ event, isExpanded, onPressed }) => {
         >
           <View style={styles.eventContainer}>
             <View style={styles.eventIconContainer}>
-              <ImageBackground
-                source={BgImage}
-                imageStyle={styles.eventTypeIcon}
-                style={styles.eventTypeBackground}
-              >
-                <Icomoon
-                  name={getThematiqueIcon(event.thematique)}
-                  size={Sizes.xxxl}
-                  color={Colors.primaryBlue}
-                />
-              </ImageBackground>
+              <IconWithBackground
+                iconName={getThematiqueIcon(event.thematique)}
+              />
             </View>
             <View style={styles.eventContentContainer}>
               <CommonText style={styles.eventTitle}>{event.nom}</CommonText>
@@ -263,19 +254,6 @@ const styles = StyleSheet.create({
     fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
     paddingBottom: Paddings.light,
-  },
-  eventTypeBackground: {
-    alignItems: "center",
-    backgroundColor: "transparent",
-    height: Sizes.xxxxl + Paddings.default,
-    justifyContent: "center",
-    paddingTop: Margins.light,
-    width: Sizes.xxxxl + Paddings.light,
-  },
-  eventTypeIcon: {
-    marginBottom: Margins.smaller,
-    marginStart: Margins.smallest,
-    resizeMode: "contain",
   },
   linkCarto: {
     paddingVertical: Paddings.default,

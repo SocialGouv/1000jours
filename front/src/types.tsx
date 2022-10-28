@@ -221,6 +221,17 @@ export type Document = {
   };
 };
 
+export type Video = {
+  id: number;
+  nom: string;
+  description?: string;
+  ordre: number;
+  url: string;
+  miniature?: Visuel;
+  thematique?: Thematique;
+  etapes?: Step[];
+};
+
 export type TableData = {
   head: string[];
   data: ReactNode[][] | string[][];
