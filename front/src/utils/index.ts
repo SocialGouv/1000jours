@@ -2,7 +2,7 @@ import * as AccessibilityUtils from "./accessibility/accessibility.util";
 import * as AppUtils from "./app.util";
 import * as AroundMeUtils from "./aroundMe/aroundMe.util";
 import * as AroundMeFilterUtils from "./aroundMe/aroundMeFilter.util";
-import * as ArticleUtils from "./article.util";
+import * as ArticleUtils from "./articles/article.util";
 import * as ArticleFilterUtils from "./articles/articleFilter.util";
 import * as AssestUtils from "./asset.util";
 import * as EpdsSurveyUtils from "./epdsSurvey.util";
