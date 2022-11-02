@@ -47,6 +47,8 @@ import NotificationsFrequency from "./notification/notificationsFrequency.compon
 import NotificationToggle from "./notification/notificationToggle.component";
 import CustomPagination from "./onboardingAndProfile/customOnboardingPagination.component";
 import UpdateChildBirthdayModal from "./onboardingAndProfile/updateChildBirthdayModal.component";
+import TabParenthequeDocuments from "./parentheque/tabParenthequeDocuments.component";
+import TabParenthequeVideos from "./parentheque/tabParenthequeVideos.component";
 import AroundMePoiList from "./search/aroundMePoiList.component";
 import StoreCurrentStepArticleIds from "./storage/storeCurrentStepArticleIds.component";
 import StepIcon from "./timeline/stepIcon.component";
@@ -100,6 +102,8 @@ export {
   StoreCurrentStepArticleIds,
   SubmitNewFilter,
   SubTitle,
+  TabParenthequeDocuments,
+  TabParenthequeVideos,
   TextHtml,
   Thematics,
   TimelineStep,
