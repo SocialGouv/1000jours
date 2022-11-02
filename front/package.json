@@ -16,7 +16,7 @@
     "build-prod:android": "expo build:android",
     "build-prod:ios": "expo build:ios",
     "upload:android": "expo upload:android --key ./api-key-play-store.json --latest --track internal",
-    "upload:ios": "fastlane deliver --ipa app.ipa --api_key_path ./api-key-app-store.json --force true",
+    "upload:ios": "fastlane deliver --ipa app.ipa --api_key_path ./api-key-app-store.json --force true --fix-ios-deploy false",
     "publish-prod": "yarn upload:android && yarn upload:ios"
   },
   "jest": {
