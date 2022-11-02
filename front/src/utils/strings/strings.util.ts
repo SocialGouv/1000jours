@@ -15,27 +15,21 @@ export const removeListHyphens = (text: string | undefined): string => {
   return text ?? "";
 };
 
-export const isNotNullNorEmpty = (str: string | null | undefined): boolean => {
-  return str !== null && str !== undefined && str.length > 0;
-};
+export const isNotNullNorEmpty = (str: string | null | undefined): boolean =>
+  str !== null && str !== undefined && str.length > 0;
 
 export const isStringArrayNullOrEmpty = (
   str: string[] | null | undefined
-): boolean => {
-  return str === null || str === undefined || str.length === 0;
-};
+): boolean => str === null || str === undefined || str.length === 0;
 
 export const areArraysTheSameInContentAndLength = (
   firstArray: string[],
   secondArray: string[]
-): boolean => {
-  return (
-    firstArray.length === secondArray.length &&
-    firstArray.every((firstArrayElement) =>
-      secondArray.includes(firstArrayElement)
-    )
+): boolean =>
+  firstArray.length === secondArray.length &&
+  firstArray.every((firstArrayElement) =>
+    secondArray.includes(firstArrayElement)
   );
-};
 
 export const isValidEmail = (inputText: string): boolean => {
   const mailFormat = /^[\w-.]+@([\w-]+\.)+[\w-]+$/;
