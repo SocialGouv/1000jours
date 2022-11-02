@@ -1,10 +1,9 @@
 import type { FC } from "react";
 import { useCallback, useState } from "react";
 import * as React from "react";
-import { ImageBackground, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
 
-import BgImage from "../../assets/images/bg-icon-event-type.png";
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { Document } from "../../types";
@@ -12,8 +11,8 @@ import { LinkingUtils, TrackerUtils } from "../../utils";
 import {
   CommonText,
   CustomButton,
-  Icomoon,
   IcomoonIcons,
+  IconWithBackground,
   SecondaryText,
   View,
 } from "../baseComponents";
@@ -48,17 +47,7 @@ const DocumentCard: FC<Props> = ({ document }) => {
         importantForAccessibility="no-hide-descendants"
         accessible={false}
       >
-        <ImageBackground
-          source={BgImage}
-          imageStyle={styles.parenthequeIcon}
-          style={styles.parenthequeIconBackground}
-        >
-          <Icomoon
-            name={IcomoonIcons.stepParentheque}
-            size={Sizes.xxxl}
-            color={Colors.primaryBlue}
-          />
-        </ImageBackground>
+        <IconWithBackground iconName={IcomoonIcons.stepParentheque} />
       </View>
       <ListItem.Content style={styles.documentContent}>
         <ListItem.Title style={styles.documentTitleContainer}>
@@ -134,20 +123,6 @@ const styles = StyleSheet.create({
     borderColor: Colors.borderGrey,
     borderWidth: 1,
     padding: 0,
-  },
-  parenthequeIcon: {
-    marginBottom: Margins.smaller,
-    marginStart: Margins.smallest,
-    resizeMode: "contain",
-  },
-  parenthequeIconBackground: {
-    alignItems: "center",
-    backgroundColor: "transparent",
-    height: Sizes.xxxxl + Paddings.default,
-    justifyContent: "center",
-    marginEnd: Margins.default,
-    paddingTop: Margins.light,
-    width: Sizes.xxxxl + Paddings.light,
   },
   titleRow: {
     flex: 1,

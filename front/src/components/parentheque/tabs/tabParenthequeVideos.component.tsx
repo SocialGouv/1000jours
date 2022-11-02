@@ -4,23 +4,23 @@ import { StyleSheet, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { Paddings } from "../../styles";
-import type { Document } from "../../types";
-import DocumentCard from "../document/documentCard.component";
+import { Paddings } from "../../../styles";
+import type { Video } from "../../../types";
+import VideoCard from "../video/videoCard.component";
 
-const TabParenthequeDocuments = (documents: Document[]): ReactElement => {
+export const TabParenthequeVideos = (videos: Video[]): ReactElement => {
   return (
     <ScrollView>
-      {documents.length > 0 && (
+      {videos.length > 0 && (
         <View style={styles.listContainer}>
-          {documents.map((document, index) => (
+          {videos.map((video, index) => (
             <Animatable.View
               key={index}
               animation="fadeInUp"
               duration={1000}
               delay={0}
             >
-              <DocumentCard document={document} />
+              <VideoCard video={video} />
             </Animatable.View>
           ))}
         </View>
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TabParenthequeDocuments;
+export default TabParenthequeVideos;
