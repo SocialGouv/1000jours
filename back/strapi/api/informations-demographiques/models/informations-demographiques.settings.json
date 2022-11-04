@@ -51,6 +51,9 @@
     "departement": {
       "type": "string"
     },
+    "departement_libelle": {
+      "type": "string"
+    },
     "region": {
       "type": "string"
     },
