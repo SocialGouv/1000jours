@@ -1,3 +1,10 @@
+# [1.114.0](https://github.com/SocialGouv/1000jours/compare/v1.113.0...v1.114.0) (2022-11-04)
+
+
+### Features
+
+* **demographie:** ajout département libellé ([#1501](https://github.com/SocialGouv/1000jours/issues/1501)) ([a3d795b](https://github.com/SocialGouv/1000jours/commit/a3d795bdae7b873fc34f9bbdde68f924363d1580))
+
 # [1.113.0](https://github.com/SocialGouv/1000jours/compare/v1.112.1...v1.113.0) (2022-10-27)
 
 
