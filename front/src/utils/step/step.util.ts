@@ -19,128 +19,131 @@ import {
 import type { UserInfos, UserSituation } from "../../types";
 import { getObjectValue } from "./../storage.util";
 
-const getUserInfos = (
-  userSituations: UserSituation[] | null,
-  childBirthday: string | null | undefined
-): UserInfos => {
-  const infos: UserInfos = _.cloneDeep(DEFAULT_USER_INFOS);
-  if (userSituations && userSituations.length > 0) {
-    userSituations.map((userSituation) => {
-      const id = userSituation.id as keyof typeof UserInfo;
-      infos[id] = userSituation.isChecked;
-    });
-  }
-  if (childBirthday && childBirthday.length > 0) infos.date = childBirthday;
-
-  return infos;
-};
-
-const checkErrorForGrossesse = (date: Date): string | null => {
-  let errorMessage = null;
-  const now = new Date();
-  const grossesseDebut = subWeeks(date, GROSSESSE_TOTAL_SEMAINES_SA);
-  if (isBefore(now, grossesseDebut)) {
-    errorMessage = Labels.profile.dateTooFarInFuture;
-  } else if (isBefore(date, now)) {
-    errorMessage = Labels.profile.dateCannotBeInThePast;
-  }
-  return errorMessage;
-};
-
-const checkErrorForEnfant = (date: Date): string | null => {
-  let errorMessage = null;
-  const now = new Date();
-  if (isBefore(now, date)) {
-    errorMessage = Labels.profile.dateCannotBeInTheFuture;
-  } else if (isAfter(now, addYears(date, 2))) {
-    errorMessage = Labels.profile.childTooOld;
-  }
-  return errorMessage;
-};
-
 export const checkErrorOnProfile = (
-  userSituations: UserSituation[],
+  userSituation: UserSituation | undefined,
   childBirthday: string | null | undefined
 ): string | null => {
-  const infos = getUserInfos(userSituations, childBirthday);
-  let errorMessage = null;
-  if (infos.grossesse || infos.enfant || infos.enfants) {
-    if (!infos.date) {
-      errorMessage = Labels.profile.dateIsRequired;
-    } else {
-      const date = new Date(infos.date);
-      if (infos.grossesse) {
-        errorMessage = checkErrorForGrossesse(date);
-      } else if (infos.enfant || infos.enfants) {
-        errorMessage = checkErrorForEnfant(date);
-      }
-    }
+  const information = getUserInformation(userSituation, childBirthday);
+  if (!information.conception && !information.projet) {
+    if (!information.date) return Labels.profile.dateIsRequired;
+
+    const date = new Date(information.date);
+    const now = new Date();
+    if (information.grossesse) return getPregnancyErrorMessageOrNull(now, date);
+    if (information.enfant || information.enfants)
+      return getErrorMessageForChildOrNull(now, date);
   }
-  return errorMessage;
+  return null;
 };
 
-const calcCurrentStep = (date: Date): number => {
-  const now = new Date();
-  const grossesseDebut = subWeeks(date, GROSSESSE_TOTAL_SEMAINES_SA);
-  const trimestre2 = addWeeks(
-    grossesseDebut,
-    GROSSESSE_TRIMESTRE_2_SEMAINES_SA
-  );
+export const getCheckedUserSituationOrUndefined = (
+  userSituations: UserSituation[] | null
+): UserSituation | undefined => _.find(userSituations, { isChecked: true });
 
-  // Période de grossesse
-  if (isBefore(now, date)) {
-    return isBefore(now, trimestre2)
-      ? StepId.grossesseDebut
-      : StepId.grossesseSuiteFin;
-  }
-  // Période après l'accouchement
-  if (isAfter(now, addYears(date, 1))) {
-    return StepId.enfant1An2Ans;
-  }
-  if (isAfter(now, addMonths(date, 3))) {
-    return StepId.enfant4Mois1An;
-  }
-  return StepId.enfant3PremiersMois;
-};
-
-export const getCurrentStepId = (
-  userSituations: UserSituation[] | null,
+export const getCurrentStepIdOrNull = (
+  checkedUserSituation: UserSituation | undefined,
   childBirthday: string | null | undefined
 ): number | null => {
-  let id = null;
-  const infos = getUserInfos(userSituations, childBirthday);
-  if ((infos.grossesse || infos.enfant || infos.enfants) && infos.date) {
-    const date = new Date(infos.date);
-    id = calcCurrentStep(date);
-  } else if (infos.projet) {
-    id = StepId.projet;
+  const information = getUserInformation(checkedUserSituation, childBirthday);
+  if (
+    (information.grossesse || information.enfant || information.enfants) &&
+    information.date
+  ) {
+    const date = new Date(information.date);
+    return currentStepId(date);
   }
-  if (infos.conception) {
-    id = StepId.conception;
-  }
-  return id;
+  if (information.projet) return StepId.projet;
+  if (information.conception) return StepId.conception;
+
+  return null;
 };
 
-export const countCurrentStepArticlesNotRead = async (): Promise<number> => {
-  const articlesOfCurrentStep = (await getObjectValue(
-    StorageKeysConstants.currentStepArticleIds
-  )) as string[] | undefined;
+export const nbOfUnreadArticlesInCurrentStep = async (): Promise<number> => {
+  const articleIdsInCurrentStep = await getArticleIdsInCurrentStep();
 
-  if (articlesOfCurrentStep && articlesOfCurrentStep.length > 0) {
-    const articlesRead =
-      ((await getObjectValue(StorageKeysConstants.articlesRead)) as
-        | string[]
-        | undefined) ?? [];
+  if (articleIdsInCurrentStep && articleIdsInCurrentStep.length > 0) {
+    const readArticleIds = await getReadArticleIds();
 
-    const currentStepArticlesRead = articlesRead.filter((id: string) => {
-      return articlesOfCurrentStep.includes(id);
-    });
+    const nbOfReadArticlesInCurrentStep = getNbOfReadArticlesInCurrentStep(
+      articleIdsInCurrentStep,
+      readArticleIds
+    );
+    const nbOfArticlesInCurrentStep = articleIdsInCurrentStep.length;
 
-    const nbArticlesOfCurrentStep = articlesOfCurrentStep.length;
-    const nbCurrentStepArticlesRead = currentStepArticlesRead.length;
-    return nbCurrentStepArticlesRead > 0
-      ? nbArticlesOfCurrentStep - nbCurrentStepArticlesRead
-      : nbArticlesOfCurrentStep;
+    return nbOfArticlesInCurrentStep - nbOfReadArticlesInCurrentStep;
   }
   return -1;
 };
+
+const getNbOfReadArticlesInCurrentStep = (
+  articleIdsInCurrentStep: string[],
+  readArticleIds: string[] | undefined
+): number =>
+  readArticleIds?.filter((id: string) => articleIdsInCurrentStep.includes(id))
+    .length ?? 0;
+
+const getArticleIdsInCurrentStep = async (): Promise<string[] | undefined> =>
+  (await getObjectValue(StorageKeysConstants.currentStepArticleIds)) as
+    | string[]
+    | undefined;
+
+const getReadArticleIds = async (): Promise<string[] | undefined> =>
+  (await getObjectValue(StorageKeysConstants.articlesRead)) as
+    | string[]
+    | undefined;
+
+const getUserInformation = (
+  checkedUserSituation: UserSituation | undefined,
+  childBirthday: string | null | undefined
+): UserInfos => {
+  const userInformation: UserInfos = _.cloneDeep(DEFAULT_USER_INFOS);
+  if (checkedUserSituation) {
+    const id = checkedUserSituation.id as keyof typeof UserInfo;
+    userInformation[id] = checkedUserSituation.isChecked;
+  }
+  if (childBirthday && childBirthday.length > 0)
+    userInformation.date = childBirthday;
+
+  return userInformation;
+};
+
+const getPregnancyErrorMessageOrNull = (
+  now: Date,
+  date: Date
+): string | null => {
+  if (isBefore(now, startOfPregnancy(date)))
+    return Labels.profile.dateTooFarInFuture;
+  if (isBefore(date, now)) return Labels.profile.dateCannotBeInThePast;
+  return null;
+};
+
+const getErrorMessageForChildOrNull = (
+  now: Date,
+  date: Date
+): string | null => {
+  if (isBefore(now, date)) return Labels.profile.dateCannotBeInTheFuture;
+  if (isAfter(now, addYears(date, 2))) return Labels.profile.childTooOld;
+  return null;
+};
+
+const currentStepId = (date: Date): number => {
+  const now = new Date();
+  const secondTrimester = addWeeks(
+    startOfPregnancy(date),
+    GROSSESSE_TRIMESTRE_2_SEMAINES_SA
+  );
+
+  // During pregnancy
+  if (isBefore(now, date))
+    return isBefore(now, secondTrimester)
+      ? StepId.grossesseDebut
+      : StepId.grossesseSuiteFin;
+  // After giving birth
+  if (isAfter(now, addYears(date, 1))) return StepId.enfant1An2Ans;
+  if (isAfter(now, addMonths(date, 3))) return StepId.enfant4Mois1An;
+
+  return StepId.enfant3PremiersMois;
+};
+
+const startOfPregnancy = (date: Date): Date =>
+  subWeeks(date, GROSSESSE_TOTAL_SEMAINES_SA);

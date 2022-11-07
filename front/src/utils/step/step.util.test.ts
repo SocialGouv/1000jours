@@ -4,8 +4,6 @@ import _ from "lodash";
 
 import { Labels, StorageKeysConstants } from "../../constants";
 import {
-  GROSSESSE_TOTAL_SEMAINES_SA,
-  GROSSESSE_TRIMESTRE_2_SEMAINES_SA,
   StepId,
   USER_SITUATIONS,
   UserInfo,
@@ -14,155 +12,127 @@ import type { UserSituation } from "../../types";
 import { StepUtils, StorageUtils } from "..";
 
 describe("Step utils", () => {
-  describe("Count Articles to read in CurrentStep", () => {
+  describe("nbOfUnreadArticlesInCurrentStep", () => {
+    const articleIdsInCurrentStep: number[] = [1, 3, 5];
+
     afterEach(() => {
       void AsyncStorage.clear();
     });
 
-    it("countCurrentStepArticlesNotRead is called with 0 article read", async () => {
-      const ARTICLES_CURRENT_STEP: number[] = [1, 3, 5];
-      const ARTICLES_READ = null;
-
+    it("should return the number of articles in current step when none of them have been read", async () => {
+      const readArticleIds = null;
       await StorageUtils.storeObjectValue(
         StorageKeysConstants.currentStepArticleIds,
-        ARTICLES_CURRENT_STEP
+        articleIdsInCurrentStep
       );
       await StorageUtils.storeObjectValue(
         StorageKeysConstants.articlesRead,
-        ARTICLES_READ
+        readArticleIds
       );
 
-      const result = await StepUtils.countCurrentStepArticlesNotRead();
-      const expected = ARTICLES_CURRENT_STEP.length;
+      const result = await StepUtils.nbOfUnreadArticlesInCurrentStep();
 
-      expect(result).toEqual(expected);
+      expect(result).toEqual(3);
     });
 
-    it("countCurrentStepArticlesNotRead is called with some articles read", async () => {
-      const ARTICLES_CURRENT_STEP: number[] = [1, 3, 5];
-      const ARTICLES_READ: number[] = [3, 7, 11, 12];
-
+    it("should return the number of unread articles in current step when some of them are read", async () => {
+      const readArticleIds: number[] = [3, 7, 11, 12];
       await StorageUtils.storeObjectValue(
         StorageKeysConstants.currentStepArticleIds,
-        ARTICLES_CURRENT_STEP
+        articleIdsInCurrentStep
       );
       await StorageUtils.storeObjectValue(
         StorageKeysConstants.articlesRead,
-        ARTICLES_READ
+        readArticleIds
       );
 
-      const result = await StepUtils.countCurrentStepArticlesNotRead();
-      const expected = 2;
+      const result = await StepUtils.nbOfUnreadArticlesInCurrentStep();
 
-      expect(result).toEqual(expected);
+      expect(result).toEqual(2);
     });
 
-    it("countCurrentStepArticlesNotRead is called with all articles read", async () => {
-      const ARTICLES_CURRENT_STEP: number[] = [1, 3, 5];
-      const ARTICLES_READ: number[] = [1, 2, 3, 4, 5, 6];
-
+    it("should return 0 when all articles in current step are read", async () => {
+      const readArticleIds: number[] = [1, 2, 3, 4, 5, 6];
       await StorageUtils.storeObjectValue(
         StorageKeysConstants.currentStepArticleIds,
-        ARTICLES_CURRENT_STEP
+        articleIdsInCurrentStep
       );
       await StorageUtils.storeObjectValue(
         StorageKeysConstants.articlesRead,
-        ARTICLES_READ
+        readArticleIds
       );
 
-      const result = await StepUtils.countCurrentStepArticlesNotRead();
-      const expected = 0;
+      const result = await StepUtils.nbOfUnreadArticlesInCurrentStep();
 
-      expect(result).toEqual(expected);
+      expect(result).toEqual(0);
     });
 
-    it("countCurrentStepArticlesNotRead is called with no articles for the current step", async () => {
-      const ARTICLES_CURRENT_STEP = null;
-      const ARTICLES_READ: number[] = [1, 2, 3, 4, 5, 6];
-
+    it("should return -1 when there are no articles for current step", async () => {
+      const readArticleIds: number[] = [1, 2, 3, 4, 5, 6];
       await StorageUtils.storeObjectValue(
         StorageKeysConstants.currentStepArticleIds,
-        ARTICLES_CURRENT_STEP
+        null
       );
       await StorageUtils.storeObjectValue(
         StorageKeysConstants.articlesRead,
-        ARTICLES_READ
+        readArticleIds
       );
 
-      const result = await StepUtils.countCurrentStepArticlesNotRead();
-      const expected = -1;
+      const result = await StepUtils.nbOfUnreadArticlesInCurrentStep();
 
-      expect(result).toEqual(expected);
+      expect(result).toEqual(-1);
     });
   });
 
-  describe("Get Current Step Id", () => {
-    afterEach(() => {
-      void AsyncStorage.clear();
-    });
-
-    const getUserSituations = (userinfo: UserInfo) => {
-      const userSituations = _.cloneDeep(USER_SITUATIONS);
-      return userSituations.map((userSituation: UserSituation) => {
-        if (userSituation.id === userinfo) userSituation.isChecked = true;
-        return userSituation;
-      });
-    };
-
-    it("getCurrentStepId is called for currentStepId  = 'projet'", () => {
-      const childBirthday = null;
-      const result = StepUtils.getCurrentStepId(
-        getUserSituations(UserInfo.projet),
-        childBirthday
+  describe("getCurrentStepId", () => {
+    it("should return 1 when user situation is a project and due date is null", () => {
+      const dueDate = null;
+      const result = StepUtils.getCurrentStepIdOrNull(
+        checkUserSituation(UserInfo.projet),
+        dueDate
       );
       const expected = StepId.projet;
 
       expect(result).toEqual(expected);
     });
 
-    it("getCurrentStepId is called for currentStepId  = 'conception'", () => {
-      const childBirthday = null;
-      const result = StepUtils.getCurrentStepId(
-        getUserSituations(UserInfo.conception),
-        childBirthday
+    it("should return 2 when user situation is conception and due date is null", () => {
+      const dueDate = null;
+      const result = StepUtils.getCurrentStepIdOrNull(
+        checkUserSituation(UserInfo.conception),
+        dueDate
       );
       const expected = StepId.conception;
 
       expect(result).toEqual(expected);
     });
 
-    it("getCurrentStepId is called for currentStepId  = 'grossesseDebut'", () => {
-      const childBirthday = addWeeks(
-        new Date(),
-        GROSSESSE_TOTAL_SEMAINES_SA - 1
-      ).toISOString();
-      const result = StepUtils.getCurrentStepId(
-        getUserSituations(UserInfo.grossesse),
-        childBirthday
+    it("should return 3 when user situation is start of pregnancy and due date is in 40 weeks", () => {
+      const dueDate = addWeeks(new Date(), 40).toISOString();
+      const result = StepUtils.getCurrentStepIdOrNull(
+        checkUserSituation(UserInfo.grossesse),
+        dueDate
       );
       const expected = StepId.grossesseDebut;
 
       expect(result).toEqual(expected);
     });
 
-    it("getCurrentStepId is called for currentStepId  = 'grossesseSuiteFin'", () => {
-      const childBirthday = addWeeks(
-        new Date(),
-        GROSSESSE_TRIMESTRE_2_SEMAINES_SA - 1
-      ).toISOString();
-      const result = StepUtils.getCurrentStepId(
-        getUserSituations(UserInfo.grossesse),
-        childBirthday
+    it("should return 4 when user situation is end of pregnancy and due date is in 15 weeks", () => {
+      const dueDate = addWeeks(new Date(), 15).toISOString();
+      const result = StepUtils.getCurrentStepIdOrNull(
+        checkUserSituation(UserInfo.grossesse),
+        dueDate
       );
       const expected = StepId.grossesseSuiteFin;
 
       expect(result).toEqual(expected);
     });
 
-    it("getCurrentStepId is called for currentStepId  = 'enfant3PremiersMois'", () => {
+    it("should return 6 when user situation is first 3 months of the child and child is a month old", () => {
       const childBirthday = subMonths(new Date(), 1).toISOString();
-      const result = StepUtils.getCurrentStepId(
-        getUserSituations(UserInfo.enfant),
+      const result = StepUtils.getCurrentStepIdOrNull(
+        checkUserSituation(UserInfo.enfant),
         childBirthday
       );
       const expected = StepId.enfant3PremiersMois;
@@ -170,10 +140,10 @@ describe("Step utils", () => {
       expect(result).toEqual(expected);
     });
 
-    it("getCurrentStepId is called for currentStepId  = 'enfant4Mois1An'", () => {
+    it("should return 7 when user situation is 4 months to a year and child is 5 months old", () => {
       const childBirthday = subMonths(new Date(), 5).toISOString();
-      const result = StepUtils.getCurrentStepId(
-        getUserSituations(UserInfo.enfant),
+      const result = StepUtils.getCurrentStepIdOrNull(
+        checkUserSituation(UserInfo.enfant),
         childBirthday
       );
       const expected = StepId.enfant4Mois1An;
@@ -181,10 +151,10 @@ describe("Step utils", () => {
       expect(result).toEqual(expected);
     });
 
-    it("getCurrentStepId is called for currentStepId  = 'enfant1An2Ans'", () => {
+    it("should return 8 when user situation is 1 to 2 years and child is 13 months old", () => {
       const childBirthday = subMonths(new Date(), 13).toISOString();
-      const result = StepUtils.getCurrentStepId(
-        getUserSituations(UserInfo.enfant),
+      const result = StepUtils.getCurrentStepIdOrNull(
+        checkUserSituation(UserInfo.enfant),
         childBirthday
       );
       const expected = StepId.enfant1An2Ans;
@@ -193,73 +163,54 @@ describe("Step utils", () => {
     });
   });
 
-  describe("Check Error On Profile", () => {
-    afterEach(() => {
-      void AsyncStorage.clear();
-    });
-
-    const getUserSituations = (userinfo: UserInfo) => {
-      const userSituations = _.cloneDeep(USER_SITUATIONS);
-      return userSituations.map((userSituation: UserSituation) => {
-        if (userSituation.id === userinfo) userSituation.isChecked = true;
-        return userSituation;
-      });
-    };
-
-    it("checkErrorOnProfile is called with no error", () => {
-      const childBirthday = addWeeks(
-        new Date(),
-        GROSSESSE_TOTAL_SEMAINES_SA - 1
-      ).toISOString();
+  describe("checkErrorOnProfile", () => {
+    it("should not return an error when due date matches with the situation", () => {
+      const dueDate = addWeeks(new Date(), 40).toISOString();
       const result = StepUtils.checkErrorOnProfile(
-        getUserSituations(UserInfo.grossesse),
-        childBirthday
+        checkUserSituation(UserInfo.grossesse),
+        dueDate
       );
-      const expected = null;
 
-      expect(result).toEqual(expected);
+      expect(result).toBeNull();
     });
 
-    it("getCurrentStepId is called with no date", () => {
-      const childBirthday = null;
+    it("should return error message when date is required but not typed", () => {
+      const dueDate = null;
       const result = StepUtils.checkErrorOnProfile(
-        getUserSituations(UserInfo.grossesse),
-        childBirthday
+        checkUserSituation(UserInfo.grossesse),
+        dueDate
       );
       const expected = Labels.profile.dateIsRequired;
 
       expect(result).toEqual(expected);
     });
 
-    it("getCurrentStepId is called with date too far in future (grossesse)", () => {
-      const childBirthday = addWeeks(
-        new Date(),
-        GROSSESSE_TOTAL_SEMAINES_SA + 1
-      ).toISOString();
+    it("should return error message when due date is over usual pregnancy term", () => {
+      const dueDate = addWeeks(new Date(), 42).toISOString();
       const result = StepUtils.checkErrorOnProfile(
-        getUserSituations(UserInfo.grossesse),
-        childBirthday
+        checkUserSituation(UserInfo.grossesse),
+        dueDate
       );
       const expected = Labels.profile.dateTooFarInFuture;
 
       expect(result).toEqual(expected);
     });
 
-    it("getCurrentStepId is called with date in the past (grossesse)", () => {
-      const childBirthday = subDays(new Date(), 1).toISOString();
+    it("should return error message when due date is in the past", () => {
+      const dueDate = subDays(new Date(), 1).toISOString();
       const result = StepUtils.checkErrorOnProfile(
-        getUserSituations(UserInfo.grossesse),
-        childBirthday
+        checkUserSituation(UserInfo.grossesse),
+        dueDate
       );
       const expected = Labels.profile.dateCannotBeInThePast;
 
       expect(result).toEqual(expected);
     });
 
-    it("getCurrentStepId is called with date in the future (enfant)", () => {
+    it("should return error message when child date of birth is in the future", () => {
       const childBirthday = addDays(new Date(), 1).toISOString();
       const result = StepUtils.checkErrorOnProfile(
-        getUserSituations(UserInfo.enfant),
+        checkUserSituation(UserInfo.enfant),
         childBirthday
       );
       const expected = Labels.profile.dateCannotBeInTheFuture;
@@ -267,10 +218,10 @@ describe("Step utils", () => {
       expect(result).toEqual(expected);
     });
 
-    it("getCurrentStepId is called with date to far in the future (enfant)", () => {
+    it("should return error message when child is over two years old", () => {
       const childBirthday = subYears(new Date(), 3).toISOString();
       const result = StepUtils.checkErrorOnProfile(
-        getUserSituations(UserInfo.enfant),
+        checkUserSituation(UserInfo.enfant),
         childBirthday
       );
       const expected = Labels.profile.childTooOld;
@@ -278,4 +229,60 @@ describe("Step utils", () => {
       expect(result).toEqual(expected);
     });
   });
+
+  describe("getCheckedUserSituationOrUndefined", () => {
+    it("should return the first checked situation", () => {
+      const userSituations: UserSituation[] = [
+        {
+          childBirthdayLabel: "",
+          childBirthdayRequired: false,
+          id: UserInfo.projet,
+          isChecked: false,
+          label: Labels.profile.situations.project,
+        },
+        {
+          childBirthdayLabel: "",
+          childBirthdayRequired: false,
+          id: UserInfo.conception,
+          isChecked: true,
+          label: Labels.profile.situations.search,
+        },
+      ];
+
+      const result =
+        StepUtils.getCheckedUserSituationOrUndefined(userSituations);
+      const expected: UserSituation = {
+        childBirthdayLabel: "",
+        childBirthdayRequired: false,
+        id: UserInfo.conception,
+        isChecked: true,
+        label: Labels.profile.situations.search,
+      };
+
+      expect(result).toEqual(expected);
+    });
+
+    it("should return undefined when no situation is checked", () => {
+      const result =
+        StepUtils.getCheckedUserSituationOrUndefined(USER_SITUATIONS);
+      expect(result).toBeUndefined();
+    });
+
+    it("should return undefined when there are no situations", () => {
+      const result = StepUtils.getCheckedUserSituationOrUndefined(null);
+      expect(result).toBeUndefined();
+    });
+  });
 });
+
+const checkUserSituation = (
+  situationId: UserInfo
+): UserSituation | undefined => {
+  const userSituations = _.cloneDeep(USER_SITUATIONS);
+  const userSituationIndex = userSituations.findIndex(
+    (situation) => situation.id == situationId
+  );
+  userSituations[userSituationIndex].isChecked = true;
+
+  return userSituations[userSituationIndex];
+};
