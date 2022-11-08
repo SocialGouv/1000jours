@@ -17,7 +17,7 @@ import {
 import type { Event, Step } from "../../types";
 import type { NotificationUtils } from "..";
 import * as NotificationToggleUtils from "../notifications/notificationToggle.util";
-import { countCurrentStepArticlesNotRead } from "../step/step.util";
+import { nbOfUnreadArticlesInCurrentStep } from "../step/step.util";
 import * as StorageUtils from "../storage.util";
 
 export enum NotificationType {
@@ -455,7 +455,7 @@ export const scheduleArticlesNotification = async (
   );
 
   if (isToggleActive) {
-    const nbArticlesToRead: number = await countCurrentStepArticlesNotRead();
+    const nbArticlesToRead: number = await nbOfUnreadArticlesInCurrentStep();
     if (nbArticlesToRead >= 0) {
       const trigger: NotificationTriggerInput = await getNotificationTrigger(
         nbArticlesToRead,
@@ -570,7 +570,7 @@ export const scheduleFakeNotif = async (
       break;
     }
     case NotificationType.articles: {
-      const nbArticlesToRead = await countCurrentStepArticlesNotRead();
+      const nbArticlesToRead = await nbOfUnreadArticlesInCurrentStep();
       content = await buildArticlesNotificationContent(nbArticlesToRead);
       break;
     }

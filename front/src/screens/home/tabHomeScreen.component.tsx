@@ -62,7 +62,10 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
       StorageKeysConstants.userChildBirthdayKey
     );
 
-    const stepId = StepUtils.getCurrentStepId(userSituations, date);
+    const stepId = StepUtils.getCurrentStepIdOrNull(
+      StepUtils.getCheckedUserSituationOrUndefined(userSituations),
+      date
+    );
     if (stepId) {
       void StorageUtils.storeStringValue(
         StorageKeysConstants.currentStepId,

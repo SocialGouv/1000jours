@@ -41,7 +41,12 @@ import type {
   UserContext,
   UserSituation,
 } from "../../types";
-import { NotificationUtils, StorageUtils, TrackerUtils } from "../../utils";
+import {
+  NotificationUtils,
+  StepUtils,
+  StorageUtils,
+  TrackerUtils,
+} from "../../utils";
 import { checkErrorOnProfile } from "../../utils/step/step.util";
 
 interface Props {
@@ -183,7 +188,9 @@ const Profile: FC<Props> = ({ navigation }) => {
   };
 
   const validateForm = useCallback(async () => {
-    const error = checkErrorOnProfile(userSituations, childBirthday);
+    const checkedUserSituation =
+      StepUtils.getCheckedUserSituationOrUndefined(userSituations);
+    const error = checkErrorOnProfile(checkedUserSituation, childBirthday);
     if (error) {
       Alert.alert(Labels.warning, error, [{ text: "OK" }]);
       return;
@@ -204,8 +211,7 @@ const Profile: FC<Props> = ({ navigation }) => {
       format(new Date(), Formats.dateISO)
     );
 
-    const situationChecked = _.find(userSituations, { isChecked: true });
-    if (situationChecked?.childBirthdayRequired) {
+    if (checkedUserSituation?.childBirthdayRequired) {
       await StorageUtils.storeStringValue(
         StorageKeysConstants.userChildBirthdayKey,
         childBirthday
@@ -215,12 +221,12 @@ const Profile: FC<Props> = ({ navigation }) => {
     }
 
     // Envoi de la situation sélectionnée sur Matomo
-    if (situationChecked) {
-      setTrackerAction(situationChecked.label);
+    if (checkedUserSituation) {
+      setTrackerAction(checkedUserSituation.label);
     }
 
     // Envoi de la date sélectionnée sur Matomo
-    if (situationChecked?.childBirthdayRequired && childBirthday) {
+    if (checkedUserSituation?.childBirthdayRequired && childBirthday) {
       setTrackerAction(`${Labels.birthdate} : ${childBirthday}`);
     }
 
