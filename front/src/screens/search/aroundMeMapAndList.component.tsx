@@ -1,7 +1,7 @@
 import type { RouteProp } from "@react-navigation/native";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import type { Poi } from "@socialgouv/nos1000jours-lib";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import type { LatLng, Region } from "react-native-maps";
@@ -11,6 +11,7 @@ import { BackButton, View } from "../../components/baseComponents";
 import { Margins } from "../../styles";
 import type { TabSearchParamList } from "../../types";
 import { AccessibilityUtils } from "../../utils";
+import { calculateRegionManually } from "../../utils/aroundMe/aroundMe.util";
 
 interface Props {
   route: RouteProp<
@@ -34,7 +35,7 @@ const AroundMeMapAndList: React.FC<Props> = ({ navigation, route }) => {
   );
   const [poisArray, setPoisArray] = useState<Poi[]>([]);
   const [selectedPoiIndex, setSelectedPoiIndex] = useState(-1);
-  const [displayMap, setDisplayMap] = useState(true);
+  const [displayMap, setDisplayMap] = useState<boolean>();
   const [userLocation] = useState(
     route.params.displayUserLocation ? coordinates : undefined
   );
@@ -56,19 +57,33 @@ const AroundMeMapAndList: React.FC<Props> = ({ navigation, route }) => {
 
   const updatePoiArray = useCallback((newPoiArray: Poi[]) => {
     setPoisArray(newPoiArray);
+  }, []);
 
-    // Si le lecteur d'écran est activé, on affiche la liste des POI une fois que la première recherche a été faite
-    const goToListIfScreenReaderIsEnabled = async () => {
+  useEffect(() => {
+    checkAcces();
+    updateRegionManually();
+  }, []);
+
+  const checkAcces = useCallback(() => {
+    const checkAccessibilityMode = async () => {
       const isScreenReaderEnabled =
         await AccessibilityUtils.isScreenReaderEnabled();
-      if (isScreenReaderEnabled) {
-        setDisplayMap(false);
+
+      // Si le lecteur d'écran est activé, on affiche la liste des POI une fois que la première recherche a été faite
+      if (isScreenReaderEnabled) setDisplayMap(false);
+      else {
+        setTimeout(() => {
+          setDisplayMap(true);
+        }, 500);
       }
     };
-    setTimeout(() => {
-      void goToListIfScreenReaderIsEnabled();
-    }, 500);
+    void checkAccessibilityMode();
   }, []);
+
+  const updateRegionManually = useCallback(() => {
+    if (!displayMap && !region && coordinates)
+      setRegion(calculateRegionManually(coordinates));
+  }, [coordinates, displayMap, region]);
 
   return (
     <View style={styles.mainContainer}>

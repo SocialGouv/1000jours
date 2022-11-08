@@ -1,6 +1,6 @@
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import type { FC } from "react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import type { Region } from "react-native-maps";
@@ -30,6 +30,10 @@ const AroundMePoiList: FC<Props> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [triggerSearchByGpsCoords, setTriggerSearchByGpsCoords] =
     useState(false);
+
+  useEffect(() => {
+    setTriggerSearchByGpsCoords(poiArray.length == 0);
+  }, []);
 
   const handlePois = useCallback(
     (pois: Poi[]) => {

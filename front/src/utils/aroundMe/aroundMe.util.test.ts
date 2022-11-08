@@ -1,7 +1,7 @@
 import type { LatLng, Region } from "react-native-maps";
 
 import { AroundMeConstants } from "../../constants";
-import { getLatLngPoint } from "./aroundMe.util";
+import { calculateRegionManually, getLatLngPoint } from "./aroundMe.util";
 
 describe("AroundMeUtils", () => {
   describe("getLatLngPoint", () => {
@@ -54,6 +54,41 @@ describe("AroundMeUtils", () => {
           AroundMeConstants.LatLngPointType.bottomRight
         )
       ).toEqual(expected);
+    });
+  });
+
+  describe("calculateRegionManually", () => {
+    it("Should return region with delta approximatively", () => {
+      const point = {
+        latitude: 47.223324097274556,
+        longitude: -1.538015529513359,
+      };
+
+      const regionByMapView: Region = {
+        latitude: 47.223324097274556,
+        latitudeDelta: 0.13430321917147126,
+        longitude: -1.538015529513359,
+        longitudeDelta: 0.13483263552188873,
+      };
+      const ERROR_MARGIN = 0.03;
+
+      const newRegion = calculateRegionManually(point);
+      expect(newRegion.latitude).toEqual(regionByMapView.latitude);
+      expect(newRegion.longitude).toEqual(regionByMapView.longitude);
+
+      expect(newRegion.longitudeDelta).toBeLessThanOrEqual(
+        regionByMapView.longitudeDelta + ERROR_MARGIN
+      );
+      expect(newRegion.longitudeDelta).toBeGreaterThanOrEqual(
+        regionByMapView.longitudeDelta - ERROR_MARGIN
+      );
+
+      expect(newRegion.latitudeDelta).toBeLessThanOrEqual(
+        regionByMapView.latitudeDelta + ERROR_MARGIN
+      );
+      expect(newRegion.latitudeDelta).toBeGreaterThanOrEqual(
+        regionByMapView.latitudeDelta - ERROR_MARGIN
+      );
     });
   });
 });

@@ -99,3 +99,25 @@ export const triggerFunctionAfterTimeout = (
     PLATFORM_IS_IOS ? 1000 : 500
   );
 };
+
+export const calculateRegionManually = (point: LatLng): Region => {
+  const EARTH_RADIUS_IN_KM = 6371;
+  const RADIUS_IN_KM = 12;
+  const ASPECT_RATIO = 1;
+  const radiusInRad = RADIUS_IN_KM / EARTH_RADIUS_IN_KM;
+
+  const longitudeDelta = rad2deg(
+    radiusInRad / Math.cos(deg2rad(point.latitude))
+  );
+  const latitudeDelta = ASPECT_RATIO * rad2deg(radiusInRad);
+
+  return {
+    latitude: point.latitude,
+    latitudeDelta: latitudeDelta,
+    longitude: point.longitude,
+    longitudeDelta: longitudeDelta,
+  };
+};
+
+const deg2rad = (angle: number) => (angle / 180) * Math.PI;
+const rad2deg = (angle: number) => (angle / Math.PI) * 180;
