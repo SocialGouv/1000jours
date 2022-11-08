@@ -32,23 +32,17 @@ export const extractedPoiTypesFromArticles = (
   return finalCartographieTypes;
 };
 
-export const searchRegionByPostalCode = async (postalCodeInput: string) => {
+export const searchRegionByPostalCode = async (
+  postalCodeInput: string,
+  postalCodeIsInvalid: () => void
+) => {
   if (
     postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH ||
     isNaN(Number(postalCodeInput))
   ) {
-    //postalCodeIsInvalid();
+    postalCodeIsInvalid();
     return;
   }
 
-  const postalCodeCoords = await AroundMeUtils.getPostalCodeCoords(
-    postalCodeInput
-  );
-
-  return postalCodeCoords;
+  return AroundMeUtils.getPostalCodeCoords(postalCodeInput);
 };
-
-// const onPostalCodeInvalid = useCallback(() => {
-//   setPostalCodeInvalid(true);
-//   setIsLoading(false);
-// }, []);

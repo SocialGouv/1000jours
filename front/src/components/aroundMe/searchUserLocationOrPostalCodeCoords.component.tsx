@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import type { LatLng } from "react-native-maps";
 
 import { AroundMeConstants } from "../../constants";
-import { AroundMeUtils } from "../../utils";
+import { SearchUtils } from "../../utils";
 
 interface Props {
   triggerGetUserLocation: boolean;
@@ -72,21 +72,6 @@ const SearchUserLocationOrPostalCodeCoords: FC<Props> = ({
     }
   };
 
-  const searchRegionByPostalCode = async () => {
-    if (
-      postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH ||
-      isNaN(Number(postalCodeInput))
-    ) {
-      postalCodeIsInvalid();
-      return;
-    }
-    const postalCodeCoords = await AroundMeUtils.getPostalCodeCoords(
-      postalCodeInput
-    );
-
-    setCoordinates(postalCodeCoords);
-  };
-
   useEffect(() => {
     setComponentIsInitialized(true);
   }, []);
@@ -97,7 +82,14 @@ const SearchUserLocationOrPostalCodeCoords: FC<Props> = ({
   }, [triggerGetUserLocation]);
 
   useEffect(() => {
-    if (componentIsInitialized) void searchRegionByPostalCode();
+    if (componentIsInitialized) {
+      void SearchUtils.searchRegionByPostalCode(
+        postalCodeInput,
+        postalCodeIsInvalid
+      ).then((coordinates) => {
+        setCoordinates(coordinates);
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [triggerGetPostalCodeCoords]);
 

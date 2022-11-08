@@ -22,21 +22,21 @@ describe("Search Util", () => {
     });
 
     it("should return lat/long by postal code", async () => {
-      const result = await searchRegionByPostalCode("44000");
+      const result = await searchRegionByPostalCode("44000", () => {});
       expect(result).toEqual(mockData);
 
       mockGetPostalCodeCoords.mockRestore();
     });
 
     it("should return error for invavalid postal code (too short)", async () => {
-      const result = await searchRegionByPostalCode("440");
+      const result = await searchRegionByPostalCode("440", () => {});
       expect(result).toEqual(undefined);
 
       mockGetPostalCodeCoords.mockRestore();
     });
 
     it("should return error for invavalid postal code (not a number)", async () => {
-      const result = await searchRegionByPostalCode("hello");
+      const result = await searchRegionByPostalCode("hello", () => {});
       expect(result).toEqual(undefined);
 
       mockGetPostalCodeCoords.mockRestore();
