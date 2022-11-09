@@ -10,8 +10,7 @@ import { AroundMeMap, AroundMePoiList } from "../../components";
 import { BackButton, View } from "../../components/baseComponents";
 import { Margins } from "../../styles";
 import type { TabSearchParamList } from "../../types";
-import { AccessibilityUtils } from "../../utils";
-import { calculateRegionManually } from "../../utils/aroundMe/aroundMe.util";
+import { AccessibilityUtils, AroundMeUtils } from "../../utils";
 
 interface Props {
   route: RouteProp<
@@ -60,11 +59,11 @@ const AroundMeMapAndList: React.FC<Props> = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    checkAcces();
+    checkAccessibility();
     updateRegionManually();
   }, []);
 
-  const checkAcces = useCallback(() => {
+  const checkAccessibility = useCallback(() => {
     const checkAccessibilityMode = async () => {
       const isScreenReaderEnabled =
         await AccessibilityUtils.isScreenReaderEnabled();
@@ -82,7 +81,7 @@ const AroundMeMapAndList: React.FC<Props> = ({ navigation, route }) => {
 
   const updateRegionManually = useCallback(() => {
     if (!displayMap && !region && coordinates)
-      setRegion(calculateRegionManually(coordinates));
+      setRegion(AroundMeUtils.calculateRegionManually(coordinates));
   }, [coordinates, displayMap, region]);
 
   return (

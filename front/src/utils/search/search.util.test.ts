@@ -28,14 +28,14 @@ describe("Search Util", () => {
       mockGetPostalCodeCoords.mockRestore();
     });
 
-    it("should return error for invavalid postal code (too short)", async () => {
+    it("should return error for invalid postal code (too short)", async () => {
       const result = await searchRegionByPostalCode("440", () => {});
       expect(result).toEqual(undefined);
 
       mockGetPostalCodeCoords.mockRestore();
     });
 
-    it("should return error for invavalid postal code (not a number)", async () => {
+    it("should return error for invalid postal code (not a number)", async () => {
       const result = await searchRegionByPostalCode("hello", () => {});
       expect(result).toEqual(undefined);
 
@@ -127,7 +127,7 @@ describe("Search Util", () => {
       void AsyncStorage.clear();
     });
 
-    it("should save in localStorage and return PoiType list", async () => {
+    it("Should save POI types in local storage and return PoiType list", async () => {
       const result = extractedPoiTypesFromArticles(articleList);
       const poiTypeExpected: PoiType[] = [
         { categorie: "", nom: "Maternité" },
@@ -140,10 +140,10 @@ describe("Search Util", () => {
       expect(result).toEqual(poiTypeExpected);
 
       // Check localStorage
-      const typesInStorage = await StorageUtils.getObjectValue(
+      const storedTypes = await StorageUtils.getObjectValue(
         StorageKeysConstants.cartoFilterKey
       );
-      const typesExpected = {
+      const expectedTypes = {
         types: [
           "Maternité",
           "Maison de naissance",
@@ -153,7 +153,7 @@ describe("Search Util", () => {
           "Sage-femme",
         ],
       };
-      expect(typesInStorage).toEqual(typesExpected);
+      expect(storedTypes).toEqual(expectedTypes);
     });
   });
 });

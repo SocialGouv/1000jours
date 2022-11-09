@@ -15,6 +15,7 @@ import { initMonitoring, reportError } from "./logging.util";
 import * as MoodboardUtils from "./moodboard/moodboard.util";
 import * as NotificationUtils from "./notifications/notification.util";
 import * as NotificationToggleUtils from "./notifications/notificationToggle.util";
+import * as NumberUtils from "./number/number.util";
 import * as RootNavigation from "./rootNavigation.util";
 import * as ScaleNormalize from "./scaleNormalize.util";
 import * as SearchUtils from "./search/search.util";
@@ -45,6 +46,7 @@ export {
   MoodboardUtils,
   NotificationToggleUtils,
   NotificationUtils,
+  NumberUtils,
   reportError,
   RootNavigation,
   ScaleNormalize,
