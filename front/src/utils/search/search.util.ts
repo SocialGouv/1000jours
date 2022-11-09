@@ -1,9 +1,11 @@
 import type { PoiType } from "@socialgouv/nos1000jours-lib";
+import type { LatLng } from "react-native-maps";
 
-import { StorageKeysConstants } from "../constants";
-import type { CartoFilterStorage } from "../type";
-import type { Article } from "../types";
-import { storeObjectValue } from "./storage.util";
+import { AroundMeConstants, StorageKeysConstants } from "../../constants";
+import type { CartoFilterStorage } from "../../type";
+import type { Article } from "../../types";
+import * as AroundMeUtils from "../aroundMe/aroundMe.util";
+import { storeObjectValue } from "../storage.util";
 
 export const extractedPoiTypesFromArticles = (
   articles: Article[]
@@ -29,4 +31,19 @@ export const extractedPoiTypesFromArticles = (
   }
 
   return finalCartographieTypes;
+};
+
+export const getCoordinatesByPostalCode = async (
+  postalCodeInput: string,
+  onInvalidPostalCode: () => void
+): Promise<LatLng | undefined> => {
+  if (
+    postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH ||
+    isNaN(Number(postalCodeInput))
+  ) {
+    onInvalidPostalCode();
+    return;
+  }
+
+  return AroundMeUtils.getPostalCodeCoords(postalCodeInput);
 };
