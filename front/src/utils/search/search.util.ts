@@ -1,4 +1,5 @@
 import type { PoiType } from "@socialgouv/nos1000jours-lib";
+import type { LatLng } from "react-native-maps";
 
 import { AroundMeConstants, StorageKeysConstants } from "../../constants";
 import type { CartoFilterStorage } from "../../type";
@@ -32,15 +33,15 @@ export const extractedPoiTypesFromArticles = (
   return finalCartographieTypes;
 };
 
-export const searchRegionByPostalCode = async (
+export const getCoordinatesByPostalCode = async (
   postalCodeInput: string,
-  postalCodeIsInvalid: () => void
-) => {
+  onInvalidPostalCode: () => void
+): Promise<LatLng | undefined> => {
   if (
     postalCodeInput.length !== AroundMeConstants.POSTAL_CODE_MAX_LENGTH ||
     isNaN(Number(postalCodeInput))
   ) {
-    postalCodeIsInvalid();
+    onInvalidPostalCode();
     return;
   }
 

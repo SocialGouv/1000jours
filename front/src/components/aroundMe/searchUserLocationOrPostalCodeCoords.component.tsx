@@ -83,7 +83,7 @@ const SearchUserLocationOrPostalCodeCoords: FC<Props> = ({
 
   useEffect(() => {
     if (componentIsInitialized) {
-      void SearchUtils.searchRegionByPostalCode(
+      void SearchUtils.getCoordinatesByPostalCode(
         postalCodeInput,
         postalCodeIsInvalid
       ).then((coordinates) => {
