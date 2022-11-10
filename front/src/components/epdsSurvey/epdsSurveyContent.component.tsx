@@ -1,7 +1,8 @@
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { useCallback, useEffect, useRef, useState } from "react";
-import { StyleSheet } from "react-native";
+import type { Text as DefaultText } from "react-native";
+import { AccessibilityInfo, findNodeHandle, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import type { SwiperFlatList } from "react-native-swiper-flatlist";
 
@@ -18,9 +19,13 @@ import EpdsSurveyQuestionsPagination from "./epdsSurveyQuestionsPagination.compo
 
 interface Props {
   epdsSurvey: EpdsQuestionAndAnswers[];
+  isAccessibilityModeOn: boolean;
 }
 
-const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
+const EpdsSurveyContent: React.FC<Props> = ({
+  epdsSurvey,
+  isAccessibilityModeOn,
+}) => {
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const swiperRef = useRef<SwiperFlatList>(null);
   const [questionsAndAnswers, setQuestionsAndAnswers] =
@@ -30,6 +35,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
   const [surveyCanBeStarted, setSurveyCanBeStarted] = useState(false);
   const [lastQuestionHas3PointAnswer, setLastQuestionHas3PointAnswer] =
     useState(false);
+  const titleRef = React.useRef<DefaultText>(null);
 
   useEffect(() => {
     let mounted = true;
@@ -45,13 +51,25 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
         ]);
 
       const previousDataSaved = Boolean(values[0]) && Boolean(values[1]);
-      if (mounted) setSurveyCanBeStarted(!previousDataSaved);
+      if (mounted) {
+        setSurveyCanBeStarted(!previousDataSaved);
+        setAccessibilityFocus();
+      }
     };
     void getPreviousSurvey();
     return () => {
       mounted = false;
     };
   }, []);
+
+  const setAccessibilityFocus = () => {
+    if (titleRef.current) {
+      const reactTag = findNodeHandle(titleRef.current);
+      if (reactTag) {
+        AccessibilityInfo.setAccessibilityFocus(reactTag);
+      }
+    }
+  };
 
   const restartSurvey = useCallback(async () => {
     await EpdsSurveyUtils.removeEpdsStorageItems();
@@ -131,6 +149,8 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
         showValidateButton={showValidateButton}
         questionIsAnswered={questionIsAnswered}
         setShowResult={setShowResult}
+        isAccessibilityModeOn={isAccessibilityModeOn}
+        setSwiperCurrentIndex={setSwiperCurrentIndex}
       />
     </View>
   );
@@ -162,6 +182,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
               style={styles.marginHorizontal}
               title={Labels.epdsSurvey.title}
               animated={false}
+              ref={titleRef}
             />
             <CommonText style={[styles.marginHorizontal, styles.instruction]}>
               {Labels.epdsSurvey.instruction}
@@ -173,6 +194,7 @@ const EpdsSurveyContent: React.FC<Props> = ({ epdsSurvey }) => {
                 swiperCurrentIndex={swiperCurrentIndex}
                 saveCurrentSurvey={saveCurrentSurvey}
                 updatePressedAnswer={updatePressedAnswer}
+                isAccessibilityModeOn={isAccessibilityModeOn}
               />
             </View>
           </ScrollView>

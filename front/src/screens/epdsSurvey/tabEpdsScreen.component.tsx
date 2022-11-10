@@ -15,6 +15,7 @@ import {
   FetchPoliciesConstants,
   StorageKeysConstants,
 } from "../../constants";
+import { useAccessibilityReader } from "../../hooks";
 import { GraphQLQuery } from "../../services";
 import type { EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, StorageUtils, TrackerUtils } from "../../utils";
@@ -25,6 +26,7 @@ const TabEpdsScreen: FC = () => {
   const [questionAndAnswers, setQuestionAndAnswers] = useState<
     EpdsQuestionAndAnswers[]
   >([]);
+  const isAccessibilityModeOn = useAccessibilityReader();
 
   useEffect(() => {
     const getGenderFromStorage = async () => {
@@ -53,7 +55,13 @@ const TabEpdsScreen: FC = () => {
       return <EpdsOnboarding onBoardingIsDone={onBoardingIsDone} />;
     else if (!genderIsEntered)
       return <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />;
-    else return <EpdsSurveyContent epdsSurvey={questionAndAnswers} />;
+    else
+      return (
+        <EpdsSurveyContent
+          epdsSurvey={questionAndAnswers}
+          isAccessibilityModeOn={isAccessibilityModeOn}
+        />
+      );
   };
 
   return (

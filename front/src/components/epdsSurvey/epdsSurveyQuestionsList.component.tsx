@@ -12,6 +12,7 @@ interface EpdsSurveyQuestionsListProps {
   swiperCurrentIndex: number;
   saveCurrentSurvey: (value: number) => void;
   updatePressedAnswer: (answer: EpdsAnswer) => void;
+  isAccessibilityModeOn: boolean;
 }
 
 const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
@@ -20,9 +21,9 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
   swiperCurrentIndex,
   saveCurrentSurvey,
   updatePressedAnswer,
+  isAccessibilityModeOn,
 }) => {
   const [nextButtonState, setNextButtonState] = React.useState(false);
-
   const onSwiperIndexChanged = useCallback(
     (item: { index: number; prevIndex: number }) => {
       saveCurrentSurvey(item.index);
@@ -32,24 +33,36 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
   );
 
   return (
-    <SwiperFlatList
-      ref={swiperRef}
-      index={swiperCurrentIndex}
-      onChangeIndex={onSwiperIndexChanged}
-      autoplay={false}
-      disableGesture
-      importantForAccessibility="no"
-    >
-      {epdsSurvey.map((questionView, questionIndex) => (
+    <>
+      {isAccessibilityModeOn ? (
         <EpdsQuestion
-          key={questionIndex}
+          key={swiperCurrentIndex}
           totalNumberOfQuestions={epdsSurvey.length}
-          questionAndAnswers={questionView}
+          questionAndAnswers={epdsSurvey[swiperCurrentIndex]}
           updatePressedAnswer={updatePressedAnswer}
           nextButtonState={nextButtonState}
         />
-      ))}
-    </SwiperFlatList>
+      ) : (
+        <SwiperFlatList
+          ref={swiperRef}
+          index={swiperCurrentIndex}
+          onChangeIndex={onSwiperIndexChanged}
+          autoplay={false}
+          disableGesture
+          importantForAccessibility="no"
+        >
+          {epdsSurvey.map((questionView, questionIndex) => (
+            <EpdsQuestion
+              key={questionIndex}
+              totalNumberOfQuestions={epdsSurvey.length}
+              questionAndAnswers={questionView}
+              updatePressedAnswer={updatePressedAnswer}
+              nextButtonState={nextButtonState}
+            />
+          ))}
+        </SwiperFlatList>
+      )}
+    </>
   );
 };
 
