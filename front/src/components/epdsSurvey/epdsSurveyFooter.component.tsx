@@ -35,42 +35,30 @@ const EpdsSurveyFooter: React.FC<Props> = ({
 }) => {
   const [trackerAction, setTrackerAction] = useState("");
 
+  const updateSwiperIndex = useCallback(
+    (newValue: number) => {
+      if (isAccessibilityModeOn) {
+        setSwiperCurrentIndex(newValue);
+      } else {
+        swiperRef.current?.scrollToIndex({
+          index: newValue,
+        });
+      }
+      if (newValue > 0)
+        setTrackerAction(
+          `${TrackerUtils.TrackingEvent.EPDS} - question n°${newValue} répondue`
+        );
+    },
+    [isAccessibilityModeOn, setSwiperCurrentIndex, swiperRef]
+  );
+
   const onBackButtonPressed = useCallback(() => {
-    const newIndex = swiperCurrentIndex - 1;
-    if (isAccessibilityModeOn) {
-      setSwiperCurrentIndex(newIndex);
-    } else {
-      swiperRef.current?.scrollToIndex({
-        index: newIndex,
-      });
-    }
-  }, [
-    isAccessibilityModeOn,
-    setSwiperCurrentIndex,
-    swiperCurrentIndex,
-    swiperRef,
-  ]);
+    updateSwiperIndex(swiperCurrentIndex - 1);
+  }, [swiperCurrentIndex, updateSwiperIndex]);
 
   const onNextButtonPressed = useCallback(() => {
-    const newIndex = swiperCurrentIndex + 1;
-    if (isAccessibilityModeOn) {
-      setSwiperCurrentIndex(newIndex);
-    } else {
-      swiperRef.current?.scrollToIndex({
-        index: newIndex,
-      });
-    }
-    setTrackerAction(
-      `${TrackerUtils.TrackingEvent.EPDS} - question n°${
-        swiperCurrentIndex + 1
-      } répondue`
-    );
-  }, [
-    isAccessibilityModeOn,
-    setSwiperCurrentIndex,
-    swiperCurrentIndex,
-    swiperRef,
-  ]);
+    updateSwiperIndex(swiperCurrentIndex + 1);
+  }, [swiperCurrentIndex, updateSwiperIndex]);
 
   const onFinishButtonPressed = useCallback(() => {
     setShowResult(true);

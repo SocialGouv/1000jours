@@ -35,7 +35,7 @@ const EpdsSurveyContent: React.FC<Props> = ({
   const [surveyCanBeStarted, setSurveyCanBeStarted] = useState(false);
   const [lastQuestionHas3PointAnswer, setLastQuestionHas3PointAnswer] =
     useState(false);
-  const titleRef = React.useRef<DefaultText>(null);
+  const titleRef = useRef<DefaultText>(null);
 
   useEffect(() => {
     let mounted = true;
@@ -65,9 +65,7 @@ const EpdsSurveyContent: React.FC<Props> = ({
   const setAccessibilityFocus = () => {
     if (titleRef.current) {
       const reactTag = findNodeHandle(titleRef.current);
-      if (reactTag) {
-        AccessibilityInfo.setAccessibilityFocus(reactTag);
-      }
+      if (reactTag) AccessibilityInfo.setAccessibilityFocus(reactTag);
     }
   };
 
