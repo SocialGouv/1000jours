@@ -37,8 +37,8 @@ const CheckAppVersion: FC = () => {
   };
 
   const handleResults = useCallback((data: unknown) => {
-    const result = data as { config: Config };
-    const lastAppVersion = result.config.lastAppVersionNumber ?? null;
+    const result = data ? (data as { config: Config }) : undefined;
+    const lastAppVersion = result?.config.lastAppVersionNumber ?? null;
     const currentVersion = Constants.manifest?.version ?? null;
     if (
       lastAppVersion &&
