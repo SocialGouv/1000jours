@@ -20,6 +20,8 @@ interface Props {
   showValidateButton: boolean | undefined;
   questionIsAnswered: boolean | undefined;
   setShowResult: (value: boolean) => void;
+  isAccessibilityModeOn: boolean;
+  setSwiperCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const EpdsSurveyFooter: React.FC<Props> = ({
@@ -28,25 +30,35 @@ const EpdsSurveyFooter: React.FC<Props> = ({
   showValidateButton,
   questionIsAnswered,
   setShowResult,
+  isAccessibilityModeOn,
+  setSwiperCurrentIndex,
 }) => {
   const [trackerAction, setTrackerAction] = useState("");
 
+  const updateSwiperIndex = useCallback(
+    (newValue: number) => {
+      if (isAccessibilityModeOn) {
+        setSwiperCurrentIndex(newValue);
+      } else {
+        swiperRef.current?.scrollToIndex({
+          index: newValue,
+        });
+      }
+      if (newValue > 0)
+        setTrackerAction(
+          `${TrackerUtils.TrackingEvent.EPDS} - question n°${newValue} répondue`
+        );
+    },
+    [isAccessibilityModeOn, setSwiperCurrentIndex, swiperRef]
+  );
+
   const onBackButtonPressed = useCallback(() => {
-    swiperRef.current?.scrollToIndex({
-      index: swiperCurrentIndex - 1,
-    });
-  }, [swiperCurrentIndex, swiperRef]);
+    updateSwiperIndex(swiperCurrentIndex - 1);
+  }, [swiperCurrentIndex, updateSwiperIndex]);
 
   const onNextButtonPressed = useCallback(() => {
-    swiperRef.current?.scrollToIndex({
-      index: swiperCurrentIndex + 1,
-    });
-    setTrackerAction(
-      `${TrackerUtils.TrackingEvent.EPDS} - question n°${
-        swiperCurrentIndex + 1
-      } répondue`
-    );
-  }, [swiperCurrentIndex, swiperRef]);
+    updateSwiperIndex(swiperCurrentIndex + 1);
+  }, [swiperCurrentIndex, updateSwiperIndex]);
 
   const onFinishButtonPressed = useCallback(() => {
     setShowResult(true);

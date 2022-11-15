@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { ViewStyle } from "react-native";
+import type { Text as DefaultText, ViewStyle } from "react-native";
 import { StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 
@@ -14,31 +14,31 @@ interface Props {
   style?: ViewStyle;
 }
 
-const TitleH1: React.FC<Props> = ({
-  title,
-  animated,
-  description,
-  showDescription,
-  style,
-}) =>
-  title ? (
+const TitleH1 = React.forwardRef<DefaultText, Props>((props: Props, ref) => {
+  return props.title ? (
     <Animatable.View
-      animation={animated ? "slideInRight" : undefined}
+      animation={props.animated ? "slideInRight" : undefined}
       duration={1500}
-      style={style}
+      style={props.style}
     >
       <SecondaryText
         style={styles.title}
         accessibilityRole="header"
-        accessibilityLabel={title}
+        accessibilityLabel={props.title}
+        ref={ref}
       >
-        {title}
+        {props.title}
       </SecondaryText>
-      {(showDescription === undefined || showDescription) && description && (
-        <SecondaryText style={styles.description}>{description}</SecondaryText>
-      )}
+      {(props.showDescription === undefined || props.showDescription) &&
+        props.description && (
+          <SecondaryText style={styles.description}>
+            {props.description}
+          </SecondaryText>
+        )}
     </Animatable.View>
   ) : null;
+});
+TitleH1.displayName = "TitleH1";
 
 const styles = StyleSheet.create({
   description: {
