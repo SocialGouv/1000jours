@@ -596,6 +596,11 @@ export default {
   noData: "Aucunes données",
   notification: {
     essentialEvents: "Que les événements essentiels",
+    favorites: {
+      body: "Vous avez placé des articles dans vos favoris, n'hésitez pas à les consulter.",
+      redirectTitle: "Consulter",
+      title: "Vos favoris",
+    },
     frequency: {
       onceADay: "1 fois par jour",
       question: "À quelle fréquence ?",

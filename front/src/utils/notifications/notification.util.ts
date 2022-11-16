@@ -15,7 +15,6 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import type { Event, Step } from "../../types";
-import type { NotificationUtils } from "..";
 import * as NotificationToggleUtils from "../notifications/notificationToggle.util";
 import { nbOfUnreadArticlesInCurrentStep } from "../step/step.util";
 import * as StorageUtils from "../storage.util";
@@ -26,6 +25,7 @@ export enum NotificationType {
   event = "event",
   moodboard = "moodboard",
   articles = "articles",
+  favorites = "favorites",
 }
 
 export enum Weekday {
@@ -43,7 +43,7 @@ export enum Frequencies {
   twiceAWeek = "2 fois par semaine",
 }
 
-const sendNotificationReminder = async (
+export const sendNotificationReminder = async (
   content: NotificationContentInput,
   trigger: NotificationTriggerInput
 ): Promise<string> => {
@@ -68,6 +68,51 @@ export const requestNotificationPermission = async (): Promise<void> => {
     await Notifications.requestPermissionsAsync();
   }
 };
+
+export const getAllScheduledNotifications = async (): Promise<
+  Notifications.NotificationRequest[]
+> => Notifications.getAllScheduledNotificationsAsync();
+
+export const logAllScheduledNotifications = async (): Promise<void> => {
+  const scheduledNotifs = await getAllScheduledNotifications();
+  for (const notif of scheduledNotifs) {
+    console.info(notif);
+  }
+};
+
+export const getAllNotificationsByType = async (
+  notificationType: NotificationType
+): Promise<NotificationRequest[]> => {
+  const notifications = await getAllScheduledNotifications();
+  return notifications.filter(
+    (notification) => notification.content.data.type === notificationType
+  );
+};
+
+export const cancelAllNotificationsByType = async (
+  notificationType: NotificationType
+): Promise<void> => {
+  const notifications: NotificationRequest[] | undefined =
+    await getAllScheduledNotifications();
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (notifications !== undefined) {
+    for (const notif of notifications) {
+      if (notif.content.data.type === notificationType) {
+        await cancelScheduledNotification(notif.identifier);
+      }
+    }
+  }
+};
+
+export const cancelAllScheduledNotifications = async (): Promise<void> => {
+  await Notifications.cancelAllScheduledNotificationsAsync();
+};
+
+const cancelScheduledNotification = async (notifId: string) => {
+  await Notifications.cancelScheduledNotificationAsync(notifId);
+};
+
+// ---------- EPDS ----------
 
 const buildEpdsNotificationContent = () => {
   return {
@@ -100,6 +145,8 @@ export const scheduleEpdsNotification = async (): Promise<string | null> => {
   } else return null;
 };
 
+// ---------- Moodboard ----------
+
 const buildMoodboardNotificationContent = () => {
   return {
     body: Labels.moodboard.notification.body,
@@ -127,7 +174,7 @@ const scheduleMoodboardNotification = async (
 };
 
 export const scheduleMoodboardNotifications = async (
-  frequency?: NotificationUtils.Frequencies
+  frequency?: Frequencies
 ): Promise<void> => {
   const isToggleActive = await NotificationToggleUtils.isToggleOn(
     NotificationType.moodboard
@@ -159,6 +206,8 @@ export const scheduleMoodboardNotifications = async (
     }
   }
 };
+
+// ---------- Next Step ----------
 
 const buildNextStepNotificationContent = (nextStep: Step) => {
   return {
@@ -227,13 +276,7 @@ export const cancelScheduleNextStepNotification = async (): Promise<void> => {
   await StorageUtils.removeKey(StorageKeysConstants.notifIdNextStep);
 };
 
-export const cancelAllScheduledNotifications = async (): Promise<void> => {
-  await Notifications.cancelAllScheduledNotificationsAsync();
-};
-
-const cancelScheduledNotification = async (notifId: string) => {
-  await Notifications.cancelScheduledNotificationAsync(notifId);
-};
+// ---------- Events ----------
 
 const updateStoreNotifEventIds = async (id: string) => {
   const notificationIds =
@@ -328,6 +371,15 @@ export const cancelScheduleEventsNotification = async (): Promise<void> => {
   }
   return StorageUtils.removeKey(StorageKeysConstants.notifIdsEvents);
 };
+
+export const rescheduleEventsNotifications = async (
+  events: Event[]
+): Promise<void> => {
+  await cancelAllNotificationsByType(NotificationType.event);
+  await scheduleEventsNotification(events);
+};
+
+// ---------- Articles ----------
 
 export const buildArticlesNotificationContent = async (
   nbArticlesToRead: number
@@ -490,44 +542,6 @@ export const scheduleArticlesNotification = async (
       }
     }
   }
-};
-
-export const getAllScheduledNotifications = async (): Promise<
-  Notifications.NotificationRequest[]
-> => Notifications.getAllScheduledNotificationsAsync();
-
-export const logAllScheduledNotifications = async (): Promise<void> => {
-  const scheduledNotifs = await getAllScheduledNotifications();
-  for (const notif of scheduledNotifs) {
-    console.info(notif);
-  }
-};
-
-export const getAllNotificationsByType = async (
-  notificationType: NotificationType
-): Promise<NotificationRequest[]> => {
-  const notifications = await getAllScheduledNotifications();
-  return notifications.filter(
-    (notification) => notification.content.data.type === notificationType
-  );
-};
-
-export const cancelAllNotificationsByType = async (
-  notificationType: NotificationType
-): Promise<void> => {
-  const notifications = await getAllScheduledNotifications();
-  for (const notif of notifications) {
-    if (notif.content.data.type === notificationType) {
-      await cancelScheduledNotification(notif.identifier);
-    }
-  }
-};
-
-export const rescheduleEventsNotifications = async (
-  events: Event[]
-): Promise<void> => {
-  await cancelAllNotificationsByType(NotificationType.event);
-  await scheduleEventsNotification(events);
 };
 
 /**
