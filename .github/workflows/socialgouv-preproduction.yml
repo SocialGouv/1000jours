@@ -25,6 +25,7 @@ jobs:
           imageName: 1000jours/strapi
           token: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: ./back/strapi/Dockerfile
+          semver: 'true'
 
   ##############################################################################
   ## DEPLOY PREPRODUCTION APPLICATION
