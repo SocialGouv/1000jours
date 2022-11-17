@@ -25,7 +25,7 @@ jobs:
           imageName: 1000jours/strapi
           token: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: ./back/strapi/Dockerfile
-          semver: true
+          semver: "true"
 
   ##############################################################################
   ## DEPLOY PRODUCTION APPLICATION
