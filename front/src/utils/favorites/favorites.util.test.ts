@@ -10,7 +10,7 @@ describe("Favorites utils", () => {
       void AsyncStorage.clear();
     });
 
-    it("should add article id to favorites when article id is not in favorites", async () => {
+    it("should add article id to favorites and schedule favorites notification when article id is not in favorites", async () => {
       await handleOnFavorite(true, 1234);
 
       const expected = [1234];

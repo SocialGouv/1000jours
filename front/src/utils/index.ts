@@ -13,6 +13,7 @@ import * as LinkingUtils from "./linking/linking.util";
 import * as LoggingUtils from "./logging.util";
 import { initMonitoring, reportError } from "./logging.util";
 import * as MoodboardUtils from "./moodboard/moodboard.util";
+import * as FavoritesNotificationUtils from "./notifications/favorites/favoritesNotification.util";
 import * as NotificationUtils from "./notifications/notification.util";
 import * as NotificationToggleUtils from "./notifications/notificationToggle.util";
 import * as NumberUtils from "./number/number.util";
@@ -36,6 +37,7 @@ export {
   AssestUtils,
   EpdsSurveyUtils,
   EventUtils,
+  FavoritesNotificationUtils,
   FavoritesUtils,
   getAppTheme,
   getVisuelFormat,

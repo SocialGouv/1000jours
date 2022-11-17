@@ -42,6 +42,10 @@ notifStyles.set(NotificationType.articles, {
   color: Colors.primaryBlueDark,
   icon: IcomoonIcons.notification,
 });
+notifStyles.set(NotificationType.favorites, {
+  color: Colors.primaryBlueDark,
+  icon: IcomoonIcons.notification,
+});
 
 const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
   const notificationType = notification.request.content.data
