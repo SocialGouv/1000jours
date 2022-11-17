@@ -37,7 +37,7 @@ jobs:
       name: production
       url: https://backoffice-les1000jours.fabrique.social.gouv.fr
     steps:
-      - uses: SocialGouv/kontinuous@v1
+      - uses: SocialGouv/kontinuous/.github/actions/deploy-via-github@v1
         with:
           environment: prod
           token: ${{ secrets.GITHUB_TOKEN }}
