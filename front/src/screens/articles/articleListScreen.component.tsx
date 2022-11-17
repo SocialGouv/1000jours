@@ -50,7 +50,9 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
   return (
     <View style={styles.mainContainer}>
       <TrackerHandler
-        screenName={`${TrackerUtils.TrackingEvent.ARTICLE_LIST} : ${route.params.step.nom}`}
+        screenName={TrackerUtils.trackerArticlesScreenName(
+          route.params.step.nom
+        )}
         actionName={trackerAction}
       />
       <GraphQLQuery
