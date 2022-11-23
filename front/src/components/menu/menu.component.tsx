@@ -1,5 +1,4 @@
 import Constants from "expo-constants";
-import * as StoreReview from "expo-store-review";
 import * as React from "react";
 import { useCallback, useMemo, useState } from "react";
 import { Linking, Modal, ScrollView, StyleSheet } from "react-native";
@@ -21,7 +20,12 @@ import {
 } from "../../styles";
 import type { TrackerEvent } from "../../type";
 import type { MenuItem, MenuSubItem } from "../../types";
-import { RootNavigation, ShareUtils, TrackerUtils } from "../../utils";
+import {
+  LinkingUtils,
+  RootNavigation,
+  ShareUtils,
+  TrackerUtils,
+} from "../../utils";
 import { Icomoon, IcomoonIcons, View } from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
 import Accessibility from "./accessibility.component";
@@ -51,7 +55,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       {
         icon: IcomoonIcons.modifier,
         onPress: () => {
-          void StoreReview.requestReview();
+          void LinkingUtils.goToStore();
         },
         title: Labels.menu.addReview,
       },

@@ -7,7 +7,7 @@ import Confetti from "react-native-confetti";
 
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
 import type { NotificationStyle } from "../../types";
-import { TrackerUtils, NotificationUtils } from "../../utils";
+import { NotificationUtils, TrackerUtils } from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 import CustomButton from "../baseComponents/customButton.component";
 import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
@@ -20,7 +20,10 @@ interface Props {
   onDismiss: () => void;
 }
 
-const notifStyles = new Map<NotificationUtils.NotificationType, NotificationStyle>();
+const notifStyles = new Map<
+  NotificationUtils.NotificationType,
+  NotificationStyle
+>();
 notifStyles.set(NotificationUtils.NotificationType.epds, {
   color: Colors.primaryYellowDark,
   icon: IcomoonIcons.favoris,
