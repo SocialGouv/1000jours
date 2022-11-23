@@ -1,4 +1,5 @@
 import Constants from "expo-constants";
+import * as StoreReview from "expo-store-review";
 import * as React from "react";
 import { useCallback, useMemo, useState } from "react";
 import { Linking, Modal, ScrollView, StyleSheet } from "react-native";
