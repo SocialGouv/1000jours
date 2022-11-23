@@ -1,4 +1,5 @@
 import Constants from "expo-constants";
+import * as StoreReview from "expo-store-review";
 import * as React from "react";
 import { useCallback, useMemo, useState } from "react";
 import { Linking, Modal, ScrollView, StyleSheet } from "react-native";
@@ -6,7 +7,7 @@ import { ListItem } from "react-native-elements";
 import GestureRecognizer from "react-native-swipe-gestures";
 import BottomSheet from "reanimated-bottom-sheet";
 
-import { Labels, Links, PlatformConstants } from "../../constants";
+import { Labels, PlatformConstants } from "../../constants";
 import { emailContact } from "../../constants/email.constants";
 import { SCREEN_HEIGHT } from "../../constants/platform.constants";
 import {
@@ -50,7 +51,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       {
         icon: IcomoonIcons.modifier,
         onPress: () => {
-          void Linking.openURL(Links.reviewTypeForm);
+          void StoreReview.requestReview();
         },
         title: Labels.menu.addReview,
       },
