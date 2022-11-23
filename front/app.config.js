@@ -69,6 +69,7 @@ export default {
     name: "1000 jours",
     orientation: "portrait",
     plugins: [
+      "sentry-expo",
       [
         "expo-notifications",
         {
