@@ -68,7 +68,7 @@ const MainAppContainer: FC = () => {
       ? Number(appActiveCounterStr)
       : 0;
     setAppCounter(appActiveCounter);
-    if (await TrackerUtils.needToTrackOpeningApp()) {
+    if (await TrackerUtils.shouldTrackAppOpening()) {
       const newAppActiveCounter = appActiveCounter + 1;
       await StorageUtils.storeStringValue(
         StorageKeysConstants.appActiveCounter,
