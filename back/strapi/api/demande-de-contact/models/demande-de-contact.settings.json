@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "demande_de_contacts",
+  "info": {
+    "name": "Demande de contact",
+    "description": "Lier la demande de contact avec la réponse EPDS"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "type_de_contact": {
+      "type": "enumeration",
+      "enum": [
+        "sms",
+        "email",
+        "chat"
+      ]
+    },
+    "widget_epds_source": {
+      "model": "widget-epds-sources"
+    },
+    "reponses_epds": {
+      "model": "reponses-epds"
+    }
+  }
+}
