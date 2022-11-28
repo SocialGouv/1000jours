@@ -1,3 +1,10 @@
+# [1.115.0](https://github.com/SocialGouv/1000jours/compare/v1.114.0...v1.115.0) (2022-11-28)
+
+
+### Features
+
+* **contact:** ajout de la collection demande de contact ([#1524](https://github.com/SocialGouv/1000jours/issues/1524)) ([dcf6d7f](https://github.com/SocialGouv/1000jours/commit/dcf6d7ff1decb0830491f8eb8a11eedbdf4e08ea))
+
 # [1.114.0](https://github.com/SocialGouv/1000jours/compare/v1.113.0...v1.114.0) (2022-11-04)
 
 
