@@ -35,5 +35,3 @@ jobs:
     needs: [register]
     uses: socialgouv/kontinuous/.github/workflows/workflow-gotoprod-manual.yaml@v1
     secrets: inherit
-    with:
-      triggerWebhook: true # comment this line when enabling webhook on repository
