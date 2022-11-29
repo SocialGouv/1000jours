@@ -1,3 +1,10 @@
+## [1.115.1](https://github.com/SocialGouv/1000jours/compare/v1.115.0...v1.115.1) (2022-11-29)
+
+
+### Bug Fixes
+
+* prod ci workflow ([#1537](https://github.com/SocialGouv/1000jours/issues/1537)) ([9c4b2a3](https://github.com/SocialGouv/1000jours/commit/9c4b2a30ab78ee53bd1aeb91597a6ec33d8af137))
+
 # [1.115.0](https://github.com/SocialGouv/1000jours/compare/v1.114.0...v1.115.0) (2022-11-28)
 
 
