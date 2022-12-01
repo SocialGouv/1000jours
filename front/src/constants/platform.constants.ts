@@ -24,3 +24,4 @@ export const IS_ON_EXPO_GO = Constants.appOwnership === "expo";
 export const IS_PREPROD_RELEASE =
   Constants.manifest?.releaseChannel === "preprod";
 export const IS_DEV_ENV = IS_ON_EXPO_GO && !IS_PREPROD_RELEASE;
+export const TIMEOUT_ON_SHARE_MODAL = 500;
