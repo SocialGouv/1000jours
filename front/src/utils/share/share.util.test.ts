@@ -6,24 +6,24 @@ describe("Share utils", () => {
   const url = "https://testurl.com";
 
   describe("buildShareContent", () => {
-    it("buildShareContent is called with url on Android", () => {
-      const expectdMessage = `${message} ${url}`;
-      const expectedResult = { message: expectdMessage, title, url };
+    it("should return share content with message and url concatenation when url is defined on Android", () => {
+      const expectedMessage = `${message} ${url}`;
+      const expectedResult = { message: expectedMessage, title, url };
       const isAndroid = true;
       expect(
         ShareUtils.buildShareContent(isAndroid, title, message, url)
       ).toEqual(expectedResult);
     });
 
-    it("buildShareContent is called without url on Android", () => {
-      const expectedResult = { message, title, url: undefined };
+    it("should return share content with simple message on Android", () => {
+      const expectedResult = { message, title };
       const isAndroid = true;
-      expect(
-        ShareUtils.buildShareContent(isAndroid, title, message, undefined)
-      ).toEqual(expectedResult);
+      expect(ShareUtils.buildShareContent(isAndroid, title, message)).toEqual(
+        expectedResult
+      );
     });
 
-    it("buildShareContent is called with url on iOS", () => {
+    it("should return share content with simple message and url when url is defined on iOS", () => {
       const expectedResult = { message, title, url };
       const isAndroid = false;
       expect(
@@ -31,12 +31,12 @@ describe("Share utils", () => {
       ).toEqual(expectedResult);
     });
 
-    it("buildShareContent is called without url on iOS", () => {
-      const expectedResult = { message, title, url: undefined };
+    it("should return share content with simple message on iOS", () => {
+      const expectedResult = { message, title };
       const isAndroid = false;
-      expect(
-        ShareUtils.buildShareContent(isAndroid, title, message, undefined)
-      ).toEqual(expectedResult);
+      expect(ShareUtils.buildShareContent(isAndroid, title, message)).toEqual(
+        expectedResult
+      );
     });
   });
 });
