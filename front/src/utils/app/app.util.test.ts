@@ -1,4 +1,7 @@
-import { AppUtils } from ".";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { StorageKeysConstants } from "../../constants";
+import { AppUtils, InAppReviewUtils, StorageUtils } from "..";
 
 describe("App utils", () => {
   describe("hasNewVersionAvailable", () => {
@@ -68,6 +71,59 @@ describe("App utils", () => {
         lastVersionAvailable
       );
       expect(hasNewVersion).toEqual(true);
+    });
+  });
+
+  describe("shouldTriggerInAppReview", () => {
+    it("should return false when the app has been opened less than 3 times", () => {
+      expect(AppUtils.shouldTriggerInAppReview(0)).toBeFalsy();
+    });
+
+    it("should return true when the app has been opened 3 times", () => {
+      expect(AppUtils.shouldTriggerInAppReview(1)).toBeTruthy();
+    });
+
+    it("should return true when the app has been opened more than 3 times", () => {
+      expect(AppUtils.shouldTriggerInAppReview(2)).toBeTruthy();
+    });
+  });
+
+  describe("handleInAppReview", () => {
+    const inAppReviewSpy = jest.spyOn(
+      InAppReviewUtils,
+      "scheduleInAppReviewNotification"
+    );
+
+    afterEach(() => {
+      void AsyncStorage.clear();
+      inAppReviewSpy.mockRestore();
+    });
+
+    it("should store in-app review trigger when app has been opened 3 times and review not triggered yet", async () => {
+      await AppUtils.handleInAppReviewPopup(1);
+
+      expect(inAppReviewSpy).toHaveBeenCalledTimes(1);
+      await StorageUtils.getObjectValue(
+        StorageKeysConstants.hasTriggeredInAppReview
+      ).then((data) => {
+        expect(data).toBeTruthy();
+      });
+    });
+
+    it("should not call for in-app review when app has been opened less than 3 times", async () => {
+      await AppUtils.handleInAppReviewPopup(0);
+
+      expect(inAppReviewSpy).toHaveBeenCalledTimes(0);
+    });
+
+    it("should not call for in-app review when review has already been triggered", async () => {
+      await StorageUtils.storeObjectValue(
+        StorageKeysConstants.hasTriggeredInAppReview,
+        true
+      );
+      await AppUtils.handleInAppReviewPopup(5);
+
+      expect(inAppReviewSpy).toHaveBeenCalledTimes(0);
     });
   });
 });
