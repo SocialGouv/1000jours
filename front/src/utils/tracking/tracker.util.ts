@@ -38,6 +38,7 @@ export enum TrackingEvent {
   MOODBOARD = "Moodboard",
   NOTIFICATIONS_CENTER = "Centre de notifications",
   SETTINGS = "Settings",
+  SHARE = "Share",
   NOTIFICATIONS_DISABLED = "Notifications désactivées",
   RESSOURCES = "Ressources",
 }

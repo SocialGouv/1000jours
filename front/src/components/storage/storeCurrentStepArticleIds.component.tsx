@@ -55,6 +55,7 @@ const StoreCurrentStepArticleIds: FC<StoreCurrentStepArticleIdsProps> = ({
           query={HomeDbQueries.LIST_ID_ARTICLES_WITH_STEP(currentStepId)}
           fetchPolicy={FetchPoliciesConstants.NO_CACHE}
           getFetchedData={handleResults}
+          noLoaderBackdrop
         />
       )}
     </>

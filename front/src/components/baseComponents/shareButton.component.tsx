@@ -1,11 +1,9 @@
 import * as React from "react";
 import { useCallback, useRef, useState } from "react";
 import type { StyleProp, ViewStyle } from "react-native";
-import { Share, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
-import { Labels } from "../../constants";
-import { deepLinkUrl } from "../../constants/links.constants";
-import { PLATFORM_IS_ANDROID } from "../../constants/platform.constants";
+import { Labels, Links } from "../../constants";
 import {
   Colors,
   FontNames,
@@ -16,6 +14,7 @@ import {
   Sizes,
 } from "../../styles";
 import type { TrackerEvent } from "../../type";
+import { ShareUtils, TrackerUtils } from "../../utils";
 import TrackerHandler from "../tracker/trackerHandler.component";
 import CustomButton from "./customButton.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
@@ -45,27 +44,16 @@ const ShareButton: React.FC<Props> = ({
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
   const messageRef = useRef(message);
 
-  const share = useCallback(async () => {
-    try {
-      const url = `${deepLinkUrl}?page=${page}&id=${id}`;
-      messageRef.current += ` ${Labels.toAccessClickHere}`;
+  const share = useCallback(() => {
+    const url = `${Links.deepLinkUrl}?page=${page}&id=${id}`;
+    messageRef.current += ` ${Labels.toAccessClickHere}`;
 
-      // Le paramètre url (Share) ne fonctionne que sur iOS
-      // Nous le rajoutons directement dans le message sous format texte.
-      if (PLATFORM_IS_ANDROID) {
-        messageRef.current += url;
-      }
-
-      const result = await Share.share(
-        { message: messageRef.current, title, url },
-        { subject: title }
-      );
-      if (result.action === Share.sharedAction) {
-        setTrackerEventObject({ action: "Share", name: `${page} : ${id}` });
-      }
-    } catch (error: unknown) {
-      console.error(error);
-    }
+    void ShareUtils.share(title, messageRef.current, url, () => {
+      setTrackerEventObject({
+        action: TrackerUtils.TrackingEvent.SHARE,
+        name: `${page} : ${id}`,
+      });
+    });
   }, [id, page, title]);
 
   return (

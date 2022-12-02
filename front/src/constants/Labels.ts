@@ -1,6 +1,7 @@
 import { IcomoonIcons } from "../components/baseComponents/icomoon.component";
 import { NUMBER_OF_DAYS_NOTIF_REMINDER } from "./epdsConstants.constants";
 import { epdsInformation } from "./epdsResultInformation.constants";
+import { landingPageUrl } from "./links.constants";
 import { MIN_SECONDS } from "./notification.constants";
 
 export default {
@@ -571,6 +572,7 @@ export default {
     myProfil: "Mon profil",
     notificationsCenter: "Centre de notifications",
     parentheque: "Parenthèque",
+    recommendApp: "Recommander l'application",
     title: "Menu",
   },
   moodboard: {
@@ -717,6 +719,10 @@ export default {
     yourSearch: "Votre recherche :",
   },
   share: {
+    app: {
+      message: `Bonjour, je te recommande l’application gratuite et totalement anonyme “1000 premiers jours”, qui est super pour suivre les étapes du projet de parentalité jusqu'aux 2 ans de l'enfant :\n\n${landingPageUrl}\n\nBonne découverte et à bientôt !`,
+      title: "1000 premiers jours",
+    },
     article: {
       messageEnd: "vous a été partagé.",
       messageStart: "L'article",
