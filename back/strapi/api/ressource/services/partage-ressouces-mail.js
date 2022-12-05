@@ -1,19 +1,45 @@
 "use strict";
 
-// TODO:
-const emailTemplate = (info) => ({
-  html: "",
-  subject: "",
-  text: "",
+const resourcesUrl =
+  "https://1000jours-blues.fabrique.social.gouv.fr/ressources";
+const landingBluesUrl = "https://1000jours-blues.fabrique.social.gouv.fr/";
+const contentEmail = `Vous avez demandé à recevoir les ressources liées aux difficultés maternelles.
+Le lien suivant répertorie les adresses et contacts des professionnels, associations et autres organisations qui aident à faire en sorte que les difficultés maternelles puissent être connues, entendues et accompagnées`
+
+const emailTemplate = () => ({
+  html: `Bonjour,
+    
+    <p>${contentEmail}</p>
+
+    <p>${resourcesUrl}</p>
+
+    <p>
+    Bien à vous,
+    L'équipe "1000 premiers jours"
+    </p>
+
+    ${landingBluesUrl}
+  `,
+  subject:
+    "1000 premiers jours - Les ressources liées aux difficultés maternelles",
+  text: `Bonjour,
+    
+    ${contentEmail}
+
+    ${resourcesUrl}
+
+    Bien à vous,
+    L'équipe "1000 premiers jours"
+
+    ${landingBluesUrl}
+  `,
 });
 
 const partageRessourcesByMail = async ({ email = "ND" }) => {
   if (!process.env["MAIL_SEND_TO"])
     throw new Error("Le service mail n'est pas configuré");
 
-  const info = {
-    email,
-  };
+  const info = { email };
 
   try {
     const res = await strapi.plugins.email.services.email.sendTemplatedEmail(
@@ -21,7 +47,7 @@ const partageRessourcesByMail = async ({ email = "ND" }) => {
         from: process.env["MAIL_SEND_FROM"],
         to: process.env["MAIL_SEND_TO"],
       },
-      emailTemplate(info),
+      emailTemplate(),
       info
     );
 

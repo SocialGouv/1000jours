@@ -19,7 +19,7 @@ module.exports = {
   `,
   resolver: {
     Mutation: {
-      epdsContact: {
+      partageRessourcesByMail: {
         description: "Envoie d'un mail pour partager les ressources",
         resolver: partageRessourcesByMail,
         resolverOf:
