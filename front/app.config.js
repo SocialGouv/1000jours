@@ -35,6 +35,8 @@ export default {
         "SCHEDULE_EXACT_ALARM",
         "VIBRATE",
       ],
+      playStoreUrl:
+        "https://play.google.com/store/apps/details?id=com.fabrique.millejours",
       versionCode: 67,
     },
     assetBundlePatterns: ["**/*"],
@@ -53,6 +55,8 @@ export default {
     },
     icon: "./src/assets/images/icon.png",
     ios: {
+      appStoreUrl:
+        "https://apps.apple.com/us/app/1000-premiers-jours/id1573729958",
       associatedDomains: [`applinks:${process.env.DEEPLINK_DOMAIN}`],
       buildNumber: "1.1.67",
       bundleIdentifier: "com.fabrique.millejours",

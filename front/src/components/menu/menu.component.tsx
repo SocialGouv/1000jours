@@ -6,7 +6,7 @@ import { ListItem } from "react-native-elements";
 import GestureRecognizer from "react-native-swipe-gestures";
 import BottomSheet from "reanimated-bottom-sheet";
 
-import { Labels, Links, PlatformConstants } from "../../constants";
+import { Labels, PlatformConstants } from "../../constants";
 import { emailContact } from "../../constants/email.constants";
 import { SCREEN_HEIGHT } from "../../constants/platform.constants";
 import {
@@ -20,7 +20,12 @@ import {
 } from "../../styles";
 import type { TrackerEvent } from "../../type";
 import type { MenuItem, MenuSubItem } from "../../types";
-import { RootNavigation, ShareUtils, TrackerUtils } from "../../utils";
+import {
+  LinkingUtils,
+  RootNavigation,
+  ShareUtils,
+  TrackerUtils,
+} from "../../utils";
 import { Icomoon, IcomoonIcons, View } from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
 import Accessibility from "./accessibility.component";
@@ -50,7 +55,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       {
         icon: IcomoonIcons.modifier,
         onPress: () => {
-          void Linking.openURL(Links.reviewTypeForm);
+          void LinkingUtils.goToStore();
         },
         title: Labels.menu.addReview,
       },
