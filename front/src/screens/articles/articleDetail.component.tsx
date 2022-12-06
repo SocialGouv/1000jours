@@ -71,7 +71,8 @@ interface Props {
 }
 
 const paddingMainContent = Paddings.default;
-const paddingArticleContent = Paddings.light;
+const paddingArticleContentLeft = Paddings.light;
+const paddingArticleContentRight = Paddings.light;
 
 const ArticleDetail: FC<Props> = ({
   route,
@@ -206,7 +207,7 @@ const ArticleDetail: FC<Props> = ({
   }, []);
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
-    const padding = paddingArticleContent * 2;
+    const padding = paddingArticleContentLeft + paddingArticleContentRight;
     const width = event.nativeEvent.layout.width - padding;
     setArticleWidth(width);
   }, []);
@@ -326,7 +327,8 @@ const ArticleDetail: FC<Props> = ({
 
 const styles = StyleSheet.create({
   articleDetails: {
-    paddingHorizontal: paddingArticleContent,
+    paddingLeft: paddingArticleContentLeft,
+    paddingRight: paddingArticleContentRight,
     paddingTop: Paddings.light,
   },
   articleIsReadText: {
