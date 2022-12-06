@@ -8,7 +8,11 @@ export const fixMediaContent = (content: string): string => {
     `<figure class="media"><oembed url=`,
     `<iframe src=`
   );
-  content = content.replace("</oembed></figure>", "</iframe>");
+  content = StringUtils.replaceAllText(
+    content,
+    `</oembed></figure>`,
+    `</iframe>`
+  );
   return content;
 };
 
@@ -27,15 +31,12 @@ export const fixYoutubeLinkContent = (content: string): string => {
   return content;
 };
 
-export const fixListContent = (
-  content: string,
-  screenWidth: number
-): string => {
-  // Permet de corriger la largeur du contenu trop élevée avec des puces
-  content = StringUtils.replaceAllText(
+/**
+ * Permet de corriger la largeur du contenu trop élevée avec des puces
+ */
+export const fixListContent = (content: string, screenWidth: number): string =>
+  StringUtils.replaceAllText(
     content,
     `<ul>`,
     `<ul style="max-width:${screenWidth}px;">`
   );
-  return content;
-};
