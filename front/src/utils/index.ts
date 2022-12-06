@@ -8,6 +8,7 @@ import * as AssestUtils from "./asset.util";
 import * as EpdsSurveyUtils from "./epdsSurvey.util";
 import * as EventUtils from "./events/event.util";
 import * as FavoritesUtils from "./favorites/favorites.util";
+import * as HtmlUtils from "./html/html.util";
 import * as KeyboardUtils from "./keyboard.util";
 import * as LinkingUtils from "./linking/linking.util";
 import * as LoggingUtils from "./logging.util";
@@ -42,6 +43,7 @@ export {
   FavoritesUtils,
   getAppTheme,
   getVisuelFormat,
+  HtmlUtils,
   initMonitoring,
   KeyboardUtils,
   LinkingUtils,

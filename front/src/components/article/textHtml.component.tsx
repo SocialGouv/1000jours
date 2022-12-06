@@ -5,7 +5,6 @@ import { StyleSheet } from "react-native";
 import HTML from "react-native-render-html";
 import WebView from "react-native-webview";
 
-import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import {
   Colors,
   FontNames,
@@ -13,7 +12,7 @@ import {
   getFontFamilyName,
   Sizes,
 } from "../../styles";
-import { StringUtils } from "../../utils";
+import { HtmlUtils } from "../../utils";
 
 interface Props {
   html: string;
@@ -21,15 +20,10 @@ interface Props {
    * Permet de dimensionner correctement les balises <iframe>
    * Sinon elle aura la même largeur que l'écran "SCREEN_WIDTH"
    */
-  offsetTotal?: number;
-  screenWidth?: number;
+  screenWidth: number;
 }
 
-const TextHtml: FC<Props> = ({
-  html,
-  offsetTotal,
-  screenWidth = SCREEN_WIDTH,
-}) => {
+const TextHtml: FC<Props> = ({ html, screenWidth }) => {
   const [htmlContent, setHtmlContent] = React.useState("");
   const [isReady, setIsReady] = React.useState(false);
 
@@ -41,29 +35,16 @@ const TextHtml: FC<Props> = ({
     iframe: iframeModel,
   };
 
-  const fixVideoContent = (content: string) => {
-    const width = offsetTotal ? screenWidth - offsetTotal * 2 : screenWidth;
-    // La balise <oembed> n'est pas supportée par la lib react-native-render-html
-    // On la remplace par une iframe qui elle sera rendu dans une WebView
-    content = content.replace(
-      '<figure class="media"><oembed url=',
-      `<iframe width="${width}" src=`
-    );
-    content = content.replace("</oembed></figure>", "</iframe>");
-    // Permet de corriger les liens des vidéos youtube
-    content = content.replace("youtube.com/watch?v=", "youtube.com/embed/");
-    // Permet de corriger la largeur du contenu trop élevée avec des puces
-    content = StringUtils.replaceAllText(
-      content,
-      `<ul>`,
-      `<ul style="max-width:${screenWidth}px;">`
-    );
+  const fixContent = (content: string) => {
+    HtmlUtils.fixMediaContent(content);
+    HtmlUtils.fixYoutubeLinkContent(content);
+    HtmlUtils.fixListContent(content, screenWidth);
     setHtmlContent(content);
     setIsReady(true);
   };
 
   React.useEffect(() => {
-    if (html) fixVideoContent(html);
+    if (html) fixContent(html);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [htmlContent]);
 
@@ -99,6 +80,11 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.bold),
+  },
+  webview: {
+    borderColor: Colors.primaryBlueDark,
+    borderWidth: 2,
+    width: "100%",
   },
 });
 

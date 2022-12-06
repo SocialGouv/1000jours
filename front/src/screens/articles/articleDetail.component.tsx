@@ -4,6 +4,7 @@ import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import type {
+  LayoutChangeEvent,
   NativeScrollEvent,
   NativeSyntheticEvent,
   Text as DefaultText,
@@ -44,7 +45,6 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import { TIMEOUT_FOCUS } from "../../constants/accessibility.constants";
-import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { GraphQLQuery } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
@@ -89,12 +89,12 @@ const ArticleDetail: FC<Props> = ({
   const [inShortArray, setInShortArray] = useState<ArticleInShortItem[]>([]);
   const [linksArray, setLinksArray] = useState<ArticleLink[]>([]);
   const [currentArticle, setCurrentArticle] = useState<Article | undefined>();
+  const [articleWidth, setArticleWidth] = useState(0);
   const articleTitleRef = React.useRef<DefaultText>(null);
 
   const [scrollerRef, setScrollerRef] = useState<ScrollView>();
   const [articleHasBeenRead, setArticleHasBeenRead] = useState(false);
   const MIN_RATIO_FOR_HAS_BEEN_READ = 0.55;
-  const WIDTH_FOR_HTML = Math.round(SCREEN_WIDTH * 0.6);
 
   useEffect(() => {
     const checkArticleRead = async () => {
@@ -205,6 +205,12 @@ const ArticleDetail: FC<Props> = ({
     setScrollerRef(scroller);
   }, []);
 
+  const onLayout = useCallback((event: LayoutChangeEvent) => {
+    const padding = paddingArticleContent * 2;
+    const width = event.nativeEvent.layout.width - padding;
+    setArticleWidth(width);
+  }, []);
+
   const renderReadArticleElement = articleHasBeenRead && (
     <View style={styles.articleIsReadView}>
       <SecondaryText style={styles.articleIsReadText}>
@@ -277,22 +283,20 @@ const ArticleDetail: FC<Props> = ({
                   </View>
                   {renderReadArticleElement}
                 </View>
-                <View style={styles.articleDetails}>
+                <View style={styles.articleDetails} onLayout={onLayout}>
                   <Title title={currentArticle.titre} ref={articleTitleRef} />
                   <Thematics items={currentArticle.thematiques} />
                   <InShort inShortArray={inShortArray} />
                   <SubTitle title={currentArticle.texteTitre1} />
                   <TextHtml
                     html={currentArticle.texte1}
-                    offsetTotal={paddingMainContent + paddingArticleContent}
-                    screenWidth={WIDTH_FOR_HTML}
+                    screenWidth={articleWidth}
                   />
                   <DidYouKnow description={currentArticle.leSaviezVous} />
                   <SubTitle title={currentArticle.texteTitre2} />
                   <TextHtml
                     html={currentArticle.texte2}
-                    offsetTotal={paddingMainContent + paddingArticleContent}
-                    screenWidth={WIDTH_FOR_HTML}
+                    screenWidth={articleWidth}
                   />
                   <Links linksArray={linksArray} />
                   <UsefulQuestion
