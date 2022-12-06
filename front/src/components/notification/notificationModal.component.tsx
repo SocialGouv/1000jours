@@ -1,4 +1,5 @@
 import type { Notification as ExpoNotificaiton } from "expo-notifications";
+import * as StoreReview from "expo-store-review";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
@@ -48,6 +49,10 @@ notifStyles.set(NotificationUtils.NotificationType.favorites, {
   color: Colors.primaryBlueDark,
   icon: IcomoonIcons.notification,
 });
+notifStyles.set(NotificationUtils.NotificationType.inAppReview, {
+  color: Colors.primaryBlueDark,
+  icon: IcomoonIcons.modifier,
+});
 
 const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
   const notificationType = notification.request.content.data
@@ -61,7 +66,7 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
   const confettiRef = React.useRef<Confetti>(null);
   const VIBRATION_PATTERN = [0, 700, 700]; // intervalles entre chaque vibration.
 
-  const action = useCallback(() => {
+  const action = useCallback(async () => {
     const buttonTitle: string | unknown =
       notification.request.content.data.redirectTitle ?? "";
     setTrackerAction(
@@ -69,6 +74,9 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
     );
     const redirectTo = notification.request.content.data.redirectTo as string;
     const redirectParams = notification.request.content.data.redirectParams;
+
+    if (notificationType == NotificationUtils.NotificationType.inAppReview)
+      await StoreReview.requestReview();
 
     if (redirectTo) {
       const redirectFromRoot = notification.request.content.data

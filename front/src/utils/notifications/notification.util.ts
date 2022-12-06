@@ -26,6 +26,7 @@ export enum NotificationType {
   moodboard = "moodboard",
   articles = "articles",
   favorites = "favorites",
+  inAppReview = "inAppReview",
 }
 
 export enum Weekday {

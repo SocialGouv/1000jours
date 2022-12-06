@@ -608,6 +608,11 @@ export default {
       question: "À quelle fréquence ?",
       twiceAWeek: "2 fois par semaine",
     },
+    inAppReview: {
+      body: "Votre avis est important pour nous ! N'hésitez pas à noter l'application et à nous laisser votre avis.",
+      redirectTitle: "Laisser un avis",
+      title: "Votre avis",
+    },
     openSettings:
       "Vos paramètres de notification sont désactivés pour cette application. Merci de vous rendre dans les réglages de votre téléphone afin de modifier ces paramètres.",
     openTheApp: "Ouverture de l'app",

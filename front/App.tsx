@@ -131,6 +131,7 @@ const MainAppContainer: FC = () => {
       await AppUtils.manageStorage();
       await updateAppActiveCounter();
       await NotificationUtils.scheduleMoodboardNotifications();
+      await AppUtils.handleInAppReviewPopup(appCounter);
     };
 
     void init();

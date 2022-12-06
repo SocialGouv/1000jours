@@ -1,13 +1,22 @@
 import Constants from "expo-constants";
 
-import { StorageKeysConstants } from "../constants";
-import { cancelAllScheduledNotifications } from "./notifications/notification.util";
+import { StorageKeysConstants } from "../../constants";
+import { scheduleInAppReviewNotification } from "../notifications/inappreview/inAppReview.util";
+import { cancelAllScheduledNotifications } from "../notifications/notification.util";
 import {
+  getObjectValue,
   getStringValue,
   multiRemove,
   storeObjectValue,
   storeStringValue,
-} from "./storage.util";
+} from "../storage.util";
+
+/* 
+  the business rule is to have the popup triggered the third time
+  since the app opening counter starts at -1 (cf. App.tsx), we have 
+  to trigger it at 1 and not 3 
+*/
+const APP_OPENINGS_TRIGGER = 1;
 
 export const manageStorage = async (): Promise<void> => {
   if (process.env.CLEAR_STORAGE === "true") {
@@ -61,3 +70,19 @@ export const hasNewVersionAvailable = (
 
   return hasNewVersion;
 };
+
+export const handleInAppReviewPopup = async (
+  activeAppCounter: number
+): Promise<void> => {
+  const hasTriggeredInAppReview = (await getObjectValue(
+    StorageKeysConstants.hasTriggeredInAppReview
+  )) as boolean | null;
+
+  if (shouldTriggerInAppReview(activeAppCounter) && !hasTriggeredInAppReview) {
+    await storeObjectValue(StorageKeysConstants.hasTriggeredInAppReview, true);
+    await scheduleInAppReviewNotification();
+  }
+};
+
+export const shouldTriggerInAppReview = (activeAppCounter: number): boolean =>
+  activeAppCounter >= APP_OPENINGS_TRIGGER;
