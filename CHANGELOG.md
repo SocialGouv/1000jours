@@ -1,3 +1,10 @@
+# [1.116.0](https://github.com/SocialGouv/1000jours/compare/v1.115.1...v1.116.0) (2022-12-07)
+
+
+### Features
+
+* **ressources:** méthode de partage des ressources par mail ([#1540](https://github.com/SocialGouv/1000jours/issues/1540)) ([6b82a51](https://github.com/SocialGouv/1000jours/commit/6b82a5102516980c0fc6e47a1393aea87a095b48))
+
 ## [1.115.1](https://github.com/SocialGouv/1000jours/compare/v1.115.0...v1.115.1) (2022-11-29)
 
 
