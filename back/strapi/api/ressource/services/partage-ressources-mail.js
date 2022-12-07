@@ -3,13 +3,17 @@
 const resourcesUrl =
   "https://1000jours-blues.fabrique.social.gouv.fr/ressources";
 const landingBluesUrl = "https://1000jours-blues.fabrique.social.gouv.fr/";
-const contentEmail = `Vous avez demandé à recevoir les ressources liées aux difficultés maternelles.
-Le lien suivant répertorie les adresses et contacts des professionnels, associations et autres organisations qui aident à faire en sorte que les difficultés maternelles puissent être connues, entendues et accompagnées`
+const content1Email = `Vous avez demandé à recevoir les ressources liées aux difficultés maternelles.`
+const content2Email = `Le lien suivant répertorie les adresses et contacts des professionnels, associations et autres organisations qui aident à faire en sorte que les difficultés maternelles puissent être connues, entendues et accompagnées`
+
 
 const emailTemplate = () => ({
   html: `Bonjour,
     
-    <p>${contentEmail}</p>
+    <p>
+    ${content1Email}<br />
+    ${content2Email}
+    </p>
 
     <p>${resourcesUrl}</p>
 
@@ -25,7 +29,8 @@ const emailTemplate = () => ({
     "1000 premiers jours - Les ressources liées aux difficultés maternelles",
   text: `Bonjour,
     
-    ${contentEmail}
+    ${content1Email}
+    ${content2Email}
 
     ${resourcesUrl}
 
