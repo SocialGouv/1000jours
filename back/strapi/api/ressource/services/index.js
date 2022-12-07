@@ -1,7 +1,7 @@
 "use strict";
 
-const { partageRessourcesByMail } = require("./partage-ressources-mail");
+const { partageRessourcesParMail } = require("./partage-ressources-mail");
 
 module.exports = {
-  partageRessourcesByMail,
+  partageRessourcesParMail,
 };

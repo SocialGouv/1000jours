@@ -1,5 +1,5 @@
-const partageRessourcesByMail = async () => { };
+const partageRessourcesParMail = async () => { };
 
 module.exports = {
-  partageRessourcesByMail,
+  partageRessourcesParMail,
 };

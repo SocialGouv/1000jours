@@ -2,9 +2,9 @@
 
 const RessourceService = require("../services");
 
-const partageRessourcesByMail = async (_1, _2, { context }) => {
+const partageRessourcesParMail = async (_1, _2, { context }) => {
   try {
-    return RessourceService.partageRessourcesByMail(context.request.body);
+    return RessourceService.partageRessourcesParMail(context.request.body);
   } catch (e) {
     context.badRequest(e.message);
   }
@@ -13,17 +13,17 @@ const partageRessourcesByMail = async (_1, _2, { context }) => {
 module.exports = {
   definition: ``,
   mutation: `
-    partageRessourcesByMail (
+    partageRessourcesParMail (
       email: String
     ): Boolean
   `,
   resolver: {
     Mutation: {
-      partageRessourcesByMail: {
+      partageRessourcesParMail: {
         description: "Envoie d'un mail pour partager les ressources",
-        resolver: partageRessourcesByMail,
+        resolver: partageRessourcesParMail,
         resolverOf:
-          "application::ressources.ressources.partageRessourcesByMail",
+          "application::ressources.ressources.partageRessourcesParMail",
       },
     },
   },

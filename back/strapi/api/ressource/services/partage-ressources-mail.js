@@ -35,7 +35,7 @@ const emailTemplate = () => ({
   `,
 });
 
-const partageRessourcesByMail = async ({ email = "ND" }) => {
+const partageRessourcesParMail = async ({ email = "ND" }) => {
   if (!process.env["MAIL_SEND_TO"])
     throw new Error("Le service mail n'est pas configuré");
 
@@ -59,5 +59,5 @@ const partageRessourcesByMail = async ({ email = "ND" }) => {
 };
 
 module.exports = {
-  partageRessourcesByMail,
+  partageRessourcesParMail,
 };
