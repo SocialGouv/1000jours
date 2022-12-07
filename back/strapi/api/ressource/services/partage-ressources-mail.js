@@ -14,7 +14,8 @@ const emailTemplate = () => ({
     <p>${resourcesUrl}</p>
 
     <p>
-    Bien à vous,
+    Bien à vous, 
+    <br />
     L'équipe "1000 premiers jours"
     </p>
 
