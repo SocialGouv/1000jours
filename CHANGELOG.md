@@ -1,3 +1,30 @@
+# [1.117.0](https://github.com/SocialGouv/1000jours/compare/v1.116.0...v1.117.0) (2022-12-08)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'affichage et l'autoplay sur les vidéos ([#1546](https://github.com/SocialGouv/1000jours/issues/1546)) ([dfc6ab6](https://github.com/SocialGouv/1000jours/commit/dfc6ab6b5c3b520eeba14f83c4797fe4889ff54e)), closes [#1538](https://github.com/SocialGouv/1000jours/issues/1538)
+* prod ci workflow ([#1537](https://github.com/SocialGouv/1000jours/issues/1537)) ([845b8ed](https://github.com/SocialGouv/1000jours/commit/845b8ed19ee0d22f650b6e46f989588f96338488))
+* **accessibility:** maplist ([#1506](https://github.com/SocialGouv/1000jours/issues/1506)) ([46e581f](https://github.com/SocialGouv/1000jours/commit/46e581fb2cb01cd831da5e473da3c5d237f5a7b8))
+* **tracking:** fix parametre tracking ecran liste articles ([#1517](https://github.com/SocialGouv/1000jours/issues/1517)) ([c66b4ea](https://github.com/SocialGouv/1000jours/commit/c66b4ea689d21e1e23d09aed00f2bb78c4f34c8e))
+* 🐛 Accessibilité questionnaire epds ([#1508](https://github.com/SocialGouv/1000jours/issues/1508)) ([53c419c](https://github.com/SocialGouv/1000jours/commit/53c419c3337e531b77691b98338e0e52a6abb40d))
+* 🐛 Corrige l'url des miniatures des videos ([#1492](https://github.com/SocialGouv/1000jours/issues/1492)) ([efe65b6](https://github.com/SocialGouv/1000jours/commit/efe65b6fa554e6537c353808d0cc54160baf0f24)), closes [#1491](https://github.com/SocialGouv/1000jours/issues/1491)
+* 🐛 Corrige une erreur Sentry (undefined is not an object) ([#1514](https://github.com/SocialGouv/1000jours/issues/1514)) ([7dc5351](https://github.com/SocialGouv/1000jours/commit/7dc535144c25a0a1bd9a97dfdc92e393ee9320d5)), closes [#1512](https://github.com/SocialGouv/1000jours/issues/1512)
+* 🐛 Exclude In-app purchases from precheck ([#1498](https://github.com/SocialGouv/1000jours/issues/1498)) ([409d56d](https://github.com/SocialGouv/1000jours/commit/409d56d1e91e9b80ea61822aa7d0de5116677c08))
+
+
+### Features
+
+* **contact:** ajout de la collection demande de contact ([#1524](https://github.com/SocialGouv/1000jours/issues/1524)) ([3f47632](https://github.com/SocialGouv/1000jours/commit/3f4763269cfd73936f419bcc3485c26886d81826))
+* **demographie:** ajout département libellé ([#1501](https://github.com/SocialGouv/1000jours/issues/1501)) ([e8338a1](https://github.com/SocialGouv/1000jours/commit/e8338a1d576d84650c054eb859d1527580958187))
+* **in-app review:** POC in app review ([#1527](https://github.com/SocialGouv/1000jours/issues/1527)) ([5f91d42](https://github.com/SocialGouv/1000jours/commit/5f91d42f38eb778fdd5b36784ccccb6517e45590))
+* **in-app review:** popup in app review ([#1545](https://github.com/SocialGouv/1000jours/issues/1545)) ([574dfab](https://github.com/SocialGouv/1000jours/commit/574dfab5431cbf1b6c32b28a83c5d9c7490f047a))
+* **ressources:** méthode de partage des ressources par mail ([#1540](https://github.com/SocialGouv/1000jours/issues/1540)) ([fdd48d6](https://github.com/SocialGouv/1000jours/commit/fdd48d6f5a39641e904027b73ab1225165ff1014))
+* 🎸 Ajoute la recommandation de l'app dans le menu ([#1539](https://github.com/SocialGouv/1000jours/issues/1539)) ([c3e6574](https://github.com/SocialGouv/1000jours/commit/c3e65747204ea4a157822f87c8af9381418158eb)), closes [#1529](https://github.com/SocialGouv/1000jours/issues/1529)
+* **notifications:** ajout notification favoris ([#1516](https://github.com/SocialGouv/1000jours/issues/1516)) ([7075381](https://github.com/SocialGouv/1000jours/commit/7075381b04e682c41c5d5d538b2b778195edd0cf))
+* **videotheque:** ajout tab videos dans la parentheque ([#1488](https://github.com/SocialGouv/1000jours/issues/1488)) ([6b85b63](https://github.com/SocialGouv/1000jours/commit/6b85b6330d5a2edabeae5e4bc62c0c57beccd134))
+* **videotheque:** branchements data + ui ([#1493](https://github.com/SocialGouv/1000jours/issues/1493)) ([915bc99](https://github.com/SocialGouv/1000jours/commit/915bc999b7007f3220593b427ab9da05be5274ad))
+
 # [1.116.0](https://github.com/SocialGouv/1000jours/compare/v1.115.1...v1.116.0) (2022-12-07)
 
 
