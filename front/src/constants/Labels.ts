@@ -573,6 +573,8 @@ export default {
     notificationsCenter: "Centre de notifications",
     parentheque: "Parenthèque",
     recommendApp: "Recommander l'application",
+    recosanteWebsite: "Recosante (Website)",
+    recosanteWidget: "Recosante (Widget)",
     title: "Menu",
   },
   moodboard: {

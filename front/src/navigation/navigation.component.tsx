@@ -18,6 +18,7 @@ import {
 import NotificationHandler from "../components/notification/notificationHandler.component";
 import { Labels } from "../constants";
 import { LoadingScreen, Moodboard, Onboarding, Profile } from "../screens";
+import RecosanteWidget from "../screens/recosante/recosanteWidget.component";
 import { Colors, Paddings, Sizes } from "../styles";
 import type { RootStackParamList } from "../types";
 import { getAppTheme } from "../utils";
@@ -60,10 +61,14 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => {
     onPressMenu(true);
   }, [onPressMenu]);
   return (
-    <Stack.Navigator initialRouteName="loading" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      initialRouteName="loading"
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name="loading" component={LoadingScreen} />
       <Stack.Screen name="onboarding" component={Onboarding} />
       <Stack.Screen name="profile" component={Profile} />
+      <Stack.Screen name="recosante" component={RecosanteWidget} />
       <Stack.Screen name="moodboard" component={Moodboard} />
       <Stack.Screen name="legalNotice" component={LegalNotice} />
       <Stack.Screen name="conditionsOfUse" component={ConditionsOfUse} />

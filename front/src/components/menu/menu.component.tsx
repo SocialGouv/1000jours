@@ -1,4 +1,5 @@
 import Constants from "expo-constants";
+import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
 import { useCallback, useMemo, useState } from "react";
 import { Linking, Modal, ScrollView, StyleSheet } from "react-native";
@@ -82,6 +83,22 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
           void RootNavigation.navigate("profile");
         },
         title: Labels.menu.myProfil,
+      },
+      {
+        icon: IcomoonIcons.proSante,
+        onPress: () => {
+          setTimeout(() => {
+            void WebBrowser.openBrowserAsync("https://recosante.beta.gouv.fr/");
+          }, 500);
+        },
+        title: Labels.menu.recosanteWebsite,
+      },
+      {
+        icon: IcomoonIcons.proSante,
+        onPress: () => {
+          void RootNavigation.navigate("recosante");
+        },
+        title: Labels.menu.recosanteWidget,
       },
       {
         icon: IcomoonIcons.favoris,

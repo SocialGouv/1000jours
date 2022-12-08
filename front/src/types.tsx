@@ -9,6 +9,7 @@ import type { LatLng } from "react-native-maps";
 export type RootStackParamList = {
   onboarding: undefined;
   profile: undefined;
+  recosante: undefined;
   moodboard: undefined;
   root: undefined;
   notFound: undefined;

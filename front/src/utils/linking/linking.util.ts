@@ -52,7 +52,7 @@ export const openNavigationApp = async (
 };
 
 export const goToStore = async (): Promise<void> => {
-  const storeUrl = PLATFORM_IS_ANDROID
+  const storeUrl: string = PLATFORM_IS_ANDROID
     ? Links.appUrlAndroid
     : Links.httpsiOSAppUrl;
 
