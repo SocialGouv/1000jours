@@ -1,6 +1,7 @@
 import { IcomoonIcons } from "../components/baseComponents/icomoon.component";
 import { NUMBER_OF_DAYS_NOTIF_REMINDER } from "./epdsConstants.constants";
 import { epdsInformation } from "./epdsResultInformation.constants";
+import { landingPageUrl } from "./links.constants";
 import { MIN_SECONDS } from "./notification.constants";
 
 export default {
@@ -570,6 +571,8 @@ export default {
     myFavorites: "Mes favoris",
     myProfil: "Mon profil",
     notificationsCenter: "Centre de notifications",
+    parentheque: "Parenthèque",
+    recommendApp: "Recommander l'application",
     title: "Menu",
   },
   moodboard: {
@@ -595,10 +598,20 @@ export default {
   noData: "Aucunes données",
   notification: {
     essentialEvents: "Que les événements essentiels",
+    favorites: {
+      body: "Vous avez placé des articles dans vos favoris, n'hésitez pas à les consulter.",
+      redirectTitle: "Consulter",
+      title: "Vos favoris",
+    },
     frequency: {
       onceADay: "1 fois par jour",
       question: "À quelle fréquence ?",
       twiceAWeek: "2 fois par semaine",
+    },
+    inAppReview: {
+      body: "Votre avis est important pour nous ! N'hésitez pas à noter l'application et à nous laisser votre avis.",
+      redirectTitle: "Laisser un avis",
+      title: "Votre avis",
     },
     openSettings:
       "Vos paramètres de notification sont désactivés pour cette application. Merci de vous rendre dans les réglages de votre téléphone afin de modifier ces paramètres.",
@@ -642,6 +655,15 @@ export default {
         title: "Connaître les différentes étapes",
       },
     ],
+  },
+  parentheque: {
+    description:
+      "Retrouvez ici les documents et vidéos utiles pour l'ensemble des 1000 premiers jours.",
+    documentSection: "Documents",
+    download: "Télécharger",
+    sectionTitle: "Parenthèque",
+    video: "Voir la vidéo",
+    videoSection: "Vidéos",
   },
   profile: {
     childBirthday: {
@@ -702,6 +724,10 @@ export default {
     yourSearch: "Votre recherche :",
   },
   share: {
+    app: {
+      message: `Bonjour, je te recommande l’application gratuite et totalement anonyme “1000 premiers jours”, qui est super pour suivre les étapes du projet de parentalité jusqu'aux 2 ans de l'enfant :\n\n${landingPageUrl}\n\nBonne découverte et à bientôt !`,
+      title: "1000 premiers jours",
+    },
     article: {
       messageEnd: "vous a été partagé.",
       messageStart: "L'article",
@@ -722,9 +748,6 @@ export default {
     description:
       "Choisissez dans le parcours ci-dessous l’étape qui vous concerne ou vous intéresse. A chaque étape correspond des informations, recommandations et outils spécifiques pour mieux vous guider et vous accompagner.",
     library: {
-      description:
-        "Retrouvez ici les documents utiles pour l'ensemble des 1000 premiers jours.",
-      download: "Télécharger",
       nom: "Parenthèque",
     },
     notification: {

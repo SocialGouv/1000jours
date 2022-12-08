@@ -1,6 +1,6 @@
 import Constants from "expo-constants";
 import * as React from "react";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Linking, Modal, ScrollView, StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
 import GestureRecognizer from "react-native-swipe-gestures";
@@ -8,7 +8,6 @@ import BottomSheet from "reanimated-bottom-sheet";
 
 import { Labels, PlatformConstants } from "../../constants";
 import { emailContact } from "../../constants/email.constants";
-import { reviewTypeForm } from "../../constants/links.constants";
 import { SCREEN_HEIGHT } from "../../constants/platform.constants";
 import {
   Colors,
@@ -19,9 +18,16 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
+import type { TrackerEvent } from "../../type";
 import type { MenuItem, MenuSubItem } from "../../types";
-import { RootNavigation } from "../../utils";
+import {
+  LinkingUtils,
+  RootNavigation,
+  ShareUtils,
+  TrackerUtils,
+} from "../../utils";
 import { Icomoon, IcomoonIcons, View } from "../baseComponents";
+import TrackerHandler from "../tracker/trackerHandler.component";
 import Accessibility from "./accessibility.component";
 import ConditionsOfUse from "./conditionsOfUse.component";
 import InfosDev from "./infosDev.component";
@@ -36,21 +42,39 @@ const MAX_HEIGHT = SCREEN_HEIGHT * 0.9;
 const NB_PRESS_TO_UNLOCK_ACTION = 5;
 
 const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
-  const [showInformation, setShowInformation] = React.useState(false);
-  const [showLegalNotice, setShowLegalNotice] = React.useState(false);
-  const [showConditionsOfUse, setShowConditionsOfUse] = React.useState(false);
-  const [showAccessibility, setShowAccessibility] = React.useState(false);
-  const [showInfosDev, setShowInfosDev] = React.useState(false);
-  const [counterPressVersion, setCounterPressVersion] = React.useState(0);
+  const [showInformation, setShowInformation] = useState(false);
+  const [showLegalNotice, setShowLegalNotice] = useState(false);
+  const [showConditionsOfUse, setShowConditionsOfUse] = useState(false);
+  const [showAccessibility, setShowAccessibility] = useState(false);
+  const [showInfosDev, setShowInfosDev] = useState(false);
+  const [counterPressVersion, setCounterPressVersion] = useState(0);
+  const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
 
   const menuItems: MenuItem[] = useMemo(() => {
     return [
       {
         icon: IcomoonIcons.modifier,
         onPress: () => {
-          void Linking.openURL(reviewTypeForm);
+          void LinkingUtils.goToStore();
         },
         title: Labels.menu.addReview,
+      },
+      {
+        icon: IcomoonIcons.partager,
+        onPress: () => {
+          void ShareUtils.share(
+            Labels.share.app.title,
+            Labels.share.app.message,
+            undefined,
+            () => {
+              setTrackerEventObject({
+                action: TrackerUtils.TrackingEvent.SHARE,
+                name: `${Labels.menu.title} : ${Labels.menu.recommendApp}`,
+              });
+            }
+          );
+        },
+        title: Labels.menu.recommendApp,
       },
       {
         icon: IcomoonIcons.profil,
@@ -78,7 +102,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
         onPress: () => {
           void RootNavigation.navigate("parentheque");
         },
-        title: Labels.timeline.library.nom,
+        title: Labels.menu.parentheque,
       },
       {
         icon: IcomoonIcons.notification,
@@ -297,15 +321,18 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
   const sheetRef = React.useRef<BottomSheet>(null);
 
   return showMenu ? (
-    <BottomSheet
-      ref={sheetRef}
-      initialSnap={0}
-      snapPoints={snapPoints}
-      borderRadius={Sizes.xl}
-      renderContent={renderContent}
-      onCloseEnd={updateShowMenu(false)}
-      enabledContentTapInteraction={false}
-    />
+    <>
+      <TrackerHandler eventObject={trackerEventObject} />
+      <BottomSheet
+        ref={sheetRef}
+        initialSnap={0}
+        snapPoints={snapPoints}
+        borderRadius={Sizes.xl}
+        renderContent={renderContent}
+        onCloseEnd={updateShowMenu(false)}
+        enabledContentTapInteraction={false}
+      />
+    </>
   ) : showLegalNotice ? (
     <LegalNotice setIsVisible={setShowLegalNotice} />
   ) : showConditionsOfUse ? (

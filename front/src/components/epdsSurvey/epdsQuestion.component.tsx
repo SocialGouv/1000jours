@@ -62,7 +62,7 @@ const EpdsQuestion: React.FC<Props> = ({
     <View style={[styles.swipeView, styles.justifyContentCenter]}>
       <TrackerHandler actionName={trackerAction} />
       <View style={[styles.swipeViewMargin, styles.paddingRight]}>
-        <View style={{ alignItems: "baseline", flexDirection: "row" }}>
+        <View style={{ flexDirection: "row" }}>
           <Text
             ref={questionNumberRef}
             style={styles.stepNum}
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     paddingRight: Paddings.light,
   },
   question: {
+    alignSelf: "center",
     color: Colors.primaryBlueDark,
     fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,

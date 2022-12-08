@@ -1,5 +1,6 @@
 import { Linking } from "react-native";
 
+import { Links } from "../../constants";
 import { PLATFORM_IS_ANDROID } from "../../constants/platform.constants";
 
 const PREFIX_HTTP = "http://";
@@ -48,6 +49,14 @@ export const openNavigationApp = async (
 
   const supported = await Linking.canOpenURL(url);
   await Linking.openURL(supported ? url : webUrl);
+};
+
+export const goToStore = async (): Promise<void> => {
+  const storeUrl = PLATFORM_IS_ANDROID
+    ? Links.appUrlAndroid
+    : Links.httpsiOSAppUrl;
+
+  await Linking.openURL(storeUrl);
 };
 
 const _formatURL = (website: string, shouldChangeUrl = true): string => {

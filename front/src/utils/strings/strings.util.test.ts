@@ -103,7 +103,7 @@ describe("Strings utils", () => {
     });
   });
 
-  describe("formatPhoneNumberForElise", () => {
+  describe("formatPhoneNumber", () => {
     it("should format French phone number when it has 10 digits", () => {
       expect(StringUtils.formatPhoneNumber("0123456789")).toEqual(
         "01 23 45 67 89"

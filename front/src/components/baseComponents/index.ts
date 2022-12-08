@@ -17,6 +17,7 @@ import { GraphQLLoader } from "./graphQLLoader.component";
 import GreenRadioButton from "./greenRadioButton.component";
 import HeaderApp from "./headerApp.component";
 import Icomoon, { IcomoonIcons } from "./icomoon.component";
+import IconWithBackground from "./iconWithBackground.component";
 import Loader from "./loader.component";
 import MapLoader from "./mapLoader.component";
 import ModalHelp from "./modalHelp.component";
@@ -51,6 +52,7 @@ export {
   HeaderApp,
   Icomoon,
   IcomoonIcons,
+  IconWithBackground,
   Loader,
   MapLoader,
   ModalHelp,

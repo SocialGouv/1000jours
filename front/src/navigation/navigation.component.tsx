@@ -60,7 +60,7 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => {
     onPressMenu(true);
   }, [onPressMenu]);
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="loading" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="loading" component={LoadingScreen} />
       <Stack.Screen name="onboarding" component={Onboarding} />
       <Stack.Screen name="profile" component={Profile} />

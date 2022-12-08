@@ -1,6 +1,7 @@
 export const userUuidKey = "@userUuidKey";
 export const appActiveCounter = "@appActiveCounter";
 export const appOpeningLastDate = "@appOpeningLastDate";
+export const hasTriggeredInAppReview = "@hasTriggeredInAppReview";
 export const isFirstLaunchKey = "@isFirstLaunch";
 export const lastVersionLaunchKey = "@lastVersionLaunchKey";
 export const currentStep = "@currentStep";

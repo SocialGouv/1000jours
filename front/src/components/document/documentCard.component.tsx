@@ -12,10 +12,10 @@ import {
   CommonText,
   CustomButton,
   IcomoonIcons,
+  IconWithBackground,
   SecondaryText,
   View,
 } from "../baseComponents";
-import StepIcon from "../timeline/stepIcon.component";
 import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
@@ -47,11 +47,7 @@ const DocumentCard: FC<Props> = ({ document }) => {
         importantForAccessibility="no-hide-descendants"
         accessible={false}
       >
-        <StepIcon
-          name={IcomoonIcons.stepParentheque}
-          active={false}
-          isParentheque
-        />
+        <IconWithBackground iconName={IcomoonIcons.stepParentheque} />
       </View>
       <ListItem.Content style={styles.documentContent}>
         <ListItem.Title style={styles.documentTitleContainer}>
@@ -68,8 +64,8 @@ const DocumentCard: FC<Props> = ({ document }) => {
         </ListItem.Subtitle>
         <View style={styles.contentButton}>
           <CustomButton
-            title={Labels.timeline.library.download}
-            accessibilityLabel={Labels.timeline.library.download + document.nom}
+            title={Labels.parentheque.download}
+            accessibilityLabel={Labels.parentheque.download + document.nom}
             titleStyle={styles.fontButton}
             rounded={true}
             disabled={false}
@@ -92,7 +88,8 @@ const styles = StyleSheet.create({
   },
   documentContent: {
     justifyContent: "center",
-    padding: Paddings.default,
+    paddingEnd: Paddings.default,
+    paddingVertical: Paddings.default,
   },
   documentDescription: {
     color: Colors.commonText,
@@ -104,6 +101,7 @@ const styles = StyleSheet.create({
     lineHeight: Sizes.lg,
   },
   documentImage: {
+    alignSelf: "flex-start",
     marginStart: Margins.smaller,
   },
   documentTitle: {
@@ -125,6 +123,11 @@ const styles = StyleSheet.create({
     borderColor: Colors.borderGrey,
     borderWidth: 1,
     padding: 0,
+  },
+  titleRow: {
+    flex: 1,
+    flexDirection: "row",
+    marginStart: 0,
   },
 });
 

@@ -1,4 +1,5 @@
 import type { Notification as ExpoNotificaiton } from "expo-notifications";
+import * as StoreReview from "expo-store-review";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
@@ -7,9 +8,8 @@ import Confetti from "react-native-confetti";
 
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
 import type { NotificationStyle } from "../../types";
-import { NotificationType } from "../../utils/notifications/notification.util";
+import { NotificationUtils, TrackerUtils } from "../../utils";
 import * as RootNavigation from "../../utils/rootNavigation.util";
-import { TrackingEvent } from "../../utils/tracker.util";
 import CustomButton from "../baseComponents/customButton.component";
 import Icomoon, { IcomoonIcons } from "../baseComponents/icomoon.component";
 import { SecondaryText } from "../baseComponents/StyledText";
@@ -21,31 +21,42 @@ interface Props {
   onDismiss: () => void;
 }
 
-const notifStyles = new Map<NotificationType, NotificationStyle>();
-notifStyles.set(NotificationType.epds, {
+const notifStyles = new Map<
+  NotificationUtils.NotificationType,
+  NotificationStyle
+>();
+notifStyles.set(NotificationUtils.NotificationType.epds, {
   color: Colors.primaryYellowDark,
   icon: IcomoonIcons.favoris,
 });
-notifStyles.set(NotificationType.event, {
+notifStyles.set(NotificationUtils.NotificationType.event, {
   color: Colors.primaryBlueDark,
   icon: IcomoonIcons.notification,
 });
-notifStyles.set(NotificationType.nextStep, {
+notifStyles.set(NotificationUtils.NotificationType.nextStep, {
   color: Colors.secondaryGreenDark,
   icon: IcomoonIcons.informations,
 });
-notifStyles.set(NotificationType.moodboard, {
+notifStyles.set(NotificationUtils.NotificationType.moodboard, {
   color: Colors.primaryBlueDark,
   icon: IcomoonIcons.bebe,
 });
-notifStyles.set(NotificationType.articles, {
+notifStyles.set(NotificationUtils.NotificationType.articles, {
   color: Colors.primaryBlueDark,
   icon: IcomoonIcons.notification,
+});
+notifStyles.set(NotificationUtils.NotificationType.favorites, {
+  color: Colors.primaryBlueDark,
+  icon: IcomoonIcons.notification,
+});
+notifStyles.set(NotificationUtils.NotificationType.inAppReview, {
+  color: Colors.primaryBlueDark,
+  icon: IcomoonIcons.modifier,
 });
 
 const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
   const notificationType = notification.request.content.data
-    .type as NotificationType;
+    .type as NotificationUtils.NotificationType;
 
   const confetti = notification.request.content.data.confetti as boolean;
 
@@ -55,13 +66,17 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
   const confettiRef = React.useRef<Confetti>(null);
   const VIBRATION_PATTERN = [0, 700, 700]; // intervalles entre chaque vibration.
 
-  const action = useCallback(() => {
-    const buttonTitle = notification.request.content.data.redirectTitle ?? "";
+  const action = useCallback(async () => {
+    const buttonTitle: string | unknown =
+      notification.request.content.data.redirectTitle ?? "";
     setTrackerAction(
-      `${TrackingEvent.NOTIFICATION} (${notificationType}) - ${buttonTitle}`
+      TrackerUtils.notificationModalTrackerAction(notificationType, buttonTitle)
     );
     const redirectTo = notification.request.content.data.redirectTo as string;
     const redirectParams = notification.request.content.data.redirectParams;
+
+    if (notificationType == NotificationUtils.NotificationType.inAppReview)
+      await StoreReview.requestReview();
 
     if (redirectTo) {
       const redirectFromRoot = notification.request.content.data

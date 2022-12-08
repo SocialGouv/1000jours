@@ -15,23 +15,25 @@ import {
   FetchPoliciesConstants,
   StorageKeysConstants,
 } from "../../constants";
+import { useAccessibilityReader } from "../../hooks";
 import { GraphQLQuery } from "../../services";
 import type { EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, StorageUtils, TrackerUtils } from "../../utils";
 
 const TabEpdsScreen: FC = () => {
-  const [onboardingIsDone, setOnboardingIsDone] = useState(false);
-  const [genderIsEntered, setGenderIsEntered] = useState(false);
+  const [isOnboardingDone, setIsOnboardingDone] = useState(false);
+  const [isGenderEntered, setIsGenderEntered] = useState(false);
   const [questionAndAnswers, setQuestionAndAnswers] = useState<
     EpdsQuestionAndAnswers[]
   >([]);
+  const isAccessibilityModeOn = useAccessibilityReader();
 
   useEffect(() => {
     const getGenderFromStorage = async () => {
       const genderValue = await StorageUtils.getStringValue(
         StorageKeysConstants.epdsGenderKey
       );
-      setGenderIsEntered(Boolean(genderValue));
+      setIsGenderEntered(Boolean(genderValue));
     };
     void getGenderFromStorage();
   }, []);
@@ -41,19 +43,24 @@ const TabEpdsScreen: FC = () => {
   }, []);
 
   const goToEpdsSurvey = useCallback(() => {
-    setGenderIsEntered(true);
+    setIsGenderEntered(true);
   }, []);
 
   const onBoardingIsDone = useCallback(() => {
-    setOnboardingIsDone(true);
+    setIsOnboardingDone(true);
   }, []);
 
   const getViewToDisplay = () => {
-    if (!onboardingIsDone)
+    if (!isOnboardingDone)
       return <EpdsOnboarding onBoardingIsDone={onBoardingIsDone} />;
-    else if (!genderIsEntered)
+    if (!isGenderEntered)
       return <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />;
-    else return <EpdsSurveyContent epdsSurvey={questionAndAnswers} />;
+    return (
+      <EpdsSurveyContent
+        epdsSurvey={questionAndAnswers}
+        isAccessibilityModeOn={isAccessibilityModeOn}
+      />
+    );
   };
 
   return (

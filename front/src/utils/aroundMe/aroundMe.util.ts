@@ -2,6 +2,7 @@ import type { LatLng, Region } from "react-native-maps";
 
 import { AroundMeConstants } from "../../constants";
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
+import { deg2rad, rad2deg } from "../number/number.util";
 
 export const getPostalCodeCoords = async (
   postalCodeInput: string
@@ -98,4 +99,23 @@ export const triggerFunctionAfterTimeout = (
     },
     PLATFORM_IS_IOS ? 1000 : 500
   );
+};
+
+export const calculateRegionManually = (coordinates: LatLng): Region => {
+  const EARTH_RADIUS_IN_KM = 6371;
+  const RADIUS_IN_KM = 12;
+  const ASPECT_RATIO = 1;
+  const radiusInRad = RADIUS_IN_KM / EARTH_RADIUS_IN_KM;
+
+  const longitudeDelta = rad2deg(
+    radiusInRad / Math.cos(deg2rad(coordinates.latitude))
+  );
+  const latitudeDelta = ASPECT_RATIO * rad2deg(radiusInRad);
+
+  return {
+    latitude: coordinates.latitude,
+    latitudeDelta: latitudeDelta,
+    longitude: coordinates.longitude,
+    longitudeDelta: longitudeDelta,
+  };
 };
