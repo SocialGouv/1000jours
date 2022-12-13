@@ -15,6 +15,7 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import type { Event, Step } from "../../types";
+import * as NotificationInAppReviewUtils from "../notifications/inappreview/inAppReview.util";
 import * as NotificationToggleUtils from "../notifications/notificationToggle.util";
 import { nbOfUnreadArticlesInCurrentStep } from "../step/step.util";
 import * as StorageUtils from "../storage.util";
@@ -589,6 +590,10 @@ export const scheduleFakeNotif = async (
       content = await buildArticlesNotificationContent(nbArticlesToRead);
       break;
     }
+    case NotificationType.inAppReview:
+      content =
+        NotificationInAppReviewUtils.buildInAppReviewNotificationContent();
+      break;
     default:
       console.warn(
         `scheduleFakeNotif : notification type '${notificationType}'`

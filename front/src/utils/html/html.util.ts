@@ -1,4 +1,4 @@
-import { StringUtils } from "..";
+import * as StringUtils from "../strings/strings.util";
 
 export const fixMediaContent = (content: string): string => {
   // La balise <oembed> n'est pas supportée par la lib react-native-render-html

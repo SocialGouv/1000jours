@@ -12,16 +12,17 @@ export const scheduleInAppReviewNotification = async (): Promise<string> =>
     NotificationConstants.MIN_TRIGGER
   );
 
-const buildInAppReviewNotificationContent = (): NotificationContentInput => {
-  return {
-    body: Labels.notification.inAppReview.body,
-    data: {
-      redirectFromRoot: false,
-      redirectParams: null,
-      redirectTitle: Labels.notification.inAppReview.redirectTitle,
-      redirectTo: null,
-      type: NotificationType.inAppReview,
-    },
-    title: Labels.notification.inAppReview.title,
+export const buildInAppReviewNotificationContent =
+  (): NotificationContentInput => {
+    return {
+      body: Labels.notification.inAppReview.body,
+      data: {
+        redirectFromRoot: false,
+        redirectParams: null,
+        redirectTitle: Labels.notification.inAppReview.redirectTitle,
+        redirectTo: null,
+        type: NotificationType.inAppReview,
+      },
+      title: Labels.notification.inAppReview.title,
+    };
   };
-};
