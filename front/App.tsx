@@ -64,24 +64,24 @@ const MainAppContainer: FC = () => {
     const appActiveCounterStr = await StorageUtils.getStringValue(
       StorageKeysConstants.appActiveCounter
     );
-    const appActiveCounter = appActiveCounterStr
+    let appActiveCounter = appActiveCounterStr
       ? Number(appActiveCounterStr)
       : 0;
-    setAppCounter(appActiveCounter);
     if (await TrackerUtils.shouldTrackAppOpening()) {
-      const newAppActiveCounter = appActiveCounter + 1;
+      appActiveCounter++;
       await StorageUtils.storeStringValue(
         StorageKeysConstants.appActiveCounter,
-        newAppActiveCounter.toString()
+        appActiveCounter.toString()
       );
-      setAppCounter(newAppActiveCounter);
       setSendTracker(true);
       await StorageUtils.storeStringValue(
         StorageKeysConstants.appOpeningLastDate,
         new Date().toISOString()
       );
     }
+    setAppCounter(appActiveCounter);
     setAppCounterIsLoaded(true);
+    return appActiveCounter;
   };
 
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
@@ -129,9 +129,11 @@ const MainAppContainer: FC = () => {
         });
 
       await AppUtils.manageStorage();
-      await updateAppActiveCounter();
+      // Pour éviter un autre useEffect on utilise la valeur retournée,
+      // car à ce moment là `appCounter` n'est pas encore à jour.
+      const appActiveCounter = await updateAppActiveCounter();
       await NotificationUtils.scheduleMoodboardNotifications();
-      await AppUtils.handleInAppReviewPopup(appCounter);
+      await AppUtils.handleInAppReviewPopup(appActiveCounter);
     };
 
     void init();

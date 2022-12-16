@@ -11,7 +11,7 @@ export const SEARCH_ARTICLES_BY_KEYWORDS = /* GraphQL */ `
         height
         width
       }
-      cartographie_pois_types {
+      cartographie_pois_types(where: { etapes: { id_gt: 0 } }) {
         nom
       }
     }
