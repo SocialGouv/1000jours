@@ -1,3 +1,15 @@
+# [1.118.0](https://github.com/SocialGouv/1000jours/compare/v1.117.0...v1.118.0) (2022-12-16)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la notification 'InAppReview' ([#1556](https://github.com/SocialGouv/1000jours/issues/1556)) ([bb53dbe](https://github.com/SocialGouv/1000jours/commit/bb53dbe2a67e532119341a90daebfc978b199113)), closes [#1554](https://github.com/SocialGouv/1000jours/issues/1554)
+
+
+### Features
+
+* 🎸 Affiche uniquement les filtres POIs non vides ([#1558](https://github.com/SocialGouv/1000jours/issues/1558)) ([9c48af9](https://github.com/SocialGouv/1000jours/commit/9c48af935186982e2d7a337a8a8379a6a5654862)), closes [#1374](https://github.com/SocialGouv/1000jours/issues/1374)
+
 # [1.117.0](https://github.com/SocialGouv/1000jours/compare/v1.116.0...v1.117.0) (2022-12-08)
 
 
