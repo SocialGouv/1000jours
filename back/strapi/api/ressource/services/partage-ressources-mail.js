@@ -51,7 +51,7 @@ const partageRessourcesParMail = async ({ email = "ND" }) => {
     const res = await strapi.plugins.email.services.email.sendTemplatedEmail(
       {
         from: process.env["MAIL_SEND_FROM"],
-        to: process.env["MAIL_SEND_TO"],
+        to: email,
       },
       emailTemplate(),
       info
