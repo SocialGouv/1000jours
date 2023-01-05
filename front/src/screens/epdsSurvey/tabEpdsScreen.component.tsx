@@ -21,6 +21,8 @@ import { GraphQLQuery } from "../../services";
 import type { EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, StorageUtils, TrackerUtils } from "../../utils";
 
+const EPDS_WIDGET_SOURCE = "1000jblues-integration";
+
 const TabEpdsScreen: FC = () => {
   const [isOnboardingDone, setIsOnboardingDone] = useState(false);
   const [isGenderEntered, setIsGenderEntered] = useState(false);
@@ -58,8 +60,9 @@ const TabEpdsScreen: FC = () => {
       return <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />;
     return (
       <WebView
+        originWhitelist={["*"]}
         source={{
-          uri: `${process.env.EPDS_WIDGET_URL}/?source=1000j-application`,
+          html: `<iframe src=${process.env.EPDS_WIDGET_URL}/?source=${EPDS_WIDGET_SOURCE}  width="100%"  height="100%"/>`,
         }}
       />
     );
