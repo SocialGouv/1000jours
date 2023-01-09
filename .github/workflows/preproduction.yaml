@@ -1,0 +1,30 @@
+name: 😎 PreProd
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "master"
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.ref }}
+
+jobs:
+  register:
+    name: Build & Register application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use autodevops build and register
+        uses: SocialGouv/actions/autodevops-build-register@v1
+        with:
+          environment: preprod
+          dockercontext: ./back/strapi
+          imageName: 1000jours/strapi
+          token: ${{ secrets.GITHUB_TOKEN }}
+          dockerfile: ./back/strapi/Dockerfile
+          semver: 'true'
+          
+  kontinuous:
+    name: "Deploy on Kubernetes 🐳"
+    uses: socialgouv/workflows/.github/workflows/use-ks-gh-preproduction.yaml@v1
+    secrets: inherit
