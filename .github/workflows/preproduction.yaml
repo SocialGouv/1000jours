@@ -26,5 +26,6 @@ jobs:
           
   kontinuous:
     name: "Deploy on Kubernetes 🐳"
+    needs: [register]
     uses: socialgouv/workflows/.github/workflows/use-ks-gh-preproduction.yaml@v1
     secrets: inherit

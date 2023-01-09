@@ -26,5 +26,7 @@ jobs:
           dockerfile: ./back/strapi/Dockerfile
 
   kontinuous:
+    name: "Deploy on Kubernetes 🐳"
+    needs: [register]
     uses: socialgouv/workflows/.github/workflows/use-ks-gh-review-auto.yaml@master
     secrets: inherit
