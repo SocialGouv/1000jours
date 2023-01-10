@@ -6,6 +6,7 @@ on:
       - "fix-**"
       - "feat/**"
       - "fix/**"
+      - "develop"
 
 concurrency:
   cancel-in-progress: true
