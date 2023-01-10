@@ -1,0 +1,32 @@
+name: 🚀 Production
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - v*
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.ref }}
+
+jobs:
+
+  register:
+    name: Build & Register application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use autodevops build and register
+        uses: SocialGouv/actions/autodevops-build-register@v1
+        with:
+          environment: prod
+          dockercontext: ./back/strapi
+          imageName: 1000jours/strapi
+          token: ${{ secrets.GITHUB_TOKEN }}
+          dockerfile: ./back/strapi/Dockerfile
+          semver: "true"
+          
+  kontinuous:
+    name: "Deploy on Kubernetes 🐳"
+    needs: [register]
+    uses: socialgouv/workflows/.github/workflows/use-ks-gh-production.yaml@v1
+    secrets: inherit
