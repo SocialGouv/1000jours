@@ -60,10 +60,10 @@ const TabEpdsScreen: FC = () => {
       return <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />;
     return (
       <WebView
-        originWhitelist={["*"]}
         source={{
-          html: `<iframe src=${process.env.EPDS_WIDGET_URL}/?source=${EPDS_WIDGET_SOURCE}  width="100%"  height="100%"/>`,
+          uri: `${process.env.EPDS_WIDGET_URL}/?source=${EPDS_WIDGET_SOURCE}`,
         }}
+        style={{ height: "100%", width: "100%" }}
       />
     );
   };
