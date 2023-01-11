@@ -21,7 +21,7 @@ import { GraphQLQuery } from "../../services";
 import type { EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, StorageUtils, TrackerUtils } from "../../utils";
 
-const EPDS_WIDGET_SOURCE = "1000jblues-integration";
+const EPDS_WIDGET_SOURCE = "1000j-application";
 
 const TabEpdsScreen: FC = () => {
   const [isOnboardingDone, setIsOnboardingDone] = useState(false);
