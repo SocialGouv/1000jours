@@ -19,7 +19,6 @@ const TabEpdsScreen: FC = () => {
 
     return (
       <WebView
-        originWhitelist={["*"]}
         source={{
           uri: `${url}/?source=${EPDS_WIDGET_SOURCE}`,
         }}
