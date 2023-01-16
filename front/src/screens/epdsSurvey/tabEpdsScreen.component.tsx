@@ -54,10 +54,6 @@ const TabEpdsScreen: FC = () => {
   }, []);
 
   const getViewToDisplay = () => {
-    if (!isOnboardingDone)
-      return <EpdsOnboarding onBoardingIsDone={onBoardingIsDone} />;
-    if (!isGenderEntered)
-      return <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />;
     return (
       <WebView
         source={{
