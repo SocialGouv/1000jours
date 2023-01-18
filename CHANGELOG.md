@@ -1,3 +1,12 @@
+## [1.118.4](https://github.com/SocialGouv/1000jours/compare/v1.118.3...v1.118.4) (2023-01-18)
+
+
+### Bug Fixes
+
+* add develop to review auto ([bbeb40e](https://github.com/SocialGouv/1000jours/commit/bbeb40e1a180cc2342ea827d68f3c3756d0f42aa))
+* deactivate drop-db ([c2f9757](https://github.com/SocialGouv/1000jours/commit/c2f97575331388d06ff0f6f6c5c22d8d9ba03ee0))
+* upgrade kontinuous workflows ([#1565](https://github.com/SocialGouv/1000jours/issues/1565)) ([a625c87](https://github.com/SocialGouv/1000jours/commit/a625c8752ca14afe8eb8ad7c757c94fbfec1f702))
+
 ## [1.118.3](https://github.com/SocialGouv/1000jours/compare/v1.118.2...v1.118.3) (2023-01-18)
 
 
