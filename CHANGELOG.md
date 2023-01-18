@@ -1,3 +1,10 @@
+## [1.118.3](https://github.com/SocialGouv/1000jours/compare/v1.118.2...v1.118.3) (2023-01-18)
+
+
+### Bug Fixes
+
+* **ressources:** url ([#1576](https://github.com/SocialGouv/1000jours/issues/1576)) ([c248e86](https://github.com/SocialGouv/1000jours/commit/c248e8656a9044b5a60c96bdae71b884e578b5a2))
+
 ## [1.118.2](https://github.com/SocialGouv/1000jours/compare/v1.118.1...v1.118.2) (2023-01-10)
 
 
