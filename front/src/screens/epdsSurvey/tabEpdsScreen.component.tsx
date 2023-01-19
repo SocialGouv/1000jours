@@ -21,6 +21,7 @@ import { GraphQLQuery } from "../../services";
 import type { EpdsQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, StorageUtils, TrackerUtils } from "../../utils";
 
+// TODO: refacto & clear
 const EPDS_WIDGET_SOURCE = "1000j-application";
 
 const TabEpdsScreen: FC = () => {
@@ -54,10 +55,15 @@ const TabEpdsScreen: FC = () => {
   }, []);
 
   const getViewToDisplay = () => {
+    // TODO: urilisation de la branche de dev du widget pour les tests
+    // uri à utiliser `${process.env.EPDS_WIDGET_URL}/?source=${EPDS_WIDGET_SOURCE}`
+    const url =
+      "https://nos1000jours-blues-epds-widget-feat-modific-4nhlqn.dev.fabrique.social.gouv.fr/";
+
     return (
       <WebView
         source={{
-          uri: `${process.env.EPDS_WIDGET_URL}/?source=${EPDS_WIDGET_SOURCE}`,
+          uri: `${url}/?source=${EPDS_WIDGET_SOURCE}`,
         }}
         style={{ height: "100%", width: "100%" }}
       />
