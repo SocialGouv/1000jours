@@ -7,7 +7,6 @@ import { View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { TrackerUtils } from "../../utils";
 
-// TODO: refacto & clear
 const EPDS_WIDGET_SOURCE = "1000j-application";
 
 // TODO: refacto & clear
