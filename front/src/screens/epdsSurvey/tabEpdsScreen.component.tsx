@@ -7,6 +7,7 @@ import { View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { TrackerUtils } from "../../utils";
 
+// TODO: refacto & clear
 const EPDS_WIDGET_SOURCE = "1000j-application";
 
 // TODO: refacto & clear
@@ -20,7 +21,7 @@ const TabEpdsScreen: FC = () => {
     return (
       <WebView
         source={{
-          uri: `${process.env.EPDS_WIDGET_URL}/?source=${EPDS_WIDGET_SOURCE}`,
+          uri: `${url}/?source=${EPDS_WIDGET_SOURCE}`,
         }}
         style={{ height: "100%", width: "100%" }}
       />
