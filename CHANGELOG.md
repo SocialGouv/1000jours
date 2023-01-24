@@ -1,3 +1,10 @@
+## [1.118.5](https://github.com/SocialGouv/1000jours/compare/v1.118.4...v1.118.5) (2023-01-24)
+
+
+### Bug Fixes
+
+* modify strapi RAM request from 256Mo to 512Mo ([80506e9](https://github.com/SocialGouv/1000jours/commit/80506e93d7a27d311720e1098b8b635bfc80b97f))
+
 ## [1.118.4](https://github.com/SocialGouv/1000jours/compare/v1.118.3...v1.118.4) (2023-01-18)
 
 
