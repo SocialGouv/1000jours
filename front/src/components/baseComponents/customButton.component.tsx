@@ -60,7 +60,7 @@ const CustomButton: FC<Props> = ({
   hasOptions,
   optionsAction,
 }) => (
-  <View style={{ backgroundColor: "transparent", flexDirection: "row" }}>
+  <View style={styles.rowContainer}>
     <Button
       disabled={disabled}
       disabledStyle={disabled ? setDisabledStyle(disabledStyle) : null}
@@ -159,6 +159,10 @@ const styles = StyleSheet.create({
   roundedButtonTitle: {
     color: Colors.white,
     textAlign: "center",
+  },
+  rowContainer: {
+    backgroundColor: "transparent",
+    flexDirection: "row",
   },
 });
 

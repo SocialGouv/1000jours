@@ -49,7 +49,7 @@ const SpeechText: FC<Props> = ({ buttonTitle, textToRead }) => {
         setIsReadingText(false);
       },
       onError: (error) => {
-        console.log(error);
+        console.error(error);
         setIsReadingText(false);
       },
       voice: storedVoiceId ?? undefined,
@@ -89,9 +89,8 @@ const SpeechText: FC<Props> = ({ buttonTitle, textToRead }) => {
   );
 
   useEffect(() => {
-    return () => {
-      Speech.stop();
-    };
+    // Stop l'écoute lorsque le composant va être "unmount"
+    return void Speech.stop();
   }, []);
 
   return (
@@ -106,7 +105,7 @@ const SpeechText: FC<Props> = ({ buttonTitle, textToRead }) => {
               color={Colors.primaryBlue}
             />
           }
-          rounded={true}
+          rounded
           disabled={false}
           action={stopReadingText}
           titleStyle={styles.buttonTitleStyle}
@@ -122,7 +121,7 @@ const SpeechText: FC<Props> = ({ buttonTitle, textToRead }) => {
               color={Colors.primaryBlue}
             />
           }
-          rounded={true}
+          rounded
           disabled={false}
           action={readText}
           titleStyle={styles.buttonTitleStyle}
