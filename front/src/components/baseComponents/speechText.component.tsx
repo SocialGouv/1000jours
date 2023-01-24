@@ -126,11 +126,11 @@ const SpeechText: FC<Props> = ({ buttonTitle, textToRead }) => {
           action={readText}
           titleStyle={styles.buttonTitleStyle}
           buttonStyle={[styles.defaultButtonStyle]}
-          hasOptions={true}
+          hasOptions
           optionsAction={selectVoice}
         />
       )}
-      <Modal transparent={true} visible={modalVisible} animationType="fade">
+      <Modal transparent visible={modalVisible} animationType="fade">
         <View style={Styles.modale.behindOfModal}>
           <View style={styles.mainContainer}>
             <View style={styles.modalHeader}>
@@ -139,7 +139,7 @@ const SpeechText: FC<Props> = ({ buttonTitle, textToRead }) => {
                 animated={false}
                 style={{ paddingTop: Paddings.larger }}
               />
-              <CloseButton onPress={closeModal} clear={true} />
+              <CloseButton onPress={closeModal} clear />
             </View>
             <ScrollView>
               {voices.map((voice, index) => (
