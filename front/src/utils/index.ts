@@ -23,6 +23,7 @@ import * as RootNavigation from "./rootNavigation.util";
 import * as ScaleNormalize from "./scaleNormalize.util";
 import * as SearchUtils from "./search/search.util";
 import * as ShareUtils from "./share/share.util";
+import * as SpeechUtils from "./speech/speech.util";
 import * as StepUtils from "./step/step.util";
 import * as StorageUtils from "./storage.util";
 import * as StringUtils from "./strings/strings.util";
@@ -59,6 +60,7 @@ export {
   ScaleNormalize,
   SearchUtils,
   ShareUtils,
+  SpeechUtils,
   StepUtils,
   StorageUtils,
   StringUtils,

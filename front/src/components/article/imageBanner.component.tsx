@@ -18,6 +18,8 @@ const ImageBanner: FC<Props> = ({ visuel }) => {
         uri: getVisuelFormat(visuel, VisuelFormat.medium),
       }}
       containerStyle={[styles.articleImage]}
+      height={200}
+      width="100%"
     />
   );
 };
@@ -26,7 +28,7 @@ const styles = StyleSheet.create({
   articleImage: {
     borderTopLeftRadius: Sizes.xxxxs,
     borderTopRightRadius: Sizes.xxxxs,
-    height: 150,
+    height: 200,
     width: "100%",
   },
 });

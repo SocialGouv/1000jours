@@ -39,6 +39,7 @@ export const triggerForArticlesNotification = "@triggerForArticlesNotification";
 export const lastProfileUpdate = "@lastProfileUpdate";
 export const stepsAlreadyCongratulatedForArticles =
   "@stepsAlreadyCongratulatedForArticles";
+export const speechVoiceId = "@speechVoiceId";
 
 export const allStorageKeys = [
   userUuidKey,
@@ -76,6 +77,7 @@ export const allStorageKeys = [
   lastProfileUpdate,
   favoriteArticlesIds,
   stepsAlreadyCongratulatedForArticles,
+  speechVoiceId,
 ];
 
 export const epdsSurveyKeys = [epdsQuestionAndAnswersKey, epdsQuestionIndexKey];

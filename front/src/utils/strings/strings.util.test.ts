@@ -120,4 +120,47 @@ describe("Strings utils", () => {
       );
     });
   });
+
+  describe("addEndDotIfNeeded", () => {
+    it("should add '.' at the end of the text when it doesn't end with '.', '?' and '!'", () => {
+      const originalString = "Lorem Ipsum";
+      expect(StringUtils.addEndDotIfNeeded(originalString)).toEqual(
+        `${originalString}.`
+      );
+    });
+    it("should return the text without change when it end with '.'", () => {
+      const originalString = "Lorem Ipsum.";
+      expect(StringUtils.formatPhoneNumber(originalString)).toEqual(
+        originalString
+      );
+    });
+    it("should return the text without change when it end with '?'", () => {
+      const originalString = "Lorem Ipsum ?";
+      expect(StringUtils.formatPhoneNumber(originalString)).toEqual(
+        originalString
+      );
+    });
+    it("should return the text without change when it end with '!'", () => {
+      const originalString = "Lorem Ipsum !";
+      expect(StringUtils.formatPhoneNumber(originalString)).toEqual(
+        originalString
+      );
+    });
+  });
+
+  describe("addSpaceBetweenDotAndUppercase", () => {
+    it("should add ' ' between dot and uppercase", () => {
+      const originalString = "Lorem Ipsum.Lorem Ipsum. Aa@bb.fr.Lorem Ipsum";
+      const expectedString = "Lorem Ipsum. Lorem Ipsum. Aa@bb.fr. Lorem Ipsum";
+      expect(
+        StringUtils.addSpaceBetweenDotAndUppercase(originalString)
+      ).toEqual(expectedString);
+    });
+    it("should return the text without change", () => {
+      const originalString = "Lorem Ipsum. Lorem Ipsum. Aa@bb.fr. Lorem Ipsum";
+      expect(
+        StringUtils.addSpaceBetweenDotAndUppercase(originalString)
+      ).toEqual(originalString);
+    });
+  });
 });

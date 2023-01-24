@@ -60,3 +60,20 @@ export const formatPhoneNumber = (phoneNumber: string): string => {
 
   return phoneNumber;
 };
+
+/**
+ * Rajoute un "." si le texte se termine par ".", "?" ou "!"
+ * @param text
+ */
+export const addEndDotIfNeeded = (text: string): string => {
+  const regexp = new RegExp("[.?!]$");
+  return regexp.exec(text) ? `${text}` : `${text}.`;
+};
+
+/**
+ * Rajoute un " " entre un point et une majuscule
+ * @param text
+ */
+export const addSpaceBetweenDotAndUppercase = (text: string): string => {
+  return text.replace(/([.])([A-Z])/g, "$1 $2").trim();
+};
