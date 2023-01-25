@@ -30,3 +30,4 @@ Pour tester l'application, utilisez Expo Go :
 ### Schéma
 
 ![Schéma](readme-schema.png?raw=true)
+
