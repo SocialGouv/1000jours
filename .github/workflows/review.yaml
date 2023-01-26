@@ -24,7 +24,7 @@ jobs:
         with:
           environment: dev
           dockercontext: ./back/strapi
-          imagePacakge: strapi
+          imagePackage: strapi
           token: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: ./back/strapi/Dockerfile
           
