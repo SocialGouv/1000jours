@@ -1,3 +1,11 @@
+## [1.118.6](https://github.com/SocialGouv/1000jours/compare/v1.118.5...v1.118.6) (2023-01-26)
+
+
+### Bug Fixes
+
+* up build image job ([20c91d1](https://github.com/SocialGouv/1000jours/commit/20c91d1e80f4561f406b113fd631a4fa6d973114))
+* up kontinuous ([6f5e454](https://github.com/SocialGouv/1000jours/commit/6f5e4545cb6a2373c3f59fc895db130ad9478e26))
+
 ## [1.118.5](https://github.com/SocialGouv/1000jours/compare/v1.118.4...v1.118.5) (2023-01-24)
 
 
