@@ -14,22 +14,23 @@ app-strapi:
 jobs:
   runs:
     create-db:
-      use: SocialGouv/kontinuous/plugins/contrib/jobs/create-db
-      with:
-        pgAdminSecretRefName: azure-pg-admin-user
+      use: create-db
     restore:
       ~needs: [create-db]
-      use: SocialGouv/kontinuous/plugins/contrib/jobs/pg-restore
+      use: pg-restore
       checkout: false
       with:
         mountPath: /mnt/restore
         restorePath: "${LATEST}/prod_db.psql.gz"
-        pgAdminSecretRefName: azure-pg-admin-user
       volumeMounts:
         - name: restore
           mountPath: /mnt/restore
           readOnly: true
       volumes:
         - name: restore
-          persistentVolumeClaim:
-            claimName: les1000jours-backup-restore
+          csi:
+            driver: file.csi.azure.com
+            readOnly: true
+            volumeAttributes:
+              secretName: les1000joursprodserver-backup-credentials
+              shareName: les1000jprodsrv2-backup-restore
