@@ -1,3 +1,10 @@
+## [1.118.7](https://github.com/SocialGouv/1000jours/compare/v1.118.6...v1.118.7) (2023-01-26)
+
+
+### Bug Fixes
+
+* typo ([1f77b28](https://github.com/SocialGouv/1000jours/commit/1f77b28a496cd7fadebe2cc97786cfd862d39464))
+
 ## [1.118.6](https://github.com/SocialGouv/1000jours/compare/v1.118.5...v1.118.6) (2023-01-26)
 
 
