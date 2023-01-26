@@ -18,11 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Use autodevops build and register
-        uses: SocialGouv/actions/autodevops-build-register@v1
+        uses: socialgouv/workflows/actions/build-image@v1
         with:
           environment: dev
           dockercontext: ./back/strapi
-          imageName: 1000jours/strapi
+          imagePackage: strapi
           token: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: ./back/strapi/Dockerfile
 
