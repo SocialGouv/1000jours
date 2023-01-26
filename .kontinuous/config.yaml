@@ -3,3 +3,12 @@ projectName: les1000jours
 dependencies:
   fabrique:
     import: SocialGouv/kontinuous/plugins/fabrique
+    dependencies:
+      contrib:
+        preDeploy:
+          importSecrets:
+            options:
+              secrets:
+                les1000joursprodserver-backup-credentials:
+                  env: dev
+                  required: true
