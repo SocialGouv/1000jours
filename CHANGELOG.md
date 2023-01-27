@@ -1,3 +1,10 @@
+## [1.118.8](https://github.com/SocialGouv/1000jours/compare/v1.118.7...v1.118.8) (2023-01-27)
+
+
+### Bug Fixes
+
+* publish develop url ([c2f5ba9](https://github.com/SocialGouv/1000jours/commit/c2f5ba9630db3cc0834ba449993f43234a6bea3b))
+
 ## [1.118.7](https://github.com/SocialGouv/1000jours/compare/v1.118.6...v1.118.7) (2023-01-26)
 
 
