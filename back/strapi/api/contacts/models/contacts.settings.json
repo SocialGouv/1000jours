@@ -15,7 +15,7 @@
       "type": "string"
     },
     "nombre_enfants": {
-      "type": "richtext"
+      "type": "integer"
     },
     "date_naissance_dernier_enfant": {
       "type": "date"
