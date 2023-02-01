@@ -92,6 +92,9 @@ export enum IcomoonIcons {
   toggleOn = "toggle-on",
   toggleOff = "toggle-off",
   video = "video",
+  ecouter = "ecouter",
+  muet = "muet",
+  reglages = "reglages",
 }
 
 const Icomoon: React.FC<Props> = ({ name, size, color, style }) => {

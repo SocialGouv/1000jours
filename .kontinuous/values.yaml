@@ -69,4 +69,3 @@ deactivate:
       deactivate:
         with:
           db: true
-          pgAdminSecretRefName: azure-pg-admin-user

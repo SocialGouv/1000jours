@@ -33,6 +33,7 @@ import {
   SecondaryText,
   ShareButton,
   SharePageType,
+  SpeechText,
   TitleH1,
   UsefulQuestion,
   View,
@@ -57,6 +58,7 @@ import type {
 import {
   ArticleUtils,
   NotificationUtils,
+  SpeechUtils,
   StorageUtils,
   TrackerUtils,
 } from "../../utils";
@@ -92,6 +94,7 @@ const ArticleDetail: FC<Props> = ({
   const [currentArticle, setCurrentArticle] = useState<Article | undefined>();
   const [articleWidth, setArticleWidth] = useState(0);
   const articleTitleRef = React.useRef<DefaultText>(null);
+  const [textToRead, setTextToRead] = useState<string>("");
 
   const [scrollerRef, setScrollerRef] = useState<ScrollView>();
   const [articleHasBeenRead, setArticleHasBeenRead] = useState(false);
@@ -143,6 +146,7 @@ const ArticleDetail: FC<Props> = ({
       const result = (data as { article: Article }).article;
       setArticleInShortArray(result);
       setArticleLinksArray(result);
+      setTextToRead(SpeechUtils.buildArticleTextToRead(result));
       setCurrentArticle(result);
     },
     [setArticleInShortArray, setArticleLinksArray]
@@ -281,6 +285,7 @@ const ArticleDetail: FC<Props> = ({
                       id={currentArticle.id}
                       buttonStyle={styles.shareButton}
                     />
+                    <SpeechText textToRead={textToRead} />
                   </View>
                   {renderReadArticleElement}
                 </View>
@@ -360,11 +365,11 @@ const styles = StyleSheet.create({
   },
   flexEnd: {
     alignItems: "flex-end",
-    alignSelf: "flex-end",
     backgroundColor: "transparent",
-    bottom: Paddings.light,
+    bottom: 0,
+    padding: Paddings.light,
     position: "absolute",
-    right: Paddings.light,
+    right: 0,
   },
   flexStart: {
     alignItems: "flex-start",
@@ -379,7 +384,7 @@ const styles = StyleSheet.create({
     padding: paddingMainContent,
   },
   shareButton: {
-    marginBottom: 0,
+    marginBottom: Margins.smaller,
   },
 });
 
