@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderColor: Colors.primaryBlue,
     borderWidth: 1,
-    marginBottom: Margins.default,
     paddingBottom: Paddings.smaller,
   },
   item: {
