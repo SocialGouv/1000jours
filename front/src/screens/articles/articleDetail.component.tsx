@@ -365,11 +365,11 @@ const styles = StyleSheet.create({
   },
   flexEnd: {
     alignItems: "flex-end",
-    alignSelf: "flex-end",
     backgroundColor: "transparent",
-    bottom: Paddings.light,
+    bottom: 0,
+    padding: Paddings.light,
     position: "absolute",
-    right: Paddings.light,
+    right: 0,
   },
   flexStart: {
     alignItems: "flex-start",
