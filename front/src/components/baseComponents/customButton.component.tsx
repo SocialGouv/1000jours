@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
   rowContainer: {
     backgroundColor: "transparent",
     flexDirection: "row",
+    justifyContent: "center",
   },
 });
 
