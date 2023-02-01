@@ -1,3 +1,28 @@
+# [1.119.0](https://github.com/SocialGouv/1000jours/compare/v1.118.9...v1.119.0) (2023-02-01)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'affichage des boutons (articles) ([#1585](https://github.com/SocialGouv/1000jours/issues/1585)) ([5dbfb50](https://github.com/SocialGouv/1000jours/commit/5dbfb5083dc46e7bfbfb1e45b998e26cfa840ad4))
+* 🐛 Corrige l'alignement des boutons (center) ([#1584](https://github.com/SocialGouv/1000jours/issues/1584)) ([734ec07](https://github.com/SocialGouv/1000jours/commit/734ec076fc621d1d3676e2da3c81224e25a072ff))
+* add develop to review auto ([d579ed7](https://github.com/SocialGouv/1000jours/commit/d579ed7b6f783a1ce056e211cad68dcee1e2df6f))
+* deactivate drop-db ([a14a948](https://github.com/SocialGouv/1000jours/commit/a14a9488b13d2c9bde51516d9a6ad5202b427b8c))
+* modify strapi RAM request from 256Mo to 512Mo ([cbe8992](https://github.com/SocialGouv/1000jours/commit/cbe89929f1f76d30961ccc277d994fe889415aa3))
+* publish develop url ([1d3ea75](https://github.com/SocialGouv/1000jours/commit/1d3ea75af650cc77d010414c7344bb7d7c7428ad))
+* publish develop url ([b83f633](https://github.com/SocialGouv/1000jours/commit/b83f633cc7a2a08d5abfb3de01f8794505cf3bfb))
+* typo ([a73495c](https://github.com/SocialGouv/1000jours/commit/a73495cc0070d82881e2f2aa1ee138e78a1f86e6))
+* up build image job ([e7ad050](https://github.com/SocialGouv/1000jours/commit/e7ad05030d9ecf52884b3b7dc849aaa34b7da166))
+* up kontinuous ([6c37455](https://github.com/SocialGouv/1000jours/commit/6c374555fc444a82154389caf662f9bf75bfdf91))
+* **ressources:** mail to ([#1562](https://github.com/SocialGouv/1000jours/issues/1562)) ([9223d79](https://github.com/SocialGouv/1000jours/commit/9223d79a1487150d3fde794e8770ee31f60bc34d))
+* **ressources:** url ([#1576](https://github.com/SocialGouv/1000jours/issues/1576)) ([ab80ddc](https://github.com/SocialGouv/1000jours/commit/ab80ddc925ac2ee22f4918dfa0276b06e6679813))
+* upgrade kontinuous workflows ([#1565](https://github.com/SocialGouv/1000jours/issues/1565)) ([a4f9a31](https://github.com/SocialGouv/1000jours/commit/a4f9a315bd2d78f9b2336ffda4a7f0aba5252ffb))
+* **ressource:** demande de contact ([#1566](https://github.com/SocialGouv/1000jours/issues/1566)) ([b8c0e6a](https://github.com/SocialGouv/1000jours/commit/b8c0e6a151f1dcdc8f6589039d132e91d0ba992f))
+
+
+### Features
+
+* 🎸 Ajoute la lecture audio d'un article ([#1577](https://github.com/SocialGouv/1000jours/issues/1577)) ([c2edb1a](https://github.com/SocialGouv/1000jours/commit/c2edb1ad1e22923539f4bb7abacae8a8e2ae90e2)), closes [#1124](https://github.com/SocialGouv/1000jours/issues/1124)
+
 ## [1.118.9](https://github.com/SocialGouv/1000jours/compare/v1.118.8...v1.118.9) (2023-01-27)
 
 
