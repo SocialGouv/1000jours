@@ -21,7 +21,7 @@
       "type": "date"
     },
     "departement_code": {
-      "type": "integer"
+      "type": "string"
     },
     "departement_libelle": {
       "type": "string"
