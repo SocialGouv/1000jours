@@ -40,6 +40,11 @@ export default {
       versionCode: 71,
     },
     assetBundlePatterns: ["**/*"],
+    extra: {
+      eas: {
+        projectId: "f6ac4fdc-cbef-49b5-9e33-fca51d77281e",
+      },
+    },
     hooks: {
       postPublish: [
         {
