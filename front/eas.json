@@ -19,6 +19,17 @@
     "production": {
       "ios": {
         "resourceClass": "m1-medium"
+      },
+      "env": {
+        "API_URL": "https://backoffice-les1000jours.fabrique.social.gouv.fr",
+        "CLEAR_STORAGE": "false",
+        "MATOMO_APPLICATION_ID": "43",
+        "MATOMO_URL": "https://matomo.fabrique.social.gouv.fr/",
+        "MATOMO_ENABLED": "true",
+        "SENTRY_DSN": "https://5dbac413000f4a43a073841acebc82f5@sentry.fabrique.social.gouv.fr/55",
+        "SENTRY_ENABLED": "true",
+        "DEEPLINK_DOMAIN": "1000jours.fabrique.social.gouv.fr",
+        "DEEPLINK_PATH": "app-millejours"
       }
     }
   },

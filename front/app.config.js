@@ -37,7 +37,7 @@ export default {
       ],
       playStoreUrl:
         "https://play.google.com/store/apps/details?id=com.fabrique.millejours",
-      versionCode: 71,
+      versionCode: 72,
     },
     assetBundlePatterns: ["**/*"],
     extra: {
@@ -63,7 +63,7 @@ export default {
       appStoreUrl:
         "https://apps.apple.com/us/app/1000-premiers-jours/id1573729958",
       associatedDomains: [`applinks:${process.env.DEEPLINK_DOMAIN}`],
-      buildNumber: "1.1.71",
+      buildNumber: "1.1.72",
       bundleIdentifier: "com.fabrique.millejours",
       infoPlist: {
         NSCalendarsUsageDescription:
@@ -97,7 +97,7 @@ export default {
       fallbackToCacheTimeout: 0,
     },
     userInterfaceStyle: "light",
-    version: "1.1.71",
+    version: "1.1.72",
     web: {
       favicon: "./src/assets/images/favicon.png",
     },
