@@ -11,12 +11,8 @@ import {
   storeStringValue,
 } from "../storage.util";
 
-/* 
-  the business rule is to have the popup triggered the third time
-  since the app opening counter starts at -1 (cf. App.tsx), we have 
-  to trigger it at 1 and not 3 
-*/
-const APP_OPENINGS_TRIGGER = 1;
+// The business rule is to have the popup triggered at the third launch of the app
+const APP_OPENINGS_TRIGGER = 3;
 
 export const manageStorage = async (): Promise<void> => {
   if (process.env.CLEAR_STORAGE === "true") {
