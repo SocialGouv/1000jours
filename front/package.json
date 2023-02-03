@@ -139,6 +139,6 @@
   "resolutions": {
     "@expo/config-plugins": "~5.0.0",
     "@expo/prebuild-config": "~5.0.1",
-    "expo-modules-autolinking": "0.10.1"
+    "expo-modules-autolinking": "0.10.3"
   }
 }

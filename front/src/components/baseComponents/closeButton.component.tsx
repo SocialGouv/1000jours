@@ -34,9 +34,11 @@ const styles = StyleSheet.create({
     padding: Paddings.default,
   },
   solidRounded: {
+    alignItems: "center",
     backgroundColor: Colors.primaryBlueDark,
     borderRadius: 25,
     color: Colors.white,
+    justifyContent: "center",
   },
 });
 
