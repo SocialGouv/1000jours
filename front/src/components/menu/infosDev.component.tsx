@@ -146,6 +146,24 @@ const InfosDev: FC<Props> = ({ setIsVisible }) => {
           );
         })}
       </View>
+
+      {/* ENV */}
+      <H2>{Labels.infosDev.env}</H2>
+      <View>
+        <SecondaryText>API_URL : {process.env.API_URL}</SecondaryText>
+        <SecondaryText>
+          CLEAR_STORAGE : {process.env.CLEAR_STORAGE}
+        </SecondaryText>
+        <SecondaryText>
+          MATOMO_APPLICATION_ID : {process.env.MATOMO_APPLICATION_ID}
+        </SecondaryText>
+        <SecondaryText>
+          MATOMO_ENABLED : {process.env.MATOMO_ENABLED}
+        </SecondaryText>
+        <SecondaryText>
+          SENTRY_ENABLED : {process.env.SENTRY_ENABLED}
+        </SecondaryText>
+      </View>
     </View>
   );
   return <ModalHtmlContent setIsVisible={setIsVisible} content={content} />;
