@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-const APP_VERSION = "1.1.73";
-const APP_VERSION_NUM = 73;
+const APP_VERSION = "1.1.74";
+const APP_VERSION_NUM = 74;
 
 export default {
   expo: {
