@@ -551,6 +551,7 @@ export default {
     title: "Événement",
   },
   infosDev: {
+    env: "Environnement",
     notifications: "Notifications",
     resetStorageData: "Effacer les données",
     resetStorageDataAlertMsg:
