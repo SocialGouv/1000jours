@@ -163,9 +163,6 @@ const InfosDev: FC<Props> = ({ setIsVisible }) => {
         <SecondaryText>
           SENTRY_ENABLED : {process.env.SENTRY_ENABLED}
         </SecondaryText>
-        <SecondaryText>
-          GOOGLE_MAPS_API_KEY : {process.env.GOOGLE_MAPS_API_KEY}
-        </SecondaryText>
       </View>
     </View>
   );
