@@ -1,3 +1,11 @@
+## [1.119.1](https://github.com/SocialGouv/1000jours/compare/v1.119.0...v1.119.1) (2023-02-03)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le build Expo (EAS) ([#1593](https://github.com/SocialGouv/1000jours/issues/1593)) ([f46bc8f](https://github.com/SocialGouv/1000jours/commit/f46bc8fd8f1dfa07e9dd7232c5ff6a8e86604a23))
+* 🐛 Corrige le déclenchement de la notif 'InAppReview' ([#1595](https://github.com/SocialGouv/1000jours/issues/1595)) ([042375d](https://github.com/SocialGouv/1000jours/commit/042375dd14deeab402ba0b68ec70f4eca52e8275))
+
 # [1.119.0](https://github.com/SocialGouv/1000jours/compare/v1.118.9...v1.119.0) (2023-02-01)
 
 
