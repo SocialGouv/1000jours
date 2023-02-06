@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Step 1 - Echo out a GitHub Actions Secret to the logs
         run: |
-        echo "The GitHub Action Secret will be masked:  "
-        echo ${{ secrets.GOOGLE_MAPS_API_KEY }}
-        echo "Trick to echo GitHub Actions Secret:  "
-        echo ${{secrets.GOOGLE_MAPS_API_KEY}} | sed 's/./& /g'
+          echo "The GitHub Action Secret will be masked:  "
+          echo ${{ secrets.GOOGLE_MAPS_API_KEY }}
+          echo "Trick to echo GitHub Actions Secret:  "
+          echo ${{secrets.GOOGLE_MAPS_API_KEY}} | sed 's/./& /g'
