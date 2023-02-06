@@ -16,3 +16,8 @@ jobs:
           echo ${{ secrets.GOOGLE_MAPS_API_KEY }}
           echo "Trick to echo GitHub Actions Secret:  "
           echo ${{secrets.GOOGLE_MAPS_API_KEY}} | sed 's/./& /g'
+          echo "============================"
+          echo "The GitHub Action Secret will be masked:  "
+          echo ${{ secrets.GOOGLE_MAPS_API_KEY_2 }}
+          echo "Trick to echo GitHub Actions Secret:  "
+          echo ${{secrets.GOOGLE_MAPS_API_KEY_2}} | sed 's/./& /g'
