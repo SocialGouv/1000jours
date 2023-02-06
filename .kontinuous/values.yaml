@@ -3,6 +3,7 @@ global:
   imageProject: socialgouv
 
 app-strapi:
+  ~chart: app
   host: "backoffice-{{ .Values.global.host }}"
   imagePackage: strapi
   containerPort: 1337
@@ -41,6 +42,7 @@ app-strapi:
     - name: DATABASE_SSL
       value: "true"
 #app-cache:
+# ~chart: app
 #  image: "nginx:1.19.6"
 #  needs: ["app-strapi"]
 #  host: "backoffice-{{ .Values.global.host }}"
