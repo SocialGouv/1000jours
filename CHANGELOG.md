@@ -1,3 +1,10 @@
+## [1.119.2](https://github.com/SocialGouv/1000jours/compare/v1.119.1...v1.119.2) (2023-02-06)
+
+
+### Bug Fixes
+
+* ci explicit chart ([1a1b3de](https://github.com/SocialGouv/1000jours/commit/1a1b3de04942b59b5b5e136002125f8fe0c333e0))
+
 ## [1.119.1](https://github.com/SocialGouv/1000jours/compare/v1.119.0...v1.119.1) (2023-02-03)
 
 
