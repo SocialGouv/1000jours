@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_domaine_tnd_domaine_tnds",
+  "info": {
+    "name": "domaine",
+    "icon": "question",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "nom": {
+      "type": "string",
+      "required": true
+    },
+    "question": {
+      "type": "component",
+      "repeatable": true,
+      "component": "questionnaire-tnd.question"
+    },
+    "ordre": {
+      "type": "integer",
+      "required": true,
+      "unique": false
+    }
+  }
+}

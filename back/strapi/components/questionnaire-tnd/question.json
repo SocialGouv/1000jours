@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_questionnaire_tnd_questions",
+  "info": {
+    "name": "question",
+    "icon": "question",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "ordre": {
+      "type": "integer"
+    },
+    "nom": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "questionnaire_tnd",
+  "info": {
+    "name": "Questionnaire TND",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "domaine": {
+      "type": "component",
+      "repeatable": true,
+      "component": "questionnaire-tnd.domaine-tnd"
+    },
+    "nb_non": {
+      "type": "integer"
+    },
+    "nb_domaine": {
+      "type": "integer"
+    },
+    "questionnaire_tnd_age": {
+      "model": "questionnaire-tnd-age"
+    }
+  }
+}
