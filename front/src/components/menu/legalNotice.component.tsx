@@ -1,21 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
 import type { FC } from "react";
 import * as React from "react";
-import { View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
-import ModalHtmlContent from "../baseComponents/modalHtmlContent.component";
+import { Styles } from "../../styles";
 import A from "../html/a.component";
 import H1 from "../html/h1.component";
 import H2 from "../html/h2.component";
 import P from "../html/p.component";
 
-interface Props {
-  setIsVisible: (showMenu: boolean) => void;
-}
-
-const LegalNotice: FC<Props> = ({ setIsVisible }) => {
-  const content = (
-    <View>
+const LegalNotice: FC = () => {
+  return (
+    <ScrollView
+      style={Styles.modalFullScreen.mainContainer}
+      contentContainerStyle={Styles.modalFullScreen.scrollviewContent}
+    >
       <H1>Mentions légales</H1>
 
       <H2>Éditeur</H2>
@@ -68,9 +67,8 @@ const LegalNotice: FC<Props> = ({ setIsVisible }) => {
         associés à la plateforme ne seront à l’origine d’envoi de courriels pour
         demander la saisie d’informations personnelles.
       </P>
-    </View>
+    </ScrollView>
   );
-  return <ModalHtmlContent setIsVisible={setIsVisible} content={content} />;
 };
 
 export default LegalNotice;

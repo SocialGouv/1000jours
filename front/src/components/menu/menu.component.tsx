@@ -28,10 +28,6 @@ import {
 } from "../../utils";
 import { Icomoon, IcomoonIcons, View } from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
-import Accessibility from "./accessibility.component";
-import ConditionsOfUse from "./conditionsOfUse.component";
-import InfosDev from "./infosDev.component";
-import LegalNotice from "./legalNotice.component";
 
 interface Props {
   showMenu: boolean;
@@ -43,10 +39,6 @@ const NB_PRESS_TO_UNLOCK_ACTION = 5;
 
 const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
   const [showInformation, setShowInformation] = useState(false);
-  const [showLegalNotice, setShowLegalNotice] = useState(false);
-  const [showConditionsOfUse, setShowConditionsOfUse] = useState(false);
-  const [showAccessibility, setShowAccessibility] = useState(false);
-  const [showInfosDev, setShowInfosDev] = useState(false);
   const [counterPressVersion, setCounterPressVersion] = useState(0);
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
 
@@ -126,19 +118,19 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
         subItems: [
           {
             onPress: () => {
-              setShowLegalNotice(true);
+              void RootNavigation.navigate("legalNotice");
             },
             title: Labels.menu.legalNotice,
           },
           {
             onPress: () => {
-              setShowConditionsOfUse(true);
+              void RootNavigation.navigate("conditionsOfUse");
             },
             title: Labels.menu.conditionsOfUse,
           },
           {
             onPress: () => {
-              setShowAccessibility(true);
+              void RootNavigation.navigate("accessibility");
             },
             title: Labels.menu.accessibility,
           },
@@ -174,7 +166,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       setShowMenu(false);
       // Sur iOS, sans le "setTimeout" la modal n'apparaît pas, il faut attendre la fermeture du menu.
       setTimeout(() => {
-        setShowInfosDev(true);
+        void RootNavigation.navigate("infosDev");
       }, PlatformConstants.TIMEOUT_ON_DISMISS_MODAL);
     } else {
       setCounterPressVersion(counterPressVersion + 1);
@@ -333,14 +325,6 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
         enabledContentTapInteraction={false}
       />
     </>
-  ) : showLegalNotice ? (
-    <LegalNotice setIsVisible={setShowLegalNotice} />
-  ) : showConditionsOfUse ? (
-    <ConditionsOfUse setIsVisible={setShowConditionsOfUse} />
-  ) : showAccessibility ? (
-    <Accessibility setIsVisible={setShowAccessibility} />
-  ) : showInfosDev ? (
-    <InfosDev setIsVisible={setShowInfosDev} />
   ) : null;
 };
 

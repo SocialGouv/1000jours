@@ -1,4 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
+import type { StackNavigationOptions } from "@react-navigation/stack";
 import { createStackNavigator } from "@react-navigation/stack";
 import type { FC } from "react";
 import { useCallback, useState } from "react";
@@ -15,9 +16,16 @@ import {
   Text,
   View,
 } from "../components/baseComponents";
+import Accessibility from "../components/menu/accessibility.component";
 import NotificationHandler from "../components/notification/notificationHandler.component";
 import { Labels } from "../constants";
-import { LoadingScreen, Moodboard, Onboarding, Profile } from "../screens";
+import {
+  LoadingScreen,
+  Moodboard,
+  NotificationsCenter,
+  Onboarding,
+  Profile,
+} from "../screens";
 import { Colors, Paddings, Sizes } from "../styles";
 import type { RootStackParamList } from "../types";
 import { getAppTheme } from "../utils";
@@ -59,58 +67,76 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => {
   const onHeaderRightPressed = useCallback(() => {
     onPressMenu(true);
   }, [onPressMenu]);
+
+  const rootScreenOptions: StackNavigationOptions = {
+    headerLeft: () => (
+      <View style={[styles.headerLeft]}>
+        <BaseAssets.LogoMinistere
+          height={Sizes.xxxl}
+          style={styles.logoMinistere}
+        />
+      </View>
+    ),
+    headerRight: () => (
+      <TouchableOpacity
+        style={[styles.headerRight]}
+        onPress={onHeaderRightPressed}
+        accessibilityRole="button"
+        accessibilityLabel={Labels.menu.title}
+      >
+        <Icomoon
+          name={IcomoonIcons.menu}
+          size={Sizes.lg}
+          color={Colors.primaryBlue}
+          style={styles.menuIcon}
+        />
+        <Text style={[styles.headerRightButtonText]} allowFontScaling={false}>
+          {Labels.menu.title}
+        </Text>
+      </TouchableOpacity>
+    ),
+    headerShown: true,
+    headerTitle: () => (
+      <BaseAssets.AppLogo height={Sizes.xxxl} width={Sizes.xxxl} />
+    ),
+    headerTitleAlign: "center",
+  };
+
+  const modalScreenOptions: StackNavigationOptions = {
+    headerBackAccessibilityLabel: Labels.buttons.back,
+    headerBackTitle: Labels.buttons.back,
+    headerBackTitleVisible: true,
+    headerTintColor: Colors.secondaryGreen,
+    headerTitle: "",
+    presentation: "modal",
+  };
+
   return (
-    <Stack.Navigator
-      initialRouteName="loading"
-      screenOptions={{ headerShown: false }}
-    >
-      <Stack.Screen name="loading" component={LoadingScreen} />
-      <Stack.Screen name="onboarding" component={Onboarding} />
-      <Stack.Screen name="profile" component={Profile} />
-      <Stack.Screen name="moodboard" component={Moodboard} />
-      <Stack.Screen name="legalNotice" component={LegalNotice} />
-      <Stack.Screen name="conditionsOfUse" component={ConditionsOfUse} />
-      <Stack.Screen name="infosDev" component={InfosDev} />
-      <Stack.Screen
-        name="root"
-        component={BottomTabNavigator}
-        options={{
-          headerLeft: () => (
-            <View style={[styles.headerLeft]}>
-              <BaseAssets.LogoMinistere
-                height={Sizes.xxxl}
-                style={styles.logoMinistere}
-              />
-            </View>
-          ),
-          headerRight: () => (
-            <TouchableOpacity
-              style={[styles.headerRight]}
-              onPress={onHeaderRightPressed}
-              accessibilityRole="button"
-              accessibilityLabel={Labels.menu.title}
-            >
-              <Icomoon
-                name={IcomoonIcons.menu}
-                size={Sizes.lg}
-                color={Colors.primaryBlue}
-                style={styles.menuIcon}
-              />
-              <Text
-                style={[styles.headerRightButtonText]}
-                allowFontScaling={false}
-              >
-                {Labels.menu.title}
-              </Text>
-            </TouchableOpacity>
-          ),
-          headerShown: true,
-          headerTitle: () => (
-            <BaseAssets.AppLogo height={Sizes.xxxl} width={Sizes.xxxl} />
-          ),
-          headerTitleAlign: "center",
-        }}
-      />
+    <Stack.Navigator initialRouteName="loading">
+      {/* SCREENS */}
+      <Stack.Group screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="loading" component={LoadingScreen} />
+        <Stack.Screen name="onboarding" component={Onboarding} />
+        <Stack.Screen
+          name="root"
+          component={BottomTabNavigator}
+          options={rootScreenOptions}
+        />
+      </Stack.Group>
+
+      {/* MODALS */}
+      <Stack.Group screenOptions={modalScreenOptions}>
+        <Stack.Screen name="profile" component={Profile} />
+        <Stack.Screen name="moodboard" component={Moodboard} />
+        <Stack.Screen name="legalNotice" component={LegalNotice} />
+        <Stack.Screen name="conditionsOfUse" component={ConditionsOfUse} />
+        <Stack.Screen name="accessibility" component={Accessibility} />
+        <Stack.Screen name="infosDev" component={InfosDev} />
+        <Stack.Screen
+          name="notificationsCenter"
+          component={NotificationsCenter}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };

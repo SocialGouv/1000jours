@@ -32,9 +32,12 @@ const MoodItemsInCarousel: React.FC<Props> = ({
 }) => {
   const ref = useRef(null);
 
-  const snapToItem = useCallback((index: number) => {
-    setActiveIndex(index);
-  }, []);
+  const snapToItem = useCallback(
+    (index: number) => {
+      setActiveIndex(index);
+    },
+    [setActiveIndex]
+  );
 
   const renderItem = useCallback(({ item }: RenderItemProps) => {
     return (

@@ -1,4 +1,3 @@
-import type { StackNavigationProp } from "@react-navigation/stack";
 import type { FC } from "react";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
@@ -9,32 +8,20 @@ import {
   NotificationPermissionInSettingsModal,
   NotificationToggle,
 } from "../../components";
-import { BackButton, TitleH1 } from "../../components/baseComponents";
-import TrackerHandler from "../../components/tracker/trackerHandler.component";
+import { TitleH1 } from "../../components/baseComponents";
 import { Labels } from "../../constants";
 import { useEvents } from "../../hooks";
 import { Colors, Paddings } from "../../styles";
-import type { RootStackParamList } from "../../types";
-import { NotificationUtils, TrackerUtils } from "../../utils";
+import { NotificationUtils } from "../../utils";
 import { NotificationType } from "../../utils/notifications/notification.util";
 
-interface Props {
-  navigation: StackNavigationProp<RootStackParamList>;
-}
-
-const NotificationsCenter: FC<Props> = ({ navigation }) => {
-  const [trackerAction, setTrackerAction] = useState<string>("");
+const NotificationsCenter: FC = () => {
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const hookEvents = useEvents();
 
   useEffect(() => {
     void checkNotificationInSettings();
   }, []);
-
-  const goBack = useCallback(() => {
-    setTrackerAction(Labels.buttons.cancel);
-    navigation.goBack();
-  }, [navigation]);
 
   const hideSettingsModal = useCallback(() => {
     setShowSettingsModal(false);
@@ -48,15 +35,7 @@ const NotificationsCenter: FC<Props> = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.mainContainer}>
-      <TrackerHandler
-        screenName={TrackerUtils.TrackingEvent.NOTIFICATIONS_CENTER}
-        actionName={trackerAction}
-      />
-
       <View style={styles.header}>
-        <View style={styles.flexStart}>
-          <BackButton action={goBack} />
-        </View>
         <TitleH1
           animated={false}
           title={Labels.notificationsCenter.title}

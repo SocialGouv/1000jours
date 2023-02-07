@@ -1,23 +1,21 @@
 /* eslint-disable react/no-unescaped-entities */
 import type { FC } from "react";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
-import { Paddings } from "../../styles";
-import ModalHtmlContent from "../baseComponents/modalHtmlContent.component";
+import { Paddings, Styles } from "../../styles";
 import A from "../html/a.component";
 import H1 from "../html/h1.component";
 import H2 from "../html/h2.component";
 import Li from "../html/li.component";
 import P from "../html/p.component";
 
-interface Props {
-  setIsVisible: (showMenu: boolean) => void;
-}
-
-const Accessibility: FC<Props> = ({ setIsVisible }) => {
-  const content = (
-    <View>
+const Accessibility: FC = () => {
+  return (
+    <ScrollView
+      style={Styles.modalFullScreen.mainContainer}
+      contentContainerStyle={Styles.modalFullScreen.scrollviewContent}
+    >
       <H1>Accessibilité</H1>
 
       <H2>Déclaration d’accessibilité</H2>
@@ -97,9 +95,8 @@ const Accessibility: FC<Props> = ({ setIsVisible }) => {
       <A url="http://references.modernisation.gouv.fr/accessibilite-numerique">
         Référentiel général d'amélioration de l'accessibilité
       </A>
-    </View>
+    </ScrollView>
   );
-  return <ModalHtmlContent setIsVisible={setIsVisible} content={content} />;
 };
 
 const styles = StyleSheet.create({

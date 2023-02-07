@@ -1,11 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 import type { FC } from "react";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
-import { FontWeight, Margins, Paddings } from "../../styles";
+import { FontWeight, Margins, Paddings, Styles } from "../../styles";
 import { SecondaryText } from "../baseComponents";
-import ModalHtmlContent from "../baseComponents/modalHtmlContent.component";
 import A from "../html/a.component";
 import H1 from "../html/h1.component";
 import H2 from "../html/h2.component";
@@ -14,13 +13,12 @@ import H4 from "../html/h4.component";
 import Li from "../html/li.component";
 import P from "../html/p.component";
 
-interface Props {
-  setIsVisible: (showMenu: boolean) => void;
-}
-
-const ConditionsOfUse: FC<Props> = ({ setIsVisible }) => {
-  const content = (
-    <View>
+const ConditionsOfUse: FC = () => {
+  return (
+    <ScrollView
+      style={Styles.modalFullScreen.mainContainer}
+      contentContainerStyle={Styles.modalFullScreen.scrollviewContent}
+    >
       <H1>Politique de confidentialité de 1000 premiers jours</H1>
 
       <H2>Traitement des données à caractère personnel</H2>
@@ -407,9 +405,8 @@ const ConditionsOfUse: FC<Props> = ({ setIsVisible }) => {
           Cookies : les outils pour les maîtriser
         </A>
       </View>
-    </View>
+    </ScrollView>
   );
-  return <ModalHtmlContent setIsVisible={setIsVisible} content={content} />;
 };
 
 const styles = StyleSheet.create({
