@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
-import type { StackNavigationProp } from "@react-navigation/stack";
 import { format } from "date-fns";
 import type { FC } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -14,36 +13,25 @@ import {
   MoodItemsInCarousel,
   MoodsCalendar,
 } from "../../components";
-import {
-  BackButton,
-  CustomButton,
-  TitleH1,
-} from "../../components/baseComponents";
+import { CustomButton, TitleH1 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Formats, Labels, StorageKeysConstants } from "../../constants";
 import { useAccessibilityReader } from "../../hooks";
 import { Colors, Paddings } from "../../styles";
 import type { MoodStorageItem } from "../../type";
-import type { RootStackParamList } from "../../types";
 import { MoodboardUtils, TrackerUtils } from "../../utils";
 import { getObjectValue } from "../../utils/storage.util";
 
-type MoodsCalendarRef = React.ElementRef<typeof MoodsCalendar>;
-
 const firstItemIndexToShow = 1;
 
-interface Props {
-  navigation: StackNavigationProp<RootStackParamList>;
-}
-
-const Moodboard: FC<Props> = ({ navigation }) => {
+const Moodboard: FC = () => {
   const [activeIndex, setActiveIndex] = useState<number>(firstItemIndexToShow);
   const [trackerAction, setTrackerAction] = useState<string>("");
   const [showCarouselChoice, setShowCarouselChoice] = useState(true);
+  const [showMoodsCalendar, setShowMoodsCalendar] = useState(true);
   const [dismissAnimation, setDismissAnimation] = useState<unknown>(null);
   const isAccessibilityMode = useAccessibilityReader();
   const elementRef = useRef<Animatable.View & View>(null);
-  const moodsCalendarRef = useRef<MoodsCalendarRef>(null);
 
   const onViewLayout = useCallback((event: LayoutChangeEvent) => {
     const { layout } = event.nativeEvent;
@@ -62,6 +50,11 @@ const Moodboard: FC<Props> = ({ navigation }) => {
     }
   }, [dismissAnimation]);
 
+  const refreshMoodsCalendar = useCallback(() => {
+    setShowMoodsCalendar(false);
+    setShowMoodsCalendar(true);
+  }, []);
+
   const checkTodayMood = useCallback(async () => {
     const moods: MoodStorageItem[] =
       (await getObjectValue(StorageKeysConstants.moodsByDate)) ?? [];
@@ -74,19 +67,14 @@ const Moodboard: FC<Props> = ({ navigation }) => {
     void checkTodayMood();
   }, [checkTodayMood]);
 
-  const goBack = useCallback(() => {
-    setTrackerAction(Labels.buttons.cancel);
-    navigation.goBack();
-  }, [navigation]);
-
   const validate = useCallback(async () => {
     await MoodboardUtils.saveMood(
       MoodboardUtils.MOODBOARD_ITEMS[activeIndex].title
     );
     setTrackerAction(MoodboardUtils.MOODBOARD_ITEMS[activeIndex].title);
     hideCarouselChoice();
-    moodsCalendarRef.current?.refresh();
-  }, [activeIndex, hideCarouselChoice]);
+    refreshMoodsCalendar();
+  }, [activeIndex, hideCarouselChoice, refreshMoodsCalendar]);
 
   return (
     <ScrollView style={styles.mainContainer}>
@@ -95,9 +83,6 @@ const Moodboard: FC<Props> = ({ navigation }) => {
         actionName={trackerAction}
       />
       <View style={styles.header}>
-        <View style={styles.flexStart}>
-          <BackButton action={goBack} />
-        </View>
         <TitleH1
           animated={false}
           title={Labels.moodboard.title}
@@ -133,7 +118,7 @@ const Moodboard: FC<Props> = ({ navigation }) => {
         </Animatable.View>
       ) : null}
 
-      <MoodsCalendar ref={moodsCalendarRef} />
+      {showMoodsCalendar ? <MoodsCalendar /> : null}
     </ScrollView>
   );
 };
@@ -150,7 +135,6 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: Paddings.default,
-    paddingTop: Paddings.largest,
   },
   mainContainer: {
     backgroundColor: Colors.white,

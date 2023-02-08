@@ -27,13 +27,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   dot: {
-    color: Colors.primaryBlue,
-    fontSize: Sizes.xxxxs,
+    color: Colors.black,
+    flex: 1,
+    fontSize: Sizes.xxxxxs,
     lineHeight: Sizes.lg,
-    marginRight: Margins.default,
+    marginRight: Margins.smallest,
     textAlignVertical: "top",
   },
   li: {
+    flex: 20,
     paddingVertical: Paddings.smallest,
   },
 });
