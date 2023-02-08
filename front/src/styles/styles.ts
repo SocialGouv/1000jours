@@ -7,7 +7,7 @@ import { Paddings } from "./spacings";
 const Styles = {
   modalFullScreen: {
     mainContainer: {
-      backgroundColor: "white",
+      backgroundColor: Colors.white,
     },
     scrollviewContent: {
       padding: Paddings.default,

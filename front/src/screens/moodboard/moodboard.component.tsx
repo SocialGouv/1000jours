@@ -74,7 +74,6 @@ const Moodboard: FC = () => {
     setTrackerAction(MoodboardUtils.MOODBOARD_ITEMS[activeIndex].title);
     hideCarouselChoice();
     refreshMoodsCalendar();
-    // moodsCalendarRef.current?.refresh();
   }, [activeIndex, hideCarouselChoice, refreshMoodsCalendar]);
 
   return (
