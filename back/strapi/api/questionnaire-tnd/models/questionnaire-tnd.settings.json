@@ -11,19 +11,22 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "domaine": {
+    "domaines": {
       "type": "component",
       "repeatable": true,
       "component": "questionnaire-tnd.domaine-tnd"
     },
-    "nb_non": {
+    "alerte_nb_non": {
       "type": "integer"
     },
-    "nb_domaine": {
+    "alerte_nb_domaine": {
       "type": "integer"
     },
-    "questionnaire_tnd_age": {
-      "model": "questionnaire-tnd-age"
+    "nom": {
+      "type": "string"
+    },
+    "ordre": {
+      "type": "integer"
     }
   }
 }

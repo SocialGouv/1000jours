@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/reponses-tnds",
+      "handler": "reponses-tnd.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/reponses-tnds/count",
+      "handler": "reponses-tnd.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/reponses-tnds/:id",
+      "handler": "reponses-tnd.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/reponses-tnds",
+      "handler": "reponses-tnd.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/reponses-tnds/:id",
+      "handler": "reponses-tnd.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/reponses-tnds/:id",
+      "handler": "reponses-tnd.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

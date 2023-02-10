@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "questionnaire_tnd_ages",
+  "collectionName": "reponses_tnds",
   "info": {
-    "name": "Questionnaire TND Age"
+    "name": "Réponses TND"
   },
   "options": {
     "increments": true,
@@ -10,11 +10,17 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "nom": {
+    "test": {
       "type": "string"
     },
-    "ordre": {
+    "non": {
       "type": "integer"
+    },
+    "oui": {
+      "type": "integer"
+    },
+    "reponses": {
+      "type": "json"
     }
   }
 }

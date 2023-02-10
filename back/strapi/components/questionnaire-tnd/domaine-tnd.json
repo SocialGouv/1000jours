@@ -11,7 +11,7 @@
       "type": "string",
       "required": true
     },
-    "question": {
+    "questions": {
       "type": "component",
       "repeatable": true,
       "component": "questionnaire-tnd.question"
