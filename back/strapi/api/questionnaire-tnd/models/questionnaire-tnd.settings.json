@@ -3,7 +3,7 @@
   "collectionName": "questionnaire_tnd",
   "info": {
     "name": "Questionnaire TND",
-    "description": ""
+    "description": "Repérage des Troubles du Neuro-Développement"
   },
   "options": {
     "increments": true,

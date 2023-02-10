@@ -2,8 +2,8 @@
   "collectionName": "components_domaine_tnd_domaine_tnds",
   "info": {
     "name": "domaine",
-    "icon": "question",
-    "description": ""
+    "icon": "tag",
+    "description": "Domaine des questions concernant le repérage des Troubles du Neuro-Développement"
   },
   "options": {},
   "attributes": {
