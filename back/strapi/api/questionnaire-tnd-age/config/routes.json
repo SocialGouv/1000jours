@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/questionnaire-tnd-ages",
+      "handler": "questionnaire-tnd-age.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/questionnaire-tnd-ages/count",
+      "handler": "questionnaire-tnd-age.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/questionnaire-tnd-ages/:id",
+      "handler": "questionnaire-tnd-age.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/questionnaire-tnd-ages",
+      "handler": "questionnaire-tnd-age.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/questionnaire-tnd-ages/:id",
+      "handler": "questionnaire-tnd-age.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/questionnaire-tnd-ages/:id",
+      "handler": "questionnaire-tnd-age.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
