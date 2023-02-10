@@ -92,7 +92,7 @@ const Accessibility: FC = () => {
         Pour en savoir plus sur la politique d’accessibilité numérique de l’État
         :
       </P>
-      <A url="http://references.modernisation.gouv.fr/accessibilite-numerique">
+      <A url="https://references.modernisation.gouv.fr/accessibilite-numerique">
         Référentiel général d'amélioration de l'accessibilité
       </A>
     </ScrollView>
