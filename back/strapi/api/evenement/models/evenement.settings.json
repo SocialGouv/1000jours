@@ -39,8 +39,8 @@
       "via": "evenements"
     },
     "articles": {
-      "collection": "article",
       "via": "evenements",
+      "collection": "article",
       "dominant": true
     },
     "documents": {
@@ -52,6 +52,10 @@
       "collection": "cartographie-types",
       "via": "evenements",
       "dominant": true
+    },
+    "handicap": {
+      "default": false,
+      "type": "boolean"
     },
     "videos": {
       "via": "evenements",

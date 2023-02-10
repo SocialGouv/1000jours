@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reponses_tnds",
+  "info": {
+    "name": "Réponses TND",
+    "description": "Réponses du questionnaire des Troubles du Neuro-Développement"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "test": {
+      "type": "string"
+    },
+    "non": {
+      "type": "integer"
+    },
+    "oui": {
+      "type": "integer"
+    },
+    "reponses": {
+      "type": "json"
+    }
+  }
+}

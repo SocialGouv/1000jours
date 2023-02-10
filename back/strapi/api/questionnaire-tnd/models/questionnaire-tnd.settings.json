@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "questionnaire_tnd",
+  "info": {
+    "name": "Questionnaire TND",
+    "description": "Repérage des Troubles du Neuro-Développement"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "domaines": {
+      "type": "component",
+      "repeatable": true,
+      "component": "questionnaire-tnd.domaine-tnd"
+    },
+    "alerte_nb_non": {
+      "type": "integer"
+    },
+    "alerte_nb_domaine": {
+      "type": "integer"
+    },
+    "nom": {
+      "type": "string"
+    },
+    "ordre": {
+      "type": "integer"
+    }
+  }
+}

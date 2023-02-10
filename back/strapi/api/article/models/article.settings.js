@@ -7,82 +7,103 @@ module.exports = {
   attributes: {
     enbref_1_icone: enBrefIconeType,
     enbref_1_texte: {
-      type: "text",
       default: "",
+      type: "text",
     },
     enbref_2_icone: enBrefIconeType,
     enbref_2_texte: {
-      type: "text",
       default: "",
+      type: "text",
     },
     enbref_3_icone: enBrefIconeType,
     enbref_3_texte: {
-      type: "text",
       default: "",
+      type: "text",
     },
     etapes: {
       collection: "etape",
       dominant: true,
       via: "articles",
     },
+    le_saviez_vous: {
+      default: "",
+      type: "text",
+    },
+    lien_1_titre: {
+      default: "",
+      type: "string",
+    },
+    lien_1_url: {
+      default: "",
+      type: "string",
+    },
+    lien_2_titre: {
+      default: "",
+      type: "string",
+    },
+    lien_2_url: {
+      default: "",
+      type: "string",
+    },
+    lien_3_titre: {
+      default: "",
+      type: "string",
+    },
+    lien_3_url: {
+      default: "",
+      type: "string",
+    },
+    lien_4_titre: {
+      default: "",
+      type: "string",
+    },
+    lien_4_url: {
+      default: "",
+      type: "string",
+    },
+    notifications: {
+      default: false,
+      type: "boolean",
+    },
+    evenements: {
+      collection: "evenement",
+      via: "articles",
+    },
     ordre: {
       type: "integer",
     },
-    le_saviez_vous: {
-      type: "text",
-      default: "",
+    cartographie_pois_types: {
+      collection: "cartographie-types",
+      dominant: true,
+      via: "articles",
     },
-    lien_1_titre: {
-      type: "string",
-      default: "",
-    },
-    lien_1_url: {
-      type: "string",
-      default: "",
-    },
-    lien_2_titre: {
-      type: "string",
-      default: "",
-    },
-    lien_2_url: {
-      type: "string",
-      default: "",
-    },
-    lien_3_titre: {
-      type: "string",
-      default: "",
-    },
-    lien_3_url: {
-      type: "string",
-      default: "",
-    },
-    lien_4_titre: {
-      type: "string",
-      default: "",
-    },
-    lien_4_url: {
-      type: "string",
-      default: "",
+    handicap: {
+      default: false,
+      type: "boolean",
     },
     resume: {
       required: true,
       type: "text",
     },
-    texte_1: {
-      type: "richtext",
+    mots_cles: {
       default: "",
+      type: "text",
+    },
+    texte_1: {
+      default: "",
+      type: "richtext",
     },
     texte_1_titre: {
-      type: "string",
       default: "",
+      type: "string",
     },
     texte_2: {
-      type: "richtext",
       default: "",
+      type: "richtext",
     },
     texte_2_titre: {
-      type: "string",
       default: "",
+      type: "string",
     },
     thematiques: {
       collection: "thematique",
@@ -99,23 +120,6 @@ module.exports = {
       plugin: "upload",
       required: true,
       via: "related",
-    },
-    notifications: {
-      type: "boolean",
-      default: false,
-    },
-    evenements: {
-      via: "articles",
-      collection: "evenement",
-    },
-    cartographie_pois_types: {
-      collection: "cartographie-types",
-      via: "articles",
-      dominant: true,
-    },
-    mots_cles: {
-      type: "text",
-      default: "",
     },
   },
   collectionName: "articles",
