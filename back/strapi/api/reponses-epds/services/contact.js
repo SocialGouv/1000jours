@@ -67,6 +67,11 @@ const contact = async ({
   if (!process.env["MAIL_SEND_TO"])
     throw new Error("Le service mail n'est pas configuré");
 
+  /**
+   * SOON : prévoir de rajouter un champs "source_epds"
+   * pour éviter de l'inclure dans le champs "prenom"
+   */
+
   const info = {
     email,
     telephone,
@@ -86,6 +91,27 @@ const contact = async ({
       emailTemplate(info),
       info
     );
+
+    try {
+      const words = info.prenom.split("[");
+      const source = words[1].slice(0, -1);
+
+      const newContact = {
+        prenom: info.prenom,
+        nombre_enfants: info.nombre_enfants,
+        date_naissance_dernier_enfant: info.naissance_dernier_enfant,
+        departement_code: undefined,
+        departement_libelle: undefined,
+        date_prise_contact: new Date(),
+        provenance: source,
+        mode: info.moyen,
+        personne_accompagnee: "nouveau",
+        commentaire: undefined,
+      };
+      strapi.query("contacts").create(newContact);
+    } catch (e) {
+      throw new Error(`Error : ${e.message}`);
+    }
 
     const isContactSuccess = res && /Ok/.test(res.response);
     if (isContactSuccess && info.email) {
