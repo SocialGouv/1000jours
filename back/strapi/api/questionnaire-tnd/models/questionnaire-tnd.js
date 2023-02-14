@@ -4,7 +4,8 @@ const QuestionnaireTnd = require("../services");
 
 module.exports = {
   lifecycles: {
-    afterFind: (videos) => videos.map(QuestionnaireTnd.format),
+    afterFind: (questionnaireTnds) =>
+      questionnaireTnds.map(QuestionnaireTnd.format),
     afterFindOne: QuestionnaireTnd.format,
   },
 };
