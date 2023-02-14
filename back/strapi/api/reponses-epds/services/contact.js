@@ -77,19 +77,29 @@ const contact = async ({
     horaires,
   };
 
-  const isContactSuccess = res && /Ok/.test(res.response);
-  if (isContactSuccess && info.email) {
-    return contactConfirmed({
-      email: info.email,
-      prenom: info.prenom.split(" [")[0],
-      typeContact: moyen,
-    });
+  try {
+    const res = await strapi.plugins.email.services.email.sendTemplatedEmail(
+      {
+        from: process.env["MAIL_SEND_FROM"],
+        to: process.env["MAIL_SEND_TO"],
+      },
+      emailTemplate(info),
+      info
+    );
+
+    const isContactSuccess = res && /Ok/.test(res.response);
+    if (isContactSuccess && info.email) {
+      return contactConfirmed({
+        email: info.email,
+        prenom: info.prenom.split(" [")[0],
+        typeContact: moyen,
+      });
+    }
+    return isContactSuccess;
+  } catch (e) {
+    console.error(e);
+    throw new Error("Erreur de connexion au serveur mail");
   }
-  return isContactSuccess;
-} catch (e) {
-  console.error(e);
-  throw new Error("Erreur de connexion au serveur mail");
-}
 };
 
 module.exports = {
