@@ -5,12 +5,12 @@ import { useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
 import { Image } from "react-native-elements";
 
-import portraitElise from "../../assets/images/epds/portrait_elise.jpg";
-import { Labels } from "../../constants";
-import { FontWeight, Margins, Paddings, Sizes } from "../../styles";
-import { TrackerUtils } from "../../utils";
-import { CustomButton, SecondaryText, View } from "../baseComponents";
-import TrackerHandler from "../tracker/trackerHandler.component";
+import portraitElise from "../../../assets/images/epds/portrait_elise.jpg";
+import { Labels } from "../../../constants";
+import { FontWeight, Margins, Paddings, Sizes } from "../../../styles";
+import { TrackerUtils } from "../../../utils";
+import { CustomButton, SecondaryText, View } from "../../baseComponents";
+import TrackerHandler from "../../tracker/trackerHandler.component";
 import HowToBeContacted from "./beContacted/howToBeContacted.component";
 
 interface EpdsResultContactMamanBluesProps {
@@ -49,6 +49,8 @@ const EpdsResultContactMamanBlues: React.FC<
         <Image
           source={portraitElise}
           containerStyle={[styles.articleImage, pictureBorderColor]}
+          height={Sizes.step}
+          width={Sizes.step}
         />
         <SecondaryText style={styles.textStyle}>
           {Labels.epdsSurveyLight.textesExplication.contactParElise}

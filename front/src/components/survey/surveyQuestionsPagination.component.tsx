@@ -2,18 +2,19 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { LinearProgress } from "react-native-elements";
 
-import { CommonText } from "../../components/baseComponents";
 import { Labels } from "../../constants";
 import { Colors, FontWeight, Margins, Sizes } from "../../styles";
+import { CommonText } from "../baseComponents";
 
-interface EpdsSurveyQuestionsPaginationProps {
+interface SurveyQuestionsPaginationProps {
   currentQuestionIndex: number;
   totalNumberOfQuestions: number;
 }
 
-const EpdsSurveyQuestionsPagination: React.FC<
-  EpdsSurveyQuestionsPaginationProps
-> = ({ currentQuestionIndex, totalNumberOfQuestions }) => {
+const SurveyQuestionsPagination: React.FC<SurveyQuestionsPaginationProps> = ({
+  currentQuestionIndex,
+  totalNumberOfQuestions,
+}) => {
   const progressValue = currentQuestionIndex / totalNumberOfQuestions;
 
   return (
@@ -28,8 +29,8 @@ const EpdsSurveyQuestionsPagination: React.FC<
           marginBottom: Margins.light,
         }}
       >
-        {Labels.accessibility.epds.question} {currentQuestionIndex}{" "}
-        {Labels.accessibility.epds.onTotalQuestion} {totalNumberOfQuestions}
+        {Labels.accessibility.survey.question} {currentQuestionIndex}{" "}
+        {Labels.accessibility.survey.onTotalQuestion} {totalNumberOfQuestions}
       </CommonText>
       <LinearProgress
         color={Colors.primaryBlueDark}
@@ -66,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EpdsSurveyQuestionsPagination;
+export default SurveyQuestionsPagination;

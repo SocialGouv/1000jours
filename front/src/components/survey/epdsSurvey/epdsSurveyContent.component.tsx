@@ -6,19 +6,24 @@ import { AccessibilityInfo, findNodeHandle, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import type { SwiperFlatList } from "react-native-swiper-flatlist";
 
-import { CommonText, TitleH1, View } from "../../components/baseComponents";
-import EpdsLoadPreviousSurvey from "../../components/epdsSurvey/epdsLoadPreviousSurvey.component";
-import { EpdsConstants, Labels, StorageKeysConstants } from "../../constants";
-import EpdsResult from "../../screens/epdsSurvey/epdsResult.component";
-import { Colors, FontStyle, Margins, Sizes } from "../../styles";
-import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
-import { EpdsSurveyUtils, StorageUtils } from "../../utils";
-import EpdsSurveyFooter from "./epdsSurveyFooter.component";
-import EpdsSurveyQuestionsList from "./epdsSurveyQuestionsList.component";
-import EpdsSurveyQuestionsPagination from "./epdsSurveyQuestionsPagination.component";
+import { CommonText, TitleH1, View } from "../../../components/baseComponents";
+import {
+  EpdsConstants,
+  Labels,
+  StorageKeysConstants,
+} from "../../../constants";
+import EpdsResult from "../../../screens/epdsSurvey/epdsResult.component";
+import { Colors, FontStyle, Margins, Sizes } from "../../../styles";
+import type { SurveyAnswer, SurveyQuestionAndAnswers } from "../../../type";
+import { EpdsSurveyUtils, StorageUtils } from "../../../utils";
+import { TrackingEvent } from "../../../utils/tracking/tracker.util";
+import SurveyFooter from "../surveyFooter.component";
+import SurveyQuestionsList from "../surveyQuestionsList.component";
+import SurveyQuestionsPagination from "../surveyQuestionsPagination.component";
+import EpdsLoadPreviousSurvey from "./epdsLoadPreviousSurvey.component";
 
 interface Props {
-  epdsSurvey: EpdsQuestionAndAnswers[];
+  epdsSurvey: SurveyQuestionAndAnswers[];
   isAccessibilityModeOn: boolean;
 }
 
@@ -29,7 +34,7 @@ const EpdsSurveyContent: React.FC<Props> = ({
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const swiperRef = useRef<SwiperFlatList>(null);
   const [questionsAndAnswers, setQuestionsAndAnswers] =
-    useState<EpdsQuestionAndAnswers[]>(epdsSurvey);
+    useState<SurveyQuestionAndAnswers[]>(epdsSurvey);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [surveyCanBeStarted, setSurveyCanBeStarted] = useState(false);
@@ -40,15 +45,15 @@ const EpdsSurveyContent: React.FC<Props> = ({
   useEffect(() => {
     let mounted = true;
     const getPreviousSurvey = async () => {
-      const values: [EpdsQuestionAndAnswers[] | undefined, number | undefined] =
-        await Promise.all([
-          StorageUtils.getObjectValue(
-            StorageKeysConstants.epdsQuestionAndAnswersKey
-          ),
-          StorageUtils.getObjectValue(
-            StorageKeysConstants.epdsQuestionIndexKey
-          ),
-        ]);
+      const values: [
+        SurveyQuestionAndAnswers[] | undefined,
+        number | undefined
+      ] = await Promise.all([
+        StorageUtils.getObjectValue(
+          StorageKeysConstants.epdsQuestionAndAnswersKey
+        ),
+        StorageUtils.getObjectValue(StorageKeysConstants.epdsQuestionIndexKey),
+      ]);
 
       const previousDataSaved = Boolean(values[0]) && Boolean(values[1]);
       if (mounted) {
@@ -81,7 +86,7 @@ const EpdsSurveyContent: React.FC<Props> = ({
       if (startOver) {
         await restartSurvey();
       } else {
-        const values: [EpdsQuestionAndAnswers[], number] = await Promise.all([
+        const values: [SurveyQuestionAndAnswers[], number] = await Promise.all([
           StorageUtils.getObjectValue(
             StorageKeysConstants.epdsQuestionAndAnswersKey
           ),
@@ -104,7 +109,7 @@ const EpdsSurveyContent: React.FC<Props> = ({
     questionIsAnswered && swiperCurrentIndex === questionsAndAnswers.length - 1;
 
   const updatePressedAnswer = useCallback(
-    (selectedAnswer: EpdsAnswer) => {
+    (selectedAnswer: SurveyAnswer) => {
       const { updatedSurvey, lastQuestionHasThreePointAnswer } =
         EpdsSurveyUtils.getUpdatedSurvey(
           questionsAndAnswers,
@@ -137,11 +142,11 @@ const EpdsSurveyContent: React.FC<Props> = ({
 
   const progressBarAndButtons = () => (
     <View>
-      <EpdsSurveyQuestionsPagination
+      <SurveyQuestionsPagination
         currentQuestionIndex={swiperCurrentIndex + 1}
         totalNumberOfQuestions={epdsSurvey.length}
       />
-      <EpdsSurveyFooter
+      <SurveyFooter
         swiperCurrentIndex={swiperCurrentIndex}
         swiperRef={swiperRef}
         showValidateButton={showValidateButton}
@@ -149,6 +154,7 @@ const EpdsSurveyContent: React.FC<Props> = ({
         setShowResult={setShowResult}
         isAccessibilityModeOn={isAccessibilityModeOn}
         setSwiperCurrentIndex={setSwiperCurrentIndex}
+        trackingEvent={TrackingEvent.EPDS}
       />
     </View>
   );
@@ -186,13 +192,14 @@ const EpdsSurveyContent: React.FC<Props> = ({
               {Labels.epdsSurvey.instruction}
             </CommonText>
             <View style={styles.surveyContainer}>
-              <EpdsSurveyQuestionsList
-                epdsSurvey={questionsAndAnswers}
+              <SurveyQuestionsList
+                survey={questionsAndAnswers}
                 swiperRef={swiperRef}
                 swiperCurrentIndex={swiperCurrentIndex}
                 saveCurrentSurvey={saveCurrentSurvey}
                 updatePressedAnswer={updatePressedAnswer}
                 isAccessibilityModeOn={isAccessibilityModeOn}
+                trackingEvent={TrackingEvent.EPDS}
               />
             </View>
           </ScrollView>

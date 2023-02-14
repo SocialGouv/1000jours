@@ -3,15 +3,10 @@ import { useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
 import type SwiperFlatListRefProps from "react-native-swiper-flatlist";
 
-import {
-  CustomButton,
-  Icomoon,
-  IcomoonIcons,
-  View,
-} from "../../components/baseComponents";
 import { Labels } from "../../constants";
 import { Colors } from "../../styles";
-import { TrackerUtils } from "../../utils";
+import type { TrackingEvent } from "../../utils/tracking/tracker.util";
+import { CustomButton, Icomoon, IcomoonIcons, View } from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
@@ -22,9 +17,10 @@ interface Props {
   setShowResult: (value: boolean) => void;
   isAccessibilityModeOn: boolean;
   setSwiperCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
+  trackingEvent: TrackingEvent;
 }
 
-const EpdsSurveyFooter: React.FC<Props> = ({
+const SurveyFooter: React.FC<Props> = ({
   swiperCurrentIndex,
   swiperRef,
   showValidateButton,
@@ -32,6 +28,7 @@ const EpdsSurveyFooter: React.FC<Props> = ({
   setShowResult,
   isAccessibilityModeOn,
   setSwiperCurrentIndex,
+  trackingEvent,
 }) => {
   const [trackerAction, setTrackerAction] = useState("");
 
@@ -45,11 +42,9 @@ const EpdsSurveyFooter: React.FC<Props> = ({
         });
       }
       if (newValue > 0)
-        setTrackerAction(
-          `${TrackerUtils.TrackingEvent.EPDS} - question n°${newValue} répondue`
-        );
+        setTrackerAction(`${trackingEvent} - question n°${newValue} répondue`);
     },
-    [isAccessibilityModeOn, setSwiperCurrentIndex, swiperRef]
+    [isAccessibilityModeOn, setSwiperCurrentIndex, swiperRef, trackingEvent]
   );
 
   const onBackButtonPressed = useCallback(() => {
@@ -62,10 +57,8 @@ const EpdsSurveyFooter: React.FC<Props> = ({
 
   const onFinishButtonPressed = useCallback(() => {
     setShowResult(true);
-    setTrackerAction(
-      `${TrackerUtils.TrackingEvent.EPDS} - questionnaire terminé`
-    );
-  }, [setShowResult]);
+    setTrackerAction(`${trackingEvent} - questionnaire terminé`);
+  }, [setShowResult, trackingEvent]);
 
   return (
     <View>
@@ -134,4 +127,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EpdsSurveyFooter;
+export default SurveyFooter;

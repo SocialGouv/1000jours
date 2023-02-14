@@ -10,12 +10,12 @@ import {
   GreenRadioButton,
   TitleH1,
   View,
-} from "../../components/baseComponents";
-import { Labels, StorageKeysConstants } from "../../constants";
-import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
-import type { EpdsGenderType } from "../../type";
-import { EpdsGenders } from "../../type";
-import { StorageUtils } from "../../utils";
+} from "../../../components/baseComponents";
+import { Labels, StorageKeysConstants } from "../../../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../../styles";
+import type { EpdsGenderType } from "../../../type";
+import { EpdsGenders } from "../../../type";
+import { StorageUtils } from "../../../utils";
 
 interface EpdsGenderEntryProps {
   goToEpdsSurvey: () => void;

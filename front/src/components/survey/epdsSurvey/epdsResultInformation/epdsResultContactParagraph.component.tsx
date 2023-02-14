@@ -2,8 +2,8 @@ import * as React from "react";
 import { useCallback, useState } from "react";
 import { StyleSheet, Text } from "react-native";
 
-import { Labels } from "../../../constants";
-import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
+import { Labels } from "../../../../constants";
+import { TIMEOUT_FOCUS } from "../../../../constants/accessibility.constants";
 import {
   Colors,
   FontNames,
@@ -12,12 +12,15 @@ import {
   Margins,
   Paddings,
   Sizes,
-} from "../../../styles";
-import type { EpdsResultContactInformation, TrackerEvent } from "../../../type";
-import { LinkingUtils, TrackerUtils } from "../../../utils";
-import { setAccessibilityFocusOnText } from "../../../utils/accessibility/accessibility.util";
-import { CustomButton, SecondaryText, View } from "../../baseComponents";
-import TrackerHandler from "../../tracker/trackerHandler.component";
+} from "../../../../styles";
+import type {
+  EpdsResultContactInformation,
+  TrackerEvent,
+} from "../../../../type";
+import { LinkingUtils, TrackerUtils } from "../../../../utils";
+import { setAccessibilityFocusOnText } from "../../../../utils/accessibility/accessibility.util";
+import { CustomButton, SecondaryText, View } from "../../../baseComponents";
+import TrackerHandler from "../../../tracker/trackerHandler.component";
 
 interface EpdsResultContactParagraphProps {
   paragraphTitle?: string;

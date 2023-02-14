@@ -31,10 +31,6 @@ export default {
     },
     close: "Fermer",
     closeMenu: "Fermer le menu",
-    epds: {
-      onTotalQuestion: "sur",
-      question: "Question",
-    },
     eventCard: {
       description: "Description",
       title: "Titre de l'événement",
@@ -56,6 +52,10 @@ export default {
     stop: "Arrêter",
     subSubtitle: "Sous sous-titre",
     subtitle: "Sous-titre",
+    survey: {
+      onTotalQuestion: "sur",
+      question: "Question",
+    },
     tapForMoreInfo: "Appuyer deux fois pour avoir plus d'informations",
     title: "Titre",
     updateDate: "Modifier la date",
@@ -339,8 +339,8 @@ export default {
         elements: [
           "Se questionner",
           "Accéder aux ressources",
-          "Trouver une\naide adaptée",
-          "Se questionner\nde nouveau",
+          "Trouver une aide adaptée",
+          "Se questionner de nouveau",
         ],
         title: "Étapes",
       },
@@ -586,6 +586,7 @@ export default {
     parentheque: "Parenthèque",
     recommendApp: "Recommander l'application",
     title: "Menu",
+    tndSurvey: "Repérage TND",
   },
   moodboard: {
     completeMoodboard:
@@ -768,6 +769,33 @@ export default {
       title: "Votre situation a changé ?",
     },
     title: "Choisissez l'étape que vous souhaitez approfondir",
+  },
+  tndSurvey: {
+    onboarding: {
+      description:
+        "Détecter les signes d’un développement inhabituel chez les enfants de moins de 7 ans",
+      reminder:
+        "Ce questionnaire n'est pas un diagnostic et ne remplace pas un professionnel de la santé.",
+      steps: {
+        elements: ["Se questionner", "Trouver une\naide adaptée"],
+        title: "Étapes :",
+      },
+      title: "Repérage des troubles du neuro-développement (TND)",
+    },
+    surveyContent: {
+      instruction:
+        'Veuillez répondre aux différentes questions en cochant "Oui" ou "Non".',
+      selectAnotherTest: "Choisir un autre test",
+      title:
+        "Détecter les signes d’un développement inhabituel chez les enfants de moins de 7 ans",
+    },
+    testSelection: {
+      instruction:
+        "Veuillez sélectionner un test de repérage selon l'âge de votre enfant.",
+      question: "Quel test de repérage souhaitez-vous passer ?",
+      title:
+        "Détecter les signes d’un développement inhabituel chez les enfants de moins de 7 ans",
+    },
   },
   toAccessClickHere: "Pour y accéder, vous pouvez cliquer ici : ",
   version: "v.",

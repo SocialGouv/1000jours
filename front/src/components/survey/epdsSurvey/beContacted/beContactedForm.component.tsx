@@ -15,11 +15,15 @@ import {
   Formats,
   Labels,
   StorageKeysConstants,
-} from "../../../constants";
-import { Colors, Margins, Paddings, Sizes } from "../../../styles";
-import type { BeContactedData } from "../../../type";
-import { AccessibilityUtils, StorageUtils, StringUtils } from "../../../utils";
-import { Datepicker, SecondaryText } from "../../baseComponents";
+} from "../../../../constants";
+import { Colors, Margins, Paddings, Sizes } from "../../../../styles";
+import type { BeContactedData } from "../../../../type";
+import {
+  AccessibilityUtils,
+  StorageUtils,
+  StringUtils,
+} from "../../../../utils";
+import { Datepicker, SecondaryText } from "../../../baseComponents";
 
 interface Props {
   byEmail: boolean;

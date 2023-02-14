@@ -7,30 +7,40 @@ import {
   StyleSheet,
   Text,
 } from "react-native";
+import { Image } from "react-native-elements";
 
 import { Labels } from "../../constants";
-import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
-import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
-import { TrackerUtils } from "../../utils";
-import { CommonText, GreenRadioButton, View } from "../baseComponents";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
+import type { SurveyAnswer, SurveyQuestionAndAnswers } from "../../type";
+import type { TrackingEvent } from "../../utils/tracking/tracker.util";
+import {
+  CommonText,
+  GreenRadioButton,
+  Icomoon,
+  IcomoonIcons,
+  SecondaryText,
+  View,
+} from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
-  questionAndAnswers: EpdsQuestionAndAnswers;
+  questionAndAnswers: SurveyQuestionAndAnswers;
   totalNumberOfQuestions: number;
-  updatePressedAnswer: (answer: EpdsAnswer) => void;
+  updatePressedAnswer: (answer: SurveyAnswer) => void;
   nextButtonState: boolean;
+  trackingEvent: TrackingEvent;
 }
 
-const EpdsQuestion: React.FC<Props> = ({
+const SurveyQuestion: React.FC<Props> = ({
   questionAndAnswers,
   totalNumberOfQuestions,
   updatePressedAnswer,
   nextButtonState,
+  trackingEvent,
 }) => {
   const [trackerAction, setTrackerAction] = useState("");
 
-  const numberLabel = `${Labels.accessibility.epds.question} ${questionAndAnswers.questionNumber} ${Labels.accessibility.epds.onTotalQuestion} ${totalNumberOfQuestions}`;
+  const numberLabel = `${Labels.accessibility.survey.question} ${questionAndAnswers.questionNumber} ${Labels.accessibility.survey.onTotalQuestion} ${totalNumberOfQuestions}`;
   const questionNumberRef = React.useRef<Text>(null);
 
   React.useEffect(() => {
@@ -49,20 +59,34 @@ const EpdsQuestion: React.FC<Props> = ({
   };
 
   const onAnswerPressed = useCallback(
-    (answer: EpdsAnswer) => () => {
+    (answer: SurveyAnswer) => () => {
       updatePressedAnswer(answer);
       setTrackerAction(
-        `${TrackerUtils.TrackingEvent.EPDS} - question n°${questionAndAnswers.questionNumber} - case cochée`
+        `${trackingEvent} - question n°${questionAndAnswers.questionNumber} - case cochée`
       );
     },
-    [questionAndAnswers.questionNumber, updatePressedAnswer]
+    [questionAndAnswers.questionNumber, trackingEvent, updatePressedAnswer]
   );
 
   return (
     <View style={[styles.swipeView, styles.justifyContentCenter]}>
       <TrackerHandler actionName={trackerAction} />
+      {questionAndAnswers.title ? (
+        <View style={[styles.swipeViewMargin, styles.questionTitleContainer]}>
+          <View style={styles.questionTitleIconView}>
+            <Icomoon
+              name={IcomoonIcons.postPartum}
+              size={Sizes.xxl}
+              style={styles.questionTitleIcon}
+            />
+          </View>
+          <SecondaryText style={styles.questionTitle}>
+            {questionAndAnswers.title}
+          </SecondaryText>
+        </View>
+      ) : null}
       <View style={[styles.swipeViewMargin, styles.paddingRight]}>
-        <View style={{ flexDirection: "row" }}>
+        <View style={styles.flexRow}>
           <Text
             ref={questionNumberRef}
             style={styles.stepNum}
@@ -74,6 +98,13 @@ const EpdsQuestion: React.FC<Props> = ({
           <CommonText style={styles.question}>
             {questionAndAnswers.question}
           </CommonText>
+          {questionAndAnswers.image && (
+            <Image
+              width={questionAndAnswers.image.width}
+              height={questionAndAnswers.image.height}
+              source={{ uri: questionAndAnswers.image.url }}
+            />
+          )}
         </View>
         <View style={styles.paddingRight}>
           {questionAndAnswers.answers.map((answer, answerIndex) => (
@@ -93,6 +124,9 @@ const EpdsQuestion: React.FC<Props> = ({
 
 const width = Dimensions.get("window").width;
 const styles = StyleSheet.create({
+  flexRow: {
+    flexDirection: "row",
+  },
   justifyContentCenter: {
     alignItems: "center",
     justifyContent: "center",
@@ -107,6 +141,30 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
     paddingBottom: Paddings.smaller,
   },
+  questionTitle: {
+    color: Colors.primaryBlue,
+    flex: 7,
+    fontSize: Sizes.md,
+    fontWeight: FontWeight.bold,
+    letterSpacing: 0,
+    lineHeight: Sizes.lg,
+    marginTop: Margins.smallest,
+    textAlign: "left",
+  },
+  questionTitleContainer: {
+    borderBottomWidth: 1,
+    borderColor: Colors.primaryBlue,
+    flexDirection: "row",
+    marginBottom: Paddings.larger,
+    paddingBottom: Paddings.smaller,
+  },
+  questionTitleIcon: {
+    color: Colors.primaryBlue,
+  },
+  questionTitleIconView: {
+    flex: 1,
+    justifyContent: "center",
+  },
   stepNum: {
     color: Colors.primaryBlueLight,
     fontSize: Sizes.xxxxl,
@@ -117,9 +175,8 @@ const styles = StyleSheet.create({
     width,
   },
   swipeViewMargin: {
-    marginEnd: "25%",
-    marginStart: "10%",
+    width: "80%",
   },
 });
 
-export default EpdsQuestion;
+export default SurveyQuestion;

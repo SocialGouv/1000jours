@@ -9,9 +9,9 @@ import { StyleSheet, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Card } from "react-native-paper";
 
-import { Labels } from "../../../constants";
-import { SCREEN_HEIGHT } from "../../../constants/platform.constants";
-import { useAccessibilityReader } from "../../../hooks";
+import { Labels } from "../../../../constants";
+import { SCREEN_HEIGHT } from "../../../../constants/platform.constants";
+import { useAccessibilityReader } from "../../../../hooks";
 import {
   Colors,
   FontNames,
@@ -20,12 +20,12 @@ import {
   Margins,
   Paddings,
   Sizes,
-} from "../../../styles";
-import type { EpdsResultInformationType, TrackerEvent } from "../../../type";
-import { TrackerUtils } from "../../../utils";
-import { EpdsAssets } from "../../assets";
-import { Icomoon, UsefulQuestion, View } from "../../baseComponents";
-import TrackerHandler from "../../tracker/trackerHandler.component";
+} from "../../../../styles";
+import type { EpdsResultInformationType, TrackerEvent } from "../../../../type";
+import { TrackerUtils } from "../../../../utils";
+import { EpdsAssets } from "../../../assets";
+import { Icomoon, UsefulQuestion, View } from "../../../baseComponents";
+import TrackerHandler from "../../../tracker/trackerHandler.component";
 import EpdsResultContactParagraph from "./epdsResultContactParagraph.component";
 import EpdsResultSimpleParagraph from "./epdsResultSimpleParagraph.component";
 import EpdsResultUrlParagraph from "./epdsResultUrlParagraph.component";

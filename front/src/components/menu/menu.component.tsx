@@ -76,6 +76,13 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
         title: Labels.menu.myProfil,
       },
       {
+        icon: IcomoonIcons.postPartum,
+        onPress: () => {
+          void RootNavigation.navigate("tndSurvey");
+        },
+        title: Labels.menu.tndSurvey,
+      },
+      {
         icon: IcomoonIcons.favoris,
         onPress: () => {
           void RootNavigation.navigate("articleFavorites");

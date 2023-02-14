@@ -19,13 +19,13 @@ import {
   IcomoonIcons,
   SecondaryText,
   TitleH1,
-} from "../../../components/baseComponents";
-import { EpdsDbQueries, Formats, Labels } from "../../../constants";
-import { GraphQLMutation } from "../../../services";
-import { Colors, Margins, Paddings, Sizes, Styles } from "../../../styles";
-import type { BeContactedData } from "../../../type";
-import { StringUtils } from "../../../utils";
-import { BeContactedAssets } from "../../assets";
+} from "../../../../components/baseComponents";
+import { EpdsDbQueries, Formats, Labels } from "../../../../constants";
+import { GraphQLMutation } from "../../../../services";
+import { Colors, Margins, Paddings, Sizes, Styles } from "../../../../styles";
+import type { BeContactedData } from "../../../../type";
+import { StringUtils } from "../../../../utils";
+import { BeContactedAssets } from "../../../assets";
 import BeContactedForm from "./beContactedForm.component";
 
 interface Props {

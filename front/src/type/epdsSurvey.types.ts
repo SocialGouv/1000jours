@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { EpdsConstants, Labels } from "../constants";
+import type { SurveyQuestionAndAnswers } from "./survey.types";
 
 export interface EpdsGenderType {
   id: number;
@@ -42,20 +43,6 @@ export interface QuestionnaireEpdsFromDB {
   reponse_4_points: number;
 }
 
-export interface EpdsQuestionAndAnswers {
-  questionNumber: number;
-  question: string;
-  answers: EpdsAnswer[];
-  isAnswered?: boolean;
-}
-
-export interface EpdsAnswer {
-  id: number;
-  label: string;
-  points: number;
-  isChecked: boolean;
-}
-
 export interface EpdsResultIconAndStateOfMind {
   stateOfMind: string;
   color: string;
@@ -73,7 +60,7 @@ export interface BeContactedColors {
 }
 
 export interface EpdsUpdatedSurvey {
-  updatedSurvey: EpdsQuestionAndAnswers[];
+  updatedSurvey: SurveyQuestionAndAnswers[];
   lastQuestionHasThreePointAnswer: boolean;
 }
 
@@ -84,6 +71,7 @@ export interface BeContactedData {
   numberOfChildren: number;
   lastChildBirthDate?: string;
   hours?: string[];
+  type?: string;
 }
 
 export interface EpdsResultSimpleInformation {

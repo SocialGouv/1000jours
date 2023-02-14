@@ -5,6 +5,7 @@ import * as ConfigQueries from "./databaseQueries/configDbQueries.constants";
 import * as EpdsDbQueries from "./databaseQueries/epdsDbQueries.constants";
 import * as HomeDbQueries from "./databaseQueries/homeDbQueries.constants";
 import * as SearchQueries from "./databaseQueries/searchQueries.constants";
+import * as TndDbQueries from "./databaseQueries/tndDbQueries.constants";
 import * as EpdsConstants from "./epdsConstants.constants";
 import * as FetchPoliciesConstants from "./fetchPolicies.constants";
 import Formats from "./formats";
@@ -16,6 +17,7 @@ import * as PlatformConstants from "./platform.constants";
 import * as ProfileConstants from "./profile.constants";
 import * as SnackBarConstants from "./snackbar.constants";
 import * as StorageKeysConstants from "./storageKeys.constants";
+import * as TndSurveyConstants from "./tndSurvey.constants";
 
 export {
   AccessibiltyConstants,
@@ -36,4 +38,6 @@ export {
   SearchQueries,
   SnackBarConstants,
   StorageKeysConstants,
+  TndDbQueries,
+  TndSurveyConstants,
 };

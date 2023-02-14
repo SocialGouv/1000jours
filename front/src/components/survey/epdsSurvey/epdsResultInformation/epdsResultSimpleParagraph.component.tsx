@@ -2,8 +2,8 @@ import * as React from "react";
 import { useCallback } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-import { Labels } from "../../../constants";
-import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
+import { Labels } from "../../../../constants";
+import { TIMEOUT_FOCUS } from "../../../../constants/accessibility.constants";
 import {
   Colors,
   FontNames,
@@ -12,11 +12,11 @@ import {
   Margins,
   Paddings,
   Sizes,
-} from "../../../styles";
-import type { EpdsResultSimpleInformation } from "../../../type";
-import { LinkingUtils } from "../../../utils";
-import { setAccessibilityFocusOnText } from "../../../utils/accessibility/accessibility.util";
-import { CustomButton, SecondaryText, View } from "../../baseComponents";
+} from "../../../../styles";
+import type { EpdsResultSimpleInformation } from "../../../../type";
+import { LinkingUtils } from "../../../../utils";
+import { setAccessibilityFocusOnText } from "../../../../utils/accessibility/accessibility.util";
+import { CustomButton, SecondaryText, View } from "../../../baseComponents";
 
 interface EpdsResultSimpleParagraphProps {
   paragraph: EpdsResultSimpleInformation;
