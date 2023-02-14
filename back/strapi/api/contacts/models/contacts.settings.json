@@ -29,10 +29,10 @@
     "date_prise_contact": {
       "type": "date"
     },
-    "provenance": {
+    "widget_epds_source": {
       "model": "widget-epds-sources"
     },
-    "mode": {
+    "type_de_contact": {
       "type": "enumeration",
       "enum": [
         "sms",
