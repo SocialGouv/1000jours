@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contacts",
+  "info": {
+    "name": "Contacts",
+    "description": "Liste des demandes de contacts (ajouté par Elise) pour permettre d'avoir un suivi plus facile"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "prenom": {
+      "type": "string"
+    },
+    "nombre_enfants": {
+      "type": "integer"
+    },
+    "date_naissance_dernier_enfant": {
+      "type": "date"
+    },
+    "departement_code": {
+      "type": "string"
+    },
+    "departement_libelle": {
+      "type": "string"
+    },
+    "date_prise_contact": {
+      "type": "date"
+    },
+    "widget_epds_source": {
+      "model": "widget-epds-sources"
+    },
+    "type_de_contact": {
+      "type": "enumeration",
+      "enum": [
+        "sms",
+        "email",
+        "chat"
+      ]
+    },
+    "personne_accompagnee": {
+      "type": "enumeration",
+      "enum": [
+        "orientee",
+        "aidee",
+        "echange_initial",
+        "non_accompagnee",
+        "nouveau"
+      ]
+    },
+    "commentaire": {
+      "type": "text"
+    }
+  }
+}
