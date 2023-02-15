@@ -11,17 +11,23 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "test": {
+    "questionnaire": {
       "type": "string"
     },
-    "non": {
+    "reponse_non": {
       "type": "integer"
     },
-    "oui": {
+    "domaine_avec_reponse_non": {
       "type": "integer"
     },
     "reponses": {
       "type": "json"
+    },
+    "signes_alerte": {
+      "type": "boolean"
+    },
+    "reponse_oui": {
+      "type": "integer"
     }
   }
 }
