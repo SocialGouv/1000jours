@@ -11,18 +11,18 @@ import {
 import { View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { useAccessibilityReader } from "../../hooks";
-import type { TndTest } from "../../type/tndSurvey.types";
+import type { TndQuestionnaire } from "../../type/tndSurvey.types";
 import { TrackerUtils } from "../../utils";
 
 const TndSurveyScreen: FC = () => {
   const [isOnboardingDone, setIsOnboardingDone] = useState(false);
-  const [selectedTndTest, setSelectedTndTest] = useState<TndTest | undefined>(
-    undefined
-  );
+  const [selectedTndTest, setSelectedTndTest] = useState<
+    TndQuestionnaire | undefined
+  >(undefined);
   const isAccessibilityModeOn = useAccessibilityReader();
 
-  const goToSurvey = useCallback((tndTest: TndTest) => {
-    setSelectedTndTest(tndTest);
+  const goToSurvey = useCallback((tndQuestionnaire: TndQuestionnaire) => {
+    setSelectedTndTest(tndQuestionnaire);
   }, []);
 
   const onBoardingIsDone = useCallback(() => {
@@ -35,7 +35,7 @@ const TndSurveyScreen: FC = () => {
     if (!selectedTndTest) return <TndTestSelection goToSurvey={goToSurvey} />;
     return (
       <TndSurveyContent
-        tndTest={selectedTndTest}
+        tndQuestionnaire={selectedTndTest}
         setSelectedTndTest={setSelectedTndTest}
         isAccessibilityModeOn={isAccessibilityModeOn}
       />
@@ -44,7 +44,7 @@ const TndSurveyScreen: FC = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <TrackerHandler screenName={TrackerUtils.TrackingEvent.EPDS} />
+      <TrackerHandler screenName={TrackerUtils.TrackingEvent.TND} />
       {getViewToDisplay()}
     </View>
   );

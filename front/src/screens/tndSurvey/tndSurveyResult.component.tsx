@@ -9,40 +9,44 @@ import {
   CustomSnackbar,
   SecondaryText,
   TitleH1,
+  View,
 } from "../../components/baseComponents";
 import EpdsResultInformation from "../../components/survey/epdsSurvey/epdsResultInformation/epdsResultInformation.component";
-import { EpdsConstants, Labels, TndDbQueries } from "../../constants";
+import { Labels, TndDbQueries } from "../../constants";
 import { useAccessibilityReader } from "../../hooks";
 import { GraphQLMutation } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { SurveyQuestionAndAnswers } from "../../type";
-import type { TndTest } from "../../type/tndSurvey.types";
+import type { TndAnswers, TndQuestionnaire } from "../../type/tndSurvey.types";
 import { TndSurveyUtils } from "../../utils";
 
 interface Props {
   result: number;
   survey: SurveyQuestionAndAnswers[];
   startSurveyOver: () => void;
-  tndTest: TndTest;
+  tndQuestionnaire: TndQuestionnaire;
 }
 
-const TndSurveyResult: FC<Props> = ({ result, survey, tndTest }) => {
+const TndSurveyResult: FC<Props> = ({ survey, tndQuestionnaire }) => {
   const [queryVariables, setQueryVariables] = useState<unknown>();
   const [triggerLaunchQuery, setTriggerLaunchQuery] = useState(false);
   const [showSnackBar, setShowSnackBar] = useState(false);
+  const [tndAnswers, setTndAnswers] = useState<TndAnswers | undefined>(
+    undefined
+  );
   const scrollRef = useRef<ScrollView>(null);
   const isAccessibilityModeOn = useAccessibilityReader();
 
-  const labelsResultats = Labels.epdsSurvey.resultats;
-
   const saveSurveyResults = () => {
-    console.log("saveSurveyResults");
-    const tndAnswers = TndSurveyUtils.formatTndResponses(tndTest, survey);
+    const answers = TndSurveyUtils.formatTndResponses(tndQuestionnaire, survey);
+    setTndAnswers(answers);
     setQueryVariables({
-      non: tndAnswers.non,
-      oui: tndAnswers.oui,
-      reponses: tndAnswers.reponses,
-      test: tndAnswers.test,
+      domaineAvecReponseNon: answers.domaineAvecReponseNon,
+      questionnaire: answers.questionnaire,
+      reponseNon: answers.reponseNon,
+      reponseOui: answers.reponseOui,
+      reponses: answers.reponses,
+      signesAlerte: answers.signesAlerte,
     });
     setTriggerLaunchQuery(!triggerLaunchQuery);
   };
@@ -56,6 +60,18 @@ const TndSurveyResult: FC<Props> = ({ result, survey, tndTest }) => {
     setShowSnackBar(false);
   }, []);
 
+  const getTextToDisplay = useCallback(() => {
+    return tndAnswers ? (
+      <View style={styles.surveyResultTextContainer}>
+        <SecondaryText style={[styles.text, styles.fontBold]}>
+          {tndAnswers.signesAlerte
+            ? Labels.tndSurvey.surveyResult.warningText
+            : Labels.tndSurvey.surveyResult.text}
+        </SecondaryText>
+      </View>
+    ) : null;
+  }, [tndAnswers]);
+
   return (
     <>
       <GraphQLMutation
@@ -65,18 +81,12 @@ const TndSurveyResult: FC<Props> = ({ result, survey, tndTest }) => {
       />
       <ScrollView ref={scrollRef}>
         <TitleH1
-          title={Labels.epdsSurveyLight.titleLight}
-          animated={false}
+          title={Labels.tndSurvey.surveyResult.title}
+          description={Labels.tndSurvey.surveyResult.description}
+          animated={true}
           style={styles.marginHorizontal}
         />
-        <SecondaryText style={[styles.text, styles.fontBold]}>
-          {Labels.epdsSurveyLight.oserEnParler}
-        </SecondaryText>
-        {result < EpdsConstants.RESULT_WELL_VALUE && (
-          <SecondaryText style={[styles.text, styles.fontBold]}>
-            {labelsResultats.retakeTestInvitation}
-          </SecondaryText>
-        )}
+        {getTextToDisplay()}
         <EpdsResultInformation
           leftBorderColor={Colors.primaryBlue}
           informationList={Labels.epdsSurveyLight.professionalsList}
@@ -117,6 +127,9 @@ const styles = StyleSheet.create({
     fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
     paddingHorizontal: Paddings.default,
+  },
+  surveyResultTextContainer: {
+    paddingVertical: Paddings.default,
   },
   text: {
     color: Colors.commonText,

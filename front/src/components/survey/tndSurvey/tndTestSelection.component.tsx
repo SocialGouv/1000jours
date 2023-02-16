@@ -10,7 +10,7 @@ import {
 } from "../../../constants";
 import { GraphQLQuery } from "../../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../../styles";
-import type { TndTest } from "../../../type/tndSurvey.types";
+import type { TndQuestionnaire } from "../../../type/tndSurvey.types";
 import {
   CommonText,
   CustomButton,
@@ -20,26 +20,28 @@ import {
 } from "../../baseComponents";
 
 interface TndTestSelectionProps {
-  goToSurvey: (tndTest: TndTest) => void;
+  goToSurvey: (tndQuestionnaire: TndQuestionnaire) => void;
 }
 
 const TndTestSelection: FC<TndTestSelectionProps> = ({ goToSurvey }) => {
-  const [tndTests, setTndTests] = useState<TndTest[]>([]);
-  const [selectedTndTest, setSelectedTndTest] = useState<TndTest | undefined>();
+  const [tndTests, setTndTests] = useState<TndQuestionnaire[]>([]);
+  const [selectedTndTest, setSelectedTndTest] = useState<
+    TndQuestionnaire | undefined
+  >();
   const [testIsSelected, setTestIsSelected] = useState(false);
 
   const handleResults = useCallback((data: unknown) => {
-    const result = data as { questionnaireTnds: TndTest[] };
+    const result = data as { questionnaireTnds: TndQuestionnaire[] };
     setTndTests(result.questionnaireTnds);
   }, []);
 
   const updateTndTests = useCallback(
-    (tndTest: TndTest) => () => {
+    (tndQuestionnaire: TndQuestionnaire) => () => {
       setTndTests(() => {
         return tndTests.map((item) => {
-          if (item.id === tndTest.id) {
+          if (item.id === tndQuestionnaire.id) {
             item.isChecked = true;
-            setSelectedTndTest(tndTest);
+            setSelectedTndTest(tndQuestionnaire);
             setTestIsSelected(true);
           } else {
             item.isChecked = false;
@@ -52,8 +54,8 @@ const TndTestSelection: FC<TndTestSelectionProps> = ({ goToSurvey }) => {
   );
 
   const validate = useCallback(
-    (tndTest: TndTest | undefined) => () => {
-      if (tndTest) goToSurvey(tndTest);
+    (tndQuestionnaire: TndQuestionnaire | undefined) => () => {
+      if (tndQuestionnaire) goToSurvey(tndQuestionnaire);
     },
     [goToSurvey]
   );

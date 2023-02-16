@@ -15,7 +15,7 @@ import TndSurveyResult from "../../../screens/tndSurvey/tndSurveyResult.componen
 import { GraphQLQuery } from "../../../services";
 import { Colors, FontStyle, Margins, Paddings, Sizes } from "../../../styles";
 import type { SurveyAnswer, SurveyQuestionAndAnswers } from "../../../type";
-import type { TndQuestionnaire, TndTest } from "../../../type/tndSurvey.types";
+import type { TndQuestionnaire } from "../../../type/tndSurvey.types";
 import { EpdsSurveyUtils, TndSurveyUtils } from "../../../utils";
 import { TrackingEvent } from "../../../utils/tracking/tracker.util";
 import { CommonText, CustomButton, TitleH1, View } from "../../baseComponents";
@@ -24,13 +24,15 @@ import SurveyQuestionsList from "../surveyQuestionsList.component";
 import SurveyQuestionsPagination from "../surveyQuestionsPagination.component";
 
 interface Props {
-  tndTest: TndTest;
-  setSelectedTndTest: React.Dispatch<React.SetStateAction<TndTest | undefined>>;
+  tndQuestionnaire: TndQuestionnaire;
+  setSelectedTndTest: React.Dispatch<
+    React.SetStateAction<TndQuestionnaire | undefined>
+  >;
   isAccessibilityModeOn: boolean;
 }
 
 const TndSurveyContent: React.FC<Props> = ({
-  tndTest,
+  tndQuestionnaire,
   isAccessibilityModeOn,
   setSelectedTndTest,
 }) => {
@@ -58,14 +60,12 @@ const TndSurveyContent: React.FC<Props> = ({
   const handleResults = useCallback((data: unknown) => {
     const result = data as { questionnaireTnd: TndQuestionnaire };
     const formattedQuestions: SurveyQuestionAndAnswers[] =
-      TndSurveyUtils.formatTndTest(result.questionnaireTnd);
+      TndSurveyUtils.formatTndQuestionnaire(result.questionnaireTnd);
     setQuestionsAndAnswers(formattedQuestions);
     setSurveyCanBeStarted(true);
   }, []);
 
-  const restartSurvey = useCallback(async () => {
-    await EpdsSurveyUtils.removeEpdsStorageItems();
-    // setTndResponses([]);
+  const restartSurvey = useCallback(() => {
     setSwiperCurrentIndex(0);
     setShowResult(false);
   }, []);
@@ -130,7 +130,7 @@ const TndSurveyContent: React.FC<Props> = ({
           result={0}
           survey={questionsAndAnswers}
           startSurveyOver={restartSurvey}
-          tndTest={tndTest}
+          tndQuestionnaire={tndQuestionnaire}
         />
       );
     else
@@ -139,7 +139,7 @@ const TndSurveyContent: React.FC<Props> = ({
           <ScrollView contentContainerStyle={styles.scrollviewContainer}>
             <TitleH1
               style={styles.marginHorizontal}
-              title={tndTest.nom}
+              title={tndQuestionnaire.nom}
               animated={false}
               ref={titleRef}
             />
@@ -178,7 +178,7 @@ const TndSurveyContent: React.FC<Props> = ({
   return (
     <View style={styles.mainContainer}>
       <GraphQLQuery
-        query={TndDbQueries.GET_TND_TEST(tndTest.id)}
+        query={TndDbQueries.GET_TND_TEST(tndQuestionnaire.id)}
         fetchPolicy={FetchPoliciesConstants.NO_CACHE}
         getFetchedData={handleResults}
       />

@@ -5,7 +5,7 @@ export interface SurveyQuestionAndAnswers {
   question: string;
   answers: SurveyAnswer[];
   isAnswered?: boolean;
-  title?: string;
+  domain?: string;
   image?: Visuel;
 }
 
@@ -15,4 +15,10 @@ export interface SurveyAnswer {
   points: number;
   isChecked: boolean;
   value?: string;
+}
+
+export interface SurveyResult {
+  nbAnswerNo: number;
+  nbAnswerYes: number;
+  nbDomainsWithAnswerNo: number;
 }

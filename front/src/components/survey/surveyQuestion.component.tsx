@@ -71,7 +71,7 @@ const SurveyQuestion: React.FC<Props> = ({
   return (
     <View style={[styles.swipeView, styles.justifyContentCenter]}>
       <TrackerHandler actionName={trackerAction} />
-      {questionAndAnswers.title ? (
+      {questionAndAnswers.domain ? (
         <View style={[styles.swipeViewMargin, styles.questionTitleContainer]}>
           <View style={styles.questionTitleIconView}>
             <Icomoon
@@ -81,7 +81,7 @@ const SurveyQuestion: React.FC<Props> = ({
             />
           </View>
           <SecondaryText style={styles.questionTitle}>
-            {questionAndAnswers.title}
+            {questionAndAnswers.domain}
           </SecondaryText>
         </View>
       ) : null}
@@ -98,14 +98,23 @@ const SurveyQuestion: React.FC<Props> = ({
           <CommonText style={styles.question}>
             {questionAndAnswers.question}
           </CommonText>
-          {questionAndAnswers.image && (
+        </View>
+        {questionAndAnswers.image && (
+          <View>
             <Image
               width={questionAndAnswers.image.width}
               height={questionAndAnswers.image.height}
               source={{ uri: questionAndAnswers.image.url }}
+              containerStyle={[
+                styles.questionImage,
+                {
+                  height: questionAndAnswers.image.height,
+                  width: questionAndAnswers.image.width,
+                },
+              ]}
             />
-          )}
-        </View>
+          </View>
+        )}
         <View style={styles.paddingRight}>
           {questionAndAnswers.answers.map((answer, answerIndex) => (
             <GreenRadioButton
@@ -140,6 +149,12 @@ const styles = StyleSheet.create({
     fontSize: Sizes.sm,
     fontWeight: FontWeight.bold,
     paddingBottom: Paddings.smaller,
+  },
+  questionImage: {
+    alignSelf: "center",
+    marginVertical: Paddings.default,
+    maxHeight: Sizes.thumbnail,
+    maxWidth: "90%",
   },
   questionTitle: {
     color: Colors.primaryBlue,

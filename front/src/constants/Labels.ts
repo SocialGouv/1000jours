@@ -789,6 +789,13 @@ export default {
       title:
         "Détecter les signes d’un développement inhabituel chez les enfants de moins de 7 ans",
     },
+    surveyResult: {
+      description:
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.",
+      text: "Texte lorsqu'il n'y a pas de signes d'alerte.",
+      title: "Lorem ipsum dolor sit amet consect",
+      warningText: "Texte lorsqu'il y a des signes d'alerte.",
+    },
     testSelection: {
       instruction:
         "Veuillez sélectionner un test de repérage selon l'âge de votre enfant.",

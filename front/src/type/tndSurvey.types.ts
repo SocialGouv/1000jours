@@ -3,13 +3,6 @@
 
 import type { Visuel } from "../types";
 
-export interface TndTest {
-  id: number;
-  nom: string;
-  ordre: number;
-  isChecked?: boolean;
-}
-
 export interface TndQuestionnaireQuestion {
   id: number;
   nom: string;
@@ -29,8 +22,9 @@ export interface TndQuestionnaire {
   nom: string;
   domaines: TndQuestionnaireDomaine[];
   ordre: number;
-  alertNbNon: number;
-  alertNbDomaine: number;
+  alerteNbNon: number;
+  alerteNbDomaine: number;
+  isChecked?: boolean;
 }
 
 export interface TndQuestion {
@@ -40,9 +34,11 @@ export interface TndQuestion {
 }
 
 export interface TndAnswers {
-  test: string;
-  non: number;
-  oui: number;
+  questionnaire: string;
+  reponseNon: number;
+  reponseOui: number;
+  domaineAvecReponseNon: number;
+  signesAlerte: boolean;
   reponses: TndAnswer[];
 }
 
