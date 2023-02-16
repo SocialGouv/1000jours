@@ -16,7 +16,7 @@ import { GraphQLQuery } from "../../../services";
 import { Colors, FontStyle, Margins, Paddings, Sizes } from "../../../styles";
 import type { SurveyAnswer, SurveyQuestionAndAnswers } from "../../../type";
 import type { TndQuestionnaire } from "../../../type/tndSurvey.types";
-import { EpdsSurveyUtils, TndSurveyUtils } from "../../../utils";
+import { TndSurveyUtils } from "../../../utils";
 import { TrackingEvent } from "../../../utils/tracking/tracker.util";
 import { CommonText, CustomButton, TitleH1, View } from "../../baseComponents";
 import SurveyFooter from "../surveyFooter.component";
