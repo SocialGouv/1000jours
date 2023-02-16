@@ -1,3 +1,10 @@
+# [1.120.0](https://github.com/SocialGouv/1000jours/compare/v1.119.2...v1.120.0) (2023-02-16)
+
+
+### Features
+
+* **contact:** collection contact ([#1581](https://github.com/SocialGouv/1000jours/issues/1581)) ([55e2111](https://github.com/SocialGouv/1000jours/commit/55e2111e0184c71f49a2ba5eda87c57cee0b46ba))
+
 ## [1.119.2](https://github.com/SocialGouv/1000jours/compare/v1.119.1...v1.119.2) (2023-02-06)
 
 
