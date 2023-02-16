@@ -1,84 +1,70 @@
 import type { FC } from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 import {
-  EpdsGenderEntry,
-  EpdsOnboarding,
-  EpdsSurveyContent,
-} from "../../components";
-import { View } from "../../components/baseComponents";
+  CommonText,
+  CustomButton,
+  View,
+} from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import {
-  EpdsDbQueries,
-  FetchPoliciesConstants,
-  StorageKeysConstants,
-} from "../../constants";
-import { useAccessibilityReader } from "../../hooks";
-import { GraphQLQuery } from "../../services";
-import type { EpdsQuestionAndAnswers } from "../../type";
-import { EpdsSurveyUtils, StorageUtils, TrackerUtils } from "../../utils";
+import { Labels } from "../../constants";
+import { Margins } from "../../styles";
+import { LinkingUtils, TrackerUtils } from "../../utils";
 
 const TabEpdsScreen: FC = () => {
-  const [isOnboardingDone, setIsOnboardingDone] = useState(false);
-  const [isGenderEntered, setIsGenderEntered] = useState(false);
-  const [questionAndAnswers, setQuestionAndAnswers] = useState<
-    EpdsQuestionAndAnswers[]
-  >([]);
-  const isAccessibilityModeOn = useAccessibilityReader();
+  const onOpenWidget = useCallback(() => {
+    const EPDS_WIDGET_SOURCE = "1000j-application";
 
-  useEffect(() => {
-    const getGenderFromStorage = async () => {
-      const genderValue = await StorageUtils.getStringValue(
-        StorageKeysConstants.epdsGenderKey
-      );
-      setIsGenderEntered(Boolean(genderValue));
-    };
-    void getGenderFromStorage();
-  }, []);
-
-  const handleResults = useCallback((data: unknown) => {
-    setQuestionAndAnswers(EpdsSurveyUtils.getQuestionsAndAnswersFromData(data));
-  }, []);
-
-  const goToEpdsSurvey = useCallback(() => {
-    setIsGenderEntered(true);
-  }, []);
-
-  const onBoardingIsDone = useCallback(() => {
-    setIsOnboardingDone(true);
+    void LinkingUtils.openWebsite(
+      `${process.env.EPDS_WIDGET_URL}/?source=${EPDS_WIDGET_SOURCE}`,
+      false
+    );
   }, []);
 
   const getViewToDisplay = () => {
-    if (!isOnboardingDone)
-      return <EpdsOnboarding onBoardingIsDone={onBoardingIsDone} />;
-    if (!isGenderEntered)
-      return <EpdsGenderEntry goToEpdsSurvey={goToEpdsSurvey} />;
     return (
-      <EpdsSurveyContent
-        epdsSurvey={questionAndAnswers}
-        isAccessibilityModeOn={isAccessibilityModeOn}
-      />
+      <View style={styles.mainView}>
+        <CommonText style={styles.textDescription}>
+          {Labels.epdsSurvey.epdsPresentation.description}
+        </CommonText>
+        <CustomButton
+          title={Labels.epdsSurvey.epdsPresentation.button}
+          rounded
+          action={onOpenWidget}
+        />
+        <CommonText style={styles.textDescription}>
+          {Labels.epdsSurvey.epdsPresentation.tools}
+        </CommonText>
+        <CustomButton
+          title={Labels.epdsSurvey.epdsPresentation.button}
+          rounded
+          action={onOpenWidget}
+        />
+      </View>
     );
   };
 
   return (
-    <View style={styles.mainContainer}>
+    <ScrollView style={styles.mainContainer}>
       <TrackerHandler screenName={TrackerUtils.TrackingEvent.EPDS} />
-      <GraphQLQuery
-        query={EpdsDbQueries.EPDS_SURVEY}
-        fetchPolicy={FetchPoliciesConstants.NO_CACHE}
-        getFetchedData={handleResults}
-      />
       {getViewToDisplay()}
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    marginHorizontal: Margins.larger,
+  },
+  mainView: {
+    backgroundColor: "transparent",
+  },
+  textDescription: {
+    marginVertical: Margins.larger,
   },
 });
 
