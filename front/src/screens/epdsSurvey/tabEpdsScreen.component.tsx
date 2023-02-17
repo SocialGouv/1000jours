@@ -62,6 +62,11 @@ const TabEpdsScreen: FC = () => {
           {Labels.epdsSurvey.epdsPresentation.tools}
         </CommonText>
         {partnersBloc()}
+        <CustomButton
+          title={Labels.epdsSurvey.epdsPresentation.button}
+          rounded
+          action={onOpenWidget}
+        />
       </View>
     );
   };
@@ -69,20 +74,22 @@ const TabEpdsScreen: FC = () => {
     return (
       <View style={styles.logosPartners}>
         <Image source={MilleJours} style={styles.logoImage} />
+        <Image source={Cnaf} style={styles.logoImage} />
+        <Image source={Spf} style={styles.logoImage} />
+        <Image source={MonenfantFr} style={styles.logoImage} />
+
+        <Image source={MamanBlues} style={styles.logoImage} />
+        <Image source={ProsPetiteEnfance} style={styles.logoImage} />
+        <Image source={Orehane} style={styles.logoImage} />
+        <Image source={EnjoyFamily} style={styles.logoImage} />
+
+        <Image source={Wemoms} style={styles.logoImage} />
         <Image source={BibaMagazine} style={styles.logoImage} />
         <Image source={Bussy} style={styles.logoImage} />
-        <Image source={Cnaf} style={styles.logoImage} />
-        <Image source={Doctissimo} style={styles.logoImage} />
-        <Image source={EnjoyFamily} style={styles.logoImage} />
-        <Image source={MamanBlues} style={styles.logoImage} />
-        <Image source={MonenfantFr} style={styles.logoImage} />
         <Image source={Mpedia} style={styles.logoImage} />
-        <Image source={Orehane} style={styles.logoImage} />
         <Image source={Parents} style={styles.logoImage} />
+        <Image source={Doctissimo} style={styles.logoImage} />
         <Image source={Path} style={styles.logoImage} />
-        <Image source={ProsPetiteEnfance} style={styles.logoImage} />
-        <Image source={Spf} style={styles.logoImage} />
-        <Image source={Wemoms} style={styles.logoImage} />
       </View>
     );
   };
@@ -118,6 +125,7 @@ const styles = StyleSheet.create({
   },
   mainView: {
     backgroundColor: "transparent",
+    marginBottom: Margins.default,
   },
   textDescription: {
     marginVertical: Margins.larger,
