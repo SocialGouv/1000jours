@@ -277,7 +277,7 @@ export default {
     epdsPresentation: {
       button: "Ouvrir le questionnaire",
       description:
-        "Nous vous proposons d'accéder à notre outils vous permettant de vous quesitonner sur votre état mental.",
+        "Nous vous proposons d'accéder à notre outils vous permettant de vous questionner sur votre état mental.",
       tools:
         "Cet outil est reconnu dans le monde professionnel. Il est déjà présent sur de nombreux sites.",
     },

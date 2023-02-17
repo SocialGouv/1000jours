@@ -61,11 +61,6 @@ const TabEpdsScreen: FC = () => {
         <CommonText style={styles.textDescription}>
           {Labels.epdsSurvey.epdsPresentation.tools}
         </CommonText>
-        <CustomButton
-          title={Labels.epdsSurvey.epdsPresentation.button}
-          rounded
-          action={onOpenWidget}
-        />
         {partnersBloc()}
       </View>
     );
