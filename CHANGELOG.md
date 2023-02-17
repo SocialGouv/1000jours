@@ -1,3 +1,10 @@
+## [1.120.1](https://github.com/SocialGouv/1000jours/compare/v1.120.0...v1.120.1) (2023-02-17)
+
+
+### Bug Fixes
+
+* **contact:** ajout attributs ([#1623](https://github.com/SocialGouv/1000jours/issues/1623)) ([701ea81](https://github.com/SocialGouv/1000jours/commit/701ea81cd30494f06783532dd3d51f95c073e39d))
+
 # [1.120.0](https://github.com/SocialGouv/1000jours/compare/v1.119.2...v1.120.0) (2023-02-16)
 
 
