@@ -6,6 +6,7 @@ import * as EpdsAssets from "./epdsAssets.component";
 import * as FavoritesAssets from "./favoritesAssets.component";
 import * as MoodboardAssets from "./moodboardAssets.component";
 import * as OnBoardingAssets from "./onBoardingAssets.component";
+import * as PartnersAssets from "./partnersAssets.component";
 
 export {
   AddressDetailsAssets,
@@ -16,4 +17,5 @@ export {
   FavoritesAssets,
   MoodboardAssets,
   OnBoardingAssets,
+  PartnersAssets,
 };
