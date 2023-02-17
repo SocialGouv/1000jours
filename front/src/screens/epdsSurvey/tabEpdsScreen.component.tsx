@@ -12,7 +12,7 @@ import {
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels } from "../../constants";
-import { Margins, Sizes } from "../../styles";
+import { Colors, Margins, Paddings, Sizes } from "../../styles";
 import { LinkingUtils, TrackerUtils } from "../../utils";
 
 import MilleJours from "../../assets/images/partners/1000-premiers-jours.png";
@@ -104,7 +104,6 @@ const TabEpdsScreen: FC = () => {
 const styles = StyleSheet.create({
   logoBlues: {
     alignSelf: "center",
-    backgroundColor: "transparent",
     marginBottom: Margins.default,
   },
   logoImage: {
@@ -114,17 +113,16 @@ const styles = StyleSheet.create({
   },
   logosPartners: {
     alignSelf: "center",
-    backgroundColor: "transparent",
     flexDirection: "row",
     flexWrap: "wrap",
     marginVertical: Margins.default,
   },
   mainContainer: {
+    backgroundColor: Colors.white,
     flex: 1,
-    marginHorizontal: Margins.larger,
+    paddingHorizontal: Paddings.larger,
   },
   mainView: {
-    backgroundColor: "transparent",
     marginBottom: Margins.default,
   },
   textDescription: {
