@@ -1,12 +1,6 @@
+import type { FC } from "react";
 import * as React from "react";
-import {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AccessibilityInfo, StyleSheet, View } from "react-native";
 import type { DateData } from "react-native-calendars";
 import { Calendar, LocaleConfig } from "react-native-calendars";
@@ -22,19 +16,11 @@ import EditMoodDay from "./editMoodDay.component";
 
 const CALENDAR_MONTH_FORMAT = "MMMM yyyy";
 
-interface RefreshMoodCalendar {
-  refresh: () => void;
-}
-
-const MoodsCalendar: React.ForwardRefRenderFunction<RefreshMoodCalendar> = (
-  props,
-  forwardedRef
-) => {
+const MoodsCalendar: FC = () => {
   const [moods, setMoods] = useState<MoodStorageItem[]>();
   const [showEditModal, setShowEditModal] = useState(false);
   const [dateToEdit, setDateToEdit] = useState<string>();
   const [monthToDisplay, setMonthToDisplay] = useState(new Date().getMonth());
-  const calendarRef = useRef<Calendar>(null);
 
   const calenderTheme: Theme = {
     arrowColor: Colors.primaryBlue,
@@ -43,12 +29,6 @@ const MoodsCalendar: React.ForwardRefRenderFunction<RefreshMoodCalendar> = (
     textDayHeaderFontWeight: FontWeight.medium,
     textMonthFontSize: Sizes.xs,
   };
-
-  useImperativeHandle(forwardedRef, () => ({
-    async refresh() {
-      await findMoods();
-    },
-  }));
 
   const findMoods = useCallback(async () => {
     const moodsStorage: MoodStorageItem[] =
@@ -141,7 +121,6 @@ const MoodsCalendar: React.ForwardRefRenderFunction<RefreshMoodCalendar> = (
         markedDates={buildMarkedDatesForCalendar(moods)}
         renderArrow={renderMonthArrow}
         onMonthChange={onMonthChange}
-        ref={calendarRef}
       />
 
       <EditMoodDay
@@ -192,4 +171,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default forwardRef(MoodsCalendar);
+export default MoodsCalendar;

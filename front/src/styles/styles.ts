@@ -5,6 +5,14 @@ import Colors from "./colors";
 import { Paddings } from "./spacings";
 
 const Styles = {
+  modalFullScreen: {
+    mainContainer: {
+      backgroundColor: Colors.white,
+    },
+    scrollviewContent: {
+      padding: Paddings.default,
+    },
+  },
   modale: {
     behindOfModal: {
       backgroundColor: Colors.transparentGrey,

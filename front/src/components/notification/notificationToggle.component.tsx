@@ -32,7 +32,7 @@ const NotificationToggle: FC<Props> = ({
   type,
   events,
 }) => {
-  const [isToggleOn, setIsToggleOn] = useState<boolean>();
+  const [isToggleOn, setIsToggleOn] = useState<boolean>(false);
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
   const toggleKey = NotificationToggleUtils.getStorageKey(type);
 

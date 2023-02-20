@@ -3,24 +3,19 @@ import _ from "lodash";
 import type { FC } from "react";
 import * as React from "react";
 import { useCallback, useEffect } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, View } from "react-native";
 
 import { Labels, StorageKeysConstants } from "../../constants";
-import { Paddings } from "../../styles";
+import { Paddings, Styles } from "../../styles";
 import { NotificationUtils, StorageUtils } from "../../utils";
 import { NotificationType } from "../../utils/notifications/notification.util";
 import { getObjectValue } from "../../utils/storage.util";
 import { CustomButton, SecondaryText } from "../baseComponents";
-import ModalHtmlContent from "../baseComponents/modalHtmlContent.component";
 import H1 from "../html/h1.component";
 import H2 from "../html/h2.component";
 import H3 from "../html/h3.component";
 
-interface Props {
-  setIsVisible: (showMenu: boolean) => void;
-}
-
-const InfosDev: FC<Props> = ({ setIsVisible }) => {
+const InfosDev: FC = () => {
   const [showNotifSection, setShowNotifSection] = React.useState(false);
   const [notificationsCountByType, setNotificationsCountByType] =
     React.useState<_.Dictionary<number> | undefined>(undefined);
@@ -61,17 +56,15 @@ const InfosDev: FC<Props> = ({ setIsVisible }) => {
   const sendNotification = useCallback(
     (notificationType: NotificationType | string) => () => {
       void NotificationUtils.scheduleFakeNotif(notificationType);
-      setIsVisible(false);
     },
-    [setIsVisible]
+    []
   );
 
   const resetAllData = useCallback(async () => {
     await StorageUtils.clear();
     await NotificationUtils.cancelAllScheduledNotifications();
     Alert.alert(Labels.warning, Labels.infosDev.resetStorageDataAlertMsg);
-    setIsVisible(false);
-  }, [setIsVisible]);
+  }, []);
 
   useEffect(() => {
     void getAllScheduledNotifications();
@@ -110,8 +103,11 @@ const InfosDev: FC<Props> = ({ setIsVisible }) => {
     }
   };
 
-  const content = (
-    <View>
+  return (
+    <ScrollView
+      style={Styles.modalFullScreen.mainContainer}
+      contentContainerStyle={Styles.modalFullScreen.scrollviewContent}
+    >
       <H1 style={styles.textCenter}>{Labels.infosDev.title}</H1>
 
       <CustomButton
@@ -164,9 +160,8 @@ const InfosDev: FC<Props> = ({ setIsVisible }) => {
           SENTRY_ENABLED : {process.env.SENTRY_ENABLED}
         </SecondaryText>
       </View>
-    </View>
+    </ScrollView>
   );
-  return <ModalHtmlContent setIsVisible={setIsVisible} content={content} />;
 };
 
 const styles = StyleSheet.create({

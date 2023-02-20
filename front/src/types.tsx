@@ -15,7 +15,9 @@ export type RootStackParamList = {
   loading: undefined;
   legalNotice: undefined;
   conditionsOfUse: undefined;
+  accessibility: undefined;
   infosDev: undefined;
+  notificationsCenter: undefined;
 };
 
 export type BottomTabParamList = {

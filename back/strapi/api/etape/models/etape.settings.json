@@ -28,8 +28,8 @@
       "via": "etapes"
     },
     "articles": {
-      "collection": "article",
-      "via": "etapes"
+      "via": "etapes",
+      "collection": "article"
     },
     "evenements": {
       "via": "etapes",

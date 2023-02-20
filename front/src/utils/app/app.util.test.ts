@@ -80,11 +80,11 @@ describe("App utils", () => {
     });
 
     it("should return true when the app has been opened 3 times", () => {
-      expect(AppUtils.shouldTriggerInAppReview(1)).toBeTruthy();
+      expect(AppUtils.shouldTriggerInAppReview(3)).toBeTruthy();
     });
 
     it("should return true when the app has been opened more than 3 times", () => {
-      expect(AppUtils.shouldTriggerInAppReview(2)).toBeTruthy();
+      expect(AppUtils.shouldTriggerInAppReview(4)).toBeTruthy();
     });
   });
 
@@ -100,7 +100,7 @@ describe("App utils", () => {
     });
 
     it("should store in-app review trigger when app has been opened 3 times and review not triggered yet", async () => {
-      await AppUtils.handleInAppReviewPopup(1);
+      await AppUtils.handleInAppReviewPopup(3);
 
       expect(inAppReviewSpy).toHaveBeenCalledTimes(1);
       await StorageUtils.getObjectValue(
