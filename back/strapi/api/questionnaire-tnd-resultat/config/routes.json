@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/questionnaire-tnd-resultats",
+      "handler": "questionnaire-tnd-resultat.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/questionnaire-tnd-resultats/count",
+      "handler": "questionnaire-tnd-resultat.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/questionnaire-tnd-resultats/:id",
+      "handler": "questionnaire-tnd-resultat.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/questionnaire-tnd-resultats",
+      "handler": "questionnaire-tnd-resultat.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/questionnaire-tnd-resultats/:id",
+      "handler": "questionnaire-tnd-resultat.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/questionnaire-tnd-resultats/:id",
+      "handler": "questionnaire-tnd-resultat.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
