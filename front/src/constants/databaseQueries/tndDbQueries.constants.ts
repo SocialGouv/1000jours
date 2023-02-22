@@ -1,3 +1,14 @@
+export const GET_ONBOARDING = /* GraphQL */ `
+  query QuestionnaireTndIntroduction {
+    questionnaireTndIntroduction {
+      titre
+      description
+      texte1: texte_1
+      texte2: texte_2
+    }
+  }
+`;
+
 export const GET_ALL_TND_TESTS = /* GraphQL */ `
   query QuestionnaireTnds {
     questionnaireTnds(sort: "ordre") {
@@ -5,6 +16,12 @@ export const GET_ALL_TND_TESTS = /* GraphQL */ `
       id
       alerteNbNon: alerte_nb_non
       alerteNbDomaine: alerte_nb_domaine
+      resultat: questionnaire_tnd_resultat {
+        titre
+        description
+        texteRas: texte_ras
+        texteAlerte: texte_alerte
+      }
     }
   }
 `;
@@ -27,6 +44,12 @@ export const GET_TND_TEST = (id: number): string /* GraphQL */ => `
       }
       alerteNbNon: alerte_nb_non
       alerteNbDomaine: alerte_nb_domaine
+      resultat: questionnaire_tnd_resultat {
+        titre
+        description
+        texteRas: texte_ras
+        texteAlerte: texte_alerte
+      }
     }
   }
 `;

@@ -45,8 +45,9 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
   const articleId: number = route ? route.params.id : 0;
 
   const CAROUSEL_MAX_ITEM_TO_RENDER = 3;
-  const CAROUSEL_PARALLAX_OFFSET = 45;
   const CAROUSEL_PARALLAX_SCALE = 0.9;
+  const CAROUSEL_PARALLAX_OFFSET =
+    (SCREEN_WIDTH - SCREEN_WIDTH * CAROUSEL_PARALLAX_SCALE) * 1.2;
 
   const firstItemIndexToShow = articles.findIndex(
     (item) => item.id == articleId

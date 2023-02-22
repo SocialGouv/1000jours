@@ -1,8 +1,18 @@
 import * as React from "react";
+import { useCallback, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
+import HTML from "react-native-render-html";
+import WebView from "react-native-webview";
 
-import { Labels } from "../../../constants";
+import {
+  FetchPoliciesConstants,
+  Labels,
+  TndDbQueries,
+} from "../../../constants";
+import { SCREEN_WIDTH } from "../../../constants/platform.constants";
+import { GraphQLQuery } from "../../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../../styles";
+import type { TndQuestionnaireIntroduction } from "../../../type/tndSurvey.types";
 import { EpdsAssets } from "../../assets";
 import {
   CommonText,
@@ -17,6 +27,9 @@ interface Props {
 }
 
 const TndOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
+  const [intro, setIntro] = useState<TndQuestionnaireIntroduction | undefined>(
+    undefined
+  );
   const getIcon = (index: number) => {
     const iconsMap = new Map<number, React.ReactNode>();
     iconsMap.set(0, <EpdsAssets.IconeRepondreQuestions />);
@@ -25,21 +38,12 @@ const TndOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
     return iconsMap.get(index);
   };
 
-  const getDescriptionWithBoldWords = (
-    boldIndexes: number[],
-    label: string
-  ) => {
-    return label.split(" ").map((eachWord: string, index: number) => {
-      return (
-        <SecondaryText
-          key={`text_${index}`}
-          style={boldIndexes.includes(index) && styles.fontBold}
-        >
-          {eachWord}{" "}
-        </SecondaryText>
-      );
-    });
-  };
+  const handleResults = useCallback((data: unknown) => {
+    const result = data as {
+      questionnaireTndIntroduction: TndQuestionnaireIntroduction;
+    };
+    setIntro(result.questionnaireTndIntroduction);
+  }, []);
 
   const renderStep = (label: string, index: number) => {
     return (
@@ -77,56 +81,56 @@ const TndOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
       style={styles.mainContainer}
       contentContainerStyle={styles.mainContentContainer}
     >
-      <TitleH1
-        title={Labels.tndSurvey.onboarding.title}
-        animated={false}
-        description={Labels.tndSurvey.onboarding.description}
-        style={styles.mainTitle}
+      <GraphQLQuery
+        query={TndDbQueries.GET_ONBOARDING}
+        fetchPolicy={FetchPoliciesConstants.NO_CACHE}
+        getFetchedData={handleResults}
       />
-      <SecondaryText style={styles.paragraphTitle}>
-        {Labels.tndSurvey.onboarding.steps.title}
-      </SecondaryText>
-      <View style={styles.stepsContainer}>
-        {Labels.tndSurvey.onboarding.steps.elements.map((label, index) =>
-          renderStep(label, index)
-        )}
-      </View>
-      <SecondaryText style={styles.reminder}>
-        {Labels.tndSurvey.onboarding.reminder}
-      </SecondaryText>
-      <View style={styles.validateButton}>
-        <CustomButton
-          title={Labels.buttons.start}
-          titleStyle={styles.fontButton}
-          rounded={true}
-          disabled={false}
-          action={onBoardingIsDone}
-        />
-      </View>
-
-      <View style={styles.descriptionEpdsContainer}>
-        <TitleH1 title={Labels.tndSurvey.onboarding.title} animated={false} />
-        {Labels.epdsSurvey.onboarding.paragraphs.map((paragraph, index) => (
-          <View key={index}>
-            <SecondaryText style={styles.paragraph}>
-              <SecondaryText style={styles.paragraphTitle}>
-                {paragraph.title}
-                {" :"}
-              </SecondaryText>
-              {getDescriptionWithBoldWords(
-                paragraph.boldIndexes,
-                paragraph.description
-              )}
-            </SecondaryText>
+      {intro && (
+        <>
+          <TitleH1
+            title={intro.titre}
+            animated={false}
+            description={intro.description}
+            style={styles.mainTitle}
+          />
+          <SecondaryText style={styles.paragraphTitle}>
+            {Labels.tndSurvey.onboarding.steps.title}
+          </SecondaryText>
+          <View style={styles.stepsContainer}>
+            {Labels.tndSurvey.onboarding.steps.elements.map((label, index) =>
+              renderStep(label, index)
+            )}
           </View>
-        ))}
-      </View>
+          <HTML
+            WebView={WebView}
+            source={{ html: intro.texte1 }}
+            contentWidth={SCREEN_WIDTH}
+          />
+          <View style={styles.validateButton}>
+            <CustomButton
+              title={Labels.buttons.start}
+              titleStyle={styles.fontButton}
+              rounded={true}
+              disabled={false}
+              action={onBoardingIsDone}
+            />
+          </View>
+          <View style={styles.descriptionSurveyContainer}>
+            <HTML
+              WebView={WebView}
+              source={{ html: intro.texte2 }}
+              contentWidth={SCREEN_WIDTH}
+            />
+          </View>
+        </>
+      )}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  descriptionEpdsContainer: {
+  descriptionSurveyContainer: {
     borderBottomColor: Colors.borderGrey,
     borderLeftColor: Colors.primaryBlueDark,
     borderLeftWidth: 4,

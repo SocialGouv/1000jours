@@ -17,6 +17,23 @@ export interface TndQuestionnaireDomaine {
   questions: TndQuestionnaireQuestion[];
 }
 
+export interface TndQuestionnaireIntroduction {
+  id: number;
+  titre: string;
+  description: string;
+  texte1: string;
+  texte2: string;
+}
+
+export interface TndQuestionnaireResultat {
+  id: number;
+  nom: string;
+  titre: string;
+  description: string;
+  texteRas: string;
+  texteAlerte: string;
+}
+
 export interface TndQuestionnaire {
   id: number;
   nom: string;
@@ -24,6 +41,7 @@ export interface TndQuestionnaire {
   ordre: number;
   alerteNbNon: number;
   alerteNbDomaine: number;
+  resultat?: TndQuestionnaireResultat;
   isChecked?: boolean;
 }
 

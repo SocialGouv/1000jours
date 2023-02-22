@@ -13,28 +13,24 @@ import {
 } from "../../../constants";
 import TndSurveyResult from "../../../screens/tndSurvey/tndSurveyResult.component";
 import { GraphQLQuery } from "../../../services";
-import { Colors, FontStyle, Margins, Paddings, Sizes } from "../../../styles";
+import { Colors, FontStyle, Margins, Sizes } from "../../../styles";
 import type { SurveyAnswer, SurveyQuestionAndAnswers } from "../../../type";
 import type { TndQuestionnaire } from "../../../type/tndSurvey.types";
 import { TndSurveyUtils } from "../../../utils";
 import { TrackingEvent } from "../../../utils/tracking/tracker.util";
-import { CommonText, CustomButton, TitleH1, View } from "../../baseComponents";
+import { CommonText, TitleH1, View } from "../../baseComponents";
 import SurveyFooter from "../surveyFooter.component";
 import SurveyQuestionsList from "../surveyQuestionsList.component";
 import SurveyQuestionsPagination from "../surveyQuestionsPagination.component";
 
 interface Props {
   tndQuestionnaire: TndQuestionnaire;
-  setSelectedTndTest: React.Dispatch<
-    React.SetStateAction<TndQuestionnaire | undefined>
-  >;
   isAccessibilityModeOn: boolean;
 }
 
 const TndSurveyContent: React.FC<Props> = ({
   tndQuestionnaire,
   isAccessibilityModeOn,
-  setSelectedTndTest,
 }) => {
   const [swiperCurrentIndex, setSwiperCurrentIndex] = useState(0);
   const swiperRef = useRef<SwiperFlatList>(null);
@@ -69,11 +65,6 @@ const TndSurveyContent: React.FC<Props> = ({
     setSwiperCurrentIndex(0);
     setShowResult(false);
   }, []);
-
-  const goToTestSelection = useCallback(() => {
-    setQuestionsAndAnswers([]);
-    setSelectedTndTest(undefined);
-  }, [setSelectedTndTest]);
 
   const questionIsAnswered =
     questionsAndAnswers[swiperCurrentIndex]?.isAnswered;
@@ -146,18 +137,6 @@ const TndSurveyContent: React.FC<Props> = ({
             <CommonText style={[styles.marginHorizontal, styles.instruction]}>
               {Labels.tndSurvey.surveyContent.instruction}
             </CommonText>
-            <CustomButton
-              title={Labels.tndSurvey.surveyContent.selectAnotherTest}
-              rounded={true}
-              titleStyle={{ color: Colors.primaryBlue, fontSize: Sizes.xs }}
-              buttonStyle={{
-                backgroundColor: Colors.white,
-                borderColor: Colors.primaryBlue,
-                borderWidth: 1,
-                marginVertical: Paddings.default,
-              }}
-              action={goToTestSelection}
-            />
             <View style={styles.surveyContainer}>
               <SurveyQuestionsList
                 survey={questionsAndAnswers}

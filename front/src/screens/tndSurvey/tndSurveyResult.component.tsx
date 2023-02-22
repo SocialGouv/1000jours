@@ -1,23 +1,26 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import type { FC } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
+import HTML from "react-native-render-html";
+import WebView from "react-native-webview";
 
+import { ArticleCard } from "../../components";
+import { CommonText, TitleH1, View } from "../../components/baseComponents";
 import {
-  CustomSnackbar,
-  SecondaryText,
-  TitleH1,
-  View,
-} from "../../components/baseComponents";
-import EpdsResultInformation from "../../components/survey/epdsSurvey/epdsResultInformation/epdsResultInformation.component";
-import { Labels, TndDbQueries } from "../../constants";
-import { useAccessibilityReader } from "../../hooks";
-import { GraphQLMutation } from "../../services";
+  FetchPoliciesConstants,
+  HomeDbQueries,
+  Labels,
+  TndDbQueries,
+} from "../../constants";
+import { SCREEN_WIDTH } from "../../constants/platform.constants";
+import { GraphQLMutation, GraphQLQuery } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { SurveyQuestionAndAnswers } from "../../type";
 import type { TndAnswers, TndQuestionnaire } from "../../type/tndSurvey.types";
+import type { Article } from "../../types";
 import { TndSurveyUtils } from "../../utils";
 
 interface Props {
@@ -30,12 +33,10 @@ interface Props {
 const TndSurveyResult: FC<Props> = ({ survey, tndQuestionnaire }) => {
   const [queryVariables, setQueryVariables] = useState<unknown>();
   const [triggerLaunchQuery, setTriggerLaunchQuery] = useState(false);
-  const [showSnackBar, setShowSnackBar] = useState(false);
   const [tndAnswers, setTndAnswers] = useState<TndAnswers | undefined>(
     undefined
   );
-  const scrollRef = useRef<ScrollView>(null);
-  const isAccessibilityModeOn = useAccessibilityReader();
+  const [handicapArticles, setHandicapArticles] = useState<Article[]>([]);
 
   const saveSurveyResults = () => {
     const answers = TndSurveyUtils.formatTndResponses(tndQuestionnaire, survey);
@@ -51,26 +52,34 @@ const TndSurveyResult: FC<Props> = ({ survey, tndQuestionnaire }) => {
     setTriggerLaunchQuery(!triggerLaunchQuery);
   };
 
+  const handleResults = useCallback((data: unknown) => {
+    const result = data as { articles: Article[] };
+    setHandicapArticles(result.articles);
+  }, []);
+
   useEffect(() => {
     saveSurveyResults();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onHideSnackBar = useCallback(() => {
-    setShowSnackBar(false);
-  }, []);
-
   const getTextToDisplay = useCallback(() => {
-    return tndAnswers ? (
-      <View style={styles.surveyResultTextContainer}>
-        <SecondaryText style={[styles.text, styles.fontBold]}>
-          {tndAnswers.signesAlerte
-            ? Labels.tndSurvey.surveyResult.warningText
-            : Labels.tndSurvey.surveyResult.text}
-        </SecondaryText>
-      </View>
-    ) : null;
-  }, [tndAnswers]);
+    if (tndAnswers && tndQuestionnaire.resultat) {
+      console.log(tndQuestionnaire);
+      const html = tndAnswers.signesAlerte
+        ? tndQuestionnaire.resultat.texteAlerte
+        : tndQuestionnaire.resultat.texteRas;
+      return (
+        <View style={styles.surveyResultTextContainer}>
+          <HTML
+            WebView={WebView}
+            source={{ html: html }}
+            contentWidth={SCREEN_WIDTH}
+          />
+        </View>
+      );
+    }
+    return null;
+  }, [tndAnswers, tndQuestionnaire]);
 
   return (
     <>
@@ -79,29 +88,36 @@ const TndSurveyResult: FC<Props> = ({ survey, tndQuestionnaire }) => {
         variables={queryVariables}
         triggerLaunchMutation={triggerLaunchQuery}
       />
-      <ScrollView ref={scrollRef}>
-        <TitleH1
-          title={Labels.tndSurvey.surveyResult.title}
-          description={Labels.tndSurvey.surveyResult.description}
-          animated={true}
-          style={styles.marginHorizontal}
-        />
-        {getTextToDisplay()}
-        <EpdsResultInformation
-          leftBorderColor={Colors.primaryBlue}
-          informationList={Labels.epdsSurveyLight.professionalsList}
-          scrollRef={scrollRef}
-        />
-      </ScrollView>
-      <CustomSnackbar
-        isAccessibilityModeOn={isAccessibilityModeOn}
-        visible={showSnackBar}
-        isOnTop={false}
-        backgroundColor={Colors.aroundMeSnackbar.background}
-        onDismiss={onHideSnackBar}
-        textColor={Colors.aroundMeSnackbar.text}
-        text={Labels.epdsSurvey.beContacted.beContactedSent}
+      <GraphQLQuery
+        query={HomeDbQueries.LIST_ARTICLES_HANDICAP}
+        fetchPolicy={FetchPoliciesConstants.NO_CACHE}
+        getFetchedData={handleResults}
       />
+      <ScrollView>
+        {tndQuestionnaire.resultat?.titre && (
+          <TitleH1
+            title={tndQuestionnaire.resultat.titre}
+            description={tndQuestionnaire.resultat.description}
+            animated={true}
+            style={styles.marginHorizontal}
+          />
+        )}
+        {getTextToDisplay()}
+
+        <View style={styles.listArticles}>
+          <CommonText style={styles.listArticlesTitle}>
+            {Labels.tndSurvey.surveyResult.articlesToRead}
+          </CommonText>
+          {handicapArticles.map((article, index) => (
+            <View key={index}>
+              <ArticleCard
+                selectedArticleId={article.id}
+                articles={handicapArticles}
+              />
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     </>
   );
 };
@@ -114,6 +130,17 @@ const styles = StyleSheet.create({
     fontSize: Sizes.md,
     textTransform: "uppercase",
   },
+  listArticles: {
+    paddingBottom: Paddings.light,
+    paddingHorizontal: Paddings.default,
+  },
+  listArticlesTitle: {
+    color: Colors.secondaryGreen,
+    fontSize: Sizes.xs,
+    fontStyle: "italic",
+    paddingTop: Paddings.default,
+    paddingVertical: Paddings.smaller,
+  },
   marginHorizontal: {
     marginHorizontal: Margins.default,
   },
@@ -122,13 +149,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginHorizontal: Margins.default,
   },
-  stateOfMind: {
-    alignSelf: "center",
-    fontSize: Sizes.sm,
-    fontWeight: FontWeight.bold,
-    paddingHorizontal: Paddings.default,
-  },
   surveyResultTextContainer: {
+    paddingHorizontal: Paddings.default,
     paddingVertical: Paddings.default,
   },
   text: {

@@ -36,7 +36,6 @@ const TndSurveyScreen: FC = () => {
     return (
       <TndSurveyContent
         tndQuestionnaire={selectedTndTest}
-        setSelectedTndTest={setSelectedTndTest}
         isAccessibilityModeOn={isAccessibilityModeOn}
       />
     );

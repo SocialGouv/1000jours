@@ -772,15 +772,10 @@ export default {
   },
   tndSurvey: {
     onboarding: {
-      description:
-        "Détecter les signes d’un développement inhabituel chez les enfants de moins de 7 ans",
-      reminder:
-        "Ce questionnaire n'est pas un diagnostic et ne remplace pas un professionnel de la santé.",
       steps: {
         elements: ["Se questionner", "Trouver une\naide adaptée"],
         title: "Étapes :",
       },
-      title: "Repérage des troubles du neuro-développement (TND)",
     },
     surveyContent: {
       instruction:
@@ -790,6 +785,7 @@ export default {
         "Détecter les signes d’un développement inhabituel chez les enfants de moins de 7 ans",
     },
     surveyResult: {
+      articlesToRead: "Articles à lire :",
       description:
         "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.",
       text: "Texte lorsqu'il n'y a pas de signes d'alerte.",
