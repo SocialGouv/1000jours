@@ -43,7 +43,8 @@
       "enum": [
         "sms",
         "email",
-        "chat"
+        "chat",
+        "rendez-vous"
       ]
     },
     "personne_accompagnee": {

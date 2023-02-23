@@ -16,7 +16,8 @@
       "enum": [
         "sms",
         "email",
-        "chat"
+        "chat",
+        "rendez-vous"
       ]
     },
     "widget_epds_source": {
