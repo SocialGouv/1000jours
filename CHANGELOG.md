@@ -1,3 +1,10 @@
+## [1.121.1](https://github.com/SocialGouv/1000jours/compare/v1.121.0...v1.121.1) (2023-02-27)
+
+
+### Bug Fixes
+
+* renommer la branche afin de respecter la semantique pour la pipeline ([f50e634](https://github.com/SocialGouv/1000jours/commit/f50e6344d303f4d783986ccc2c66d9712fc9ca53))
+
 # [1.121.0](https://github.com/SocialGouv/1000jours/compare/v1.120.1...v1.121.0) (2023-02-20)
 
 
