@@ -112,13 +112,12 @@ const TndTestSelection: FC<TndTestSelectionProps> = ({ goToSurvey }) => {
 
 const styles = StyleSheet.create({
   answers: {
-    paddingHorizontal: Paddings.largest,
+    paddingHorizontal: Paddings.default,
   },
   instruction: {
     color: Colors.primaryBlueDark,
     fontSize: Sizes.sm,
     fontWeight: FontWeight.medium,
-    paddingHorizontal: Paddings.largest,
     paddingVertical: Paddings.default,
   },
   mainContainer: {

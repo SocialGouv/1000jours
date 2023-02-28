@@ -64,7 +64,6 @@ const TndSurveyResult: FC<Props> = ({ survey, tndQuestionnaire }) => {
 
   const getTextToDisplay = useCallback(() => {
     if (tndAnswers && tndQuestionnaire.resultat) {
-      console.log(tndQuestionnaire);
       const html = tndAnswers.signesAlerte
         ? tndQuestionnaire.resultat.texteAlerte
         : tndQuestionnaire.resultat.texteRas;
@@ -103,20 +102,21 @@ const TndSurveyResult: FC<Props> = ({ survey, tndQuestionnaire }) => {
           />
         )}
         {getTextToDisplay()}
-
-        <View style={styles.listArticles}>
-          <CommonText style={styles.listArticlesTitle}>
-            {Labels.tndSurvey.surveyResult.articlesToRead}
-          </CommonText>
-          {handicapArticles.map((article, index) => (
-            <View key={index}>
-              <ArticleCard
-                selectedArticleId={article.id}
-                articles={handicapArticles}
-              />
-            </View>
-          ))}
-        </View>
+        {handicapArticles.length > 0 && (
+          <View style={styles.listArticles}>
+            <CommonText style={styles.listArticlesTitle}>
+              {Labels.tndSurvey.surveyResult.articlesToRead}
+            </CommonText>
+            {handicapArticles.map((article, index) => (
+              <View key={index}>
+                <ArticleCard
+                  selectedArticleId={article.id}
+                  articles={handicapArticles}
+                />
+              </View>
+            ))}
+          </View>
+        )}
       </ScrollView>
     </>
   );
