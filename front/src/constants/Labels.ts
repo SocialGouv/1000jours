@@ -586,7 +586,7 @@ export default {
     parentheque: "Parenthèque",
     recommendApp: "Recommander l'application",
     title: "Menu",
-    tndSurvey: "Repérage TND",
+    tndSurvey: "Repérage handicap",
   },
   moodboard: {
     completeMoodboard:
