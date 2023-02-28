@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { StorageKeysConstants } from "../../../constants";
-import type { BeContactedData } from "../../../type/epdsSurvey.types";
+import { StorageKeysConstants } from "../../../../constants";
+import type { BeContactedData } from "../../../../type/epdsSurvey.types";
 import * as BeContactedForm from "./beContactedForm.component";
 
 describe("BeContactedForm component", () => {

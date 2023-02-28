@@ -26,7 +26,8 @@ import {
   Onboarding,
   Profile,
 } from "../screens";
-import { Colors, Paddings, Sizes } from "../styles";
+import TndSurveyScreen from "../screens/tndSurvey/tndSurveyScreen.component";
+import { Colors, FontWeight, Paddings, Sizes } from "../styles";
 import type { RootStackParamList } from "../types";
 import { getAppTheme } from "../utils";
 import { navigationRef } from "../utils/rootNavigation.util";
@@ -103,10 +104,18 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => {
   };
 
   const modalScreenOptions: StackNavigationOptions = {
-    headerBackAccessibilityLabel: Labels.buttons.back,
-    headerBackTitle: Labels.buttons.back,
+    headerBackAccessibilityLabel: Labels.buttons.close,
+    headerBackImage: () => <Icomoon name={IcomoonIcons.fermer} />,
+    headerBackTitle: Labels.buttons.close,
+    headerBackTitleStyle: {
+      fontWeight: FontWeight.semibold,
+      paddingLeft: Paddings.smaller,
+    },
     headerBackTitleVisible: true,
-    headerTintColor: Colors.secondaryGreen,
+    headerLeftContainerStyle: {
+      paddingLeft: Paddings.smaller,
+    },
+    headerTintColor: Colors.primaryBlueDark,
     headerTitle: "",
     presentation: "modal",
   };
@@ -136,6 +145,7 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => {
           name="notificationsCenter"
           component={NotificationsCenter}
         />
+        <Stack.Screen name="tndSurvey" component={TndSurveyScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );

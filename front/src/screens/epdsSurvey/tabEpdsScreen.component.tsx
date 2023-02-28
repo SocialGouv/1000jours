@@ -1,19 +1,8 @@
 import type { FC } from "react";
 import { useCallback } from "react";
 import * as React from "react";
-import { StyleSheet, Image } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-
-import { PartnersAssets } from "../../components/assets";
-import {
-  CommonText,
-  CustomButton,
-  View,
-} from "../../components/baseComponents";
-import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { Labels } from "../../constants";
-import { Colors, Margins, Paddings, Sizes } from "../../styles";
-import { LinkingUtils, TrackerUtils } from "../../utils";
 
 import MilleJours from "../../assets/images/partners/1000-premiers-jours.png";
 import BibaMagazine from "../../assets/images/partners/bibamagazine.jpg";
@@ -30,6 +19,16 @@ import Path from "../../assets/images/partners/path.png";
 import ProsPetiteEnfance from "../../assets/images/partners/pros-petite-enfance.png";
 import Spf from "../../assets/images/partners/spf.jpeg";
 import Wemoms from "../../assets/images/partners/wemoms.png";
+import { PartnersAssets } from "../../components/assets";
+import {
+  CommonText,
+  CustomButton,
+  View,
+} from "../../components/baseComponents";
+import TrackerHandler from "../../components/tracker/trackerHandler.component";
+import { Labels } from "../../constants";
+import { Colors, Margins, Paddings, Sizes } from "../../styles";
+import { LinkingUtils, TrackerUtils } from "../../utils";
 
 const TabEpdsScreen: FC = () => {
   const onOpenWidget = useCallback(() => {

@@ -27,6 +27,10 @@
     },
     "ordre": {
       "type": "integer"
+    },
+    "questionnaire_tnd_resultat": {
+      "model": "questionnaire-tnd-resultat",
+      "via": "questionnaire_tnds"
     }
   }
 }

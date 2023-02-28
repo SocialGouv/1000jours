@@ -3,30 +3,33 @@ import { useCallback } from "react";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import type { SwiperFlatListRefProps } from "react-native-swiper-flatlist/src/components/SwiperFlatList/SwiperFlatListProps";
 
-import type { EpdsAnswer, EpdsQuestionAndAnswers } from "../../type";
-import EpdsQuestion from "./epdsQuestion.component";
+import type { SurveyAnswer, SurveyQuestionAndAnswers } from "../../type";
+import type { TrackingEvent } from "../../utils/tracking/tracker.util";
+import SurveyQuestion from "./surveyQuestion.component";
 
-interface EpdsSurveyQuestionsListProps {
-  epdsSurvey: EpdsQuestionAndAnswers[];
+interface SurveyQuestionsListProps {
+  survey: SurveyQuestionAndAnswers[];
   swiperRef: React.RefObject<SwiperFlatListRefProps>;
   swiperCurrentIndex: number;
-  saveCurrentSurvey: (value: number) => void;
-  updatePressedAnswer: (answer: EpdsAnswer) => void;
+  updatePressedAnswer: (answer: SurveyAnswer) => void;
   isAccessibilityModeOn: boolean;
+  trackingEvent: TrackingEvent;
+  saveCurrentSurvey?: (value: number) => void;
 }
 
-const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
-  epdsSurvey,
+const SurveyQuestionsList: React.FC<SurveyQuestionsListProps> = ({
+  survey,
   swiperRef,
   swiperCurrentIndex,
-  saveCurrentSurvey,
   updatePressedAnswer,
   isAccessibilityModeOn,
+  trackingEvent,
+  saveCurrentSurvey,
 }) => {
   const [nextButtonState, setNextButtonState] = React.useState(false);
   const onSwiperIndexChanged = useCallback(
     (item: { index: number; prevIndex: number }) => {
-      saveCurrentSurvey(item.index);
+      if (saveCurrentSurvey) saveCurrentSurvey(item.index);
       setNextButtonState(!nextButtonState);
     },
     [nextButtonState, saveCurrentSurvey]
@@ -35,12 +38,13 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
   return (
     <>
       {isAccessibilityModeOn ? (
-        <EpdsQuestion
+        <SurveyQuestion
           key={swiperCurrentIndex}
-          totalNumberOfQuestions={epdsSurvey.length}
-          questionAndAnswers={epdsSurvey[swiperCurrentIndex]}
+          totalNumberOfQuestions={survey.length}
+          questionAndAnswers={survey[swiperCurrentIndex]}
           updatePressedAnswer={updatePressedAnswer}
           nextButtonState={nextButtonState}
+          trackingEvent={trackingEvent}
         />
       ) : (
         <SwiperFlatList
@@ -51,13 +55,14 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
           disableGesture
           importantForAccessibility="no"
         >
-          {epdsSurvey.map((questionView, questionIndex) => (
-            <EpdsQuestion
+          {survey.map((questionView, questionIndex) => (
+            <SurveyQuestion
               key={questionIndex}
-              totalNumberOfQuestions={epdsSurvey.length}
+              totalNumberOfQuestions={survey.length}
               questionAndAnswers={questionView}
               updatePressedAnswer={updatePressedAnswer}
               nextButtonState={nextButtonState}
+              trackingEvent={trackingEvent}
             />
           ))}
         </SwiperFlatList>
@@ -66,4 +71,4 @@ const EpdsSurveyQuestionsList: React.FC<EpdsSurveyQuestionsListProps> = ({
   );
 };
 
-export default EpdsSurveyQuestionsList;
+export default SurveyQuestionsList;

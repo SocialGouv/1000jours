@@ -26,9 +26,6 @@ import Title from "./article/title.component";
 import CustomDivider from "./baseComponents/customDivider.component";
 import Events from "./calendar/events.component";
 import DocumentCard from "./document/documentCard.component";
-import EpdsGenderEntry from "./epdsSurvey/epdsGenderEntry.component";
-import EpdsOnboarding from "./epdsSurvey/epdsOnboarding.component";
-import EpdsSurveyContent from "./epdsSurvey/epdsSurveyContent.component";
 import ParenthequeItem from "./home/parenthequeItem.component";
 import ConditionsOfUse from "./menu/conditionsOfUse.component";
 import InfosDev from "./menu/infosDev.component";
@@ -52,6 +49,13 @@ import TabParenthequeVideos from "./parentheque/tabs/tabParenthequeVideos.compon
 import VideoCard from "./parentheque/video/videoCard.component";
 import AroundMePoiList from "./search/aroundMePoiList.component";
 import StoreCurrentStepArticleIds from "./storage/storeCurrentStepArticleIds.component";
+import EpdsGenderEntry from "./survey/epdsSurvey/epdsGenderEntry.component";
+import EpdsOnboarding from "./survey/epdsSurvey/epdsOnboarding.component";
+import EpdsSurveyContent from "./survey/epdsSurvey/epdsSurveyContent.component";
+import TndSurveyQuestionsList from "./survey/surveyQuestionsList.component";
+import TndOnboarding from "./survey/tndSurvey/tndOnboarding.component";
+import TndSurveyContent from "./survey/tndSurvey/tndSurveyContent.component";
+import TndTestSelection from "./survey/tndSurvey/tndTestSelection.component";
 import StepIcon from "./timeline/stepIcon.component";
 import TimelineStep from "./timeline/timelineStep.component";
 
@@ -109,6 +113,10 @@ export {
   Thematics,
   TimelineStep,
   Title,
+  TndOnboarding,
+  TndSurveyContent,
+  TndSurveyQuestionsList,
+  TndTestSelection,
   UpdateChildBirthdayModal,
   VideoCard,
 };

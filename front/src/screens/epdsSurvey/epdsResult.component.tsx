@@ -14,8 +14,8 @@ import {
   TitleH1,
   View,
 } from "../../components/baseComponents";
-import EpdsResultContactMamanBlues from "../../components/epdsSurvey/epdsResultContactMamanBlues.component";
-import EpdsResultInformation from "../../components/epdsSurvey/epdsResultInformation/epdsResultInformation.component";
+import EpdsResultContactMamanBlues from "../../components/survey/epdsSurvey/epdsResultContactMamanBlues.component";
+import EpdsResultInformation from "../../components/survey/epdsSurvey/epdsResultInformation/epdsResultInformation.component";
 import {
   EpdsConstants,
   EpdsDbQueries,
@@ -25,12 +25,12 @@ import {
 import { useAccessibilityReader } from "../../hooks";
 import { GraphQLMutation } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
-import type { EpdsQuestionAndAnswers } from "../../type";
+import type { SurveyQuestionAndAnswers } from "../../type";
 import { EpdsSurveyUtils, NotificationUtils, StorageUtils } from "../../utils";
 
 interface Props {
   result: number;
-  epdsSurvey: EpdsQuestionAndAnswers[];
+  epdsSurvey: SurveyQuestionAndAnswers[];
   showBeContactedButton: boolean;
   lastQuestionHasThreePointsAnswer: boolean;
   startSurveyOver: () => void;

@@ -28,6 +28,7 @@ import * as StepUtils from "./step/step.util";
 import * as StorageUtils from "./storage.util";
 import * as StringUtils from "./strings/strings.util";
 import { getAppTheme } from "./theme.util";
+import * as TndSurveyUtils from "./tndSurvey.util";
 import * as TrackerUtils from "./tracking/tracker.util";
 import { getVisuelFormat, VisuelFormat } from "./visuel.util";
 
@@ -64,6 +65,7 @@ export {
   StepUtils,
   StorageUtils,
   StringUtils,
+  TndSurveyUtils,
   TrackerUtils,
   VisuelFormat,
 };

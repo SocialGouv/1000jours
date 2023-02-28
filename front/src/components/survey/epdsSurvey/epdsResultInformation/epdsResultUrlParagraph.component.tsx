@@ -2,7 +2,7 @@ import * as React from "react";
 import { useCallback, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-import { TIMEOUT_FOCUS } from "../../../constants/accessibility.constants";
+import { TIMEOUT_FOCUS } from "../../../../constants/accessibility.constants";
 import {
   Colors,
   FontNames,
@@ -10,12 +10,12 @@ import {
   getFontFamilyName,
   Margins,
   Sizes,
-} from "../../../styles";
-import type { TrackerEvent } from "../../../type";
-import { LinkingUtils, TrackerUtils } from "../../../utils";
-import { setAccessibilityFocusOnText } from "../../../utils/accessibility/accessibility.util";
-import { SecondaryText, View } from "../../baseComponents";
-import TrackerHandler from "../../tracker/trackerHandler.component";
+} from "../../../../styles";
+import type { TrackerEvent } from "../../../../type";
+import { LinkingUtils, TrackerUtils } from "../../../../utils";
+import { setAccessibilityFocusOnText } from "../../../../utils/accessibility/accessibility.util";
+import { SecondaryText, View } from "../../../baseComponents";
+import TrackerHandler from "../../../tracker/trackerHandler.component";
 
 interface EpdsResultUrlParagraphProps {
   paragraphTitle?: string;
