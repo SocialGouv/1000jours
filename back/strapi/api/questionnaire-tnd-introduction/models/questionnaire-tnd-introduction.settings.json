@@ -1,0 +1,26 @@
+{
+  "kind": "singleType",
+  "collectionName": "questionnaire_tnd_introductions",
+  "info": {
+    "name": "Questionnaire TND introduction"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "titre": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "texte_1": {
+      "type": "richtext"
+    },
+    "texte_2": {
+      "type": "richtext"
+    }
+  }
+}

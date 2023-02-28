@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "questionnaire_tnd_resultats",
+  "info": {
+    "name": "Questionnaire TND résultat"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "titre": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "texte_ras": {
+      "type": "richtext"
+    },
+    "texte_alerte": {
+      "type": "richtext"
+    },
+    "questionnaire_tnds": {
+      "via": "questionnaire_tnd_resultat",
+      "collection": "questionnaire-tnd"
+    }
+  }
+}

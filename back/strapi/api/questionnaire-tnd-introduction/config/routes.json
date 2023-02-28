@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/questionnaire-tnd-introduction",
+      "handler": "questionnaire-tnd-introduction.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/questionnaire-tnd-introduction",
+      "handler": "questionnaire-tnd-introduction.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/questionnaire-tnd-introduction",
+      "handler": "questionnaire-tnd-introduction.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
