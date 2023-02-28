@@ -6,10 +6,8 @@ import {
 import {
   BeContactedColors,
   BeContactedData,
-  EpdsAnswer,
   EpdsGenders,
   EpdsGenderType,
-  EpdsQuestionAndAnswers,
   EpdsResultContactInformation,
   EpdsResultIconAndStateOfMind,
   EpdsResultInformationType,
@@ -20,6 +18,7 @@ import {
 } from "./epdsSurvey.types";
 import { TrackerEvent } from "./event.types";
 import { MoodboardItem, MoodStorageItem } from "./moodboard.types";
+import { SurveyAnswer, SurveyQuestionAndAnswers } from "./survey.types";
 import { TrackerSearch } from "./tabSearch.types";
 
 export {
@@ -27,10 +26,8 @@ export {
   BeContactedData,
   CartoFilter,
   CartoFilterStorage,
-  EpdsAnswer,
   EpdsGenders,
   EpdsGenderType,
-  EpdsQuestionAndAnswers,
   EpdsResultContactInformation,
   EpdsResultIconAndStateOfMind,
   EpdsResultInformationType,
@@ -41,6 +38,8 @@ export {
   MoodboardItem,
   MoodStorageItem,
   QuestionnaireEpdsFromDB,
+  SurveyAnswer,
+  SurveyQuestionAndAnswers,
   TrackerEvent,
   TrackerSearch,
 };

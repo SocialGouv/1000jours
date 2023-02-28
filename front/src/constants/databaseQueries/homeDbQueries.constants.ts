@@ -153,3 +153,24 @@ export const ARTICLE_DETAILS_WITH_ID = (
       }
     }
   `;
+
+export const LIST_ARTICLES_HANDICAP = /* GraphQL */ `
+  query GetHandicapArticles {
+    articles(sort: "ordre", where: { handicap: true }) {
+      id
+      titre
+      resume
+      visuel {
+        id
+        hash
+        url
+        height
+        width
+      }
+      thematiques {
+        nom
+        id
+      }
+    }
+  }
+`;

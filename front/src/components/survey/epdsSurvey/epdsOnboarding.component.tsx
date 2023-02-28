@@ -1,16 +1,16 @@
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
-import { Labels } from "../../constants";
-import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
-import { EpdsAssets } from "../assets";
+import { Labels } from "../../../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../../styles";
+import { EpdsAssets } from "../../assets";
 import {
   CommonText,
   CustomButton,
   SecondaryText,
   TitleH1,
   View,
-} from "../baseComponents";
+} from "../../baseComponents";
 
 interface Props {
   onBoardingIsDone: () => void;
@@ -43,27 +43,33 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
     });
   };
 
-  const renderStep = (index: number) => {
+  const renderStep = (label: string, index: number) => {
     return (
-      <View style={styles.iconWithTitle}>
-        <View>{getIcon(index)}</View>
-        <CommonText
-          style={styles.stepNum}
-          allowFontScaling={false}
-          accessible={false}
-        >
-          {index + 1}
-        </CommonText>
-        <CommonText
-          style={styles.stepTitle}
-          allowFontScaling={false}
-          accessibilityLabel={`
+      <View style={styles.step} key={index}>
+        <View style={styles.iconWithTitle}>
+          <View>
+            {getIcon(index)}
+            <CommonText
+              style={styles.stepNum}
+              allowFontScaling={false}
+              accessible={false}
+            >
+              {index + 1}
+            </CommonText>
+          </View>
+        </View>
+        <View>
+          <CommonText
+            style={styles.stepTitle}
+            allowFontScaling={false}
+            accessibilityLabel={`
             ${Labels.accessibility.step} ${index + 1} 
-            ${Labels.epdsSurvey.onboarding.steps.elements[index]}
+            ${label}
           `}
-        >
-          {Labels.epdsSurvey.onboarding.steps.elements[index]}
-        </CommonText>
+          >
+            {label}
+          </CommonText>
+        </View>
       </View>
     );
   };
@@ -77,14 +83,12 @@ const EpdsOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
         {Labels.epdsSurvey.onboarding.steps.title}
         {" :"}
       </SecondaryText>
-      <View style={styles.row}>
-        {renderStep(0)}
-        {renderStep(1)}
+      <View style={styles.stepsContainer}>
+        {Labels.epdsSurvey.onboarding.steps.elements.map((label, index) =>
+          renderStep(label, index)
+        )}
       </View>
-      <View style={styles.row}>
-        {renderStep(2)}
-        {renderStep(3)}
-      </View>
+
       <SecondaryText style={styles.reminder}>
         {Labels.epdsSurvey.onboarding.reminder}
       </SecondaryText>
@@ -159,18 +163,17 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
     marginVertical: Margins.default,
   },
-  row: {
-    alignItems: "flex-end",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginHorizontal: Margins.smaller,
+  step: {
+    flexBasis: "48%", // 2 colonnes de 50% - 2% (marginLeft + marginRight)
+    margin: "1%",
+    textAlign: "center",
   },
   stepNum: {
+    bottom: -Paddings.smallest,
     color: Colors.primaryBlueLight,
     fontSize: Sizes.xxxxl,
     fontWeight: "bold",
-    left: 0,
-    paddingTop: Margins.larger,
+    left: -Paddings.larger,
     position: "absolute",
   },
   stepTitle: {
@@ -178,6 +181,11 @@ const styles = StyleSheet.create({
     fontSize: Sizes.xs,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  stepsContainer: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   validateButton: {
     alignItems: "center",

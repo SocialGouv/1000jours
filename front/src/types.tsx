@@ -18,6 +18,7 @@ export type RootStackParamList = {
   accessibility: undefined;
   infosDev: undefined;
   notificationsCenter: undefined;
+  tndSurvey: undefined;
 };
 
 export type BottomTabParamList = {

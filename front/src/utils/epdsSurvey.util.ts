@@ -2,18 +2,18 @@ import { EpdsConstants, Labels, StorageKeysConstants } from "../constants";
 import { Colors } from "../styles";
 import type {
   BeContactedColors,
-  EpdsAnswer,
-  EpdsQuestionAndAnswers,
   EpdsResultIconAndStateOfMind,
   EpdsUpdatedSurvey,
   IntroductionText,
   QuestionnaireEpdsFromDB,
+  SurveyAnswer,
+  SurveyQuestionAndAnswers,
 } from "../type";
 import { getObjectValue, multiRemove, storeObjectValue } from "./storage.util";
 
 export const getQuestionsAndAnswersFromData = (
   data: unknown
-): EpdsQuestionAndAnswers[] => {
+): SurveyQuestionAndAnswers[] => {
   if (!data) return [];
   const fetchedData = (data as { questionnaireEpds: QuestionnaireEpdsFromDB[] })
     .questionnaireEpds;
@@ -57,9 +57,9 @@ const convertToQuestionsAndAnswers = (
   });
 
 export const getUpdatedSurvey = (
-  questionsAndAnswers: EpdsQuestionAndAnswers[],
+  questionsAndAnswers: SurveyQuestionAndAnswers[],
   selectedQuestionIndex: number,
-  selectedAnswer: EpdsAnswer
+  selectedAnswer: SurveyAnswer
 ): EpdsUpdatedSurvey => {
   let lastQuestionHasThreePointAnswer = false;
   const updatedSurvey = questionsAndAnswers.map((question, questionIndex) => {
@@ -85,7 +85,7 @@ export const getUpdatedSurvey = (
 };
 
 export const getUpdatedScore = (
-  questionsAndAnswers: EpdsQuestionAndAnswers[]
+  questionsAndAnswers: SurveyQuestionAndAnswers[]
 ): number => {
   let score = 0;
   questionsAndAnswers.forEach((question) => {
@@ -98,7 +98,7 @@ export const getUpdatedScore = (
 };
 
 export const getCurrentQuestionPoints = (
-  question: EpdsQuestionAndAnswers
+  question: SurveyQuestionAndAnswers
 ): number | undefined =>
   question.answers.find((answer) => answer.isChecked)?.points;
 
@@ -193,7 +193,7 @@ export const incrementEpdsSurveyCounterAndGetNewValue =
   };
 
 export const getEachQuestionScore = (
-  questionsAndAnswers: EpdsQuestionAndAnswers[]
+  questionsAndAnswers: SurveyQuestionAndAnswers[]
 ): number[] => {
   const scores: number[] = [];
   questionsAndAnswers.forEach((question) => {

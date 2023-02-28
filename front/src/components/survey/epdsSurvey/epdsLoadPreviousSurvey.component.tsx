@@ -3,9 +3,14 @@ import { useCallback } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import { Labels } from "../../constants";
-import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
-import { CustomButton, SecondaryText, TitleH1, View } from "../baseComponents";
+import { Labels } from "../../../constants";
+import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../../styles";
+import {
+  CustomButton,
+  SecondaryText,
+  TitleH1,
+  View,
+} from "../../baseComponents";
 
 interface EpdsLoadPreviousSurveyProps {
   startSurveyOver: (value: boolean) => void;
