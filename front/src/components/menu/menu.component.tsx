@@ -162,7 +162,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
     (menuItem: MenuItem | MenuSubItem) => () => {
       setShowMenu(false);
       // Sur iOS, sans le "setTimeout" la modal n'apparaît pas, il faut attendre la fermeture du menu.
-      setTimeout(menuItem.onPress, PlatformConstants.TIMEOUT_ON_DISMISS_MODAL);
+      setTimeout(menuItem.onPress, PlatformConstants.TIMEOUT_ON_DISMISS_MENU);
     },
     [setShowMenu]
   );
@@ -174,7 +174,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       // Sur iOS, sans le "setTimeout" la modal n'apparaît pas, il faut attendre la fermeture du menu.
       setTimeout(() => {
         void RootNavigation.navigate("infosDev");
-      }, PlatformConstants.TIMEOUT_ON_DISMISS_MODAL);
+      }, PlatformConstants.TIMEOUT_ON_DISMISS_MENU);
     } else {
       setCounterPressVersion(counterPressVersion + 1);
     }

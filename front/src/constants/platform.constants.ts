@@ -19,7 +19,8 @@ export const PLATFORM_IS_ANDROID = Platform.OS === "android";
 export const MAJOR_VERSION_IOS = parseInt(String(Platform.Version), 10);
 export const ICLOUD = "iCloud";
 
-export const TIMEOUT_ON_DISMISS_MODAL = PLATFORM_IS_IOS ? 200 : 0;
+export const TIMEOUT_ON_DISMISS_MENU = PLATFORM_IS_IOS ? 500 : 0;
+export const TIMEOUT_ON_DISMISS_MODAL = PLATFORM_IS_IOS ? 300 : 0;
 export const IS_ON_EXPO_GO = Constants.appOwnership === "expo";
 export const IS_PREPROD_RELEASE =
   Constants.manifest?.releaseChannel === "preprod";
