@@ -1,3 +1,10 @@
+## [1.122.1](https://github.com/SocialGouv/1000jours/compare/v1.122.0...v1.122.1) (2023-02-28)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'ouverture de la popup du repérage TND ([439e766](https://github.com/SocialGouv/1000jours/commit/439e766fde9d1d59540746eaf4db642a3b9ae3bd))
+
 # [1.122.0](https://github.com/SocialGouv/1000jours/compare/v1.121.1...v1.122.0) (2023-02-28)
 
 
