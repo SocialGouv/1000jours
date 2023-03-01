@@ -1,3 +1,10 @@
+## [1.122.2](https://github.com/SocialGouv/1000jours/compare/v1.122.1...v1.122.2) (2023-03-01)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le lien du Widget EPDS ([199d562](https://github.com/SocialGouv/1000jours/commit/199d562105f1e8f759e54bf053a3f5af393679d5))
+
 ## [1.122.1](https://github.com/SocialGouv/1000jours/compare/v1.122.0...v1.122.1) (2023-02-28)
 
 
