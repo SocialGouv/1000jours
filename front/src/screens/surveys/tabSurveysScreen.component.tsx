@@ -27,11 +27,13 @@ const TabSurveysScreen: FC = () => {
 
   const surveysBanner: SurveyBanner[] = [
     {
+      buttonTitle: Labels.surveys.epds.buttonTitle,
       description: Labels.surveys.epds.description,
       onPress: openEpdsSurvey,
       title: Labels.surveys.epds.title,
     },
     {
+      buttonTitle: Labels.surveys.tnd.buttonTitle,
       description: Labels.surveys.tnd.description,
       onPress: openTndSurvey,
       title: Labels.surveys.tnd.title,
@@ -54,7 +56,7 @@ const TabSurveysScreen: FC = () => {
             {survey.description}
           </SecondaryText>
           <CustomButton
-            title={Labels.buttons.start}
+            title={survey.buttonTitle}
             rounded
             action={survey.onPress}
           />

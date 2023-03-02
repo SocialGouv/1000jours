@@ -754,14 +754,16 @@ export default {
     description:
       "Choisissez une de nos auto-évaluations et répondez aux différentes questions.",
     epds: {
+      buttonTitle: "Commencer le test",
       description: "",
       title: "Dépression post partum, en parler c’est se soigner !",
     },
-    title: "Nos auto-évaluations",
+    title: "Auto-évaluations",
     tnd: {
+      buttonTitle: "Commencer le repérage",
       description: "",
       title:
-        "Détecter les signes d’un développement inhabituel chez les enfants de moins de 7 ans",
+        "Repérer les signes d’un développement inhabituel chez les enfants de moins de 7 ans",
     },
   },
   tabs: {

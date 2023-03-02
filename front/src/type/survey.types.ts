@@ -26,5 +26,6 @@ export interface SurveyResult {
 export interface SurveyBanner {
   title: string;
   description: string;
+  buttonTitle: string;
   onPress: () => void;
 }
