@@ -750,12 +750,26 @@ export default {
       messageStart: "L'événement",
     },
   },
+  surveys: {
+    description:
+      "Choisissez une de nos auto-évaluations et répondez aux différentes questions.",
+    epds: {
+      description: "",
+      title: "Dépression post partum, en parler c’est se soigner !",
+    },
+    title: "Nos auto-évaluations",
+    tnd: {
+      description: "",
+      title:
+        "Détecter les signes d’un développement inhabituel chez les enfants de moins de 7 ans",
+    },
+  },
   tabs: {
     calendarTitle: "Calendrier",
     favoritesTitle: "Favoris",
     helpTitle: "Recherche",
     homeTitle: "Accueil",
-    testEpds: "Post-partum",
+    surveys: "Évaluations",
   },
   timeline: {
     description:

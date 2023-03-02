@@ -14,11 +14,6 @@ export default {
               tabCalendarScreen: "calendar",
             },
           },
-          tabEpds: {
-            screens: {
-              tabEpdsScreen: "epds",
-            },
-          },
           tabHome: {
             screens: {
               tabHomeScreen: "home",
@@ -27,6 +22,11 @@ export default {
           tabSearch: {
             screens: {
               tabSearchScreen: "search",
+            },
+          },
+          tabSurveys: {
+            screens: {
+              tabSurveysScreen: "surveys",
             },
           },
         },
