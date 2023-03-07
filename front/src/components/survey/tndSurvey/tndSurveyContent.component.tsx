@@ -19,6 +19,7 @@ import type { TndQuestionnaire } from "../../../type/tndSurvey.types";
 import { TndSurveyUtils } from "../../../utils";
 import { TrackingEvent } from "../../../utils/tracking/tracker.util";
 import { CommonText, TitleH1, View } from "../../baseComponents";
+import TrackerHandler from "../../tracker/trackerHandler.component";
 import SurveyFooter from "../surveyFooter.component";
 import SurveyQuestionsList from "../surveyQuestionsList.component";
 import SurveyQuestionsPagination from "../surveyQuestionsPagination.component";
@@ -41,6 +42,7 @@ const TndSurveyContent: React.FC<Props> = ({
   // const [tndResponses, setTndResponses] = useState([]);
   const [surveyCanBeStarted, setSurveyCanBeStarted] = useState(false);
   const titleRef = useRef<DefaultText>(null);
+  const [trackerAction, setTrackerAction] = useState("");
 
   useEffect(() => {
     setAccessibilityFocus();
@@ -55,6 +57,11 @@ const TndSurveyContent: React.FC<Props> = ({
 
   const handleResults = useCallback((data: unknown) => {
     const result = data as { questionnaireTnd: TndQuestionnaire };
+    if (result.questionnaireTnd.nom) {
+      setTrackerAction(
+        `${TrackingEvent.TND} - Test : ${result.questionnaireTnd.nom}`
+      );
+    }
     const formattedQuestions: SurveyQuestionAndAnswers[] =
       TndSurveyUtils.formatTndQuestionnaire(result.questionnaireTnd);
     setQuestionsAndAnswers(formattedQuestions);
@@ -156,6 +163,7 @@ const TndSurveyContent: React.FC<Props> = ({
 
   return (
     <View style={styles.mainContainer}>
+      <TrackerHandler actionName={trackerAction} />
       <GraphQLQuery
         query={TndDbQueries.GET_TND_TEST(tndQuestionnaire.id)}
         fetchPolicy={FetchPoliciesConstants.NO_CACHE}
