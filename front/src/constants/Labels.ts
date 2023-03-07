@@ -203,6 +203,7 @@ export default {
     settings: "Paramètres",
     share: "Partager",
     start: "Commencer",
+    startTndSurvey: "Commencer le repérage",
     validate: "Valider",
     yes: "Oui",
   },
