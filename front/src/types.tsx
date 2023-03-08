@@ -19,12 +19,13 @@ export type RootStackParamList = {
   infosDev: undefined;
   notificationsCenter: undefined;
   tndSurvey: undefined;
+  epdsSurvey: undefined;
 };
 
 export type BottomTabParamList = {
   tabHome: undefined;
   tabCalendar: undefined;
-  tabEpds: undefined;
+  tabSurveys: undefined;
   tabSearch: undefined;
 };
 
@@ -46,8 +47,8 @@ export type TabCalendarParamList = {
   aroundMeScreen: undefined;
 };
 
-export type TabEpdsParamList = {
-  tabEpdsScreen: undefined;
+export type TabSurveysParamList = {
+  tabSurveysScreen: undefined;
 };
 
 export type TabAroundMeParamList = {
@@ -166,6 +167,7 @@ export type Article = {
   hide?: boolean;
   // eslint-disable-next-line @typescript-eslint/naming-convention
   cartographie_pois_types?: PoiType[];
+  handicap?: boolean;
 };
 
 export type ArticleInShortItem = {

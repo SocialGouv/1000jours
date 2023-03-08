@@ -23,14 +23,15 @@ import { PartnersAssets } from "../../components/assets";
 import {
   CommonText,
   CustomButton,
+  TitleH1,
   View,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels } from "../../constants";
-import { Colors, Margins, Paddings, Sizes } from "../../styles";
+import { Colors, Margins, Paddings, Sizes, Styles } from "../../styles";
 import { LinkingUtils, TrackerUtils } from "../../utils";
 
-const TabEpdsScreen: FC = () => {
+const EpdsSurveyScreen: FC = () => {
   const onOpenWidget = useCallback(() => {
     const EPDS_WIDGET_SOURCE = "1000j-application";
 
@@ -43,9 +44,11 @@ const TabEpdsScreen: FC = () => {
   const getViewToDisplay = () => {
     return (
       <View style={styles.mainView}>
-        <CommonText style={styles.textDescription}>
-          {Labels.epdsSurvey.epdsPresentation.description}
-        </CommonText>
+        <TitleH1
+          animated={false}
+          title={Labels.surveys.epds.title}
+          description={Labels.epdsSurvey.epdsPresentation.description}
+        />
         <View style={styles.logoBlues}>
           <PartnersAssets.MillesJoursBlues
             width={Sizes.xxxxxxl}
@@ -93,7 +96,10 @@ const TabEpdsScreen: FC = () => {
     );
   };
   return (
-    <ScrollView style={styles.mainContainer}>
+    <ScrollView
+      style={Styles.modalFullScreen.mainContainer}
+      contentContainerStyle={Styles.modalFullScreen.scrollviewContent}
+    >
       <TrackerHandler screenName={TrackerUtils.TrackingEvent.EPDS} />
       {getViewToDisplay()}
     </ScrollView>
@@ -129,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TabEpdsScreen;
+export default EpdsSurveyScreen;

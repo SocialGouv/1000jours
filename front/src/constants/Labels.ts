@@ -203,6 +203,7 @@ export default {
     settings: "Paramètres",
     share: "Partager",
     start: "Commencer",
+    startTndSurvey: "Commencer le repérage",
     validate: "Valider",
     yes: "Oui",
   },
@@ -750,12 +751,28 @@ export default {
       messageStart: "L'événement",
     },
   },
+  surveys: {
+    description:
+      "Choisissez une de nos auto-évaluations et répondez aux différentes questions.",
+    epds: {
+      buttonTitle: "Commencer le test",
+      description: "",
+      title: "Dépression post partum, en parler c’est se soigner !",
+    },
+    title: "Auto-évaluations",
+    tnd: {
+      buttonTitle: "Commencer le repérage",
+      description: "",
+      title:
+        "Repérer les signes d’un développement inhabituel chez les enfants de moins de 7 ans",
+    },
+  },
   tabs: {
     calendarTitle: "Calendrier",
     favoritesTitle: "Favoris",
     helpTitle: "Recherche",
     homeTitle: "Accueil",
-    testEpds: "Post-partum",
+    surveys: "Évaluations",
   },
   timeline: {
     description:

@@ -29,6 +29,7 @@ import {
 } from "../../components";
 import {
   BackButton,
+  CustomButton,
   FavoriteButton,
   SecondaryText,
   ShareButton,
@@ -58,6 +59,7 @@ import type {
 import {
   ArticleUtils,
   NotificationUtils,
+  RootNavigation,
   SpeechUtils,
   StorageUtils,
   TrackerUtils,
@@ -216,6 +218,10 @@ const ArticleDetail: FC<Props> = ({
     setArticleWidth(width);
   }, []);
 
+  const openSurveyTnd = useCallback(() => {
+    void RootNavigation.navigate("tndSurvey");
+  }, []);
+
   const renderReadArticleElement = articleHasBeenRead && (
     <View style={styles.articleIsReadView}>
       <SecondaryText style={styles.articleIsReadText}>
@@ -298,6 +304,14 @@ const ArticleDetail: FC<Props> = ({
                     html={currentArticle.texte1}
                     screenWidth={articleWidth}
                   />
+                  {currentArticle.handicap && (
+                    <CustomButton
+                      rounded={true}
+                      title={Labels.buttons.startTndSurvey}
+                      action={openSurveyTnd}
+                      buttonStyle={{ marginVertical: Margins.default }}
+                    />
+                  )}
                   <DidYouKnow description={currentArticle.leSaviezVous} />
                   <SubTitle title={currentArticle.texteTitre2} />
                   <TextHtml

@@ -15,19 +15,18 @@ import {
   EventDetails,
   Parentheque,
   TabCalendarScreen,
-  TabEpdsScreen,
   TabHomeScreen,
   TabSearchScreen,
 } from "../screens";
-import NotificationsCenter from "../screens/notificationsCenter/notificationsCenter.component";
+import TabSurveysScreen from "../screens/surveys/tabSurveysScreen.component";
 import { Colors } from "../styles";
 import type {
   BottomTabParamList,
   TabCalendarParamList,
-  TabEpdsParamList,
   TabHomeParamList,
   TabItem,
   TabSearchParamList,
+  TabSurveysParamList,
 } from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -62,7 +61,7 @@ const BottomTabNavigator: FC = () => {
       title: Labels.tabs.calendarTitle,
     },
     {
-      component: TabEpdsNavigator,
+      component: TabSurveysNavigator,
       getIcon: (tintColor, focused) => (
         <Icomoon
           name={
@@ -72,8 +71,8 @@ const BottomTabNavigator: FC = () => {
           size={iconSize}
         />
       ),
-      name: "tabEpds",
-      title: Labels.tabs.testEpds,
+      name: "tabSurveys",
+      title: Labels.tabs.surveys,
     },
     {
       component: TabSearchNavigator,
@@ -111,7 +110,7 @@ const BottomTabNavigator: FC = () => {
             tabBarAllowFontScaling: false,
             tabBarIcon: ({ color, focused }) => tabItem.getIcon(color, focused),
             title: tabItem.title,
-            unmountOnBlur: tabItem.name === "tabEpds",
+            unmountOnBlur: tabItem.name === "tabSurveys",
           }}
         />
       ))}
@@ -135,7 +134,6 @@ const TabHomeNavigator: FC = () => (
     <TabHomeStack.Screen name="articleFavorites" component={ArticleFavorites} />
     <TabHomeStack.Screen name="parentheque" component={Parentheque} />
     <TabHomeStack.Screen name="article" component={ArticleDetail} />
-    <TabHomeStack.Screen name="epdsSurvey" component={TabEpdsScreen} />
   </TabHomeStack.Navigator>
 );
 
@@ -154,16 +152,16 @@ const TabCalendarNavigator: FC = () => (
   </TabCalendarStack.Navigator>
 );
 
-const TabEpdsStack = createStackNavigator<TabEpdsParamList>();
-const TabEpdsNavigator: FC = () => (
-  <TabEpdsStack.Navigator screenOptions={{ headerShown: false }}>
-    <TabEpdsStack.Screen
-      name="tabEpdsScreen"
-      component={TabEpdsScreen}
+const TabSurveysStack = createStackNavigator<TabSurveysParamList>();
+const TabSurveysNavigator: FC = () => (
+  <TabSurveysStack.Navigator screenOptions={{ headerShown: false }}>
+    <TabSurveysStack.Screen
+      name="tabSurveysScreen"
+      component={TabSurveysScreen}
       options={{}}
     />
     <TabHomeStack.Screen name="parentheque" component={Parentheque} />
-  </TabEpdsStack.Navigator>
+  </TabSurveysStack.Navigator>
 );
 
 const TabSearchStack = createStackNavigator<TabSearchParamList>();
