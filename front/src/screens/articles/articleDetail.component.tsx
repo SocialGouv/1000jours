@@ -309,6 +309,7 @@ const ArticleDetail: FC<Props> = ({
                       rounded={true}
                       title={Labels.buttons.startTndSurvey}
                       action={openSurveyTnd}
+                      buttonStyle={{ marginVertical: Margins.default }}
                     />
                   )}
                   <DidYouKnow description={currentArticle.leSaviezVous} />
