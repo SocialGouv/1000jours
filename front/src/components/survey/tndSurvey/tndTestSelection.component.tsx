@@ -11,7 +11,6 @@ import {
 import { GraphQLQuery } from "../../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../../styles";
 import type { TndQuestionnaire } from "../../../type/tndSurvey.types";
-import { TrackingEvent } from "../../../utils/tracking/tracker.util";
 import {
   CommonText,
   CustomButton,
@@ -19,7 +18,6 @@ import {
   TitleH1,
   View,
 } from "../../baseComponents";
-import TrackerHandler from "../../tracker/trackerHandler.component";
 
 interface TndTestSelectionProps {
   goToSurvey: (tndTest: TndQuestionnaire) => void;
@@ -31,7 +29,6 @@ const TndTestSelection: FC<TndTestSelectionProps> = ({ goToSurvey }) => {
     TndQuestionnaire | undefined
   >();
   const [testIsSelected, setTestIsSelected] = useState(false);
-  const [trackerAction, setTrackerAction] = useState("");
 
   const handleResults = useCallback((data: unknown) => {
     const result = data as { questionnaireTnds: TndQuestionnaire[] };
@@ -59,7 +56,6 @@ const TndTestSelection: FC<TndTestSelectionProps> = ({ goToSurvey }) => {
   const validate = useCallback(
     (tndTest: TndQuestionnaire | undefined) => () => {
       if (tndTest) {
-        setTrackerAction(`${TrackingEvent.TND} - Test : ${tndTest.nom}`);
         goToSurvey(tndTest);
       }
     },
@@ -68,7 +64,6 @@ const TndTestSelection: FC<TndTestSelectionProps> = ({ goToSurvey }) => {
 
   return (
     <>
-      <TrackerHandler actionName={trackerAction} />
       <GraphQLQuery
         query={TndDbQueries.GET_ALL_TND_TESTS}
         fetchPolicy={FetchPoliciesConstants.NO_CACHE}

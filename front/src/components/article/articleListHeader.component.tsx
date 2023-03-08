@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     marginVertical: Margins.light,
   },
   bannerTitle: {
-    color: Colors.primaryYellowDark,
+    color: Colors.primaryBlueDark,
     fontSize: Sizes.sm,
   },
   flexStart: {
@@ -181,7 +181,9 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   threeFirstMonthsBanner: {
-    backgroundColor: Colors.primaryYellowLight,
+    backgroundColor: Colors.primaryBlueLight,
+    borderLeftColor: Colors.primaryBlueDark,
+    borderLeftWidth: 3,
     marginBottom: Paddings.light,
     padding: Paddings.default,
   },

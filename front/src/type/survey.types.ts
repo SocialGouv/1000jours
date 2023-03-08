@@ -22,3 +22,10 @@ export interface SurveyResult {
   nbAnswerYes: number;
   nbDomainsWithAnswerNo: number;
 }
+
+export interface SurveyBanner {
+  title: string;
+  description: string;
+  buttonTitle: string;
+  onPress: () => void;
+}

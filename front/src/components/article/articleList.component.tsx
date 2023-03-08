@@ -170,6 +170,7 @@ const ArticleList: FC<Props> = ({
               setArticles={articleListHeaderParams.setArticles}
               setTrackerAction={articleListHeaderParams.setTrackerAction}
               navigation={articleListHeaderParams.navigation}
+              step={step}
             />
           ) : null
         }
