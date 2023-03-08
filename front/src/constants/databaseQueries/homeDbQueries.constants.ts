@@ -150,6 +150,7 @@ export const ARTICLE_DETAILS_WITH_ID = (
           nom
           id
         }
+        handicap
       }
     }
   `;

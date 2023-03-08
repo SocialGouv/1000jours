@@ -166,6 +166,7 @@ export type Article = {
   hide?: boolean;
   // eslint-disable-next-line @typescript-eslint/naming-convention
   cartographie_pois_types?: PoiType[];
+  handicap?: boolean;
 };
 
 export type ArticleInShortItem = {
