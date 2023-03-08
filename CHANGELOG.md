@@ -1,3 +1,10 @@
+# [1.123.0](https://github.com/SocialGouv/1000jours/compare/v1.122.2...v1.123.0) (2023-03-08)
+
+
+### Features
+
+* activation du chat du widget EPDS depuis le back office ([#1641](https://github.com/SocialGouv/1000jours/issues/1641)) ([9c3eb3b](https://github.com/SocialGouv/1000jours/commit/9c3eb3b20354022ba123753a62a593beba718122))
+
 ## [1.122.2](https://github.com/SocialGouv/1000jours/compare/v1.122.1...v1.122.2) (2023-03-01)
 
 
