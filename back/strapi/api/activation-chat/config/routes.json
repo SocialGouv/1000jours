@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/activation-chat",
+      "handler": "activation-chat.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/activation-chat/:id",
+      "handler": "activation-chat.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/activation-chat/:id",
+      "handler": "activation-chat.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
