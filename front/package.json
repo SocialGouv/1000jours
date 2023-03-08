@@ -116,7 +116,7 @@
     "@babel/preset-typescript": "^7.16.0",
     "@socialgouv/eslint-config-react": "^1.104.0",
     "@socialgouv/eslint-config-typescript": "^1.88.0",
-    "@testing-library/react-native": "^7.2.0",
+    "@testing-library/react-native": "^11.0.0",
     "@types/jest": "^26.0.24",
     "@types/lodash": "^4.14.177",
     "@types/matomo-tracker-react-native": "0.3.0",
