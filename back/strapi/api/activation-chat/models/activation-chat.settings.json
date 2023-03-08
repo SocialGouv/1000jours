@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "activation_chat",
+  "info": {
+    "name": "Activation du chat",
+    "description": "Permet d'activer ou de désactiver le chat pour la demande de contact"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "activation_chat": {
+      "default": true,
+      "type": "boolean"
+    }
+  }
+}
