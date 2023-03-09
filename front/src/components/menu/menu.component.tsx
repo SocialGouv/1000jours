@@ -141,6 +141,12 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
             },
             title: Labels.menu.accessibility,
           },
+          {
+            onPress: () => {
+              void RootNavigation.navigate("newFeatures");
+            },
+            title: Labels.menu.newFeatures,
+          },
         ],
         title: Labels.menu.information,
       },

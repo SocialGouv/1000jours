@@ -14,7 +14,7 @@ import {
 import { PLATFORM_IS_IOS } from "../../constants/platform.constants";
 import { GraphQLQuery } from "../../services";
 import type { Config } from "../../types";
-import { AppUtils } from "../../utils";
+import { AppUtils, RootNavigation } from "../../utils";
 
 const CheckAppVersion: FC = () => {
   const showAlertUpdateAvailable = (lastAppVersion: string) => {
@@ -36,7 +36,7 @@ const CheckAppVersion: FC = () => {
     );
   };
 
-  const handleResults = useCallback((data: unknown) => {
+  const handleResults = useCallback(async (data: unknown) => {
     const result = data ? (data as { config: Config }) : undefined;
     const lastAppVersion = result?.config.lastAppVersionNumber ?? null;
     const currentVersion = Constants.manifest?.version ?? null;
@@ -45,6 +45,12 @@ const CheckAppVersion: FC = () => {
       AppUtils.hasNewVersionAvailable(currentVersion, lastAppVersion)
     ) {
       showAlertUpdateAvailable(lastAppVersion);
+    }
+    if (
+      currentVersion &&
+      (await AppUtils.hasNewFeaturesToShow(currentVersion))
+    ) {
+      void RootNavigation.navigate("newFeatures");
     }
   }, []);
 

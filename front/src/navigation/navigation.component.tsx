@@ -8,6 +8,7 @@ import type { ColorSchemeName } from "react-native";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { ConditionsOfUse, InfosDev, LegalNotice, Menu } from "../components";
+import NewFeatures from "../components/app/newFeatures.component";
 import { BaseAssets } from "../components/assets";
 import {
   Backdrop,
@@ -148,6 +149,7 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => {
         />
         <Stack.Screen name="epdsSurvey" component={EpdsSurveyScreen} />
         <Stack.Screen name="tndSurvey" component={TndSurveyScreen} />
+        <Stack.Screen name="newFeatures" component={NewFeatures} />
       </Stack.Group>
     </Stack.Navigator>
   );

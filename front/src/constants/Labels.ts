@@ -583,6 +583,7 @@ export default {
     moodboard: "Suivi d'humeur",
     myFavorites: "Mes favoris",
     myProfil: "Mon profil",
+    newFeatures: "Nouveautés",
     notificationsCenter: "Centre de notifications",
     parentheque: "Parenthèque",
     recommendApp: "Recommander l'application",
@@ -608,6 +609,11 @@ export default {
       title: "Suivi d'Humeur",
     },
     title: "Suivi d'Humeur",
+  },
+  newFeatures: {
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
+    title: "Nouveautés",
   },
   noData: "Aucunes données",
   notification: {

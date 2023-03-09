@@ -1,6 +1,7 @@
 import Constants from "expo-constants";
 
 import { StorageKeysConstants } from "../../constants";
+import { StorageUtils } from "..";
 import { scheduleInAppReviewNotification } from "../notifications/inappreview/inAppReview.util";
 import { cancelAllScheduledNotifications } from "../notifications/notification.util";
 import {
@@ -37,6 +38,19 @@ export const manageStorage = async (): Promise<void> => {
       true
     );
   }
+};
+
+export const hasNewFeaturesToShow = async (
+  currentVersion: string
+): Promise<boolean> => {
+  if (currentVersion) {
+    const versions =
+      ((await StorageUtils.getObjectValue(
+        StorageKeysConstants.newFeaturesAlreadyPop
+      )) as string[] | null) ?? [];
+    return !versions.includes(currentVersion);
+  }
+  return false;
 };
 
 export const hasNewVersionAvailable = (
