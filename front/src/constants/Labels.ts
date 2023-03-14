@@ -611,8 +611,7 @@ export default {
     title: "Suivi d'Humeur",
   },
   newFeatures: {
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
+    description: "",
     title: "Nouveautés",
   },
   noData: "Aucunes données",
