@@ -1,5 +1,12 @@
 import * as StringUtils from "../strings/strings.util";
 
+export const cleanImgContainer = (content: string): string => {
+  // Supprime les balises `figure` en conservant la balise `img`
+  content = StringUtils.replaceAllText(content, /<figure.[^>]*>/, ``);
+  content = StringUtils.replaceAllText(content, /<\/figure>/, ``);
+  return content;
+};
+
 export const fixMediaContent = (content: string): string => {
   // La balise <oembed> n'est pas supportée par la lib react-native-render-html
   // On la remplace par une iframe qui elle sera rendu dans une WebView
