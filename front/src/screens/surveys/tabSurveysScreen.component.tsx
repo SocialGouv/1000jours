@@ -15,11 +15,16 @@ import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { Labels } from "../../constants";
 import { Colors, Margins, Paddings, Sizes } from "../../styles";
 import type { SurveyBanner } from "../../type/survey.types";
-import { RootNavigation, TrackerUtils } from "../../utils";
+import { LinkingUtils, RootNavigation, TrackerUtils } from "../../utils";
 
 const TabSurveysScreen: FC = () => {
   const openEpdsSurvey = useCallback(() => {
-    void RootNavigation.navigate("epdsSurvey");
+    const EPDS_WIDGET_SOURCE = "1000j-application";
+
+    void LinkingUtils.openWebsite(
+      `${process.env.EPDS_WIDGET_URL}/?source=${EPDS_WIDGET_SOURCE}`,
+      false
+    );
   }, []);
   const openTndSurvey = useCallback(() => {
     void RootNavigation.navigate("tndSurvey");
