@@ -54,7 +54,7 @@ const MainAppContainer: FC = () => {
   const [screenCanBeDisplayed, setScreenCanBeDisplayed] = useState(false);
   const [storeCurrentStepArticleIds, setStoreCurrentStepArticleIds] =
     useState(false);
-  const [checkAppVersion, setCheckAppVersion] = useState(false);
+  const [checkAppVersion, setCheckAppVersion] = useState(true);
   // Load Custom Fonts (Icomoon)
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
