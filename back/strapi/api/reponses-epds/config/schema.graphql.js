@@ -60,7 +60,7 @@ module.exports = {
       naissance_dernier_enfant: String
       nombre_enfants: Int
       prenom: String
-      score_question_dix: Int!
+      score_question_dix: String
       telephone: String
     ): Boolean
 
