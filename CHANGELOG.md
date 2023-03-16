@@ -1,3 +1,10 @@
+# [1.127.0](https://github.com/SocialGouv/1000jours/compare/v1.126.0...v1.127.0) (2023-03-16)
+
+
+### Features
+
+* changer le mail reçu par les parents en ne mentionnant plus Elise lors de la prise de contact ([#1656](https://github.com/SocialGouv/1000jours/issues/1656)) ([5eb4327](https://github.com/SocialGouv/1000jours/commit/5eb43278a1b58a75fd9ef520c0620e6aed654ef7))
+
 # [1.126.0](https://github.com/SocialGouv/1000jours/compare/v1.125.0...v1.126.0) (2023-03-16)
 
 
