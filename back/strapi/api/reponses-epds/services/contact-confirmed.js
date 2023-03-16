@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 "use strict";
 
 const TYPE_CONTACT_EMAIL = "email";
@@ -19,21 +20,21 @@ const emailTemplateForSMS = (info) => ({
   subject: "1000 premiers jours - suite à votre demande",
   text: `Bonjour <%- prenom %>,
 
-    Je m'appelle Elise, je suis la présidente de l'association Maman Blues et membre de l'équipe des 1000 premiers jours.
-    Je vous confirme que j'ai bien reçu votre demande.
-    Je vous contacterai en respectant les créneaux que vous avez choisis.
+    Nous sommes l'équipe des "1000 premiers jours - Blues" en charge des réponses suite au passage du questionnaire sur la dépression du post-partum.
+    Nous vous confirmons avoir bien reçu votre demande.
+    Nous vous contacterons en respectant les créneaux que vous avez choisis.
 
     En parler, c'est déjà se soigner.
 
-    Elise des 1000 premiers jours
+    L'équipe "1000 premiers jours - Blues"
     
     ${footerText}`,
   html: `<p>Bonjour <%- prenom %>,</p>
 
     <p>
-      Je m'appelle Elise, je suis la présidente de l'association Maman Blues et membre de l'équipe des 1000 premiers jours.<br/>
-      Je vous confirme que j'ai bien reçu votre demande.<br/>
-      Je vous contacterai en respectant les créneaux que vous avez choisis.
+      Nous sommes l'équipe des "1000 premiers jours - Blues" en charge des réponses suite au passage du questionnaire sur la dépression du post-partum.<br/>
+      Nous vous confirmons avoir bien reçu votre demande.<br/>
+      Nous vous contacterons en respectant les créneaux que vous avez choisis.
     </p>
 
     <p>En parler, c'est déjà se soigner.</p>
@@ -42,8 +43,8 @@ const emailTemplateForSMS = (info) => ({
       <img src="https://backoffice-les1000jours.fabrique.social.gouv.fr/uploads/cercle_vertueux_3a7bb0fb95.png" style="max-width:300px;"/>
     </p>
 
-    Elise des 1000 premiers jours
-    
+    L'équipe "1000 premiers jours - Blues"
+
     ${footerHtml()}`,
 });
 
@@ -51,36 +52,32 @@ const emailTemplateForEmail = (info) => ({
   subject: "1000 premiers jours - Suite à votre questionnaire, échangeons",
   text: `Bonjour <%- prenom %>,
 
-    Je suis Elise, la présidente de l'association Maman Blues en charge des réponses suite au passage du questionnaire sur la dépression du post-partum.
-    Vous avez demandé à être recontactée.
+  Nous sommes l'équipe des "1000 premiers jours - Blues" en charge des réponses suite au passage du questionnaire sur la dépression du post-partum.
+  Vous avez demandé à être recontactée et nous sommes à votre écoute.
 
-    Souhaiteriez-vous m'en dire plus vous concernant ? Ce que vous vivez, quels sont vos besoins si vous parvenez à les exprimer ? votre lieu de résidence pour vous orienter vers des professionnels et/ou structures adaptées le cas échéant ?
-
-    Je vous laisse me répondre pour pouvoir vous aider au mieux.
-    Sachez que vous pouvez me répondre ici mais si vous préférez par sms ou directement à l'oral, c'est tout à fait possible.
-    Mon numéro : 06.14.03.57.05
-
-    Bien à vous,
-    Elise pour l'équipe "1000 premiers jours"
-
-    https://1000jours.fabrique.social.gouv.fr/
+  Souhaiteriez-vous nous en dire plus vous concernant ? Ce que vous vivez, quels sont vos besoins si vous parvenez à les exprimer ? Votre lieu de résidence afin de vous orienter vers des professionnels et/ou structures adaptées le cas échéant ?
+  
+  Vous pouvez répondre directement à cet e-mail. Nous vous répondrons dans les plus brefs délais.
+  
+  Bien à vous,
+  L'équipe "1000 premiers jours - Blues"
+  
+  https://1000jours.fabrique.social.gouv.fr/
     
     ${footerText}`,
   html: `<p>Bonjour <%- prenom %>,</p>
 
     <p>
-      Je suis Elise, la présidente de l'association Maman Blues en charge des réponses suite au passage du questionnaire sur la dépression du post-partum.<br/>
-      Vous avez demandé à être recontactée.
+      Nous sommes l'équipe des "1000 premiers jours - Blues" en charge des réponses suite au passage du questionnaire sur la dépression du post-partum.<br/>
+      Vous avez demandé à être recontactée et nous sommes à votre écoute.
     </p>
 
     <p>
-      Souhaiteriez-vous m'en dire plus vous concernant ? Ce que vous vivez, quels sont vos besoins si vous parvenez à les exprimer ? votre lieu de résidence pour vous orienter vers des professionnels et/ou structures adaptées le cas échéant ?
+      Souhaiteriez-vous nous en dire plus vous concernant ? Ce que vous vivez, quels sont vos besoins si vous parvenez à les exprimer ? Votre lieu de résidence afin de vous orienter vers des professionnels et/ou structures adaptées le cas échéant ?
     </p>
 
     <p>
-      Je vous laisse me répondre pour pouvoir vous aider au mieux.<br/>
-      Sachez que vous pouvez me répondre ici mais si vous préférez par sms ou directement à l'oral, c'est tout à fait possible.<br/>
-      Mon numéro : 06.14.03.57.05
+      Vous pouvez répondre directement à cet e-mail. Nous vous répondrons dans les plus brefs délais.
     </p>
 
     <p>
@@ -89,7 +86,7 @@ const emailTemplateForEmail = (info) => ({
 
     <p>
       Bien à vous,<br/>
-      Elise pour l'équipe "1000 premiers jours"
+      L'équipe "1000 premiers jours - Blues"
     </p>
 
     <p>
