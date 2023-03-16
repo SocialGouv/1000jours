@@ -1,3 +1,10 @@
+# [1.125.0](https://github.com/SocialGouv/1000jours/compare/v1.124.0...v1.125.0) (2023-03-16)
+
+
+### Features
+
+* changer le mail de de contact a Elise pour rajouter le score de la question 10 de l'epds ([#1651](https://github.com/SocialGouv/1000jours/issues/1651)) ([f12c809](https://github.com/SocialGouv/1000jours/commit/f12c809a28848bd9ecf560b319baddbd268cf5c9))
+
 # [1.124.0](https://github.com/SocialGouv/1000jours/compare/v1.123.0...v1.124.0) (2023-03-08)
 
 
