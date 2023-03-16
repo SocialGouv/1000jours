@@ -13,6 +13,9 @@
   "attributes": {
     "lastAppVersionNumber": {
       "type": "string"
+    },
+    "news": {
+      "type": "richtext"
     }
   }
 }

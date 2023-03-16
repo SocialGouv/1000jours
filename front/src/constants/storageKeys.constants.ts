@@ -40,6 +40,7 @@ export const lastProfileUpdate = "@lastProfileUpdate";
 export const stepsAlreadyCongratulatedForArticles =
   "@stepsAlreadyCongratulatedForArticles";
 export const speechVoiceId = "@speechVoiceId";
+export const newFeaturesAlreadyPop = "@newFeaturesAlreadyPop";
 
 export const allStorageKeys = [
   userUuidKey,
@@ -78,6 +79,7 @@ export const allStorageKeys = [
   favoriteArticlesIds,
   stepsAlreadyCongratulatedForArticles,
   speechVoiceId,
+  newFeaturesAlreadyPop,
 ];
 
 export const epdsSurveyKeys = [epdsQuestionAndAnswersKey, epdsQuestionIndexKey];

@@ -20,6 +20,7 @@ export type RootStackParamList = {
   notificationsCenter: undefined;
   tndSurvey: undefined;
   epdsSurvey: undefined;
+  newFeatures: { title: string; description: string; html: string };
 };
 
 export type BottomTabParamList = {
@@ -263,6 +264,7 @@ export type ArticleListHeaderParams = {
 
 export type Config = {
   lastAppVersionNumber: string | null;
+  news?: string;
 };
 
 export type MarkedDatesType = Record<string, MarkingProps>;

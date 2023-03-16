@@ -1,7 +1,7 @@
 // Il y a un souci de compatibilité avec le String.replaceAll, il faut donc utiliser la méthode split
 export const replaceAllText = (
   originalString: string,
-  search: string,
+  search: RegExp | string,
   replace: string
 ): string => {
   return originalString.split(search).join(replace);
