@@ -55,12 +55,13 @@ module.exports = {
   mutation: `
     epdsContact (
       email: String
-      telephone: String
-      prenom: String
-      nombre_enfants: Int
-      naissance_dernier_enfant: String
-      moyen: String
       horaires: String
+      moyen: String
+      naissance_dernier_enfant: String
+      nombre_enfants: Int
+      prenom: String
+      score_question_dix: String
+      telephone: String
     ): Boolean
 
     epdsContactConfirmed (

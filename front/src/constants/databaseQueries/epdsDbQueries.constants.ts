@@ -67,6 +67,7 @@ export const EPDS_CONTACT_INFORMATION = /* GraphQL */ `
     $naissanceDernierEnfant: String
     $moyen: String
     $horaires: String
+    $score_question_dix: String
   ) {
     epdsContact(
       email: $email
@@ -76,6 +77,7 @@ export const EPDS_CONTACT_INFORMATION = /* GraphQL */ `
       naissance_dernier_enfant: $naissanceDernierEnfant
       moyen: $moyen
       horaires: $horaires
+      score_question_dix: $score_question_dix
     )
   }
 `;
