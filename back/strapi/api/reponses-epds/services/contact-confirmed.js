@@ -122,7 +122,7 @@ const contactConfirmed = async ({
         from: process.env["MAIL_SEND_FROM"],
         replyTo: {
           address: "1000joursblues@fabrique.social.gouv.fr",
-          personalName: "Elise des 1000 premiers jours",
+          personalName: "L'équipe des 1000 premiers jours",
         },
         to: email,
       },
