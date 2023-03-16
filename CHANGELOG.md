@@ -1,3 +1,17 @@
+# [1.126.0](https://github.com/SocialGouv/1000jours/compare/v1.125.0...v1.126.0) (2023-03-16)
+
+
+### Bug Fixes
+
+* 🐛 Ouvre le widget EPDS sans page intermédiaire ([#1654](https://github.com/SocialGouv/1000jours/issues/1654)) ([609f69e](https://github.com/SocialGouv/1000jours/commit/609f69e10114bee0cc864976b02ede6124132f98))
+* corrige l'affichage des nouveautés de la version de l'app ([ec2fc4a](https://github.com/SocialGouv/1000jours/commit/ec2fc4a100c8e80d04c146c180a9cc865278d1ba))
+
+
+### Features
+
+* 🎸 Ajoute une popup pour afficher les nouveautés ([#1653](https://github.com/SocialGouv/1000jours/issues/1653)) ([a1cd1e8](https://github.com/SocialGouv/1000jours/commit/a1cd1e89220dc087ac88fa2c4062f30b1a9156c8)), closes [#1642](https://github.com/SocialGouv/1000jours/issues/1642)
+* changer le mail de de contact a Elise pour rajouter le score de la question 10 de l'epds ([#1651](https://github.com/SocialGouv/1000jours/issues/1651)) ([b0b589d](https://github.com/SocialGouv/1000jours/commit/b0b589d1626c4af0e7bbbcc5cae19a93cbc6357b))
+
 # [1.125.0](https://github.com/SocialGouv/1000jours/compare/v1.124.0...v1.125.0) (2023-03-16)
 
 
