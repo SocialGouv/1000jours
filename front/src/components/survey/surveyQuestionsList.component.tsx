@@ -54,6 +54,7 @@ const SurveyQuestionsList: React.FC<SurveyQuestionsListProps> = ({
           autoplay={false}
           disableGesture
           importantForAccessibility="no"
+          renderAll={true}
         >
           {survey.map((questionView, questionIndex) => (
             <SurveyQuestion
