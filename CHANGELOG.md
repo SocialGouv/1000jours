@@ -1,3 +1,17 @@
+# [1.128.0](https://github.com/SocialGouv/1000jours/compare/v1.127.0...v1.128.0) (2023-03-21)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'affichage en dark mode sur Android (EAS build) ([#1665](https://github.com/SocialGouv/1000jours/issues/1665)) ([8c5b99a](https://github.com/SocialGouv/1000jours/commit/8c5b99a3afcbce304b3a0506a580f4b5cffd661a)), closes [#1664](https://github.com/SocialGouv/1000jours/issues/1664)
+* 🐛 Corrige le carousel des questions TND (>11 questions) ([#1668](https://github.com/SocialGouv/1000jours/issues/1668)) ([36489d6](https://github.com/SocialGouv/1000jours/commit/36489d6f49084da25cb077c1fa7a6710f5d569ad)), closes [#1667](https://github.com/SocialGouv/1000jours/issues/1667)
+
+
+### Features
+
+* 🎸 Ajoute un bouton pour donner son avis (repérage TND) ([#1666](https://github.com/SocialGouv/1000jours/issues/1666)) ([cc07b0c](https://github.com/SocialGouv/1000jours/commit/cc07b0c05a782ce93e3ac0cf1ebdef84bb77e784)), closes [#1658](https://github.com/SocialGouv/1000jours/issues/1658)
+* changer le mail reçu par les parents en ne mentionnant plus Elise lors de la prise de contact ([#1656](https://github.com/SocialGouv/1000jours/issues/1656)) ([278e8d2](https://github.com/SocialGouv/1000jours/commit/278e8d2efde82e1a3e3b0e0eaf34f84e7bb10dc1))
+
 # [1.127.0](https://github.com/SocialGouv/1000jours/compare/v1.126.0...v1.127.0) (2023-03-16)
 
 
