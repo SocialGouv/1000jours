@@ -3,16 +3,18 @@
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import HTML from "react-native-render-html";
 import WebView from "react-native-webview";
 
+import ImgBtnReview from "../../assets/images/btn-review-sp-plus.svg";
 import { ArticleCard } from "../../components";
 import { CommonText, TitleH1, View } from "../../components/baseComponents";
 import {
   FetchPoliciesConstants,
   HomeDbQueries,
   Labels,
+  Links,
   TndDbQueries,
 } from "../../constants";
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
@@ -21,7 +23,7 @@ import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { SurveyQuestionAndAnswers } from "../../type";
 import type { TndAnswers, TndQuestionnaire } from "../../type/tndSurvey.types";
 import type { Article } from "../../types";
-import { TndSurveyUtils } from "../../utils";
+import { LinkingUtils, TndSurveyUtils } from "../../utils";
 
 interface Props {
   result: number;
@@ -57,6 +59,10 @@ const TndSurveyResult: FC<Props> = ({ survey, tndQuestionnaire }) => {
     setHandicapArticles(result.articles);
   }, []);
 
+  const tndReview = useCallback(() => {
+    void LinkingUtils.openWebsite(Links.tndReviewUrl, false);
+  }, []);
+
   useEffect(() => {
     saveSurveyResults();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,11 +80,16 @@ const TndSurveyResult: FC<Props> = ({ survey, tndQuestionnaire }) => {
             source={{ html: html }}
             contentWidth={SCREEN_WIDTH}
           />
+          <View>
+            <TouchableOpacity style={styles.btnReview} onPress={tndReview}>
+              <ImgBtnReview height={Sizes.xxxxxl} />
+            </TouchableOpacity>
+          </View>
         </View>
       );
     }
     return null;
-  }, [tndAnswers, tndQuestionnaire]);
+  }, [tndAnswers, tndQuestionnaire, tndReview]);
 
   return (
     <>
@@ -123,6 +134,10 @@ const TndSurveyResult: FC<Props> = ({ survey, tndQuestionnaire }) => {
 };
 
 const styles = StyleSheet.create({
+  btnReview: {
+    alignItems: "center",
+    marginTop: Paddings.default,
+  },
   fontBold: {
     fontWeight: FontWeight.bold,
   },
