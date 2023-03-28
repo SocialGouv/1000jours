@@ -636,6 +636,11 @@ export default {
       "Vos paramètres de notification sont désactivés pour cette application. Merci de vous rendre dans les réglages de votre téléphone afin de modifier ces paramètres.",
     openTheApp: "Ouverture de l'app",
     title: "Notifications",
+    tnd: {
+      body: "Détecter les signes d’un développement inhabituel chez les enfants de moins de 7 ans.",
+      redirectTitle: "Passer le test",
+      title: "Auto-évaluation",
+    },
   },
   notificationsCenter: {
     article: {

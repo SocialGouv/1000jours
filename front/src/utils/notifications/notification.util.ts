@@ -19,6 +19,7 @@ import * as NotificationInAppReviewUtils from "../notifications/inappreview/inAp
 import * as NotificationToggleUtils from "../notifications/notificationToggle.util";
 import { nbOfUnreadArticlesInCurrentStep } from "../step/step.util";
 import * as StorageUtils from "../storage.util";
+import { buildTndNotificationContent } from "./tnd/tndNotification.util";
 
 export enum NotificationType {
   epds = "epds",
@@ -28,6 +29,7 @@ export enum NotificationType {
   articles = "articles",
   favorites = "favorites",
   inAppReview = "inAppReview",
+  tnd = "tnd",
 }
 
 export enum Weekday {
@@ -123,7 +125,7 @@ const buildEpdsNotificationContent = () => {
     data: {
       redirectFromRoot: true,
       redirectTitle: Labels.epdsSurvey.notification.redirectTitle,
-      redirectTo: "epds",
+      redirectTo: "tabSurveys",
       type: NotificationType.epds,
     },
     title: Labels.epdsSurvey.notification.title,
@@ -558,6 +560,9 @@ export const scheduleFakeNotif = async (
   switch (notificationType) {
     case NotificationType.epds:
       content = buildEpdsNotificationContent();
+      break;
+    case NotificationType.tnd:
+      content = buildTndNotificationContent();
       break;
     case NotificationType.event: {
       const event: Event = {

@@ -6,6 +6,7 @@ import * as React from "react";
 import { Modal, StyleSheet, TouchableOpacity, Vibration } from "react-native";
 import Confetti from "react-native-confetti";
 
+import { TIMEOUT_ON_DISMISS_MODAL } from "../../constants/platform.constants";
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
 import type { NotificationStyle } from "../../types";
 import { NotificationUtils, TrackerUtils } from "../../utils";
@@ -28,6 +29,10 @@ const notifStyles = new Map<
 notifStyles.set(NotificationUtils.NotificationType.epds, {
   color: Colors.primaryYellowDark,
   icon: IcomoonIcons.favoris,
+});
+notifStyles.set(NotificationUtils.NotificationType.tnd, {
+  color: Colors.primaryYellowDark,
+  icon: IcomoonIcons.postPartum,
 });
 notifStyles.set(NotificationUtils.NotificationType.event, {
   color: Colors.primaryBlueDark,
@@ -66,6 +71,20 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
   const confettiRef = React.useRef<Confetti>(null);
   const VIBRATION_PATTERN = [0, 700, 700]; // intervalles entre chaque vibration.
 
+  const redirect = useCallback(
+    (redirectTo: string, redirectParams: unknown) => {
+      const redirectFromRoot = notification.request.content.data
+        .redirectFromRoot as boolean;
+      if (redirectFromRoot)
+        void RootNavigation.navigate("root", {
+          params: redirectParams,
+          screen: redirectTo,
+        });
+      else void RootNavigation.navigate(redirectTo, redirectParams);
+    },
+    [notification.request.content.data.redirectFromRoot]
+  );
+
   const action = useCallback(async () => {
     const buttonTitle: string | unknown =
       notification.request.content.data.redirectTitle ?? "";
@@ -79,22 +98,17 @@ const NotificationModal: FC<Props> = ({ notification, onDismiss }) => {
       await StoreReview.requestReview();
 
     if (redirectTo) {
-      const redirectFromRoot = notification.request.content.data
-        .redirectFromRoot as boolean;
-      if (redirectFromRoot)
-        void RootNavigation.navigate("root", {
-          params: redirectParams,
-          screen: redirectTo,
-        });
-      else void RootNavigation.navigate(redirectTo, redirectParams);
+      setTimeout(() => {
+        redirect(redirectTo, redirectParams);
+      }, TIMEOUT_ON_DISMISS_MODAL);
     }
     setModalVisible(false);
   }, [
-    notification.request.content.data.redirectFromRoot,
     notification.request.content.data.redirectParams,
     notification.request.content.data.redirectTitle,
     notification.request.content.data.redirectTo,
     notificationType,
+    redirect,
   ]);
 
   useEffect(() => {

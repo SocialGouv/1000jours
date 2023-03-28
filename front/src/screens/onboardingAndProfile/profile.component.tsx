@@ -45,8 +45,10 @@ import {
   NotificationUtils,
   StepUtils,
   StorageUtils,
+  TndNotificationUtils,
   TrackerUtils,
 } from "../../utils";
+import { NotificationType } from "../../utils/notifications/notification.util";
 import { checkErrorOnProfile } from "../../utils/step/step.util";
 
 interface Props {
@@ -225,9 +227,20 @@ const Profile: FC<Props> = ({ navigation }) => {
       setTrackerAction(checkedUserSituation.label);
     }
 
-    // Envoi de la date sélectionnée sur Matomo
     if (checkedUserSituation?.childBirthdayRequired && childBirthday) {
+      // Envoi de la date sélectionnée sur Matomo
       setTrackerAction(`${Labels.birthdate} : ${childBirthday}`);
+
+      // Programme les notifications pour passer le repérage TND
+      const notifs = await NotificationUtils.getAllNotificationsByType(
+        NotificationType.tnd
+      );
+      console.log(notifs);
+      const isFirstTime = notifs.length === 0;
+      void TndNotificationUtils.scheduleTndNotifications(
+        childBirthday,
+        isFirstTime
+      );
     }
 
     // Envoi du genre sélectionné sur Matomo
