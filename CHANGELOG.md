@@ -1,3 +1,10 @@
+## [1.129.1](https://github.com/SocialGouv/1000jours/compare/v1.129.0...v1.129.1) (2023-03-28)
+
+
+### Bug Fixes
+
+* 🐛 Augmente le timeout pour la fermeture des popup ([#1679](https://github.com/SocialGouv/1000jours/issues/1679)) ([2cf8554](https://github.com/SocialGouv/1000jours/commit/2cf85545e39ea2d5b1019d02cc13f913e190f98d))
+
 # [1.129.0](https://github.com/SocialGouv/1000jours/compare/v1.128.0...v1.129.0) (2023-03-28)
 
 
