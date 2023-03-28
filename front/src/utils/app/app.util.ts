@@ -30,9 +30,10 @@ export const hasBeenUpdated = async (
 };
 
 export const hasNewFeaturesToShow = async (
-  currentVersion: string
+  currentVersion: string,
+  news: string | null
 ): Promise<boolean> => {
-  if (currentVersion) {
+  if (currentVersion && news && news.length > 0) {
     const versions =
       ((await StorageUtils.getObjectValue(
         StorageKeysConstants.newFeaturesAlreadyPop

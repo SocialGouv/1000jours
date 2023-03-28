@@ -101,21 +101,45 @@ describe("App utils", () => {
   describe("hasNewFeaturesToShow", () => {
     it("should return true when the version is not store in `newFeaturesAlreadyPop`", async () => {
       const currentVersion = "1.1.999";
+      const news = "Lorem Ipsum...";
       await StorageUtils.storeObjectValue(
         StorageKeysConstants.newFeaturesAlreadyPop,
         ["1.0.0", "1.0.1", "1.1.0"]
       );
-      const result = await AppUtils.hasNewFeaturesToShow(currentVersion);
+      const result = await AppUtils.hasNewFeaturesToShow(currentVersion, news);
       expect(result).toBeTruthy();
+    });
+
+    it("should return false when news is null)", async () => {
+      const currentVersion = "1.1.999";
+      const news = null;
+      await StorageUtils.storeObjectValue(
+        StorageKeysConstants.newFeaturesAlreadyPop,
+        ["1.0.0", "1.0.1", "1.1.0"]
+      );
+      const result = await AppUtils.hasNewFeaturesToShow(currentVersion, news);
+      expect(result).toBeFalsy();
+    });
+
+    it("should return false when news is empty", async () => {
+      const currentVersion = "1.1.999";
+      const news = "";
+      await StorageUtils.storeObjectValue(
+        StorageKeysConstants.newFeaturesAlreadyPop,
+        ["1.0.0", "1.0.1", "1.1.0"]
+      );
+      const result = await AppUtils.hasNewFeaturesToShow(currentVersion, news);
+      expect(result).toBeFalsy();
     });
 
     it("should return false when the version is already store in `newFeaturesAlreadyPop`", async () => {
       const currentVersion = "1.1.999";
+      const news = "Lorem Ipsum...";
       await StorageUtils.storeObjectValue(
         StorageKeysConstants.newFeaturesAlreadyPop,
         [currentVersion]
       );
-      const result = await AppUtils.hasNewFeaturesToShow(currentVersion);
+      const result = await AppUtils.hasNewFeaturesToShow(currentVersion, news);
       expect(result).toBeFalsy();
     });
   });
