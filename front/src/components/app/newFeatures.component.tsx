@@ -22,14 +22,14 @@ const NewFeatures: React.FC = () => {
   const [html, setHtml] = useState<string | undefined>(undefined);
 
   const storeNewFeaturesVersion = useCallback(
-    async (currentVersion: string): Promise<void> => {
+    async (currentVersion: string, news: string | null): Promise<void> => {
       const versions =
         ((await StorageUtils.getObjectValue(
           StorageKeysConstants.newFeaturesAlreadyPop
         )) as string[] | null) ?? [];
       if (
         currentVersion &&
-        (await AppUtils.hasNewFeaturesToShow(currentVersion))
+        (await AppUtils.hasNewFeaturesToShow(currentVersion, news))
       ) {
         versions.push(currentVersion);
         await StorageUtils.storeObjectValue(
@@ -48,7 +48,8 @@ const NewFeatures: React.FC = () => {
         const htmlToDisplay = HtmlUtils.cleanImgContainer(result.config.news);
         setHtml(htmlToDisplay);
         const currentVersion = Constants.manifest?.version;
-        if (currentVersion) void storeNewFeaturesVersion(currentVersion);
+        if (currentVersion)
+          void storeNewFeaturesVersion(currentVersion, result.config.news);
       }
     },
     [storeNewFeaturesVersion]
@@ -60,7 +61,7 @@ const NewFeatures: React.FC = () => {
       contentContainerStyle={styles.mainContentContainer}
     >
       <GraphQLQuery
-        query={ConfigQueries.CONFIG_GET_NEWS}
+        query={ConfigQueries.CONFIG_GET_ALL}
         fetchPolicy={FetchPoliciesConstants.NO_CACHE}
         getFetchedData={handleResults}
         showErrorMessage={false}

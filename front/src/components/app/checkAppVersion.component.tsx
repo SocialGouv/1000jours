@@ -60,28 +60,32 @@ const CheckAppVersion: FC = () => {
     }
   };
 
-  const onAppUpdated = useCallback(async (currentVersion: string) => {
-    await StorageUtils.storeStringValue(
-      StorageKeysConstants.lastVersionLaunchKey,
-      currentVersion
-    );
-    await StorageUtils.storeObjectValue(
-      StorageKeysConstants.forceToScheduleEventsNotif,
-      true
-    );
+  const onAppUpdated = useCallback(
+    async (currentVersion: string, news: string | null) => {
+      await StorageUtils.storeStringValue(
+        StorageKeysConstants.lastVersionLaunchKey,
+        currentVersion
+      );
+      await StorageUtils.storeObjectValue(
+        StorageKeysConstants.forceToScheduleEventsNotif,
+        true
+      );
 
-    // Programme les notifications pour passer le repérage TND si nécessaire
-    await needToScheduleTndNotifications();
+      // Programme les notifications pour passer le repérage TND si nécessaire
+      await needToScheduleTndNotifications();
 
-    if (await AppUtils.hasNewFeaturesToShow(currentVersion)) {
-      void RootNavigation.navigate("newFeatures");
-    }
-  }, []);
+      if (await AppUtils.hasNewFeaturesToShow(currentVersion, news)) {
+        void RootNavigation.navigate("newFeatures");
+      }
+    },
+    []
+  );
 
   const handleResults = useCallback(
     async (data: unknown) => {
       const result = data ? (data as { config: Config }) : undefined;
       const lastAppVersion = result?.config.lastAppVersionNumber ?? null;
+      const news = result?.config.news ?? null;
       const currentVersion = Constants.manifest?.version ?? null;
       if (
         lastAppVersion &&
@@ -91,7 +95,7 @@ const CheckAppVersion: FC = () => {
       }
 
       if (currentVersion && (await AppUtils.hasBeenUpdated(currentVersion))) {
-        await onAppUpdated(currentVersion);
+        await onAppUpdated(currentVersion, news);
       }
     },
     [onAppUpdated]
@@ -99,7 +103,7 @@ const CheckAppVersion: FC = () => {
 
   return (
     <GraphQLQuery
-      query={ConfigQueries.CONFIG_GET_LAST_APP_VERSION}
+      query={ConfigQueries.CONFIG_GET_ALL}
       fetchPolicy={FetchPoliciesConstants.NO_CACHE}
       getFetchedData={handleResults}
       showErrorMessage={false}
