@@ -1,3 +1,15 @@
+# [1.129.0](https://github.com/SocialGouv/1000jours/compare/v1.128.0...v1.129.0) (2023-03-28)
+
+
+### Bug Fixes
+
+* 🐛 N'affiche pas les nouveautés lorsqu'elle est vide ([#1677](https://github.com/SocialGouv/1000jours/issues/1677)) ([f72d239](https://github.com/SocialGouv/1000jours/commit/f72d239a9ff15be94641e817f1419f65af009957))
+
+
+### Features
+
+* 🎸 Ajoute les notifications TND pour passer le test ([#1676](https://github.com/SocialGouv/1000jours/issues/1676)) ([790562e](https://github.com/SocialGouv/1000jours/commit/790562efbc5b250457cc72b4a0e500fd175bfa5e)), closes [#1675](https://github.com/SocialGouv/1000jours/issues/1675)
+
 # [1.128.0](https://github.com/SocialGouv/1000jours/compare/v1.127.0...v1.128.0) (2023-03-21)
 
 
