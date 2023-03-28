@@ -1,4 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
+import type { StackNavigationProp } from "@react-navigation/stack";
+import type { NotificationRequest } from "expo-notifications";
 import _ from "lodash";
 import type { FC } from "react";
 import * as React from "react";
@@ -7,6 +9,7 @@ import { Alert, ScrollView, StyleSheet, View } from "react-native";
 
 import { Labels, StorageKeysConstants } from "../../constants";
 import { Paddings, Styles } from "../../styles";
+import type { RootStackParamList } from "../../types";
 import { NotificationUtils, StorageUtils } from "../../utils";
 import { NotificationType } from "../../utils/notifications/notification.util";
 import { getObjectValue } from "../../utils/storage.util";
@@ -15,10 +18,14 @@ import H1 from "../html/h1.component";
 import H2 from "../html/h2.component";
 import H3 from "../html/h3.component";
 
-const InfosDev: FC = () => {
+interface Props {
+  navigation: StackNavigationProp<RootStackParamList, "root">;
+}
+
+const InfosDev: FC<Props> = ({ navigation }) => {
   const [showNotifSection, setShowNotifSection] = React.useState(false);
-  const [notificationsCountByType, setNotificationsCountByType] =
-    React.useState<_.Dictionary<number> | undefined>(undefined);
+  const [notificationsGroupByType, setNotificationsGroupByType] =
+    React.useState<_.Dictionary<NotificationRequest[]> | undefined>(undefined);
   const [triggerNotifArticles, setTriggerNotifArticles] =
     React.useState<Date | null>(null);
   const [triggerNotifEpds, setTriggerNotifEpds] = React.useState<Date | null>(
@@ -31,8 +38,8 @@ const InfosDev: FC = () => {
     const notifications =
       await NotificationUtils.getAllScheduledNotifications();
     if (notifications.length > 0) {
-      setNotificationsCountByType(
-        _.countBy(notifications, "content.data.type")
+      setNotificationsGroupByType(
+        _.groupBy(notifications, "content.data.type")
       );
 
       const _triggerNotifArticles = (await getObjectValue(
@@ -54,10 +61,11 @@ const InfosDev: FC = () => {
   };
 
   const sendNotification = useCallback(
-    (notificationType: NotificationType | string) => () => {
-      void NotificationUtils.scheduleFakeNotif(notificationType);
+    (notificationType: NotificationType | string) => async () => {
+      await NotificationUtils.scheduleFakeNotif(notificationType);
+      navigation.goBack();
     },
-    []
+    [navigation]
   );
 
   const resetAllData = useCallback(async () => {
@@ -71,28 +79,43 @@ const InfosDev: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const renderNotificationsCountItem = (key: string, value: number) => {
-    let trigger = null;
-    if (key === NotificationType.articles && triggerNotifArticles) {
-      trigger = `(${new Date(triggerNotifArticles).toLocaleString()})`;
-    }
-    if (key === NotificationType.epds && triggerNotifEpds) {
-      trigger = `(${new Date(triggerNotifEpds).toLocaleString()})`;
-    }
-    if (key === NotificationType.nextStep && triggerNotifNextStep) {
-      trigger = `(${new Date(triggerNotifNextStep).toLocaleString()})`;
-    }
+  const renderNotificationsGroupItem = (
+    key: string,
+    notifications: NotificationRequest[]
+  ) => {
     return (
-      <SecondaryText key={key} style={styles.paddingLeft}>
-        {key} : {value} {trigger ?? null}
-      </SecondaryText>
+      <View key={key}>
+        <SecondaryText style={styles.paddingLeft}>
+          {key} : {notifications.length}
+        </SecondaryText>
+        {notifications.map((notif, index) => {
+          let trigger = null;
+          if (key === NotificationType.articles && triggerNotifArticles) {
+            trigger = ` - (${new Date(triggerNotifArticles).toLocaleString()})`;
+          }
+          if (key === NotificationType.epds && triggerNotifEpds) {
+            trigger = ` - (${new Date(triggerNotifEpds).toLocaleString()})`;
+          }
+          if (key === NotificationType.nextStep && triggerNotifNextStep) {
+            trigger = ` - (${new Date(triggerNotifNextStep).toLocaleString()})`;
+          }
+          if (key === NotificationType.tnd) {
+            trigger = ` - (${notif.content.data.trigger})`;
+          }
+          return trigger ? (
+            <SecondaryText key={index} style={styles.paddingLeft}>
+              {trigger}
+            </SecondaryText>
+          ) : null;
+        })}
+      </View>
     );
   };
 
   const renderNotificationSection = () => {
-    if (notificationsCountByType) {
-      return Object.keys(notificationsCountByType).map((key: string) => {
-        return renderNotificationsCountItem(key, notificationsCountByType[key]);
+    if (notificationsGroupByType) {
+      return Object.keys(notificationsGroupByType).map((key: string) => {
+        return renderNotificationsGroupItem(key, notificationsGroupByType[key]);
       });
     } else {
       return (

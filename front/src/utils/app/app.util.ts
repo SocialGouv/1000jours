@@ -1,5 +1,3 @@
-import Constants from "expo-constants";
-
 import { StorageKeysConstants } from "../../constants";
 import { StorageUtils } from "..";
 import { scheduleInAppReviewNotification } from "../notifications/inappreview/inAppReview.util";
@@ -9,7 +7,6 @@ import {
   getStringValue,
   multiRemove,
   storeObjectValue,
-  storeStringValue,
 } from "../storage.util";
 
 // The business rule is to have the popup triggered at the third launch of the app
@@ -20,30 +17,23 @@ export const manageStorage = async (): Promise<void> => {
     await cancelAllScheduledNotifications();
     await multiRemove(StorageKeysConstants.allStorageKeys);
   }
+};
 
+export const hasBeenUpdated = async (
+  currentVersion: string
+): Promise<boolean> => {
   const lastVersionLaunch = await getStringValue(
     StorageKeysConstants.lastVersionLaunchKey
   );
 
-  if (
-    Constants.manifest?.version &&
-    lastVersionLaunch !== Constants.manifest.version
-  ) {
-    await storeStringValue(
-      StorageKeysConstants.lastVersionLaunchKey,
-      Constants.manifest.version
-    );
-    await storeObjectValue(
-      StorageKeysConstants.forceToScheduleEventsNotif,
-      true
-    );
-  }
+  return lastVersionLaunch !== currentVersion;
 };
 
 export const hasNewFeaturesToShow = async (
-  currentVersion: string
+  currentVersion: string,
+  news: string | null
 ): Promise<boolean> => {
-  if (currentVersion) {
+  if (currentVersion && news && news.length > 0) {
     const versions =
       ((await StorageUtils.getObjectValue(
         StorageKeysConstants.newFeaturesAlreadyPop
