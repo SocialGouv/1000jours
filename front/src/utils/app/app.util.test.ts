@@ -74,6 +74,30 @@ describe("App utils", () => {
     });
   });
 
+  describe("hasBeenUpdated", () => {
+    it("should return false when the app has not been updated (same version)", async () => {
+      const lastVersionLaunch = "1.1.99";
+      const currentVersion = "1.1.99";
+      await StorageUtils.storeStringValue(
+        StorageKeysConstants.lastVersionLaunchKey,
+        lastVersionLaunch
+      );
+      const result = await AppUtils.hasBeenUpdated(currentVersion);
+      expect(result).toBeFalsy();
+    });
+
+    it("should return true when the app has been updated (new version)", async () => {
+      const lastVersionLaunch = "1.1.99";
+      const currentVersion = "1.2.99";
+      await StorageUtils.storeStringValue(
+        StorageKeysConstants.lastVersionLaunchKey,
+        lastVersionLaunch
+      );
+      const result = await AppUtils.hasBeenUpdated(currentVersion);
+      expect(result).toBeTruthy();
+    });
+  });
+
   describe("hasNewFeaturesToShow", () => {
     it("should return true when the version is not store in `newFeaturesAlreadyPop`", async () => {
       const currentVersion = "1.1.999";

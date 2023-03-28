@@ -18,6 +18,7 @@ import * as FavoritesNotificationUtils from "./notifications/favorites/favorites
 import * as InAppReviewUtils from "./notifications/inappreview/inAppReview.util";
 import * as NotificationUtils from "./notifications/notification.util";
 import * as NotificationToggleUtils from "./notifications/notificationToggle.util";
+import * as TndNotificationUtils from "./notifications/tnd/tndNotification.util";
 import * as NumberUtils from "./number/number.util";
 import * as RootNavigation from "./rootNavigation.util";
 import * as ScaleNormalize from "./scaleNormalize.util";
@@ -65,6 +66,7 @@ export {
   StepUtils,
   StorageUtils,
   StringUtils,
+  TndNotificationUtils,
   TndSurveyUtils,
   TrackerUtils,
   VisuelFormat,
