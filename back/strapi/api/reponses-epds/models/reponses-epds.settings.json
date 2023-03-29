@@ -69,6 +69,9 @@
     },
     "source_widget": {
       "model": "widget-epds-sources"
+    },
+    "temps_survey": {
+      "type": "string"
     }
   }
 }
