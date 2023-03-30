@@ -14,8 +14,8 @@ WORKDIR /app
 
 COPY . .
 
-RUN yarn --production --frozen-lockfile --prefer-offline && \
-    yarn cache clean --ignore-scripts
+RUN yarn --production --frozen-lockfile --prefer-offline --ignore-scripts && \
+    yarn cache clean
 
 ENV NODE_ENV=production \
     TZ=Europe/Paris
