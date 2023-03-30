@@ -42,7 +42,7 @@ app-strapi:
     - name: DATABASE_SSL
       value: "true"
     - name: TZ
-      value: "Europe/Paris"
+      value: Europe/Paris
 #app-cache:
 # ~chart: app
 #  image: "nginx:1.19.6"
