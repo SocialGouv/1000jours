@@ -14,10 +14,11 @@ WORKDIR /app
 
 COPY . .
 
-RUN yarn --production --frozen-lockfile --prefer-offline --ignore-scripts && \
+RUN yarn --production --frozen-lockfile --prefer-offline && \
     yarn cache clean
 
-ENV NODE_ENV=production
+ENV NODE_ENV=production \
+    TZ=Europe/Paris
 
 RUN yarn build
 
