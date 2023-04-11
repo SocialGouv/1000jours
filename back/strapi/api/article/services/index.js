@@ -32,7 +32,7 @@ const search = async ({ query }) => {
 
   const articles = await strapi
     .query("article")
-    .find({ published_at_null: false });
+    .find({ _publicationState: "live" });
 
   if (!articles.length) return [];
 
@@ -45,6 +45,6 @@ const search = async ({ query }) => {
 
 module.exports = {
   ...ModelsService,
-  search,
   format,
+  search,
 };
