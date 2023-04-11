@@ -98,6 +98,7 @@ module.exports = {
       reponse_8: Int
       reponse_9: Int
       reponse_10: Int
+      temps_survey: String
       langue: ID
       source_widget_nom: String!
     ): ReponsesEpds
