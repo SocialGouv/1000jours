@@ -29,7 +29,6 @@ const ArticleTextFields = Object.keys(ArticleModel.attributes).filter(
 
 const search = async ({ query }) => {
   query = normalizeString(query);
-
   const articles = await strapi
     .query("article")
     .find({ _publicationState: "live" });
