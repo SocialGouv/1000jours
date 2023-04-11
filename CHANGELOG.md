@@ -1,3 +1,10 @@
+## [1.130.1](https://github.com/SocialGouv/1000jours/compare/v1.130.0...v1.130.1) (2023-04-11)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la recherche article ([#1689](https://github.com/SocialGouv/1000jours/issues/1689)) ([e61122b](https://github.com/SocialGouv/1000jours/commit/e61122ba623003a4422c456ac5133c40d2476b3d))
+
 # [1.130.0](https://github.com/SocialGouv/1000jours/compare/v1.129.1...v1.130.0) (2023-04-11)
 
 
