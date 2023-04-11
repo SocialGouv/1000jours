@@ -1,3 +1,17 @@
+# [1.130.0](https://github.com/SocialGouv/1000jours/compare/v1.129.1...v1.130.0) (2023-04-11)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la recherche article ([#1687](https://github.com/SocialGouv/1000jours/issues/1687)) ([0abbb61](https://github.com/SocialGouv/1000jours/commit/0abbb612a5bf0f85812aab1bd993c240997a5e5f)), closes [#1686](https://github.com/SocialGouv/1000jours/issues/1686)
+* Update values.yaml ([#1685](https://github.com/SocialGouv/1000jours/issues/1685)) ([c7528e7](https://github.com/SocialGouv/1000jours/commit/c7528e73d921936dd4ac1b97dbe3a0f1857f7583))
+
+
+### Features
+
+* ajout champs du temps passer sur le questionnaire EPDS ([#1682](https://github.com/SocialGouv/1000jours/issues/1682)) ([f1d599b](https://github.com/SocialGouv/1000jours/commit/f1d599bb3d58d50c5f5222056be2494f455a764c))
+* synchro de l'activation du chat dans les plages horaires du widget web ([#1681](https://github.com/SocialGouv/1000jours/issues/1681)) ([1fa6972](https://github.com/SocialGouv/1000jours/commit/1fa697251e38182d494c5e90534dc3b539624989))
+
 ## [1.129.1](https://github.com/SocialGouv/1000jours/compare/v1.129.0...v1.129.1) (2023-03-28)
 
 
