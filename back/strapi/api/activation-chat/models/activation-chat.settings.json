@@ -17,22 +17,18 @@
     },
     "matin_de": {
       "type": "time",
-      "required": true,
       "default": "09:00:00"
     },
     "matin_a": {
       "type": "time",
-      "required": true,
       "default": "12:00:00"
     },
     "apres_midi_de": {
       "type": "time",
-      "required": true,
       "default": "13:00:00"
     },
     "apres_midi_a": {
       "type": "time",
-      "required": true,
       "default": "17:30:00"
     }
   }
