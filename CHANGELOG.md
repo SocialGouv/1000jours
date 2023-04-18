@@ -1,3 +1,10 @@
+## [1.130.2](https://github.com/SocialGouv/1000jours/compare/v1.130.1...v1.130.2) (2023-04-18)
+
+
+### Bug Fixes
+
+* horaire du chat manuel sur strapi ([#1692](https://github.com/SocialGouv/1000jours/issues/1692)) ([bfac6ad](https://github.com/SocialGouv/1000jours/commit/bfac6ad6163eaead592d5afbfb033ebb6a2f7c83))
+
 ## [1.130.1](https://github.com/SocialGouv/1000jours/compare/v1.130.0...v1.130.1) (2023-04-11)
 
 
