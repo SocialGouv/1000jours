@@ -14,6 +14,22 @@
     "activation_chat": {
       "default": true,
       "type": "boolean"
+    },
+    "matin_de": {
+      "type": "time",
+      "default": "09:00:00"
+    },
+    "matin_a": {
+      "type": "time",
+      "default": "12:00:00"
+    },
+    "apres_midi_de": {
+      "type": "time",
+      "default": "13:00:00"
+    },
+    "apres_midi_a": {
+      "type": "time",
+      "default": "17:30:00"
     }
   }
 }
