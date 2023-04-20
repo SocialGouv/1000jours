@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/annuaire-1000-j-blues",
+      "handler": "annuaire-1000j-blues.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/annuaire-1000-j-blues/count",
+      "handler": "annuaire-1000j-blues.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/annuaire-1000-j-blues/:id",
+      "handler": "annuaire-1000j-blues.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/annuaire-1000-j-blues",
+      "handler": "annuaire-1000j-blues.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/annuaire-1000-j-blues/:id",
+      "handler": "annuaire-1000j-blues.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/annuaire-1000-j-blues/:id",
+      "handler": "annuaire-1000j-blues.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

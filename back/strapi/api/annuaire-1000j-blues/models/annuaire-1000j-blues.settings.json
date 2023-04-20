@@ -1,0 +1,59 @@
+{
+  "kind": "collectionType",
+  "collectionName": "annuaire_1000j_blues",
+  "info": {
+    "name": "Annuaire 1000jBlues"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "type": {
+      "type": "string"
+    },
+    "nom": {
+      "type": "string"
+    },
+    "prenom": {
+      "type": "string"
+    },
+    "profession": {
+      "type": "string"
+    },
+    "telephone1": {
+      "type": "string"
+    },
+    "adresse": {
+      "type": "string"
+    },
+    "code_postal": {
+      "type": "string"
+    },
+    "ville": {
+      "type": "string"
+    },
+    "departement": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "longitude": {
+      "type": "float"
+    },
+    "latitude": {
+      "type": "float"
+    },
+    "tarif": {
+      "type": "string"
+    },
+    "conventionne_securite_sociale": {
+      "type": "string"
+    },
+    "telephone2": {
+      "type": "string"
+    }
+  }
+}
