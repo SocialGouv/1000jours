@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "activation_tile",
+  "info": {
+    "name": "Activation contact",
+    "description": "Permet d'activer ou de désactiver la tuile pour la demande de contact avec Wanda"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "activation_tile": {
+      "default": true,
+      "type": "boolean"
+    }
+  }
+}
