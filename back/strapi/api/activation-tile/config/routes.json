@@ -2,24 +2,24 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/activation-chat",
-      "handler": "activation-chat.find",
+      "path": "/activation-tile",
+      "handler": "activation-tile.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/activation-chat/:id",
-      "handler": "activation-chat.update",
+      "path": "/activation-tile/:id",
+      "handler": "activation-tile.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/activation-chat/:id",
-      "handler": "activation-chat.delete",
+      "path": "/activation-tile/:id",
+      "handler": "activation-tile.delete",
       "config": {
         "policies": []
       }
