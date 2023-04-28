@@ -1,3 +1,10 @@
+## [1.130.3](https://github.com/SocialGouv/1000jours/compare/v1.130.2...v1.130.3) (2023-04-28)
+
+
+### Bug Fixes
+
+* changer le nom du type d'activation chat en activation contact pour la tuile de contact avec Wanda ([#1696](https://github.com/SocialGouv/1000jours/issues/1696)) ([4952aa3](https://github.com/SocialGouv/1000jours/commit/4952aa3c14787bfa2afe54988e1a3a22e93da8a3))
+
 ## [1.130.2](https://github.com/SocialGouv/1000jours/compare/v1.130.1...v1.130.2) (2023-04-18)
 
 
