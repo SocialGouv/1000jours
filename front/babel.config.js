@@ -7,6 +7,7 @@ module.exports = function (api) {
       "inline-dotenv",
       "react-native-reanimated/plugin",
       "@babel/plugin-proposal-private-methods",
+      { loose: true },
     ],
   };
 };
