@@ -74,12 +74,12 @@ export const requestNotificationPermission = async (): Promise<void> => {
 };
 
 export const getAllScheduledNotifications = async (): Promise<
-  Notifications.NotificationRequest[]
+  Notifications.NotificationRequest[] | undefined
 > => Notifications.getAllScheduledNotificationsAsync();
 
 export const logAllScheduledNotifications = async (): Promise<void> => {
   const scheduledNotifs = await getAllScheduledNotifications();
-  for (const notif of scheduledNotifs) {
+  for (const notif of scheduledNotifs ?? []) {
     console.info(notif);
   }
 };
@@ -88,9 +88,11 @@ export const getAllNotificationsByType = async (
   notificationType: NotificationType
 ): Promise<NotificationRequest[]> => {
   const notifications = await getAllScheduledNotifications();
-  return notifications.filter(
-    (notification) => notification.content.data.type === notificationType
-  );
+  return notifications
+    ? notifications.filter(
+        (notification) => notification.content.data.type === notificationType
+      )
+    : [];
 };
 
 export const cancelAllNotificationsByType = async (
