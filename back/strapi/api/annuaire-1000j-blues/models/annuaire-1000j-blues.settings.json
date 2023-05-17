@@ -10,9 +10,6 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "type": {
-      "type": "string"
-    },
     "nom": {
       "type": "string"
     },
@@ -22,16 +19,25 @@
     "profession": {
       "type": "string"
     },
-    "telephone1": {
+    "telephone": {
+      "type": "string"
+    },
+    "mail": {
+      "type": "string"
+    },
+    "site": {
       "type": "string"
     },
     "adresse": {
       "type": "string"
     },
     "code_postal": {
-      "type": "string"
+      "type": "number"
     },
     "ville": {
+      "type": "string"
+    },
+    "departement_code": {
       "type": "string"
     },
     "departement": {
@@ -50,9 +56,6 @@
       "type": "string"
     },
     "conventionne_securite_sociale": {
-      "type": "string"
-    },
-    "telephone2": {
       "type": "string"
     }
   }
