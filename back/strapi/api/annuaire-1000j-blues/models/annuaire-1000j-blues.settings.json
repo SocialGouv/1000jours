@@ -32,7 +32,7 @@
       "type": "string"
     },
     "code_postal": {
-      "type": "string"
+      "type": "number"
     },
     "ville": {
       "type": "string"
