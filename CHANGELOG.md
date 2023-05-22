@@ -1,3 +1,19 @@
+# [1.131.0](https://github.com/SocialGouv/1000jours/compare/v1.130.3...v1.131.0) (2023-05-22)
+
+
+### Bug Fixes
+
+* annuaire collection settings ([#1703](https://github.com/SocialGouv/1000jours/issues/1703)) ([586bb3c](https://github.com/SocialGouv/1000jours/commit/586bb3c351ad747077a13c65203837224a250775))
+* broken debian stretch sources ([#1702](https://github.com/SocialGouv/1000jours/issues/1702)) ([2837eef](https://github.com/SocialGouv/1000jours/commit/2837eefcca4acc9e5942a999c7e60adabb1dabaf))
+* changer le nom du type d'activation chat en activation contact pour la tuile de contact avec Wanda ([#1696](https://github.com/SocialGouv/1000jours/issues/1696)) ([42ab3a1](https://github.com/SocialGouv/1000jours/commit/42ab3a10af8f67232718fa34f548caa0b1471c29))
+* horaire du chat manuel sur strapi ([#1692](https://github.com/SocialGouv/1000jours/issues/1692)) ([ece0a0c](https://github.com/SocialGouv/1000jours/commit/ece0a0c25d803d2ba75ae1970e6ecaa4e13ca86d))
+
+
+### Features
+
+* ajout de la collection annuaire ([#1693](https://github.com/SocialGouv/1000jours/issues/1693)) ([c17237b](https://github.com/SocialGouv/1000jours/commit/c17237b3ab688f4bf82ffb70de28addb8e4000d9)), closes [#1692](https://github.com/SocialGouv/1000jours/issues/1692)
+* update legal notice ([2a47765](https://github.com/SocialGouv/1000jours/commit/2a477656cae013c1c3169f81d2998f38cbde23c7))
+
 ## [1.130.3](https://github.com/SocialGouv/1000jours/compare/v1.130.2...v1.130.3) (2023-04-28)
 
 
