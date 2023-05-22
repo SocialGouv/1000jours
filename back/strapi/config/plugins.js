@@ -1,6 +1,26 @@
 module.exports = ({ env }) => ({
+  demarches: {
+    token: env("DEMARCHES_SIMPLIFIEES_TOKEN"),
+  },
+  email: {
+    provider: "smtp",
+    providerOptions: {
+      connectionTimeout: 1,
+      host: env("MAIL_HOST"),
+      password: env("MAIL_PASSWORD"),
+      port: env("MAIL_PORT"),
+      rejectUnauthorized: true,
+      requireTLS: true,
+      secure: false,
+      username: env("MAIL_USER"),
+    },
+    settings: {
+      from: env("MAIL_SEND_FROM"),
+      replyTo: env("MAIL_SEND_FROM"),
+    },
+  },
   graphql: {
-    amountLimit: 100,
+    amountLimit: 1500,
     apolloServer: {
       tracing: false,
     },
@@ -11,25 +31,5 @@ module.exports = ({ env }) => ({
   },
   sentry: {
     dsn: env("SENTRY_DSN"),
-  },
-  email: {
-    provider: "smtp",
-    providerOptions: {
-      host: env("MAIL_HOST"),
-      port: env("MAIL_PORT"),
-      secure: false,
-      username: env("MAIL_USER"),
-      password: env("MAIL_PASSWORD"),
-      rejectUnauthorized: true,
-      requireTLS: true,
-      connectionTimeout: 1,
-    },
-    settings: {
-      from: env("MAIL_SEND_FROM"),
-      replyTo: env("MAIL_SEND_FROM"),
-    },
-  },
-  demarches: {
-    token: env("DEMARCHES_SIMPLIFIEES_TOKEN"),
   },
 });

@@ -19,13 +19,14 @@ const LegalNotice: FC = () => {
 
       <H2>Éditeur</H2>
       <P>
-        Ce site est édité par la Direction générale de la Cohésion sociale : 18
-        place des 5-Martyrs-du-Lycée-Buffon 75014 Paris.
+        Cette application est éditée par la Direction générale de la Cohésion
+        sociale au sein de la Fabrique numérique des ministères sociaux :
       </P>
+      <P>18 place des 5-Martyrs-du-Lycée-Buffon, 75014 Paris</P>
 
       <H2>Directeur de la publication</H2>
       <P>
-        Madame Virginie LASSERRE, Directrice générale de la cohésion sociale.
+        Monsieur Jean-Benoît DUJOL, Directeur général de la cohésion sociale.
       </P>
 
       <H2>Hébergement du site</H2>
