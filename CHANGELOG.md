@@ -1,3 +1,10 @@
+## [1.131.1](https://github.com/SocialGouv/1000jours/compare/v1.131.0...v1.131.1) (2023-05-23)
+
+
+### Bug Fixes
+
+* annuaire collection settings ([#1703](https://github.com/SocialGouv/1000jours/issues/1703)) ([1f805a7](https://github.com/SocialGouv/1000jours/commit/1f805a74b3a0ceccafdf2ef99dfc06eaf61f9e0b))
+
 # [1.131.0](https://github.com/SocialGouv/1000jours/compare/v1.130.3...v1.131.0) (2023-05-22)
 
 
