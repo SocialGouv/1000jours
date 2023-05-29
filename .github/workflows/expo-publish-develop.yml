@@ -42,11 +42,10 @@ jobs:
         with:
           node-version: 14.x
 
-      - uses: expo/expo-github-action@v5
+      - uses: expo/expo-github-action@v8
         with:
-          expo-version: 4.x
-          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
-          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
 
       - id: env
         uses: socialgouv/kontinuous/.github/actions/env@v1
@@ -58,7 +57,7 @@ jobs:
           env
           cd front
           yarn install
-          eas update --channel ${{ steps.env.outputs.branch }} --message 'EAS Update'
+          eas update --auto --non-interactive
         env:
           API_URL: "https://${{ steps.env.outputs.subdomain_backoffice }}.dev.fabrique.social.gouv.fr"
           BRANCH_NAME: ${{ steps.env.outputs.branch }}
