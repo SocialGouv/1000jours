@@ -86,7 +86,7 @@ const CheckAppVersion: FC = () => {
       const result = data ? (data as { config: Config }) : undefined;
       const lastAppVersion = result?.config.lastAppVersionNumber ?? null;
       const news = result?.config.news ?? null;
-      const currentVersion = Constants.manifest?.version ?? null;
+      const currentVersion = Constants.expoConfig?.version ?? null;
       if (
         lastAppVersion &&
         AppUtils.hasNewVersionAvailable(currentVersion, lastAppVersion)

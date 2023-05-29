@@ -300,10 +300,10 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
                 <ListItem.Content>
                   <ListItem.Title
                     style={styles.version}
-                    accessibilityLabel={`${Labels.accessibility.version}${Constants.manifest?.version}`}
+                    accessibilityLabel={`${Labels.accessibility.version}${Constants.expoConfig?.version}`}
                     onPress={onVersionPress}
                   >
-                    {`${Labels.version}${Constants.manifest?.version}`}
+                    {`${Labels.version}${Constants.expoConfig?.version}`}
                   </ListItem.Title>
                 </ListItem.Content>
               </ListItem>

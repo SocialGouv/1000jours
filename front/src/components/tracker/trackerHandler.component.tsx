@@ -44,7 +44,7 @@ const TrackerHandler: FC<TrackerHandlerProps> = ({
     }
 
     const userInfo: TrackerUserInfo = {
-      dimension1: Constants.manifest?.version ?? "",
+      dimension1: Constants.expoConfig?.version ?? "",
       dimension2: userSituationLabel,
       dimension3: gender?.label ?? null,
       dimension4: currentStep?.nom ?? null,

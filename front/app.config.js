@@ -89,6 +89,9 @@ export default {
         },
       ],
     ],
+    runtimeVersion: {
+      policy: "sdkVersion",
+    },
     scheme: "millejours",
     slug: "1000jours",
     splash: {
@@ -98,6 +101,7 @@ export default {
     },
     updates: {
       fallbackToCacheTimeout: 0,
+      url: "https://u.expo.dev/f6ac4fdc-cbef-49b5-9e33-fca51d77281e",
     },
     userInterfaceStyle: "light",
     version: APP_VERSION,

@@ -47,7 +47,7 @@ const NewFeatures: React.FC = () => {
       if (result?.config.news) {
         const htmlToDisplay = HtmlUtils.cleanImgContainer(result.config.news);
         setHtml(htmlToDisplay);
-        const currentVersion = Constants.manifest?.version;
+        const currentVersion = Constants.expoConfig?.version;
         if (currentVersion)
           void storeNewFeaturesVersion(currentVersion, result.config.news);
       }
