@@ -52,7 +52,6 @@ export default {
       postPublish: [
         {
           config: {
-            authToken: process.env.SENTRY_TOKEN,
             organization: "incubateur",
             project: "nos-1000-jours",
             url: "https://sentry.fabrique.social.gouv.fr",
