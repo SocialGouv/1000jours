@@ -22,7 +22,7 @@ export const ICLOUD = "iCloud";
 export const TIMEOUT_ON_DISMISS_MENU = PLATFORM_IS_IOS ? 500 : 0;
 export const TIMEOUT_ON_DISMISS_MODAL = PLATFORM_IS_IOS ? 500 : 0;
 export const IS_ON_EXPO_GO = Constants.appOwnership === "expo";
-export const IS_PREPROD_RELEASE =
-  Constants.manifest?.releaseChannel === "preprod";
-export const IS_DEV_ENV = IS_ON_EXPO_GO && !IS_PREPROD_RELEASE;
+// Ne fonctionne plus avec le SDK Expo 48
+// export const IS_PREPROD_RELEASE = Constants.expoConfig?.releaseChannel === "preprod";
+export const IS_DEV_ENV = IS_ON_EXPO_GO; // && !IS_PREPROD_RELEASE;
 export const TIMEOUT_ON_SHARE_MODAL = 500;

@@ -52,7 +52,6 @@ export default {
       postPublish: [
         {
           config: {
-            authToken: process.env.SENTRY_TOKEN,
             organization: "incubateur",
             project: "nos-1000-jours",
             url: "https://sentry.fabrique.social.gouv.fr",
@@ -89,6 +88,9 @@ export default {
         },
       ],
     ],
+    runtimeVersion: {
+      policy: "appVersion",
+    },
     scheme: "millejours",
     slug: "1000jours",
     splash: {
@@ -98,6 +100,7 @@ export default {
     },
     updates: {
       fallbackToCacheTimeout: 0,
+      url: "https://u.expo.dev/f6ac4fdc-cbef-49b5-9e33-fca51d77281e",
     },
     userInterfaceStyle: "light",
     version: APP_VERSION,
