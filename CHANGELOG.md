@@ -1,3 +1,12 @@
+## [1.131.2](https://github.com/SocialGouv/1000jours/compare/v1.131.1...v1.131.2) (2023-05-29)
+
+
+### Bug Fixes
+
+* 🐛 Migration du SDK Expo 48 ([b9eecf6](https://github.com/SocialGouv/1000jours/commit/b9eecf62fb2440642ff2a48e97e55b025ba022ec))
+* 🐛 Migration Expo SDK 48 - Sentry ([3efdc26](https://github.com/SocialGouv/1000jours/commit/3efdc26d1ffe97cc355e36dc95b403c3d0c814b7))
+* 🐛 update expo publish command (eas update) ([817497d](https://github.com/SocialGouv/1000jours/commit/817497d7231b466e4c3f952b8ee83f172d91b926))
+
 ## [1.131.1](https://github.com/SocialGouv/1000jours/compare/v1.131.0...v1.131.1) (2023-05-23)
 
 
