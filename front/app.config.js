@@ -89,7 +89,7 @@ export default {
       ],
     ],
     runtimeVersion: {
-      policy: "sdkVersion",
+      policy: "exposdk:48.0.0",
     },
     scheme: "millejours",
     slug: "1000jours",
