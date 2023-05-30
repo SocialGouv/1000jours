@@ -1,3 +1,10 @@
+## [1.131.3](https://github.com/SocialGouv/1000jours/compare/v1.131.2...v1.131.3) (2023-05-30)
+
+
+### Bug Fixes
+
+* type code postal annuaire ([#1707](https://github.com/SocialGouv/1000jours/issues/1707)) ([a1685d8](https://github.com/SocialGouv/1000jours/commit/a1685d85c38f66016cc3dd4bf4fd15daa026b4a4))
+
 ## [1.131.2](https://github.com/SocialGouv/1000jours/compare/v1.131.1...v1.131.2) (2023-05-29)
 
 
