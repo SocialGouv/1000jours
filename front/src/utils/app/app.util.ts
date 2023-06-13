@@ -1,5 +1,4 @@
 import { StorageKeysConstants } from "../../constants";
-import { StorageUtils } from "..";
 import { scheduleInAppReviewNotification } from "../notifications/inappreview/inAppReview.util";
 import { cancelAllScheduledNotifications } from "../notifications/notification.util";
 import {
@@ -35,9 +34,9 @@ export const hasNewFeaturesToShow = async (
 ): Promise<boolean> => {
   if (currentVersion && news && news.length > 0) {
     const versions =
-      ((await StorageUtils.getObjectValue(
-        StorageKeysConstants.newFeaturesAlreadyPop
-      )) as string[] | null) ?? [];
+      ((await getObjectValue(StorageKeysConstants.newFeaturesAlreadyPop)) as
+        | string[]
+        | null) ?? [];
     return !versions.includes(currentVersion);
   }
   return false;

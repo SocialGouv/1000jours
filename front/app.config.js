@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-const APP_VERSION = "1.1.86";
-const APP_VERSION_NUM = 86;
+const APP_VERSION = "1.1.87";
+const APP_VERSION_NUM = 87;
 
 export default {
   expo: {
@@ -89,7 +89,7 @@ export default {
       ],
     ],
     runtimeVersion: {
-      policy: "appVersion",
+      policy: "sdkVersion",
     },
     scheme: "millejours",
     slug: "1000jours",

@@ -62,7 +62,7 @@ export const multiRemove = async (storageKeys: string[]): Promise<void> => {
   }
 };
 
-export const log = async (): Promise<[string, string | null][] | null> => {
+export const log = async () => {
   let storage = null;
   try {
     storage = await AsyncStorage.multiGet(StorageKeysConstants.allStorageKeys);
