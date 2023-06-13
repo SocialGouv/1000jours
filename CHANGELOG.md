@@ -1,3 +1,11 @@
+## [1.131.4](https://github.com/SocialGouv/1000jours/compare/v1.131.3...v1.131.4) (2023-06-13)
+
+
+### Bug Fixes
+
+* 🐛 Corrige les crashs depuis la migration du SDK Expo 48 ([2c0e606](https://github.com/SocialGouv/1000jours/commit/2c0e606039fbc84088e5ea30bc0e3c06af6daebd))
+* type code postal annuaire ([#1707](https://github.com/SocialGouv/1000jours/issues/1707)) ([3ae323c](https://github.com/SocialGouv/1000jours/commit/3ae323c40ee046d7d7ef9c9323916fed82146f7a))
+
 ## [1.131.3](https://github.com/SocialGouv/1000jours/compare/v1.131.2...v1.131.3) (2023-05-30)
 
 
