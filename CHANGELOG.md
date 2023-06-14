@@ -1,3 +1,10 @@
+## [1.131.5](https://github.com/SocialGouv/1000jours/compare/v1.131.4...v1.131.5) (2023-06-14)
+
+
+### Bug Fixes
+
+* change type temps_survey for reponse epds ([#1713](https://github.com/SocialGouv/1000jours/issues/1713)) ([4b14802](https://github.com/SocialGouv/1000jours/commit/4b148020ccb3f2320a71a4101408a38ee4819dab))
+
 ## [1.131.4](https://github.com/SocialGouv/1000jours/compare/v1.131.3...v1.131.4) (2023-06-13)
 
 
