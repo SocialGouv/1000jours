@@ -105,6 +105,7 @@ const TndOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
           <HTML
             WebView={WebView}
             source={{ html: intro.texte1 }}
+            ignoredStyles={["color", "textAlign"]}
             contentWidth={SCREEN_WIDTH}
           />
           <View style={styles.validateButton}>
@@ -120,6 +121,7 @@ const TndOnboarding: React.FC<Props> = ({ onBoardingIsDone }) => {
             <HTML
               WebView={WebView}
               source={{ html: intro.texte2 }}
+              ignoredStyles={["color", "textAlign"]}
               contentWidth={SCREEN_WIDTH}
             />
           </View>
