@@ -1,6 +1,6 @@
 export const ALL_EVENTS = /* GraphQL */ `
   query GetEvents {
-    evenements {
+    evenements(sort: "debut:ASC") {
       id
       nom
       description
