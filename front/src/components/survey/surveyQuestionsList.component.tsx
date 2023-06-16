@@ -26,13 +26,13 @@ const SurveyQuestionsList: React.FC<SurveyQuestionsListProps> = ({
   trackingEvent,
   saveCurrentSurvey,
 }) => {
-  const [nextButtonState, setNextButtonState] = React.useState(false);
+  const [nextButtonState] = React.useState(false);
+
   const onSwiperIndexChanged = useCallback(
     (item: { index: number; prevIndex: number }) => {
       if (saveCurrentSurvey) saveCurrentSurvey(item.index);
-      setNextButtonState(!nextButtonState);
     },
-    [nextButtonState, saveCurrentSurvey]
+    [saveCurrentSurvey]
   );
 
   return (
