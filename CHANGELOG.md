@@ -1,3 +1,10 @@
+## [1.131.6](https://github.com/SocialGouv/1000jours/compare/v1.131.5...v1.131.6) (2023-06-16)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'ordre d'affichage des événements du calendrier ([a4e0dfe](https://github.com/SocialGouv/1000jours/commit/a4e0dfe4c271fbaf6b0c30eae9f680280c93380a))
+
 ## [1.131.5](https://github.com/SocialGouv/1000jours/compare/v1.131.4...v1.131.5) (2023-06-14)
 
 
