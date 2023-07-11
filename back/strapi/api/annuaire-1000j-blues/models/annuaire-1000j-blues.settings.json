@@ -57,6 +57,9 @@
     },
     "conventionne_securite_sociale": {
       "type": "string"
+    },
+    "teleconsultation": {
+      "type": "boolean"
     }
   }
 }
