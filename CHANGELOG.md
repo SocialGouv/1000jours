@@ -1,3 +1,10 @@
+# [1.132.0](https://github.com/SocialGouv/1000jours/compare/v1.131.7...v1.132.0) (2023-07-11)
+
+
+### Features
+
+* ajout champs téléconsultation pour annuaire ([#1717](https://github.com/SocialGouv/1000jours/issues/1717)) ([2b794b9](https://github.com/SocialGouv/1000jours/commit/2b794b9e1b06b8623470fdef1ac59660c7b9f568))
+
 ## [1.131.7](https://github.com/SocialGouv/1000jours/compare/v1.131.6...v1.131.7) (2023-06-16)
 
 
