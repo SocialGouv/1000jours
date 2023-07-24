@@ -1,4 +1,5 @@
 import * as Font from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import type { FC } from "react";
 import * as React from "react";
@@ -29,6 +30,9 @@ import {
   StorageUtils,
   TrackerUtils,
 } from "./src/utils";
+
+// Keep the splash screen visible while we fetch resources
+void SplashScreen.preventAutoHideAsync();
 
 setNotificationHandler();
 initLocales();
@@ -138,17 +142,24 @@ const MainAppContainer: FC = () => {
 
     void init();
     // Permet de détecter lorsque l'app change d'état ('active' | 'background' | 'inactive' | 'unknown' | 'extension')
-    AppState.addEventListener("change", handleAppStateChange);
+    const subscription = AppState.addEventListener(
+      "change",
+      handleAppStateChange
+    );
 
     return () => {
-      AppState.removeEventListener("change", handleAppStateChange);
+      subscription.remove();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (isLoadingComplete && fontsLoaded && appCounterIsLoaded) {
-      setScreenCanBeDisplayed(true);
+      const hideSplashScreen = async () => {
+        await SplashScreen.hideAsync();
+        setScreenCanBeDisplayed(true);
+      };
+      void hideSplashScreen();
     }
   }, [isLoadingComplete, fontsLoaded, appCounterIsLoaded]);
 
