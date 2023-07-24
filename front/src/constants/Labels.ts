@@ -565,6 +565,8 @@ export default {
     resetStorageDataAlertMsg:
       "Relancez l'app pour appliquer les modifications.",
     scheduledNotifications: "Notifications programmées",
+    sentry: "Sentry",
+    sentryLogError: "Log in Sentry",
     showStorageData: "Voir les données",
     testNotification: "Tester une notification",
     testNotificationInfo: `(se déclenche au bout de ${MIN_SECONDS}s)`,
