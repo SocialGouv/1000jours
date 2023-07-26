@@ -1,9 +1,14 @@
 projectName: les1000jours
+ciNamespace: ci-les1000jours
 
 dependencies:
   fabrique:
-    import: SocialGouv/kontinuous/plugins/fabrique
-    dependencies:
+    extends:
+    - name: ovh
+      ifEnv: [dev,preprod]
+    - name: buildkit-service
+      ifEnv: [dev,preprod]
+    dependencies: # todo: remove
       contrib:
         preDeploy:
           importSecrets:
@@ -11,4 +16,3 @@ dependencies:
               secrets:
                 les1000joursprodserver-backup-credentials:
                   env: dev
-                  required: true
