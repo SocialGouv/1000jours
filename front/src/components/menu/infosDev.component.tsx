@@ -10,7 +10,7 @@ import { Alert, ScrollView, StyleSheet, View } from "react-native";
 import { Labels, StorageKeysConstants } from "../../constants";
 import { Paddings, Styles } from "../../styles";
 import type { RootStackParamList } from "../../types";
-import { NotificationUtils, StorageUtils } from "../../utils";
+import { NotificationUtils, reportError, StorageUtils } from "../../utils";
 import { NotificationType } from "../../utils/notifications/notification.util";
 import { getObjectValue } from "../../utils/storage.util";
 import { CustomButton, SecondaryText } from "../baseComponents";
@@ -37,7 +37,7 @@ const InfosDev: FC<Props> = ({ navigation }) => {
   const getAllScheduledNotifications = async () => {
     const notifications =
       await NotificationUtils.getAllScheduledNotifications();
-    if (notifications.length > 0) {
+    if (notifications !== undefined && notifications.length > 0) {
       setNotificationsGroupByType(
         _.groupBy(notifications, "content.data.type")
       );
@@ -72,6 +72,10 @@ const InfosDev: FC<Props> = ({ navigation }) => {
     await StorageUtils.clear();
     await NotificationUtils.cancelAllScheduledNotifications();
     Alert.alert(Labels.warning, Labels.infosDev.resetStorageDataAlertMsg);
+  }, []);
+
+  const sendFakeErrorInSentry = useCallback(() => {
+    reportError("Test - log fake error in Sentry");
   }, []);
 
   useEffect(() => {
@@ -165,6 +169,14 @@ const InfosDev: FC<Props> = ({ navigation }) => {
           );
         })}
       </View>
+
+      <H2>{Labels.infosDev.sentry}</H2>
+      <CustomButton
+        title={Labels.infosDev.sentryLogError}
+        rounded={true}
+        buttonStyle={{ margin: Paddings.smaller }}
+        action={sendFakeErrorInSentry}
+      />
 
       {/* ENV */}
       <H2>{Labels.infosDev.env}</H2>

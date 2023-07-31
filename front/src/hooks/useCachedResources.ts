@@ -1,6 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 
 const useCachedResources = (): boolean => {
@@ -10,8 +9,6 @@ const useCachedResources = (): boolean => {
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-        void SplashScreen.preventAutoHideAsync();
-
         // Load fonts
         await Font.loadAsync({
           ...Ionicons.font,
@@ -34,7 +31,6 @@ const useCachedResources = (): boolean => {
         console.warn(error);
       } finally {
         setLoadingComplete(true);
-        void SplashScreen.hideAsync();
       }
     }
 
