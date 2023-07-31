@@ -65,6 +65,8 @@ const NewFeatures: React.FC = () => {
         fetchPolicy={FetchPoliciesConstants.NO_CACHE}
         getFetchedData={handleResults}
         showErrorMessage={false}
+        noLoader
+        noLoaderBackdrop
       />
       {html && (
         <View style={styles.webviewContainer}>

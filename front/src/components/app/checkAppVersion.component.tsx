@@ -107,6 +107,8 @@ const CheckAppVersion: FC = () => {
       fetchPolicy={FetchPoliciesConstants.NO_CACHE}
       getFetchedData={handleResults}
       showErrorMessage={false}
+      noLoader
+      noLoaderBackdrop
     />
   );
 };
