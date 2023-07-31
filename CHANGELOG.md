@@ -1,3 +1,22 @@
+# [1.133.0](https://github.com/SocialGouv/1000jours/compare/v1.132.0...v1.133.0) (2023-07-31)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'erreur Sentry : Current activity not found ([#1718](https://github.com/SocialGouv/1000jours/issues/1718)) ([03690e1](https://github.com/SocialGouv/1000jours/commit/03690e1798b4ba18d1648b72233653c2730861a3)), closes [#1254](https://github.com/SocialGouv/1000jours/issues/1254)
+* 🐛 Corrige l'exécution des Tests Unitaires ([45bb865](https://github.com/SocialGouv/1000jours/commit/45bb8651b7bbb7000faa22194835d5a4d92a83c1))
+* 🐛 Corrige l'intégration de Sentry avec le nouveau SDK expo ([44f230e](https://github.com/SocialGouv/1000jours/commit/44f230ec591005dcad5f9f6d10258e4b1a1f24f7)), closes [#1716](https://github.com/SocialGouv/1000jours/issues/1716)
+* 🐛 Corrige l'ordre d'affichage des événements du calendrier ([028769a](https://github.com/SocialGouv/1000jours/commit/028769a026c30d3ecbf58d72c608b9646972940b))
+* 🐛 Corrige le bouton suivant des questions du TND ([61376db](https://github.com/SocialGouv/1000jours/commit/61376dbb3c7b4f5670d34f2ff6a52414e4bc9373))
+* 🐛 Supprime les loaders inutiles (risque de freeze) ([174b516](https://github.com/SocialGouv/1000jours/commit/174b5164711d079a51ba375bbfeaa2201b0747e8)), closes [#1706](https://github.com/SocialGouv/1000jours/issues/1706)
+* change type temps_survey for reponse epds ([#1713](https://github.com/SocialGouv/1000jours/issues/1713)) ([b9dd5a5](https://github.com/SocialGouv/1000jours/commit/b9dd5a5a058ff2d0390be1149da46eabbe990e3f))
+* Corrige le tracker au niveau de la recherche (add param 'userInfo') ([9239920](https://github.com/SocialGouv/1000jours/commit/923992051a4964f5b9eccf730f6ce94f9b438636))
+
+
+### Features
+
+* ajout champs téléconsultation pour annuaire ([#1717](https://github.com/SocialGouv/1000jours/issues/1717)) ([3f8ddc0](https://github.com/SocialGouv/1000jours/commit/3f8ddc0f17fc6b4fc7b66b6291eb2dd2013d50d7))
+
 # [1.132.0](https://github.com/SocialGouv/1000jours/compare/v1.131.7...v1.132.0) (2023-07-11)
 
 
