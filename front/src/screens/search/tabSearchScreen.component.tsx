@@ -1,3 +1,5 @@
+import Constants from "expo-constants";
+import _ from "lodash";
 import type { FC } from "react";
 import { useCallback, useState } from "react";
 import * as React from "react";
@@ -19,7 +21,12 @@ import {
   PoisRoute,
 } from "../../components/search/tabSearchRoutes.component";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { FetchPoliciesConstants, Labels, SearchQueries } from "../../constants";
+import {
+  FetchPoliciesConstants,
+  Labels,
+  SearchQueries,
+  StorageKeysConstants,
+} from "../../constants";
 import { GraphQLLazyQuery } from "../../services";
 import {
   Colors,
@@ -31,8 +38,14 @@ import {
   Sizes,
 } from "../../styles";
 import type { TrackerSearch } from "../../type";
-import type { Article } from "../../types";
-import { KeyboardUtils, StringUtils, TrackerUtils } from "../../utils";
+import type { TrackerUserInfo } from "../../type/userInfo.types";
+import type { Article, UserSituation } from "../../types";
+import {
+  KeyboardUtils,
+  StorageUtils,
+  StringUtils,
+  TrackerUtils,
+} from "../../utils";
 
 const TabSearchScreen: FC = () => {
   const [keywords, setKeywords] = useState("");
@@ -71,8 +84,34 @@ const TabSearchScreen: FC = () => {
     }
   }, [keywords, triggerGetArticles]);
 
+  const getUserInfo = async () => {
+    const userSituations = (await StorageUtils.getObjectValue(
+      StorageKeysConstants.userSituationsKey
+    )) as UserSituation[] | null;
+    const gender = await StorageUtils.getObjectValue(
+      StorageKeysConstants.userGenderKey
+    );
+    const currentStep = await StorageUtils.getObjectValue(
+      StorageKeysConstants.currentStep
+    );
+
+    let userSituationLabel = null;
+    if (userSituations) {
+      const userSituation = _.find(userSituations, { isChecked: true });
+      userSituationLabel = userSituation?.label ?? null;
+    }
+
+    const userInfo: TrackerUserInfo = {
+      dimension1: Constants.expoConfig?.version ?? "",
+      dimension2: userSituationLabel,
+      dimension3: gender?.label ?? null,
+      dimension4: currentStep?.nom ?? null,
+    };
+    return userInfo;
+  };
+
   const handleResults = useCallback(
-    (data: unknown) => {
+    async (data: unknown) => {
       if (data) {
         const results = (data as { articles: Article[] }).articles;
         setArticles(results);
@@ -81,6 +120,7 @@ const TabSearchScreen: FC = () => {
           category: trackerSearchCategory,
           count: results.length,
           keyword: keywords,
+          userInfo: await getUserInfo(),
         });
       } else setUpdatedText(Labels.errorMsg);
     },
