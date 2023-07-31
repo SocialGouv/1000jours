@@ -1,3 +1,10 @@
+## [1.133.1](https://github.com/SocialGouv/1000jours/compare/v1.133.0...v1.133.1) (2023-07-31)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la config Babel (FlatList Error) ([ea3968d](https://github.com/SocialGouv/1000jours/commit/ea3968df3bf7c6885798ca0f36dcaaa563d44971))
+
 # [1.133.0](https://github.com/SocialGouv/1000jours/compare/v1.132.0...v1.133.0) (2023-07-31)
 
 
