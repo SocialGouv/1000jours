@@ -47,6 +47,7 @@ import {
   StorageKeysConstants,
 } from "../../constants";
 import { TIMEOUT_FOCUS } from "../../constants/accessibility.constants";
+import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { GraphQLQuery } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
@@ -94,7 +95,9 @@ const ArticleDetail: FC<Props> = ({
   const [inShortArray, setInShortArray] = useState<ArticleInShortItem[]>([]);
   const [linksArray, setLinksArray] = useState<ArticleLink[]>([]);
   const [currentArticle, setCurrentArticle] = useState<Article | undefined>();
-  const [articleWidth, setArticleWidth] = useState(0);
+  const [articleWidth, setArticleWidth] = useState(
+    SCREEN_WIDTH - Paddings.light * 2
+  );
   const articleTitleRef = React.useRef<DefaultText>(null);
   const [textToRead, setTextToRead] = useState<string>("");
 

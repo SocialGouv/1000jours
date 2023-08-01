@@ -1,5 +1,4 @@
 import * as Font from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import type { FC } from "react";
 import * as React from "react";
@@ -30,9 +29,6 @@ import {
   StorageUtils,
   TrackerUtils,
 } from "./src/utils";
-
-// Keep the splash screen visible while we fetch resources
-void SplashScreen.preventAutoHideAsync();
 
 setNotificationHandler();
 initLocales();
@@ -155,11 +151,7 @@ const MainAppContainer: FC = () => {
 
   useEffect(() => {
     if (isLoadingComplete && fontsLoaded && appCounterIsLoaded) {
-      const hideSplashScreen = async () => {
-        await SplashScreen.hideAsync();
-        setScreenCanBeDisplayed(true);
-      };
-      void hideSplashScreen();
+      setScreenCanBeDisplayed(true);
     }
   }, [isLoadingComplete, fontsLoaded, appCounterIsLoaded]);
 
