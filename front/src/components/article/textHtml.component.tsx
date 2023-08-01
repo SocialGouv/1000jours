@@ -36,10 +36,11 @@ const TextHtml: FC<Props> = ({ html, screenWidth }) => {
   };
 
   const fixContent = (content: string) => {
-    HtmlUtils.fixMediaContent(content);
-    HtmlUtils.fixYoutubeLinkContent(content);
-    HtmlUtils.fixListContent(content, screenWidth);
-    setHtmlContent(content);
+    let fixedContent = content;
+    fixedContent = HtmlUtils.fixMediaContent(fixedContent);
+    fixedContent = HtmlUtils.fixYoutubeLinkContent(fixedContent);
+    fixedContent = HtmlUtils.fixListContent(fixedContent, screenWidth);
+    setHtmlContent(fixedContent);
     setIsReady(true);
   };
 

@@ -6,7 +6,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import { ArticleList } from "../../components";
-import { Loader, View } from "../../components/baseComponents";
+import { View } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import { FetchPoliciesConstants, HomeDbQueries } from "../../constants";
 import { GraphQLQuery } from "../../services";
@@ -55,13 +55,7 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
         )}
         actionName={trackerAction}
       />
-      <GraphQLQuery
-        query={HomeDbQueries.LIST_ARTICLES_WITH_STEP(route.params.step.id)}
-        fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-        getFetchedData={handleResults}
-        noLoader={true}
-      />
-      {showArticles ? (
+      {showArticles && (
         <View style={styles.listContainer}>
           <ArticleList
             articleListHeaderParams={{
@@ -76,9 +70,13 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
             step={route.params.step}
           />
         </View>
-      ) : (
-        <Loader backdrop={false} />
       )}
+      <GraphQLQuery
+        query={HomeDbQueries.LIST_ARTICLES_WITH_STEP(route.params.step.id)}
+        fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
+        getFetchedData={handleResults}
+        noLoaderBackdrop={true}
+      />
     </View>
   );
 };
