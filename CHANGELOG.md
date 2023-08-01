@@ -1,3 +1,11 @@
+## [1.133.2](https://github.com/SocialGouv/1000jours/compare/v1.133.1...v1.133.2) (2023-08-01)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'affichage des articles avec des liens video ([1092ab3](https://github.com/SocialGouv/1000jours/commit/1092ab3f2dcbc4b6288741eff25ac59dd2953731)), closes [#1721](https://github.com/SocialGouv/1000jours/issues/1721)
+* 🐛 Corrige l'erreur Sentry 'No native splash screen...' ([6000374](https://github.com/SocialGouv/1000jours/commit/6000374971ee8a2a8601c94eae5ed42902c00655)), closes [#1254](https://github.com/SocialGouv/1000jours/issues/1254)
+
 ## [1.133.1](https://github.com/SocialGouv/1000jours/compare/v1.133.0...v1.133.1) (2023-07-31)
 
 
