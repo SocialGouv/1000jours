@@ -6,8 +6,8 @@ module.exports = function (api) {
     plugins: [
       "inline-dotenv",
       "@babel/plugin-transform-flow-strip-types",
-      "react-native-reanimated/plugin",
       ["@babel/plugin-transform-private-methods", { loose: true }],
+      "react-native-reanimated/plugin", // react-native-reanimated/plugin has to be listed last.
     ],
   };
 };

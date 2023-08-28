@@ -5,6 +5,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import type { AppStateStatus } from "react-native";
 import { AppState } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { CheckAppVersion, StoreCurrentStepArticleIds } from "./src/components";
@@ -157,7 +158,7 @@ const MainAppContainer: FC = () => {
 
   const renderView = () => {
     const appContainer = (
-      <>
+      <GestureHandlerRootView style={{ flex: 1 }}>
         <TrackerAppStart />
         <TrackerHandler eventObject={trackerEventObject} />
         <LinksHandler />
@@ -172,7 +173,7 @@ const MainAppContainer: FC = () => {
           <Navigation colorScheme={colorScheme} />
           <StatusBar />
         </SafeAreaProvider>
-      </>
+      </GestureHandlerRootView>
     );
     return <GraphQLProvider appContainer={appContainer} />;
   };

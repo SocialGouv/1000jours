@@ -11,7 +11,6 @@ import { ConditionsOfUse, InfosDev, LegalNotice, Menu } from "../components";
 import NewFeatures from "../components/app/newFeatures.component";
 import { BaseAssets } from "../components/assets";
 import {
-  Backdrop,
   Icomoon,
   IcomoonIcons,
   Text,
@@ -43,10 +42,6 @@ interface NavigationProps {
 const Navigation: FC<NavigationProps> = ({ colorScheme }) => {
   const [showMenu, setShowMenu] = useState(false);
 
-  const onBackdropPressed = useCallback(() => {
-    setShowMenu(false);
-  }, []);
-
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -54,7 +49,6 @@ const Navigation: FC<NavigationProps> = ({ colorScheme }) => {
       theme={getAppTheme(colorScheme)}
     >
       <RootNavigator onPressMenu={setShowMenu} />
-      <Backdrop isVisible={showMenu} onPress={onBackdropPressed} />
       <Menu showMenu={showMenu} setShowMenu={setShowMenu} />
       <NotificationHandler />
     </NavigationContainer>

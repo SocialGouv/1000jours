@@ -87,6 +87,20 @@ export default {
           icon: "./src/assets/images/notification_icon.png",
         },
       ],
+      "expo-localization",
+      [
+        "expo-build-properties",
+        {
+          android: {
+            buildToolsVersion: "33.0.0",
+            compileSdkVersion: 33,
+            targetSdkVersion: 33,
+          },
+          ios: {
+            deploymentTarget: "16.0",
+          },
+        },
+      ],
     ],
     runtimeVersion: {
       policy: "sdkVersion",

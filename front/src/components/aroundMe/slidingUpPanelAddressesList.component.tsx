@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import BottomSheet from "@gorhom/bottom-sheet";
 import type { Poi } from "@socialgouv/nos1000jours-lib";
 import * as React from "react";
 import { useCallback, useRef, useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
-import BottomSheet from "reanimated-bottom-sheet";
 
-import { Colors, Margins, Sizes } from "../../styles";
+import { Margins, Sizes } from "../../styles";
 import { View } from "../baseComponents";
 import AroundMePoiResultInformation from "./aroundMePoiResultInformation.component";
 import PoiList from "./poiList.component";
@@ -27,14 +27,14 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
 
   const handlePanel = useCallback(() => {
     const nextSnapPoint = currentPanelSnapPointIndex - 1;
-    sheetRef.current?.snapTo(nextSnapPoint);
+    sheetRef.current?.snapToIndex(nextSnapPoint);
     setCurrentPanelSnapPointIndex(nextSnapPoint === 0 ? 2 : nextSnapPoint);
   }, [currentPanelSnapPointIndex]);
 
   const goToMarkerAndMinimizeSlider = useCallback(
     (poiIndex: number) => {
       centerOnMarker(poiIndex);
-      sheetRef.current?.snapTo(0);
+      sheetRef.current?.snapToIndex(0);
     },
     [centerOnMarker]
   );
@@ -42,7 +42,6 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
   const renderContent = useCallback(() => {
     return (
       <View style={styles.slidingUpPanelView}>
-        <View style={styles.swipeIndicator} />
         <AroundMePoiResultInformation numberOfPoisFound={poisArray.length} />
         <PoiList
           poisArray={poisArray}
@@ -57,9 +56,9 @@ const SlidingUpPanelAddressesList: React.FC<Props> = ({
     <BottomSheet
       ref={sheetRef}
       snapPoints={[height / 9.5, height / 2.5, height - 170]}
-      borderRadius={10}
-      renderContent={renderContent}
-    />
+    >
+      {renderContent}
+    </BottomSheet>
   );
 };
 
@@ -71,15 +70,6 @@ const styles = StyleSheet.create({
     borderTopEndRadius: Sizes.xxxl,
     borderTopStartRadius: Sizes.xxxl,
     height: "100%",
-  },
-  swipeIndicator: {
-    alignSelf: "center",
-    backgroundColor: Colors.navigation,
-    borderRadius: Sizes.xs,
-    height: Sizes.xxxxxxs,
-    marginBottom: Margins.smaller,
-    marginTop: Margins.default,
-    width: Sizes.xxxl,
   },
 });
 
