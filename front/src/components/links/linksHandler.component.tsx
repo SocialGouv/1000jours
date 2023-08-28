@@ -13,12 +13,12 @@ const enum DeepLinksPages {
 const LinksHandler: FC = () => {
   const redirectDeepLink = async (url: string) => {
     const { path, queryParams } = Linking.parse(url);
-    if (path === Linking.parse(Links.deepLinkUrl).path) {
+    if (path === Linking.parse(Links.deepLinkUrl).path && queryParams) {
       // TODO: à améliorer
       // Sauvegarde du scrollToEventId car les params ne sont pas pris en compte lors de cette redirection
       // Il est possible de les prendre en compte mais il y un soucis pour reset les params de la route.
       // Lorsque l'on clique sur le tabCalendar c'est le bottomTab qui gère la navigation et conserve les params de la route...
-      if (queryParams.page === DeepLinksPages.event && queryParams?.id) {
+      if (queryParams.page === DeepLinksPages.event && queryParams.id) {
         await StorageUtils.storeStringValue(
           StorageKeysConstants.scrollToEventId,
           queryParams.id as string
@@ -53,10 +53,6 @@ const LinksHandler: FC = () => {
       .catch((err) => {
         console.error("An error occurred", err);
       });
-
-    return () => {
-      Linking.removeEventListener("url", handleOpenURL);
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -50,9 +50,7 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
   return (
     <View style={styles.mainContainer}>
       <TrackerHandler
-        screenName={TrackerUtils.trackerArticlesScreenName(
-          route.params.step.nom
-        )}
+        screenName={TrackerUtils.trackerArticlesScreenName(screenTitle)}
         actionName={trackerAction}
       />
       {showArticles && (
