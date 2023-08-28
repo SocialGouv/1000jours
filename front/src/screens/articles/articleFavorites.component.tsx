@@ -46,11 +46,9 @@ const ArticleFavorites: FC<Props> = ({ navigation }) => {
   }, [articles, favoriteIds]);
 
   useEffect(() => {
-    const willFocusSubscription = navigation.addListener("focus", () => {
-      void setFavorites();
-    });
-    return willFocusSubscription;
-  }, [navigation, setFavorites]);
+    void setFavorites();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleResults = useCallback((data: unknown) => {
     const results = (data as { articles: Article[] }).articles;

@@ -222,10 +222,10 @@ export default {
     },
     pleaseAllowAccessCalendar:
       "Veuillez autoriser l'accès au calendrier dans les paramètres de votre téléphone",
-    synchronise: "Synchroniser avec mon calendrier",
     synchronization: "Synchronisation",
     synchronizationHelper:
       "Ce bouton permet de synchroniser votre calendrier personnel avec celui de l’application. Ainsi, les événements affichés ici le seront aussi sur votre calendrier.",
+    synchronize: "Synchroniser avec mon calendrier",
     today: "Aujourd'hui",
     usefulEvent: "Cette information vous a été utile ?",
   },
