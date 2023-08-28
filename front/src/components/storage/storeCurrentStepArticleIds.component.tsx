@@ -56,6 +56,7 @@ const StoreCurrentStepArticleIds: FC<StoreCurrentStepArticleIdsProps> = ({
           fetchPolicy={FetchPoliciesConstants.NO_CACHE}
           getFetchedData={handleResults}
           noLoaderBackdrop
+          noLoader
         />
       )}
     </>

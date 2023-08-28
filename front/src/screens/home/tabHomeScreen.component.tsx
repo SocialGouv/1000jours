@@ -78,14 +78,9 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   }, [triggerGetSteps]);
 
   useEffect(() => {
-    // Permet de forcer le refresh de la page lorsque l'on arrive dessus
-    const unsubscribe = navigation.addListener("focus", () => {
-      void init();
-    });
-    // Return the function to unsubscribe from the event so it gets removed on unmount
-    return unsubscribe;
+    void init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [init, navigation]);
+  }, []);
 
   useEffect(() => {
     if (currentStep) {
@@ -135,34 +130,36 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
 
   const handleResults = useCallback(
     async (data: unknown) => {
-      const result = data as { etapes: Step[] };
-      let _currentStep = undefined;
+      if (data) {
+        const result = data as { etapes: Step[] };
+        let _currentStep = undefined;
 
-      // Set CurrentStep
-      if (result.etapes.length && currentStepId) {
-        _currentStep = _.find(result.etapes, (o) => {
-          return o.id == currentStepId;
-        });
-        if (_currentStep?.nom) {
-          setCurrentStep(_currentStep);
-          await StorageUtils.storeObjectValue(
-            StorageKeysConstants.currentStep,
-            _currentStep
-          );
+        // Set CurrentStep
+        if (result.etapes.length && currentStepId) {
+          _currentStep = _.find(result.etapes, (o) => {
+            return o.id == currentStepId;
+          });
+          if (_currentStep?.nom) {
+            setCurrentStep(_currentStep);
+            await StorageUtils.storeObjectValue(
+              StorageKeysConstants.currentStep,
+              _currentStep
+            );
+          }
         }
+
+        // Format and Set the Steps
+        const etapes = result.etapes.map((etape) => ({
+          ...etape,
+          // '+' permet de convertir l'id (string) en number
+          active: currentStepId === +etape.id,
+          id: +etape.id,
+        }));
+        setEtapes(etapes);
+
+        if (_currentStep)
+          await checkIfCurrentStepHasChanged(etapes, _currentStep);
       }
-
-      // Format and Set the Steps
-      const etapes = result.etapes.map((etape) => ({
-        ...etape,
-        // '+' permet de convertir l'id (string) en number
-        active: currentStepId === +etape.id,
-        id: +etape.id,
-      }));
-      setEtapes(etapes);
-
-      if (_currentStep)
-        await checkIfCurrentStepHasChanged(etapes, _currentStep);
     },
     [checkIfCurrentStepHasChanged, currentStepId]
   );
@@ -183,6 +180,11 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
       )}
       <ScrollView style={[styles.mainContainer]} ref={scrollViewRef}>
         <TrackerHandler screenName={TrackerUtils.TrackingEvent.HOME} />
+        <TitleH1
+          title={Labels.timeline.title}
+          description={Labels.timeline.description}
+          animated={false}
+        />
         <GraphQLLazyQuery
           query={HomeDbQueries.HOME_GET_ALL_STEPS}
           fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
@@ -191,18 +193,11 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
           noLoaderBackdrop
         />
         {_etapes.length > 0 && (
-          <>
-            <TitleH1
-              title={Labels.timeline.title}
-              description={Labels.timeline.description}
-              animated={false}
-            />
-            <Timeline
-              steps={_etapes}
-              scrollTo={scrollTo}
-              navigation={navigation}
-            />
-          </>
+          <Timeline
+            steps={_etapes}
+            scrollTo={scrollTo}
+            navigation={navigation}
+          />
         )}
         {showUpdateProfile && (
           <UpdateChildBirthdayModal

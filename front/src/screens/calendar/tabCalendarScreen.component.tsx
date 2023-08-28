@@ -1,4 +1,3 @@
-import type { StackNavigationProp } from "@react-navigation/stack";
 import { format } from "date-fns";
 import * as Calendar from "expo-calendar";
 import * as Localization from "expo-localization";
@@ -44,7 +43,7 @@ import {
   Paddings,
   Sizes,
 } from "../../styles";
-import type { Event, TabCalendarParamList } from "../../types";
+import type { Event } from "../../types";
 import {
   NotificationUtils,
   StorageUtils,
@@ -54,11 +53,7 @@ import {
 import { formattedEvents } from "../../utils/events/event.util";
 import * as RootNavigation from "../../utils/rootNavigation.util";
 
-interface Props {
-  navigation: StackNavigationProp<TabCalendarParamList, "eventDetails">;
-}
-
-const TabCalendarScreen: FC<Props> = ({ navigation }) => {
+const TabCalendarScreen: FC = () => {
   const [childBirthday, setChildBirthday] = useState("");
   const [eventsCalcFromBirthday, setEventsCalcFromBirthday] = useState("");
   const [events, setEvents] = useState<Event[]>([]);
@@ -76,6 +71,9 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   const isAccessibilityModeOn = useAccessibilityReader();
 
   const init = useCallback(async () => {
+    await getLastSyncDate();
+    await getScrollToEventId();
+
     const childBirthdayStr =
       (await StorageUtils.getStringValue(
         StorageKeysConstants.userChildBirthdayKey
@@ -94,16 +92,9 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
   }, [triggerGetAllEvents]);
 
   useEffect(() => {
-    void getLastSyncDate();
-    void getScrollToEventId();
-
-    // Permet de forcer le refresh de la page lorsque l'on arrive dessus
-    const unsubscribe = navigation.addListener("focus", () => {
-      void init();
-    });
-    // Retourne "unsubscribe" pour que l'événement soit supprimé lors du "démontage" (fix memory leak)
-    return unsubscribe;
-  }, [init, navigation]);
+    void init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getScrollToEventId = async () => {
     const eventId = await StorageUtils.getStringValue(
@@ -288,13 +279,6 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
         screenName={TrackerUtils.TrackingEvent.CALENDAR}
         actionName={trackerAction}
       />
-      <GraphQLLazyQuery
-        query={CalendarDbQueries.ALL_EVENTS}
-        fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-        getFetchedData={handleResults}
-        triggerLaunchQuery={triggerGetAllEvents}
-        noLoaderBackdrop
-      />
       {!loadingEvents && (
         <View style={styles.calendarContainer}>
           {childBirthday.length > 0 ? (
@@ -302,7 +286,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
               <View style={styles.flexStart}>
                 <View style={{ flex: 0 }}>
                   <CustomButton
-                    title={Labels.calendar.synchronise}
+                    title={Labels.calendar.synchronize}
                     icon={
                       <Icomoon
                         name={IcomoonIcons.synchroniser}
@@ -315,7 +299,7 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
                     action={syncEventsWithOsCalendar}
                     titleStyle={styles.buttonTitleStyle}
                     buttonStyle={styles.buttonStyle}
-                    accessibilityLabel={`${Labels.calendar.synchronise}. ${Labels.calendar.synchronizationHelper}`}
+                    accessibilityLabel={`${Labels.calendar.synchronize}. ${Labels.calendar.synchronizationHelper}`}
                   />
                 </View>
                 {!isAccessibilityModeOn && (
@@ -357,6 +341,13 @@ const TabCalendarScreen: FC<Props> = ({ navigation }) => {
           )}
         </View>
       )}
+      <GraphQLLazyQuery
+        query={CalendarDbQueries.ALL_EVENTS}
+        fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
+        getFetchedData={handleResults}
+        triggerLaunchQuery={triggerGetAllEvents}
+        noLoaderBackdrop
+      />
       {showModalHelp && (
         <ModalHelp
           icon={IcomoonIcons.synchroniser}

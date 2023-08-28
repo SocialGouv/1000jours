@@ -25,9 +25,9 @@ const Timeline: FC<TimelineProps> = ({ steps, navigation, scrollTo }) => {
   useEffect(() => {
     checkFontScale();
     // Permet de détecter lorsque l'app change d'état ('active' | 'background' | 'inactive' | 'unknown' | 'extension')
-    AppState.addEventListener("change", checkFontScale);
+    const subscription = AppState.addEventListener("change", checkFontScale);
     return () => {
-      AppState.removeEventListener("change", checkFontScale);
+      subscription.remove();
     };
   }, []);
 

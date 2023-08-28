@@ -1,10 +1,10 @@
+import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
+import type { BottomSheetDefaultBackdropProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types";
 import Constants from "expo-constants";
 import * as React from "react";
 import { useCallback, useMemo, useState } from "react";
-import { Linking, Modal, ScrollView, StyleSheet } from "react-native";
+import { Linking, ScrollView, StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
-import GestureRecognizer from "react-native-swipe-gestures";
-import BottomSheet from "reanimated-bottom-sheet";
 
 import { Labels, PlatformConstants } from "../../constants";
 import { emailContact } from "../../constants/email.constants";
@@ -260,83 +260,71 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
 
   const renderContent = useCallback(
     () => (
-      <Modal animationType="slide" transparent={true} visible={showMenu}>
-        <View style={styles.modalView}>
-          <View style={styles.modalContent}>
-            <GestureRecognizer
-              onSwipeUp={updateShowMenu(true)}
-              onSwipeDown={updateShowMenu(false)}
-            >
-              <View
-                style={styles.swipeIndicatorContainer}
-                accessibilityRole="button"
-                accessible
-                accessibilityLabel={Labels.accessibility.closeMenu}
-                onTouchEnd={updateShowMenu(false)}
-              >
-                <View style={styles.swipeIndicator} />
+      <View style={styles.modalView}>
+        <View style={styles.modalContent}>
+          <ScrollView style={styles.scrollView}>
+            <ListItem bottomDivider>
+              <ListItem.Content>
+                <ListItem.Title style={styles.title} accessibilityRole="header">
+                  {Labels.menu.title}
+                </ListItem.Title>
+              </ListItem.Content>
+            </ListItem>
+            {menuItems.map((menuItem, index) => (
+              <View key={index}>
+                {menuItem.subItems
+                  ? listItemAccordion(menuItem)
+                  : listItem(menuItem)}
               </View>
-            </GestureRecognizer>
-            <ScrollView style={styles.scrollView}>
-              <ListItem bottomDivider>
-                <ListItem.Content>
-                  <ListItem.Title
-                    style={styles.title}
-                    accessibilityRole="header"
-                  >
-                    {Labels.menu.title}
-                  </ListItem.Title>
-                </ListItem.Content>
-              </ListItem>
-              {menuItems.map((menuItem, index) => (
-                <View key={index}>
-                  {menuItem.subItems
-                    ? listItemAccordion(menuItem)
-                    : listItem(menuItem)}
-                </View>
-              ))}
-              {/* App Version */}
-              <ListItem>
-                <ListItem.Content>
-                  <ListItem.Title
-                    style={styles.version}
-                    accessibilityLabel={`${Labels.accessibility.version}${Constants.expoConfig?.version}`}
-                    onPress={onVersionPress}
-                  >
-                    {`${Labels.version}${Constants.expoConfig?.version}`}
-                  </ListItem.Title>
-                </ListItem.Content>
-              </ListItem>
-            </ScrollView>
-          </View>
+            ))}
+            {/* App Version */}
+            <ListItem>
+              <ListItem.Content>
+                <ListItem.Title
+                  style={styles.version}
+                  accessibilityLabel={`${Labels.accessibility.version}${Constants.expoConfig?.version}`}
+                  onPress={onVersionPress}
+                >
+                  {`${Labels.version}${Constants.expoConfig?.version}`}
+                </ListItem.Title>
+              </ListItem.Content>
+            </ListItem>
+          </ScrollView>
         </View>
-      </Modal>
+      </View>
     ),
-    [
-      showMenu,
-      updateShowMenu,
-      menuItems,
-      onVersionPress,
-      listItemAccordion,
-      listItem,
-    ]
+    [menuItems, onVersionPress, listItemAccordion, listItem]
   );
 
-  const snapPoints = [MAX_HEIGHT, MAX_HEIGHT / 1.5, 0];
+  const snapPoints = ["60%", "90%"];
   const sheetRef = React.useRef<BottomSheet>(null);
+
+  const renderBackdrop = useCallback(
+    (
+      props: BottomSheetDefaultBackdropProps & React.JSX.IntrinsicAttributes
+    ) => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+      />
+    ),
+    []
+  );
 
   return showMenu ? (
     <>
       <TrackerHandler eventObject={trackerEventObject} />
       <BottomSheet
         ref={sheetRef}
-        initialSnap={0}
+        index={1}
         snapPoints={snapPoints}
-        borderRadius={Sizes.xl}
-        renderContent={renderContent}
-        onCloseEnd={updateShowMenu(false)}
-        enabledContentTapInteraction={false}
-      />
+        onClose={updateShowMenu(false)}
+        enablePanDownToClose={true}
+        backdropComponent={renderBackdrop}
+      >
+        {renderContent}
+      </BottomSheet>
     </>
   ) : null;
 };

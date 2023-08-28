@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-const APP_VERSION = "1.1.95";
-const APP_VERSION_NUM = 95;
+const APP_VERSION = "1.1.96";
+const APP_VERSION_NUM = 96;
 
 export default {
   expo: {
@@ -85,6 +85,20 @@ export default {
         "expo-notifications",
         {
           icon: "./src/assets/images/notification_icon.png",
+        },
+      ],
+      "expo-localization",
+      [
+        "expo-build-properties",
+        {
+          android: {
+            buildToolsVersion: "33.0.0",
+            compileSdkVersion: 33,
+            targetSdkVersion: 33,
+          },
+          ios: {
+            deploymentTarget: "16.0",
+          },
         },
       ],
     ],
