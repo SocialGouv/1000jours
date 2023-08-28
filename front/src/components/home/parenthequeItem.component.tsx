@@ -62,6 +62,8 @@ const ParenthequeItem: FC<Props> = ({ navigation, isBasicTimeline }) => {
         query={HomeDbQueries.PARENTS_DOCUMENTS}
         fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
         getFetchedData={handleResults}
+        noLoader
+        noLoaderBackdrop
       />
       {documents.length > 0 && (
         <>

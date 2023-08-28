@@ -138,6 +138,7 @@ const Parentheque: FC<Props> = ({ navigation, route }) => {
           getFetchedData={handleVideosResults}
           triggerLaunchQuery={shouldGetVideos}
           noLoaderBackdrop
+          noLoader
         />
       </View>
       <TabView
