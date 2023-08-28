@@ -1,3 +1,17 @@
+# [1.134.0](https://github.com/SocialGouv/1000jours/compare/v1.133.2...v1.134.0) (2023-08-28)
+
+
+### Bug Fixes
+
+* 🐛 Corrige l'actualisation du calendrier + etapes undefined ([30b66f4](https://github.com/SocialGouv/1000jours/commit/30b66f4fcd997ab7d462a66ccba0b1bb2f9d087b)), closes [#1725](https://github.com/SocialGouv/1000jours/issues/1725) [#1723](https://github.com/SocialGouv/1000jours/issues/1723)
+* 🐛 Sentry error Cannot read property 'nom' of undefined ([b01852f](https://github.com/SocialGouv/1000jours/commit/b01852f40a2131491aa5cbf7448c41337f126aca)), closes [#1724](https://github.com/SocialGouv/1000jours/issues/1724)
+* 🐛 Supprime les loaders inutiles ([990f1fe](https://github.com/SocialGouv/1000jours/commit/990f1fe9f3d66f6aede6d9780bbbccacd1302979))
+
+
+### Features
+
+* 🎸 Upgrade Expo SDK (v.49.0.0) ([193a676](https://github.com/SocialGouv/1000jours/commit/193a6769b191e10a531200ff5a1384c6fb7acfa3)), closes [#1722](https://github.com/SocialGouv/1000jours/issues/1722)
+
 ## [1.133.2](https://github.com/SocialGouv/1000jours/compare/v1.133.1...v1.133.2) (2023-08-01)
 
 
