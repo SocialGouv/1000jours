@@ -1,3 +1,10 @@
+## [1.134.1](https://github.com/SocialGouv/1000jours/compare/v1.134.0...v1.134.1) (2023-08-31)
+
+
+### Bug Fixes
+
+* 🐛 Supprime la dépendance 'expo-analytics-segment' (SDK49) ([59ab473](https://github.com/SocialGouv/1000jours/commit/59ab4734b0108addea963f4713474cb325211d98))
+
 # [1.134.0](https://github.com/SocialGouv/1000jours/compare/v1.133.2...v1.134.0) (2023-08-28)
 
 
