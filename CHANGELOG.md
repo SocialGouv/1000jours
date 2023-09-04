@@ -1,3 +1,10 @@
+## [1.134.2](https://github.com/SocialGouv/1000jours/compare/v1.134.1...v1.134.2) (2023-09-04)
+
+
+### Bug Fixes
+
+* 🐛 Corrige le scroll vertical du menu ([c4028fd](https://github.com/SocialGouv/1000jours/commit/c4028fdd1e4755840c8db0b06e04e9d14e551e0e))
+
 ## [1.134.1](https://github.com/SocialGouv/1000jours/compare/v1.134.0...v1.134.1) (2023-08-31)
 
 
