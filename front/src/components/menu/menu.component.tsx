@@ -1,20 +1,22 @@
-import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
+import type { BottomSheetFlatListMethods } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetFlatList,
+} from "@gorhom/bottom-sheet";
 import type { BottomSheetDefaultBackdropProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types";
 import Constants from "expo-constants";
 import * as React from "react";
-import { useCallback, useMemo, useState } from "react";
-import { Linking, ScrollView, StyleSheet } from "react-native";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { Linking, StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
 
 import { Labels, PlatformConstants } from "../../constants";
 import { emailContact } from "../../constants/email.constants";
-import { SCREEN_HEIGHT } from "../../constants/platform.constants";
 import {
   Colors,
   FontNames,
   FontWeight,
   getFontFamilyName,
-  Margins,
   Paddings,
   Sizes,
 } from "../../styles";
@@ -28,25 +30,51 @@ import {
 } from "../../utils";
 import { Icomoon, IcomoonIcons, View } from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
+import MenuAccordionItem from "./menuItem.component";
 
 interface Props {
   showMenu: boolean;
   setShowMenu: (showMenu: boolean) => void;
 }
 
-const MAX_HEIGHT = SCREEN_HEIGHT * 0.9;
 const NB_PRESS_TO_UNLOCK_ACTION = 5;
 
 const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
-  const [showInformation, setShowInformation] = useState(false);
-  const [counterPressVersion, setCounterPressVersion] = useState(0);
+  const counterPressVersion = useRef(0);
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
+
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const flatListRef = useRef<BottomSheetFlatListMethods>(null);
+
+  const closeMenu = useCallback(() => {
+    counterPressVersion.current = 0;
+    bottomSheetRef.current?.close();
+  }, []);
+
+  const onVersionPress = useCallback(() => {
+    if (counterPressVersion.current > NB_PRESS_TO_UNLOCK_ACTION) {
+      counterPressVersion.current = 0;
+      closeMenu();
+      // Sur iOS, sans le "setTimeout" la modal n'apparaît pas, il faut attendre la fermeture du menu.
+      setTimeout(() => {
+        void RootNavigation.navigate("infosDev");
+      }, PlatformConstants.TIMEOUT_ON_DISMISS_MENU);
+    } else {
+      counterPressVersion.current++;
+    }
+  }, [closeMenu]);
 
   const menuItems: MenuItem[] = useMemo(() => {
     return [
       {
+        accessibilityRole: "header",
+        style: styles.title,
+        title: Labels.menu.title,
+      },
+      {
         icon: IcomoonIcons.modifier,
         onPress: () => {
+          closeMenu();
           void LinkingUtils.goToStore();
         },
         title: Labels.menu.addReview,
@@ -54,6 +82,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       {
         icon: IcomoonIcons.partager,
         onPress: () => {
+          closeMenu();
           void ShareUtils.share(
             Labels.share.app.title,
             Labels.share.app.message,
@@ -71,6 +100,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       {
         icon: IcomoonIcons.profil,
         onPress: () => {
+          closeMenu();
           void RootNavigation.navigate("profile");
         },
         title: Labels.menu.myProfil,
@@ -78,6 +108,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       {
         icon: IcomoonIcons.postPartum,
         onPress: () => {
+          closeMenu();
           void RootNavigation.navigate("tndSurvey");
         },
         title: Labels.menu.tndSurvey,
@@ -85,6 +116,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       {
         icon: IcomoonIcons.favoris,
         onPress: () => {
+          closeMenu();
           void RootNavigation.navigate("articleFavorites");
         },
         title: Labels.menu.myFavorites,
@@ -92,6 +124,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       {
         icon: IcomoonIcons.bebe,
         onPress: () => {
+          closeMenu();
           void RootNavigation.navigate("moodboard");
         },
         title: Labels.menu.moodboard,
@@ -99,6 +132,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       {
         icon: IcomoonIcons.stepParentheque,
         onPress: () => {
+          closeMenu();
           void RootNavigation.navigate("parentheque");
         },
         title: Labels.menu.parentheque,
@@ -106,6 +140,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       {
         icon: IcomoonIcons.notification,
         onPress: () => {
+          closeMenu();
           void RootNavigation.navigate("notificationsCenter");
         },
         title: Labels.menu.notificationsCenter,
@@ -113,36 +148,38 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
       {
         icon: IcomoonIcons.email,
         onPress: () => {
+          closeMenu();
           void Linking.openURL(`mailto:${emailContact}`);
         },
         title: Labels.menu.contactUs,
       },
       {
         icon: IcomoonIcons.politiquesConfidentialite,
-        onPress: () => {
-          setShowInformation(true);
-        },
         subItems: [
           {
             onPress: () => {
+              closeMenu();
               void RootNavigation.navigate("legalNotice");
             },
             title: Labels.menu.legalNotice,
           },
           {
             onPress: () => {
+              closeMenu();
               void RootNavigation.navigate("conditionsOfUse");
             },
             title: Labels.menu.conditionsOfUse,
           },
           {
             onPress: () => {
+              closeMenu();
               void RootNavigation.navigate("accessibility");
             },
             title: Labels.menu.accessibility,
           },
           {
             onPress: () => {
+              closeMenu();
               void RootNavigation.navigate("newFeatures");
             },
             title: Labels.menu.newFeatures,
@@ -150,8 +187,17 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
         ],
         title: Labels.menu.information,
       },
+      {
+        accessibilityLabel: `${Labels.accessibility.version}${Constants.expoConfig?.version}`,
+        noBottomDivider: true,
+        onPress: () => {
+          onVersionPress();
+        },
+        style: styles.version,
+        title: `${Labels.version}${Constants.expoConfig?.version}`,
+      },
     ];
-  }, []);
+  }, [closeMenu, onVersionPress]);
 
   const updateShowMenu = useCallback(
     (showM: boolean) => () => {
@@ -160,96 +206,38 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
     [setShowMenu]
   );
 
-  const updateShowInformation = useCallback(() => {
-    setShowInformation(!showInformation);
-  }, [showInformation]);
-
   const onListItemPressed = useCallback(
     (menuItem: MenuItem | MenuSubItem) => () => {
-      setShowMenu(false);
-      // Sur iOS, sans le "setTimeout" la modal n'apparaît pas, il faut attendre la fermeture du menu.
-      setTimeout(menuItem.onPress, PlatformConstants.TIMEOUT_ON_DISMISS_MENU);
+      if (menuItem.onPress) {
+        // Sur iOS, sans le "setTimeout" la modal n'apparaît pas, il faut attendre la fermeture du menu.
+        setTimeout(menuItem.onPress, PlatformConstants.TIMEOUT_ON_DISMISS_MENU);
+      }
     },
-    [setShowMenu]
-  );
-
-  const onVersionPress = useCallback(() => {
-    if (counterPressVersion > NB_PRESS_TO_UNLOCK_ACTION) {
-      setCounterPressVersion(0);
-      setShowMenu(false);
-      // Sur iOS, sans le "setTimeout" la modal n'apparaît pas, il faut attendre la fermeture du menu.
-      setTimeout(() => {
-        void RootNavigation.navigate("infosDev");
-      }, PlatformConstants.TIMEOUT_ON_DISMISS_MENU);
-    } else {
-      setCounterPressVersion(counterPressVersion + 1);
-    }
-  }, [counterPressVersion, setShowMenu]);
-
-  const listItemAccordion = useCallback(
-    (menuItem: MenuItem) => (
-      <ListItem.Accordion
-        accessibilityLabel={menuItem.title}
-        accessibilityRole="button"
-        accessibilityState={{
-          expanded: showInformation,
-        }}
-        content={
-          <>
-            <View style={styles.menuItemIcon}>
-              <Icomoon
-                name={menuItem.icon}
-                size={Sizes.xl}
-                color={Colors.primaryBlueDark}
-              />
-            </View>
-            <ListItem.Content>
-              <ListItem.Title
-                style={[styles.menuItemTitle, { marginStart: Margins.default }]}
-                allowFontScaling={false}
-              >
-                {menuItem.title}
-              </ListItem.Title>
-            </ListItem.Content>
-          </>
-        }
-        isExpanded={showInformation}
-        onPress={updateShowInformation}
-      >
-        {menuItem.subItems?.map((subItem, subIndex) => (
-          <ListItem key={`sub${subIndex}`} onPress={onListItemPressed(subItem)}>
-            <ListItem.Content>
-              <ListItem.Title
-                style={styles.menuItemSubTitle}
-                allowFontScaling={false}
-              >
-                {subItem.title}
-              </ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-        ))}
-      </ListItem.Accordion>
-    ),
-    [onListItemPressed, showInformation, updateShowInformation]
+    []
   );
 
   const listItem = useCallback(
     (menuItem: MenuItem) => (
       <ListItem
         onPress={onListItemPressed(menuItem)}
-        accessibilityRole="button"
-        accessibilityLabel={menuItem.title}
-        bottomDivider
+        accessibilityRole={menuItem.accessibilityRole ?? "button"}
+        accessibilityLabel={menuItem.accessibilityLabel ?? menuItem.title}
+        bottomDivider={menuItem.noBottomDivider ? false : true}
       >
-        <View style={styles.menuItemIcon}>
-          <Icomoon
-            name={menuItem.icon}
-            size={Sizes.xl}
-            color={Colors.primaryBlueDark}
-          />
-        </View>
+        {menuItem.icon && (
+          <View style={styles.menuItemIcon}>
+            <Icomoon
+              name={menuItem.icon}
+              size={Sizes.xl}
+              color={Colors.primaryBlueDark}
+            />
+          </View>
+        )}
         <ListItem.Content>
-          <ListItem.Title style={styles.menuItemTitle} allowFontScaling={false}>
+          <ListItem.Title
+            style={menuItem.style ?? styles.menuItemTitle}
+            allowFontScaling={false}
+          >
             {menuItem.title}
           </ListItem.Title>
         </ListItem.Content>
@@ -258,46 +246,34 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
     [onListItemPressed]
   );
 
+  const keyExtractor = useCallback((item: MenuItem) => item.title, []);
+  const renderItem = useCallback(
+    ({ item }: { item: MenuItem }) =>
+      item.subItems ? (
+        <MenuAccordionItem
+          accordionItem={item}
+          onListItemPressed={onListItemPressed}
+        />
+      ) : (
+        listItem(item)
+      ),
+    [listItem, onListItemPressed]
+  );
+
   const renderContent = useCallback(
     () => (
-      <View style={styles.modalView}>
-        <View style={styles.modalContent}>
-          <ScrollView style={styles.scrollView}>
-            <ListItem bottomDivider>
-              <ListItem.Content>
-                <ListItem.Title style={styles.title} accessibilityRole="header">
-                  {Labels.menu.title}
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-            {menuItems.map((menuItem, index) => (
-              <View key={index}>
-                {menuItem.subItems
-                  ? listItemAccordion(menuItem)
-                  : listItem(menuItem)}
-              </View>
-            ))}
-            {/* App Version */}
-            <ListItem>
-              <ListItem.Content>
-                <ListItem.Title
-                  style={styles.version}
-                  accessibilityLabel={`${Labels.accessibility.version}${Constants.expoConfig?.version}`}
-                  onPress={onVersionPress}
-                >
-                  {`${Labels.version}${Constants.expoConfig?.version}`}
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-          </ScrollView>
-        </View>
-      </View>
+      <BottomSheetFlatList
+        ref={flatListRef}
+        data={menuItems}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        contentContainerStyle={styles.contentContainer}
+      />
     ),
-    [menuItems, onVersionPress, listItemAccordion, listItem]
+    [menuItems, renderItem, keyExtractor]
   );
 
   const snapPoints = ["60%", "90%"];
-  const sheetRef = React.useRef<BottomSheet>(null);
 
   const renderBackdrop = useCallback(
     (
@@ -316,7 +292,7 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
     <>
       <TrackerHandler eventObject={trackerEventObject} />
       <BottomSheet
-        ref={sheetRef}
+        ref={bottomSheetRef}
         index={1}
         snapPoints={snapPoints}
         onClose={updateShowMenu(false)}
@@ -330,46 +306,15 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
 };
 
 const styles = StyleSheet.create({
+  contentContainer: { backgroundColor: "white" },
   menuItemIcon: {
     backgroundColor: "transparent",
     paddingLeft: Paddings.default,
     paddingRight: Paddings.smallest,
   },
-  menuItemSubTitle: {
-    color: Colors.primaryBlueDark,
-    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
-    paddingLeft: Paddings.subItemMenu,
-  },
   menuItemTitle: {
     color: Colors.primaryBlueDark,
     fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
-  },
-  menuItemToto: {
-    color: Colors.primaryBlueDark,
-    fontFamily: getFontFamilyName(FontNames.avenir, FontWeight.medium),
-  },
-  modalContent: {
-    backgroundColor: "transparent",
-    maxHeight: MAX_HEIGHT,
-  },
-  modalView: {
-    backgroundColor: Colors.transparentGrey,
-    flex: 1,
-    justifyContent: "flex-end",
-  },
-  scrollView: { backgroundColor: "white" },
-  swipeIndicator: {
-    alignSelf: "center",
-    backgroundColor: Colors.navigation,
-    borderRadius: Sizes.xs,
-    height: Sizes.xxxxxxs,
-    marginBottom: Margins.light,
-    marginTop: Margins.larger,
-    width: Sizes.xxxl,
-  },
-  swipeIndicatorContainer: {
-    borderTopLeftRadius: Sizes.mmd,
-    borderTopRightRadius: Sizes.mmd,
   },
   title: {
     color: Colors.primaryBlueDark,

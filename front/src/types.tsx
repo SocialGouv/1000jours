@@ -2,6 +2,7 @@ import type { StackNavigationProp } from "@react-navigation/stack";
 import type { PoiType } from "@socialgouv/nos1000jours-lib";
 import type { FC, ReactNode } from "react";
 import type React from "react";
+import type { AccessibilityRole, StyleProp, TextStyle } from "react-native";
 import type { MarkingProps } from "react-native-calendars/src/calendar/day/marking";
 import type { LatLng } from "react-native-maps";
 
@@ -188,10 +189,14 @@ export type ArticleLink = {
 };
 
 export type MenuItem = {
-  icon: string;
+  icon?: string;
   title: string;
-  onPress: () => void;
+  onPress?: () => void;
   subItems?: MenuSubItem[];
+  style?: StyleProp<TextStyle>;
+  accessibilityRole?: AccessibilityRole;
+  accessibilityLabel?: string;
+  noBottomDivider?: boolean;
 };
 
 export type MenuSubItem = {
