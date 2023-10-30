@@ -1,3 +1,10 @@
+## [1.134.3](https://github.com/SocialGouv/1000jours/compare/v1.134.2...v1.134.3) (2023-10-30)
+
+
+### Bug Fixes
+
+* Corrige des erreurs Sentry : Cannot read property 'id' (ArticleListScreen) ([2531b5d](https://github.com/SocialGouv/1000jours/commit/2531b5d655624372b67396261b6f9fe41a36c910))
+
 ## [1.134.2](https://github.com/SocialGouv/1000jours/compare/v1.134.1...v1.134.2) (2023-09-04)
 
 
