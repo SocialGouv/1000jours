@@ -12,18 +12,18 @@ import { FetchPoliciesConstants, HomeDbQueries } from "../../constants";
 import { GraphQLQuery } from "../../services";
 import { Colors, FontWeight, Paddings, Sizes } from "../../styles";
 import type { Article, Step, TabHomeParamList } from "../../types";
-import { TrackerUtils } from "../../utils";
+import { reportError, TrackerUtils } from "../../utils";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;
-  route: RouteProp<{ params: { step: Step } }, "params">;
+  route: RouteProp<{ params: { step?: Step } }, "params">;
 }
 
 const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  const screenTitle = route?.params?.step?.nom ?? null;
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  const description = route?.params?.step?.description ?? null;
+  const step = route?.params?.step;
+  const screenTitle = step?.nom ?? "";
+  const description = step?.description ?? "";
   const [trackerAction, setTrackerAction] = useState("");
   const [articles, setArticles] = useState<Article[]>([]);
   const [showArticles, setShowArticles] = useState(false);
@@ -33,14 +33,22 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
   }, [articles]);
 
   useEffect(() => {
-    const willFocusSubscription = navigation.addListener("focus", () => {
-      setShowArticles(false);
-      setTimeout(() => {
-        setShowArticles(true);
-      }, 100);
-    });
-    return willFocusSubscription;
-  }, [navigation]);
+    if (step) {
+      const willFocusSubscription = navigation.addListener("focus", () => {
+        setShowArticles(false);
+        setTimeout(() => {
+          setShowArticles(true);
+        }, 100);
+      });
+      return willFocusSubscription;
+    } else {
+      reportError(
+        `ArticleListScreen : no param (step) => call goBack().\n
+        Details : route.key = ${route.key} / route.name = ${route.name} / route.path = ${route.path}`
+      );
+      if (navigation.canGoBack()) navigation.goBack();
+    }
+  }, [navigation, route.key, route.name, route.path, step]);
 
   const handleResults = useCallback((data: unknown) => {
     const results = (data as { articles: Article[] }).articles;
@@ -53,28 +61,32 @@ const ArticleListScreen: FC<Props> = ({ navigation, route }) => {
         screenName={TrackerUtils.trackerArticlesScreenName(screenTitle)}
         actionName={trackerAction}
       />
-      {showArticles && (
-        <View style={styles.listContainer}>
-          <ArticleList
-            articleListHeaderParams={{
-              description: description ?? undefined,
-              navigation: navigation,
-              setArticles: setArticles,
-              setTrackerAction: setTrackerAction,
-              title: screenTitle,
-            }}
-            articles={articles}
-            animationDuration={1000}
-            step={route.params.step}
+      {step && (
+        <>
+          {showArticles && (
+            <View style={styles.listContainer}>
+              <ArticleList
+                articleListHeaderParams={{
+                  description: description,
+                  navigation: navigation,
+                  setArticles: setArticles,
+                  setTrackerAction: setTrackerAction,
+                  title: screenTitle,
+                }}
+                articles={articles}
+                animationDuration={1000}
+                step={route.params.step}
+              />
+            </View>
+          )}
+          <GraphQLQuery
+            query={HomeDbQueries.LIST_ARTICLES_WITH_STEP(step.id)}
+            fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
+            getFetchedData={handleResults}
+            noLoaderBackdrop={true}
           />
-        </View>
+        </>
       )}
-      <GraphQLQuery
-        query={HomeDbQueries.LIST_ARTICLES_WITH_STEP(route.params.step.id)}
-        fetchPolicy={FetchPoliciesConstants.CACHE_AND_NETWORK}
-        getFetchedData={handleResults}
-        noLoaderBackdrop={true}
-      />
     </View>
   );
 };
