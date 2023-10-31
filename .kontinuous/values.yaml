@@ -2,6 +2,9 @@ global:
   registry: ghcr.io
   imageProject: socialgouv
 
+pg:
+  ~chart: pg
+
 app-strapi:
   ~chart: app
   host: "backoffice-{{ .Values.global.host }}"
@@ -43,29 +46,6 @@ app-strapi:
       value: "true"
     - name: TZ
       value: "Europe/Paris"
-#app-cache:
-# ~chart: app
-#  image: "nginx:1.19.6"
-#  needs: ["app-strapi"]
-#  host: "backoffice-{{ .Values.global.host }}"
-#  containerPort: 8080
-#  volumes:
-#    - name: strapi-cache
-#      emptyDir: {}
-#    - name: "config"
-#      configMap:
-#        name: nginx-configmap
-#  volumeMounts:
-#    - name: strapi-cache
-#      mountPath: /var/cache/nginx
-#    - name: config
-#      mountPath: /etc/nginx/nginx.conf
-#      subPath: nginx.conf
-#  ingress:
-#    annotations:
-#      "nginx.ingress.kubernetes.io/proxy-body-size": "1g"
-#      "nginx.ingress.kubernetes.io/limit-rps": "20"
-#      "nginx.ingress.kubernetes.io/limit-rpm": "300"
 
 deactivate:
   jobs-deactivate:

@@ -2,7 +2,7 @@ app-strapi:
   ~needs: [restore]
   ~preDeploy.cleaner:
     match:
-      kind: Deployment  
+      kind: Deployment
     value: true
   volumes:
     - name: uploads
@@ -10,13 +10,20 @@ app-strapi:
   volumeMounts:
     - mountPath: /app/public/uploads
       name: uploads
+  envFrom:
+    - secretRef:
+        name: strapi
+    - configMapRef:
+        name: strapi-configmap
+    - secretRef:
+        name: azure-les1000jours-volume
+    - secretRef:
+        name: "pg-app"
 
 jobs:
   runs:
-    create-db:
-      use: create-db
     restore:
-      ~needs: [create-db]
+      ~needs: [pg]
       use: pg-restore
       checkout: false
       with:

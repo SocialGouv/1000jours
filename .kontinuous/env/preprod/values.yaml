@@ -13,4 +13,4 @@ app-strapi:
     - secretRef:
         name: azure-les1000jours-volume
     - secretRef:
-        name: "{{ .Values.global.pgSecretName }}"
+        name: "pg-app"
