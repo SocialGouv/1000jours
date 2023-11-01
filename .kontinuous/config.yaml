@@ -5,3 +5,12 @@ dependencies:
   fabrique:
     extends:
       - name: buildkit-service
+    dependencies:
+      contrib:
+        preDeploy:
+          importSecrets:
+            options:
+              secrets:
+                les1000joursprodserver-backup-credentials:
+                  env: dev
+                  required: true
