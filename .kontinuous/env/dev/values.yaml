@@ -15,8 +15,8 @@ app-strapi:
         name: strapi
     - configMapRef:
         name: strapi-configmap
-    - secretRef:
-        name: azure-les1000jours-volume
+    # - secretRef:
+    #     name: azure-les1000jours-volume
     - secretRef:
         name: "pg-app"
 #
