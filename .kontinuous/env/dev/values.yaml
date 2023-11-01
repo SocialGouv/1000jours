@@ -20,8 +20,8 @@ app-strapi:
     - secretRef:
         name: "pg-app"
 #
-# désactivé le temps de mettre CNPG en prod et se baser dessus pour le restore
-
+# todo: a remplacer par une conf de restore CNPG
+#
 jobs:
   runs:
     restore:
@@ -30,11 +30,11 @@ jobs:
       checkout: false
       with:
         mountPath: /mnt/restore
-        restorePath: "${LATEST}/prod_db.psql.gz"
+        restorePath: "${LATEST}"
         pgAdminUserSecretRefName: pg-superuser
       env:
         - name: RESTORE_PATH
-          value: "${LATEST}/prod_db.psql.gz"
+          value: "${LATEST}"
         - name: OWNER
           value: "{{ $.Values.global.pgUser }}"
         - name: MOUNT_PATH
