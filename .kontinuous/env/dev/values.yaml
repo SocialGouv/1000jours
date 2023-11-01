@@ -37,6 +37,8 @@ jobs:
           value: "$(username)"
         - name: PGHOST
           value: "pg-rw"
+        - name: PGDATABASE
+          value: "{{ $.Values.global.pgDatabase }}"
       volumeMounts:
         - name: restore
           mountPath: /mnt/restore
