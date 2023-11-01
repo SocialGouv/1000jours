@@ -33,6 +33,8 @@ jobs:
       env:
         - name: RESTORE_PATH
           value: "${LATEST}/prod_db.psql.gz"
+        - name: OWNER
+          value: "{{ $.Values.global.pgUser }}"
         - name: PGPASSWORD
           value: "$(password)"
         - name: PGUSER
