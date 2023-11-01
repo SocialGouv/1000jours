@@ -5,5 +5,4 @@ dependencies:
   fabrique:
     extends:
       - name: ovh
-        ifEnv: [dev, preprod]
       - name: buildkit-service
