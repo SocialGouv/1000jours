@@ -39,6 +39,8 @@ jobs:
           value: "{{ $.Values.global.pgUser }}"
         - name: MOUNT_PATH
           value: /mnt/restore
+        - name: FILTER_PATH
+          value: prod_db
         - name: PGPASSWORD
           value: "$(password)"
         - name: PGUSER
