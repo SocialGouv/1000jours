@@ -30,6 +30,13 @@ jobs:
         mountPath: /mnt/restore
         restorePath: "${LATEST}/prod_db.psql.gz"
         pgAdminUserSecretRefName: pg-superuser
+      env:
+        - name: PGPASSWORD
+          value: "$(password)"
+        - name: PGUSER
+          value: "$(username)"
+        - name: PGHOST
+          value: "pg-rw"
       volumeMounts:
         - name: restore
           mountPath: /mnt/restore
