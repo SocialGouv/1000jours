@@ -43,6 +43,8 @@ app-strapi:
     - name: DATABASE_PASSWORD
       value: "$(PGPASSWORD)"
     - name: DATABASE_SSL
+      value: "true"
+    - name: DATABASE_SSL_REJECT_UNAUTHORIZED
       value: "false"
     - name: TZ
       value: "Europe/Paris"
