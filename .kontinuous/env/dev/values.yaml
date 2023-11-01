@@ -29,6 +29,7 @@ jobs:
       with:
         mountPath: /mnt/restore
         restorePath: "${LATEST}/prod_db.psql.gz"
+        pgAdminUserSecretRefName: pg-app
       volumeMounts:
         - name: restore
           mountPath: /mnt/restore
