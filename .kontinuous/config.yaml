@@ -4,5 +4,4 @@ ciNamespace: ci-les1000jours
 dependencies:
   fabrique:
     extends:
-      - name: ovh
       - name: buildkit-service
