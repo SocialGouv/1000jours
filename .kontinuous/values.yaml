@@ -1,6 +1,5 @@
 global:
-  registry: ghcr.io
-  imageProject: socialgouv
+  imageProject: 1000jours
 
 pg:
   ~chart: pg
@@ -8,6 +7,7 @@ pg:
 app-strapi:
   ~chart: app
   host: "backoffice-{{ .Values.global.host }}"
+  ~needs: [pg, build-strapi]
   imagePackage: strapi
   containerPort: 1337
   probesPath: /_health
@@ -47,9 +47,10 @@ app-strapi:
     - name: TZ
       value: "Europe/Paris"
 
-deactivate:
-  jobs-deactivate:
-    runs:
-      deactivate:
-        with:
-          db: true
+jobs:
+  runs:
+    build-strapi:
+      use: build
+      with:
+        context: ./back/strapi
+        imagePackage: strapi

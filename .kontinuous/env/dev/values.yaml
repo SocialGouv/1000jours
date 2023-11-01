@@ -1,5 +1,5 @@
 app-strapi:
-  ~needs: [restore]
+  ~needs: [pg, build-strapi, restore]
   ~preDeploy.cleaner:
     match:
       kind: Deployment
