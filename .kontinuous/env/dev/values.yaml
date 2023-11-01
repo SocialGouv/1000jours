@@ -31,6 +31,8 @@ jobs:
         restorePath: "${LATEST}/prod_db.psql.gz"
         pgAdminUserSecretRefName: pg-superuser
       env:
+        - name: RESTORE_PATH
+          value: "${LATEST}/prod_db.psql.gz"
         - name: PGPASSWORD
           value: "$(password)"
         - name: PGUSER
