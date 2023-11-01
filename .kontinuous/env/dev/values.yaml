@@ -32,7 +32,7 @@ jobs:
         mountPath: /mnt/restore
         restorePath: "${LATEST}"
         pgAdminUserSecretRefName: pg-superuser
-      env:
+      env: # there is a bug when setting custom job env, so we have to repeat "with" vars here
         - name: RESTORE_PATH
           value: "${LATEST}"
         - name: OWNER
