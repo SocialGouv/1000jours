@@ -1,3 +1,10 @@
+# [1.135.0](https://github.com/SocialGouv/1000jours/compare/v1.134.3...v1.135.0) (2023-11-13)
+
+
+### Features
+
+* 🎸 Ajoute 2 nouveaux champs (Info démographiques) ([2beb607](https://github.com/SocialGouv/1000jours/commit/2beb6071b03309918552c554e52e40bfb1d7704a))
+
 ## [1.134.3](https://github.com/SocialGouv/1000jours/compare/v1.134.2...v1.134.3) (2023-10-30)
 
 
