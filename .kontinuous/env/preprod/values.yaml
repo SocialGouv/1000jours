@@ -1,16 +1,50 @@
 app-strapi:
   host: "backoffice-1000jours-preprod.dev.fabrique.social.gouv.fr"
+  ~needs: [pg, build-strapi, restore]
   addVolumes:
     - uploads
   volumeMounts:
     - mountPath: /app/public/uploads
       name: uploads
-  envFrom:
-    - secretRef:
-        name: strapi
-    - configMapRef:
-        name: strapi-configmap
-    - secretRef:
-        name: azure-les1000jours-volume
-    - secretRef:
-        name: "{{ .Values.global.pgSecretName }}"
+
+# todo: a remplacer par une conf de restore CNPG
+#
+jobs:
+  runs:
+    restore:
+      ~needs: [pg]
+      use: pg-restore
+      checkout: false
+      with:
+        mountPath: /mnt/restore
+        restorePath: "${LATEST}"
+        pgAdminUserSecretRefName: pg-superuser
+      env: # there is a bug when setting custom job env, so we have to repeat "with" vars here
+        - name: RESTORE_PATH
+          value: "${LATEST}"
+        - name: OWNER
+          value: "{{ $.Values.global.pgUser }}"
+        - name: MOUNT_PATH
+          value: /mnt/restore
+        - name: FILTER_PATH
+          value: prod_db
+        - name: PGPASSWORD
+          value: "$(password)"
+        - name: PGUSER
+          value: "$(username)"
+        - name: PGHOST
+          value: "pg-rw"
+        - name: PGDATABASE
+          value: "{{ $.Values.global.pgDatabase }}"
+      volumeMounts:
+        - name: restore
+          mountPath: /mnt/restore
+          readOnly: true
+      volumes:
+        - name: restore
+          csi:
+            driver: file.csi.azure.com
+            readOnly: true
+            volumeAttributes:
+              secretName: les1000joursprodserver-backup-credentials
+              shareName: les1000jprodsrv2-backup-restore
