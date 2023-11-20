@@ -1,3 +1,10 @@
+## [1.135.1](https://github.com/SocialGouv/1000jours/compare/v1.135.0...v1.135.1) (2023-11-20)
+
+
+### Bug Fixes
+
+* release ([#1732](https://github.com/SocialGouv/1000jours/issues/1732)) ([8393d46](https://github.com/SocialGouv/1000jours/commit/8393d46e007c9d9dec23e3f0febca7cdd24b3629)), closes [#1729](https://github.com/SocialGouv/1000jours/issues/1729)
+
 # [1.135.0](https://github.com/SocialGouv/1000jours/compare/v1.134.3...v1.135.0) (2023-11-13)
 
 
