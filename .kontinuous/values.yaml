@@ -26,7 +26,7 @@ app-strapi:
     - configMapRef:
         name: strapi-configmap
     - secretRef:
-        name: "{{ .Values.global.pgSecretName }}"
+        name: "pg-app"
   env:
     - name: BACKOFFICE_URL
       value: "https://backoffice-{{ .Values.global.host }}"
