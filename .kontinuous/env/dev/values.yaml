@@ -15,10 +15,10 @@ app-strapi:
         name: strapi
     - configMapRef:
         name: strapi-configmap
-    # - secretRef:
-    #     name: azure-les1000jours-volume
     - secretRef:
         name: "pg-app"
+    # - secretRef:
+    #     name: azure-les1000jours-volume
 #
 # todo: a remplacer par une conf de restore CNPG
 #

@@ -6,15 +6,6 @@ app-strapi:
   volumeMounts:
     - mountPath: /app/public/uploads
       name: uploads
-  envFrom:
-    - secretRef:
-        name: strapi
-    - configMapRef:
-        name: strapi-configmap
-    - secretRef:
-        name: azure-les1000jours-volume
-    - secretRef:
-        name: pg-app
 
 # todo: a remplacer par une conf de restore CNPG
 #
