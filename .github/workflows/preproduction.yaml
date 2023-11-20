@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - "master"
-      - "main"
-    tags-ignore:
-      - v*
 
 concurrency:
   cancel-in-progress: true
