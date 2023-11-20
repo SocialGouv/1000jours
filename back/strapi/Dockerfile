@@ -36,8 +36,7 @@ ENV NODE_ENV=production
 
 RUN yarn build
 
-RUN useradd strapi --uid 1001 --gid 1001 --shel /dev/null \
-  chown -R strapi:strapi /app
+RUN useradd strapi --uid 1001 --gid 1001 --shell /dev/null && chown -R strapi:strapi /app
 USER 1001
 
 CMD ["yarn", "start"]
