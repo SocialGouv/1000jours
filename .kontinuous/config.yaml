@@ -1,8 +1,10 @@
 projectName: les1000jours
+ciNamespace: ci-les1000jours
 
 dependencies:
   fabrique:
-    import: SocialGouv/kontinuous/plugins/fabrique
+    extends:
+      - name: buildkit-service
     dependencies:
       contrib:
         preDeploy:
@@ -10,5 +12,5 @@ dependencies:
             options:
               secrets:
                 les1000joursprodserver-backup-credentials:
-                  env: dev
-                  required: true
+                les1000jours-dev-backups-access-key:
+                les1000jours-prod-backups-access-key:
