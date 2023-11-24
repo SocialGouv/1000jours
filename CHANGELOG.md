@@ -1,3 +1,12 @@
+## [1.135.2](https://github.com/SocialGouv/1000jours/compare/v1.135.1...v1.135.2) (2023-11-24)
+
+
+### Bug Fixes
+
+* add CNPG prod cluster ([#1729](https://github.com/SocialGouv/1000jours/issues/1729)) ([4b74272](https://github.com/SocialGouv/1000jours/commit/4b74272b1384654235fbbc6c75200e0830961496))
+* allow metabse ingress ([#1733](https://github.com/SocialGouv/1000jours/issues/1733)) ([1f841e1](https://github.com/SocialGouv/1000jours/commit/1f841e1b24023966219c6fcf81c1f50f5d10de74))
+* release ([dffeb6c](https://github.com/SocialGouv/1000jours/commit/dffeb6c31befe7a36db59bdcd34c61cd8cfb7904))
+
 ## [1.135.1](https://github.com/SocialGouv/1000jours/compare/v1.135.0...v1.135.1) (2023-11-20)
 
 
