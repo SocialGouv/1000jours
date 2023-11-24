@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  annotations:
+  labels:
+  name: netpol-pg
+  namespace: les1000jours
+spec:
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              application: les1000jours
+  podSelector: {}
+  policyTypes:
+    - Ingress
