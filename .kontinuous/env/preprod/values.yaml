@@ -1,3 +1,8 @@
+global:
+  # to match prod database name adn make restore easier
+  pgUser: 1000jours
+  pgDatabase: 1000jours
+
 app-strapi:
   host: "backoffice-1000jours-preprod.dev.fabrique.social.gouv.fr"
   ~needs: [pg, build-strapi]
