@@ -22,6 +22,11 @@ app-strapi:
 
 pg:
   ~chart: pg
+  # this force ce PG cluster to be destroyed on redeploys
+  ~preDeploy.cleaner:
+    match:
+      kind: Cluster
+    value: true
   cnpg-cluster:
     recovery:
       enabled: true
