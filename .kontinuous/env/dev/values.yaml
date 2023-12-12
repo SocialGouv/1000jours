@@ -28,20 +28,20 @@ pg:
     match:
       kind: Cluster
     value: true
-  cnpg-cluster:
-    recovery:
-      enabled: true
-      targetTime: "2023-12-01T09:00:00"
-      barmanObjectStore:
-        ~tpl~destinationPath: "s3://les1000jours-prod-backups/les1000jours"
-        s3Credentials:
-          accessKeyId:
-            ~tpl~name: "les1000jours-prod-backups-access-key"
-            key: bucket_access_key
-          secretAccessKey:
-            ~tpl~name: "les1000jours-prod-backups-access-key"
-            key: bucket_secret_key
-          region:
-            ~tpl~name: "les1000jours-prod-backups-access-key"
-            key: bucket_region
+  # cnpg-cluster:
+  #   recovery:
+  #     enabled: true
+  #     targetTime: "2023-12-01T09:00:00"
+  #     barmanObjectStore:
+  #       ~tpl~destinationPath: "s3://les1000jours-prod-backups/les1000jours"
+  #       s3Credentials:
+  #         accessKeyId:
+  #           ~tpl~name: "les1000jours-prod-backups-access-key"
+  #           key: bucket_access_key
+  #         secretAccessKey:
+  #           ~tpl~name: "les1000jours-prod-backups-access-key"
+  #           key: bucket_secret_key
+  #         region:
+  #           ~tpl~name: "les1000jours-prod-backups-access-key"
+  #           key: bucket_region
  
