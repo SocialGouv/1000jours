@@ -1,7 +1,3 @@
-global:
-  # to match prod database name adn make restore easier
-  pgUser: 1000jours
-  pgDatabase: 1000jours
 
 app-strapi:
   ~needs: [pg, build-strapi]
