@@ -31,6 +31,7 @@ pg:
   cnpg-cluster:
     recovery:
       enabled: true
+      targetTime: "2023-12-01T09:00:00"
       barmanObjectStore:
         ~tpl~destinationPath: "s3://les1000jours-prod-backups/les1000jours"
         s3Credentials:
