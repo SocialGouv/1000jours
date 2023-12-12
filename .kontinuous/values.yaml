@@ -1,7 +1,5 @@
 global:
   imageProject: 1000jours
-  pgUser: 1000jours
-  pgDatabase: 1000jours
 
 pg:
   ~chart: pg
@@ -37,13 +35,13 @@ app-strapi:
     - name: DATABASE_CLIENT
       value: "postgres"
     - name: DATABASE_NAME
-      value: "{{ .Values.global.pgDatabase }}"
+      value: "$(PGDATABASE)"
     - name: DATABASE_HOST
       value: "$(PGHOST)"
     - name: DATABASE_PORT
       value: "$(PGPORT)"
     - name: DATABASE_USERNAME
-      value: "{{ .Values.global.pgUser }}"
+      value: "$(PGUSER)"
     - name: DATABASE_PASSWORD
       value: "$(PGPASSWORD)"
     - name: DATABASE_SSL
