@@ -147,7 +147,8 @@ const TabCalendarNavigator: FC = () => (
     />
     <TabCalendarStack.Screen name="eventDetails" component={EventDetails} />
     <TabCalendarStack.Screen name="article" component={ArticleDetail} />
-    <TabHomeStack.Screen name="parentheque" component={Parentheque} />
+    <TabCalendarStack.Screen name="articleSwipe" component={ArticleSwipe} />
+    <TabCalendarStack.Screen name="parentheque" component={Parentheque} />
     <TabCalendarStack.Screen name="aroundMeScreen" component={AroundMeScreen} />
   </TabCalendarStack.Navigator>
 );
@@ -160,7 +161,7 @@ const TabSurveysNavigator: FC = () => (
       component={TabSurveysScreen}
       options={{}}
     />
-    <TabHomeStack.Screen name="parentheque" component={Parentheque} />
+    <TabSurveysStack.Screen name="parentheque" component={Parentheque} />
   </TabSurveysStack.Navigator>
 );
 
@@ -176,7 +177,7 @@ const TabSearchNavigator: FC = () => (
       name="aroundMeMapAndList"
       component={AroundMeMapAndList}
     />
-    <TabHomeStack.Screen name="parentheque" component={Parentheque} />
+    <TabSearchStack.Screen name="parentheque" component={Parentheque} />
   </TabSearchStack.Navigator>
 );
 
