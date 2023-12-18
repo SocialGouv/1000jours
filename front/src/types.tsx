@@ -46,11 +46,14 @@ export type TabCalendarParamList = {
   tabCalendarScreen: undefined;
   eventDetails: { eventId: string };
   article: { id: number; step?: Step };
+  articleSwipe: undefined;
+  parentheque: { documents?: Document[] };
   aroundMeScreen: undefined;
 };
 
 export type TabSurveysParamList = {
   tabSurveysScreen: undefined;
+  parentheque: { documents?: Document[] };
 };
 
 export type TabAroundMeParamList = {
@@ -63,6 +66,7 @@ export type TabSearchParamList = {
     coordinates: LatLng;
     displayUserLocation: boolean;
   };
+  parentheque: { documents?: Document[] };
 };
 
 export type ArticleSwipeRouteParamList = {
