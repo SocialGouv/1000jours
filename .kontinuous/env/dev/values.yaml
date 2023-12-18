@@ -1,5 +1,6 @@
+
 app-strapi:
-  ~needs: [pg, build-strapi, restore]
+  ~needs: [pg, build-strapi]
   ~preDeploy.cleaner:
     match:
       kind: Deployment
@@ -19,45 +20,31 @@ app-strapi:
         name: "pg-app"
     # - secretRef:
     #     name: azure-les1000jours-volume
-#
-# todo: a remplacer par une conf de restore CNPG
-#
-jobs:
-  runs:
-    restore:
-      ~needs: [pg]
-      use: pg-restore
-      checkout: false
-      with:
-        mountPath: /mnt/restore
-        restorePath: "${LATEST}"
-        pgAdminUserSecretRefName: pg-superuser
-      env: # there is a bug when setting custom job env, so we have to repeat "with" vars here
-        - name: RESTORE_PATH
-          value: "${LATEST}"
-        - name: OWNER
-          value: "{{ $.Values.global.pgUser }}"
-        - name: MOUNT_PATH
-          value: /mnt/restore
-        - name: FILTER_PATH
-          value: prod_db
-        - name: PGPASSWORD
-          value: "$(password)"
-        - name: PGUSER
-          value: "$(username)"
-        - name: PGHOST
-          value: "pg-rw"
-        - name: PGDATABASE
-          value: "{{ $.Values.global.pgDatabase }}"
-      volumeMounts:
-        - name: restore
-          mountPath: /mnt/restore
-          readOnly: true
-      volumes:
-        - name: restore
-          csi:
-            driver: file.csi.azure.com
-            readOnly: true
-            volumeAttributes:
-              secretName: les1000joursprodserver-backup-credentials
-              shareName: les1000jprodsrv2-backup-restore
+
+pg:
+  ~chart: pg
+  # this force ce PG cluster to be destroyed on redeploys
+  ~preDeploy.cleaner:
+    match:
+      kind: Cluster
+    value: true
+  cnpg-cluster:
+    recovery:
+      ~tpl~database: "{{ .Values.global.pgDatabase }}"
+      ~tpl~owner: "{{ .Values.global.pgUser }}"
+      secretName: "pg-db"
+      enabled: true
+      #targetTime: "2023-12-01T09:00:00"
+      barmanObjectStore:
+        ~tpl~destinationPath: "s3://les1000jours-prod-backups/les1000jours"
+        s3Credentials:
+          accessKeyId:
+            ~tpl~name: "les1000jours-prod-backups-access-key"
+            key: bucket_access_key
+          secretAccessKey:
+            ~tpl~name: "les1000jours-prod-backups-access-key"
+            key: bucket_secret_key
+          region:
+            ~tpl~name: "les1000jours-prod-backups-access-key"
+            key: bucket_region
+ 
