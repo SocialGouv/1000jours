@@ -14,9 +14,9 @@ pg:
     match:
       kind: Cluster
     value: true
-  backup:
-    enabled: false
   cnpg-cluster:
+    backup:
+       ~tpl~enabled: "false"
     recovery:
       enabled: true
       ~tpl~database: "{{ .Values.global.pgDatabase }}"
