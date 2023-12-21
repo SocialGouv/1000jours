@@ -14,6 +14,8 @@ pg:
     match:
       kind: Cluster
     value: true
+  backup:
+    enabled: false
   cnpg-cluster:
     recovery:
       enabled: true
