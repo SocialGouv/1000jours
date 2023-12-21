@@ -1,5 +1,7 @@
 global:
   imageProject: 1000jours
+  pgUser: 1000jours
+  pgDatabase: 1000jours
 
 pg:
   ~chart: pg
