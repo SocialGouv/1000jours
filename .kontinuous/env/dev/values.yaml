@@ -30,11 +30,7 @@ pg:
     value: true
   cnpg-cluster:
     recovery:
-      ~tpl~database: "{{ .Values.global.pgDatabase }}"
-      ~tpl~owner: "{{ .Values.global.pgUser }}"
-      secretName: "pg-db"
       enabled: true
-      #targetTime: "2023-12-01T09:00:00"
       barmanObjectStore:
         ~tpl~destinationPath: "s3://les1000jours-prod-backups/les1000jours"
         s3Credentials:
