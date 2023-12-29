@@ -2,3 +2,4 @@ Dockerfile
 .gitignore
 .dockerignore
 /*.md
+node_modules

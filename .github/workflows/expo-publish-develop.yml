@@ -61,3 +61,4 @@ jobs:
         env:
           API_URL: "https://${{ steps.env.outputs.subdomain_backoffice }}.dev.fabrique.social.gouv.fr"
           BRANCH_NAME: ${{ steps.env.outputs.branch }}
+          YARN_IGNORE_NODE: "1"

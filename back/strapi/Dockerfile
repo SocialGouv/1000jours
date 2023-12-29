@@ -35,7 +35,6 @@ COPY yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
 RUN yarn fetch --immutable
 COPY --chown=1001:1001 . .
-COPY . .
 RUN yarn build
 RUN yarn workspaces focus --production && yarn cache clean
 

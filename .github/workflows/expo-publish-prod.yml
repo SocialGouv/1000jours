@@ -25,6 +25,8 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Yarn
+        env:
+          YARN_IGNORE_NODE: "1"
         run: |
           cd front
           echo $PLAY_STORE_API_KEY | base64 -d > api-key-play-store.json
@@ -50,6 +52,8 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Yarn
+        env:
+          YARN_IGNORE_NODE: "1"
         run: |
           cd front
           yarn install

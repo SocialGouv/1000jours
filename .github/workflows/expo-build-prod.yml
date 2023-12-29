@@ -34,6 +34,8 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Yarn
+        env:
+          YARN_IGNORE_NODE: "1"
         run: |
           cd front
           yarn install
@@ -67,6 +69,8 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Yarn
+        env:
+          YARN_IGNORE_NODE: "1"
         run: |
           cd front
           yarn install

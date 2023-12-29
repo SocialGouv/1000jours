@@ -16,7 +16,11 @@ jobs:
         node-version: 14.x
 
     - name: Install dependencies
+      env:
+        YARN_IGNORE_NODE: "1"
       run: yarn --cwd back/strapi install
 
     - name: Run tests
+      env:
+        YARN_IGNORE_NODE: "1"
       run: yarn --cwd back/strapi test
