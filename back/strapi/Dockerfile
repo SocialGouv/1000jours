@@ -26,13 +26,15 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-RUN useradd strapi --uid 1001 --shell /dev/null && chown -R strapi:strapi /app
+RUN groupadd -g 1001 strapi && \
+  useradd -rm -d /home/strapi -s /bin/bash -g strapi -u 1001 strapi && \
+  chown 1001:1001 /app
 USER 1001
 ENV NODE_ENV=production
 
 FROM base as builder
 COPY yarn.lock .yarnrc.yml ./
-COPY .yarn .yarn
+COPY --chown=1001:1001 .yarn .yarn
 RUN yarn fetch --immutable
 COPY --chown=1001:1001 . .
 RUN yarn build
