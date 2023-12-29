@@ -63,5 +63,6 @@
     "eslint-plugin-jest": "^24.4.3",
     "jest": "^27.2.5",
     "prettier": "^2.3.2"
-  }
+  },
+  "packageManager": "yarn@4.0.2"
 }

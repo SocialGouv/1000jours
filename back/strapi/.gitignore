@@ -113,3 +113,11 @@ exports
 build
 .strapi-updater.json
 seeds
+
+# Yarn Berry
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

@@ -13,8 +13,7 @@
     "typescript": "^4.4.4"
   },
   "scripts": {
-    "commit": "git-cz",
-    "k8s": "yarn --silent --cwd .k8s",
-    "k8s-update": "yarn --silent --cwd .k8s test -u"
-  }
+    "commit": "git-cz"
+  },
+  "packageManager": "yarn@4.0.2"
 }
