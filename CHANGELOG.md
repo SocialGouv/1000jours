@@ -1,3 +1,17 @@
+## [1.135.5](https://github.com/SocialGouv/1000jours/compare/v1.135.4...v1.135.5) (2024-01-15)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la redirection vers les articles depuis les tnd ([ad155a0](https://github.com/SocialGouv/1000jours/commit/ad155a00a61404e1fb291ad5f7df6e271da59aaa))
+* Corrige les notifications articles et certaines redirections vers les articles ([e2ab03f](https://github.com/SocialGouv/1000jours/commit/e2ab03f01d8deeb992483018264480b5ba08608d))
+* yarn berry + fetch + docker opti ([#1739](https://github.com/SocialGouv/1000jours/issues/1739)) ([204a176](https://github.com/SocialGouv/1000jours/commit/204a1768b78a743d666def2aa715e46299efc0cc))
+* **ci:** restore from cnpg ([#1736](https://github.com/SocialGouv/1000jours/issues/1736)) ([8cb13d5](https://github.com/SocialGouv/1000jours/commit/8cb13d53d5a375f357b7ed165922621f1a32eb66))
+* **cnpg:** disable preprod backups for real ([0a313f0](https://github.com/SocialGouv/1000jours/commit/0a313f028d3d80395b4d6bd5d78824eba7503d03))
+* **cnpg:** use fixed name DB ([8f8796c](https://github.com/SocialGouv/1000jours/commit/8f8796cd82205d403b12636e4a0995941cff3df1))
+* **restore:** use defaults recovery user ([#1738](https://github.com/SocialGouv/1000jours/issues/1738)) ([3cefc73](https://github.com/SocialGouv/1000jours/commit/3cefc73649ee5d292c29875bd638bfebd233fd79))
+* 🐛 Corrige la navigation vers les articles depuis calendar ([5bcfd15](https://github.com/SocialGouv/1000jours/commit/5bcfd15e745a2e89ba06a44b8eb7eb19ee9df4fc))
+
 ## [1.135.4](https://github.com/SocialGouv/1000jours/compare/v1.135.3...v1.135.4) (2024-01-15)
 
 ### Bug Fixes
