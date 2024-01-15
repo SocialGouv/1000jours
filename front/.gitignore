@@ -11,3 +11,11 @@ web-build/
 
 # macOS
 .DS_Store
+
+# Yarn Berry
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

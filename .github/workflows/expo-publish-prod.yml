@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: 14.x
+          node-version: 16.x
 
       - uses: expo/expo-github-action@v8
         with:
@@ -25,6 +25,8 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Yarn
+        env:
+          YARN_IGNORE_NODE: "1"
         run: |
           cd front
           echo $PLAY_STORE_API_KEY | base64 -d > api-key-play-store.json
@@ -42,7 +44,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: 14.x
+          node-version: 16.x
 
       - uses: expo/expo-github-action@v8
         with:
@@ -50,6 +52,8 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Yarn
+        env:
+          YARN_IGNORE_NODE: "1"
         run: |
           cd front
           yarn install

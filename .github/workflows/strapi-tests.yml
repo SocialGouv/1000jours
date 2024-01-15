@@ -16,7 +16,11 @@ jobs:
         node-version: 14.x
 
     - name: Install dependencies
-      run: yarn --cwd back/strapi install
+      env:
+        YARN_IGNORE_NODE: "1"
+      run: cd back/strapi && yarn --immutable
 
     - name: Run tests
-      run: yarn --cwd back/strapi test
+      env:
+        YARN_IGNORE_NODE: "1"
+      run: cd back/strapi && yarn test

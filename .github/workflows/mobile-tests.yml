@@ -21,6 +21,8 @@ jobs:
         node-version: 16
 
     - name: Run tests
+      env:
+        YARN_IGNORE_NODE: "1"
       run: |
           cd front
           yarn install
