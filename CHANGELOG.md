@@ -1,31 +1,3 @@
-## [1.135.3](https://github.com/SocialGouv/1000jours/compare/v1.135.2...v1.135.3) (2024-01-15)
-
-
-### Bug Fixes
-
-* Corrige les notifications articles et certaines redirections vers les articles ([5364e89](https://github.com/SocialGouv/1000jours/commit/5364e89de2b1261439882ac7e47c141a8ea16e2d))
-* **ci:** restore from cnpg ([#1736](https://github.com/SocialGouv/1000jours/issues/1736)) ([fb94763](https://github.com/SocialGouv/1000jours/commit/fb947636a6f892534ad757383e89d4d41dd61843))
-* **cnpg:** disable preprod backups for real ([67ea71b](https://github.com/SocialGouv/1000jours/commit/67ea71b94d827c1053da6cc37cfa718180c766d5))
-* **cnpg:** use fixed name DB ([e5073fb](https://github.com/SocialGouv/1000jours/commit/e5073fbd31fee8fb79eb3765852e26dbd0441b65))
-* **restore:** use defaults recovery user ([#1738](https://github.com/SocialGouv/1000jours/issues/1738)) ([c230ef1](https://github.com/SocialGouv/1000jours/commit/c230ef1b868ccdd13eedf115017ae171e36ce946))
-* 🐛 Corrige la navigation vers les articles depuis calendar ([b0904c0](https://github.com/SocialGouv/1000jours/commit/b0904c032d1262bf6ec586ccad97fa30e3b845a5))
-
-## [1.135.2](https://github.com/SocialGouv/1000jours/compare/v1.135.1...v1.135.2) (2023-11-24)
-
-
-### Bug Fixes
-
-* add CNPG prod cluster ([#1729](https://github.com/SocialGouv/1000jours/issues/1729)) ([4b74272](https://github.com/SocialGouv/1000jours/commit/4b74272b1384654235fbbc6c75200e0830961496))
-* allow metabse ingress ([#1733](https://github.com/SocialGouv/1000jours/issues/1733)) ([1f841e1](https://github.com/SocialGouv/1000jours/commit/1f841e1b24023966219c6fcf81c1f50f5d10de74))
-* release ([dffeb6c](https://github.com/SocialGouv/1000jours/commit/dffeb6c31befe7a36db59bdcd34c61cd8cfb7904))
-
-## [1.135.1](https://github.com/SocialGouv/1000jours/compare/v1.135.0...v1.135.1) (2023-11-20)
-
-
-### Bug Fixes
-
-* release ([#1732](https://github.com/SocialGouv/1000jours/issues/1732)) ([8393d46](https://github.com/SocialGouv/1000jours/commit/8393d46e007c9d9dec23e3f0febca7cdd24b3629)), closes [#1729](https://github.com/SocialGouv/1000jours/issues/1729)
-
 # [1.135.0](https://github.com/SocialGouv/1000jours/compare/v1.134.3...v1.135.0) (2023-11-13)
 
 
