@@ -8,8 +8,13 @@ import HTML from "react-native-render-html";
 import WebView from "react-native-webview";
 
 import ImgBtnReview from "../../assets/images/btn-review-sp-plus.svg";
-import { ArticleCard } from "../../components";
-import { CommonText, TitleH1, View } from "../../components/baseComponents";
+import { ArticleList } from "../../components";
+import {
+  CommonText,
+  SecondaryTextItalic,
+  TitleH1,
+  View,
+} from "../../components/baseComponents";
 import {
   FetchPoliciesConstants,
   HomeDbQueries,
@@ -22,8 +27,58 @@ import { GraphQLMutation, GraphQLQuery } from "../../services";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type { SurveyQuestionAndAnswers } from "../../type";
 import type { TndAnswers, TndQuestionnaire } from "../../type/tndSurvey.types";
-import type { Article } from "../../types";
+import type { Article, Step } from "../../types";
 import { LinkingUtils, TndSurveyUtils } from "../../utils";
+import ArticleDetail from "../articles/articleDetail.component";
+
+export const ArticlesRoute = (
+  updatedText: string,
+  articles: Article[]
+): React.ReactElement => {
+  const [showArticle, setShowArticle] = useState(false);
+  const [currentArticleId, setCurrentArticleId] = useState(0);
+  const [currentArticleStep, setCurrentArticleStep] = useState<
+    Step | undefined
+  >();
+
+  const onBackButtonPressed = useCallback(() => {
+    setShowArticle(false);
+  }, []);
+
+  const onUpdateStepAndArticleId = useCallback(
+    (articleId: number, step: Step | undefined) => {
+      setShowArticle(true);
+      setCurrentArticleId(articleId);
+      setCurrentArticleStep(step);
+    },
+    []
+  );
+
+  if (articles.length <= 0) {
+    return (
+      <View style={styles.center}>
+        <SecondaryTextItalic>{updatedText}</SecondaryTextItalic>
+      </View>
+    );
+  }
+
+  return showArticle ? (
+    <ArticleDetail
+      _articleId={currentArticleId}
+      _articleStep={currentArticleStep}
+      goBack={onBackButtonPressed}
+    />
+  ) : (
+    <View style={styles.listContainer}>
+      <ArticleList
+        articles={articles}
+        animationDuration={500}
+        isFromSearchScreen
+        setStepAndArticleId={onUpdateStepAndArticleId}
+      />
+    </View>
+  );
+};
 
 interface Props {
   result: number;
@@ -118,14 +173,16 @@ const TndSurveyResult: FC<Props> = ({ survey, tndQuestionnaire }) => {
             <CommonText style={styles.listArticlesTitle}>
               {Labels.tndSurvey.surveyResult.articlesToRead}
             </CommonText>
-            {handicapArticles.map((article, index) => (
+            {/* {handicapArticles.map((article, index) => (
               <View key={index}>
                 <ArticleCard
                   selectedArticleId={article.id}
                   articles={handicapArticles}
+                  isFromTndScreen={true}
                 />
               </View>
-            ))}
+            ))} */}
+            {ArticlesRoute("", handicapArticles)}
           </View>
         )}
       </ScrollView>
@@ -137,6 +194,11 @@ const styles = StyleSheet.create({
   btnReview: {
     alignItems: "center",
     marginTop: Paddings.default,
+  },
+  center: {
+    alignItems: "center",
+    justifyContent: "center",
+    margin: Margins.default,
   },
   fontBold: {
     fontWeight: FontWeight.bold,
@@ -155,6 +217,10 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     paddingTop: Paddings.default,
     paddingVertical: Paddings.smaller,
+  },
+  listContainer: {
+    paddingHorizontal: Paddings.default,
+    paddingVertical: Paddings.smallest,
   },
   marginHorizontal: {
     marginHorizontal: Margins.default,

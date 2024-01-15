@@ -30,6 +30,7 @@ import {
   StringUtils,
   TrackerUtils,
 } from "../../utils";
+import { NotificationType } from "../../utils/notifications/notification.util";
 
 interface Props {
   navigation: StackNavigationProp<TabHomeParamList>;
@@ -89,17 +90,31 @@ const TabHomeScreen: FC<Props> = ({ navigation }) => {
   }, [currentStep]);
 
   const scheduleArticlesNotificationIfNeeded = useCallback(async () => {
-    if (currentStep) {
-      const triggerForArticlesNotification = await StorageUtils.getObjectValue(
-        StorageKeysConstants.triggerForArticlesNotification
+    const articlesNotification =
+      await NotificationUtils.getAllNotificationsByType(
+        NotificationType.articles
       );
-      // Programme la notification des articles non lus si cette notification n'a jamais été programmée ou si il y a un changement d'étape
+
+    if (currentStep) {
+      // Programme la notification des articles non lus si :
+      // - cette notification n'a jamais été programmée
+      // - cette notification est déjà programmée mais qu'il n'y a pas de 'redirectParams'
+      // - il y a un changement d'étape
       if (
-        !triggerForArticlesNotification ||
+        articlesNotification.length === 0 ||
+        (articlesNotification.length > 0 &&
+          !articlesNotification[0].content.data.redirectParams) ||
         (StringUtils.isNotNullNorEmpty(previousCurrentStepId) &&
           previousCurrentStepId !== currentStep.id.toString())
       ) {
         await NotificationUtils.scheduleArticlesNotification();
+      }
+    } else {
+      // Annule la notification si l'étape courante n'est pas définie
+      if (articlesNotification.length > 0) {
+        await NotificationUtils.cancelAllNotificationsByType(
+          NotificationType.articles
+        );
       }
     }
   }, [currentStep, previousCurrentStepId]);
