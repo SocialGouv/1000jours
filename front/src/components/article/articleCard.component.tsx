@@ -91,7 +91,14 @@ const ArticleCard: FC<Props> = ({
         true
       );
     }
-  }, [isFromSearchScreen, setStepAndArticleId, article, step, articles]);
+  }, [
+    isFromSearchScreen,
+    isFromTndScreen,
+    setStepAndArticleId,
+    article,
+    step,
+    articles,
+  ]);
 
   const imageStyle = [
     styles.articleImage,
