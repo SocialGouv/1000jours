@@ -40,7 +40,7 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: 14.x
+          node-version: 16.x
 
       - uses: expo/expo-github-action@v8
         with:
@@ -61,3 +61,4 @@ jobs:
         env:
           API_URL: "https://${{ steps.env.outputs.subdomain_backoffice }}.dev.fabrique.social.gouv.fr"
           BRANCH_NAME: ${{ steps.env.outputs.branch }}
+          YARN_IGNORE_NODE: "1"

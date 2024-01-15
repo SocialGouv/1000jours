@@ -1,16 +1,14 @@
 FROM node:15-alpine as builder
 
 WORKDIR /app
-
 RUN chown node:node /app
-
-COPY package.json .
-COPY yarn.lock .
-
 ENV NODE_ENV=production
 
+COPY yarn.lock .yarnrc.yml ./
+COPY .yarn .yarn
+RUN yarn fetch --immutable
+
 # need expo-cli and typescript@~4.0.0 @types/react@~16.9.35
-RUN yarn install --frozen-lockfile
 RUN yarn global add expo-cli
 RUN yarn add --dev typescript@~4.0.0 @types/react@~16.9.35 @types/react-native@~0.63.2
 

@@ -26,17 +26,20 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-
-COPY . .
-
-RUN yarn --production --frozen-lockfile --prefer-offline && \
-  yarn cache clean
-
+RUN groupadd -g 1001 strapi && \
+  useradd -rm -d /home/strapi -s /bin/bash -g strapi -u 1001 strapi && \
+  chown 1001:1001 /app
+USER 1001
 ENV NODE_ENV=production
 
+FROM base as builder
+COPY yarn.lock .yarnrc.yml ./
+COPY --chown=1001:1001 .yarn .yarn
+RUN yarn fetch --immutable
+COPY --chown=1001:1001 . .
 RUN yarn build
+RUN yarn workspaces focus --production && yarn cache clean
 
-RUN useradd strapi --uid 1001 --shell /dev/null && chown -R strapi:strapi /app
-USER 1001
-
+FROM base as server
+COPY --from=builder /app /app
 CMD ["yarn", "start"]
