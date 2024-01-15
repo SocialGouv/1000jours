@@ -5,7 +5,7 @@ import type { FC } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as React from "react";
 
-import { Labels } from "../../constants";
+import { Labels, NotificationConstants } from "../../constants";
 import { NotificationUtils, TrackerUtils } from "../../utils";
 import { NotificationModal } from "../baseComponents";
 import TrackerHandler from "../tracker/trackerHandler.component";
@@ -31,7 +31,11 @@ const NotificationHandler: FC = () => {
     // Ajoute un setTimeout pour éviter que l'application freeze
     // lorsque l'on ouvre l'app depuis une notification
     setTimeout(() => {
-      setNotification(notif);
+      const redirectTo = notif.request.content.data.redirectTo as string;
+      const params = notif.request.content.data.redirectParams as string;
+      if (redirectTo === NotificationConstants.SCREEN_ARTICLES && !params)
+        return false;
+      else setNotification(notif);
     }, 1000);
   };
 

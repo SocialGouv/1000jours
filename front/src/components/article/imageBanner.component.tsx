@@ -19,7 +19,7 @@ const ImageBanner: FC<Props> = ({ visuel }) => {
       }}
       containerStyle={[styles.articleImage]}
       height={200}
-      width="100%"
+      resizeMode="cover"
     />
   );
 };
