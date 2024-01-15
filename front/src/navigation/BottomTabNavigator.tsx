@@ -162,6 +162,8 @@ const TabSurveysNavigator: FC = () => (
       options={{}}
     />
     <TabSurveysStack.Screen name="parentheque" component={Parentheque} />
+    <TabCalendarStack.Screen name="article" component={ArticleDetail} />
+    <TabCalendarStack.Screen name="articleSwipe" component={ArticleSwipe} />
   </TabSurveysStack.Navigator>
 );
 
