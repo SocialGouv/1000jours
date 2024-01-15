@@ -1,3 +1,11 @@
+## [1.135.4](https://github.com/SocialGouv/1000jours/compare/v1.135.3...v1.135.4) (2024-01-15)
+
+
+### Bug Fixes
+
+* 🐛 Corrige la redirection vers les articles depuis les tnd ([2e1a2d7](https://github.com/SocialGouv/1000jours/commit/2e1a2d75e315620b912ec189cc6d35cb01b8738e))
+* yarn berry + fetch + docker opti ([#1739](https://github.com/SocialGouv/1000jours/issues/1739)) ([772e4ca](https://github.com/SocialGouv/1000jours/commit/772e4ca24378629017a4b86e51d8fc24a9f23891))
+
 ## [1.135.3](https://github.com/SocialGouv/1000jours/compare/v1.135.2...v1.135.3) (2024-01-15)
 
 
