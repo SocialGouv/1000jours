@@ -394,32 +394,35 @@ export const buildArticlesNotificationContent = async (
     StorageKeysConstants.currentStep
   )) as Step | null;
 
-  if (nbArticlesToRead > 0) {
-    return {
-      body: `${Labels.article.notification.articlesToRead.bodyPart1} ${nbArticlesToRead} ${Labels.article.notification.articlesToRead.bodyPart2}.`,
-      data: {
-        redirectFromRoot: false,
-        redirectParams: { step: currentStep },
-        redirectTitle: Labels.article.notification.articlesToRead.redirectTitle,
-        redirectTo: NotificationConstants.SCREEN_ARTICLES,
-        type: NotificationType.articles,
-      },
-      title: Labels.article.notification.articlesToRead.title,
-    };
-  }
-  if (nbArticlesToRead === 0) {
-    return {
-      body: Labels.article.notification.congrats.body,
-      data: {
-        confetti: true,
-        redirectFromRoot: false,
-        redirectParams: null,
-        redirectTitle: Labels.article.notification.congrats.redirectTitle,
-        redirectTo: null,
-        type: NotificationType.articles,
-      },
-      title: Labels.article.notification.congrats.title,
-    };
+  if (currentStep) {
+    if (nbArticlesToRead > 0) {
+      return {
+        body: `${Labels.article.notification.articlesToRead.bodyPart1} ${nbArticlesToRead} ${Labels.article.notification.articlesToRead.bodyPart2}.`,
+        data: {
+          redirectFromRoot: false,
+          redirectParams: { step: currentStep },
+          redirectTitle:
+            Labels.article.notification.articlesToRead.redirectTitle,
+          redirectTo: NotificationConstants.SCREEN_ARTICLES,
+          type: NotificationType.articles,
+        },
+        title: Labels.article.notification.articlesToRead.title,
+      };
+    }
+    if (nbArticlesToRead === 0) {
+      return {
+        body: Labels.article.notification.congrats.body,
+        data: {
+          confetti: true,
+          redirectFromRoot: false,
+          redirectParams: null,
+          redirectTitle: Labels.article.notification.congrats.redirectTitle,
+          redirectTo: null,
+          type: NotificationType.articles,
+        },
+        title: Labels.article.notification.congrats.title,
+      };
+    }
   }
 
   return null;
@@ -595,6 +598,7 @@ export const scheduleFakeNotif = async (
     case NotificationType.articles: {
       const nbArticlesToRead = await nbOfUnreadArticlesInCurrentStep();
       content = await buildArticlesNotificationContent(nbArticlesToRead);
+      if (content?.data?.redirectParams) content.data.redirectParams = null;
       break;
     }
     case NotificationType.inAppReview:

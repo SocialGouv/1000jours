@@ -27,6 +27,7 @@ interface Props {
   articles: Article[];
   step?: Step;
   isFromSearchScreen?: boolean;
+  isFromTndScreen?: boolean;
   setStepAndArticleId?: (articleId: number, step: Step | undefined) => void;
   onFavoriteUpdate?: () => void;
 }
@@ -36,6 +37,7 @@ const ArticleCard: FC<Props> = ({
   articles,
   step,
   isFromSearchScreen,
+  isFromTndScreen,
   setStepAndArticleId,
   onFavoriteUpdate,
 }) => {
@@ -68,7 +70,11 @@ const ArticleCard: FC<Props> = ({
   }, [checkReadAndFavorites]);
 
   const onItemPressed = useCallback(async () => {
-    if (isFromSearchScreen && setStepAndArticleId && article)
+    if (
+      (isFromSearchScreen || isFromTndScreen) &&
+      setStepAndArticleId &&
+      article
+    )
       setStepAndArticleId(article.id, step);
     else {
       const isScreenReaderEnabled =
