@@ -1,3 +1,10 @@
+# [1.136.0](https://github.com/SocialGouv/1000jours/compare/v1.135.5...v1.136.0) (2024-01-29)
+
+
+### Features
+
+* ajoute un champ dans la config pour activer zeroAccident ([bf2ce24](https://github.com/SocialGouv/1000jours/commit/bf2ce2443c03cda78f8826b5f6a66a2571beffd3))
+
 ## [1.135.5](https://github.com/SocialGouv/1000jours/compare/v1.135.4...v1.135.5) (2024-01-15)
 
 
