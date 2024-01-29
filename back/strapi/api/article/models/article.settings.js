@@ -5,6 +5,11 @@ const enBrefIconeType = {
 
 module.exports = {
   attributes: {
+    cartographie_pois_types: {
+      collection: "cartographie-types",
+      dominant: true,
+      via: "articles",
+    },
     enbref_1_icone: enBrefIconeType,
     enbref_1_texte: {
       default: "",
@@ -24,6 +29,14 @@ module.exports = {
       collection: "etape",
       dominant: true,
       via: "articles",
+    },
+    evenements: {
+      collection: "evenement",
+      via: "articles",
+    },
+    handicap: {
+      default: false,
+      type: "boolean",
     },
     le_saviez_vous: {
       default: "",
@@ -61,32 +74,19 @@ module.exports = {
       default: "",
       type: "string",
     },
+    mots_cles: {
+      default: "",
+      type: "text",
+    },
     notifications: {
       default: false,
       type: "boolean",
     },
-    evenements: {
-      collection: "evenement",
-      via: "articles",
-    },
     ordre: {
       type: "integer",
     },
-    cartographie_pois_types: {
-      collection: "cartographie-types",
-      dominant: true,
-      via: "articles",
-    },
-    handicap: {
-      default: false,
-      type: "boolean",
-    },
     resume: {
       required: true,
-      type: "text",
-    },
-    mots_cles: {
-      default: "",
       type: "text",
     },
     texte_1: {
@@ -120,6 +120,10 @@ module.exports = {
       plugin: "upload",
       required: true,
       via: "related",
+    },
+    zero_accident: {
+      default: false,
+      type: "boolean",
     },
   },
   collectionName: "articles",
