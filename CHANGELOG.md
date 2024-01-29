@@ -1,3 +1,10 @@
+# [1.137.0](https://github.com/SocialGouv/1000jours/compare/v1.136.0...v1.137.0) (2024-01-29)
+
+
+### Features
+
+* ajoute un flag zeroAccident sur les articles ([a782dc6](https://github.com/SocialGouv/1000jours/commit/a782dc618641ede29c43cf4f468d1adea67b13d5))
+
 # [1.136.0](https://github.com/SocialGouv/1000jours/compare/v1.135.5...v1.136.0) (2024-01-29)
 
 
