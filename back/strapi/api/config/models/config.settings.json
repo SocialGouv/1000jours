@@ -16,6 +16,9 @@
     },
     "news": {
       "type": "richtext"
+    },
+    "activationZeroAccident": {
+      "type": "boolean"
     }
   }
 }
