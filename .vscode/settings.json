@@ -2,10 +2,10 @@
   "eslint.workingDirectories": ["front", "back", "lib"],
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "eslint.validate": ["javascript", "typescript"],
   "[html]": {
     "editor.formatOnSave": false
-  },
+  }
 }

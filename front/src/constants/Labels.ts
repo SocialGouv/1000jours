@@ -832,4 +832,16 @@ export default {
   toAccessClickHere: "Pour y accéder, vous pouvez cliquer ici : ",
   version: "v.",
   warning: "Attention",
+  zeroAccident: {
+    article: {
+      buttonTitle: "Télécharger",
+      title:
+        "Vous êtes parent d’un jeune enfant et vous souhaitez en apprendre plus sur les risques d’accidents à la maison? Téléchargez le jeu Zéro accident: un jeu d’enfant et déjouez les chutes, les intoxications, les suffocations et la noyade!",
+    },
+    survey: {
+      buttonTitle: "Jouer",
+      title:
+        "Tester ses connaissances en prévention des accidents de la vie courante chez les enfants entre 0 et 4 ans.",
+    },
+  },
 };
