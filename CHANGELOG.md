@@ -1,3 +1,10 @@
+## [1.138.1](https://github.com/SocialGouv/1000jours/compare/v1.138.0...v1.138.1) (2024-03-04)
+
+
+### Bug Fixes
+
+* Expo build iOS ([1b5b9ff](https://github.com/SocialGouv/1000jours/commit/1b5b9ffad7ff804dda503188beb293ca62ca68fa))
+
 # [1.138.0](https://github.com/SocialGouv/1000jours/compare/v1.137.0...v1.138.0) (2024-03-04)
 
 
