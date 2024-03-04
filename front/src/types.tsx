@@ -174,6 +174,7 @@ export type Article = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   cartographie_pois_types?: PoiType[];
   handicap?: boolean;
+  zeroAccident?: boolean;
 };
 
 export type ArticleInShortItem = {
@@ -274,6 +275,7 @@ export type ArticleListHeaderParams = {
 export type Config = {
   lastAppVersionNumber: string | null;
   news?: string;
+  activationZeroAccident?: boolean;
 };
 
 export type MarkedDatesType = Record<string, MarkingProps>;

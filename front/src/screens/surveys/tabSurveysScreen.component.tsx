@@ -12,20 +12,32 @@ import {
   View,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
-import { Labels } from "../../constants";
+import ZeroAccidentBanner from "../../components/zeroAccident/zeroAccidentBanner.component";
+import { ConfigQueries, FetchPoliciesConstants, Labels } from "../../constants";
+import { GraphQLQuery } from "../../services";
 import { Colors, Margins, Paddings, Sizes } from "../../styles";
 import type { SurveyBanner } from "../../type/survey.types";
+import type { Config } from "../../types";
 import { LinkingUtils, RootNavigation, TrackerUtils } from "../../utils";
 
 const TabSurveysScreen: FC = () => {
+  const [config, setConfig] = React.useState<Config | null>(null);
+
+  const handleConfig = useCallback((data: unknown) => {
+    const result = data ? (data as { config: Config }) : undefined;
+    if (result?.config) {
+      setConfig(result.config);
+    }
+  }, []);
+
   const openEpdsSurvey = useCallback(() => {
     const EPDS_WIDGET_SOURCE = "1000j-application";
-
     void LinkingUtils.openWebsite(
       `${process.env.EPDS_WIDGET_URL}/?source=${EPDS_WIDGET_SOURCE}`,
       false
     );
   }, []);
+
   const openTndSurvey = useCallback(() => {
     void RootNavigation.navigate("tndSurvey");
   }, []);
@@ -54,6 +66,21 @@ const TabSurveysScreen: FC = () => {
         description={Labels.surveys.description}
         style={styles.header}
       />
+      <GraphQLQuery
+        query={ConfigQueries.CONFIG_ZERO_ACCIDENT}
+        fetchPolicy={FetchPoliciesConstants.NO_CACHE}
+        getFetchedData={handleConfig}
+        showErrorMessage={false}
+        noLoader
+        noLoaderBackdrop
+      />
+      {config?.activationZeroAccident && (
+        <ZeroAccidentBanner
+          title={Labels.zeroAccident.survey.title}
+          buttonTitle={Labels.zeroAccident.survey.buttonTitle}
+          fromPage="Surveys"
+        />
+      )}
       {surveysBanner.map((survey, index) => (
         <View key={index} style={styles.surveyBlock}>
           <CommonText style={styles.bannerTitle}>{survey.title}</CommonText>

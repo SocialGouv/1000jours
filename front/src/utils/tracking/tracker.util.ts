@@ -43,6 +43,7 @@ export enum TrackingEvent {
   NOTIFICATIONS_DISABLED = "Notifications désactivées",
   RESSOURCES = "Ressources",
   SURVEYS = "Évaluations",
+  ZERO_ACCIDENT = "Zero Accident",
 }
 
 export const matomoInstance = async (): Promise<MatomoTracker> => {

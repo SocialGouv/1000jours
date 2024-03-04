@@ -40,7 +40,9 @@ import {
   View,
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
+import ZeroAccidentBanner from "../../components/zeroAccident/zeroAccidentBanner.component";
 import {
+  ConfigQueries,
   FetchPoliciesConstants,
   HomeDbQueries,
   Labels,
@@ -54,6 +56,7 @@ import type {
   Article,
   ArticleInShortItem,
   ArticleLink,
+  Config,
   Step,
   TabHomeParamList,
 } from "../../types";
@@ -104,6 +107,15 @@ const ArticleDetail: FC<Props> = ({
   const [scrollerRef, setScrollerRef] = useState<ScrollView>();
   const [articleHasBeenRead, setArticleHasBeenRead] = useState(false);
   const MIN_RATIO_FOR_HAS_BEEN_READ = 0.55;
+
+  const [config, setConfig] = React.useState<Config | null>(null);
+
+  const handleConfig = useCallback((data: unknown) => {
+    const result = data ? (data as { config: Config }) : undefined;
+    if (result?.config) {
+      setConfig(result.config);
+    }
+  }, []);
 
   useEffect(() => {
     const checkArticleRead = async () => {
@@ -321,6 +333,22 @@ const ArticleDetail: FC<Props> = ({
                     html={currentArticle.texte2}
                     screenWidth={articleWidth}
                   />
+                  <GraphQLQuery
+                    query={ConfigQueries.CONFIG_ZERO_ACCIDENT}
+                    fetchPolicy={FetchPoliciesConstants.NO_CACHE}
+                    getFetchedData={handleConfig}
+                    showErrorMessage={false}
+                    noLoader
+                    noLoaderBackdrop
+                  />
+                  {config?.activationZeroAccident &&
+                    currentArticle.zeroAccident && (
+                      <ZeroAccidentBanner
+                        title={Labels.zeroAccident.article.title}
+                        buttonTitle={Labels.zeroAccident.article.buttonTitle}
+                        fromPage="Article"
+                      />
+                    )}
                   <Links linksArray={linksArray} />
                   <UsefulQuestion
                     question={Labels.article.usefulTitle}

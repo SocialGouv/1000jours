@@ -151,6 +151,7 @@ export const ARTICLE_DETAILS_WITH_ID = (
           id
         }
         handicap
+        zeroAccident: zero_accident
       }
     }
   `;
