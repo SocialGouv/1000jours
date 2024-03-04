@@ -79,6 +79,7 @@ export default {
     },
     name: "1000 jours",
     orientation: "portrait",
+    owner: "1000.jours",
     plugins: [
       "sentry-expo",
       [
