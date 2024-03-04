@@ -1,3 +1,12 @@
+# [1.138.0](https://github.com/SocialGouv/1000jours/compare/v1.137.0...v1.138.0) (2024-03-04)
+
+
+### Features
+
+* ajoute un champ dans la config pour activer zeroAccident ([c31e085](https://github.com/SocialGouv/1000jours/commit/c31e0853c852b559982e642851a9d14d9d3a52f4))
+* ajoute un flag zeroAccident sur les articles ([29ee0fd](https://github.com/SocialGouv/1000jours/commit/29ee0fdc549103b7a68fca62b12c5db1a4b22e6c))
+* zeroaaccident ([438aab0](https://github.com/SocialGouv/1000jours/commit/438aab05081a50bd0bdd80d5e93d5f16b6f0755d))
+
 # [1.137.0](https://github.com/SocialGouv/1000jours/compare/v1.136.0...v1.137.0) (2024-01-29)
 
 
