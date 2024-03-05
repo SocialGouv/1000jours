@@ -1,6 +1,4 @@
-
 app-strapi:
-  ~needs: [pg, build-strapi]
   ~preDeploy.cleaner:
     match:
       kind: Deployment
@@ -11,19 +9,10 @@ app-strapi:
   volumeMounts:
     - mountPath: /app/public/uploads
       name: uploads
-  envFrom:
-    - secretRef:
-        name: strapi
-    - configMapRef:
-        name: strapi-configmap
-    - secretRef:
-        name: "pg-app"
-    # - secretRef:
-    #     name: azure-les1000jours-volume
 
 pg:
   ~chart: pg
-  # this force ce PG cluster to be destroyed on redeploys
+  # this forces the PG cluster to be destroyed on redeploys
   ~preDeploy.cleaner:
     match:
       kind: Cluster

@@ -1,6 +1,6 @@
 app-strapi:
-  host: "backoffice-1000jours-preprod.dev.fabrique.social.gouv.fr"
-  ~needs: [pg, build-strapi]
+  replicas: 1 # mandatory because volume is RWO
+  strategyType: Recreate # idem
   addVolumes:
     - uploads
   volumeMounts:
@@ -9,7 +9,7 @@ app-strapi:
 
 pg:
   ~chart: pg
-  # this force ce PG cluster to be destroyed on redeploys
+  # this forces the PG cluster to be destroyed on redeploys
   ~preDeploy.cleaner:
     match:
       kind: Cluster
