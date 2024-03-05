@@ -6,6 +6,8 @@ app-strapi:
   volumeMounts:
     - mountPath: /app/public/uploads
       name: uploads
+  securityContext:
+    fsGroup: 1001
 
 pg:
   ~chart: pg
@@ -16,7 +18,7 @@ pg:
     value: true
   cnpg-cluster:
     backup:
-       ~tpl~enabled: "false"
+      ~tpl~enabled: "false"
     recovery:
       enabled: true
       ~tpl~database: "{{ .Values.global.pgDatabase }}"
@@ -34,4 +36,3 @@ pg:
           region:
             ~tpl~name: "les1000jours-prod-backups-access-key"
             key: bucket_region
- 
