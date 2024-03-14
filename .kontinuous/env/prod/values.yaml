@@ -12,23 +12,3 @@ app-strapi:
       mountPath: /app/public/uploads
   securityContext:
     fsGroup: 1001
-
-pg:
-  cnpg-cluster:
-    recovery:
-      enabled: true
-      ~tpl~database: "{{ .Values.global.pgDatabase }}"
-      ~tpl~owner: "{{ .Values.global.pgUser }}"
-      secretName: "pg-db"
-      barmanObjectStore:
-        ~tpl~destinationPath: "s3://les1000jours-prod-backups/les1000jours"
-        s3Credentials:
-          accessKeyId:
-            ~tpl~name: "les1000jours-prod-backups-access-key"
-            key: bucket_access_key
-          secretAccessKey:
-            ~tpl~name: "les1000jours-prod-backups-access-key"
-            key: bucket_secret_key
-          region:
-            ~tpl~name: "les1000jours-prod-backups-access-key"
-            key: bucket_region
