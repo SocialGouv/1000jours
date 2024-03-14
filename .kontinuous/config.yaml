@@ -4,13 +4,4 @@ ciNamespace: ci-les1000jours
 dependencies:
   fabrique:
     extends:
-      - name: buildkit-service
-    dependencies:
-      contrib:
-        preDeploy:
-          importSecrets:
-            options:
-              secrets:
-                les1000joursprodserver-backup-credentials:
-                les1000jours-dev-backups-access-key:
-                les1000jours-prod-backups-access-key:
+      - name: ovh

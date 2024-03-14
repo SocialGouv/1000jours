@@ -24,7 +24,7 @@ jobs:
     name: Publish PreProd
     runs-on: ubuntu-latest
     env:
-      API_URL: https://backoffice-1000jours-preprod.dev.fabrique.social.gouv.fr
+      API_URL: https://backoffice-1000jours-preprod.ovh.fabrique.social.gouv.fr
       CLEAR_STORAGE: false
       MATOMO_APPLICATION_ID: 46
       MATOMO_ENABLED: true

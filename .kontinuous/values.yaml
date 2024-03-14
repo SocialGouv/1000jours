@@ -5,6 +5,8 @@ global:
 
 pg:
   ~chart: pg
+  backup:
+    name: ovh
 
 app-strapi:
   ~chart: app
@@ -20,8 +22,6 @@ app-strapi:
     limits:
       cpu: 1
       memory: 1Gi
-  # startupProbe:
-  #   initialDelaySeconds: 30
   envFrom:
     - secretRef:
         name: strapi
@@ -29,8 +29,6 @@ app-strapi:
         name: strapi-configmap
     - secretRef:
         name: "pg-app"
-    - secretRef:
-        name: azure-les1000jours-volume
   env:
     - name: BACKOFFICE_URL
       value: "https://backoffice-{{ .Values.global.host }}"
