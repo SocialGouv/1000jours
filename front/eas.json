@@ -21,7 +21,8 @@
     "production": {
       "channel": "prod",
       "ios": {
-        "resourceClass": "m1-medium"
+        "resourceClass": "m1-medium",
+        "image": "latest"
       },
       "env": {
         "API_URL": "https://backoffice-les1000jours.fabrique.social.gouv.fr",
