@@ -1,3 +1,10 @@
+## [1.138.2](https://github.com/SocialGouv/1000jours/compare/v1.138.1...v1.138.2) (2024-03-18)
+
+
+### Bug Fixes
+
+* 🐛 Politique de confidentialité 2024 ([5661675](https://github.com/SocialGouv/1000jours/commit/5661675fb24f367ab51b595fc109998bb7c1ed4f))
+
 ## [1.138.1](https://github.com/SocialGouv/1000jours/compare/v1.138.0...v1.138.1) (2024-03-04)
 
 
