@@ -3,14 +3,12 @@ global:
   host: "les1000jours.fabrique.social.gouv.fr"
 
 app-strapi:
-  certSecretName: strapi-cache-crt
-  host: "backoffice-les1000jours.fabrique.social.gouv.fr"
+  replicas: 1 # mandatory because volume is RWO
+  strategyType: Recreate # idem
   addVolumes:
     - uploads
   volumeMounts:
     - name: uploads
       mountPath: /app/public/uploads
-  autoscale:
-    enabled: true
-    minReplicas: 2
-    maxReplicas: 5
+  securityContext:
+    fsGroup: 1001
