@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import * as React from "react";
 import { useCallback } from "react";
-import { StyleSheet } from "react-native";
+import { Linking, StyleSheet } from "react-native";
 
 import { Colors } from "../../styles";
 import { LinkingUtils } from "../../utils";
@@ -15,10 +15,10 @@ interface AProps {
 export type Props = AProps & TextProps;
 
 const A: FC<Props> = (props) => {
-  const onTextPressed = useCallback(
-    async () => LinkingUtils.openWebsite(props.url),
-    [props.url]
-  );
+  const onTextPressed = useCallback(() => {
+    if (props.url.startsWith("mailto:")) void Linking.openURL(props.url);
+    else void LinkingUtils.openWebsite(props.url);
+  }, [props.url]);
 
   return (
     <SecondaryText
