@@ -1,3 +1,15 @@
+# [1.139.0](https://github.com/SocialGouv/1000jours/compare/v1.138.2...v1.139.0) (2024-03-25)
+
+
+### Bug Fixes
+
+* 🐛 Ajoute les liens de l'app ZéroAccident ([a75f778](https://github.com/SocialGouv/1000jours/commit/a75f77888ca32dbcdc4adfdc429c2c034b873203))
+
+
+### Features
+
+* 🎸 Ajoute un champ 'note' pour l'annuaire 1000j blues ([c1e552c](https://github.com/SocialGouv/1000jours/commit/c1e552ce0e4660e1bfec45f590114081fd192cce))
+
 ## [1.138.2](https://github.com/SocialGouv/1000jours/compare/v1.138.1...v1.138.2) (2024-03-18)
 
 
