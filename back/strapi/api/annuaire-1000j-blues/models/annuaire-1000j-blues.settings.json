@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "annuaire_1000j_blues",
   "info": {
-    "name": "Annuaire 1000jBlues"
+    "name": "Annuaire 1000jBlues",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -60,6 +61,9 @@
     },
     "teleconsultation": {
       "type": "boolean"
+    },
+    "note": {
+      "type": "richtext"
     }
   }
 }
