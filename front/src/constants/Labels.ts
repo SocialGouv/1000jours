@@ -771,6 +771,12 @@ export default {
       description: "",
       title: "Dépression post partum, en parler c’est se soigner !",
     },
+    recosante: {
+      buttonTitle: "Essayer Recosanté",
+      description: "",
+      title:
+        "Une application gratuite pour protéger votre santé et celle de votre famille",
+    },
     title: "Auto-évaluations",
     tnd: {
       buttonTitle: "Commencer le repérage",
