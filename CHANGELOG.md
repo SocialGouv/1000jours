@@ -1,3 +1,10 @@
+# [1.140.0](https://github.com/SocialGouv/1000jours/compare/v1.139.0...v1.140.0) (2024-04-01)
+
+
+### Features
+
+* **recosante:** add recosante widget on evaluation page ([#1742](https://github.com/SocialGouv/1000jours/issues/1742)) ([dafc7be](https://github.com/SocialGouv/1000jours/commit/dafc7bef7e5a43c2fe01452636baa1e856639dd6))
+
 # [1.139.0](https://github.com/SocialGouv/1000jours/compare/v1.138.2...v1.139.0) (2024-03-25)
 
 
