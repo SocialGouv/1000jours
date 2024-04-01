@@ -42,6 +42,13 @@ const TabSurveysScreen: FC = () => {
     void RootNavigation.navigate("tndSurvey");
   }, []);
 
+  const openRecosanteSurvey = useCallback(() => {
+    const RECOSANTE_WIDGET_SOURCE = "1000j-application";
+    void LinkingUtils.openWebsite(
+      `https://recosante.beta.gouv.fr/download?source=${RECOSANTE_WIDGET_SOURCE}`,
+      false
+    );
+  }, []);
   const surveysBanner: SurveyBanner[] = [
     {
       buttonTitle: Labels.surveys.epds.buttonTitle,
@@ -54,6 +61,12 @@ const TabSurveysScreen: FC = () => {
       description: Labels.surveys.tnd.description,
       onPress: openTndSurvey,
       title: Labels.surveys.tnd.title,
+    },
+    {
+      buttonTitle: Labels.surveys.recosante.buttonTitle,
+      description: Labels.surveys.recosante.description,
+      onPress: openRecosanteSurvey,
+      title: Labels.surveys.recosante.title,
     },
   ];
 
@@ -124,7 +137,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryBlueLight,
     borderLeftColor: Colors.primaryBlueDark,
     borderLeftWidth: 3,
-    marginBottom: Paddings.light,
+    marginBottom: Paddings.largest,
     marginVertical: Paddings.default,
     padding: Paddings.default,
   },
