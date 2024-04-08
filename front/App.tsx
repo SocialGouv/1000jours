@@ -1,5 +1,6 @@
 import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
+import * as Updates from "expo-updates";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -119,7 +120,21 @@ const MainAppContainer: FC = () => {
     );
   };
 
+  const onFetchUpdateAsync = async () => {
+    try {
+      const update = await Updates.checkForUpdateAsync();
+
+      if (update.isAvailable) {
+        await Updates.fetchUpdateAsync();
+        await Updates.reloadAsync();
+      }
+    } catch (error: unknown) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
+    void onFetchUpdateAsync();
     const init = async () => {
       await Font.loadAsync(customFonts)
         .then(() => {
@@ -136,7 +151,6 @@ const MainAppContainer: FC = () => {
       await NotificationUtils.scheduleMoodboardNotifications();
       await AppUtils.handleInAppReviewPopup(appActiveCounter);
     };
-
     void init();
     // Permet de détecter lorsque l'app change d'état ('active' | 'background' | 'inactive' | 'unknown' | 'extension')
     const subscription = AppState.addEventListener(
