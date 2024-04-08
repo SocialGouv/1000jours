@@ -1,3 +1,10 @@
+## [1.140.1](https://github.com/SocialGouv/1000jours/compare/v1.140.0...v1.140.1) (2024-04-08)
+
+
+### Bug Fixes
+
+* add info dev (expoUpdates enabled) ([00d337c](https://github.com/SocialGouv/1000jours/commit/00d337cbe6070c97e1a2b413c7362351cb3640e3))
+
 # [1.140.0](https://github.com/SocialGouv/1000jours/compare/v1.139.0...v1.140.0) (2024-04-01)
 
 
