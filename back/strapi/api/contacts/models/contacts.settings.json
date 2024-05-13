@@ -40,10 +40,7 @@
     },
     "type_de_contact": {
       "type": "enumeration",
-      "enum": [
-        "sms",
-        "rendezvous"
-      ]
+      "enum": ["sms", "rendezvous", "whatsapp"]
     },
     "personne_accompagnee": {
       "type": "enumeration",
