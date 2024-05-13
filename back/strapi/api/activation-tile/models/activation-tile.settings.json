@@ -14,6 +14,15 @@
     "activation_tile": {
       "default": true,
       "type": "boolean"
+    },
+    "sms": {
+      "type": "boolean"
+    },
+    "rdv": {
+      "type": "boolean"
+    },
+    "whatsapp": {
+      "type": "boolean"
     }
   }
 }
