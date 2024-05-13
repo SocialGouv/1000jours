@@ -1,3 +1,10 @@
+# [1.141.0](https://github.com/SocialGouv/1000jours/compare/v1.140.1...v1.141.0) (2024-05-13)
+
+
+### Features
+
+* add contact type for widget epds ([#1747](https://github.com/SocialGouv/1000jours/issues/1747)) ([205bdc7](https://github.com/SocialGouv/1000jours/commit/205bdc74a9db8184297100ec464f7df1cdbe8d73))
+
 ## [1.140.1](https://github.com/SocialGouv/1000jours/compare/v1.140.0...v1.140.1) (2024-04-08)
 
 
