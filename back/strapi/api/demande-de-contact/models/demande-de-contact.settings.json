@@ -13,10 +13,7 @@
   "attributes": {
     "type_de_contact": {
       "type": "enumeration",
-      "enum": [
-        "sms",
-        "rendezvous"
-      ]
+      "enum": ["sms", "rendezvous", "whatsapp"]
     },
     "widget_epds_source": {
       "model": "widget-epds-sources"
