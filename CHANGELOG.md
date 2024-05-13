@@ -1,9 +1,8 @@
 ## [1.141.2](https://github.com/SocialGouv/1000jours/compare/v1.141.1...v1.141.2) (2024-07-08)
 
-
 ### Bug Fixes
 
-* change type whatsapp_redirect_message to richtext ([#1755](https://github.com/SocialGouv/1000jours/issues/1755)) ([1094147](https://github.com/SocialGouv/1000jours/commit/1094147f4c8042e28e013f6c9f8b41be18bc7134))
+- change type whatsapp_redirect_message to richtext ([#1755](https://github.com/SocialGouv/1000jours/issues/1755)) ([1094147](https://github.com/SocialGouv/1000jours/commit/1094147f4c8042e28e013f6c9f8b41be18bc7134))
 
 ## [1.141.1](https://github.com/SocialGouv/1000jours/compare/v1.141.0...v1.141.1) (2024-07-03)
 
