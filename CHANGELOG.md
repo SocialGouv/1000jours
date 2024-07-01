@@ -1,86 +1,75 @@
 # [1.141.0](https://github.com/SocialGouv/1000jours/compare/v1.140.1...v1.141.0) (2024-05-13)
 
-
 ### Features
 
-* add contact type for widget epds ([#1747](https://github.com/SocialGouv/1000jours/issues/1747)) ([205bdc7](https://github.com/SocialGouv/1000jours/commit/205bdc74a9db8184297100ec464f7df1cdbe8d73))
+- add contact type for widget epds ([#1747](https://github.com/SocialGouv/1000jours/issues/1747)) ([205bdc7](https://github.com/SocialGouv/1000jours/commit/205bdc74a9db8184297100ec464f7df1cdbe8d73))
 
 ## [1.140.1](https://github.com/SocialGouv/1000jours/compare/v1.140.0...v1.140.1) (2024-04-08)
 
-
 ### Bug Fixes
 
-* add info dev (expoUpdates enabled) ([00d337c](https://github.com/SocialGouv/1000jours/commit/00d337cbe6070c97e1a2b413c7362351cb3640e3))
+- add info dev (expoUpdates enabled) ([00d337c](https://github.com/SocialGouv/1000jours/commit/00d337cbe6070c97e1a2b413c7362351cb3640e3))
 
 # [1.140.0](https://github.com/SocialGouv/1000jours/compare/v1.139.0...v1.140.0) (2024-04-01)
 
-
 ### Features
 
-* **recosante:** add recosante widget on evaluation page ([#1742](https://github.com/SocialGouv/1000jours/issues/1742)) ([dafc7be](https://github.com/SocialGouv/1000jours/commit/dafc7bef7e5a43c2fe01452636baa1e856639dd6))
+- **recosante:** add recosante widget on evaluation page ([#1742](https://github.com/SocialGouv/1000jours/issues/1742)) ([dafc7be](https://github.com/SocialGouv/1000jours/commit/dafc7bef7e5a43c2fe01452636baa1e856639dd6))
 
 # [1.139.0](https://github.com/SocialGouv/1000jours/compare/v1.138.2...v1.139.0) (2024-03-25)
 
-
 ### Bug Fixes
 
-* 🐛 Ajoute les liens de l'app ZéroAccident ([a75f778](https://github.com/SocialGouv/1000jours/commit/a75f77888ca32dbcdc4adfdc429c2c034b873203))
-
+- 🐛 Ajoute les liens de l'app ZéroAccident ([a75f778](https://github.com/SocialGouv/1000jours/commit/a75f77888ca32dbcdc4adfdc429c2c034b873203))
 
 ### Features
 
-* 🎸 Ajoute un champ 'note' pour l'annuaire 1000j blues ([c1e552c](https://github.com/SocialGouv/1000jours/commit/c1e552ce0e4660e1bfec45f590114081fd192cce))
+- 🎸 Ajoute un champ 'note' pour l'annuaire 1000j blues ([c1e552c](https://github.com/SocialGouv/1000jours/commit/c1e552ce0e4660e1bfec45f590114081fd192cce))
 
 ## [1.138.2](https://github.com/SocialGouv/1000jours/compare/v1.138.1...v1.138.2) (2024-03-18)
 
-
 ### Bug Fixes
 
-* 🐛 Politique de confidentialité 2024 ([5661675](https://github.com/SocialGouv/1000jours/commit/5661675fb24f367ab51b595fc109998bb7c1ed4f))
+- 🐛 Politique de confidentialité 2024 ([5661675](https://github.com/SocialGouv/1000jours/commit/5661675fb24f367ab51b595fc109998bb7c1ed4f))
 
 ## [1.138.1](https://github.com/SocialGouv/1000jours/compare/v1.138.0...v1.138.1) (2024-03-04)
 
-
 ### Bug Fixes
 
-* Expo build iOS ([1b5b9ff](https://github.com/SocialGouv/1000jours/commit/1b5b9ffad7ff804dda503188beb293ca62ca68fa))
+- Expo build iOS ([1b5b9ff](https://github.com/SocialGouv/1000jours/commit/1b5b9ffad7ff804dda503188beb293ca62ca68fa))
 
 # [1.138.0](https://github.com/SocialGouv/1000jours/compare/v1.137.0...v1.138.0) (2024-03-04)
 
-
 ### Features
 
-* ajoute un champ dans la config pour activer zeroAccident ([c31e085](https://github.com/SocialGouv/1000jours/commit/c31e0853c852b559982e642851a9d14d9d3a52f4))
-* ajoute un flag zeroAccident sur les articles ([29ee0fd](https://github.com/SocialGouv/1000jours/commit/29ee0fdc549103b7a68fca62b12c5db1a4b22e6c))
-* zeroaaccident ([438aab0](https://github.com/SocialGouv/1000jours/commit/438aab05081a50bd0bdd80d5e93d5f16b6f0755d))
+- ajoute un champ dans la config pour activer zeroAccident ([c31e085](https://github.com/SocialGouv/1000jours/commit/c31e0853c852b559982e642851a9d14d9d3a52f4))
+- ajoute un flag zeroAccident sur les articles ([29ee0fd](https://github.com/SocialGouv/1000jours/commit/29ee0fdc549103b7a68fca62b12c5db1a4b22e6c))
+- zeroaaccident ([438aab0](https://github.com/SocialGouv/1000jours/commit/438aab05081a50bd0bdd80d5e93d5f16b6f0755d))
 
 # [1.137.0](https://github.com/SocialGouv/1000jours/compare/v1.136.0...v1.137.0) (2024-01-29)
 
-
 ### Features
 
-* ajoute un flag zeroAccident sur les articles ([a782dc6](https://github.com/SocialGouv/1000jours/commit/a782dc618641ede29c43cf4f468d1adea67b13d5))
+- ajoute un flag zeroAccident sur les articles ([a782dc6](https://github.com/SocialGouv/1000jours/commit/a782dc618641ede29c43cf4f468d1adea67b13d5))
 
 # [1.136.0](https://github.com/SocialGouv/1000jours/compare/v1.135.5...v1.136.0) (2024-01-29)
 
-
 ### Features
 
-* ajoute un champ dans la config pour activer zeroAccident ([bf2ce24](https://github.com/SocialGouv/1000jours/commit/bf2ce2443c03cda78f8826b5f6a66a2571beffd3))
+- ajoute un champ dans la config pour activer zeroAccident ([bf2ce24](https://github.com/SocialGouv/1000jours/commit/bf2ce2443c03cda78f8826b5f6a66a2571beffd3))
 
 ## [1.135.5](https://github.com/SocialGouv/1000jours/compare/v1.135.4...v1.135.5) (2024-01-15)
 
-
 ### Bug Fixes
 
-* 🐛 Corrige la redirection vers les articles depuis les tnd ([ad155a0](https://github.com/SocialGouv/1000jours/commit/ad155a00a61404e1fb291ad5f7df6e271da59aaa))
-* Corrige les notifications articles et certaines redirections vers les articles ([e2ab03f](https://github.com/SocialGouv/1000jours/commit/e2ab03f01d8deeb992483018264480b5ba08608d))
-* yarn berry + fetch + docker opti ([#1739](https://github.com/SocialGouv/1000jours/issues/1739)) ([204a176](https://github.com/SocialGouv/1000jours/commit/204a1768b78a743d666def2aa715e46299efc0cc))
-* **ci:** restore from cnpg ([#1736](https://github.com/SocialGouv/1000jours/issues/1736)) ([8cb13d5](https://github.com/SocialGouv/1000jours/commit/8cb13d53d5a375f357b7ed165922621f1a32eb66))
-* **cnpg:** disable preprod backups for real ([0a313f0](https://github.com/SocialGouv/1000jours/commit/0a313f028d3d80395b4d6bd5d78824eba7503d03))
-* **cnpg:** use fixed name DB ([8f8796c](https://github.com/SocialGouv/1000jours/commit/8f8796cd82205d403b12636e4a0995941cff3df1))
-* **restore:** use defaults recovery user ([#1738](https://github.com/SocialGouv/1000jours/issues/1738)) ([3cefc73](https://github.com/SocialGouv/1000jours/commit/3cefc73649ee5d292c29875bd638bfebd233fd79))
-* 🐛 Corrige la navigation vers les articles depuis calendar ([5bcfd15](https://github.com/SocialGouv/1000jours/commit/5bcfd15e745a2e89ba06a44b8eb7eb19ee9df4fc))
+- 🐛 Corrige la redirection vers les articles depuis les tnd ([ad155a0](https://github.com/SocialGouv/1000jours/commit/ad155a00a61404e1fb291ad5f7df6e271da59aaa))
+- Corrige les notifications articles et certaines redirections vers les articles ([e2ab03f](https://github.com/SocialGouv/1000jours/commit/e2ab03f01d8deeb992483018264480b5ba08608d))
+- yarn berry + fetch + docker opti ([#1739](https://github.com/SocialGouv/1000jours/issues/1739)) ([204a176](https://github.com/SocialGouv/1000jours/commit/204a1768b78a743d666def2aa715e46299efc0cc))
+- **ci:** restore from cnpg ([#1736](https://github.com/SocialGouv/1000jours/issues/1736)) ([8cb13d5](https://github.com/SocialGouv/1000jours/commit/8cb13d53d5a375f357b7ed165922621f1a32eb66))
+- **cnpg:** disable preprod backups for real ([0a313f0](https://github.com/SocialGouv/1000jours/commit/0a313f028d3d80395b4d6bd5d78824eba7503d03))
+- **cnpg:** use fixed name DB ([8f8796c](https://github.com/SocialGouv/1000jours/commit/8f8796cd82205d403b12636e4a0995941cff3df1))
+- **restore:** use defaults recovery user ([#1738](https://github.com/SocialGouv/1000jours/issues/1738)) ([3cefc73](https://github.com/SocialGouv/1000jours/commit/3cefc73649ee5d292c29875bd638bfebd233fd79))
+- 🐛 Corrige la navigation vers les articles depuis calendar ([5bcfd15](https://github.com/SocialGouv/1000jours/commit/5bcfd15e745a2e89ba06a44b8eb7eb19ee9df4fc))
 
 ## [1.135.4](https://github.com/SocialGouv/1000jours/compare/v1.135.3...v1.135.4) (2024-01-15)
 
