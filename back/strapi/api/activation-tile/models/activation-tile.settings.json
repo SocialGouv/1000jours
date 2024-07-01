@@ -23,6 +23,9 @@
     },
     "whatsapp": {
       "type": "boolean"
+    },
+    "whatsapp_redirect_message": {
+      "type": "string"
     }
   }
 }

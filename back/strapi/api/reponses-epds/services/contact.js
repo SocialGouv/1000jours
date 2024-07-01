@@ -11,35 +11,22 @@ const emailTemplate = (info) => ({
     <ul>
     ${
       info.email
-        ? `
-        <li>à l'adresse suivante : <a href="mailto:<%- email %>"><%- email %></a>`
+        ? ` <li>à l'adresse suivante : <a href="mailto:<%- email %>"><%- email %></a></li>`
         : ""
     }
     ${
       info.telephone
-        ? ` </li>
-      <li>au numéro suivant : <a href="tel:<%- telephone %>"><%- telephone %></a>`
+        ? ` <li>au numéro suivant : <a href="tel:<%- telephone %>"><%- telephone %></a></li>`
         : ""
     }
-    ${
-      info.moyen
-        ? ` </li>
-      <li>préférence : <%- moyen %>`
-        : ""
-    }
-    ${
-      info.horaires
-        ? ` </li>
-      <li>horaires : <%- horaires %>`
-        : ""
-    }
+    ${info.moyen ? ` <li>préférence : <%- moyen %></li>` : ""}
+    ${info.horaires ? ` <li>horaires : <%- horaires %></li>` : ""}
     ${
       info.score_question_dix
-        ? `
-        <li>score à la question 10 "Il m’est arrivé de penser à me faire du mal" : <%- score_question_dix %> / 3`
+        ? ` <li>score à la question 10 "Il m’est arrivé de penser à me faire du mal" : <%- score_question_dix %> / 3</li>`
         : ""
     }
-    </li>
+    ${info.langue ? ` <li>langue: <%- langue %></li>` : ""}
     </ul>
     </p>
 
@@ -80,6 +67,12 @@ const emailTemplate = (info) => ({
     - score à la question 10 "Il m’est arrivé de penser à me faire du mal" : <%- score_question_dix %> / 3`
         : ``
     }
+    ${
+      info.langue
+        ? `
+    - langue : <%- langue %>`
+        : ``
+    }
 
     L'équipe 1000 premiers jours.`,
 });
@@ -93,6 +86,7 @@ const contact = async ({
   nombre_enfants = "ND",
   score_question_dix = "ND",
   telephone = "ND",
+  langue = "ND",
 }) => {
   if (!process.env["MAIL_SEND_TO"])
     throw new Error("Le service mail n'est pas configuré");
@@ -106,6 +100,7 @@ const contact = async ({
     prenom,
     score_question_dix,
     telephone,
+    langue,
   };
 
   try {
