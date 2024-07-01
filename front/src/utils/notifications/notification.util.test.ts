@@ -11,16 +11,16 @@ import { NotificationUtils, StorageUtils } from "..";
 import { NotificationType } from "./notification.util";
 
 describe("Notification utils", () => {
-  describe("Build Articles Notification Content", () => {
-    const CURRENT_STEP = {
-      debut: 0,
-      description: null,
-      fin: 90,
-      id: "6",
-      nom: "De 0 à 3 mois",
-      ordre: 6,
-    };
+  const CURRENT_STEP = {
+    debut: 0,
+    description: null,
+    fin: 90,
+    id: "6",
+    nom: "De 0 à 3 mois",
+    ordre: 6,
+  };
 
+  describe("Build Articles Notification Content", () => {
     afterEach(() => {
       void AsyncStorage.clear();
     });
@@ -52,9 +52,14 @@ describe("Notification utils", () => {
 
     it("buildArticlesNotificationContent is called with no articles to read (NB_ARTICLE_TO_READ = 0)", async () => {
       const NB_ARTICLE_TO_READ = 0;
+      await StorageUtils.storeObjectValue(
+        StorageKeysConstants.currentStep,
+        CURRENT_STEP
+      );
       const content = await NotificationUtils.buildArticlesNotificationContent(
         NB_ARTICLE_TO_READ
       );
+
       const expected = {
         body: Labels.article.notification.congrats.body,
         data: {
