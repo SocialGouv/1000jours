@@ -62,6 +62,7 @@ module.exports = {
       prenom: String
       score_question_dix: String
       telephone: String
+      langue: String
     ): Boolean
 
     epdsContactConfirmed (
