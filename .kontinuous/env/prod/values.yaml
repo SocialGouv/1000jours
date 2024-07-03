@@ -3,6 +3,13 @@ global:
   host: "les1000jours.fabrique.social.gouv.fr"
 
 app-strapi:
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1000m
+      memory: 2Gi
   replicas: 1 # mandatory because volume is RWO
   strategyType: Recreate # idem
   addVolumes:
