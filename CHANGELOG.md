@@ -1,9 +1,8 @@
 ## [1.141.1](https://github.com/SocialGouv/1000jours/compare/v1.141.0...v1.141.1) (2024-07-03)
 
-
 ### Bug Fixes
 
-* update resources ([403f7f6](https://github.com/SocialGouv/1000jours/commit/403f7f651ccb1c8473b1d7fadc614df58648310b))
+- update resources ([403f7f6](https://github.com/SocialGouv/1000jours/commit/403f7f651ccb1c8473b1d7fadc614df58648310b))
 
 # [1.141.0](https://github.com/SocialGouv/1000jours/compare/v1.140.1...v1.141.0) (2024-05-13)
 
