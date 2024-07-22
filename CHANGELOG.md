@@ -1,3 +1,10 @@
+## [1.141.4](https://github.com/SocialGouv/1000jours/compare/v1.141.3...v1.141.4) (2024-07-22)
+
+
+### Bug Fixes
+
+* Expo Build (yarn.lock + node version) ([#1757](https://github.com/SocialGouv/1000jours/issues/1757)) ([86c66d3](https://github.com/SocialGouv/1000jours/commit/86c66d3acaecdcb49c1dfb3a62134dea13a78242)), closes [#1746](https://github.com/SocialGouv/1000jours/issues/1746) [#1732](https://github.com/SocialGouv/1000jours/issues/1732) [#1729](https://github.com/SocialGouv/1000jours/issues/1729) [#1729](https://github.com/SocialGouv/1000jours/issues/1729) [#1729](https://github.com/SocialGouv/1000jours/issues/1729) [#1733](https://github.com/SocialGouv/1000jours/issues/1733) [#1736](https://github.com/SocialGouv/1000jours/issues/1736) [#1738](https://github.com/SocialGouv/1000jours/issues/1738) [#1736](https://github.com/SocialGouv/1000jours/issues/1736) [#1738](https://github.com/SocialGouv/1000jours/issues/1738) [#1739](https://github.com/SocialGouv/1000jours/issues/1739) [#1739](https://github.com/SocialGouv/1000jours/issues/1739) [#1739](https://github.com/SocialGouv/1000jours/issues/1739) [#1736](https://github.com/SocialGouv/1000jours/issues/1736) [#1738](https://github.com/SocialGouv/1000jours/issues/1738) [#1742](https://github.com/SocialGouv/1000jours/issues/1742)
+
 ## [1.141.3](https://github.com/SocialGouv/1000jours/compare/v1.141.2...v1.141.3) (2024-07-22)
 
 ### Bug Fixes
