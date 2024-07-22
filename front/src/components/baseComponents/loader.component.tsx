@@ -15,11 +15,11 @@ const Loader: React.FC<Props> = ({ backdrop = true }) => {
       presentationStyle="overFullScreen"
       transparent={true}
     >
-      <SafeAreaView>
+      {/* <SafeAreaView> */}
         <View style={styles.mainContainer}>
           <MaterialIndicator color={Colors.white} />
         </View>
-      </SafeAreaView>
+      {/* </SafeAreaView> */}
     </RNModal>
   ) : (
     <MaterialIndicator color={Colors.primaryBlueDark} />
