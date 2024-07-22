@@ -21,6 +21,7 @@ import {
   CommonText,
   CustomButton,
   Datepicker,
+  GraphQLLoader,
   Icomoon,
   IcomoonIcons,
   SecondaryText,
@@ -28,6 +29,8 @@ import {
 } from "../../components/baseComponents";
 import TrackerHandler from "../../components/tracker/trackerHandler.component";
 import {
+  CalendarDbQueries,
+  FetchPoliciesConstants,
   Formats,
   Labels,
   PlatformConstants,
@@ -36,6 +39,7 @@ import {
 import { USER_SITUATIONS } from "../../constants/profile.constants";
 import { Colors, FontWeight, Margins, Paddings, Sizes } from "../../styles";
 import type {
+  Event,
   ProfileGender,
   RootStackParamList,
   UserContext,
@@ -48,8 +52,11 @@ import {
   TndNotificationUtils,
   TrackerUtils,
 } from "../../utils";
-import { NotificationType } from "../../utils/notifications/notification.util";
+import { NotificationType, cancelScheduleEventsNotification, getAllNotificationsByType, scheduleEventsNotification } from "../../utils/notifications/notification.util";
 import { checkErrorOnProfile } from "../../utils/step/step.util";
+import { useEvents } from "../../hooks";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { formattedEvents } from "../../utils/events/event.util";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -108,6 +115,23 @@ const Profile: FC<Props> = ({ navigation }) => {
       await StorageUtils.getObjectValue(StorageKeysConstants.userGenderKey);
     setGender(genderStored ?? genderEmpty);
   };
+
+  const [fetchEvents, { loading, error, data, called, refetch }] = useLazyQuery(
+    gql(CalendarDbQueries.ALL_EVENTS),
+    {
+      fetchPolicy: FetchPoliciesConstants.CACHE_AND_NETWORK,
+      onCompleted: async (data) => {
+        const evenements = (data as { evenements: Event[] }).evenements;
+        const events = formattedEvents(evenements, childBirthday);
+        await cancelScheduleEventsNotification();
+        await scheduleEventsNotification(events);
+        navigateToRoot();
+      },
+      onError: (e: any) => {
+        console.warn(e);
+      },
+    }
+  );
 
   useEffect(() => {
     const initDataWithStorageValue = async () => {
@@ -192,9 +216,10 @@ const Profile: FC<Props> = ({ navigation }) => {
   const validateForm = useCallback(async () => {
     const checkedUserSituation =
       StepUtils.getCheckedUserSituationOrUndefined(userSituations);
-    const error = checkErrorOnProfile(checkedUserSituation, childBirthday);
-    if (error) {
-      Alert.alert(Labels.warning, error, [{ text: "OK" }]);
+    const errorOnProfile = checkErrorOnProfile(checkedUserSituation, childBirthday);
+    
+    if (errorOnProfile) {
+      Alert.alert(Labels.warning, errorOnProfile, [{ text: "OK" }]);
       return;
     }
 
@@ -235,7 +260,6 @@ const Profile: FC<Props> = ({ navigation }) => {
       const notifs = await NotificationUtils.getAllNotificationsByType(
         NotificationType.tnd
       );
-      console.log(notifs);
       const isFirstTime = notifs.length === 0;
       void TndNotificationUtils.scheduleTndNotifications(
         childBirthday,
@@ -249,7 +273,12 @@ const Profile: FC<Props> = ({ navigation }) => {
     // Annule la notification 'NextStep' et supprime les données concernant l'étape courante
     await resetNextStep();
 
-    navigateToRoot();
+    if(checkedUserSituation?.childBirthdayRequired && childBirthday) {
+      await fetchEvents();
+    } else {
+      await cancelScheduleEventsNotification();
+      navigateToRoot();
+    }
   }, [childBirthday, navigateToRoot, userSituations, gender]);
 
   const scrollViewRef = React.useRef<ScrollView>(null);
@@ -293,161 +322,167 @@ const Profile: FC<Props> = ({ navigation }) => {
   };
 
   return (
-    <View style={[styles.mainContainer]}>
-      <TrackerHandler
-        screenName={TrackerUtils.TrackingEvent.PROFILE}
-        actionName={trackerAction}
-      />
-      <KeyboardAvoidingView
-        behavior={PlatformConstants.PLATFORM_IS_IOS ? "padding" : undefined}
-        style={{ flex: 1 }}
-      >
-        <View style={styles.mainView}>
-          <ScrollView style={styles.mainMargins} ref={scrollViewRef}>
-            <View style={styles.appLogo}>
-              <BaseAssets.AppLogo
-                height={Sizes.logo}
-                accessible
-                accessibilityRole="image"
-                accessibilityLabel={`${Labels.accessibility.logoApp} ${Labels.appName}`}
-              />
-            </View>
-            <View style={styles.justifyContentCenter}>
-              <Image
-                source={imageProfile}
-                style={styles.imageProfile}
-                accessible
-                accessibilityRole="image"
-                accessibilityLabel={Labels.accessibility.illustrationProfile}
-              />
-            </View>
-            <CommonText style={[styles.title, styles.textAlignCenter]}>
-              {Labels.profile.title}
-            </CommonText>
-            <CommonText style={[styles.subTitle, styles.textAlignCenter]}>
-              {Labels.profile.subTitle}
-            </CommonText>
-            <View onLayout={onViewLayout}>
-              {userSituations.map((situation, index) => (
-                <View
-                  key={index}
-                  style={[
-                    styles.item,
-                    situation.isChecked ? styles.itemSelected : null,
-                  ]}
-                >
-                  <TouchableOpacity
-                    onPress={onCheckboxPressed(situation)}
-                    disabled={situation.isChecked}
-                    accessibilityRole="checkbox"
-                    accessibilityState={{ checked: situation.isChecked }}
-                    style={styles.itemTouchable}
-                  >
-                    <SecondaryText
-                      style={
-                        situation.isChecked
-                          ? styles.itemTextSelected
-                          : styles.itemText
-                      }
-                    >
-                      {situation.label}
-                    </SecondaryText>
-                  </TouchableOpacity>
-                  <View style={[styles.mainMargins, styles.bgTransparent]}>
-                    {situation.isChecked &&
-                      situation.childBirthdayRequired &&
-                      datePickerIsReady && (
-                        <View
-                          style={[
-                            styles.bgTransparent,
-                            styles.birthdayConatiner,
-                          ]}
-                        >
-                          <SecondaryText style={{ color: Colors.white }}>
-                            {situation.childBirthdayLabel}
-                          </SecondaryText>
-                          <View
-                            style={[styles.bgTransparent, styles.flexStart]}
-                          >
-                            <Datepicker
-                              date={
-                                childBirthday.length > 0
-                                  ? new Date(childBirthday)
-                                  : undefined
-                              }
-                              onChange={onUpdatedDate}
-                              color={Colors.primaryYellow}
-                            />
-                          </View>
-                        </View>
-                      )}
-                  </View>
-                </View>
-              ))}
-            </View>
-            <View style={styles.genderContainer}>
-              <CommonText style={styles.textSelectGender}>
-                {`${Labels.profile.gender.select} :`}
+    <>
+      {loading ? 
+        <GraphQLLoader noLoader={false} noLoaderBackdrop={false} /> : null
+      }
+      <View style={[styles.mainContainer]}>
+        <TrackerHandler
+          screenName={TrackerUtils.TrackingEvent.PROFILE}
+          actionName={trackerAction}
+        />
+        <KeyboardAvoidingView
+          behavior={PlatformConstants.PLATFORM_IS_IOS ? "padding" : undefined}
+          style={{ flex: 1 }}
+        >
+           
+          <View style={styles.mainView}>
+            <ScrollView style={styles.mainMargins} ref={scrollViewRef}>
+              <View style={styles.appLogo}>
+                <BaseAssets.AppLogo
+                  height={Sizes.logo}
+                  accessible
+                  accessibilityRole="image"
+                  accessibilityLabel={`${Labels.accessibility.logoApp} ${Labels.appName}`}
+                />
+              </View>
+              <View style={styles.justifyContentCenter}>
+                <Image
+                  source={imageProfile}
+                  style={styles.imageProfile}
+                  accessible
+                  accessibilityRole="image"
+                  accessibilityLabel={Labels.accessibility.illustrationProfile}
+                />
+              </View>
+              <CommonText style={[styles.title, styles.textAlignCenter]}>
+                {Labels.profile.title}
               </CommonText>
-              <View style={styles.genderItemsContainer}>
-                {genders.map((item, index) => (
-                  <View key={index} style={styles.genderItemContainer}>
+              <CommonText style={[styles.subTitle, styles.textAlignCenter]}>
+                {Labels.profile.subTitle}
+              </CommonText>
+              <View onLayout={onViewLayout}>
+                {userSituations.map((situation, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      styles.item,
+                      situation.isChecked ? styles.itemSelected : null,
+                    ]}
+                  >
                     <TouchableOpacity
-                      style={[
-                        styles.item,
-                        styles.genderItem,
-                        isSelectedGender(item) ? styles.itemSelected : null,
-                      ]}
-                      onPress={onGenderPressed(item)}
-                      disabled={isSelectedGender(item)}
+                      onPress={onCheckboxPressed(situation)}
+                      disabled={situation.isChecked}
                       accessibilityRole="checkbox"
-                      accessibilityState={{ checked: isSelectedGender(item) }}
+                      accessibilityState={{ checked: situation.isChecked }}
+                      style={styles.itemTouchable}
                     >
-                      <CommonText
+                      <SecondaryText
                         style={
-                          isSelectedGender(item)
+                          situation.isChecked
                             ? styles.itemTextSelected
-                            : null
+                            : styles.itemText
                         }
                       >
-                        {item.label}
-                      </CommonText>
+                        {situation.label}
+                      </SecondaryText>
                     </TouchableOpacity>
+                    <View style={[styles.mainMargins, styles.bgTransparent]}>
+                      {situation.isChecked &&
+                        situation.childBirthdayRequired &&
+                        datePickerIsReady && (
+                          <View
+                            style={[
+                              styles.bgTransparent,
+                              styles.birthdayConatiner,
+                            ]}
+                          >
+                            <SecondaryText style={{ color: Colors.white }}>
+                              {situation.childBirthdayLabel}
+                            </SecondaryText>
+                            <View
+                              style={[styles.bgTransparent, styles.flexStart]}
+                            >
+                              <Datepicker
+                                date={
+                                  childBirthday.length > 0
+                                    ? new Date(childBirthday)
+                                    : undefined
+                                }
+                                onChange={onUpdatedDate}
+                                color={Colors.primaryYellow}
+                              />
+                            </View>
+                          </View>
+                        )}
+                    </View>
                   </View>
                 ))}
               </View>
-            </View>
-          </ScrollView>
-          <View style={[styles.footer]}>
-            <View style={styles.buttonContainer}>
-              <CustomButton
-                buttonStyle={{ alignItems: "center" }}
-                title={Labels.buttons.pass}
-                rounded={false}
-                disabled={false}
-                icon={
-                  <Icomoon
-                    name={IcomoonIcons.fermer}
-                    size={14}
-                    color={Colors.primaryBlue}
-                  />
-                }
-                action={onCloseButtonPressed}
-              />
-            </View>
-            <View style={styles.buttonContainer}>
-              <CustomButton
-                buttonStyle={styles.flexStart}
-                title={Labels.buttons.validate}
-                rounded={true}
-                disabled={!canValidate}
-                action={validateForm}
-              />
+              <View style={styles.genderContainer}>
+                <CommonText style={styles.textSelectGender}>
+                  {`${Labels.profile.gender.select} :`}
+                </CommonText>
+                <View style={styles.genderItemsContainer}>
+                  {genders.map((item, index) => (
+                    <View key={index} style={styles.genderItemContainer}>
+                      <TouchableOpacity
+                        style={[
+                          styles.item,
+                          styles.genderItem,
+                          isSelectedGender(item) ? styles.itemSelected : null,
+                        ]}
+                        onPress={onGenderPressed(item)}
+                        disabled={isSelectedGender(item)}
+                        accessibilityRole="checkbox"
+                        accessibilityState={{ checked: isSelectedGender(item) }}
+                      >
+                        <CommonText
+                          style={
+                            isSelectedGender(item)
+                              ? styles.itemTextSelected
+                              : null
+                          }
+                        >
+                          {item.label}
+                        </CommonText>
+                      </TouchableOpacity>
+                    </View>
+                  ))}
+                </View>
+              </View>
+            </ScrollView>
+            <View style={[styles.footer]}>
+              <View style={styles.buttonContainer}>
+                <CustomButton
+                  buttonStyle={{ alignItems: "center" }}
+                  title={Labels.buttons.pass}
+                  rounded={false}
+                  disabled={false}
+                  icon={
+                    <Icomoon
+                      name={IcomoonIcons.fermer}
+                      size={14}
+                      color={Colors.primaryBlue}
+                    />
+                  }
+                  action={onCloseButtonPressed}
+                />
+              </View>
+              <View style={styles.buttonContainer}>
+                <CustomButton
+                  buttonStyle={styles.flexStart}
+                  title={Labels.buttons.validate}
+                  rounded={true}
+                  disabled={!canValidate}
+                  action={validateForm}
+                />
+              </View>
             </View>
           </View>
-        </View>
-      </KeyboardAvoidingView>
-    </View>
+        </KeyboardAvoidingView>
+      </View>
+    </>
   );
 };
 
