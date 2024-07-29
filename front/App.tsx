@@ -1,6 +1,5 @@
 import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
-import * as Updates from "expo-updates";
 import type { FC } from "react";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -120,21 +119,7 @@ const MainAppContainer: FC = () => {
     );
   };
 
-  const onFetchUpdateAsync = async () => {
-    try {
-      const update = await Updates.checkForUpdateAsync();
-
-      if (update.isAvailable) {
-        await Updates.fetchUpdateAsync();
-        await Updates.reloadAsync();
-      }
-    } catch (error: unknown) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
-    void onFetchUpdateAsync();
     const init = async () => {
       await Font.loadAsync(customFonts)
         .then(() => {
