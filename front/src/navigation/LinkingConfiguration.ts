@@ -33,5 +33,5 @@ export default {
       },
     },
   },
-  prefixes: [Linking.makeUrl("/")],
+  prefixes: [Linking.createURL("/")],
 };
