@@ -90,9 +90,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       "expo-build-properties",
       {
         android: {
-          buildToolsVersion: "33.0.0",
-          compileSdkVersion: 33,
-          targetSdkVersion: 33,
+          buildToolsVersion: "34.0.0",
+          compileSdkVersion: 34,
+          targetSdkVersion: 34,
         },
         ios: {
           deploymentTarget: "16.0",
