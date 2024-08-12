@@ -76,7 +76,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       {
         project: "nos-1000-jours",
         organization: "incubateur",
-        url: "https://sentry.fabrique.social.gouv.fr/",
+        url: "https://sentry.fabrique.social.gouv.fr",
       },
     ],
     [
