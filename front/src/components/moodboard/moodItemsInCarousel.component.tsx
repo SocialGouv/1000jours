@@ -2,13 +2,13 @@ import type { Dispatch, SetStateAction } from "react";
 import * as React from "react";
 import { useCallback, useRef } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import Carousel from "react-native-snap-carousel";
 
 import { SCREEN_WIDTH } from "../../constants/platform.constants";
 import { Margins, Sizes } from "../../styles";
 import type { MoodboardItem } from "../../type";
 import { MoodboardUtils } from "../../utils";
 import { SecondaryText } from "../baseComponents";
+import Carousel from "react-native-reanimated-carousel";
 
 interface Props {
   setActiveIndex: Dispatch<SetStateAction<number>>;
@@ -20,11 +20,10 @@ interface RenderItemProps {
   index: number;
 }
 
-const ITEM_WIDTH = Math.round(SCREEN_WIDTH * 0.7);
-const ITEM_HEIGHT = Math.round(
-  (ITEM_WIDTH * 3) / MoodboardUtils.MOODBOARD_ITEMS.length
-);
-const ICON_SIZE = Math.round(ITEM_WIDTH * 0.5);
+const CAROUSEL_HEIGHT = Math.round(250);
+const CAROUSEL_MAX_ITEM_TO_RENDER = 3;
+const ITEM_WIDTH = Math.round(SCREEN_WIDTH);
+const ICON_SIZE = Math.round(ITEM_WIDTH * 0.4);
 
 const MoodItemsInCarousel: React.FC<Props> = ({
   setActiveIndex,
@@ -53,6 +52,7 @@ const MoodItemsInCarousel: React.FC<Props> = ({
             <Image
               style={{ height: ICON_SIZE, width: ICON_SIZE }}
               source={item.icon}
+              
             />
           </View>
           <View
@@ -75,14 +75,37 @@ const MoodItemsInCarousel: React.FC<Props> = ({
       ref={ref}
       data={MoodboardUtils.MOODBOARD_ITEMS}
       renderItem={renderItem}
-      sliderWidth={SCREEN_WIDTH}
-      itemWidth={ITEM_WIDTH}
-      containerCustomStyle={styles.carouselContainer}
-      inactiveSlideShift={0}
+      width={SCREEN_WIDTH}
+      height={CAROUSEL_HEIGHT}
+      windowSize={CAROUSEL_MAX_ITEM_TO_RENDER}
+      defaultIndex={firstItemIndexToShow}
       onSnapToItem={snapToItem}
-      useScrollView={true}
-      firstItem={firstItemIndexToShow}
+      loop={false}
+      snapEnabled={true}
+      pagingEnabled={true}
+      style={styles.carouselContainer}
+      mode="parallax"
     />
+  //   <Carousel
+  //   ref={ref}
+  //   data={articles}
+  //   defaultIndex={firstItemIndexToShow}
+  //   renderItem={renderItem}
+  //   onSnapToItem={snapToItem}
+  //   windowSize={CAROUSEL_MAX_ITEM_TO_RENDER}
+  //   width={SCREEN_WIDTH}
+  //   mode="parallax"
+  //   modeConfig={{
+  //     parallaxScrollingOffset: CAROUSEL_PARALLAX_OFFSET,
+  //     parallaxScrollingScale: CAROUSEL_PARALLAX_SCALE,
+  //   }}
+  //   pagingEnabled={true}
+  //   snapEnabled={true}
+  //   loop={false}
+  //   panGestureHandlerProps={{
+  //     activeOffsetX: [-Paddings.light, Paddings.light],
+  //   }}
+  // />
   );
 };
 
@@ -91,7 +114,7 @@ const styles = StyleSheet.create({
     borderRadius: Sizes.xxxs,
   },
   carouselContainer: {
-    marginTop: Margins.largest,
+    marginTop: Margins.light,
   },
   iconContainer: {
     flex: 5,
@@ -100,8 +123,8 @@ const styles = StyleSheet.create({
   itemContainer: {
     alignItems: "center",
     justifyContent: "center",
-    minHeight: ITEM_HEIGHT,
-    width: ITEM_WIDTH,
+    minHeight: CAROUSEL_HEIGHT,
+    width: SCREEN_WIDTH,
   },
   itemLabel: {
     color: "white",
