@@ -74,8 +74,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       "@sentry/react-native/expo",
       {
-        project: "incubateur",
-        organization: "nos-1000-jours",
+        project: "nos-1000-jours",
+        organization: "incubateur",
+        url: "https://sentry.fabrique.social.gouv.fr/",
       },
     ],
     [
