@@ -1,3 +1,10 @@
+## [1.141.5](https://github.com/SocialGouv/1000jours/compare/v1.141.4...v1.141.5) (2024-08-12)
+
+
+### Bug Fixes
+
+* Migration Expo SDK 51 ([#1758](https://github.com/SocialGouv/1000jours/issues/1758)) ([f045d37](https://github.com/SocialGouv/1000jours/commit/f045d37f2e190d3f41b5b091366571ed244a1727)), closes [#1746](https://github.com/SocialGouv/1000jours/issues/1746) [#1732](https://github.com/SocialGouv/1000jours/issues/1732) [#1729](https://github.com/SocialGouv/1000jours/issues/1729) [#1729](https://github.com/SocialGouv/1000jours/issues/1729) [#1729](https://github.com/SocialGouv/1000jours/issues/1729) [#1733](https://github.com/SocialGouv/1000jours/issues/1733) [#1736](https://github.com/SocialGouv/1000jours/issues/1736) [#1738](https://github.com/SocialGouv/1000jours/issues/1738) [#1736](https://github.com/SocialGouv/1000jours/issues/1736) [#1738](https://github.com/SocialGouv/1000jours/issues/1738) [#1739](https://github.com/SocialGouv/1000jours/issues/1739) [#1739](https://github.com/SocialGouv/1000jours/issues/1739) [#1739](https://github.com/SocialGouv/1000jours/issues/1739) [#1736](https://github.com/SocialGouv/1000jours/issues/1736) [#1738](https://github.com/SocialGouv/1000jours/issues/1738) [#1742](https://github.com/SocialGouv/1000jours/issues/1742)
+
 ## [1.141.4](https://github.com/SocialGouv/1000jours/compare/v1.141.3...v1.141.4) (2024-07-22)
 
 ### Bug Fixes
