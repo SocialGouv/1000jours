@@ -39,7 +39,7 @@
     "collectCoverage": true
   },
   "dependencies": {
-    "@apollo/client": "^3.4.17",
+    "@apollo/client": "^3.11.4",
     "@expo/config-plugins": "~8.0.0",
     "@expo/metro-config": "~0.18.1",
     "@expo/prebuild-config": "~7.0.0",

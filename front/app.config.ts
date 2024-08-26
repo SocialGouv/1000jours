@@ -1,8 +1,8 @@
 import { ExpoConfig, ConfigContext } from "expo/config";
 
 /* eslint-disable @typescript-eslint/naming-convention */
-const APP_VERSION = "1.1.107";
-const APP_VERSION_NUM = 107;
+const APP_VERSION = "1.1.108";
+const APP_VERSION_NUM = 108;
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
