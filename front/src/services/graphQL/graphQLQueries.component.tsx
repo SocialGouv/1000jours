@@ -29,8 +29,11 @@ export const GraphQLQuery: FC<Props> = ({
   const { loading, error, data } = useQuery(gql(query), {
     fetchPolicy: fetchPolicy ?? FetchPoliciesConstants.NETWORK_ONLY,
     notifyOnNetworkStatusChange,
-    onCompleted: () => {
+    onCompleted: (data) => {
       getFetchedData(data);
+    },
+    onError(error) {
+      console.error(error);
     },
   });
 
@@ -63,8 +66,11 @@ export const GraphQLLazyQuery: FC<PropsLazy> = ({
     {
       fetchPolicy: fetchPolicy ?? FetchPoliciesConstants.NETWORK_ONLY,
       notifyOnNetworkStatusChange,
-      onCompleted: () => {
+      onCompleted: (data) => {
         getFetchedData(data);
+      },
+      onError(error) {
+        console.error(error);
       },
     }
   );
