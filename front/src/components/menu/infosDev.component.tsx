@@ -136,9 +136,6 @@ const InfosDev: FC<Props> = ({ navigation }) => {
       contentContainerStyle={Styles.modalFullScreen.scrollviewContent}
     >
       <H1 style={styles.textCenter}>{Labels.infosDev.title}</H1>
-      <SecondaryText style={styles.textCenter}>
-        {Labels.infosDev.expoUpdatesInfo}
-      </SecondaryText>
 
       <CustomButton
         title={Labels.infosDev.resetStorageData}
