@@ -3,13 +3,11 @@ global:
   host: "les1000jours.fabrique.social.gouv.fr"
 
 app-strapi:
-  resources:
-    requests:
-      cpu: 500m
-      memory: 1Gi
-    limits:
-      cpu: 1000m
-      memory: 2Gi
+  labels:
+    oblik.socialgouv.io/enabled: "true"
+  annotations:
+    oblik.socialgouv.io/min-request-cpu: 500m
+    oblik.socialgouv.io/min-request-memory: 2500Mi
   replicas: 1 # mandatory because volume is RWO
   strategyType: Recreate # idem
   addVolumes:
