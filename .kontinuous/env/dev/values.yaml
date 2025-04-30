@@ -1,4 +1,7 @@
 app-strapi:
+  annotations:
+    oblik.socialgouv.io/min-request-cpu: 500m
+    oblik.socialgouv.io/min-request-memory: 2500Mi
   ~preDeploy.cleaner:
     match:
       kind: Deployment
