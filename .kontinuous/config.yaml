@@ -1,5 +1,5 @@
 projectName: les1000jours
-ciNamespace: ci-les1000jours
+ciNamespace: ci-nos1000jours
 
 dependencies:
   fabrique:

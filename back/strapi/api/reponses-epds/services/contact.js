@@ -36,7 +36,7 @@ const emailTemplate = (info) => ({
 
     Une demande de contact suite à un test EPDS a été effectuée.
 
-    Vous pouvez recontacter <%- prenom %> (<%- nombre_enfants %> enfant(s), dernier enfant le <%- naissance_dernier_enfant %>) :
+    Vous pouvez recontacter <%- prenom %> (<%- situation %>) :
     ${
       info.email
         ? `
@@ -68,12 +68,36 @@ const emailTemplate = (info) => ({
         : ``
     }
     ${
+      info.score
+        ? `
+    - score EPDS : <%- score %> / 30`
+        : ``
+    }
+    ${
       info.langue
         ? `
     - langue : <%- langue %>`
         : ``
     }
-
+    ${
+      info.departement
+        ? `
+    - departement : <%- departement %>`
+        : ``
+    }
+    ${
+      info.nb_mois_de_grossesse
+        ? `
+    - nombre de mois de grossesse : <%- nb_mois_de_grossesse %>`
+        : ``
+    }
+    ${
+      info.nb_mois_dernier_enfant
+        ? `
+    - nombre de mois du dernier enfant : <%- nb_mois_dernier_enfant %>`
+        : ``
+    }
+    
     L'équipe 1000 premiers jours.`,
 });
 
@@ -87,6 +111,11 @@ const contact = async ({
   score_question_dix = "ND",
   telephone = "ND",
   langue = "ND",
+  situation = "ND",
+  score = "ND",
+  departement = "ND",
+  nb_mois_de_grossesse = "ND",
+  nb_mois_dernier_enfant = "ND",
 }) => {
   if (!process.env["MAIL_SEND_TO"])
     throw new Error("Le service mail n'est pas configuré");
@@ -101,6 +130,11 @@ const contact = async ({
     score_question_dix,
     telephone,
     langue,
+    situation,
+    score,
+    departement,
+    nb_mois_de_grossesse,
+    nb_mois_dernier_enfant,
   };
 
   try {
