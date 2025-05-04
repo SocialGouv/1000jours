@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_ressources_epds_ressources",
+  "info": {
+    "name": "ressources",
+    "icon": "align-center",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "titre": {
+      "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": ["pros", "tels", "sites", "ressources"]
+    },
+    "contenu": {
+      "type": "richtext"
+    }
+  }
+}
