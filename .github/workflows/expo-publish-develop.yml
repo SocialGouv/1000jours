@@ -1,14 +1,14 @@
 name: Publish on ExpoGo (Develop)
 on:
-  push:
-    # branches: [develop, alpha, beta, next]
-    branches:
-      - "**"
-    tags-ignore:
-      - v*
-    paths:
-      - "front/**"
-      - ".github/workflows/expo-publish-develop.yml"
+  # push:
+  #   # branches: [develop, alpha, beta, next]
+  #   branches:
+  #     - "**"
+  #   tags-ignore:
+  #     - v*
+  #   paths:
+  #     - "front/**"
+  #     - ".github/workflows/expo-publish-develop.yml"
   workflow_dispatch:
     inputs:
       tags:
