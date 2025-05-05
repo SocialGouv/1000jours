@@ -1,6 +1,5 @@
 ## [1.141.6](https://github.com/SocialGouv/1000jours/compare/v1.141.5...v1.141.6) (2024-08-26)
 
-
 ### Bug Fixes
 
 * corrige les problèmes de requête GraphQL (Apollo) ([#1759](https://github.com/SocialGouv/1000jours/issues/1759)) ([d5b4daf](https://github.com/SocialGouv/1000jours/commit/d5b4daf593f2594a99852098a1615e1a8b9aca49)), closes [#1746](https://github.com/SocialGouv/1000jours/issues/1746) [#1732](https://github.com/SocialGouv/1000jours/issues/1732) [#1729](https://github.com/SocialGouv/1000jours/issues/1729) [#1729](https://github.com/SocialGouv/1000jours/issues/1729) [#1729](https://github.com/SocialGouv/1000jours/issues/1729) [#1733](https://github.com/SocialGouv/1000jours/issues/1733) [#1736](https://github.com/SocialGouv/1000jours/issues/1736) [#1738](https://github.com/SocialGouv/1000jours/issues/1738) [#1736](https://github.com/SocialGouv/1000jours/issues/1736) [#1738](https://github.com/SocialGouv/1000jours/issues/1738) [#1739](https://github.com/SocialGouv/1000jours/issues/1739) [#1739](https://github.com/SocialGouv/1000jours/issues/1739) [#1739](https://github.com/SocialGouv/1000jours/issues/1739) [#1736](https://github.com/SocialGouv/1000jours/issues/1736) [#1738](https://github.com/SocialGouv/1000jours/issues/1738) [#1742](https://github.com/SocialGouv/1000jours/issues/1742)

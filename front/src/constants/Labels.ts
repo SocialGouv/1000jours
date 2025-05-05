@@ -560,7 +560,6 @@ export default {
   },
   infosDev: {
     env: "Environnement",
-    expoUpdatesInfo: "Expo Updates are enabled",
     notifications: "Notifications",
     resetStorageData: "Effacer les données",
     resetStorageDataAlertMsg:
