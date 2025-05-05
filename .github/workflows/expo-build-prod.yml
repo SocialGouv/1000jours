@@ -23,7 +23,7 @@ jobs:
       DEEPLINK_PATH: app-millejours
       NODE_OPTIONS: --max_old_space_size=8192
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v2
         with:
           node-version: 18.x
@@ -58,7 +58,7 @@ jobs:
       DEEPLINK_PATH: app-millejours
       NODE_OPTIONS: --max_old_space_size=8192
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v2
         with:
           node-version: 18.x
