@@ -67,7 +67,7 @@ module.exports = {
       situation: String
       departement: String
       nb_mois_de_grossesse: String
-      nb_mois_du_dernier_enfant: String
+      nb_mois_dernier_enfant: String
     ): Boolean
 
     epdsContactConfirmed (
