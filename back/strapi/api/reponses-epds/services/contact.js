@@ -29,7 +29,6 @@ const emailTemplate = (info) => ({
     <p>${emailTemplateAskContactMsg}</p>
     <p>${emailTemplateRecontactMsg}
       <ul>
-        <li>${emailTemplateInfosEmail}</li>
         <li>${emailTemplateInfosPhone}</li>
         <li>${emailTemplateInfosPreference}</li>
         <li>${emailTemplateInfosHoraires}</li>
@@ -50,7 +49,6 @@ const emailTemplate = (info) => ({
     ${emailTemplateAskContactMsg}
 
     ${emailTemplateRecontactMsg}
-    - ${emailTemplateInfosEmail}
     - ${emailTemplateInfosPhone}
     - ${emailTemplateInfosPreference}
     - ${emailTemplateInfosHoraires}
@@ -85,20 +83,20 @@ const contact = async ({
     throw new Error("Le service mail n'est pas configuré");
 
   const info = {
-    email,
-    horaires,
-    moyen,
-    naissance_dernier_enfant,
-    nombre_enfants,
-    prenom,
-    score_question_dix,
-    telephone,
-    langue,
-    situation,
-    score,
-    departement,
-    nb_mois_de_grossesse,
-    nb_mois_dernier_enfant,
+    email: email ?? "ND",
+    horaires: horaires ?? "ND",
+    moyen: moyen ?? "ND",
+    naissance_dernier_enfant: naissance_dernier_enfant ?? "ND",
+    nombre_enfants: nombre_enfants ?? "ND",
+    prenom: prenom ?? "ND",
+    score_question_dix: score_question_dix ?? "ND",
+    telephone: telephone ?? "ND",
+    langue: langue ?? "ND",
+    situation: situation ?? "ND",
+    score: score ?? "ND",
+    departement: departement ?? "ND",
+    nb_mois_de_grossesse: nb_mois_de_grossesse ?? "ND",
+    nb_mois_dernier_enfant: nb_mois_dernier_enfant ?? "ND",
   };
 
   try {
