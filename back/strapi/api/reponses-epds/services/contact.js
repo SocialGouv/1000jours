@@ -2,103 +2,67 @@
 
 const { contactConfirmed } = require("./contact-confirmed");
 
+const emailSubject = "Demande de contact EPDS <%- prenom %>";
+const emailTemplateHelloMsg = "Bonjour,";
+const emailTemplateAskContactMsg =
+  "Une demande de contact suite à un test EPDS a été effectuée.";
+const emailTemplateRecontactMsg =
+  "Vous pouvez recontacter <%- prenom %> (<%- situation %>) :";
+const emailTemplateInfosEmail = "à l'adresse suivante : <%- email %>";
+const emailTemplateInfosPhone = "au numéro suivant : <%- telephone %>";
+const emailTemplateInfosPreference = "préférence : <%- moyen %>";
+const emailTemplateInfosHoraires = "horaires : <%- horaires %>";
+const emailTemplateInfosScoreQ10 =
+  'score à la question 10 "Il m’est arrivé de penser à me faire du mal" : <%- score_question_dix %> / 3';
+const emailTemplateInfosScore = "score EPDS : <%- score %> / 30";
+const emailTemplateInfosLangue = "langue : <%- langue %>";
+const emailTemplateInfosDepartement = "departement : <%- departement %>";
+const emailTemplateInfosNbMoisGrossesse =
+  "nombre de mois de grossesse : <%- nb_mois_de_grossesse %>";
+const emailTemplateInfosNbMoisDernierEnfant =
+  "nombre de mois du dernier enfant : <%- nb_mois_dernier_enfant %>";
+const emailTemplateSignature = "L'équipe 1000 premiers jours.";
+
 const emailTemplate = (info) => ({
-  html: `<p>Bonjour,</p>
-
-    <p>Une demande de contact suite à un test EPDS a été effectuée.</p>
-
-    <p>Vous pouvez recontacter <%- prenom %> (<%- nombre_enfants %> enfant(s), dernier enfant né le <%- naissance_dernier_enfant %>) :
-    <ul>
-    ${
-      info.email
-        ? ` <li>à l'adresse suivante : <a href="mailto:<%- email %>"><%- email %></a></li>`
-        : ""
-    }
-    ${
-      info.telephone
-        ? ` <li>au numéro suivant : <a href="tel:<%- telephone %>"><%- telephone %></a></li>`
-        : ""
-    }
-    ${info.moyen ? ` <li>préférence : <%- moyen %></li>` : ""}
-    ${info.horaires ? ` <li>horaires : <%- horaires %></li>` : ""}
-    ${
-      info.score_question_dix
-        ? ` <li>score à la question 10 "Il m’est arrivé de penser à me faire du mal" : <%- score_question_dix %> / 3</li>`
-        : ""
-    }
-    ${info.langue ? ` <li>langue: <%- langue %></li>` : ""}
-    </ul>
+  html: `
+    <p>${emailTemplateHelloMsg}</p>
+    <p>${emailTemplateAskContactMsg}</p>
+    <p>${emailTemplateRecontactMsg}
+      <ul>
+        <li>${emailTemplateInfosEmail}</li>
+        <li>${emailTemplateInfosPhone}</li>
+        <li>${emailTemplateInfosPreference}</li>
+        <li>${emailTemplateInfosHoraires}</li>
+        <li>${emailTemplateInfosScoreQ10}</li>
+        <li>${emailTemplateInfosScore}</li>
+        <li>${emailTemplateInfosLangue}</li>
+        <li>${emailTemplateInfosDepartement}</li>
+        <li>${emailTemplateInfosNbMoisGrossesse}</li>
+        <li>${emailTemplateInfosNbMoisDernierEnfant}</li>
+      </ul>
     </p>
+    <p>${emailTemplateSignature}</p>
+  `,
+  subject: emailSubject,
+  text: `
+    ${emailTemplateHelloMsg}
 
-    L'équipe 1000 premiers jours.`,
-  subject: "Demande de contact EPDS <%- prenom %>",
-  text: `Bonjour,
+    ${emailTemplateAskContactMsg}
 
-    Une demande de contact suite à un test EPDS a été effectuée.
-
-    Vous pouvez recontacter <%- prenom %> (<%- situation %>) :
-    ${
-      info.email
-        ? `
-    - à l'adresse suivante : <%- email %>`
-        : ``
-    }
-    ${
-      info.telephone
-        ? `
-    - au numéro suivant : <%- telephone %>`
-        : ``
-    }
-    ${
-      info.moyen
-        ? `
-    - préférence : <%- moyen %>`
-        : ``
-    } 
-    ${
-      info.horaires
-        ? `
-    - horaires : <%- horaires %>`
-        : ``
-    }
-    ${
-      info.score_question_dix
-        ? `
-    - score à la question 10 "Il m’est arrivé de penser à me faire du mal" : <%- score_question_dix %> / 3`
-        : ``
-    }
-    ${
-      info.score
-        ? `
-    - score EPDS : <%- score %> / 30`
-        : ``
-    }
-    ${
-      info.langue
-        ? `
-    - langue : <%- langue %>`
-        : ``
-    }
-    ${
-      info.departement
-        ? `
-    - departement : <%- departement %>`
-        : ``
-    }
-    ${
-      info.nb_mois_de_grossesse
-        ? `
-    - nombre de mois de grossesse : <%- nb_mois_de_grossesse %>`
-        : ``
-    }
-    ${
-      info.nb_mois_dernier_enfant
-        ? `
-    - nombre de mois du dernier enfant : <%- nb_mois_dernier_enfant %>`
-        : ``
-    }
+    ${emailTemplateRecontactMsg}
+    - ${emailTemplateInfosEmail}
+    - ${emailTemplateInfosPhone}
+    - ${emailTemplateInfosPreference}
+    - ${emailTemplateInfosHoraires}
+    - ${emailTemplateInfosScoreQ10}
+    - ${emailTemplateInfosScore}
+    - ${emailTemplateInfosLangue}
+    - ${emailTemplateInfosDepartement}
+    - ${emailTemplateInfosNbMoisGrossesse}
+    - ${emailTemplateInfosNbMoisDernierEnfant}
     
-    L'équipe 1000 premiers jours.`,
+    ${emailTemplateSignature}
+  `,
 });
 
 const contact = async ({
