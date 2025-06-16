@@ -1,3 +1,13 @@
+## [1.141.7](https://github.com/SocialGouv/1000jours/compare/v1.141.6...v1.141.7) (2025-06-16)
+
+
+### Bug Fixes
+
+* add default values reponses-epds (contact) ([#1773](https://github.com/SocialGouv/1000jours/issues/1773)) ([3d2f996](https://github.com/SocialGouv/1000jours/commit/3d2f996a56bd4d72337133fba87ef249e911904f)), closes [#1764](https://github.com/SocialGouv/1000jours/issues/1764)
+* email template 'Demande de contact' ([#1771](https://github.com/SocialGouv/1000jours/issues/1771)) ([33e8da4](https://github.com/SocialGouv/1000jours/commit/33e8da4b5a83d96d8de4f8b439b7c0ca85527ce4)), closes [#1764](https://github.com/SocialGouv/1000jours/issues/1764)
+* preprod resources ([74599bb](https://github.com/SocialGouv/1000jours/commit/74599bb085b6dce55f7f2453351ee06e26ec450a))
+* prod pg cpu request ([9c084be](https://github.com/SocialGouv/1000jours/commit/9c084be895362ecd4044c4196ce84c7046365eef))
+
 ## [1.141.6](https://github.com/SocialGouv/1000jours/compare/v1.141.5...v1.141.6) (2024-08-26)
 
 ### Bug Fixes
