@@ -22,7 +22,7 @@ pg:
   cnpg-cluster:
     resources:
       requests:
-        cpu: 100mi
+        cpu: 100m
         memory: 1Gi
       limits:
         cpu: "1"
