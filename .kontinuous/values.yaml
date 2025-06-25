@@ -11,7 +11,7 @@ pg:
 app-strapi:
   ~chart: app
   host: "backoffice-{{ .Values.global.host }}"
-  ~needs: [pg, build-strapi]
+  ~needs: [pg]
   imagePackage: strapi
   containerPort: 1337
   probesPath: /_health
@@ -48,11 +48,3 @@ app-strapi:
       value: "true"
     - name: TZ
       value: "Europe/Paris"
-
-jobs:
-  runs:
-    build-strapi:
-      use: build
-      with:
-        context: ./back/strapi
-        imagePackage: strapi
