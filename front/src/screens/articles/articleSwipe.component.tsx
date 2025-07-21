@@ -117,7 +117,7 @@ const ArticleSwipe: FC<Props> = ({ route, navigation }) => {
           snapEnabled={true}
           loop={false}
           panGestureHandlerProps={{
-            activeOffsetX: [-Paddings.light, Paddings.light],
+            activeOffsetX: [-Paddings.largest, Paddings.largest],
           }}
         />
       </View>
