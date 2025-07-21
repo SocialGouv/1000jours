@@ -1,8 +1,8 @@
 import { ExpoConfig, ConfigContext } from "expo/config";
 
 /* eslint-disable @typescript-eslint/naming-convention */
-const APP_VERSION = "1.1.108";
-const APP_VERSION_NUM = 108;
+const APP_VERSION = "1.1.109";
+const APP_VERSION_NUM = 109;
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -90,9 +90,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       "expo-build-properties",
       {
         android: {
-          buildToolsVersion: "34.0.0",
-          compileSdkVersion: 34,
-          targetSdkVersion: 34,
+          buildToolsVersion: "35.0.0",
+          compileSdkVersion: 35,
+          targetSdkVersion: 35,
         },
         ios: {
           deploymentTarget: "16.0",
