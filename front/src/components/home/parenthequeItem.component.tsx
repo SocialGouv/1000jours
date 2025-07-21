@@ -56,6 +56,7 @@ const ParenthequeItem: FC<Props> = ({ navigation, isBasicTimeline }) => {
         styles.timelineStepContainer,
         styles.timelineStepLibraryContainer,
         isBasicTimeline ? null : styles.timelineMargin,
+
       ]}
     >
       <GraphQLQuery
@@ -126,6 +127,7 @@ const styles = StyleSheet.create({
   },
   timelineMargin: { marginHorizontal: "5%" },
   timelineStepContainer: {
+    minHeight: Sizes.step,
     marginBottom: Sizes.step,
   },
   timelineStepLibraryContainer: {
