@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 3.5.0"
+    "version": ">= 3.5.0",
+    "appVersionSource": "remote" // "local"
   },
   "build": {
     "development": {
@@ -19,7 +20,7 @@
       }
     },
     "production": {
-      "channel": "prod",
+      "autoIncrement": true,
       "ios": {
         "resourceClass": "m1-medium",
         "image": "latest"

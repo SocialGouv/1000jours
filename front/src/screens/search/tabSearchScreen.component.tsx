@@ -4,11 +4,8 @@ import type { FC } from "react";
 import { useCallback, useState } from "react";
 import * as React from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
-import type {
-  NavigationState,
-  SceneRendererProps,
-} from "react-native-tab-view";
-import { SceneMap, TabBar, TabView } from "react-native-tab-view";
+
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import {
   CustomButton,
@@ -47,6 +44,8 @@ import {
   TrackerUtils,
 } from "../../utils";
 
+const Tab = createMaterialTopTabNavigator();
+
 const TabSearchScreen: FC = () => {
   const [keywords, setKeywords] = useState("");
   const [articles, setArticles] = useState<Article[]>([]);
@@ -56,22 +55,6 @@ const TabSearchScreen: FC = () => {
   const [triggerGetArticles, setTriggerGetArticles] = useState(false);
   const [queryVariables, setQueryVariables] = useState<unknown>();
   const trackerSearchCategory = "Onglet Rechercher";
-
-  // Tabs
-  const layout = useWindowDimensions();
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    {
-      accessible: true,
-      key: "articlesSearchResult",
-      title: Labels.search.articles,
-    },
-    {
-      accessible: true,
-      key: "poisSearchResult",
-      title: Labels.search.aroundMe,
-    },
-  ]);
 
   const onSearchByKeywords = useCallback(() => {
     setUpdatedText(Labels.search.loading);
@@ -127,26 +110,6 @@ const TabSearchScreen: FC = () => {
     [keywords]
   );
 
-  const renderTabBar = useCallback(
-    (
-      props: SceneRendererProps & {
-        navigationState: NavigationState<{
-          accessible: boolean;
-          key: string;
-          title: string;
-        }>;
-      }
-    ) => (
-      <TabBar
-        {...props}
-        labelStyle={styles.tabBarLabel}
-        style={[styles.whiteBackground]}
-        indicatorStyle={styles.indicator}
-      />
-    ),
-    []
-  );
-
   const onKeywordsTextInputChanged = useCallback((text: string) => {
     setKeywords(text);
     if (!StringUtils.isNotNullNorEmpty(text)) {
@@ -200,17 +163,24 @@ const TabSearchScreen: FC = () => {
           </View>
         </View>
       </View>
-      <TabView
-        renderTabBar={renderTabBar}
-        navigationState={{ index, routes }}
-        renderScene={SceneMap({
-          articlesSearchResult: () => ArticlesRoute(updatedText, articles),
-          poisSearchResult: () => PoisRoute(updatedText, articles),
-        })}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
-        style={styles.whiteBackground}
-      />
+      <Tab.Navigator
+        screenOptions={{
+          tabBarLabelStyle: styles.tabBarLabel,
+          tabBarIndicatorStyle: styles.indicator,
+          tabBarStyle: styles.whiteBackground,
+        }}
+      >
+        <Tab.Screen
+          name="ArticlesSearchResult"
+          children={() => ArticlesRoute(updatedText, articles)}
+          options={{ title: Labels.search.articles }}
+        />
+        <Tab.Screen
+          name="PoisSearchResult"
+          children={() => PoisRoute(updatedText, articles)}
+          options={{ title: Labels.search.aroundMe }}
+        />
+      </Tab.Navigator>
     </>
   );
 };

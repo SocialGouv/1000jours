@@ -20,9 +20,10 @@ import TrackerHandler from "../tracker/trackerHandler.component";
 
 interface Props {
   document: Document;
+  key: number;
 }
 
-const DocumentCard: FC<Props> = ({ document }) => {
+const DocumentCard: FC<Props> = ({ document, key }) => {
   const [trackerAction, setTrackerAction] = useState("");
 
   const onDownloadButtonPressed = useCallback(() => {
@@ -35,6 +36,7 @@ const DocumentCard: FC<Props> = ({ document }) => {
 
   return (
     <ListItem
+      key={key}
       bottomDivider
       pad={0}
       containerStyle={[styles.listItemContainer, styles.borderLeftRadius]}
