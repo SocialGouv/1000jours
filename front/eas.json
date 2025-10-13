@@ -9,20 +9,20 @@
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
-        "resourceClass": "m1-medium"
+        "resourceClass": "m-medium"
       }
     },
     "preview": {
       "channel": "preview",
       "distribution": "internal",
       "ios": {
-        "resourceClass": "m1-medium"
+        "resourceClass": "m-medium"
       }
     },
     "production": {
       "autoIncrement": true,
       "ios": {
-        "resourceClass": "m1-medium",
+        "resourceClass": "m-medium",
         "image": "latest"
       },
       "env": {
