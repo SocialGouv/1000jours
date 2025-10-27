@@ -20,7 +20,7 @@ const TabParenthequeDocuments = (documents: Document[]): ReactElement => {
               duration={1000}
               delay={0}
             >
-              <DocumentCard document={document} />
+              <DocumentCard document={document} key={index} />
             </Animatable.View>
           ))}
         </View>

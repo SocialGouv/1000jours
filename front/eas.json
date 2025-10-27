@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 3.5.0"
+    "version": ">= 3.5.0",
+    "appVersionSource": "remote" // "local"
   },
   "build": {
     "development": {
@@ -8,21 +9,24 @@
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
-        "resourceClass": "m1-medium"
+        "resourceClass": "m-medium",
+        "cache": {
+          "disabled": true
+        }
       }
     },
     "preview": {
       "channel": "preview",
       "distribution": "internal",
       "ios": {
-        "resourceClass": "m1-medium"
+        "resourceClass": "m-medium"
       }
     },
     "production": {
-      "channel": "prod",
+      "autoIncrement": true,
       "ios": {
-        "resourceClass": "m1-medium",
-        "image": "latest"
+        "resourceClass": "m-medium",
+        "image": "auto"
       },
       "env": {
         "API_URL": "https://backoffice-les1000jours.fabrique.social.gouv.fr",

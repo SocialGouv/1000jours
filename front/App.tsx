@@ -56,9 +56,6 @@ const MainAppContainer: FC = () => {
   const [storeCurrentStepArticleIds, setStoreCurrentStepArticleIds] =
     useState(false);
   const [checkAppVersion, setCheckAppVersion] = useState(true);
-  // Load Custom Fonts (Icomoon)
-  const [fontsLoaded, setFontsLoaded] = useState(false);
-
   const [trackerEventObject, setTrackerEventObject] = useState<TrackerEvent>();
 
   const updateAppActiveCounter = async () => {
@@ -121,14 +118,6 @@ const MainAppContainer: FC = () => {
 
   useEffect(() => {
     const init = async () => {
-      await Font.loadAsync(customFonts)
-        .then(() => {
-          setFontsLoaded(true);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
       await AppUtils.manageStorage();
       // Pour éviter un autre useEffect on utilise la valeur retournée,
       // car à ce moment là `appCounter` n'est pas encore à jour.
@@ -150,10 +139,10 @@ const MainAppContainer: FC = () => {
   }, []);
 
   useEffect(() => {
-    if (isLoadingComplete && fontsLoaded && appCounterIsLoaded) {
+    if (isLoadingComplete && appCounterIsLoaded) {
       setScreenCanBeDisplayed(true);
     }
-  }, [isLoadingComplete, fontsLoaded, appCounterIsLoaded]);
+  }, [isLoadingComplete, appCounterIsLoaded]);
 
   const renderView = () => {
     const appContainer = (

@@ -5,11 +5,8 @@ import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { StyleSheet, useWindowDimensions } from "react-native";
-import type {
-  NavigationState,
-  SceneRendererProps,
-} from "react-native-tab-view";
-import { SceneMap, TabBar, TabView } from "react-native-tab-view";
+
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import {
   TabParenthequeDocuments,
@@ -38,6 +35,8 @@ interface Props {
   >;
 }
 
+const Tab = createMaterialTopTabNavigator();
+
 const Parentheque: FC<Props> = ({ navigation, route }) => {
   const documentsFromParam =
     route.params?.documents && sortDocuments(route.params.documents);
@@ -51,22 +50,6 @@ const Parentheque: FC<Props> = ({ navigation, route }) => {
 
   const [videos, setVideos] = useState<Video[]>(videosFromParameters ?? []);
   const [shouldGetVideos, setShouldGetVideos] = useState(false);
-
-  // TabView
-  const layout = useWindowDimensions();
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    {
-      accessible: true,
-      key: "documents",
-      title: Labels.parentheque.documentSection,
-    },
-    {
-      accessible: true,
-      key: "videos",
-      title: Labels.parentheque.videoSection,
-    },
-  ]);
 
   useEffect(() => {
     if (!documentsFromParam) setShouldGetDocuments(!shouldGetDocuments);
@@ -88,26 +71,6 @@ const Parentheque: FC<Props> = ({ navigation, route }) => {
     const results = (data as { videos: Video[] }).videos;
     setVideos(results);
   }, []);
-
-  const renderTabBar = useCallback(
-    (
-      props: SceneRendererProps & {
-        navigationState: NavigationState<{
-          accessible: boolean;
-          key: string;
-          title: string;
-        }>;
-      }
-    ) => (
-      <TabBar
-        {...props}
-        labelStyle={styles.tabBarLabel}
-        style={[styles.whiteBackground]}
-        indicatorStyle={styles.indicator}
-      />
-    ),
-    []
-  );
 
   return (
     <>
@@ -141,17 +104,24 @@ const Parentheque: FC<Props> = ({ navigation, route }) => {
           noLoader
         />
       </View>
-      <TabView
-        renderTabBar={renderTabBar}
-        navigationState={{ index, routes }}
-        renderScene={SceneMap({
-          documents: () => TabParenthequeDocuments(documents),
-          videos: () => TabParenthequeVideos(videos),
-        })}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
-        style={styles.whiteBackground}
-      />
+      <Tab.Navigator
+        screenOptions={{
+          tabBarLabelStyle: styles.tabBarLabel,
+          tabBarIndicatorStyle: styles.indicator,
+          tabBarStyle: styles.whiteBackground,
+        }}
+      >
+        <Tab.Screen
+          name="Documents"
+          children={() => TabParenthequeDocuments(documents)}
+          options={{ title: Labels.parentheque.documentSection }}
+        />
+        <Tab.Screen
+          name="Videos"
+          children={() => TabParenthequeVideos(videos)}
+          options={{ title: Labels.parentheque.videoSection }}
+        />
+      </Tab.Navigator>
     </>
   );
 };

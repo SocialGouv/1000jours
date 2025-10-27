@@ -1,20 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
-const { getDefaultConfig } = require("@expo/metro-config");
+const { getDefaultConfig } = require("expo/metro-config");
+const { mergeConfig } = require("metro-config");
 
-module.exports = (async () => {
-  const config = await getDefaultConfig(__dirname);
-  const { transformer, resolver } = config;
+/** @type {import('expo/metro-config').MetroConfig} */
+const baseConfig = getDefaultConfig(__dirname);
 
-  config.transformer = {
-    ...transformer,
+const customConfig = {
+  transformer: {
     babelTransformerPath: require.resolve("react-native-svg-transformer"),
-  };
-  config.resolver = {
-    ...resolver,
-    assetExts: resolver.assetExts.filter((ext) => ext !== "svg"),
-    sourceExts: [...resolver.sourceExts, "svg", "cjs"],
-  };
+  },
+  resolver: {
+    assetExts: baseConfig.resolver.assetExts.filter((ext) => ext !== "svg"),
+    sourceExts: [...baseConfig.resolver.sourceExts, "svg", "cjs"],
+  },
+};
 
-  return config;
-})();
+module.exports = mergeConfig(baseConfig, customConfig);

@@ -3,6 +3,7 @@ import { Modal as RNModal, SafeAreaView, StyleSheet, View } from "react-native";
 import { MaterialIndicator } from "react-native-indicators";
 
 import { Colors } from "../../styles";
+import { ActivityIndicator } from "react-native-paper";
 
 interface Props {
   backdrop?: boolean;
@@ -17,12 +18,12 @@ const Loader: React.FC<Props> = ({ backdrop = true }) => {
     >
       {/* <SafeAreaView> */}
         <View style={styles.mainContainer}>
-          <MaterialIndicator color={Colors.white} />
+          <ActivityIndicator color={Colors.white} />
         </View>
       {/* </SafeAreaView> */}
     </RNModal>
   ) : (
-    <MaterialIndicator color={Colors.primaryBlueDark} />
+    <ActivityIndicator color={Colors.primaryBlueDark} />
   );
 };
 
