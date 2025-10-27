@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { useEffect, useState } from "react";
+import { BaseAssets } from "../components/assets";
 
 const useCachedResources = (): boolean => {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -12,6 +13,7 @@ const useCachedResources = (): boolean => {
         // Load fonts
         await Font.loadAsync({
           ...Ionicons.font,
+          IcoMoon: BaseAssets.IcomoonFont,
           /* eslint-disable */
           "space-mono": require("../assets/fonts/SpaceMono-Regular.ttf"),
           "comfortaa-bold": require("../assets/fonts/Comfortaa-Bold.ttf"),
