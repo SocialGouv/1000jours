@@ -145,14 +145,14 @@ const Menu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
         },
         title: Labels.menu.notificationsCenter,
       },
-      {
-        icon: IcomoonIcons.email,
-        onPress: () => {
-          closeMenu();
-          void Linking.openURL(`mailto:${emailContact}`);
-        },
-        title: Labels.menu.contactUs,
-      },
+      // {
+      //   icon: IcomoonIcons.email,
+      //   onPress: () => {
+      //     closeMenu();
+      //     void Linking.openURL(`mailto:${emailContact}`);
+      //   },
+      //   title: Labels.menu.contactUs,
+      // },
       {
         icon: IcomoonIcons.politiquesConfidentialite,
         subItems: [
