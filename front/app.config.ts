@@ -112,6 +112,13 @@ export default {
         },
       ],
       "expo-web-browser",
+      [
+        "expo-calendar",
+        {
+          calendarPermission:
+            "Permet de synchroniser les événements avec le calendrier de votre téléphone",
+        },
+      ],
     ],
     runtimeVersion: {
       policy: "sdkVersion",

@@ -9,7 +9,10 @@
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
-        "resourceClass": "m-medium"
+        "resourceClass": "m-medium",
+        "cache": {
+          "disabled": true
+        }
       }
     },
     "preview": {
@@ -23,7 +26,7 @@
       "autoIncrement": true,
       "ios": {
         "resourceClass": "m-medium",
-        "image": "latest"
+        "image": "auto"
       },
       "env": {
         "API_URL": "https://backoffice-les1000jours.fabrique.social.gouv.fr",
