@@ -140,7 +140,7 @@
     "typescript": "~5.8.3"
   },
   "private": true,
-  "packageManager": "yarn@3.6.4",
+  "packageManager": "yarn@3.8.7",
   "resolutions": {
     "metro": "0.82.5",
     "metro-config": "0.82.5",
