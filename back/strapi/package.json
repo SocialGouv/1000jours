@@ -57,7 +57,7 @@
   "license": "MIT",
   "devDependencies": {
     "@socialgouv/eslint-config-recommended": "^1.88.0",
-    "babel-eslint": "^10.1.0",
+    "@babel/eslint-parser": "^7.11.0",
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-jest": "^24.4.3",
