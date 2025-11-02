@@ -119,9 +119,9 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => {
   return (
     <Stack.Navigator initialRouteName="loading">
       {/* SCREENS */}
-      <Stack.Group screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="loading" component={LoadingScreen} />
-        <Stack.Screen name="onboarding" component={Onboarding} />
+      <Stack.Group screenOptions={{ headerShown: true }}>
+        <Stack.Screen name="loading" component={LoadingScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="onboarding" component={Onboarding} options={{ headerShown: false }}/>
         <Stack.Screen
           name="root"
           component={BottomTabNavigator}
