@@ -1,3 +1,10 @@
+## [1.141.10](https://github.com/SocialGouv/1000jours/compare/v1.141.9...v1.141.10) (2025-11-02)
+
+
+### Bug Fixes
+
+* Expo SDK Migration (v53) ([#1781](https://github.com/SocialGouv/1000jours/issues/1781)) ([d1bcf36](https://github.com/SocialGouv/1000jours/commit/d1bcf3616cb1bae0dcdfb7b6b058ac95cd2bcde9)), closes [#1764](https://github.com/SocialGouv/1000jours/issues/1764)
+
 ## [1.141.9](https://github.com/SocialGouv/1000jours/compare/v1.141.8...v1.141.9) (2025-11-02)
 
 
