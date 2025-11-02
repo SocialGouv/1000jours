@@ -66,6 +66,7 @@ const RootNavigator: FC<RootNavigatorProps> = ({ onPressMenu }) => {
   }, [onPressMenu]);
 
   const rootScreenOptions: StackNavigationOptions = {
+    animationEnabled: false,
     headerLeft: () => (
       <View style={[styles.headerLeft]}>
         <BaseAssets.LogoMinistere
