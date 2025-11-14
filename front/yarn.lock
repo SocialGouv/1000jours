@@ -3327,21 +3327,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*":
-  version: 19.2.2
-  resolution: "@types/react@npm:19.2.2"
+"@types/react@npm:*, @types/react@npm:~19.2.0":
+  version: 19.2.5
+  resolution: "@types/react@npm:19.2.5"
   dependencies:
     csstype: ^3.0.2
-  checksum: 7eb2d316dd5a6c02acb416524b50bae932c38d055d26e0f561ca23c009c686d16a2b22fcbb941eecbe2ecb167f119e29b9d0142d9d056dd381352c43413b60da
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:~19.0.10":
-  version: 19.0.14
-  resolution: "@types/react@npm:19.0.14"
-  dependencies:
-    csstype: ^3.0.2
-  checksum: fa749597f3500e1e8d045b4460cdbb6c67f4bc37e13ffb9d5ce059b71526f62f8c6836169772e3a1a64df9326291477d5c1c92262100161f74d5b5fa2a420c8d
+  checksum: 32a48cba7b214d74bd73f79ef9a6ec04a02ba052a7b488f4c925648c7a242765a4571146d2e03bd55435c7dc4d239d593cb180cc15fc2d8d6c87f37be07b8989
   languageName: node
   linkType: hard
 
@@ -7336,7 +7327,7 @@ __metadata:
     "@types/jest": ^26.0.24
     "@types/lodash": ^4.14.177
     "@types/matomo-tracker-react-native": 0.3.0
-    "@types/react": ~19.0.10
+    "@types/react": ~19.2.0
     "@types/react-native-calendars": ^1.1264.3
     "@types/react-native-confetti": ^0.1.0
     "@types/react-native-indicators": ^0.16.1
@@ -7403,7 +7394,7 @@ __metadata:
     react-native-vector-icons: ^8.1.0
     react-native-web: ^0.20.0
     react-native-webview: 13.13.5
-    typescript: ~5.8.3
+    typescript: ~5.9.0
     uuid: ^8.3.2
   languageName: unknown
   linkType: soft
@@ -14051,23 +14042,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:~5.8.3":
-  version: 5.8.3
-  resolution: "typescript@npm:5.8.3"
+"typescript@npm:~5.9.0":
+  version: 5.9.3
+  resolution: "typescript@npm:5.9.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: cb1d081c889a288b962d3c8ae18d337ad6ee88a8e81ae0103fa1fecbe923737f3ba1dbdb3e6d8b776c72bc73bfa6d8d850c0306eed1a51377d2fccdfd75d92c4
+  checksum: 0d0ffb84f2cd072c3e164c79a2e5a1a1f4f168e84cb2882ff8967b92afe1def6c2a91f6838fb58b168428f9458c57a2ba06a6737711fdd87a256bbe83e9a217f
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@~5.8.3#~builtin<compat/typescript>":
-  version: 5.8.3
-  resolution: "typescript@patch:typescript@npm%3A5.8.3#~builtin<compat/typescript>::version=5.8.3&hash=29ae49"
+"typescript@patch:typescript@~5.9.0#~builtin<compat/typescript>":
+  version: 5.9.3
+  resolution: "typescript@patch:typescript@npm%3A5.9.3#~builtin<compat/typescript>::version=5.9.3&hash=29ae49"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 1b503525a88ff0ff5952e95870971c4fb2118c17364d60302c21935dedcd6c37e6a0a692f350892bafcef6f4a16d09073fe461158547978d2f16fbe4cb18581c
+  checksum: 8bb8d86819ac86a498eada254cad7fb69c5f74778506c700c2a712daeaff21d3a6f51fd0d534fe16903cb010d1b74f89437a3d02d4d0ff5ca2ba9a4660de8497
   languageName: node
   linkType: hard
 
