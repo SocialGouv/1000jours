@@ -47,7 +47,6 @@ jobs:
           cert: ${{ secrets.BUILDKIT_OPERATOR_CERT }}
           key: ${{ secrets.BUILDKIT_OPERATOR_KEY }}
           context: "./back/strapi"
-          file: "Dockerfile"
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           push: true
