@@ -142,7 +142,7 @@
   "private": true,
   "packageManager": "yarn@3.6.4",
   "resolutions": {
-    "metro": "0.82.5",
+    "metro": "0.83.3",
     "metro-config": "0.82.5",
     "metro-resolver": "0.82.5"
   },
