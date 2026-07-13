@@ -11,9 +11,13 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "nom": {
+    "label": {
       "type": "string",
       "unique": true
+    },
+    "nom": {
+      "type": "string",
+      "unique": false
     },
     "thematiques": {
       "collection": "thematique",
