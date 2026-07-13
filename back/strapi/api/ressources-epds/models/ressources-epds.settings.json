@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ressources_epds",
+  "info": {
+    "name": "Ressources EPDS",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "plateforme": {
+      "type": "string"
+    },
+    "ressources_configs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ressources-epds.ressources-config"
+    }
+  }
+}
