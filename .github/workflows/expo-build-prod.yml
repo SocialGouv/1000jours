@@ -2,12 +2,19 @@ name: Expo Build Prod
 on:
   workflow_dispatch:
     inputs:
-      tags:
-        description: "Manual workflow"
+      platform:
+        description: "Plateforme à construire"
+        type: choice
+        default: all
+        options:
+          - all
+          - ios
+          - android
 
 jobs:
   Build-ios:
     name: Build and publish iOS for Prod
+    if: ${{ inputs.platform == 'all' || inputs.platform == 'ios' || inputs.platform == '' }}
     runs-on: ubuntu-latest
     env:
       API_URL: https://backoffice-les1000jours.fabrique.social.gouv.fr
@@ -23,15 +30,46 @@ jobs:
       DEEPLINK_PATH: app-millejours
       NODE_OPTIONS: --max_old_space_size=8192
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          # eas-cli >= 24 (et ses dépendances) exige Node 22
+          node-version: 22.x
 
       - uses: expo/expo-github-action@v8
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
+
+      # Signature iOS : le certificat de distribution (.p12) et le profil de
+      # provisionnement sont fournis par les secrets du repo et passés à EAS
+      # via credentials.json (credentialsSource "local" dans eas.json).
+      - name: Prepare iOS signing credentials
+        env:
+          IOS_P12_B64: ${{ secrets.IOS_P12_B64 }}
+          IOS_P12_PASSWORD: ${{ secrets.IOS_P12_PASSWORD }}
+          IOS_PROVISIONNING_PROFILE_B64: ${{ secrets.IOS_PROVISIONNING_PROFILE_B64 }}
+        run: |
+          cd front
+          if [ -z "$IOS_P12_B64" ] || [ -z "$IOS_P12_PASSWORD" ] || [ -z "$IOS_PROVISIONNING_PROFILE_B64" ]; then
+            echo "::error::Secrets IOS_P12_B64, IOS_P12_PASSWORD et IOS_PROVISIONNING_PROFILE_B64 requis"
+            exit 1
+          fi
+          mkdir -p ios-credentials
+          echo "$IOS_P12_B64" | base64 -d > ios-credentials/distribution.p12
+          echo "$IOS_PROVISIONNING_PROFILE_B64" | base64 -d > ios-credentials/production.mobileprovision
+          node -e "
+            require('fs').writeFileSync('credentials.json', JSON.stringify({
+              ios: {
+                provisioningProfilePath: 'ios-credentials/production.mobileprovision',
+                distributionCertificate: {
+                  path: 'ios-credentials/distribution.p12',
+                  password: process.env.IOS_P12_PASSWORD,
+                },
+              },
+            }, null, 2));
+          "
+          ls -l ios-credentials
 
       - name: Yarn
         env:
@@ -39,10 +77,26 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn build-prod:ios
+          yarn build-prod:ios --json > build-ios.json
+
+      # Le binaire est téléchargé depuis EAS puis publié en artefact GitHub,
+      # pour pouvoir le récupérer sans accès au compte Expo.
+      - name: Download build from EAS
+        run: |
+          cd front
+          BUILD_URL=$(node -e "const t = require('fs').readFileSync('build-ios.json', 'utf8'); const b = JSON.parse(t.slice(t.indexOf('['))); console.log(b[0].artifacts.buildUrl)")
+          curl -sSL -o 1000jours-ios.ipa "$BUILD_URL"
+          ls -l 1000jours-ios.ipa
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 1000jours-ios
+          path: front/1000jours-ios.ipa
+          retention-days: 30
 
   Build-android:
     name: Build and publish Android for Prod
+    if: ${{ inputs.platform == 'all' || inputs.platform == 'android' || inputs.platform == '' }}
     runs-on: ubuntu-latest
     env:
       API_URL: https://backoffice-les1000jours.fabrique.social.gouv.fr
@@ -58,10 +112,11 @@ jobs:
       DEEPLINK_PATH: app-millejours
       NODE_OPTIONS: --max_old_space_size=8192
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          # eas-cli >= 24 (et ses dépendances) exige Node 22
+          node-version: 22.x
 
       - uses: expo/expo-github-action@v8
         with:
@@ -74,4 +129,19 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn build-prod:android
+          yarn build-prod:android --json > build-android.json
+
+      # Le binaire est téléchargé depuis EAS puis publié en artefact GitHub,
+      # pour pouvoir le récupérer sans accès au compte Expo.
+      - name: Download build from EAS
+        run: |
+          cd front
+          BUILD_URL=$(node -e "const t = require('fs').readFileSync('build-android.json', 'utf8'); const b = JSON.parse(t.slice(t.indexOf('['))); console.log(b[0].artifacts.buildUrl)")
+          curl -sSL -o 1000jours-android.aab "$BUILD_URL"
+          ls -l 1000jours-android.aab
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 1000jours-android
+          path: front/1000jours-android.aab
+          retention-days: 30

@@ -25,8 +25,9 @@
     "production": {
       "autoIncrement": true,
       "ios": {
+        "credentialsSource": "local",
         "resourceClass": "m-medium",
-        "image": "auto"
+        "image": "macos-sequoia-15.6-xcode-26.0"
       },
       "env": {
         "API_URL": "https://backoffice-les1000jours.fabrique.social.gouv.fr",
@@ -42,6 +43,18 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "ascAppId": "1573729958",
+        "ascApiKeyPath": "./asc-api-key.p8",
+        "ascApiKeyId": "GXRUC5TM27",
+        "ascApiKeyIssuerId": "0e5fd802-ce56-4c88-95a2-7fa37056e60a"
+      },
+      "android": {
+        "serviceAccountKeyPath": "./api-key-play-store.json",
+        "track": "production",
+        "releaseStatus": "completed"
+      }
+    }
   }
 }

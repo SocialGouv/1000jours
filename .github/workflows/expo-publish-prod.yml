@@ -1,62 +1,84 @@
 name: Publish on Stores (Prod)
+# Envoie aux stores le dernier build EAS de chaque plateforme (App Store Connect
+# / TestFlight pour iOS, piste Production du Play Store pour Android).
 on:
   workflow_dispatch:
     inputs:
-      tags:
-        description: "Manual workflow"
+      platform:
+        description: "Plateforme à soumettre"
+        type: choice
+        default: all
+        options:
+          - all
+          - ios
+          - android
 
 jobs:
-  Publish-android:
-    name: Publish Android for Prod
-    #    needs: Build-android
+  Submit-ios:
+    name: Submit iOS to App Store Connect
+    if: ${{ inputs.platform == 'all' || inputs.platform == 'ios' }}
     runs-on: ubuntu-latest
-    env:
-      PLAY_STORE_API_KEY: ${{ secrets.PLAY_STORE_API_KEY }}
-      NODE_OPTIONS: --max_old_space_size=8192
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
-
+          node-version: 22.x
       - uses: expo/expo-github-action@v8
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Yarn
+      # Le secret APP_STORE_API_KEY est le JSON fastlane (key_id, issuer_id, key) en base64.
+      - name: Configure App Store Connect API key
+        env:
+          APP_STORE_API_KEY: ${{ secrets.APP_STORE_API_KEY }}
+        run: |
+          cd front
+          echo "$APP_STORE_API_KEY" | base64 -d > asc-api-key.json
+          node -e "
+            const k = require('./asc-api-key.json');
+            require('fs').writeFileSync('asc-api-key.p8', k.key);
+            console.log('EXPO_ASC_KEY_ID=' + k.key_id);
+            console.log('EXPO_ASC_ISSUER_ID=' + k.issuer_id);
+          " >> "$GITHUB_ENV"
+          echo "EXPO_ASC_API_KEY_PATH=$PWD/asc-api-key.p8" >> "$GITHUB_ENV"
+          echo "EXPO_APPLE_TEAM_ID=76GBKHVK25" >> "$GITHUB_ENV"
+          rm asc-api-key.json
+
+      - name: Submit latest iOS build
         env:
           YARN_IGNORE_NODE: "1"
         run: |
           cd front
-          echo $PLAY_STORE_API_KEY | base64 -d > api-key-play-store.json
           yarn install
-          yarn upload:android
+          eas submit --platform ios --profile production --latest --non-interactive
 
-  Publish-ios:
-    name: Publish iOS for Prod
-    #   needs: Build-ios
-    runs-on: macOS-latest
-    env:
-      APP_STORE_API_KEY: ${{ secrets.APP_STORE_API_KEY }}
-      NODE_OPTIONS: --max_old_space_size=8192
+  Submit-android:
+    name: Submit Android to Play Store
+    if: ${{ inputs.platform == 'all' || inputs.platform == 'android' }}
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
-
+          node-version: 22.x
       - uses: expo/expo-github-action@v8
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Yarn
+      # Le secret PLAY_STORE_API_KEY est le JSON du compte de service Google Play en base64.
+      - name: Configure Play Store service account
+        env:
+          PLAY_STORE_API_KEY: ${{ secrets.PLAY_STORE_API_KEY }}
+        run: |
+          cd front
+          echo "$PLAY_STORE_API_KEY" | base64 -d > api-key-play-store.json
+
+      - name: Submit latest Android build
         env:
           YARN_IGNORE_NODE: "1"
         run: |
           cd front
           yarn install
-          curl -o app.ipa "$(expo url:ipa --non-interactive)"
-          echo $APP_STORE_API_KEY | base64 -d > api-key-app-store.json
-          yarn upload:ios
+          eas submit --platform android --profile production --latest --non-interactive

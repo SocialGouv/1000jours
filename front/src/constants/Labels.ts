@@ -229,6 +229,32 @@ export default {
     today: "Aujourd'hui",
     usefulEvent: "Cette information vous a été utile ?",
   },
+  closure: {
+    banner: {
+      learnMore: "En savoir plus",
+      text: "Cette application ne sera plus accessible à partir du 30 septembre 2026.",
+      title: "⚠ Fermeture prochaine du service",
+    },
+    message: {
+      paragraph1:
+        "Après plusieurs années à accompagner les futurs parents et les parents au quotidien, l’application 1000 jours fermera définitivement le 30 septembre 2026.",
+      paragraph2:
+        "Jusqu’à cette date, vous pouvez continuer à utiliser l’application normalement.\nAprès le 30 septembre, l’application et ses fonctionnalités ne seront plus accessibles.",
+      paragraph3End: ".",
+      paragraph3Link: "1000-premiers-jours.fr",
+      paragraph3Start:
+        "Pour continuer à bénéficier d’informations fiables et de conseils pendant la grossesse et les deux premières années de votre enfant, rendez-vous sur le site ",
+      paragraph4End:
+        " pour retrouver des informations et des conseils pendant votre grossesse, et suivre votre santé ainsi que celle de votre famille tout au long de la vie.",
+      paragraph4Link: "Mon espace santé",
+      paragraph4Start:
+        "Nous vous invitons également à télécharger l’application et à activer ",
+      paragraph5:
+        "Nous remercions chaleureusement toutes celles et ceux qui ont utilisé l’application et contribué, par leurs retours, à la faire évoluer au fil des années.",
+      signature: "L’équipe 1000 jours",
+      title: "L’application 1000 jours fermera le 30 septembre 2026",
+    },
+  },
   dateFormatLabel: "Jour / Mois / Année",
   epdsSurvey: {
     beContacted: {

@@ -9,6 +9,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { CheckAppVersion, StoreCurrentStepArticleIds } from "./src/components";
+import ClosureBanner from "./src/components/app/closureBanner.component";
 import { BaseAssets } from "./src/components/assets";
 import LinksHandler from "./src/components/links/linksHandler.component";
 import { setNotificationHandler } from "./src/components/notification/notificationHandler.component";
@@ -158,7 +159,9 @@ const MainAppContainer: FC = () => {
         {storeCurrentStepArticleIds && <StoreCurrentStepArticleIds />}
         {checkAppVersion && <CheckAppVersion />}
         <SafeAreaProvider>
-          <Navigation colorScheme={colorScheme} />
+          <ClosureBanner>
+            <Navigation colorScheme={colorScheme} />
+          </ClosureBanner>
           <StatusBar />
         </SafeAreaProvider>
       </GestureHandlerRootView>
