@@ -23,10 +23,11 @@ jobs:
       DEEPLINK_PATH: app-millejours
       NODE_OPTIONS: --max_old_space_size=8192
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          # eas-cli >= 24 (et ses dépendances) exige Node 22
+          node-version: 22.x
 
       - uses: expo/expo-github-action@v8
         with:
@@ -39,7 +40,22 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn build-prod:ios
+          yarn build-prod:ios --json > build-ios.json
+
+      # Le binaire est téléchargé depuis EAS puis publié en artefact GitHub,
+      # pour pouvoir le récupérer sans accès au compte Expo.
+      - name: Download build from EAS
+        run: |
+          cd front
+          BUILD_URL=$(node -e "const t = require('fs').readFileSync('build-ios.json', 'utf8'); const b = JSON.parse(t.slice(t.indexOf('['))); console.log(b[0].artifacts.buildUrl)")
+          curl -sSL -o 1000jours-ios.ipa "$BUILD_URL"
+          ls -l 1000jours-ios.ipa
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 1000jours-ios
+          path: front/1000jours-ios.ipa
+          retention-days: 30
 
   Build-android:
     name: Build and publish Android for Prod
@@ -58,10 +74,11 @@ jobs:
       DEEPLINK_PATH: app-millejours
       NODE_OPTIONS: --max_old_space_size=8192
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          # eas-cli >= 24 (et ses dépendances) exige Node 22
+          node-version: 22.x
 
       - uses: expo/expo-github-action@v8
         with:
@@ -74,4 +91,19 @@ jobs:
         run: |
           cd front
           yarn install
-          yarn build-prod:android
+          yarn build-prod:android --json > build-android.json
+
+      # Le binaire est téléchargé depuis EAS puis publié en artefact GitHub,
+      # pour pouvoir le récupérer sans accès au compte Expo.
+      - name: Download build from EAS
+        run: |
+          cd front
+          BUILD_URL=$(node -e "const t = require('fs').readFileSync('build-android.json', 'utf8'); const b = JSON.parse(t.slice(t.indexOf('['))); console.log(b[0].artifacts.buildUrl)")
+          curl -sSL -o 1000jours-android.aab "$BUILD_URL"
+          ls -l 1000jours-android.aab
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 1000jours-android
+          path: front/1000jours-android.aab
+          retention-days: 30
