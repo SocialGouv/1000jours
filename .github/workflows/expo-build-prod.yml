@@ -2,12 +2,19 @@ name: Expo Build Prod
 on:
   workflow_dispatch:
     inputs:
-      tags:
-        description: "Manual workflow"
+      platform:
+        description: "Plateforme à construire"
+        type: choice
+        default: all
+        options:
+          - all
+          - ios
+          - android
 
 jobs:
   Build-ios:
     name: Build and publish iOS for Prod
+    if: ${{ inputs.platform == 'all' || inputs.platform == 'ios' || inputs.platform == '' }}
     runs-on: ubuntu-latest
     env:
       API_URL: https://backoffice-les1000jours.fabrique.social.gouv.fr
@@ -34,6 +41,25 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
+      # En mode non interactif, EAS a besoin d'une clé API App Store Connect
+      # pour valider ou régénérer le certificat et le profil de provisionnement.
+      # Le secret APP_STORE_API_KEY est le JSON fastlane (key_id, issuer_id, key) en base64.
+      - name: Configure App Store Connect API key for EAS
+        env:
+          APP_STORE_API_KEY: ${{ secrets.APP_STORE_API_KEY }}
+        run: |
+          cd front
+          echo "$APP_STORE_API_KEY" | base64 -d > asc-api-key.json
+          node -e "
+            const k = require('./asc-api-key.json');
+            if (!k.key_id || !k.issuer_id || !k.key) throw new Error('APP_STORE_API_KEY: champs key_id / issuer_id / key attendus');
+            require('fs').writeFileSync('asc-api-key.p8', k.key);
+            console.log('EXPO_ASC_KEY_ID=' + k.key_id);
+            console.log('EXPO_ASC_ISSUER_ID=' + k.issuer_id);
+          " >> "$GITHUB_ENV"
+          echo "EXPO_ASC_API_KEY_PATH=$PWD/asc-api-key.p8" >> "$GITHUB_ENV"
+          rm asc-api-key.json
+
       - name: Yarn
         env:
           YARN_IGNORE_NODE: "1"
@@ -59,6 +85,7 @@ jobs:
 
   Build-android:
     name: Build and publish Android for Prod
+    if: ${{ inputs.platform == 'all' || inputs.platform == 'android' || inputs.platform == '' }}
     runs-on: ubuntu-latest
     env:
       API_URL: https://backoffice-les1000jours.fabrique.social.gouv.fr
