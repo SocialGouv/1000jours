@@ -27,7 +27,7 @@
       "ios": {
         "credentialsSource": "local",
         "resourceClass": "m-medium",
-        "image": "auto"
+        "image": "macos-sequoia-15.6-xcode-26.0"
       },
       "env": {
         "API_URL": "https://backoffice-les1000jours.fabrique.social.gouv.fr",
