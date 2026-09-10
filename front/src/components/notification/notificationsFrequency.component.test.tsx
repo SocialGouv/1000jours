@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { RenderAPI } from "@testing-library/react-native";
-import { render, waitFor } from "@testing-library/react-native";
+import { act, render, waitFor } from "@testing-library/react-native";
 import * as React from "react";
 
 import { StorageKeysConstants } from "../../constants";
@@ -18,9 +18,14 @@ describe("Notification Frenquency", () => {
     });
 
     it("moodboard frequency init state should be twice a week", async () => {
+      // L'état initial est chargé de façon asynchrone depuis le storage :
+      // on attend la fin de ce chargement avant de vérifier le rendu.
       screen = render(
         <NotificationsFrequency type={NotificationType.moodboard} />
       );
+      await act(async () => {
+        await Promise.resolve();
+      });
 
       await waitFor(() => {
         expect(screen.getAllByRole("radio")).toHaveLength(2);
@@ -45,9 +50,14 @@ describe("Notification Frenquency", () => {
         NotificationUtils.Frequencies.onceADay
       );
 
+      // L'état initial est chargé de façon asynchrone depuis le storage :
+      // on attend la fin de ce chargement avant de vérifier le rendu.
       screen = render(
         <NotificationsFrequency type={NotificationType.moodboard} />
       );
+      await act(async () => {
+        await Promise.resolve();
+      });
 
       await waitFor(() => {
         expect(screen.getAllByRole("radio")).toHaveLength(2);
