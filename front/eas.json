@@ -25,6 +25,7 @@
     "production": {
       "autoIncrement": true,
       "ios": {
+        "credentialsSource": "local",
         "resourceClass": "m-medium",
         "image": "auto"
       },

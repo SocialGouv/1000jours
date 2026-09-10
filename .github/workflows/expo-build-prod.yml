@@ -41,27 +41,35 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      # En mode non interactif, EAS a besoin d'une clé API App Store Connect
-      # pour valider ou régénérer le certificat et le profil de provisionnement.
-      # Le secret APP_STORE_API_KEY est le JSON fastlane (key_id, issuer_id, key) en base64.
-      - name: Configure App Store Connect API key for EAS
+      # Signature iOS : le certificat de distribution (.p12) et le profil de
+      # provisionnement sont fournis par les secrets du repo et passés à EAS
+      # via credentials.json (credentialsSource "local" dans eas.json).
+      - name: Prepare iOS signing credentials
         env:
-          APP_STORE_API_KEY: ${{ secrets.APP_STORE_API_KEY }}
+          IOS_P12_B64: ${{ secrets.IOS_P12_B64 }}
+          IOS_P12_PASSWORD: ${{ secrets.IOS_P12_PASSWORD }}
+          IOS_PROVISIONNING_PROFILE_B64: ${{ secrets.IOS_PROVISIONNING_PROFILE_B64 }}
         run: |
           cd front
-          echo "$APP_STORE_API_KEY" | base64 -d > asc-api-key.json
+          if [ -z "$IOS_P12_B64" ] || [ -z "$IOS_P12_PASSWORD" ] || [ -z "$IOS_PROVISIONNING_PROFILE_B64" ]; then
+            echo "::error::Secrets IOS_P12_B64, IOS_P12_PASSWORD et IOS_PROVISIONNING_PROFILE_B64 requis"
+            exit 1
+          fi
+          mkdir -p ios-credentials
+          echo "$IOS_P12_B64" | base64 -d > ios-credentials/distribution.p12
+          echo "$IOS_PROVISIONNING_PROFILE_B64" | base64 -d > ios-credentials/production.mobileprovision
           node -e "
-            const k = require('./asc-api-key.json');
-            if (!k.key_id || !k.issuer_id || !k.key) throw new Error('APP_STORE_API_KEY: champs key_id / issuer_id / key attendus');
-            require('fs').writeFileSync('asc-api-key.p8', k.key);
-            console.log('EXPO_ASC_KEY_ID=' + k.key_id);
-            console.log('EXPO_ASC_ISSUER_ID=' + k.issuer_id);
-          " >> "$GITHUB_ENV"
-          echo "EXPO_ASC_API_KEY_PATH=$PWD/asc-api-key.p8" >> "$GITHUB_ENV"
-          rm asc-api-key.json
-          # Team ID Apple du ministère (identique à celui du fichier apple-app-site-association)
-          echo "EXPO_APPLE_TEAM_ID=76GBKHVK25" >> "$GITHUB_ENV"
-          echo "EXPO_APPLE_TEAM_TYPE=COMPANY_OR_ORGANIZATION" >> "$GITHUB_ENV"
+            require('fs').writeFileSync('credentials.json', JSON.stringify({
+              ios: {
+                provisioningProfilePath: 'ios-credentials/production.mobileprovision',
+                distributionCertificate: {
+                  path: 'ios-credentials/distribution.p12',
+                  password: process.env.IOS_P12_PASSWORD,
+                },
+              },
+            }, null, 2));
+          "
+          ls -l ios-credentials
 
       - name: Yarn
         env:

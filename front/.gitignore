@@ -19,3 +19,9 @@ web-build/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Signature iOS (fournie au build par les secrets GitHub)
+credentials.json
+ios-credentials/
+*.p12
+*.mobileprovision
