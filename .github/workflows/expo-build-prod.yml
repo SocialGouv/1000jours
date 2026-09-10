@@ -59,6 +59,9 @@ jobs:
           " >> "$GITHUB_ENV"
           echo "EXPO_ASC_API_KEY_PATH=$PWD/asc-api-key.p8" >> "$GITHUB_ENV"
           rm asc-api-key.json
+          # Team ID Apple du ministère (identique à celui du fichier apple-app-site-association)
+          echo "EXPO_APPLE_TEAM_ID=76GBKHVK25" >> "$GITHUB_ENV"
+          echo "EXPO_APPLE_TEAM_TYPE=COMPANY_OR_ORGANIZATION" >> "$GITHUB_ENV"
 
       - name: Yarn
         env:
