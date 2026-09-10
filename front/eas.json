@@ -43,6 +43,15 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "ascAppId": "1573729958"
+      },
+      "android": {
+        "serviceAccountKeyPath": "./api-key-play-store.json",
+        "track": "production",
+        "releaseStatus": "completed"
+      }
+    }
   }
 }
