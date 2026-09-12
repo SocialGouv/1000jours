@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/ressources-epds",
+      "handler": "ressources-epds.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/ressources-epds/count",
+      "handler": "ressources-epds.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/ressources-epds/:id",
+      "handler": "ressources-epds.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/ressources-epds",
+      "handler": "ressources-epds.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/ressources-epds/:id",
+      "handler": "ressources-epds.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/ressources-epds/:id",
+      "handler": "ressources-epds.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
