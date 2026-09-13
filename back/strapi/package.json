@@ -22,7 +22,7 @@
     "form-data": "^4.0.0",
     "html-pdf-node": "^1.0.7",
     "json2csv": "^5.0.6",
-    "knex": "^0.95",
+    "knex": "^2.0.0",
     "lodash": "^4.17.21",
     "node-fetch": "^3.2.10",
     "pg": "latest",
