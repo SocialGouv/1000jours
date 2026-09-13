@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "parcours",
   "info": {
-    "name": "Parcours"
+    "name": "Parcours",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -20,6 +21,16 @@
       "via": "parcours",
       "collection": "etape",
       "dominant": true
+    },
+    "particularite": {
+      "type": "enumeration",
+      "enum": [
+        "standard",
+        "premature",
+        "a_risque",
+        "obesite"
+      ],
+      "unique": true
     }
   }
 }
